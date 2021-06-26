@@ -55,7 +55,7 @@ public class TARDISConfigMenuInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
                 int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
-                if (value == "false") {
+                if (value.equals("false")) {
                     cmd += 100; // xx -> 1xx
                 }
                 im.setCustomModelData(cmd);

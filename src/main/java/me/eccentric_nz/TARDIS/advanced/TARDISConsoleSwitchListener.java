@@ -88,35 +88,29 @@ public class TARDISConsoleSwitchListener implements Listener {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     ItemStack[] stack = null;
                                     Inventory new_inv = null;
-                                    switch (cmd) {
-                                        case 10001966: // Chameleon circuit
-                                        case 20001966:
+                                    switch (cmd) { // Chameleon circuit
+                                        case 10001966, 20001966 -> {
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                             stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-                                            break;
-                                        case 10001973: // ARS circuit
-                                        case 20001973:
+                                        } // ARS circuit
+                                        case 10001973, 20001973 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
                                             stack = new TARDISARSInventory(plugin).getARS();
-                                            break;
-                                        case 10001974: // Temporal circuit
-                                        case 20001974:
+                                        } // Temporal circuit
+                                        case 10001974, 20001974 -> {
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
                                             stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                                            break;
-                                        case 10001975: // Memory circuit (saves/areas)
-                                        case 20001975:
+                                        } // Memory circuit (saves/areas)
+                                        case 10001975, 20001975 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS saves");
                                             stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), p).getTerminal();
-                                            break;
-                                        case 10001976: // Input circuit (terminal)
-                                        case 20001976:
+                                        } // Input circuit (terminal)
+                                        case 10001976, 20001976 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
-                                            break;
-                                        default: // scanner circuit
+                                        }
+                                        default -> // scanner circuit
                                             TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
-                                            break;
                                     }
                                     // close inventory
                                     p.closeInventory();

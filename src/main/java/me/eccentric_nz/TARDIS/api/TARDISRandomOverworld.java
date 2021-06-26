@@ -136,15 +136,14 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             int level, row, col, rowcount, colcount;
             int starty = loc.getBlockY();
             switch (d) {
-                case EAST:
-                case WEST:
+                case EAST, WEST -> {
                     rowcount = 3;
                     colcount = 4;
-                    break;
-                default:
+                }
+                default -> {
                     rowcount = 4;
                     colcount = 3;
-                    break;
+                }
             }
             for (level = starty; level < starty + 4; level++) {
                 for (row = s[0]; row < s[0] + rowcount; row++) {

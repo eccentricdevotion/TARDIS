@@ -72,11 +72,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();
             UUID uuid;
-            if (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) {
-                uuid = TARDISSudoTracker.SUDOERS.get(playerUUID);
-            } else {
-                uuid = playerUUID;
-            }
+            uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {

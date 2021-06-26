@@ -53,6 +53,7 @@
             </activation>
             <properties>
                 <!-- Set the build number to the date and time of the build -->
+                <!--suppress UnresolvedMavenProperty -->
                 <project.build.number>${myBuildNumber}</project.build.number>
             </properties>
             <build>

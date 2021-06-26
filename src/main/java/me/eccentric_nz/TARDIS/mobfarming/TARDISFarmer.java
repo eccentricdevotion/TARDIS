@@ -69,18 +69,10 @@ public class TARDISFarmer {
      */
     public TARDISPetsAndFollowers farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
         switch (d) {
-            case NORTH:
-                l.setZ(l.getZ() - 1);
-                break;
-            case WEST:
-                l.setX(l.getX() - 1);
-                break;
-            case SOUTH:
-                l.setZ(l.getZ() + 1);
-                break;
-            default:
-                l.setX(l.getX() + 1);
-                break;
+            case NORTH -> l.setZ(l.getZ() - 1);
+            case WEST -> l.setX(l.getX() - 1);
+            case SOUTH -> l.setZ(l.getZ() + 1);
+            default -> l.setX(l.getX() + 1);
         }
         l.setY(l.getY() + 1);
         // spawn an entity at this location so we can get nearby entities - an egg will do
@@ -488,20 +480,12 @@ public class TARDISFarmer {
                     }
                 }
                 if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0) {
-                    boolean canfarm;
-                    switch (plugin.getInvManager()) {
-                        case MULTIVERSE:
-                            canfarm = TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
-                            break;
-                        case MULTI:
-                            canfarm = TARDISMultiInvChecker.checkWorldsCanShare(from, to);
-                            break;
-                        case PER_WORLD:
-                            canfarm = TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
-                            break;
-                        default:
-                            canfarm = true;
-                    }
+                    boolean canfarm = switch (plugin.getInvManager()) {
+                        case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
+                        case MULTI -> TARDISMultiInvChecker.checkWorldsCanShare(from, to);
+                        case PER_WORLD -> TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
+                        default -> true;
+                    };
                     if (!canfarm) {
                         TARDISMessage.send(p, "WORLD_NO_FARM");
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
@@ -547,18 +531,11 @@ public class TARDISFarmer {
                     World world = TARDISStaticLocationGetters.getWorld(aquarium);
                     Location fish_tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(aquarium);
                     switch (fish.getType()) {
-                        case COD:
-                            fish_tank.add(3.0d, 1.5d, 3.0d);
-                            break;
-                        case PUFFERFISH:
-                            fish_tank.add(-3.0d, 1.5d, 3.0d);
-                            break;
-                        case SALMON:
-                            fish_tank.add(3.0d, 1.5d, -3.0d);
-                            break;
-                        default: // TROPICAL_FISH
+                        case COD -> fish_tank.add(3.0d, 1.5d, 3.0d);
+                        case PUFFERFISH -> fish_tank.add(-3.0d, 1.5d, 3.0d);
+                        case SALMON -> fish_tank.add(3.0d, 1.5d, -3.0d);
+                        default -> // TROPICAL_FISH
                             fish_tank.add(-3.0d, 1.5d, -3.0d);
-                            break;
                     }
                     while (!world.getChunkAt(fish_tank).isLoaded()) {
                         world.getChunkAt(fish_tank).load();

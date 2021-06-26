@@ -143,17 +143,14 @@ class TARDISMaterialisePreset implements Runnable {
                     datas = column.getBlockData();
                 } else {
                     // determine preset to use
-                    switch (i % 3) {
-                        case 2: // stained
-                            datas = stained_column.getBlockData();
-                            break;
-                        case 1: // glass
-                            datas = glass_column.getBlockData();
-                            break;
-                        default: // preset
-                            datas = column.getBlockData();
-                            break;
-                    }
+                    datas = switch (i % 3) {
+                        case 2 -> // stained
+                            stained_column.getBlockData();
+                        case 1 -> // glass
+                            glass_column.getBlockData();
+                        default -> // preset
+                            column.getBlockData();
+                    };
                 }
                 // rescue player?
                 if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
@@ -183,16 +180,10 @@ class TARDISMaterialisePreset implements Runnable {
                             if (preset.equals(PRESET.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
-                                switch (bd.getThrottle()) {
-                                    case WARP:
-                                    case RAPID:
-                                    case FASTER:
-                                        sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                        break;
-                                    default:
-                                        sound = "tardis_land";
-                                        break;
-                                }
+                                sound = switch (bd.getThrottle()) {
+                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    default -> "tardis_land";
+                                };
                             }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
@@ -201,71 +192,71 @@ class TARDISMaterialisePreset implements Runnable {
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                     switch (bd.getDirection()) {
-                        case SOUTH:
+                        case SOUTH -> {
                             // if (yaw >= 315 || yaw < 45)
                             signx = x;
                             signz = (minusz - 1);
-                            break;
-                        case EAST:
+                        }
+                        case EAST -> {
                             // if (yaw >= 225 && yaw < 315)
                             signx = (minusx - 1);
                             signz = z;
-                            break;
-                        case NORTH:
+                        }
+                        case NORTH -> {
                             // if (yaw >= 135 && yaw < 225)
                             signx = x;
                             signz = (plusz + 1);
-                            break;
-                        case WEST:
+                        }
+                        case WEST -> {
                             // if (yaw >= 45 && yaw < 135)
                             signx = (plusx + 1);
                             signz = z;
-                            break;
+                        }
                     }
                     int xx, zz;
                     for (int n = 0; n < 10; n++) {
                         BlockData[] colData = datas[n];
                         switch (n) {
-                            case 0:
+                            case 0 -> {
                                 xx = minusx;
                                 zz = minusz;
-                                break;
-                            case 1:
+                            }
+                            case 1 -> {
                                 xx = x;
                                 zz = minusz;
-                                break;
-                            case 2:
+                            }
+                            case 2 -> {
                                 xx = plusx;
                                 zz = minusz;
-                                break;
-                            case 3:
+                            }
+                            case 3 -> {
                                 xx = plusx;
                                 zz = z;
-                                break;
-                            case 4:
+                            }
+                            case 4 -> {
                                 xx = plusx;
                                 zz = plusz;
-                                break;
-                            case 5:
+                            }
+                            case 5 -> {
                                 xx = x;
                                 zz = plusz;
-                                break;
-                            case 6:
+                            }
+                            case 6 -> {
                                 xx = minusx;
                                 zz = plusz;
-                                break;
-                            case 7:
+                            }
+                            case 7 -> {
                                 xx = minusx;
                                 zz = z;
-                                break;
-                            case 8:
+                            }
+                            case 8 -> {
                                 xx = x;
                                 zz = z;
-                                break;
-                            default:
+                            }
+                            default -> {
                                 xx = signx;
                                 zz = signz;
-                                break;
+                            }
                         }
                         for (int yy = 0; yy < 4; yy++) {
                             boolean change = true;
@@ -439,16 +430,9 @@ class TARDISMaterialisePreset implements Runnable {
                                                         owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                                     }
                                                     switch (preset) {
-                                                        case GRAVESTONE:
-                                                            s.setLine(3, owner);
-                                                            break;
-                                                        case ANGEL:
-                                                        case JAIL:
-                                                            s.setLine(2, owner);
-                                                            break;
-                                                        default:
-                                                            s.setLine(0, owner);
-                                                            break;
+                                                        case GRAVESTONE -> s.setLine(3, owner);
+                                                        case ANGEL, JAIL -> s.setLine(2, owner);
+                                                        default -> s.setLine(0, owner);
                                                     }
                                                 }
                                             }
@@ -557,46 +541,46 @@ class TARDISMaterialisePreset implements Runnable {
                 for (int n = 0; n < 9; n++) {
                     BlockData[] coldatas = datas[n];
                     switch (n) {
-                        case 0:
+                        case 0 -> {
                             xx = minusx;
                             zz = minusz;
-                            break;
-                        case 1:
+                        }
+                        case 1 -> {
                             xx = x;
                             zz = minusz;
-                            break;
-                        case 2:
+                        }
+                        case 2 -> {
                             xx = plusx;
                             zz = minusz;
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             xx = plusx;
                             zz = z;
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             xx = plusx;
                             zz = plusz;
-                            break;
-                        case 5:
+                        }
+                        case 5 -> {
                             xx = x;
                             zz = plusz;
-                            break;
-                        case 6:
+                        }
+                        case 6 -> {
                             xx = minusx;
                             zz = plusz;
-                            break;
-                        case 7:
+                        }
+                        case 7 -> {
                             xx = minusx;
                             zz = z;
-                            break;
-                        case 8:
+                        }
+                        case 8 -> {
                             xx = x;
                             zz = z;
-                            break;
-                        default:
+                        }
+                        default -> {
                             xx = signx;
                             zz = signz;
-                            break;
+                        }
                     }
                     for (int yy = 0; yy < 4; yy++) {
                         boolean change = true;

@@ -306,14 +306,11 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 
     private int getSonicConfig(int slot, InventoryView view) {
         ItemStack option = view.getItem(slot);
-        switch (option.getType()) {
-            case LIME_WOOL:
-                return 1;
-            case RED_WOOL:
-                return 2;
-            default:
-                return 0;
-        }
+        return switch (option.getType()) {
+            case LIME_WOOL -> 1;
+            case RED_WOOL -> 2;
+            default -> 0;
+        };
     }
 
     private ConfiguredSonic createConfiguredSonic(Player player, InventoryView view) {

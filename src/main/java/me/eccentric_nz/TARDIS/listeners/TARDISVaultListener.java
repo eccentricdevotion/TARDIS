@@ -83,33 +83,19 @@ public class TARDISVaultListener implements Listener {
                                 // is it a double chest
                                 if (chestType.equals(Chest.Type.LEFT)) {
                                     switch (chestdata.getFacing()) {
-                                        case WEST:
-                                            chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                            break;
-                                        case SOUTH:
-                                            chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-                                            break;
-                                        case EAST:
-                                            chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                            break;
-                                        default: // NORTH
+                                        case WEST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+                                        case SOUTH -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+                                        case EAST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+                                        default -> // NORTH
                                             chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                            break;
                                     }
                                 } else if (chestType.equals(Chest.Type.RIGHT)) {
                                     switch (chestdata.getFacing()) {
-                                        case WEST:
-                                            chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                            break;
-                                        case SOUTH:
-                                            chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                            break;
-                                        case EAST:
-                                            chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                            break;
-                                        default: // NORTH
+                                        case WEST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+                                        case SOUTH -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+                                        case EAST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+                                        default -> // NORTH
                                             chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-                                            break;
                                     }
                                 }
                                 chestLocations.add(blocation);

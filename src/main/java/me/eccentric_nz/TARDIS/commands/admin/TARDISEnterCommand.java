@@ -89,26 +89,26 @@ class TARDISEnterCommand {
                 int getx = tardis_loc.getBlockX();
                 int getz = tardis_loc.getBlockZ();
                 switch (innerD) {
-                    case NORTH:
+                    case NORTH -> {
                         // z -ve
                         tardis_loc.setX(getx + 0.5);
                         tardis_loc.setZ(getz - 0.5);
-                        break;
-                    case EAST:
+                    }
+                    case EAST -> {
                         // x +ve
                         tardis_loc.setX(getx + 1.5);
                         tardis_loc.setZ(getz + 0.5);
-                        break;
-                    case SOUTH:
+                    }
+                    case SOUTH -> {
                         // z +ve
                         tardis_loc.setX(getx + 0.5);
                         tardis_loc.setZ(getz + 1.5);
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         // x -ve
                         tardis_loc.setX(getx - 0.5);
                         tardis_loc.setZ(getz + 0.5);
-                        break;
+                    }
                 }
                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -123,18 +123,10 @@ class TARDISEnterCommand {
                 COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
-                        case NORTH:
-                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
-                            break;
-                        case WEST:
-                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
-                            break;
-                        case SOUTH:
-                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
-                            break;
-                        case EAST:
-                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
-                            break;
+                        case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
+                        case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
+                        case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
+                        case EAST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
                     }
                 }
                 tardis_loc.setYaw(yaw);

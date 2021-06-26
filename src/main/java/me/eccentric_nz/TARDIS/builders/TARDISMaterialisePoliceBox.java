@@ -71,19 +71,19 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 i++;
                 int cmd;
                 switch (i % 3) {
-                    case 2: // stained
+                    case 2 -> { // stained
                         cmd = 1003;
                         light.setBlockData(TARDISConstants.AIR);
-                        break;
-                    case 1: // glass
+                    }
+                    case 1 -> { // glass
                         cmd = 1004;
                         light.setBlockData(TARDISConstants.AIR);
-                        break;
-                    default: // preset
+                    }
+                    default -> { // preset
                         cmd = 1001;
                         // set a light block
                         light.setBlockData(TARDISConstants.LIGHT);
-                        break;
+                    }
                 }
                 // first run
                 if (i == 1) {
@@ -114,16 +114,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             if (preset.equals(PRESET.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
-                                switch (bd.getThrottle()) {
-                                    case WARP:
-                                    case RAPID:
-                                    case FASTER:
-                                        sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                        break;
-                                    default: // NORMAL
-                                        sound = "tardis_land";
-                                        break;
-                                }
+                                sound = switch (bd.getThrottle()) {
+                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    default -> // NORMAL
+                                        "tardis_land";
+                                };
                             }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {

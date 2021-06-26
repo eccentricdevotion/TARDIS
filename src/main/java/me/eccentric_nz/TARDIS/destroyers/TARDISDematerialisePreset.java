@@ -108,17 +108,14 @@ class TARDISDematerialisePreset implements Runnable {
         if (i < loops) {
             i++;
             // expand placed blocks to a police box
-            switch (i % 3) {
-                case 2: // stained
-                    data = stained_column.getBlockData();
-                    break;
-                case 1: // glass
-                    data = glass_column.getBlockData();
-                    break;
-                default: // preset
-                    data = column.getBlockData();
-                    break;
-            }
+            data = switch (i % 3) {
+                case 2 -> // stained
+                    stained_column.getBlockData();
+                case 1 -> // glass
+                    glass_column.getBlockData();
+                default -> // preset
+                    column.getBlockData();
+            };
             // first run - play sound
             if (i == 1) {
                 switch (preset) {
@@ -128,22 +125,22 @@ class TARDISDematerialisePreset implements Runnable {
                         int flowery = (dd.getLocation().getBlockY() + 1);
                         int flowerz;
                         switch (dd.getDirection()) {
-                            case NORTH:
+                            case NORTH -> {
                                 flowerx = dd.getLocation().getBlockX();
                                 flowerz = dd.getLocation().getBlockZ() + 1;
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 flowerx = dd.getLocation().getBlockX() + 1;
                                 flowerz = dd.getLocation().getBlockZ();
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 flowerx = dd.getLocation().getBlockX();
                                 flowerz = dd.getLocation().getBlockZ() - 1;
-                                break;
-                            default:
+                            }
+                            default -> {
                                 flowerx = dd.getLocation().getBlockX() - 1;
                                 flowerz = dd.getLocation().getBlockZ();
-                                break;
+                            }
                         }
                         TARDISBlockSetters.setBlock(world, flowerx, flowery, flowerz, Material.AIR);
                         break;
@@ -169,30 +166,30 @@ class TARDISDematerialisePreset implements Runnable {
                         int deadz;
                         int bushz;
                         switch (dd.getDirection()) {
-                            case NORTH:
+                            case NORTH -> {
                                 deadx = dd.getLocation().getBlockX() + 1;
                                 deadz = dd.getLocation().getBlockZ() + 1;
                                 bushx = dd.getLocation().getBlockX() - 1;
                                 bushz = dd.getLocation().getBlockZ();
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 deadx = dd.getLocation().getBlockX() + 1;
                                 deadz = dd.getLocation().getBlockZ() - 1;
                                 bushx = dd.getLocation().getBlockX();
                                 bushz = dd.getLocation().getBlockZ() + 1;
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 deadx = dd.getLocation().getBlockX() - 1;
                                 deadz = dd.getLocation().getBlockZ() - 1;
                                 bushx = dd.getLocation().getBlockX() + 1;
                                 bushz = dd.getLocation().getBlockZ();
-                                break;
-                            default:
+                            }
+                            default -> {
                                 deadx = dd.getLocation().getBlockX() - 1;
                                 deadz = dd.getLocation().getBlockZ() + 1;
                                 bushx = dd.getLocation().getBlockX();
                                 bushz = dd.getLocation().getBlockZ() - 1;
-                                break;
+                            }
                         }
                         TARDISBlockSetters.setBlock(world, deadx, bushy, deadz, Material.AIR);
                         TARDISBlockSetters.setBlock(world, bushx, bushy, bushz, Material.AIR);
@@ -214,16 +211,11 @@ class TARDISDematerialisePreset implements Runnable {
                         if (preset.equals(PRESET.JUNK_MODE)) {
                             sound = "junk_takeoff";
                         } else {
-                            switch (spaceTimeThrottle) {
-                                case WARP:
-                                case RAPID:
-                                case FASTER:
-                                    sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-                                    break;
-                                default: // NORMAL
-                                    sound = "tardis_takeoff";
-                                    break;
-                            }
+                            sound = switch (spaceTimeThrottle) {
+                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                                default -> // NORMAL
+                                    "tardis_takeoff";
+                            };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
@@ -245,42 +237,42 @@ class TARDISDematerialisePreset implements Runnable {
                 for (int n = 0; n < 9; n++) {
                     BlockData[] colData = data[n];
                     switch (n) {
-                        case 0:
+                        case 0 -> {
                             xx = minusx;
                             zz = minusz;
-                            break;
-                        case 1:
+                        }
+                        case 1 -> {
                             xx = x;
                             zz = minusz;
-                            break;
-                        case 2:
+                        }
+                        case 2 -> {
                             xx = plusx;
                             zz = minusz;
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             xx = plusx;
                             zz = z;
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             xx = plusx;
                             zz = plusz;
-                            break;
-                        case 5:
+                        }
+                        case 5 -> {
                             xx = x;
                             zz = plusz;
-                            break;
-                        case 6:
+                        }
+                        case 6 -> {
                             xx = minusx;
                             zz = plusz;
-                            break;
-                        case 7:
+                        }
+                        case 7 -> {
                             xx = minusx;
                             zz = z;
-                            break;
-                        default:
+                        }
+                        default -> {
                             xx = x;
                             zz = z;
-                            break;
+                        }
                     }
                     for (int yy = 0; yy < 4; yy++) {
                         boolean change = true;

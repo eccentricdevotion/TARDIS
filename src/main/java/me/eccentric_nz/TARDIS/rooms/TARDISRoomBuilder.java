@@ -91,20 +91,16 @@ public class TARDISRoomBuilder {
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int xzoffset = (dimensions.get("width").getAsInt() / 2);
             switch (d) {
-                case NORTH:
+                case NORTH -> {
                     l.setX(l.getX() - xzoffset);
                     l.setZ(l.getZ() - dimensions.get("width").getAsInt());
-                    break;
-                case WEST:
+                }
+                case WEST -> {
                     l.setX(l.getX() - dimensions.get("width").getAsInt());
                     l.setZ(l.getZ() - xzoffset);
-                    break;
-                case SOUTH:
-                    l.setX(l.getX() - xzoffset);
-                    break;
-                default:
-                    l.setZ(l.getZ() - xzoffset);
-                    break;
+                }
+                case SOUTH -> l.setX(l.getX() - xzoffset);
+                default -> l.setZ(l.getZ() - xzoffset);
             }
             // set y offset
             int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));

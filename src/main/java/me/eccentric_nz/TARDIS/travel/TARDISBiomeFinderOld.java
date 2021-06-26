@@ -68,7 +68,7 @@ public class TARDISBiomeFinderOld implements Runnable {
     public void run() {
         if (location == null) {
             switch (directions[i]) {
-                case 0:
+                case 0 -> {
                     // east
                     int east = startx + plus;
                     Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
@@ -81,8 +81,8 @@ public class TARDISBiomeFinderOld implements Runnable {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     // south
                     int south = startz + plus;
                     Biome chkbs = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
@@ -95,8 +95,8 @@ public class TARDISBiomeFinderOld implements Runnable {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     // west
                     int west = startx - plus;
                     Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
@@ -109,8 +109,8 @@ public class TARDISBiomeFinderOld implements Runnable {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     // north
                     int north = startz - plus;
                     Biome chkbn = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
@@ -123,7 +123,7 @@ public class TARDISBiomeFinderOld implements Runnable {
                         i++;
                         plus = 0;
                     }
-                    break;
+                }
             }
         }
     }

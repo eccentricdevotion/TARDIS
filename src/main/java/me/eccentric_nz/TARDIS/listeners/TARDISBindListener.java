@@ -186,18 +186,18 @@ public class TARDISBindListener implements Listener {
                                         HashMap<String, Object> wherec = new HashMap<>();
                                         HashMap<String, Object> set = new HashMap<>();
                                         switch (name) {
-                                            case "OFF":
+                                            case "OFF" -> {
                                                 set.put("adapti_on", 0);
                                                 set.put("chameleon_preset", "POLICE_BOX_BLUE");
-                                                break;
-                                            case "ADAPT":
+                                            }
+                                            case "ADAPT" -> {
                                                 set.put("adapti_on", 1);
                                                 set.put("chameleon_preset", "FACTORY");
-                                                break;
-                                            default: // preset
+                                            }
+                                            default -> { // preset
                                                 set.put("adapti_on", 0);
                                                 set.put("chameleon_preset", name);
-                                                break;
+                                            }
                                         }
                                         wherec.put("tardis_id", id);
                                         plugin.getQueryFactory().doUpdate("tardis", set, wherec);

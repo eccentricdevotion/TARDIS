@@ -198,24 +198,12 @@ public class TARDISSaveSignInventory {
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             switch (m) {
-                case 45:
-                    stack[m] = tool;
-                    break;
-                case 47:
-                    stack[m] = bucket;
-                    break;
-                case 49:
-                    stack[m] = own;
-                    break;
-                case 51:
-                    stack[m] = next;
-                    break;
-                case 53:
-                    stack[m] = map;
-                    break;
-                default:
-                    stack[m] = null;
-                    break;
+                case 45 -> stack[m] = tool;
+                case 47 -> stack[m] = bucket;
+                case 49 -> stack[m] = own;
+                case 51 -> stack[m] = next;
+                case 53 -> stack[m] = map;
+                default -> stack[m] = null;
             }
         }
         return stack;

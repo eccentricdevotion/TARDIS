@@ -532,9 +532,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPlaceholderExpansion(this).register();
             }
             if (!getConfig().getBoolean("conversions.restore_biomes")) {
-                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                    new TARDISBiomeConverter(this).convertBiomes();
-                }, 1200);
+                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new TARDISBiomeConverter(this).convertBiomes(), 1200);
                 getConfig().set("conversions.restore_biomes", true);
                 conversions++;
             }

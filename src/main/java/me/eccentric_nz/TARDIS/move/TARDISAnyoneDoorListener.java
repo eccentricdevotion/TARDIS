@@ -121,21 +121,12 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         }
                         COMPASS dd = rsd.getDoor_direction();
                         int doortype = rsd.getDoor_type();
-                        int end_doortype;
-                        switch (doortype) {
-                            case 0: // outside preset door
-                                end_doortype = 1;
-                                break;
-                            case 2: // outside backdoor
-                                end_doortype = 3;
-                                break;
-                            case 3: // inside backdoor
-                                end_doortype = 2;
-                                break;
-                            default: // 1, 4 TARDIS inside door, secondary inside door
-                                end_doortype = 0;
-                                break;
-                        }
+                        int end_doortype = switch (doortype) {
+                            case 0 -> 1; // outside preset door
+                            case 2 -> 3; // outside backdoor
+                            case 3 -> 2; // inside backdoor
+                            default -> 0; // 1, 4 TARDIS inside door, secondary inside door
+                        };
                         ItemStack stack = player.getInventory().getItemInMainHand();
                         Material material = stack.getType();
                         // get key material
@@ -378,22 +369,22 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 exitLoc.setZ(ez + 0.5);
                                             } else {
                                                 switch (d) {
-                                                    case NORTH:
+                                                    case NORTH -> {
                                                         exitLoc.setX(ex + 0.5);
                                                         exitLoc.setZ(ez + 2.5);
-                                                        break;
-                                                    case EAST:
+                                                    }
+                                                    case EAST -> {
                                                         exitLoc.setX(ex - 1.5);
                                                         exitLoc.setZ(ez + 0.5);
-                                                        break;
-                                                    case SOUTH:
+                                                    }
+                                                    case SOUTH -> {
                                                         exitLoc.setX(ex + 0.5);
                                                         exitLoc.setZ(ez - 1.5);
-                                                        break;
-                                                    case WEST:
+                                                    }
+                                                    case WEST -> {
                                                         exitLoc.setX(ex + 2.5);
                                                         exitLoc.setZ(ez + 0.5);
-                                                        break;
+                                                    }
                                                 }
                                             }
                                             // exit TARDIS!

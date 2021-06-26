@@ -118,8 +118,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
                     }
                     if (first.equals("maze")) {
-                        if (sender instanceof Player) {
-                            Player p = (Player) sender;
+                        if (sender instanceof Player p) {
                             Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
                             TARDISMazeGenerator generator = new TARDISMazeGenerator();
                             generator.makeMaze();

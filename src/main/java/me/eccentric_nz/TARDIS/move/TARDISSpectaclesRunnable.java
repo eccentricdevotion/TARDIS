@@ -75,18 +75,10 @@ public class TARDISSpectaclesRunnable implements Runnable {
 
     private Door calculateFacing(Door door, COMPASS compass) {
         switch (compass) {
-            case SOUTH:
-                door.setFacing(BlockFace.SOUTH);
-                break;
-            case WEST:
-                door.setFacing(BlockFace.WEST);
-                break;
-            case NORTH:
-                door.setFacing(BlockFace.NORTH);
-                break;
-            default:
-                door.setFacing(BlockFace.EAST);
-                break;
+            case SOUTH -> door.setFacing(BlockFace.SOUTH);
+            case WEST -> door.setFacing(BlockFace.WEST);
+            case NORTH -> door.setFacing(BlockFace.NORTH);
+            default -> door.setFacing(BlockFace.EAST);
         }
         return door;
     }

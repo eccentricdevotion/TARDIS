@@ -265,8 +265,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player p = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player p) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 return;
             }
@@ -285,8 +284,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreakHanging(HangingBreakByEntityEvent event) {
-        if (event.getRemover() instanceof Player) {
-            Player p = (Player) event.getRemover();
+        if (event.getRemover() instanceof Player p) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 return;
             }

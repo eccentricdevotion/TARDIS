@@ -64,15 +64,11 @@ public class TARDISPistonHarvesterListener implements Listener {
     }
 
     private BlockFace getOppositeDirection(BlockFace bf) {
-        switch (bf) {
-            case NORTH:
-                return BlockFace.SOUTH;
-            case EAST:
-                return BlockFace.WEST;
-            case SOUTH:
-                return BlockFace.NORTH;
-            default:
-                return BlockFace.EAST;
-        }
+        return switch (bf) {
+            case NORTH -> BlockFace.SOUTH;
+            case EAST -> BlockFace.WEST;
+            case SOUTH -> BlockFace.NORTH;
+            default -> BlockFace.EAST;
+        };
     }
 }

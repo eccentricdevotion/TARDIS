@@ -107,22 +107,22 @@ class TARDISHostileDispersal {
                 int flowery = (l.getBlockY() + 1);
                 int flowerz;
                 switch (d) {
-                    case NORTH:
+                    case NORTH -> {
                         flowerx = l.getBlockX();
                         flowerz = l.getBlockZ() + 1;
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         flowerx = l.getBlockX() + 1;
                         flowerz = l.getBlockZ();
-                        break;
-                    case SOUTH:
+                    }
+                    case SOUTH -> {
                         flowerx = l.getBlockX();
                         flowerz = l.getBlockZ() - 1;
-                        break;
-                    default:
+                    }
+                    default -> {
                         flowerx = l.getBlockX() - 1;
                         flowerz = l.getBlockZ();
-                        break;
+                    }
                 }
                 TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                 break;
@@ -163,7 +163,7 @@ class TARDISHostileDispersal {
                         }
                     }
                     if (!b.getType().isAir()) {
-                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
+                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 + 0.5) + 1));
                         // get the appropriate carpet colour
                         String stainedGlass = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType()).toString();
                         String colour = stainedGlass.replace("STAINED_GLASS", "CARPET");

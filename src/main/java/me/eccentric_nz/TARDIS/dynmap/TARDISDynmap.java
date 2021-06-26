@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
+import org.dynmap.markers.GenericMarker;
 import org.dynmap.markers.Marker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
@@ -211,9 +212,7 @@ public class TARDISDynmap {
             /*
              * Now, review old map - anything left is gone
              */
-            markers.values().forEach((oldm) -> {
-                oldm.deleteMarker();
-            });
+            markers.values().forEach(GenericMarker::deleteMarker);
             /*
              * And replace with new map
              */
@@ -254,14 +253,14 @@ public class TARDISDynmap {
         public Map<String, TARDISData> getMarkers() {
             HashMap<String, TARDISData> map = new HashMap<>();
             HashMap<String, Integer> tl = plugin.getTardisAPI().getTimelordMap();
-            tl.entrySet().forEach((lords) -> {
+            tl.forEach((key, value) -> {
                 TARDISData data;
                 try {
-                    data = plugin.getTardisAPI().getTARDISMapData(lords.getValue());
+                    data = plugin.getTardisAPI().getTARDISMapData(value);
                     if (data.getLocation() != null) {
-                        map.put(lords.getKey(), data);
+                        map.put(key, data);
                     }
-                } catch (Exception x) {
+                } catch (Exception ignored) {
                 }
             });
             return map;

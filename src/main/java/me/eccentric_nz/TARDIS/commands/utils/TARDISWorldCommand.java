@@ -162,15 +162,9 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     String name = args[1].toLowerCase(Locale.ROOT);
                     if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
                         switch (name) {
-                            case "gallifrey":
-                                new TARDISGallifrey(plugin).loadTimeLordWorld();
-                                break;
-                            case "siluria":
-                                new TARDISSiluria(plugin).loadSilurianUnderworld();
-                                break;
-                            default:
-                                new TARDISSkaro(plugin).loadDalekWorld();
-                                break;
+                            case "gallifrey" -> new TARDISGallifrey(plugin).loadTimeLordWorld();
+                            case "siluria" -> new TARDISSiluria(plugin).loadSilurianUnderworld();
+                            default -> new TARDISSkaro(plugin).loadDalekWorld();
                         }
                         Reader reader = new InputStreamReader(plugin.getResource("planets_template.yml"));
                         FileConfiguration pConfig = YamlConfiguration.loadConfiguration(reader);

@@ -80,8 +80,7 @@ class TARDISAbandonedCommand {
             return true;
         }
         Location l;
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
+        if (sender instanceof Player p) {
             l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
         } else {
             if (args.length < 8) {

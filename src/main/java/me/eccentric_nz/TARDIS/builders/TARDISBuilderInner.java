@@ -378,16 +378,12 @@ public class TARDISBuilderInner implements Runnable {
                     case ORANGE_WOOL:
                         if (wall_type == Material.ORANGE_WOOL) {
                             switch (use_clay) {
-                                case TERRACOTTA:
-                                    data = Material.ORANGE_TERRACOTTA.createBlockData();
-                                    break;
-                                case CONCRETE:
-                                    data = Material.ORANGE_CONCRETE.createBlockData();
-                                    break;
-                                default:
+                                case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
+                                case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
+                                default -> {
                                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                                     postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
-                                    break;
+                                }
                             }
                         } else {
                             data = wall_type.createBlockData();
@@ -396,17 +392,11 @@ public class TARDISBuilderInner implements Runnable {
                     case LIGHT_GRAY_WOOL:
                         if (!schm.getPermission().equals("eleventh")) {
                             if (floor_type == Material.LIGHT_GRAY_WOOL) {
-                                switch (use_clay) {
-                                    case TERRACOTTA:
-                                        data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
-                                        break;
-                                    case CONCRETE:
-                                        data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
-                                        break;
-                                    default:
-                                        data = Material.LIGHT_GRAY_WOOL.createBlockData();
-                                        break;
-                                }
+                                data = switch (use_clay) {
+                                    case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+                                    case CONCRETE -> Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                                    default -> Material.LIGHT_GRAY_WOOL.createBlockData();
+                                };
                             } else {
                                 data = floor_type.createBlockData();
                             }
@@ -423,16 +413,12 @@ public class TARDISBuilderInner implements Runnable {
                         break;
                     case BLUE_WOOL:
                         switch (use_clay) {
-                            case TERRACOTTA:
-                                data = Material.BLUE_TERRACOTTA.createBlockData();
-                                break;
-                            case CONCRETE:
-                                data = Material.BLUE_CONCRETE.createBlockData();
-                                break;
-                            default:
+                            case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
+                            case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
+                            default -> {
                                 data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                                 postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
-                                break;
+                            }
                         }
                         break;
                     default:
@@ -676,30 +662,30 @@ public class TARDISBuilderInner implements Runnable {
                     data = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) data;
                     switch (j) {
-                        case 2:
+                        case 2 -> {
                             directional.setFacing(BlockFace.WEST);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             directional.setFacing(BlockFace.NORTH);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             directional.setFacing(BlockFace.SOUTH);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
-                            break;
-                        default:
+                        }
+                        default -> {
                             directional.setFacing(BlockFace.EAST);
                             data = directional;
                             postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                             plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
-                            break;
+                        }
                     }
                     j++;
                 }

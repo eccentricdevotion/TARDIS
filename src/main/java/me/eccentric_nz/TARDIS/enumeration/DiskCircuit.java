@@ -87,17 +87,9 @@ public enum DiskCircuit {
     }
 
     public boolean isDisk() {
-        switch (this) {
-            case AREA:
-            case BIOME:
-            case BLANK:
-            case HANDLES:
-            case PLAYER:
-            case PRESET:
-            case SAVE:
-                return true;
-            default:
-                return false;
-        }
+        return switch (this) {
+            case AREA, BIOME, BLANK, HANDLES, PLAYER, PRESET, SAVE -> true;
+            default -> false;
+        };
     }
 }

@@ -107,21 +107,14 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
             // get GameMode from first argument
             if (args[0].length() <= 2) {
                 switch (args[0].toLowerCase(Locale.ENGLISH)) {
-                    case "s":
-                        gm = GameMode.SURVIVAL;
-                        break;
-                    case "c":
-                        gm = GameMode.CREATIVE;
-                        break;
-                    case "a":
-                        gm = GameMode.ADVENTURE;
-                        break;
-                    case "sp":
-                        gm = GameMode.SPECTATOR;
-                        break;
-                    default:
+                    case "s" -> gm = GameMode.SURVIVAL;
+                    case "c" -> gm = GameMode.CREATIVE;
+                    case "a" -> gm = GameMode.ADVENTURE;
+                    case "sp" -> gm = GameMode.SPECTATOR;
+                    default -> {
                         TARDISMessage.send(sender, "ARG_GAMEMODE");
                         return false;
+                    }
                 }
             } else {
                 try {

@@ -509,7 +509,7 @@ public class TARDISWorldGuardUtils {
         if (rm.hasRegion("TARDIS_" + owner)) {
             ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
             State state = region.getFlag(Flags.CHEST_ACCESS);
-            return state == null ? true : state.equals(State.ALLOW);
+            return state == null || state.equals(State.ALLOW);
         }
         return true;
     }

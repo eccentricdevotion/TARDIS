@@ -144,27 +144,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             String which = args[0].toLowerCase();
             switch (which) {
-                case "bowl-of-custard":
-                case "jelly-baby":
-                case "biome-storage-disk":
-                case "player-storage-disk":
-                case "preset-storage-disk":
-                case "save-storage-disk":
-                case "schematic-wand":
-                case "admin-upgrade":
-                case "bio-scanner-upgrade":
-                case "redstone-upgrade":
-                case "diamond-upgrade":
-                case "emerald-upgrade":
-                case "painter-upgrade":
-                case "ignite-upgrade":
-                case "pickup-arrows-upgrade":
-                case "knockback-upgrade":
+                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade" -> {
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
-                default:
+                }
+                default -> {
                     showShapedRecipe(player, recipeItems.get(which));
                     return true;
+                }
             }
         }
         return false;

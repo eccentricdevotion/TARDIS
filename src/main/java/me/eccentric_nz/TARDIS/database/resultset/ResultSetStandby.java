@@ -66,10 +66,8 @@ public class ResultSetStandby {
                         preset = PRESET.FACTORY;
                     }
                     switch (rs.getString("size")) {
-                        case "JUNK":
-                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
-                            break;
-                        case "ARCHIVE":
+                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                        case "ARCHIVE" -> {
                             HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", rs.getString("uuid"));
                             wherea.put("use", 1);
@@ -79,10 +77,8 @@ public class ResultSetStandby {
                                 lanterns = rsa.getArchive().isLanterns();
                             }
                             sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
-                            break;
-                        default:
-                            sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
-                            break;
+                        }
+                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

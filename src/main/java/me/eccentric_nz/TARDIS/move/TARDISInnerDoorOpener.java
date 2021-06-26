@@ -124,40 +124,29 @@ public class TARDISInnerDoorOpener {
                         indirection = tmp_direction;
                         // adjust for teleport
                         switch (indirection) {
-                            case NORTH:
+                            case NORTH ->
                                 // z -ve
                                 indoor.add(0.5d, 0.0d, -0.5d);
-                                break;
-                            case EAST:
+                            case EAST ->
                                 // x +ve
                                 indoor.add(1.5d, 0.0d, 0.5d);
-                                break;
-                            case SOUTH:
+                            case SOUTH ->
                                 // z +ve
                                 indoor.add(0.5d, 0.0d, 1.5d);
-                                break;
-                            case WEST:
+                            case WEST ->
                                 // x -ve
                                 indoor.add(-0.5d, 0.0d, 0.5d);
-                                break;
                         }
                     } else {
                         // outer door
                         exdirection = COMPASS.valueOf(map.get("door_direction"));
                         // adjust for teleport
                         switch (rsc.getDirection()) {
-                            case NORTH:
-                                exdoor.add(0.5d, 0.0d, 1.75d);
-                                break;
-                            case WEST:
-                                exdoor.add(1.75d, 0.0d, 0.5d);
-                                break;
-                            case SOUTH:
-                                exdoor.add(0.5d, 0.0d, -1.75d);
-                                break;
-                            default: // EAST
+                            case NORTH -> exdoor.add(0.5d, 0.0d, 1.75d);
+                            case WEST -> exdoor.add(1.75d, 0.0d, 0.5d);
+                            case SOUTH -> exdoor.add(0.5d, 0.0d, -1.75d);
+                            default -> // EAST
                                 exdoor.add(-1.75d, 0.0d, 0.5d);
-                                break;
                         }
                     }
                 }
@@ -175,9 +164,7 @@ public class TARDISInnerDoorOpener {
                     tp_out.setAbandoned(abandoned);
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
-                        uuids.forEach((u) -> {
-                            plugin.getTrackerKeeper().getMover().add(u);
-                        });
+                        uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
                     }
                     // locations
                     if (tardis != null && preset != null) {
@@ -195,15 +182,11 @@ public class TARDISInnerDoorOpener {
     }
 
     private BlockFace getOppositeFace(COMPASS d) {
-        switch (d) {
-            case SOUTH:
-                return BlockFace.NORTH;
-            case WEST:
-                return BlockFace.EAST;
-            case NORTH:
-                return BlockFace.SOUTH;
-            default:
-                return BlockFace.WEST;
-        }
+        return switch (d) {
+            case SOUTH -> BlockFace.NORTH;
+            case WEST -> BlockFace.EAST;
+            case NORTH -> BlockFace.SOUTH;
+            default -> BlockFace.WEST;
+        };
     }
 }

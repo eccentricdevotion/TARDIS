@@ -158,20 +158,14 @@ public enum RecipeItem {
     }
 
     public String toRecipeString() {
-        switch (this) {
-            case THREE_D_GLASSES:
-                return "3-D Glasses";
-            case BIO_SCANNER_CIRCUIT:
-                return "Bio-scanner Circuit";
-            case BIO_SCANNER_UPGRADE:
-                return "Bio-scanner Upgrade";
-            case BOWL_OF_CUSTARD:
-                return "Bowl of Custard";
-            case TARDIS_ARS_CIRCUIT:
-                return "TARDIS ARS Circuit";
-            default:
-                return TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
-        }
+        return switch (this) {
+            case THREE_D_GLASSES -> "3-D Glasses";
+            case BIO_SCANNER_CIRCUIT -> "Bio-scanner Circuit";
+            case BIO_SCANNER_UPGRADE -> "Bio-scanner Upgrade";
+            case BOWL_OF_CUSTARD -> "Bowl of Custard";
+            case TARDIS_ARS_CIRCUIT -> "TARDIS ARS Circuit";
+            default -> TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
+        };
     }
 
     public String toTabCompletionString() {

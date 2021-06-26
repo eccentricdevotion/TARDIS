@@ -64,7 +64,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 17:
+                    case 17 -> {
                         // back
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
@@ -74,8 +74,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         // return to Desktop Theme GUI
                         close(p);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton(), 2L);
-                        break;
-                    case 18:
+                    }
+                    case 18 -> {
                         // size
                         ItemStack iss = view.getItem(18);
                         ItemMeta ims = iss.getItemMeta();
@@ -91,18 +91,14 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             ims.setLore(Arrays.asList(t, b, ChatColor.AQUA + "Click to change"));
                             iss.setItemMeta(ims);
                         }
-                        break;
-                    case 19:
+                    }
+                    case 19 ->
                         // scan
                         scan(p, view);
-                        break;
-                    case 20:
+                    case 20 ->
                         // archive
                         archive(p, view);
-                        break;
-                    case 22:
-                    case 23:
-                    case 24:
+                    case 22, 23, 24 -> {
                         ItemStack template = view.getItem(slot);
                         if (template != null) {
                             UUID uuid = p.getUniqueId();
@@ -123,12 +119,11 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 close(p);
                             }
                         }
-                        break;
-                    case 26:
+                    }
+                    case 26 ->
                         // close
                         close(p);
-                        break;
-                    default:
+                    default -> {
                         // get Display name of selected archive
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
@@ -161,7 +156,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 close(p);
                             }
                         }
-                        break;
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

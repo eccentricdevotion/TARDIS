@@ -153,51 +153,39 @@ public class TARDISUpdateListener implements Listener {
                 return;
             }
             switch (updateable) {
-                case BACKDOOR:
-                case DOOR:
-                    new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
-                    break;
-                case GENERATOR:
-                    plugin.getQueryFactory().insertControl(id, 24, blockLocStr, secondary ? 1 : 0);
-                    break;
-                case DISPENSER:
-                    plugin.getQueryFactory().insertControl(id, 28, blockLocStr, secondary ? 1 : 0);
-                    break;
-                case TELEPATHIC:
+                case BACKDOOR, DOOR -> new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
+                case GENERATOR -> plugin.getQueryFactory().insertControl(id, 24, blockLocStr, secondary ? 1 : 0);
+                case DISPENSER -> plugin.getQueryFactory().insertControl(id, 28, blockLocStr, secondary ? 1 : 0);
+                case TELEPATHIC -> {
                     plugin.getTrackerKeeper().getTelepathicPlacements().remove(playerUUID);
                     plugin.getQueryFactory().insertControl(id, 23, blockLocStr, secondary ? 1 : 0);
                     Block detector = block;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TARDISConstants.DAYLIGHT), 3L);
-                    break;
-                case HANDBRAKE:
-                    plugin.getQueryFactory().insertControl(id, 0, blockLocStr, secondary ? 1 : 0);
-                    break;
-                case BEACON:
+                }
+                case HANDBRAKE -> plugin.getQueryFactory().insertControl(id, 0, blockLocStr, secondary ? 1 : 0);
+                case BEACON -> {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    break;
-                case FARM:
-                case STABLE:
-                case STALL:
-                case VILLAGE:
+                }
+                case FARM, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
-                    break;
-                case CREEPER:
+                }
+                case CREEPER -> {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                     set.put("creeper", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    break;
-                case EPS:
+                }
+                case EPS -> {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
                     set.put("eps", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    break;
-                case RAIL:
+                }
+                case RAIL -> {
                     set.put("rail", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    break;
-                case CHAMELEON:
+                }
+                case CHAMELEON -> {
                     plugin.getQueryFactory().insertControl(id, 31, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign cs = (Sign) block.getState();
@@ -206,8 +194,8 @@ public class TARDISUpdateListener implements Listener {
                     cs.setLine(2, "");
                     cs.setLine(3, tardis.getPreset().toString());
                     cs.update();
-                    break;
-                case KEYBOARD:
+                }
+                case KEYBOARD -> {
                     plugin.getQueryFactory().insertControl(id, 7, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ks = (Sign) block.getState();
@@ -216,8 +204,8 @@ public class TARDISUpdateListener implements Listener {
                         ks.setLine(i, "");
                     }
                     ks.update();
-                    break;
-                case SAVE_SIGN:
+                }
+                case SAVE_SIGN -> {
                     plugin.getQueryFactory().insertControl(id, 32, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ss = (Sign) block.getState();
@@ -226,8 +214,8 @@ public class TARDISUpdateListener implements Listener {
                     ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     ss.setLine(3, "");
                     ss.update();
-                    break;
-                case TERMINAL:
+                }
+                case TERMINAL -> {
                     plugin.getQueryFactory().insertControl(id, 9, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ts = (Sign) block.getState();
@@ -236,8 +224,8 @@ public class TARDISUpdateListener implements Listener {
                     ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     ts.setLine(3, "");
                     ts.update();
-                    break;
-                case CONTROL:
+                }
+                case CONTROL -> {
                     plugin.getQueryFactory().insertControl(id, 22, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign os = (Sign) block.getState();
@@ -246,11 +234,9 @@ public class TARDISUpdateListener implements Listener {
                     os.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     os.setLine(3, "");
                     os.update();
-                    break;
-                case ARS:
-                    new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
-                    break;
-                case BACK:
+                }
+                case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
+                case BACK -> {
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
                     HashMap<String, Object> wherecl = new HashMap<>();
@@ -268,8 +254,8 @@ public class TARDISUpdateListener implements Listener {
                         whereb.put("tardis_id", id);
                         plugin.getQueryFactory().doUpdate("back", setb, whereb);
                     }
-                    break;
-                case TEMPORAL:
+                }
+                case TEMPORAL -> {
                     plugin.getQueryFactory().insertControl(id, 11, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign es = (Sign) block.getState();
@@ -278,9 +264,8 @@ public class TARDISUpdateListener implements Listener {
                     es.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     es.setLine(3, "");
                     es.update();
-                    break;
-                case ADVANCED:
-                case STORAGE:
+                }
+                case ADVANCED, STORAGE -> {
                     plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(uuid, id);
@@ -288,8 +273,8 @@ public class TARDISUpdateListener implements Listener {
                     int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
                     BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
                     block.setBlockData(mushroom, true);
-                    break;
-                case INFO:
+                }
+                case INFO -> {
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign s = (Sign) block.getState();
@@ -298,11 +283,9 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(2, plugin.getSigns().getStringList("info").get(0));
                     s.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.update();
-                    break;
-                case ZERO:
-                    plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
-                    break;
-                case THROTTLE:
+                }
+                case ZERO -> plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
+                case THROTTLE -> {
                     plugin.getQueryFactory().insertControl(id, 39, blockLocStr, secondary ? 1 : 0);
                     Block rblock = block;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -311,17 +294,10 @@ public class TARDISUpdateListener implements Listener {
                         repeater.setDelay(4);
                         rblock.setBlockData(repeater);
                     }, 2L);
-                    break;
-                case SMELT:
-                case FUEL:
-                    new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
-                    break;
-                case VAULT:
-                    new TARDISVaultCommand(plugin).addDropChest(player, id, block);
-                    break;
-                default:
-                    plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
-                    break;
+                }
+                case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
+                case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
+                default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
                 TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
