@@ -277,8 +277,7 @@ public class TARDISBuilderInner implements Runnable {
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (pos != null) {
-                    String name = (schm.getPermission().equals("junk")) ? "junk" : player.getName();
-                    plugin.getWorldGuardUtils().addWGProtection(name, pos, world);
+                    plugin.getWorldGuardUtils().addWGProtection(player, pos, world, schm.getPermission().equals("junk"));
                 } else {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
                 }

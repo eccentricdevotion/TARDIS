@@ -286,7 +286,7 @@ public class TARDISStaticUtils {
         }
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
             return (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
         } else {
             return player.getName();
@@ -311,7 +311,7 @@ public class TARDISStaticUtils {
         return angleToEulerAngle(((double) degrees) / 360 * Math.PI);
     }
 
-    public static EulerAngle angleToEulerAngle(double radians) {
+    private static EulerAngle angleToEulerAngle(double radians) {
         double x = Math.cos(radians);
         double z = Math.sin(radians);
         return new EulerAngle(x, 0, z);
@@ -368,4 +368,34 @@ public class TARDISStaticUtils {
         NamespacedKey key = new NamespacedKey(split[0], split[1]);
         return TARDISBiome.of(key);
     }
+
+    /**
+     * Gets an offline player
+     *
+     * @param name the player's name to lookup
+     */
+    public static OfflinePlayer getOfflinePlayer(String name) {
+        for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Gets an offline player
+     *
+     * @param uuid the player's UUID to lookup
+     */
+    public static OfflinePlayer getOfflinePlayer(UUID uuid) {
+        for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+            if (player.getUniqueId().equals(uuid)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
 }

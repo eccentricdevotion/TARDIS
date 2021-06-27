@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -38,7 +39,7 @@ class TARDISPlayerCountCommand {
 
     boolean countPlayers(CommandSender sender, String[] args) {
         int max_count = plugin.getConfig().getInt("creation.count");
-        OfflinePlayer player = plugin.getServer().getOfflinePlayer(args[1]);
+        OfflinePlayer player = TARDISStaticUtils.getOfflinePlayer(args[1]);
         if (player == null) {
             TARDISMessage.send(sender, "PLAYER_NOT_VALID");
             return true;

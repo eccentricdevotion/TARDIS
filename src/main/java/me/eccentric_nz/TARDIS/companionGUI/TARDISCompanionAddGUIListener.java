@@ -78,7 +78,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                     // remove all members
                                     String[] data = tardis.getChunk().split(":");
-                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName());
+                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
                                     // set entry and exit flags to allow
                                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                                 }

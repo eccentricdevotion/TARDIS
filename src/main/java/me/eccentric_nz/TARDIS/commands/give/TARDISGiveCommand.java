@@ -25,10 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -181,7 +179,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (item.equals("artron")) {
-                    if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
+                    if (TARDISStaticUtils.getOfflinePlayer(args[0]) == null) {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
@@ -307,38 +305,34 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-        if (uuid != null) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
-                int id = tardis.getTardis_id();
-                int level = tardis.getArtron_level();
-                int set_level;
-                if (amount == 0) {
-                    set_level = 0;
-                } else {
-                    // always fill to full and no more
-                    if (level >= full && amount > 0) {
-                        TARDISMessage.send(sender, "GIVE_FULL", player);
-                        return true;
-                    }
-                    if ((full - level) < amount) {
-                        set_level = full;
-                    } else {
-                        set_level = level + amount;
-                    }
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
+            int level = tardis.getArtron_level();
+            int set_level;
+            if (amount == 0) {
+                set_level = 0;
+            } else {
+                // always fill to full and no more
+                if (level >= full && amount > 0) {
+                    TARDISMessage.send(sender, "GIVE_FULL", player);
+                    return true;
                 }
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("artron_level", set_level);
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", id);
-                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
+                if ((full - level) < amount) {
+                    set_level = full;
+                } else {
+                    set_level = level + amount;
+                }
             }
-        } else {
-            TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("artron_level", set_level);
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("tardis_id", id);
+            plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+            sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
         }
         return true;
     }
@@ -440,16 +434,17 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
-        if (plugin.getServer().getOfflinePlayer(player) == null) {
+        if (TARDISStaticUtils.getOfflinePlayer(player) == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
             return true;
         }
         // Look up this player's UUID
-        UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-        if (uuid != null) {
+        OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(player);
+        if (offlinePlayer != null) {
+            UUID uuid = offlinePlayer.getUniqueId();
             plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
         } else {
-            TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
+            TARDISMessage.send(sender, "PLAYER_NOT_FOUND");
         }
         return true;
     }
