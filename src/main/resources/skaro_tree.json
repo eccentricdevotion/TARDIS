@@ -4,7 +4,7 @@
     "decorator": {
       "type": "minecraft:count_multilayer",
       "config": {
-        "count": 10
+        "count": 1
       }
     },
     "feature": {
