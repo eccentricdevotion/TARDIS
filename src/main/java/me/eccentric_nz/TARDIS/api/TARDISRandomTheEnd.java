@@ -34,7 +34,6 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
     private final TARDIS plugin;
     private final Parameters param;
     private final List<World> worlds;
-    private Location dest;
 
     TARDISRandomTheEnd(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin);
@@ -84,9 +83,8 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                 count = 1;
             }
             if (count == 0) {
-                dest = (highest > 0) ? new Location(war.getWorld(), x, highest, z) : null;
+                return new Location(war.getWorld(), x, highest, z);
             }
-            return dest;
         }
         return null;
     }
