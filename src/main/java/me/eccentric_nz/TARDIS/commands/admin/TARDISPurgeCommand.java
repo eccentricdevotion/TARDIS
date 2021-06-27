@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -38,11 +40,14 @@ class TARDISPurgeCommand {
 
     boolean clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
-        UUID uuid;
+        UUID uuid = null;
         if (args[1].toLowerCase(Locale.ENGLISH).equals("junk")) {
             uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
         } else {
-            uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+            OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
+            if (offlinePlayer != null) {
+                uuid = offlinePlayer.getUniqueId();
+            }
         }
         if (uuid != null) {
             // get the player's TARDIS id

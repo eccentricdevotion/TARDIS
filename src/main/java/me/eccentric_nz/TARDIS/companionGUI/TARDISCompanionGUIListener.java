@@ -91,7 +91,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                         if (!comps.equalsIgnoreCase("everyone")) {
                                             String[] data = tardis.getChunk().split(":");
-                                            removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                                            removeFromRegion(data[0], tardis.getOwner(), UUID.fromString(u));
                                         }
                                     }
                                     close(player);
@@ -140,10 +140,10 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
         }
     }
 
-    private void removeFromRegion(String world, String owner, String player) {
+    private void removeFromRegion(String world, String owner, UUID uuid) {
         World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
-            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, player);
+            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, uuid);
         }
     }
 }

@@ -231,7 +231,8 @@ class TARDISBuildAbandoned implements Runnable {
             lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                plugin.getWorldGuardUtils().addWGProtection(UUID.randomUUID().toString(), pos, world);
+                UUID randomUUID = UUID.randomUUID();
+                plugin.getWorldGuardUtils().addWGProtection(randomUUID, randomUUID.toString(), pos, world);
             }
             if (ender != null) {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
