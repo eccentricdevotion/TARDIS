@@ -737,10 +737,14 @@ public class TARDISWorldGuardUtils {
                     region = rm.getRegion("TARDIS_" + sanitised);
                 }
             }
+
+            // always allow region entry if open door policy is true
+            State flag = (allow || plugin.getConfig().getBoolean("preferences.open_door_policy")) ? State.ALLOW : State.DENY;
+
             if (region != null) {
                 Map<Flag<?>, Object> flags = region.getFlags();
-                flags.put(Flags.ENTRY, (allow) ? State.ALLOW : State.DENY);
-                flags.put(Flags.EXIT, (allow) ? State.ALLOW : State.DENY);
+                flags.put(Flags.ENTRY, flag);
+                flags.put(Flags.EXIT, flag);
                 region.setFlags(flags);
                 try {
                     rm.save();
