@@ -24,7 +24,6 @@ import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 

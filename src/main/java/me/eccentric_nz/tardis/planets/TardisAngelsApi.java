@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.planets;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardisweepingangels.TardisWeepingAngelsPlugin;
 import me.eccentric_nz.tardisweepingangels.TardisWeepingAngelsApi;
+import me.eccentric_nz.tardisweepingangels.TardisWeepingAngelsPlugin;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;

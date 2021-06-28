@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.disguise.TardisDisguiser;
 import org.bukkit.entity.Player;
 

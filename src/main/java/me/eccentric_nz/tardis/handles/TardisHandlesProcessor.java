@@ -378,8 +378,9 @@ public class TardisHandlesProcessor {
                                                     // check location
                                                     while (true) {
                                                         assert bw != null;
-                                                        if (bw.getChunkAt(nsob).isLoaded())
+                                                        if (bw.getChunkAt(nsob).isLoaded()) {
                                                             break;
+                                                        }
                                                         bw.getChunkAt(nsob).load();
                                                     }
                                                     int[] start_loc = TardisTimeTravel.getStartLocation(nsob, direction);

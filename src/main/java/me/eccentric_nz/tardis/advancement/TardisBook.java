@@ -48,9 +48,9 @@ public class TardisBook {
      * Read text from a file and write it to a book. The book is then placed in the player's inventory.
      *
      * @param bookTitle The name of the book
-     * @param author       Who wrote the book
-     * @param name         The name of the text file
-     * @param player            The player who will receive the book
+     * @param author    Who wrote the book
+     * @param name      The name of the text file
+     * @param player    The player who will receive the book
      */
     public void writeBook(String bookTitle, String author, String name, Player player) {
         // read the file

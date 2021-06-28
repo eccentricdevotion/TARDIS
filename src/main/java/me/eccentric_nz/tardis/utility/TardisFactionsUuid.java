@@ -36,7 +36,7 @@ class TardisFactionsUuid {
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
      * player doesn't belong to.
      *
-     * @param player a player
+     * @param player   a player
      * @param location the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
