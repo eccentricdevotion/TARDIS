@@ -24,7 +24,6 @@ import java.net.URLEncoder;
 public final class Translate extends YandexTranslatorAPI {
 
     private static final String SERVICE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
-    private static final String TRANSLATION_LABEL = "text";
 
     //prevent instantiation
     private Translate() {
@@ -43,7 +42,7 @@ public final class Translate extends YandexTranslatorAPI {
         validateServiceState(text);
         String params = PARAM_API_KEY + URLEncoder.encode(apiKey, ENCODING) + PARAM_LANG_PAIR + URLEncoder.encode(from.toString(), ENCODING) + URLEncoder.encode("-", ENCODING) + URLEncoder.encode(to.toString(), ENCODING) + PARAM_TEXT + URLEncoder.encode(text, ENCODING);
         URL url = new URL(SERVICE_URL + params);
-        return retrievePropArrString(url, TRANSLATION_LABEL).trim();
+        return retrievePropArrString(url).trim();
     }
 
     private static void validateServiceState(String text) throws Exception {

@@ -107,20 +107,19 @@ public abstract class YandexTranslatorAPI {
      * Forms a request, sends it using the GET method and returns the contents of the array of strings with the given
      * label, with multiple strings concatenated.
      *
-     * @param url             a uniform resource locator
-     * @param jsonValProperty a JSON string
+     * @param url a uniform resource locator
      * @return a string of concatenated values
      * @throws java.lang.Exception a generic exception
      */
-    static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
+    static String retrievePropArrString(URL url) throws Exception {
         String response = retrieveResponse(url);
-        return jsonObjValToStringArr(response, jsonValProperty);
+        return jsonObjValToStringArr(response);
     }
 
-    // Helper method to parse a JsonObject containing an array of Strings with the given label.
-    private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) {
+    // Helper method to parse a JsonObject containing an array of Strings with the label "text".
+    private static String jsonObjValToStringArr(String inputString) {
         JsonObject jsonObj = new JsonParser().parse(inputString).getAsJsonObject();
-        JsonArray jsonArr = jsonObj.get(subObjPropertyName).getAsJsonArray();
+        JsonArray jsonArr = jsonObj.get("text").getAsJsonArray();
         return jsonArr.getAsString();
     }
 
