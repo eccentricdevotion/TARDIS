@@ -111,10 +111,8 @@ class TARDISRemoveCompanionCommand {
                         if (w != null) {
                             if (args[1].equals("all")) {
                                 plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner, player.getUniqueId());
-                                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                                    // set entry and exit flags to deny
-                                    plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
-                                }
+                                // set entry and exit flags to deny
+                                plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
                             }
                         }
                     }
