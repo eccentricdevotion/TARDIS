@@ -262,14 +262,6 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.apache.commons.commons-compress</pattern>
-                                    <shadedPattern>me.eccentric_nz.tardis.lib.commons-compress</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.rauschig.jarchivelib</pattern>
-                                    <shadedPattern>me.eccentric_nz.tardis.lib.jarchivelib</shadedPattern>
-                                </relocation>
-                                <relocation>
                                     <pattern>io.papermc.lib</pattern>
                                     <shadedPattern>me.eccentric_nz.tardis.lib.paperlib</shadedPattern>
                                 </relocation>
@@ -306,20 +298,6 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>3.3.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.rauschig</groupId>
-            <artifactId>jarchivelib</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.20</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
