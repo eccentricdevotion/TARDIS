@@ -270,7 +270,7 @@ public class TardisSonicGeneratorMenuListener extends TardisMenuListener impleme
     private void generate(Player p, ItemStack sonic, int cost) {
         // check they have enough Artron energy
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-        if (rs.fromUUID(p.getUniqueId().toString())) {
+        if (rs.fromUuid(p.getUniqueId().toString())) {
             int level = rs.getArtronLevel();
             if (cost < level) {
                 ItemStack is = sonic.clone();

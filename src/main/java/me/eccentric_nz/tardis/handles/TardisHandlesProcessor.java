@@ -409,9 +409,9 @@ public class TardisHandlesProcessor {
                                                         TardisMessage.handlesSend(player, "NOT_ONLINE");
                                                         continue;
                                                     }
-                                                    UUID toUUID = to.getUniqueId();
+                                                    UUID toUuid = to.getUniqueId();
                                                     // check the to player's DND status
-                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
+                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUuid.toString());
                                                     if (rspp.resultSet() && rspp.isDndOn()) {
                                                         TardisMessage.handlesSend(player, "DND", first);
                                                         continue;
@@ -610,7 +610,7 @@ public class TardisHandlesProcessor {
                             level = getNumber(thb, i);
                             // get the current Artron level
                             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-                            if (rs.fromUUID(player.getUniqueId().toString())) {
+                            if (rs.fromUuid(player.getUniqueId().toString())) {
                                 assert comparison != null;
                                 process = switch (comparison) {
                                     case LESS_THAN -> (level < rs.getArtronLevel());

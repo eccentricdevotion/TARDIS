@@ -142,8 +142,8 @@ public class TardisHandbrakeListener implements Listener {
                         if (preset.equals(Preset.JUNK)) {
                             return;
                         }
-                        UUID ownerUUID = tardis.getUuid();
-                        if ((tardis.isIsoOn() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TardisPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                        UUID ownerUuid = tardis.getUuid();
+                        if ((tardis.isIsoOn() && !uuid.equals(ownerUuid) && event.useInteractedBlock().equals(Event.Result.DENY) && !TardisPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
                             TardisMessage.send(player, "ISO_HANDS_OFF");
                             return;
@@ -223,8 +223,8 @@ public class TardisHandbrakeListener implements Listener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                                        if (!uuid.equals(ownerUUID)) {
-                                            Player ptl = plugin.getServer().getPlayer(ownerUUID);
+                                        if (!uuid.equals(ownerUuid)) {
+                                            Player ptl = plugin.getServer().getPlayer(ownerUuid);
                                             if (ptl != null) {
                                                 new TardisArtronIndicator(plugin).showArtronLevel(ptl, id, Math.abs(amount));
                                             }

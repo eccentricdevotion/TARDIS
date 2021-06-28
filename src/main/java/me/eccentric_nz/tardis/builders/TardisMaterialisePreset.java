@@ -154,8 +154,8 @@ class TardisMaterialisePreset implements Runnable {
                 }
                 // rescue player?
                 if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
-                    UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
-                    Player saved = plugin.getServer().getPlayer(playerUUID);
+                    UUID playerUuid = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
+                    Player saved = plugin.getServer().getPlayer(playerUuid);
                     if (saved != null) {
                         TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
                         Location l = idl.getL();
@@ -164,7 +164,7 @@ class TardisMaterialisePreset implements Runnable {
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisId());
-                        set.put("uuid", playerUUID.toString());
+                        set.put("uuid", playerUuid.toString());
                         plugin.getQueryFactory().doInsert("travellers", set);
                     }
                     plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());

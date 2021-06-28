@@ -107,7 +107,7 @@ public class TardisSonicGeneratorListener implements Listener {
     private void generate(Player p, Location location, Sonic s) {
         // check they have enough Artron energy
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-        if (rs.fromUUID(p.getUniqueId().toString())) {
+        if (rs.fromUuid(p.getUniqueId().toString())) {
             double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
             int cost = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
             int level = rs.getArtronLevel();

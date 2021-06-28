@@ -42,7 +42,7 @@ public class TardisEntityTracker {
 
     public void addNpcs(Location exterior, Location interior, UUID uuid) {
         List<Entity> ents = TardisScanner.getNearbyEntities(exterior, 6);
-        List<UUID> npcids = new ArrayList<>();
+        List<UUID> npcUuids = new ArrayList<>();
         for (Entity e : ents) {
             if (e instanceof LivingEntity) {
                 Location location = e.getLocation();
@@ -59,7 +59,7 @@ public class TardisEntityTracker {
                 // create NPC
                 plugin.setTardisSpawn(true);
                 ArmorStand stand = (ArmorStand) Objects.requireNonNull(interior.getWorld()).spawnEntity(l, EntityType.ARMOR_STAND);
-                npcids.add(stand.getUniqueId());
+                npcUuids.add(stand.getUniqueId());
                 Object[] options = null;
                 switch (e.getType()) {
                     case CAT:
@@ -139,8 +139,8 @@ public class TardisEntityTracker {
                 TardisArmorStandDisguiser.disguiseArmourStand(stand, e.getType(), options);
             }
         }
-        if (npcids.size() > 0) {
-            plugin.getTrackerKeeper().getRenderedNpcs().put(uuid, npcids);
+        if (npcUuids.size() > 0) {
+            plugin.getTrackerKeeper().getRenderedNpcs().put(uuid, npcUuids);
         }
     }
 

@@ -61,8 +61,8 @@ public class TardisCompanionAddInventory {
             int i = 0;
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (i < 45) {
-                    UUID puid = p.getUniqueId();
-                    if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
+                    UUID playerUuid = p.getUniqueId();
+                    if (playerUuid != uuid && !comps.contains(playerUuid.toString()) && VanishChecker.canSee(player, p)) {
                         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
                         assert skull != null;

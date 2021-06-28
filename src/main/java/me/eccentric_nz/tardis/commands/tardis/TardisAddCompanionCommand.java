@@ -92,15 +92,15 @@ class TardisAddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+                    UUID olUuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
                     tid.put("tardis_id", id);
                     if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
                         // add to the list
-                        String newList = comps + ":" + oluuid;
+                        String newList = comps + ":" + olUuid;
                         set.put("companions", newList);
                     } else {
                         // make a list
-                        set.put("companions", oluuid.toString());
+                        set.put("companions", olUuid.toString());
                     }
                     // are we doing an achievement?
                     if (plugin.getAdvancementConfig().getBoolean("friends.enabled")) {

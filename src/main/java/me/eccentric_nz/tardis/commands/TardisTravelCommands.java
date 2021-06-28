@@ -417,14 +417,14 @@ public class TardisTravelCommands implements CommandExecutor {
                             return true;
                         }
                         // ask if we can travel to this player
-                        UUID requestedUUID = requested.getUniqueId();
+                        UUID requestedUuid = requested.getUniqueId();
                         TardisMessage.send(requested, "REQUEST_TRAVEL", player.getName(), ChatColor.AQUA + "tardis request accept" + ChatColor.RESET);
-                        plugin.getTrackerKeeper().getChat().put(requestedUUID, player.getUniqueId());
+                        plugin.getTrackerKeeper().getChat().put(requestedUuid, player.getUniqueId());
                         Player p = player;
                         String to = args[0];
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
-                                plugin.getTrackerKeeper().getChat().remove(requestedUUID);
+                            if (plugin.getTrackerKeeper().getChat().containsKey(requestedUuid)) {
+                                plugin.getTrackerKeeper().getChat().remove(requestedUuid);
                                 TardisMessage.send(p, "REQUEST_NO_RESPONSE", to);
                             }
                         }, 1200L);

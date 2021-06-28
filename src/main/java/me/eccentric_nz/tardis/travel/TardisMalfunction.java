@@ -187,14 +187,14 @@ public class TardisMalfunction {
                     HashMap<String, Object> wherev = new HashMap<>();
                     wherev.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
-                    List<UUID> playerUUIDs;
+                    List<UUID> playerUuids;
                     if (rst.resultSet()) {
-                        playerUUIDs = rst.getData();
+                        playerUuids = rst.getData();
                     } else {
-                        playerUUIDs = new ArrayList<>();
-                        playerUUIDs.add(p.getUniqueId());
+                        playerUuids = new ArrayList<>();
+                        playerUuids.add(p.getUniqueId());
                     }
-                    TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+                    TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, message, p, playerUuids, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tardisEpsRunnable, 220L);
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;

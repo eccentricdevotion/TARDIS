@@ -121,7 +121,7 @@ public class TardisJoinListener implements Listener {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisResourcePackChanger(plugin).changeResourcePack(player, rsp.getTextureIn()), 50L);
                     }
                 }
             }

@@ -66,7 +66,7 @@ public class ResultSetTardisAbandoned {
      * @param uuid the Time Lord uuid to check
      * @return true if the tardis is not yet abandoned
      */
-    public boolean fromUUID(String uuid) {
+    public boolean fromUuid(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT tardis_id, artron_level, size, chameleon_preset, handbrake_on, hidden, tardis_init, powered_on, lights_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";

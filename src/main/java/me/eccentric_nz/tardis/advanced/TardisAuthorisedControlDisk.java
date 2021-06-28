@@ -154,15 +154,15 @@ public class TardisAuthorisedControlDisk {
                 HashMap<String, Object> whereVortex = new HashMap<>();
                 whereVortex.put("tardis_id", id);
                 ResultSetTravellers resultSetTravellers = new ResultSetTravellers(plugin, whereVortex, true);
-                List<UUID> playerUUIDs;
+                List<UUID> playerUuids;
                 if (resultSetTravellers.resultSet()) {
-                    playerUUIDs = resultSetTravellers.getData();
+                    playerUuids = resultSetTravellers.getData();
                 } else {
-                    playerUUIDs = new ArrayList<>();
-                    playerUUIDs.add(player.getUniqueId());
+                    playerUuids = new ArrayList<>();
+                    playerUuids.add(player.getUniqueId());
                 }
                 String message = "The TARDIS has detected an authorised control disk, valid for one journey only. Travelling to the programmed location.";
-                TardisEpsRunnable EpsRunnable = new TardisEpsRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
+                TardisEpsRunnable EpsRunnable = new TardisEpsRunnable(plugin, message, player, playerUuids, id, eps, creeper);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EpsRunnable, 20L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // dematerialise

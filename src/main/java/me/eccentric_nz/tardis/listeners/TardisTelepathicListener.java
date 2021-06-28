@@ -73,8 +73,8 @@ public class TardisTelepathicListener implements Listener {
             wheret.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (rs.resultSet()) {
-                UUID o_uuid = rs.getTardis().getUuid();
-                String owner = o_uuid.toString();
+                UUID oUuid = rs.getTardis().getUuid();
+                String owner = oUuid.toString();
                 // get Time Lord player prefs
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner);
                 if (rsp.resultSet()) {
@@ -82,7 +82,7 @@ public class TardisTelepathicListener implements Listener {
                     UUID uuid = player.getUniqueId();
                     if (rsp.isTelepathyOn()) {
                         // track player
-                        plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
+                        plugin.getTrackerKeeper().getTelepaths().put(uuid, oUuid);
                         TardisMessage.send(player, "TELEPATHIC_COMMAND");
                     } else {
                         TardisMessage.send(player, "TELEPATHIC_OFF");

@@ -78,8 +78,8 @@ class TardisUpdateCommand {
                 return true;
             }
             HashMap<String, Object> where = new HashMap<>();
-            UUID playerUUID = player.getUniqueId();
-            String uuid = (TardisSudoTracker.SUDOERS.containsKey(playerUUID)) ? TardisSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+            UUID playerUuid = player.getUniqueId();
+            String uuid = (TardisSudoTracker.SUDOERS.containsKey(playerUuid)) ? TardisSudoTracker.SUDOERS.get(playerUuid).toString() : playerUuid.toString();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
@@ -144,7 +144,7 @@ class TardisUpdateCommand {
                     }
                     return true;
                 }
-                plugin.getTrackerKeeper().getPlayers().put(playerUUID, tardis_block);
+                plugin.getTrackerKeeper().getPlayers().put(playerUuid, tardis_block);
                 TardisMessage.send(player, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
                     TardisMessage.send(player, "HOOK_REMIND");

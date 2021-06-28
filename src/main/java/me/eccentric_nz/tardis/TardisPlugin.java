@@ -958,7 +958,7 @@ public class TardisPlugin extends JavaPlugin {
 
     /**
      * Gets the server default resource pack. Will use the Minecraft default pack if none is specified. Until
-     * Minecraft/Bukkit lets us set the RP back to Default, we'll have to host it on DropBox
+     * Minecraft/Bukkit lets us set the resource pack back to Default, we'll have to host it on DropBox
      *
      * @return The server specified texture pack.
      */

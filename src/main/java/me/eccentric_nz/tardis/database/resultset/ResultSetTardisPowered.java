@@ -57,7 +57,7 @@ public class ResultSetTardisPowered {
      * @param uuid the Time Lord uuid to check
      * @return true or false depending on whether the tardis is powered on
      */
-    public boolean fromUUID(String uuid) {
+    public boolean fromUuid(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT powered_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";

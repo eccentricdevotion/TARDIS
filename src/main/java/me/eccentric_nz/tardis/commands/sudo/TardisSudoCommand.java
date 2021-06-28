@@ -110,7 +110,7 @@ public class TardisSudoCommand extends TardisCompleter implements CommandExecuto
                                 }
                                 // get TARDIS console size
                                 ResultSetTardisConsole rstc = new ResultSetTardisConsole(plugin);
-                                if (rstc.fromUUID(uuid.toString())) {
+                                if (rstc.fromUuid(uuid.toString())) {
                                     Schematic schm = rstc.getSchematic();
                                     String controlBlock = schm.getSeedMaterial().toString();
                                     if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {

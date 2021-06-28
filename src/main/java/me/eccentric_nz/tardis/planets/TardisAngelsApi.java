@@ -42,6 +42,6 @@ public class TardisAngelsApi {
     }
 
     public static boolean isDalek(Skeleton skeleton) {
-        return skeleton.getPersistentDataContainer().has(TardisWeepingAngelsPlugin.DALEK, PersistentDataType.INTEGER);
+        return skeleton.getPersistentDataContainer().has(TardisWeepingAngelsPlugin.dalek, PersistentDataType.INTEGER);
     }
 }

@@ -201,7 +201,7 @@ public class TardisAbandonCommand {
                 }
                 // abandon TARDIS
                 ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                if (!rs.fromUuid(player.getUniqueId().toString())) {
                     TardisMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {

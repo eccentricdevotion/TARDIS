@@ -65,7 +65,7 @@ public class TardisMinecartListener implements Listener {
             Material material = block.getType();
             if (Tag.DOORS.isTagged(material) || Tag.FENCES.isTagged(material)) {
                 String[] data = null;
-                UUID playerUUID = null;
+                UUID playerUuid = null;
                 int id = 0;
                 CardinalDirection d = CardinalDirection.SOUTH;
                 Location block_loc = block.getLocation();
@@ -100,7 +100,7 @@ public class TardisMinecartListener implements Listener {
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
                                 Tardis tardis = rs.getTardis();
                                 data = tardis.getRail().split(":");
-                                playerUUID = tardis.getUuid();
+                                playerUuid = tardis.getUuid();
                                 plugin.getTrackerKeeper().getMinecart().add(id);
                             }
                         }
@@ -117,7 +117,7 @@ public class TardisMinecartListener implements Listener {
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                         if (rsp.resultSet()) {
                             Tardis tardis = rsp.getTardis();
-                            playerUUID = tardis.getUuid();
+                            playerUuid = tardis.getUuid();
                             id = tardis.getTardisId();
                             HashMap<String, Object> whereinner = new HashMap<>();
                             whereinner.put("tardis_id", id);
@@ -147,8 +147,8 @@ public class TardisMinecartListener implements Listener {
                         default -> false;
                     };
                     if (shouldPrevent) {
-                        if (playerUUID != null && Objects.requireNonNull(plugin.getServer().getPlayer(playerUUID)).isOnline()) {
-                            TardisMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
+                        if (playerUuid != null && Objects.requireNonNull(plugin.getServer().getPlayer(playerUuid)).isOnline()) {
+                            TardisMessage.send(plugin.getServer().getPlayer(playerUuid), "WORLD_NO_CART", bw, data[0]);
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {

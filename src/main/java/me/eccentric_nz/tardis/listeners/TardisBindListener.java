@@ -117,7 +117,7 @@ public class TardisBindListener implements Listener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            UUID ownerUUID = tardis.getUuid();
+                            UUID ownerUuid = tardis.getUuid();
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
                             whereb.put("location", l);
@@ -127,7 +127,7 @@ public class TardisBindListener implements Listener {
                                     TardisMessage.send(player, "POWER_DOWN");
                                     return;
                                 }
-                                if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+                                if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUuid) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
                                     TardisMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }

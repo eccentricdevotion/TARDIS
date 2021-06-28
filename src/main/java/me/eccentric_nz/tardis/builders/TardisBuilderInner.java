@@ -90,7 +90,7 @@ public class TardisBuilderInner implements Runnable {
     private Location wg2;
     private TardisTipsData pos;
     private List<Chunk> chunkList;
-    private String playerUUID;
+    private String playerUuid;
     private boolean running = false;
     private Location ender = null;
     private UseClay use_clay;
@@ -156,7 +156,7 @@ public class TardisBuilderInner implements Runnable {
             w = dimensions.get("width").getAsInt();
             d = dimensions.get("length").getAsInt() - 1;
             div = (h + 1.0d) * w * (d + 1.0d);
-            playerUUID = player.getUniqueId().toString();
+            playerUuid = player.getUniqueId().toString();
 
             // calculate startx, starty, startz
             if (tips) { // default world - use TIPS
@@ -332,13 +332,13 @@ public class TardisBuilderInner implements Runnable {
                 if (TardisPermission.hasPermission(player, "tardis.kit.create")) {
                     // check if they have the tardis kit
                     HashMap<String, Object> wherek = new HashMap<>();
-                    wherek.put("uuid", playerUUID);
+                    wherek.put("uuid", playerUuid);
                     wherek.put("name", "createkit");
                     ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, wherek, false);
                     if (!rsa.resultSet()) {
                         //add a record
                         HashMap<String, Object> setk = new HashMap<>();
-                        setk.put("uuid", playerUUID);
+                        setk.put("uuid", playerUuid);
                         setk.put("name", "createkit");
                         plugin.getQueryFactory().doInsert("achievements", setk);
                         // give the join kit
@@ -480,7 +480,7 @@ public class TardisBuilderInner implements Runnable {
                 String advanced = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerUUID, dbID);
+                plugin.getUtils().updateStorageId(playerUuid, dbID);
                 // set block data to correct MUSHROOM_STEM
                 data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
             }
@@ -550,7 +550,7 @@ public class TardisBuilderInner implements Runnable {
                 JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
                 HashMap<String, Object> seta = new HashMap<>();
                 seta.put("tardis_id", dbID);
-                seta.put("uuid", playerUUID);
+                seta.put("uuid", playerUuid);
                 seta.put("json", json.toString());
                 plugin.getQueryFactory().doInsert("ars", seta);
             }

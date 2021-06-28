@@ -61,7 +61,7 @@ public class ResultSetTardisSize {
      * @param uuid the Time Lord uuid to check
      * @return the size of the console
      */
-    public boolean fromUUID(String uuid) {
+    public boolean fromUuid(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT size FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";

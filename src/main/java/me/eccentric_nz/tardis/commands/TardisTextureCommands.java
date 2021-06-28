@@ -73,12 +73,12 @@ public class TardisTextureCommands implements CommandExecutor {
             }
             if (TardisPermission.hasPermission(player, "tardis.texture")) {
                 // get the players preferences
-                String playerUUID = player.getUniqueId().toString();
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID);
+                String playerUuid = player.getUniqueId().toString();
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
                 HashMap<String, Object> set = new HashMap<>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {
-                    set.put("uuid", playerUUID);
+                    set.put("uuid", playerUuid);
                     plugin.getQueryFactory().doInsert("player_prefs", set);
                 }
                 HashMap<String, Object> upd = new HashMap<>();
@@ -111,7 +111,7 @@ public class TardisTextureCommands implements CommandExecutor {
                 }
                 if (upd.size() > 0) {
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", playerUUID);
+                    where.put("uuid", playerUuid);
                     plugin.getQueryFactory().doUpdate("player_prefs", upd, where);
                     TardisMessage.send(player, "PREF_TEXTURE");
                     return true;

@@ -158,7 +158,7 @@ public class TardisControlListener implements Listener {
                         }
                         int level = tardis.getArtronLevel();
                         boolean hb = tardis.isHandbrakeOn();
-                        UUID ownerUUID = tardis.getUuid();
+                        UUID ownerUuid = tardis.getUuid();
                         TardisCircuitChecker tcc = null;
                         if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                             tcc = new TardisCircuitChecker(plugin, id);
@@ -266,18 +266,18 @@ public class TardisControlListener implements Listener {
                                     new TardisInfoMenuButton(plugin, player).clickButton();
                                     break;
                                 case 14: // Disk Storage
-                                    UUID playerUUID = player.getUniqueId();
-                                    if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUUID)) {
+                                    UUID playerUuid = player.getUniqueId();
+                                    if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUuid)) {
                                         return;
                                     }
                                     // only the time lord of this tardis
-                                    if (!ownerUUID.equals(playerUUID)) {
+                                    if (!ownerUuid.equals(playerUuid)) {
                                         TardisMessage.send(player, "NOT_OWNER");
                                         return;
                                     }
                                     // do they have a storage record?
                                     HashMap<String, Object> wherestore = new HashMap<>();
-                                    wherestore.put("uuid", playerUUID);
+                                    wherestore.put("uuid", playerUuid);
                                     ResultSetDiskStorage rsstore = new ResultSetDiskStorage(plugin, wherestore);
                                     ItemStack[] stack = new ItemStack[54];
                                     if (rsstore.resultSet()) {
@@ -450,7 +450,7 @@ public class TardisControlListener implements Listener {
                                 case 30:
                                     // flight mode button
                                     // get current flight mode
-                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
+                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUuid.toString());
                                     if (rsp.resultSet()) {
                                         int mode = rsp.getFlightMode() + 1;
                                         if (mode > 3) {

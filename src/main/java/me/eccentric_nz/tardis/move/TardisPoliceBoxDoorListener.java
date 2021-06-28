@@ -68,7 +68,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                 if (dim.hasCustomModelData()) {
                     int cmd = dim.getCustomModelData();
                     if ((cmd == 1001 || cmd == 1002) && TardisPermission.hasPermission(player, "tardis.enter")) {
-                        UUID playerUUID = player.getUniqueId();
+                        UUID playerUuid = player.getUniqueId();
                         // get tardis from location
                         Location location = frame.getLocation();
                         String doorloc = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
@@ -100,7 +100,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                 }
                                 // must be Time Lord or companion
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-                                if (rsc.getCompanions().contains(playerUUID) || tardis.isAbandoned()) {
+                                if (rsc.getCompanions().contains(playerUuid) || tardis.isAbandoned()) {
                                     if (!rsd.isLocked()) {
                                         if (open) {
                                             // get key material
@@ -132,8 +132,8 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                     World playerWorld = location.getWorld();
                                                     // check for entities near the police box
                                                     TardisPetsAndFollowers petsAndFollowers = null;
-                                                    if (plugin.getConfig().getBoolean("allow.mob_farming") && TardisPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
-                                                        plugin.getTrackerKeeper().getFarming().add(playerUUID);
+                                                    if (plugin.getConfig().getBoolean("allow.mob_farming") && TardisPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUuid) && willFarm) {
+                                                        plugin.getTrackerKeeper().getFarming().add(playerUuid);
                                                         TardisFarmer tf = new TardisFarmer(plugin);
                                                         petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
                                                     }
@@ -161,7 +161,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                     }
                                                     if (plugin.getConfig().getBoolean("allow.tp_switch") && rspref.isTextureOn()) {
                                                         if (!rspref.getTextureIn().isEmpty()) {
-                                                            new TardisResourcePackChanger(plugin).changeRP(player, rspref.getTextureIn());
+                                                            new TardisResourcePackChanger(plugin).changeResourcePack(player, rspref.getTextureIn());
                                                         }
                                                     }
                                                     if (canPowerUp && !tardis.isPowered() && !tardis.isAbandoned()) {
@@ -170,10 +170,10 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                     }
                                                     // put player into travellers table
                                                     // remove them first as they may have exited incorrectly and we only want them listed once
-                                                    removeTraveller(playerUUID);
+                                                    removeTraveller(playerUuid);
                                                     HashMap<String, Object> set = new HashMap<>();
                                                     set.put("tardis_id", id);
-                                                    set.put("uuid", playerUUID.toString());
+                                                    set.put("uuid", playerUuid.toString());
                                                     plugin.getQueryFactory().doSyncInsert("travellers", set);
                                                 } else {
                                                     // create portal & open inner door
@@ -196,7 +196,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                             frame.setItem(dye, false);
                                             playDoorSound(false, location);
                                         }
-                                    } else if (tardis.getUuid() != playerUUID) {
+                                    } else if (tardis.getUuid() != playerUuid) {
                                         TardisMessage.send(player, "DOOR_DEADLOCKED");
                                     } else {
                                         TardisMessage.send(player, "DOOR_UNLOCK");

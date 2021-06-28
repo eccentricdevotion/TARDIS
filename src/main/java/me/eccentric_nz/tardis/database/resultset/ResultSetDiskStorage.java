@@ -109,7 +109,7 @@ public class ResultSetDiskStorage {
                     if (!rs.wasNull()) {
                         uuid = UUID.fromString(rs.getString("uuid"));
                     } else {
-                        uuid = TardisStaticUtils.getZERO_UUID();
+                        uuid = TardisStaticUtils.getZeroUuid();
                     }
                     savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {

@@ -152,8 +152,8 @@ public class TardisAnyoneMoveListener implements Listener {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
         if (!rsc.getCompanions().isEmpty()) {
             // check if they are a companion
-            for (UUID cuuid : rsc.getCompanions()) {
-                if (cuuid.equals(uuid)) {
+            for (UUID cUuid : rsc.getCompanions()) {
+                if (cUuid.equals(uuid)) {
                     return true;
                 }
             }

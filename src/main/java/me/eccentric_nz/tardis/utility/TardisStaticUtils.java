@@ -242,7 +242,7 @@ public class TardisStaticUtils {
         return player.getName();
     }
 
-    public static UUID getZERO_UUID() {
+    public static UUID getZeroUuid() {
         return ZERO_UUID;
     }
 

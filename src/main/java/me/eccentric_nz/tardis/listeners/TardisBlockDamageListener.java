@@ -126,13 +126,13 @@ public class TardisBlockDamageListener implements Listener {
             if (!tardis.isTardisInit()) {
                 return false;
             }
-            UUID ownerUUID = tardis.getUuid();
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
+            UUID ownerUuid = tardis.getUuid();
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUuid.toString());
             boolean hadsOn = true;
             if (rsp.resultSet()) {
                 hadsOn = rsp.isHadsOn();
             }
-            return (plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hadsOn);
+            return (plugin.getServer().getOfflinePlayer(ownerUuid).isOnline() && hadsOn);
         } else {
             return false;
         }

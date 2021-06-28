@@ -48,16 +48,16 @@ public class TardisRandomButton {
     private final HashMap<String, Object> set = new HashMap<>();
     private final int secondary;
     private final String comps;
-    private final UUID ownerUUID;
+    private final UUID ownerUuid;
 
-    public TardisRandomButton(TardisPlugin plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUUID) {
+    public TardisRandomButton(TardisPlugin plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUuid) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
         this.level = level;
         this.secondary = secondary;
         this.comps = comps;
-        this.ownerUUID = ownerUUID;
+        this.ownerUuid = ownerUuid;
     }
 
     public void clickButton() {
@@ -170,15 +170,15 @@ public class TardisRandomButton {
                         String[] companions = comps.split(":");
                         for (String c : companions) {
                             // are they online - AND are they travelling
-                            UUID cuuid = UUID.fromString(c);
-                            if (plugin.getServer().getPlayer(cuuid) != null && !cuuid.equals(ownerUUID)) {
+                            UUID cUuid = UUID.fromString(c);
+                            if (plugin.getServer().getPlayer(cUuid) != null && !cUuid.equals(ownerUuid)) {
                                 // are they travelling
                                 HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", id);
                                 wherec.put("uuid", c);
                                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
                                 if (rsv.resultSet() && !plugin.getConfig().getBoolean("preferences.no_coords")) {
-                                    TardisMessage.send(plugin.getServer().getPlayer(cuuid), "DEST", dchat);
+                                    TardisMessage.send(plugin.getServer().getPlayer(cUuid), "DEST", dchat);
                                 }
                             }
                             if (c.equalsIgnoreCase(player.getName())) {
@@ -189,8 +189,8 @@ public class TardisRandomButton {
                     if (!plugin.getConfig().getBoolean("preferences.no_coords")) {
                         if (isTL) {
                             TardisMessage.send(player, "DEST", dchat);
-                        } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
-                            TardisMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);
+                        } else if (plugin.getServer().getPlayer(ownerUuid) != null) {
+                            TardisMessage.send(plugin.getServer().getPlayer(ownerUuid), "DEST", dchat);
                         }
                     }
                     HashMap<String, Object> wherel = new HashMap<>();

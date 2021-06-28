@@ -102,14 +102,14 @@ public class TardisSiegeListener implements Listener {
         }
         Tardis tardis = rs.getTardis();
         // only break if player is owner or companion
-        UUID puuid = event.getPlayer().getUniqueId();
-        UUID tluuid = tardis.getUuid();
-        if (!puuid.equals(tluuid)) {
+        UUID pUuid = event.getPlayer().getUniqueId();
+        UUID tlUuid = tardis.getUuid();
+        if (!pUuid.equals(tlUuid)) {
             boolean isCompanion = false;
             if (!tardis.getCompanions().isEmpty()) {
                 // check if they are a companion
                 for (String cuuid : tardis.getCompanions().split(":")) {
-                    if (cuuid.equals(puuid.toString())) {
+                    if (cuuid.equals(pUuid.toString())) {
                         isCompanion = true;
                         break;
                     }
@@ -137,7 +137,7 @@ public class TardisSiegeListener implements Listener {
         if (rst.resultSet()) {
             rst.getData().forEach((tuuid) -> {
                 Player p = plugin.getServer().getPlayer(tuuid);
-                if (p != null && tuuid != tluuid) {
+                if (p != null && tuuid != tlUuid) {
                     String c = p.getName();
                     lore.add("Companion: " + c);
                 }
@@ -152,7 +152,7 @@ public class TardisSiegeListener implements Listener {
         // track it
         plugin.getTrackerKeeper().getIsSiegeCube().add(id);
         // track the player as well
-        plugin.getTrackerKeeper().getSiegeCarrying().put(puuid, id);
+        plugin.getTrackerKeeper().getSiegeCarrying().put(pUuid, id);
     }
 
     @EventHandler(ignoreCancelled = true)

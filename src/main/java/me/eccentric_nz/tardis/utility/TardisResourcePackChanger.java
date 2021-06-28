@@ -45,7 +45,7 @@ public class TardisResourcePackChanger {
      * @param p   The player
      * @param str The URL of the texture pack file
      */
-    public void changeRP(Player p, String str) {
+    public void changeResourcePack(Player p, String str) {
         // check the URL
         try {
             new URL(str);

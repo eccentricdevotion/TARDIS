@@ -73,13 +73,13 @@ class TardisRemoveCompanionCommand {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
-                    UUID oluuid = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
+                    UUID olUuid = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
                     String[] split = comps.split(":");
                     StringBuilder sb = new StringBuilder();
                     if (split.length > 1) {
                         // recompile string without the specified player
                         for (String c : split) {
-                            if (!c.equals(oluuid.toString())) {
+                            if (!c.equals(olUuid.toString())) {
                                 // add to new string
                                 sb.append(c).append(":");
                             }

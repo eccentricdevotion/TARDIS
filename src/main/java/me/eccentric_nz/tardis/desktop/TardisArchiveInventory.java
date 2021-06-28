@@ -84,7 +84,7 @@ class TardisArchiveInventory {
 
         // get current console size
         ResultSetTardisSize rss = new ResultSetTardisSize(plugin);
-        if (rss.fromUUID(player.getUniqueId().toString())) {
+        if (rss.fromUuid(player.getUniqueId().toString())) {
             s = rss.getConsoleSize().toString();
             b = rss.getConsoleSize().getBlocks();
         }

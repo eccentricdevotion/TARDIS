@@ -47,7 +47,7 @@ class TardisRescueCommand {
         }
         if (TardisPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NOT_A_TIMELORD");
                 return true;
             }
@@ -62,14 +62,14 @@ class TardisRescueCommand {
                     TardisMessage.send(player, "NOT_ONLINE");
                     return true;
                 }
-                UUID savedUUID = destPlayer.getUniqueId();
-                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? Objects.requireNonNull(plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID))).getName() : player.getName();
+                UUID savedUuid = destPlayer.getUniqueId();
+                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUuid)) ? Objects.requireNonNull(plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUuid))).getName() : player.getName();
                 // get auto_rescue_on preference
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {
                     // go straight to rescue
                     TardisRescue res = new TardisRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                    plugin.getTrackerKeeper().getChat().remove(savedUuid);
                     // delay it so the chat appears before the message
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TardisRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
@@ -83,10 +83,10 @@ class TardisRescueCommand {
                     }, 2L);
                 } else {
                     TardisMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
-                    plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
+                    plugin.getTrackerKeeper().getChat().put(savedUuid, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
-                            plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUuid)) {
+                            plugin.getTrackerKeeper().getChat().remove(savedUuid);
                             TardisMessage.send(player, "RESCUE_NO_RESPONSE", saved);
                         }
                     }, 1200L);
