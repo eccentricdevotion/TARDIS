@@ -35,9 +35,9 @@ public final class TardisRoomGrowEvent extends TardisEvent {
      * @param player   the player growing the room
      * @param tardis   the Tardis data object, may be null - if room was manually grown, use {@link
      *                 #getRoomData()}.getTardis_id()
-     * @param slot     the TARDISARSSlot data object, may be null - if the room was manually grown, use {@link
+     * @param slot     the {@link TardisArsSlot} data object, may be null - if the room was manually grown, use {@link
      *                 #getRoomData()}.getLocation()
-     * @param roomData the TARDISRoomData data object
+     * @param roomData the {@link TardisRoomData} data object
      */
     public TardisRoomGrowEvent(Player player, Tardis tardis, TardisArsSlot slot, TardisRoomData roomData) {
         super(player, tardis);
@@ -47,9 +47,9 @@ public final class TardisRoomGrowEvent extends TardisEvent {
 
     /**
      * Returns the Architectural Reconfiguration System position data object. Use the {@link
-     * TardisArsSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
+     * TardisArsSlot}'s getter methods to retrieve the coordinates.
      *
-     * @return the TARDISARSSlot object or null if the room was manually grown
+     * @return the {@link TardisArsSlot} object or null if the room was manually grown
      */
     public TardisArsSlot getSlot() {
         return slot;

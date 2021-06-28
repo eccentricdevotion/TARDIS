@@ -55,7 +55,7 @@ public class FormulaViewer {
                 Element element = Element.valueOf(data[0]);
                 is = ElementBuilder.getElement(element);
                 is.setAmount(Integer.parseInt(data[1]));
-            } catch (IllegalArgumentException ee) {
+            } catch (IllegalArgumentException elementException) {
                 // don't know what it is
             }
             stack[i + 18] = is;
@@ -81,17 +81,17 @@ public class FormulaViewer {
                         // is it a Spigot material?
                         Material material = Material.valueOf(data[i][j]);
                         is = new ItemStack(material, 1);
-                    } catch (IllegalArgumentException me) {
+                    } catch (IllegalArgumentException materialException) {
                         // is it a compound?
                         try {
                             Compound compound = Compound.valueOf(data[i][j].replace(" ", "_"));
                             is = CompoundBuilder.getCompound(compound);
-                        } catch (IllegalArgumentException ce) {
+                        } catch (IllegalArgumentException compoundException) {
                             // is it an element?
                             try {
                                 Element element = Element.valueOf(data[i][j]);
                                 is = ElementBuilder.getElement(element);
-                            } catch (IllegalArgumentException ee) {
+                            } catch (IllegalArgumentException elementException) {
                                 // don't know what it is
                             }
                         }
@@ -118,12 +118,12 @@ public class FormulaViewer {
             try {
                 Compound compound = Compound.valueOf(shape[i].replace(" ", "_"));
                 is = CompoundBuilder.getCompound(compound);
-            } catch (IllegalArgumentException ce) {
+            } catch (IllegalArgumentException compoundException) {
                 // is it an element?
                 try {
                     Element element = Element.valueOf(shape[i]);
                     is = ElementBuilder.getElement(element);
-                } catch (IllegalArgumentException ee) {
+                } catch (IllegalArgumentException elementException) {
                     // don't know what it is
                 }
             }

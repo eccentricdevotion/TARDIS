@@ -66,7 +66,7 @@ public class TardisJunkCommands implements CommandExecutor {
                         TardisMessage.send(sender, "CMD_PLAYER");
                         return false;
                     }
-                    return new TardisJunkCreator(plugin, p).createJunkTARDIS();
+                    return new TardisJunkCreator(plugin, p).createJunkTardis();
                 }
                 if (first.equals("find")) {
                     return new TardisJunkFind(plugin).find(sender);

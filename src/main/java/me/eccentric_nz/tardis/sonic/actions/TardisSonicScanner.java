@@ -134,7 +134,7 @@ public class TardisSonicScanner {
         String daynight = TardisStaticUtils.getTime(time);
         String worldname;
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
+            worldname = plugin.getMultiverseHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = TardisAliasResolver.getWorldAlias(scan_loc.getWorld());
         }

@@ -49,7 +49,7 @@ class TardisJunkDeleter {
             return true;
         }
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+        if (rs.fromUuid("00000000-aaaa-bbbb-cccc-000000000000")) {
             int id = rs.getTardisId();
             // get the current location
             Location bb_loc = null;

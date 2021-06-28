@@ -182,7 +182,7 @@ public class TardisAdminCommands implements CommandExecutor {
                     return new TardisDisguiseCommand(plugin).disguise(sender, args);
                 }
                 if (first.equals("enter")) {
-                    return new TardisEnterCommand(plugin).enterTARDIS(sender, args);
+                    return new TardisEnterCommand(plugin).enterTardis(sender, args);
                 }
                 if (first.equals("delete")) {
                     return new TardisDeleteCommand(plugin).deleteTardis(sender, args);

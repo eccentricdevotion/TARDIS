@@ -366,7 +366,7 @@ public class TardisGiveCommand implements CommandExecutor {
             }
         }
         if (player != null) {
-            ItemStack bp = plugin.getTardisApi().getTARDISBlueprintItem(blueprint, player);
+            ItemStack bp = plugin.getTardisApi().getTardisBlueprintItem(blueprint, player);
             player.getInventory().addItem(bp);
             player.updateInventory();
             TardisMessage.send(player, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");

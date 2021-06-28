@@ -48,11 +48,11 @@ class TardisAreaDisks {
     }
 
     /**
-     * Makes an array of item stacks containing the default Storage GUI top and any area storage disks the player has
+     * Makes an {@link java.lang.reflect.Array array} of {@link ItemStack}s containing the default Storage GUI top and any area storage disks the player has
      * permission for.
      *
-     * @param player the player to create the array for
-     * @return an array of item stacks
+     * @param player the {@link Player} to create the {@link java.lang.reflect.Array array} for
+     * @return an {@link java.lang.reflect.Array array} of {@link ItemStack}s
      */
     ItemStack[] makeDisks(Player player) {
 

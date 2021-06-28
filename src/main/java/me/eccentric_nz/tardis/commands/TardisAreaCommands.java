@@ -116,7 +116,7 @@ public class TardisAreaCommands implements CommandExecutor {
                     int park;
                     try {
                         park = Integer.parseInt(args[2]);
-                    } catch (NumberFormatException nfe) {
+                    } catch (NumberFormatException numberFormatException) {
                         TardisMessage.send(player, "AREA_PARK");
                         return false;
                     }
@@ -180,7 +180,7 @@ public class TardisAreaCommands implements CommandExecutor {
                             if (args.length > 3) {
                                 dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH)).createBlockData();
                             }
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException illegalArgumentException) {
                             TardisMessage.send(player, "ARG_MATERIAL");
                             return true;
                         }
@@ -234,7 +234,7 @@ public class TardisAreaCommands implements CommandExecutor {
                     if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
                             Preset.valueOf(value);
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException illegalArgumentException) {
                             TardisMessage.send(player, "ARG_PRESET");
                             return false;
                         }
@@ -265,7 +265,7 @@ public class TardisAreaCommands implements CommandExecutor {
                     String dir = args[2].toUpperCase(Locale.ENGLISH);
                     try {
                         CardinalDirection.valueOf(dir);
-                    } catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException illegalArgumentException) {
                         if (dir.equals("NONE")) {
                             dir = "";
                         } else {

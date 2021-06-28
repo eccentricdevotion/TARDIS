@@ -235,7 +235,7 @@ public class TardisArsMapListener extends TardisArsMethods implements Listener {
                         if (md.getData()[l][r][c].equals(room)) {
                             // will always get the first room of this type on this level
                             a = new TardisArsSlot();
-                            a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
+                            a.setChunk(plugin.getLocationUtils().getTardisChunk(id));
                             a.setY(l);
                             a.setX(r);
                             a.setZ(c);

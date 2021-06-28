@@ -60,7 +60,7 @@ public class TardisWeatherCommand extends TardisCompleter implements CommandExec
                 World world = location.getWorld();
                 if (plugin.getUtils().inTardisWorld(player)) {
                     // get TARDIS player is in
-                    int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(player);
+                    int id = plugin.getTardisApi().getIdOfTardisPlayerIsIn(player);
                     // get current TARDIS location
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);

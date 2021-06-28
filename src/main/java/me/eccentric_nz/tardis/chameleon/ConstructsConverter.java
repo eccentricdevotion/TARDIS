@@ -153,7 +153,7 @@ public class ConstructsConverter {
                                     default:
                                         try {
                                             stGrid[y][x] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).createBlockData().getAsString();
-                                        } catch (NullPointerException ex) {
+                                        } catch (NullPointerException nullPointerException) {
                                             plugin.debug(material.toString());
                                         }
                                         break;
@@ -181,8 +181,8 @@ public class ConstructsConverter {
             }
             plugin.getConfig().set("conversions.constructs", true);
             plugin.saveConfig();
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for chameleon table! " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for chameleon table! " + sqlException.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -194,8 +194,8 @@ public class ConstructsConverter {
                 if (update != null) {
                     update.close();
                 }
-            } catch (SQLException e) {
-                plugin.debug("Error closing chameleon table! " + e.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing chameleon table! " + sqlException.getMessage());
             }
         }
     }

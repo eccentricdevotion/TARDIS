@@ -79,7 +79,7 @@ class TardisToggleOnOffCommand {
                     UUID uuid = player.getUniqueId();
                     // get tardis id
                     ResultSetTardisId rsi = new ResultSetTardisId(plugin);
-                    if (rsi.fromUUID(uuid.toString())) {
+                    if (rsi.fromUuid(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
                     }
                 }
@@ -96,7 +96,7 @@ class TardisToggleOnOffCommand {
                     UUID uuid = player.getUniqueId();
                     // get tardis id
                     ResultSetTardisId rsi = new ResultSetTardisId(plugin);
-                    if (rsi.fromUUID(uuid.toString())) {
+                    if (rsi.fromUuid(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
                     }
                 }

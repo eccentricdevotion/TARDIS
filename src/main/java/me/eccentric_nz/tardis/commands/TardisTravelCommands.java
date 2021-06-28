@@ -935,7 +935,7 @@ public class TardisTravelCommands implements CommandExecutor {
             w = rsc.getWorld();
         } else {
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                w = plugin.getMVHelper().getWorld(w_str);
+                w = plugin.getMultiverseHelper().getWorld(w_str);
             } else {
                 w = TardisAliasResolver.getWorldFromAlias(w_str);
             }

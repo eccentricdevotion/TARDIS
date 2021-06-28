@@ -72,7 +72,7 @@ public class TardisTeleportListener implements Listener {
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
-                        if (!rsid.fromUUID(uuid)) {
+                        if (!rsid.fromUuid(uuid)) {
                             return;
                         }
                     } else {
@@ -81,7 +81,7 @@ public class TardisTeleportListener implements Listener {
                             return;
                         }
                     }
-                } else if (!rsid.fromUUID(uuid)) {
+                } else if (!rsid.fromUuid(uuid)) {
                     return;
                 }
                 // remove potential existing records from travellers first

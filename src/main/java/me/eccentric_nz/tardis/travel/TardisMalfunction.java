@@ -194,8 +194,8 @@ public class TardisMalfunction {
                         playerUUIDs = new ArrayList<>();
                         playerUUIDs.add(p.getUniqueId());
                     }
-                    TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
+                    TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tardisEpsRunnable, 220L);
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // flicker lights

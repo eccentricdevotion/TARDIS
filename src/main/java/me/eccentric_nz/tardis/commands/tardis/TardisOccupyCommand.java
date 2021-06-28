@@ -64,7 +64,7 @@ class TardisOccupyCommand {
                         TardisMessage.send(player, "OCCUPY_MUST_BE_IN");
                         return false;
                     }
-                } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
+                } else if (!rsid.fromUuid(player.getUniqueId().toString())) {
                     TardisMessage.send(player, "NOT_A_TIMELORD");
                     return false;
                 }

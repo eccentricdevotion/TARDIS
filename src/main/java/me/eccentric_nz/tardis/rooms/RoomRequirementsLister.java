@@ -41,7 +41,7 @@ public class RoomRequirementsLister {
         }
         // get the tardis id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
+        if (rs.fromUuid(player.getUniqueId().toString())) {
             TardisMessage.send(player, "CONDENSE_REQUIRE", name);
             HashMap<String, Integer> item_counts = new HashMap<>();
             for (Map.Entry<String, Integer> entry : blockTypes.entrySet()) {

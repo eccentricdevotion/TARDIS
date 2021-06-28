@@ -63,7 +63,7 @@ public class TardisHadsPersister {
                 ps.setInt(5, l.getBlockZ());
                 // get tardis_id
                 ResultSetTardisId rst = new ResultSetTardisId(plugin);
-                rst.fromUUID(uuid);
+                rst.fromUuid(uuid);
                 ps.setInt(6, rst.getTardisId());
                 count += ps.executeUpdate();
             }

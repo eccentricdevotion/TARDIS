@@ -47,7 +47,7 @@ class TardisSecondaryCommand {
             }
             UUID uuid = player.getUniqueId();
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(uuid.toString())) {
+            if (!rs.fromUuid(uuid.toString())) {
                 TardisMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }

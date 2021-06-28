@@ -97,8 +97,8 @@ public class ArsConverter {
             }
             plugin.getConfig().set("conversions.ars_materials", true);
             plugin.saveConfig();
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for ars table! " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for ars table! " + sqlException.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -110,8 +110,8 @@ public class ArsConverter {
                 if (update != null) {
                     update.close();
                 }
-            } catch (SQLException e) {
-                plugin.debug("Error closing ars table! " + e.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing ars table! " + sqlException.getMessage());
             }
         }
     }

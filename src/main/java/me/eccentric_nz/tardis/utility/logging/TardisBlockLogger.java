@@ -39,22 +39,22 @@ public class TardisBlockLogger {
     public void enableLogger() {
         PluginManager pm = plugin.getServer().getPluginManager();
         if (pm.isPluginEnabled("CoreProtect")) {
-            CoreProtect cp = (CoreProtect) pm.getPlugin("CoreProtect");
+            CoreProtect coreProtect = (CoreProtect) pm.getPlugin("CoreProtect");
             // Check that CoreProtect is loaded
-            if (cp == null) {
+            if (coreProtect == null) {
                 return;
             }
             // Check that the API is enabled
-            CoreProtectAPI CoreProtect = cp.getAPI();
-            if (!CoreProtect.isEnabled()) {
+            CoreProtectAPI coreProtectAPI = coreProtect.getAPI();
+            if (!coreProtectAPI.isEnabled()) {
                 return;
             }
             // Check that a compatible version of the API is loaded
-            if (CoreProtect.APIVersion() < 6) {
+            if (coreProtectAPI.APIVersion() < 6) {
                 return;
             }
             plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Connecting to CoreProtect");
-            coreProtectApi = CoreProtect;
+            coreProtectApi = coreProtectAPI;
             logging = true;
         }
     }

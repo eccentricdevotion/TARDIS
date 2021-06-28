@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.disguise;
 
-import net.minecraft.server.v1_16_R3.EntityPanda;
+import net.minecraft.world.entity.animal.EntityPanda;
 import org.bukkit.entity.Panda;
 
 public enum Gene {
 
-    NORMAL(EntityPanda.Gene.NORMAL),
-    LAZY(EntityPanda.Gene.LAZY),
-    WORRIED(EntityPanda.Gene.WORRIED),
-    PLAYFUL(EntityPanda.Gene.PLAYFUL),
-    BROWN(EntityPanda.Gene.BROWN),
-    WEAK(EntityPanda.Gene.WEAK),
-    AGGRESSIVE(EntityPanda.Gene.AGGRESSIVE);
+    NORMAL(EntityPanda.Gene.a), // NORMAL
+    LAZY(EntityPanda.Gene.b), // LAZY
+    WORRIED(EntityPanda.Gene.c), // WORRIED
+    PLAYFUL(EntityPanda.Gene.d), // PLAYFUL
+    BROWN(EntityPanda.Gene.e), // BROWN
+    WEAK(EntityPanda.Gene.f), // WEAK
+    AGGRESSIVE(EntityPanda.Gene.g); // AGGRESSIVE
 
     private final EntityPanda.Gene nmsGene;
 

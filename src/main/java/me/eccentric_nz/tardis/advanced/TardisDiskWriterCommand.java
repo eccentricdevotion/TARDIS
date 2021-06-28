@@ -254,7 +254,7 @@ public class TardisDiskWriterCommand {
                     return false;
                 }
                 ResultSetTardisId resultSetTardisId = new ResultSetTardisId(plugin);
-                if (!resultSetTardisId.fromUUID(player.getUniqueId().toString())) {
+                if (!resultSetTardisId.fromUuid(player.getUniqueId().toString())) {
                     TardisMessage.send(player, "NO_TARDIS");
                     return false;
                 } else {

@@ -46,7 +46,7 @@ public class TardisBlockPhysicsListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPhysics(BlockPhysicsEvent event) {
         Block block = event.getBlock();
-        if (block.getType().equals(Material.GRASS_PATH)) {
+        if (block.getType().equals(Material.DIRT_PATH)) {
             String loc = block.getRelative(BlockFace.UP).getLocation().toString();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TardisRecordingQueue.addToQueue(loc), 7L);
         }

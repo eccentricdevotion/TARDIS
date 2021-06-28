@@ -107,7 +107,7 @@ public class TardisCraftListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onCraftTARDISItem(PrepareItemCraftEvent event) {
+    public void onCraftTardisItem(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
         if (recipe != null) {
             ItemStack is = recipe.getResult();

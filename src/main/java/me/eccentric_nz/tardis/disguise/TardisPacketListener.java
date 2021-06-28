@@ -18,10 +18,10 @@ package me.eccentric_nz.tardis.disguise;
 
 import io.netty.channel.*;
 import me.eccentric_nz.tardischunkgenerator.TardisHelperPlugin;
-import net.minecraft.server.v1_16_R3.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.network.protocol.game.PacketPlayOutNamedEntitySpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -32,7 +32,7 @@ import java.util.UUID;
 public class TardisPacketListener {
 
     public static void removePlayer(Player player) {
-        Channel channel = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel;
+        Channel channel = ((CraftPlayer) player).getHandle().b.a.k; // b = playerConnection, a = networkManager, k = channel
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove(player.getName());
             return null;
@@ -71,7 +71,7 @@ public class TardisPacketListener {
             }
         };
 
-        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
+        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().b.a.k.pipeline(); // b = playerConnection, a = networkManager, k = channel
         pipeline.addBefore("packet_handler", player.getName(), channelDuplexHandler);
     }
 }

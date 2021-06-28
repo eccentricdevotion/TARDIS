@@ -51,7 +51,7 @@ public class TardisCompanionAddInventory {
         ItemStack[] heads = new ItemStack[54];
         // get current companions
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-        if (rs.fromUUID(uuid.toString())) {
+        if (rs.fromUuid(uuid.toString())) {
             List<String> comps;
             if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
                 comps = Arrays.asList(rs.getCompanions().split(":"));

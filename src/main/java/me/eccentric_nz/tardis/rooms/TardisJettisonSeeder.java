@@ -101,7 +101,7 @@ public class TardisJettisonSeeder implements Listener {
                     Location l = block.getRelative(facing, 3).getLocation();
                     // get the tardis id
                     ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                    if (rs.fromUUID(player.getUniqueId().toString())) {
+                    if (rs.fromUuid(player.getUniqueId().toString())) {
                         int id = rs.getTardisId();
                         TardisRoomRemover remover = new TardisRoomRemover(plugin, r, l, d, id);
                         if (remover.remove()) {

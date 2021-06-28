@@ -229,7 +229,7 @@ public class TardisScanner {
         TardisMessage.send(player, "SCAN_RESULT", whereIsIt);
         String worldName;
         if (TardisPlugin.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldName = TardisPlugin.plugin.getMVHelper().getAlias(scan_loc.getWorld());
+            worldName = TardisPlugin.plugin.getMultiverseHelper().getAlias(scan_loc.getWorld());
         } else {
             worldName = TardisAliasResolver.getWorldAlias(scan_loc.getWorld());
         }

@@ -68,7 +68,7 @@ public class TardisItemFrameListener implements Listener {
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
                     // check they have a tardis
                     ResultSetTardisId rst = new ResultSetTardisId(plugin);
-                    if (!rst.fromUUID(uuid.toString())) {
+                    if (!rst.fromUuid(uuid.toString())) {
                         TardisMessage.send(player, "NO_TARDIS");
                         return;
                     }
@@ -299,7 +299,7 @@ public class TardisItemFrameListener implements Listener {
                     }
                     // must have a tardis
                     ResultSetTardisId rst = new ResultSetTardisId(plugin);
-                    if (rst.fromUUID(uuid.toString())) {
+                    if (rst.fromUuid(uuid.toString())) {
                         // check if they have a handles block
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", rst.getTardisId());
@@ -356,7 +356,7 @@ public class TardisItemFrameListener implements Listener {
                     } else {
                         // is it the players handles?
                         ResultSetTardisId rst = new ResultSetTardisId(plugin);
-                        if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardisId() == rst.getTardisId()) {
+                        if (rst.fromUuid(player.getUniqueId().toString()) && rsc.getTardisId() == rst.getTardisId()) {
                             // remove control record
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("c_id", rsc.getcId());

@@ -23,10 +23,11 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardischunkgenerator.TardisHelperPlugin;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
+import net.minecraft.server.level.EntityPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -48,9 +49,9 @@ public class TardisPlayerDisguiser {
         disguisePlayer();
     }
 
-    public static void disguiseToPlayer(Player disguised, Player to, TardisHelperPlugin plugin) {
-        to.hidePlayer(plugin, disguised);
-        to.showPlayer(plugin, disguised);
+    public static void disguiseToPlayer(Player disguised, Player to) {
+        to.hidePlayer(TardisPlugin.plugin, disguised);
+        to.showPlayer(TardisPlugin.plugin, disguised);
     }
 
     public void disguisePlayer() {

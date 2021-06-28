@@ -117,7 +117,7 @@ public class TardisArtronStorageCommand implements CommandExecutor {
                     TardisMessage.send(player, "ENERGY_NOT_NEG");
                     return true;
                 }
-            } catch (NumberFormatException n) {
+            } catch (NumberFormatException numberFormatException) {
                 TardisMessage.send(player, "ARG_SEC_NUMBER");
                 return false;
             }

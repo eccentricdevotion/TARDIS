@@ -114,7 +114,7 @@ public class TardisForceField implements Runnable {
 
     private boolean isCompanion(Player other, Player player) {
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
+        if (rs.fromUuid(player.getUniqueId().toString())) {
             List<String> comps;
             if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
                 if (rs.getCompanions().equalsIgnoreCase("everyone")) {

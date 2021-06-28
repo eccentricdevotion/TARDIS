@@ -63,7 +63,7 @@ public class TardisArtronFurnaceParticle {
                     return (plugin.getTardisHelper().isArtronFurnace(b));
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException nullPointerException) {
             return false;
         }
         return false;

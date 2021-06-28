@@ -122,7 +122,7 @@ public class TardisCompanionAddGuiListener extends TardisMenuListener implements
     private void list(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-            if (rs.fromUUID(player.getUniqueId().toString())) {
+            if (rs.fromUuid(player.getUniqueId().toString())) {
                 String comps = rs.getCompanions();
                 ItemStack[] items;
                 if (comps.equalsIgnoreCase("everyone")) {

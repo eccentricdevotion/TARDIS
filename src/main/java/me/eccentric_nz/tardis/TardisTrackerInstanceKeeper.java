@@ -39,7 +39,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * A central repository used to store various data values required to track what Time lords and TARDIS are doing
+ * A central repository used to store various data values required to track what Time Lords and TARDIS are doing
  * in-game, and provide easy access to the data in other classes. For example the spectacleWearers List tracks which
  * Time Lords are currently wearing 3d_glasses.
  *
@@ -74,7 +74,7 @@ public class TardisTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<>();
-    private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
+    private final HashMap<UUID, List<UUID>> renderedNpcs = new HashMap<>();
     private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
     private final HashMap<UUID, Location> dispersed = new HashMap<>();
     private final HashMap<UUID, Location> endLocation = new HashMap<>();
@@ -141,7 +141,7 @@ public class TardisTrackerInstanceKeeper {
     private final Set<UUID> zeroRoomOccupants = new HashSet<>();
     private String immortalityGate = "";
 
-    public TardisMoveSession getTARDISMoveSession(Player p) {
+    public TardisMoveSession getTardisMoveSession(Player p) {
         if (moveSessions.containsKey(p.getUniqueId())) {
             return moveSessions.get(p.getUniqueId());
         }
@@ -266,8 +266,8 @@ public class TardisTrackerInstanceKeeper {
         return repeaters;
     }
 
-    public HashMap<UUID, List<UUID>> getRenderedNPCs() {
-        return renderedNPCs;
+    public HashMap<UUID, List<UUID>> getRenderedNpcs() {
+        return renderedNpcs;
     }
 
     public HashMap<UUID, Location> getActiveForceFields() {

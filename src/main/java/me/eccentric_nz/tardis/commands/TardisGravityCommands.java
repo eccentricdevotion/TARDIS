@@ -103,7 +103,7 @@ public class TardisGravityCommands implements CommandExecutor {
                             TardisMessage.send(player, "TOO_FAR");
                             return true;
                         }
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException numberFormatException) {
                         TardisMessage.send(player, "ARG_SEC_NUMBER");
                         return false;
                     }

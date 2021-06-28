@@ -351,7 +351,7 @@ public class QueryFactory {
      * @param id     the tardis id
      * @return true if the claim was a success
      */
-    public boolean claimTARDIS(Player player, int id) {
+    public boolean claimTardis(Player player, int id) {
         PreparedStatement ps = null;
         // check if they have a non-abandoned tardis
         HashMap<String, Object> where = new HashMap<>();

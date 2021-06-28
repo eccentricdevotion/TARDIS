@@ -66,83 +66,83 @@ public class Tardises implements TardisApi {
 
     @Override
     public HashMap<String, Integer> getTimeLordMap() {
-        HashMap<String, Integer> timelords = new HashMap<>();
+        HashMap<String, Integer> timeLords = new HashMap<>();
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
         String query = "SELECT tardis_id, owner FROM " + TardisPlugin.plugin.getPrefix() + "tardis";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    timelords.put(rs.getString("owner"), rs.getInt("tardis_id"));
+            resultSet = statement.executeQuery(query);
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    timeLords.put(resultSet.getString("owner"), resultSet.getInt("tardis_id"));
                 }
             }
-        } catch (SQLException e) {
-            TardisPlugin.plugin.debug("ResultSet error for tardis table! " + e.getMessage());
+        } catch (SQLException sqlException) {
+            TardisPlugin.plugin.debug("ResultSet error for tardis table! " + sqlException.getMessage());
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
+                if (resultSet != null) {
+                    resultSet.close();
                 }
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (SQLException e) {
-                TardisPlugin.plugin.debug("Error closing tardis table! " + e.getMessage());
+            } catch (SQLException sqlException) {
+                TardisPlugin.plugin.debug("Error closing tardis table! " + sqlException.getMessage());
             }
         }
-        return timelords;
+        return timeLords;
     }
 
     @Override
-    public Location getTARDISCurrentLocation(int id) {
+    public Location getTardisCurrentLocation(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(TardisPlugin.plugin, where);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        ResultSetCurrentLocation resultSetCurrentLocation = new ResultSetCurrentLocation(TardisPlugin.plugin, where);
+        if (resultSetCurrentLocation.resultSet()) {
+            return new Location(resultSetCurrentLocation.getWorld(), resultSetCurrentLocation.getX(), resultSetCurrentLocation.getY(), resultSetCurrentLocation.getZ());
         }
         return null;
     }
 
     @Override
-    public Location getTARDISCurrentLocation(Player p) {
-        return getTARDISCurrentLocation(p.getUniqueId());
+    public Location getTardisCurrentLocation(Player player) {
+        return getTardisCurrentLocation(player.getUniqueId());
     }
 
     @Override
-    public Location getTARDISCurrentLocation(UUID uuid) {
+    public Location getTardisCurrentLocation(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(TardisPlugin.plugin, where);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        ResultSetCurrentLocation resultSetCurrentLocation = new ResultSetCurrentLocation(TardisPlugin.plugin, where);
+        if (resultSetCurrentLocation.resultSet()) {
+            return new Location(resultSetCurrentLocation.getWorld(), resultSetCurrentLocation.getX(), resultSetCurrentLocation.getY(), resultSetCurrentLocation.getZ());
         }
         return null;
     }
 
     @Override
-    public Location getTARDISNextLocation(int id) {
+    public Location getTardisNextLocation(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetNextLocation rs = new ResultSetNextLocation(TardisPlugin.plugin, where);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        ResultSetNextLocation resultSetNextLocation = new ResultSetNextLocation(TardisPlugin.plugin, where);
+        if (resultSetNextLocation.resultSet()) {
+            return new Location(resultSetNextLocation.getWorld(), resultSetNextLocation.getX(), resultSetNextLocation.getY(), resultSetNextLocation.getZ());
         }
         return null;
     }
 
     @Override
     public TardisData getTardisMapData(int id) {
-        TardisData data = null;
+        TardisData tardisData = null;
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            Location current = getTARDISCurrentLocation(id);
+        ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
+        if (resultSetTardis.resultSet()) {
+            Tardis tardis = resultSetTardis.getTardis();
+            Location current = getTardisCurrentLocation(id);
             String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
             String chameleon = tardis.getPreset().toString();
             String door = "Closed";
@@ -157,14 +157,14 @@ public class Tardises implements TardisApi {
             String powered = (tardis.isPowered()) ? "Yes" : "No";
             String siege = (tardis.isSiegeOn()) ? "Yes" : "No";
             String abandoned = (tardis.isAbandoned()) ? "Yes" : "No";
-            List<String> occupants = getPlayersInTARDIS(id);
-            data = new TardisData(current, console, chameleon, door, powered, siege, abandoned, occupants);
+            List<String> occupants = getPlayersInTardis(id);
+            tardisData = new TardisData(current, console, chameleon, door, powered, siege, abandoned, occupants);
         }
-        return data;
+        return tardisData;
     }
 
     @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
+    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters parameters) {
         if (environment == null) {
             // choose random environment - weighted towards normal!
             environment = WEIGHTED_CHOICE.next();
@@ -174,60 +174,60 @@ public class Tardises implements TardisApi {
             }
         }
         return switch (environment) {
-            case NETHER -> new TardisRandomNether(TardisPlugin.plugin, worlds, param).getLocation();
-            case THE_END -> new TardisRandomTheEnd(TardisPlugin.plugin, worlds, param).getLocation();
-            default -> new TardisRandomOverworld(TardisPlugin.plugin, worlds, param).getLocation();
+            case NETHER -> new TardisRandomNether(TardisPlugin.plugin, worlds, parameters).getLocation();
+            case THE_END -> new TardisRandomTheEnd(TardisPlugin.plugin, worlds, parameters).getLocation();
+            default -> new TardisRandomOverworld(TardisPlugin.plugin, worlds, parameters).getLocation();
         };
     }
 
     @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getApiFlags()));
+    public Location getRandomLocation(List<String> worlds, Environment environment, Player player) {
+        return getRandomLocation(getWorlds(), null, new Parameters(player, Flag.getApiFlags()));
     }
 
     @Override
-    public Location getRandomLocation(List<String> worlds, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getApiFlags()));
+    public Location getRandomLocation(List<String> worlds, Player player) {
+        return getRandomLocation(getWorlds(), null, new Parameters(player, Flag.getApiFlags()));
     }
 
     @Override
-    public Location getRandomOverworldLocation(Player p) {
-        return getRandomLocation(getWorlds(), Environment.NORMAL, p);
+    public Location getRandomOverworldLocation(Player player) {
+        return getRandomLocation(getWorlds(), Environment.NORMAL, player);
     }
 
     @Override
-    public Location getRandomOverworldLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NORMAL, p);
+    public Location getRandomOverworldLocation(String world, Player player) {
+        return getRandomLocation(Collections.singletonList(world), Environment.NORMAL, player);
     }
 
     @Override
-    public Location getRandomNetherLocation(Player p) {
-        return getRandomLocation(getWorlds(), Environment.NETHER, p);
+    public Location getRandomNetherLocation(Player player) {
+        return getRandomLocation(getWorlds(), Environment.NETHER, player);
     }
 
     @Override
-    public Location getRandomNetherLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NETHER, p);
+    public Location getRandomNetherLocation(String world, Player player) {
+        return getRandomLocation(Collections.singletonList(world), Environment.NETHER, player);
     }
 
     @Override
-    public Location getRandomEndLocation(Player p) {
-        return getRandomLocation(getWorlds(), Environment.THE_END, p);
+    public Location getRandomEndLocation(Player player) {
+        return getRandomLocation(getWorlds(), Environment.THE_END, player);
     }
 
     @Override
-    public Location getRandomEndLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.THE_END, p);
+    public Location getRandomEndLocation(String world, Player player) {
+        return getRandomLocation(Collections.singletonList(world), Environment.THE_END, player);
     }
 
     @Override
     public List<String> getWorlds() {
         List<String> worlds = new ArrayList<>();
-        Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
+        Bukkit.getWorlds().forEach((world) -> {
+            String name = world.getName();
             if (TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
                 if (TardisPlugin.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                    worlds.add(TardisPlugin.plugin.getMVHelper().getAlias(name));
+                    worlds.add(TardisPlugin.plugin.getMultiverseHelper().getAlias(name));
                 } else {
                     worlds.add(TardisAliasResolver.getWorldAlias(name));
                 }
@@ -237,13 +237,13 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public List<String> getOverWorlds() {
+    public List<String> getOverworlds() {
         List<String> worlds = new ArrayList<>();
-        Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
-            if (TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
+        Bukkit.getWorlds().forEach((world) -> {
+            String name = world.getName();
+            if (TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && !world.getEnvironment().equals(Environment.NETHER) && !world.getEnvironment().equals(Environment.THE_END)) {
                 if (TardisPlugin.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                    worlds.add(TardisPlugin.plugin.getMVHelper().getAlias(name));
+                    worlds.add(TardisPlugin.plugin.getMultiverseHelper().getAlias(name));
                 } else {
                     worlds.add(TardisAliasResolver.getWorldAlias(name));
                 }
@@ -253,62 +253,62 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public String getTARDISPlayerIsIn(Player p) {
-        return getTARDISPlayerIsIn(p.getUniqueId());
+    public String getTardisPlayerIsIn(Player player) {
+        return getTardisPlayerIsIn(player.getUniqueId());
     }
 
     @Override
-    public String getTARDISPlayerIsIn(UUID uuid) {
-        Player p = Bukkit.getPlayer(uuid);
-        if (p != null && p.isOnline()) {
-            String str = " is not in any TARDIS.";
+    public String getTardisPlayerIsIn(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null && player.isOnline()) {
+            String string = " is not in any TARDIS.";
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
-            ResultSetTravellers rs = new ResultSetTravellers(TardisPlugin.plugin, where, false);
-            if (rs.resultSet()) {
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", rs.getTardisId());
-                ResultSetTardis rst = new ResultSetTardis(TardisPlugin.plugin, wheret, "", false, 2);
+            ResultSetTravellers resultSetTravellers = new ResultSetTravellers(TardisPlugin.plugin, where, false);
+            if (resultSetTravellers.resultSet()) {
+                HashMap<String, Object> whereTardis = new HashMap<>();
+                whereTardis.put("tardis_id", resultSetTravellers.getTardisId());
+                ResultSetTardis rst = new ResultSetTardis(TardisPlugin.plugin, whereTardis, "", false, 2);
                 if (rst.resultSet()) {
                     if (rst.getTardis().isAbandoned()) {
-                        str = " is in an abandoned TARDIS.";
+                        string = " is in an abandoned TARDIS.";
                     } else {
-                        str = " is in " + rst.getTardis().getOwner() + "'s TARDIS.";
+                        string = " is in " + rst.getTardis().getOwner() + "'s TARDIS.";
                     }
                 }
             }
-            return p.getName() + str;
+            return player.getName() + string;
         }
         return "Player is not online.";
     }
 
     @Override
-    public int getIdOfTARDISPlayerIsIn(Player p) {
-        return getIdOfTARDISPlayerIsIn(p.getUniqueId());
+    public int getIdOfTardisPlayerIsIn(Player player) {
+        return getIdOfTardisPlayerIsIn(player.getUniqueId());
     }
 
     @Override
-    public int getIdOfTARDISPlayerIsIn(UUID uuid) {
+    public int getIdOfTardisPlayerIsIn(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetTravellers rs = new ResultSetTravellers(TardisPlugin.plugin, where, false);
-        if (rs.resultSet()) {
-            return rs.getTardisId();
+        ResultSetTravellers resultSetTravellers = new ResultSetTravellers(TardisPlugin.plugin, where, false);
+        if (resultSetTravellers.resultSet()) {
+            return resultSetTravellers.getTardisId();
         }
         return -1;
     }
 
     @Override
-    public List<String> getPlayersInTARDIS(int id) {
+    public List<String> getPlayersInTardis(int id) {
         List<String> list = new ArrayList<>();
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetTravellers rs = new ResultSetTravellers(TardisPlugin.plugin, where, true);
-        if (rs.resultSet()) {
-            rs.getData().forEach((u) -> {
-                Player p = Bukkit.getPlayer(u);
-                if (p != null && p.isOnline()) {
-                    list.add(p.getName());
+        ResultSetTravellers resultSetTravellers = new ResultSetTravellers(TardisPlugin.plugin, where, true);
+        if (resultSetTravellers.resultSet()) {
+            resultSetTravellers.getData().forEach((uuid) -> {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player != null && player.isOnline()) {
+                    list.add(player.getName());
                 }
             });
         }
@@ -316,31 +316,31 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public List<String> getPlayersInTARDIS(Player p) {
-        return getPlayersInTARDIS(p.getUniqueId());
+    public List<String> getPlayersInTardis(Player player) {
+        return getPlayersInTardis(player.getUniqueId());
     }
 
     @Override
-    public List<String> getPlayersInTARDIS(UUID uuid) {
-        ResultSetTardisId rs = new ResultSetTardisId(TardisPlugin.plugin);
-        if (rs.fromUUID(uuid.toString())) {
-            return getPlayersInTARDIS(rs.getTardisId());
+    public List<String> getPlayersInTardis(UUID uuid) {
+        ResultSetTardisId resultSetTardisId = new ResultSetTardisId(TardisPlugin.plugin);
+        if (resultSetTardisId.fromUuid(uuid.toString())) {
+            return getPlayersInTardis(resultSetTardisId.getTardisId());
         } else {
             return new ArrayList<>();
         }
     }
 
     @Override
-    public List<String> getTARDISCompanions(int id) {
+    public List<String> getTardisCompanions(int id) {
         List<String> list = new ArrayList<>();
-        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(TardisPlugin.plugin);
-        if (rs.fromID(id)) {
-            String companions = rs.getCompanions();
+        ResultSetTardisCompanions resultSetTardisCompanions = new ResultSetTardisCompanions(TardisPlugin.plugin);
+        if (resultSetTardisCompanions.fromId(id)) {
+            String companions = resultSetTardisCompanions.getCompanions();
             if (!companions.isEmpty()) {
-                for (String s : companions.split(":")) {
-                    Player p = Bukkit.getPlayer(s);
-                    if (p != null && p.isOnline()) {
-                        list.add(p.getName());
+                for (String string : companions.split(":")) {
+                    Player player = Bukkit.getPlayer(string);
+                    if (player != null && player.isOnline()) {
+                        list.add(player.getName());
                     }
                 }
             }
@@ -349,21 +349,21 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public List<String> getTARDISCompanions(Player p) {
-        return getTARDISCompanions(p.getUniqueId());
+    public List<String> getTardisCompanions(Player player) {
+        return getTardisCompanions(player.getUniqueId());
     }
 
     @Override
-    public List<String> getTARDISCompanions(UUID uuid) {
+    public List<String> getTardisCompanions(UUID uuid) {
         List<String> list = new ArrayList<>();
-        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(TardisPlugin.plugin);
-        if (rs.fromUUID(uuid.toString())) {
-            String companions = rs.getCompanions();
+        ResultSetTardisCompanions resultSetTardisCompanions = new ResultSetTardisCompanions(TardisPlugin.plugin);
+        if (resultSetTardisCompanions.fromUuid(uuid.toString())) {
+            String companions = resultSetTardisCompanions.getCompanions();
             if (!companions.isEmpty()) {
-                for (String s : companions.split(":")) {
-                    Player p = Bukkit.getPlayer(s);
-                    if (p != null && p.isOnline()) {
-                        list.add(p.getName());
+                for (String string : companions.split(":")) {
+                    Player player = Bukkit.getPlayer(string);
+                    if (player != null && player.isOnline()) {
+                        list.add(player.getName());
                     }
                 }
             }
@@ -372,8 +372,8 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public boolean isPlayerInZeroRoom(Player p) {
-        return isPlayerInZeroRoom(p.getUniqueId());
+    public boolean isPlayerInZeroRoom(Player player) {
+        return isPlayerInZeroRoom(player.getUniqueId());
     }
 
     @Override
@@ -382,8 +382,8 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public boolean isPlayerGeneticallyModified(Player p) {
-        return isPlayerGeneticallyModified(p.getUniqueId());
+    public boolean isPlayerGeneticallyModified(Player player) {
+        return isPlayerGeneticallyModified(player.getUniqueId());
     }
 
     @Override
@@ -417,7 +417,7 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public ItemStack getTARDISShapeItem(String item, Player player) {
+    public ItemStack getTardisShapeItem(String item, Player player) {
         ItemStack result;
         if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") || item.endsWith("Jelly Baby")) {
             ShapelessRecipe recipe = TardisPlugin.plugin.getShapelessRecipe().getShapelessRecipes().get(item);
@@ -431,26 +431,26 @@ public class Tardises implements TardisApi {
         }
         if (item.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
-            ItemMeta im = result.getItemMeta();
-            assert im != null;
-            List<String> lore = im.getLore();
+            ItemMeta itemMeta = result.getItemMeta();
+            assert itemMeta != null;
+            List<String> lore = itemMeta.getLore();
             String uses = (Objects.equals(TardisPlugin.plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !TardisPlugin.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TardisPlugin.plugin.getConfig().getString("circuits.uses.invisibility");
             assert lore != null;
             lore.set(1, uses);
-            im.setLore(lore);
-            result.setItemMeta(im);
+            itemMeta.setLore(lore);
+            result.setItemMeta(itemMeta);
         }
         if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
-            ItemMeta im = result.getItemMeta();
-            assert im != null;
-            im.addItemFlags(ItemFlag.values());
-            result.setItemMeta(im);
+            ItemMeta itemMeta = result.getItemMeta();
+            assert itemMeta != null;
+            itemMeta.addItemFlags(ItemFlag.values());
+            result.setItemMeta(itemMeta);
         }
         if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
-            ItemMeta im = result.getItemMeta();
-            assert im != null;
-            im.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
-            List<String> lore = im.getLore();
+            ItemMeta itemMeta = result.getItemMeta();
+            assert itemMeta != null;
+            itemMeta.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
+            List<String> lore = itemMeta.getLore();
             if (lore == null) {
                 lore = new ArrayList<>();
             }
@@ -458,8 +458,8 @@ public class Tardises implements TardisApi {
             String what = item.equals("key") ? "key" : "disk";
             lore.add(format + "This " + what + " belongs to");
             lore.add(format + player.getName());
-            im.setLore(lore);
-            result.setItemMeta(im);
+            itemMeta.setLore(lore);
+            result.setItemMeta(itemMeta);
         }
         return result;
     }
@@ -470,31 +470,29 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public ItemStack getTARDISSeedItem(String schematic) {
+    public ItemStack getTardisSeedItem(String schematic) {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
-            ItemStack is;
+            ItemStack itemStack;
             int model = TardisSeedModel.modelByString(schematic);
-            if (Consoles.getBY_NAMES().get(schematic).isCustom()) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER")) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            if (Consoles.getBY_NAMES().get(schematic).isCustom() || schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER") || schematic.equalsIgnoreCase("CAVE") || schematic.equalsIgnoreCase("WEATHERED")) {
+                itemStack = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
-                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+                itemStack = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
             }
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            im.setCustomModelData(10000000 + model);
-            im.getPersistentDataContainer().set(TardisPlugin.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            itemMeta.setCustomModelData(10000000 + model);
+            itemMeta.getPersistentDataContainer().set(TardisPlugin.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
             // set display name
-            im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+            itemMeta.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(schematic);
             lore.add("Walls: ORANGE_WOOL");
             lore.add("Floors: LIGHT_GRAY_WOOL");
             lore.add("Chameleon: FACTORY");
-            im.setLore(lore);
-            is.setItemMeta(im);
-            return is;
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+            return itemStack;
         }
         return null;
     }
@@ -506,63 +504,63 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public ItemStack getTARDISBlueprintItem(String item, Player player) {
+    public ItemStack getTardisBlueprintItem(String item, Player player) {
         String[] split = item.split("_");
         if (split.length < 3) {
             return null;
         }
         try {
             BlueprintType type = BlueprintType.valueOf(split[1].toUpperCase());
-            int sub = 11 + split[1].length(); // BLUEPRINT_+length()+_
-            String upper = item.toUpperCase().substring(sub);
-            String perm;
+            int substring = 11 + split[1].length(); // BLUEPRINT_+length()+_
+            String upper = item.toUpperCase().substring(substring);
+            String permission;
             switch (type) {
                 case CONSOLE -> {
                     BlueprintConsole console = BlueprintConsole.valueOf(upper);
-                    perm = console.getPermission();
+                    permission = console.getPermission();
                 }
                 case FEATURE -> {
                     BlueprintFeature feature = BlueprintFeature.valueOf(upper);
-                    perm = feature.getPermission();
+                    permission = feature.getPermission();
                 }
                 case PRESET -> {
                     BlueprintPreset preset = BlueprintPreset.valueOf(upper);
-                    perm = preset.getPermission();
+                    permission = preset.getPermission();
                 }
                 case ROOM -> {
                     BlueprintRoom room = BlueprintRoom.valueOf(upper);
-                    perm = room.getPermission();
+                    permission = room.getPermission();
                 }
                 case SONIC -> {
                     BlueprintSonic sonic = BlueprintSonic.valueOf(upper);
-                    perm = sonic.getPermission();
+                    permission = sonic.getPermission();
                 }
                 case TRAVEL -> {
                     BlueprintTravel travel = BlueprintTravel.valueOf(upper);
-                    perm = travel.getPermission();
+                    permission = travel.getPermission();
                 }
                 default -> { // BASE
                     BlueprintBase base = BlueprintBase.valueOf(upper);
-                    perm = base.getPermission();
+                    permission = base.getPermission();
                 }
             }
-            if (perm != null) {
-                ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
-                ItemMeta im = is.getItemMeta();
-                assert im != null;
-                im.setCustomModelData(10000001);
-                PersistentDataContainer pdc = im.getPersistentDataContainer();
-                pdc.set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
-                pdc.set(TardisPlugin.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-                im.setDisplayName("TARDIS Blueprint Disk");
+            if (permission != null) {
+                ItemStack itemStack = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                assert itemMeta != null;
+                itemMeta.setCustomModelData(10000001);
+                PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+                persistentDataContainer.set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
+                persistentDataContainer.set(TardisPlugin.plugin.getBlueprintKey(), PersistentDataType.STRING, permission);
+                itemMeta.setDisplayName("TARDIS Blueprint Disk");
                 List<String> lore = Arrays.asList(TardisStringUtils.capitalise(item), "Valid only for", player.getName());
-                im.setLore(lore);
-                im.addItemFlags(ItemFlag.values());
-                is.setItemMeta(im);
-                return is;
+                itemMeta.setLore(lore);
+                itemMeta.addItemFlags(ItemFlag.values());
+                itemStack.setItemMeta(itemMeta);
+                return itemStack;
             }
             return null;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException illegalArgumentException) {
             return null;
         }
     }
@@ -570,17 +568,17 @@ public class Tardises implements TardisApi {
     @Override
     public List<String> getWallFloorBlocks() {
         List<String> blocks = new ArrayList<>();
-        TardisWalls.BLOCKS.forEach((m) -> blocks.add(m.toString()));
+        TardisWalls.BLOCKS.forEach((material) -> blocks.add(material.toString()));
         return blocks;
     }
 
     @Override
     public boolean setDestination(int id, Location location, boolean travel) {
         // get current direction
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(TardisPlugin.plugin, wherec);
-        if (rs.resultSet()) {
+        HashMap<String, Object> whereCurrentDirection = new HashMap<>();
+        whereCurrentDirection.put("tardis_id", id);
+        ResultSetCurrentLocation resultSetCurrentLocation = new ResultSetCurrentLocation(TardisPlugin.plugin, whereCurrentDirection);
+        if (resultSetCurrentLocation.resultSet()) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
@@ -588,19 +586,19 @@ public class Tardises implements TardisApi {
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
-            set.put("direction", rs.getDirection().toString());
+            set.put("direction", resultSetCurrentLocation.getDirection().toString());
             set.put("submarine", 0);
             TardisPlugin.plugin.getQueryFactory().doUpdate("next", set, where);
             if (travel) {
                 // get TARDIS data
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", id);
-                ResultSetTardis rst = new ResultSetTardis(TardisPlugin.plugin, wheret, "", false, 2);
-                if (rst.resultSet()) {
-                    Player player = Bukkit.getServer().getPlayer(rst.getTardis().getUuid());
+                HashMap<String, Object> whereTardis = new HashMap<>();
+                whereTardis.put("tardis_id", id);
+                ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, whereTardis, "", false, 2);
+                if (resultSetTardis.resultSet()) {
+                    Player player = Bukkit.getServer().getPlayer(resultSetTardis.getTardis().getUuid());
                     // travel
                     TardisPlugin.plugin.getTrackerKeeper().getHasDestination().put(id, TardisPlugin.plugin.getArtronConfig().getInt("random"));
-                    new TardisTakeoff(TardisPlugin.plugin).run(id, player, rst.getTardis().getBeacon());
+                    new TardisTakeoff(TardisPlugin.plugin).run(id, player, resultSetTardis.getTardis().getBeacon());
                     return true;
                 } else {
                     return false;
@@ -615,9 +613,9 @@ public class Tardises implements TardisApi {
     @Override
     public boolean setDestination(UUID uuid, Location location, boolean travel) {
         // get tardis_id
-        ResultSetTardisId rst = new ResultSetTardisId(TardisPlugin.plugin);
-        if (rst.fromUUID(uuid.toString())) {
-            return setDestination(rst.getTardisId(), location, travel);
+        ResultSetTardisId resultSetTardisId = new ResultSetTardisId(TardisPlugin.plugin);
+        if (resultSetTardisId.fromUuid(uuid.toString())) {
+            return setDestination(resultSetTardisId.getTardisId(), location, travel);
         } else {
             return false;
         }
@@ -633,9 +631,9 @@ public class Tardises implements TardisApi {
         // get TARDIS data
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            return rs.getTardis();
+        ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
+        if (resultSetTardis.resultSet()) {
+            return resultSetTardis.getTardis();
         } else {
             return null;
         }
@@ -646,9 +644,9 @@ public class Tardises implements TardisApi {
         // get TARDIS data
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            return rs.getTardis();
+        ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
+        if (resultSetTardis.resultSet()) {
+            return resultSetTardis.getTardis();
         } else {
             return null;
         }
@@ -673,35 +671,35 @@ public class Tardises implements TardisApi {
         TardisPlugin.plugin.getQueryFactory().doSyncUpdate("tardis", set, where);
         if (rebuild) {
             // rebuild exterior
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TardisPlugin.plugin, wherecl);
-            if (!rsc.resultSet()) {
+            HashMap<String, Object> whereCurrentLocation = new HashMap<>();
+            whereCurrentLocation.put("tardis_id", id);
+            ResultSetCurrentLocation resultSetCurrentLocation = new ResultSetCurrentLocation(TardisPlugin.plugin, whereCurrentLocation);
+            if (!resultSetCurrentLocation.resultSet()) {
                 return false;
             }
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(TardisPlugin.plugin, wheret, "", false, 2);
-            if (rs.resultSet()) {
-                OfflinePlayer player = Bukkit.getOfflinePlayer(rs.getTardis().getUuid());
-                Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                BuildData bd = new BuildData(player.getUniqueId().toString());
-                bd.setDirection(rsc.getDirection());
-                bd.setLocation(l);
-                bd.setMalfunction(false);
-                bd.setOutside(false);
-                bd.setPlayer(player);
-                bd.setRebuild(true);
-                bd.setSubmarine(false);
-                bd.setTardisId(id);
-                bd.setThrottle(SpaceTimeThrottle.REBUILD);
-                TardisPlugin.plugin.getPresetBuilder().buildPreset(bd);
+            HashMap<String, Object> whereTardis = new HashMap<>();
+            whereTardis.put("tardis_id", id);
+            ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, whereTardis, "", false, 2);
+            if (resultSetTardis.resultSet()) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(resultSetTardis.getTardis().getUuid());
+                Location location = new Location(resultSetCurrentLocation.getWorld(), resultSetCurrentLocation.getX(), resultSetCurrentLocation.getY(), resultSetCurrentLocation.getZ());
+                BuildData buildData = new BuildData(player.getUniqueId().toString());
+                buildData.setDirection(resultSetCurrentLocation.getDirection());
+                buildData.setLocation(location);
+                buildData.setMalfunction(false);
+                buildData.setOutside(false);
+                buildData.setPlayer(player);
+                buildData.setRebuild(true);
+                buildData.setSubmarine(false);
+                buildData.setTardisId(id);
+                buildData.setThrottle(SpaceTimeThrottle.REBUILD);
+                TardisPlugin.plugin.getPresetBuilder().buildPreset(buildData);
                 TardisPlugin.plugin.getTrackerKeeper().getInVortex().add(id);
-                HashMap<String, Object> whereh = new HashMap<>();
-                whereh.put("tardis_id", id);
-                HashMap<String, Object> seth = new HashMap<>();
-                seth.put("hidden", 0);
-                TardisPlugin.plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+                HashMap<String, Object> whereHidden = new HashMap<>();
+                whereHidden.put("tardis_id", id);
+                HashMap<String, Object> setHidden = new HashMap<>();
+                setHidden.put("hidden", 0);
+                TardisPlugin.plugin.getQueryFactory().doUpdate("tardis", setHidden, whereHidden);
             } else {
                 return false;
             }
@@ -712,9 +710,9 @@ public class Tardises implements TardisApi {
     @Override
     public boolean setChameleonPreset(UUID uuid, Preset preset, boolean rebuild) {
         // get tardis_id
-        ResultSetTardisId rst = new ResultSetTardisId(TardisPlugin.plugin);
-        if (rst.fromUUID(uuid.toString())) {
-            return setChameleonPreset(rst.getTardisId(), preset, rebuild);
+        ResultSetTardisId resultSetTardisId = new ResultSetTardisId(TardisPlugin.plugin);
+        if (resultSetTardisId.fromUuid(uuid.toString())) {
+            return setChameleonPreset(resultSetTardisId.getTardisId(), preset, rebuild);
         } else {
             return false;
         }
@@ -726,7 +724,7 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public void spawnAbandonedTARDIS(Location location, String type, Preset preset, CardinalDirection direction) throws TardisException {
+    public void spawnAbandonedTardis(Location location, String type, Preset preset, CardinalDirection direction) throws TardisException {
         if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
             throw new TardisException("Not a valid Console type");
         }
@@ -736,16 +734,16 @@ public class Tardises implements TardisApi {
         if (!TardisPlugin.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TardisException("TARDIS must be configured to create TARDISes in a default world");
         }
-        Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
-        new TardisAbandoned(TardisPlugin.plugin).spawn(location, schm, preset, direction, null);
+        Schematic schematic = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
+        new TardisAbandoned(TardisPlugin.plugin).spawn(location, schematic, preset, direction, null);
     }
 
     @Override
-    public void spawnAbandonedTARDIS(Location location) {
+    public void spawnAbandonedTardis(Location location) {
         try {
-            spawnAbandonedTARDIS(location, "BUDGET", Preset.FACTORY, CardinalDirection.SOUTH);
-        } catch (TardisException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, null, ex);
+            spawnAbandonedTardis(location, "BUDGET", Preset.FACTORY, CardinalDirection.SOUTH);
+        } catch (TardisException tardisException) {
+            Bukkit.getLogger().log(Level.SEVERE, null, tardisException);
         }
     }
 
@@ -754,12 +752,12 @@ public class Tardises implements TardisApi {
         // get uuid
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
-        if (rst.resultSet()) {
+        ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
+        if (resultSetTardis.resultSet()) {
             try {
-                return setDesktopWallAndFloor(rst.getTardis().getUuid(), wall, floor, artron);
-            } catch (TardisException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, null, ex);
+                return setDesktopWallAndFloor(resultSetTardis.getTardis().getUuid(), wall, floor, artron);
+            } catch (TardisException tardisException) {
+                Bukkit.getLogger().log(Level.SEVERE, null, tardisException);
                 return "";
             }
         } else {
@@ -769,34 +767,34 @@ public class Tardises implements TardisApi {
 
     @Override
     public String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TardisException {
-        Material w = Material.getMaterial(wall);
-        Material f = Material.getMaterial(floor);
-        if (!TardisWalls.BLOCKS.contains(w)) {
+        Material wallMaterial = Material.getMaterial(wall);
+        Material floorMaterial = Material.getMaterial(floor);
+        if (!TardisWalls.BLOCKS.contains(wallMaterial)) {
             throw new TardisException("Not a valid wall type");
         }
-        if (!TardisWalls.BLOCKS.contains(f)) {
+        if (!TardisWalls.BLOCKS.contains(floorMaterial)) {
             throw new TardisException("Not a valid wall type");
         }
         // get current Schematic
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            Schematic current_console = rs.getTardis().getSchematic();
-            TardisUpgradeData tud = new TardisUpgradeData();
-            tud.setSchematic(current_console);
-            tud.setPrevious(current_console);
-            tud.setLevel(rs.getTardis().getArtronLevel());
-            tud.setWall(wall);
-            tud.setFloor(floor);
+        ResultSetTardis resultSetTardis = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 2);
+        if (resultSetTardis.resultSet()) {
+            Schematic currentConsole = resultSetTardis.getTardis().getSchematic();
+            TardisUpgradeData tardisUpgradeData = new TardisUpgradeData();
+            tardisUpgradeData.setSchematic(currentConsole);
+            tardisUpgradeData.setPrevious(currentConsole);
+            tardisUpgradeData.setLevel(resultSetTardis.getTardis().getArtronLevel());
+            tardisUpgradeData.setWall(wall);
+            tardisUpgradeData.setFloor(floor);
             // change the wall and floor
-            TardisWallFloorRunnable ttr = new TardisWallFloorRunnable(TardisPlugin.plugin, uuid, tud);
+            TardisWallFloorRunnable tardisWallFloorRunnable = new TardisWallFloorRunnable(TardisPlugin.plugin, uuid, tardisUpgradeData);
             long delay = Math.round(20 / TardisPlugin.plugin.getConfig().getDouble("growth.room_speed"));
-            int task = TardisPlugin.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TardisPlugin.plugin, ttr, 5L, delay);
-            ttr.setTaskID(task);
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TardisPlugin.plugin, uuid.toString());
-            if (rsp.resultSet()) {
-                return rsp.getWall() + "," + rsp.getFloor();
+            int task = TardisPlugin.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TardisPlugin.plugin, tardisWallFloorRunnable, 5L, delay);
+            tardisWallFloorRunnable.setTaskID(task);
+            ResultSetPlayerPrefs resultSetPlayerPrefs = new ResultSetPlayerPrefs(TardisPlugin.plugin, uuid.toString());
+            if (resultSetPlayerPrefs.resultSet()) {
+                return resultSetPlayerPrefs.getWall() + "," + resultSetPlayerPrefs.getFloor();
             } else {
                 return "ORANGE_WOOL,LIGHT_GRAY_WOOL";
             }

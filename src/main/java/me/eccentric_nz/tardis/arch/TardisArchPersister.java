@@ -76,8 +76,8 @@ public class TardisArchPersister {
                 count += ps.executeUpdate();
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'arched' players.");
-        } catch (SQLException ex) {
-            plugin.debug("Insert error for arched table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("Insert error for arched table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -86,8 +86,8 @@ public class TardisArchPersister {
                 if (rs != null) {
                     rs.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing arched statement: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing arched statement: " + sqlException.getMessage());
             }
         }
     }
@@ -119,8 +119,8 @@ public class TardisArchPersister {
             }
             count += ps.executeUpdate();
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'arched' player.");
-        } catch (SQLException ex) {
-            plugin.debug("Insert error for arched table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("Insert error for arched table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -129,8 +129,8 @@ public class TardisArchPersister {
                 if (rs != null) {
                     rs.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing arched statement: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing arched statement: " + sqlException.getMessage());
             }
         }
     }
@@ -164,8 +164,8 @@ public class TardisArchPersister {
                     }, 5L);
                 }
             }
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for arched table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for arched table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -174,8 +174,8 @@ public class TardisArchPersister {
                 if (rs != null) {
                     rs.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing arched statement or resultset: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing arched statement or resultset: " + sqlException.getMessage());
             }
         }
     }
@@ -211,8 +211,8 @@ public class TardisArchPersister {
                         }
                     }
                 }
-            } catch (SQLException ex) {
-                plugin.debug("ResultSet error for arched table: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("ResultSet error for arched table: " + sqlException.getMessage());
             } finally {
                 try {
                     if (ps != null) {
@@ -221,8 +221,8 @@ public class TardisArchPersister {
                     if (rs != null) {
                         rs.close();
                     }
-                } catch (SQLException ex) {
-                    plugin.debug("Error closing arched statement or resultset: " + ex.getMessage());
+                } catch (SQLException sqlException) {
+                    plugin.debug("Error closing arched statement or resultset: " + sqlException.getMessage());
                 }
             }
         }, 30L);
@@ -233,15 +233,15 @@ public class TardisArchPersister {
             ps = connection.prepareStatement("DELETE FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for arched table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for arched table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
                     ps.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing arched statement or resultset: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing arched statement or resultset: " + sqlException.getMessage());
             }
         }
     }

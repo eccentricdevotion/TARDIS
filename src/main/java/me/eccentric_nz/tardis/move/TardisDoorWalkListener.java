@@ -166,7 +166,7 @@ public class TardisDoorWalkListener extends TardisDoorListener implements Listen
                             }
                             // must be the owner
                             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                            if (rs.fromUUID(playerUUID.toString())) {
+                            if (rs.fromUuid(playerUUID.toString())) {
                                 // must use key to lock / unlock door
                                 if (material.equals(m)) {
                                     if (rs.getTardisId() != id) {

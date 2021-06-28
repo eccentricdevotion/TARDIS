@@ -94,8 +94,8 @@ public class TardisGeneralInstanceKeeper {
         pluginYAML = new YamlConfiguration();
         try {
             pluginYAML.load(reader);
-        } catch (IOException | InvalidConfigurationException ex) {
-            Logger.getLogger(TardisCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | InvalidConfigurationException exception) {
+            Logger.getLogger(TardisCommandHelper.class.getName()).log(Level.SEVERE, null, exception);
         }
     }
 

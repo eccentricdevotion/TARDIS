@@ -46,7 +46,7 @@ class TardisJunkFind {
         }
         // get junk tardis id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+        if (rs.fromUuid("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", rs.getTardisId());
@@ -54,7 +54,7 @@ class TardisJunkFind {
             if (rsc.resultSet()) {
                 String world = TardisAliasResolver.getWorldAlias(rsc.getWorld());
                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                    world = plugin.getMVHelper().getAlias(rsc.getWorld());
+                    world = plugin.getMultiverseHelper().getAlias(rsc.getWorld());
                 }
                 TardisMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
             } else {

@@ -42,7 +42,7 @@ public class TardisSonicAtmospheric {
         if (isPresetSign(plugin, line0, line1, line2)) {
             // get tardis id
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (rs.fromUUID(player.getUniqueId().toString())) {
+            if (rs.fromUuid(player.getUniqueId().toString())) {
                 int tid = rs.getTardisId();
                 Block blockbehind = null;
                 Directional directional = (Directional) b.getBlockData();

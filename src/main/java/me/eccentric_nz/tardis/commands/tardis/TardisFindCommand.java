@@ -40,10 +40,10 @@ class TardisFindCommand {
         this.plugin = plugin;
     }
 
-    boolean findTARDIS(Player player) {
+    boolean findTardis(Player player) {
         if (TardisPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return true;
             }
@@ -54,7 +54,7 @@ class TardisFindCommand {
                 if (rsc.resultSet()) {
                     String world = TardisAliasResolver.getWorldAlias(rsc.getWorld());
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        world = plugin.getMVHelper().getAlias(rsc.getWorld());
+                        world = plugin.getMultiverseHelper().getAlias(rsc.getWorld());
                     }
                     TardisMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                 } else {

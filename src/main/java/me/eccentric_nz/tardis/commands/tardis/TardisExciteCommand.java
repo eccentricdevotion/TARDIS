@@ -40,7 +40,7 @@ class TardisExciteCommand {
         }
         // get tardis id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
+        if (rs.fromUuid(player.getUniqueId().toString())) {
             new TardisAtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
             plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
             return true;

@@ -345,7 +345,7 @@ public class TardisArsMethods {
                         // damage the circuit if configured
                         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                             // get the id of the TARDIS this player is in
-                            int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(playerUUID);
+                            int id = plugin.getTardisApi().getIdOfTardisPlayerIsIn(playerUUID);
                             TardisCircuitChecker tcc = new TardisCircuitChecker(plugin, id);
                             tcc.getCircuits();
                             // decrement uses

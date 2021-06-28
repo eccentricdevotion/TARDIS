@@ -72,7 +72,7 @@ public class TardisAcidWater implements Listener {
         Player player = e.getPlayer();
         Location loc = player.getLocation();
 
-        TardisMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
+        TardisMoveSession tms = plugin.getTrackerKeeper().getTardisMoveSession(player);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
         if (tms.isStaleLocation()) {

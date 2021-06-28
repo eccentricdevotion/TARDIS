@@ -55,7 +55,7 @@ class TardisHostileDisplacement {
         this.plugin = plugin;
     }
 
-    void moveTARDIS(int id, UUID uuid, Player hostile, Preset preset) {
+    void moveTardis(int id, UUID uuid, Player hostile, Preset preset) {
 
         TardisTimeTravel tt = new TardisTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
@@ -175,7 +175,7 @@ class TardisHostileDisplacement {
                 } else if (count > 7) {
                     // only if count is 8 or more
                     // use dispersal instead...
-                    new TardisHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                    new TardisHostileDispersal(plugin).disperseTardis(id, uuid, hostile, preset);
                 }
             } else {
                 plugin.getTrackerKeeper().getDamage().remove(id);

@@ -94,7 +94,7 @@ public class TardisCommandHelper {
                     }
                     sender.sendMessage("------");
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException illegalArgumentException) {
                 sender.sendMessage("Invalid TARDIS help command argument: " + c);
             }
         }

@@ -55,7 +55,7 @@ public class TardisSiegePersister {
                         int id = rs.getInt("tardis_id");
                         plugin.getTrackerKeeper().getInSiegeMode().add(id);
                         if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
-                            Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+                            Chunk c = plugin.getLocationUtils().getTardisChunk(id);
                             TardisSiegeArea tsa = new TardisSiegeArea(id, c);
                             if (plugin.getConfig().getInt("siege.breeding") > 0) {
                                 List<TardisSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());

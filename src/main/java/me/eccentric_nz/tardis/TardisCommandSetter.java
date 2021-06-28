@@ -51,7 +51,7 @@ import java.io.File;
 import java.util.Objects;
 
 /**
- * Loads all tardis command executors and tab completers.
+ * Loads all TARDIS command executors and tab completers.
  *
  * @author eccentric_nz
  */

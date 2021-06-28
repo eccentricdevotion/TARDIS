@@ -260,6 +260,7 @@ public class TardisStainedGlassLookupTable {
         stain.put(Material.DIORITE_STAIRS, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.DIORITE_WALL, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.DIRT, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.DIRT_PATH, Material.GREEN_STAINED_GLASS);
         stain.put(Material.DISPENSER, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.DRAGON_EGG, Material.BLACK_STAINED_GLASS);
         stain.put(Material.DRAGON_HEAD, Material.BLACK_STAINED_GLASS);
@@ -302,7 +303,6 @@ public class TardisStainedGlassLookupTable {
         stain.put(Material.GRANITE_WALL, Material.BROWN_STAINED_GLASS);
         stain.put(Material.GRASS, Material.LIME_STAINED_GLASS);
         stain.put(Material.GRASS_BLOCK, Material.GREEN_STAINED_GLASS);
-        stain.put(Material.GRASS_PATH, Material.GREEN_STAINED_GLASS);
         stain.put(Material.GRAVEL, Material.LIGHT_GRAY_STAINED_GLASS);
         stain.put(Material.GRAY_BANNER, Material.GRAY_STAINED_GLASS);
         stain.put(Material.GRAY_BED, Material.GRAY_STAINED_GLASS);

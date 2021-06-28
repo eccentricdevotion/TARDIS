@@ -60,7 +60,7 @@ public class TardisAbandonLister {
                 wherec.put("tardis_id", t.getTardisId());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (rsc.resultSet()) {
-                    String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TardisAliasResolver.getWorldAlias(rsc.getWorld());
+                    String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(rsc.getWorld()) : TardisAliasResolver.getWorldAlias(rsc.getWorld());
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
                         TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);

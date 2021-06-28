@@ -63,23 +63,23 @@ public class ResultSetSounds {
         PreparedStatement tardis = null;
         PreparedStatement travellers = null;
         ResultSet rs = null;
-        ResultSet rsTARDIS = null;
+        ResultSet rsTardis = null;
         ResultSet rsTravellers = null;
-        String queryTARDIS = "SELECT tardis_id, powered_on FROM " + prefix + "tardis WHERE tardis_id = ?";
+        String queryTardis = "SELECT tardis_id, powered_on FROM " + prefix + "tardis WHERE tardis_id = ?";
         String queryTravellers = "SELECT uuid FROM " + prefix + "travellers WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            tardis = connection.prepareStatement(queryTARDIS);
+            tardis = connection.prepareStatement(queryTardis);
             travellers = connection.prepareStatement(queryTravellers);
             rs = statement.executeQuery("SELECT DISTINCT tardis_id FROM " + prefix + "travellers");
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     tardis.setInt(1, rs.getInt("tardis_id"));
-                    rsTARDIS = tardis.executeQuery();
-                    if (rsTARDIS.next()) {
-                        if (rsTARDIS.getBoolean("powered_on")) {
-                            travellers.setInt(1, rsTARDIS.getInt("tardis_id"));
+                    rsTardis = tardis.executeQuery();
+                    if (rsTardis.next()) {
+                        if (rsTardis.getBoolean("powered_on")) {
+                            travellers.setInt(1, rsTardis.getInt("tardis_id"));
                             rsTravellers = travellers.executeQuery();
                             while (rsTravellers.next()) {
                                 data.add(UUID.fromString(rsTravellers.getString("uuid")));
@@ -98,8 +98,8 @@ public class ResultSetSounds {
                 if (rs != null) {
                     rs.close();
                 }
-                if (rsTARDIS != null) {
-                    rsTARDIS.close();
+                if (rsTardis != null) {
+                    rsTardis.close();
                 }
                 if (rsTravellers != null) {
                     rsTravellers.close();

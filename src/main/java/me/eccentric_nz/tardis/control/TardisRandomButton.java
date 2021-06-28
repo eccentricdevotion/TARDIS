@@ -160,7 +160,7 @@ public class TardisRandomButton {
                     plugin.getTrackerKeeper().getSubmarine().remove(id);
                     String worldname;
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        worldname = plugin.getMVHelper().getAlias(rand.getWorld());
+                        worldname = plugin.getMultiverseHelper().getAlias(rand.getWorld());
                     } else {
                         worldname = TardisAliasResolver.getWorldAlias(rand.getWorld());
                     }

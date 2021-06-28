@@ -16,26 +16,26 @@
  */
 package me.eccentric_nz.tardis.disguise;
 
-import net.minecraft.server.v1_16_R3.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerProfession;
 import org.bukkit.entity.Villager;
 
 public enum Profession {
 
-    NONE(VillagerProfession.NONE),
-    ARMORER(VillagerProfession.ARMORER),
-    BUTCHER(VillagerProfession.BUTCHER),
-    CARTOGRAPHER(VillagerProfession.CARTOGRAPHER),
-    CLERIC(VillagerProfession.CLERIC),
-    FARMER(VillagerProfession.FARMER),
-    FISHERMAN(VillagerProfession.FISHERMAN),
-    FLETCHER(VillagerProfession.FLETCHER),
-    LEATHERWORKER(VillagerProfession.LEATHERWORKER),
-    LIBRARIAN(VillagerProfession.LIBRARIAN),
-    MASON(VillagerProfession.MASON),
-    NITWIT(VillagerProfession.NITWIT),
-    SHEPHERD(VillagerProfession.SHEPHERD),
-    TOOLSMITH(VillagerProfession.TOOLSMITH),
-    WEAPONSMITH(VillagerProfession.WEAPONSMITH);
+    NONE(VillagerProfession.a), // NONE
+    ARMORER(VillagerProfession.b), // ARMORER
+    BUTCHER(VillagerProfession.c), // BUTCHER
+    CARTOGRAPHER(VillagerProfession.d), // CARTOGRAPHER
+    CLERIC(VillagerProfession.e), // CLERIC
+    FARMER(VillagerProfession.f), // FARMER
+    FISHERMAN(VillagerProfession.g), // FISHERMAN
+    FLETCHER(VillagerProfession.h), // FLETCHER
+    LEATHERWORKER(VillagerProfession.i), // LEATHERWORKER
+    LIBRARIAN(VillagerProfession.j), // LIBRARIAN
+    MASON(VillagerProfession.k), // MASON
+    NITWIT(VillagerProfession.l), // NITWIT
+    SHEPHERD(VillagerProfession.m), // SHEPHERD
+    TOOLSMITH(VillagerProfession.n), // TOOLSMITH
+    WEAPONSMITH(VillagerProfession.o); // WEAPONSMITH
 
     private final VillagerProfession nms;
 

@@ -50,10 +50,10 @@ public final class TardisChameleonArchEvent extends Event {
     }
 
     /**
-     * Returns the Chameleon Arch {@link TardisWatchData TARDISWatchData} object. This
+     * Returns the Chameleon Arch {@link TardisWatchData} object. This
      * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
      *
-     * @return the TARDISWatchData object
+     * @return the TardisWatchData object
      */
     public TardisWatchData getTardisWatchData() {
         return tardisWatchData;

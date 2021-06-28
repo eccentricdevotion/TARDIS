@@ -132,7 +132,7 @@ public class TardisSaveSignPageTwo {
             ItemStack own;
             // is it this player's tardis?
             ResultSetTardisId rstid = new ResultSetTardisId(plugin);
-            if (rstid.fromUUID(player.getUniqueId().toString())) {
+            if (rstid.fromUuid(player.getUniqueId().toString())) {
                 // add button to view own saves (if in another player's tardis)
                 if (rstid.getTardisId() != id) {
                     own = new ItemStack(GuiSaves.LOAD_MY_SAVES.getMaterial(), 1);

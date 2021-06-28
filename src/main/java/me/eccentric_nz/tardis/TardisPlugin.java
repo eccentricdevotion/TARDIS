@@ -184,7 +184,7 @@ public class TardisPlugin extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.7.0");
+        versions.put("TARDISChunkGenerator", "4.7.2");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -716,7 +716,7 @@ public class TardisPlugin extends JavaPlugin {
      * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
      */
     private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TardisHumSounds().playTARDISHum(), 60, 1500);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TardisHumSounds().playTardisHum(), 60, 1500);
     }
 
     /**
@@ -817,7 +817,7 @@ public class TardisPlugin extends JavaPlugin {
         }
     }
 
-    public TardisMultiverseHelper getMVHelper() {
+    public TardisMultiverseHelper getMultiverseHelper() {
         return multiverseHelper;
     }
 
@@ -864,7 +864,7 @@ public class TardisPlugin extends JavaPlugin {
     /**
      * Loads the quotes from a text file.
      *
-     * @return an ArrayList of quotes
+     * @return an {@link ArrayList} of quotes
      */
     private ArrayList<String> quotes() {
         ArrayList<String> quotes = new ArrayList<>();
@@ -880,14 +880,14 @@ public class TardisPlugin extends JavaPlugin {
                 if (quotes.size() < 1) {
                     quotes.add("");
                 }
-            } catch (IOException io) {
+            } catch (IOException ioException) {
                 console.sendMessage(pluginName + "Could not read quotes file");
             } finally {
                 if (bufRdr != null) {
                     try {
                         bufRdr.close();
-                    } catch (IOException e) {
-                        debug("Error closing quotes reader! " + e.getMessage());
+                    } catch (IOException ioException) {
+                        debug("Error closing quotes reader! " + ioException.getMessage());
                     }
                 }
             }
@@ -896,7 +896,7 @@ public class TardisPlugin extends JavaPlugin {
     }
 
     /**
-     * Reads the config file and places the configured seed material for each room type into a HashMap.
+     * Reads the config file and places the configured seed material for each room type into a {@link HashMap}.
      */
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<>();
@@ -912,7 +912,7 @@ public class TardisPlugin extends JavaPlugin {
                 try {
                     Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
                     map.put(m, s);
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException illegalArgumentException) {
                     debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
                 }
             }
@@ -920,8 +920,8 @@ public class TardisPlugin extends JavaPlugin {
         if (r > 0) {
             try {
                 getRoomsConfig().save(new File(getDataFolder(), "rooms.yml"));
-            } catch (IOException io) {
-                debug("Could not save rooms.yml, " + io.getMessage());
+            } catch (IOException ioException) {
+                debug("Could not save rooms.yml, " + ioException.getMessage());
             }
         }
         return map;
@@ -972,10 +972,10 @@ public class TardisPlugin extends JavaPlugin {
             properties.load(in);
             String texture_pack = properties.getProperty("texture-pack");
             return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException fileNotFoundException) {
             debug("Could not find server.properties!");
             return link;
-        } catch (IOException ex) {
+        } catch (IOException ioException) {
             debug("Could not read server.properties!");
             return link;
         } finally {
@@ -983,7 +983,7 @@ public class TardisPlugin extends JavaPlugin {
                 if (in != null) {
                     in.close();
                 }
-            } catch (IOException ex) {
+            } catch (IOException ioException) {
                 debug("Could not close server.properties!");
             }
         }
@@ -1070,7 +1070,7 @@ public class TardisPlugin extends JavaPlugin {
     /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
-     * @param o the Object to print to the console
+     * @param o the {@link Object} to print to the console
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {

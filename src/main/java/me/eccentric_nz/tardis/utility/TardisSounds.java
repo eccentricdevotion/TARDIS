@@ -39,7 +39,7 @@ public class TardisSounds {
      *
      * @param p the player to play the sound to
      */
-    public static void playTARDISHum(Player p) {
+    public static void playTardisHum(Player p) {
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TardisPlugin.plugin, p.getUniqueId().toString());
         boolean userSFX;
         String hum;

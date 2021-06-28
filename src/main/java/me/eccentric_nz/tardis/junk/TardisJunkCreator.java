@@ -49,7 +49,7 @@ class TardisJunkCreator {
         this.p = p;
     }
 
-    boolean createJunkTARDIS() {
+    boolean createJunkTardis() {
         if (!TardisPermission.hasPermission(p, "tardis.admin")) {
             TardisMessage.send(p, "CMD_ADMIN");
             return true;

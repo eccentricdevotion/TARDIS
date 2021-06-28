@@ -20,7 +20,7 @@ class SudoDeadlock {
     boolean toggleDeadlock(UUID uuid, CommandSender sender) {
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         // does the player have a TARDIS
-        if (rs.fromUUID(uuid.toString())) {
+        if (rs.fromUuid(uuid.toString())) {
             int id = rs.getTardisId();
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);

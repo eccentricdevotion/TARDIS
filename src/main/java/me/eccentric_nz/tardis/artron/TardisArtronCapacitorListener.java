@@ -150,7 +150,7 @@ public class TardisArtronCapacitorListener implements Listener {
                                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                                         switch (plugin.getWorldManager()) {
                                             case MULTIVERSE:
-                                                if (!plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
+                                                if (!plugin.getMultiverseHelper().isWorldSurvival(block.getLocation().getWorld())) {
                                                     TardisMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
@@ -313,7 +313,7 @@ public class TardisArtronCapacitorListener implements Listener {
 
     private boolean claimAbandoned(Player player, int id, Block block, Tardis tardis) {
         // transfer ownership to the player who clicked
-        boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
+        boolean pu = plugin.getQueryFactory().claimTardis(player, id);
         // make sure player is added as owner of interior WorldGuard region
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());

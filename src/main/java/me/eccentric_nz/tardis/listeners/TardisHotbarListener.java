@@ -46,7 +46,7 @@ public class TardisHotbarListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSelectTARDISItem(PlayerItemHeldEvent event) {
+    public void onSelectTardisItem(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(event.getNewSlot());
@@ -61,7 +61,7 @@ public class TardisHotbarListener implements Listener {
                 if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("tardis Locator")) {
                     // get tardis location
                     ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                    if (rs.fromUUID(player.getUniqueId().toString())) {
+                    if (rs.fromUuid(player.getUniqueId().toString())) {
                         HashMap<String, Object> wherecl = new HashMap<>();
                         wherecl.put("tardis_id", rs.getTardisId());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

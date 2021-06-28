@@ -48,7 +48,7 @@ class TardisDesiegeCommand {
             UUID uuid = p.getUniqueId();
             // get the player's tardis id
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(uuid.toString())) {
+            if (!rs.fromUuid(uuid.toString())) {
                 TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
             }

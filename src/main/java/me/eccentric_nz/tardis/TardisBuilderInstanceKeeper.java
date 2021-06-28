@@ -110,7 +110,7 @@ public class TardisBuilderInstanceKeeper {
         PRECIOUS.add(Material.REDSTONE_BLOCK);
     }
 
-    private final HashMap<Location, TardisBuildData> trackTARDISSeed = new HashMap<>();
+    private final HashMap<Location, TardisBuildData> trackTardisSeed = new HashMap<>();
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
     private final TardisStainedGlassLookupTable stainedGlassLookup = new TardisStainedGlassLookupTable();
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
@@ -121,7 +121,7 @@ public class TardisBuilderInstanceKeeper {
     }
 
     public HashMap<Location, TardisBuildData> getTrackTardisSeed() {
-        return trackTARDISSeed;
+        return trackTardisSeed;
     }
 
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {

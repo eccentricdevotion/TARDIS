@@ -41,7 +41,7 @@ class TardisEmergencyProgrammeCommand {
         this.plugin = plugin;
     }
 
-    boolean showEP1(Player p) {
+    boolean showEp1(Player p) {
         if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTardisWorld(p)) {
                 TardisMessage.send(p, "CMD_IN_WORLD");
@@ -86,8 +86,8 @@ class TardisEmergencyProgrammeCommand {
                 playerUUIDs = new ArrayList<>();
                 playerUUIDs.add(p.getUniqueId());
             }
-            TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
+            TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tardisEpsRunnable, 20L);
         } else {
             TardisMessage.send(p, "EP1_DISABLED");
         }

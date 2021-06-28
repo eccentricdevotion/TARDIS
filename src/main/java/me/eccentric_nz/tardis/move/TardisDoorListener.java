@@ -135,7 +135,7 @@ public class TardisDoorListener {
                 if (player.isPlayerTimeRelative()) {
                     setTemporalLocation(player, -1);
                 }
-                TardisSounds.playTARDISHum(player);
+                TardisSounds.playTardisHum(player);
             }
             // give a key
             giveKey(player);
@@ -151,7 +151,7 @@ public class TardisDoorListener {
     public boolean checkSurvival(World world) {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
-            case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
+            case MULTIVERSE -> bool = plugin.getMultiverseHelper().isWorldSurvival(world);
             case NONE -> bool = Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode")).equalsIgnoreCase("SURVIVAL");
         }
         return bool;

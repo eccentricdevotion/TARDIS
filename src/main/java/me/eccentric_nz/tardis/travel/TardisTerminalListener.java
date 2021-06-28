@@ -155,7 +155,7 @@ public class TardisTerminalListener implements Listener {
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<>();
                                 String[] data = terminalDestination.get(uuid).split(":");
-                                String ww = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                                String ww = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getWorld(data[0]).getName() : data[0];
                                 set.put("world", ww);
                                 set.put("x", data[1]);
                                 set.put("y", data[2]);
@@ -307,7 +307,7 @@ public class TardisTerminalListener implements Listener {
     private void setCurrent(InventoryView view, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            current = plugin.getMVHelper().getAlias(current);
+            current = plugin.getMultiverseHelper().getAlias(current);
         } else {
             current = TardisAliasResolver.getWorldAlias(current);
         }
@@ -410,7 +410,7 @@ public class TardisTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : TardisAliasResolver.getWorldAlias(world);
+        return (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(world) : TardisAliasResolver.getWorldAlias(world);
     }
 
     private void checkSettings(InventoryView view, Player p) {
@@ -430,7 +430,7 @@ public class TardisTerminalListener implements Listener {
                 String world = Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(view.getItem(i)).getItemMeta()).getLore()).get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : TardisAliasResolver.getWorldFromAlias(world);
+                    World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getWorld(world) : TardisAliasResolver.getWorldFromAlias(world);
                     assert w != null;
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {

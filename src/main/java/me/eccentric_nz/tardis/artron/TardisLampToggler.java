@@ -56,7 +56,7 @@ public class TardisLampToggler {
             if (rsp.resultSet()) {
                 // only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
                 ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                if (rs.fromUUID(uuid.toString()) && rs.getTardisId() == id) {
+                if (rs.fromUuid(uuid.toString()) && rs.getTardisId() == id) {
                     lantern = rsp.isLanternsOn();
                     use_wool = rsp.isWoolLightsOn();
                 } else {

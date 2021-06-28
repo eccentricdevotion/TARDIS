@@ -90,7 +90,7 @@ import me.eccentric_nz.tardis.update.TardisUpdateListener;
 import java.util.Objects;
 
 /**
- * Registers all the listeners for the various events required to use the tardis.
+ * Registers all the listeners for the various events required to use the TARDIS.
  *
  * @author eccentric_nz
  */

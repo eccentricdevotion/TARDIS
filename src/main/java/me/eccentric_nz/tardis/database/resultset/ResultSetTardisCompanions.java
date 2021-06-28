@@ -57,7 +57,7 @@ public class ResultSetTardisCompanions {
      * @param uuid the Time Lord uuid to check
      * @return true or false depending on whether the tardis is powered on
      */
-    public boolean fromUUID(String uuid) {
+    public boolean fromUuid(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT companions FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
@@ -96,7 +96,7 @@ public class ResultSetTardisCompanions {
      * @param id the Tardis ID to check
      * @return true or false depending on whether the tardis is powered on
      */
-    public boolean fromID(int id) {
+    public boolean fromId(int id) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT companions FROM " + prefix + "tardis WHERE tardis_id = ?";

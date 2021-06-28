@@ -48,13 +48,13 @@ class TardisHandlesScanCommand {
     private final TardisPlugin plugin;
     private final Player player;
     private final int id;
-    private final boolean inTARDIS;
+    private final boolean inTardis;
 
     TardisHandlesScanCommand(TardisPlugin plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
-        inTARDIS = plugin.getUtils().inTardisWorld(this.player);
+        inTardis = plugin.getUtils().inTardisWorld(this.player);
     }
 
     boolean sayScan() {
@@ -64,7 +64,7 @@ class TardisHandlesScanCommand {
         CardinalDirection tardisDirection;
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        if (inTARDIS) {
+        if (inTardis) {
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, where);
                 if (!rsn.resultSet()) {
@@ -181,14 +181,14 @@ class TardisHandlesScanCommand {
         long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
         String daynight = TardisStaticUtils.getTime(time);
         // message the player
-        if (inTARDIS) {
+        if (inTardis) {
             TardisMessage.handlesSend(player, "SCAN_RESULT", whereIsIt);
         } else {
             TardisMessage.handlesSend(player, "SCAN_PLAYER");
         }
         String worldname;
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
+            worldname = plugin.getMultiverseHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = TardisAliasResolver.getWorldAlias(scan_loc.getWorld());
         }

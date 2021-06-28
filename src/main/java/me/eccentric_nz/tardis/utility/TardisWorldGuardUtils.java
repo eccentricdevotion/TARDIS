@@ -588,7 +588,7 @@ public class TardisWorldGuardUtils {
      * @param w the world to get the regions for
      * @return a list of tardis region names for this world
      */
-    public List<String> getTARDISRegions(World w) {
+    public List<String> getTardisRegions(World w) {
         List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         assert rm != null;

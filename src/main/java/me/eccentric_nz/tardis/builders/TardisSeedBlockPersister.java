@@ -63,15 +63,15 @@ public class TardisSeedBlockPersister {
             if (count > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " placed seed blocks.");
             }
-        } catch (SQLException ex) {
-            plugin.debug("Insert error for seeds table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("Insert error for seeds table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
                     ps.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing portals statement: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing portals statement: " + sqlException.getMessage());
             }
         }
     }
@@ -106,8 +106,8 @@ public class TardisSeedBlockPersister {
             // clear the portals table so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "seeds");
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for seeds table: " + ex.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for seeds table: " + sqlException.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -116,8 +116,8 @@ public class TardisSeedBlockPersister {
                 if (rs != null) {
                     rs.close();
                 }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing seeds statement or resultset: " + ex.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing seeds statement or resultset: " + sqlException.getMessage());
             }
         }
     }

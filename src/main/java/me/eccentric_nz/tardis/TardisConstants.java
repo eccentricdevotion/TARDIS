@@ -24,6 +24,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 
@@ -81,12 +82,12 @@ public class TardisConstants {
     public static final HashMap<Material, Material> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
 
     /**
-     * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks
+     * Creates a {@link HashMap} from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks
      * into more aesthetically pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
      *
-     * @param keys   an array of block types to change
-     * @param values an array of block types to change to
-     * @return the combined arrays as a HashMap
+     * @param keys   an {@link java.lang.reflect.Array array} of block types to change
+     * @param values an {@link java.lang.reflect.Array array} of block types to change to
+     * @return the combined arrays as a {@link HashMap}{@code <}{@link Material}{@code , }{@link Material}{@code >}
      */
     private static HashMap<Material, Material> toMap(Material[] keys, Material[] values) {
         int keysSize = (keys != null) ? keys.length : 0;

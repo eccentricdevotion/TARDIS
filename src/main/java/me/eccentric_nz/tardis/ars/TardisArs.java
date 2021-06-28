@@ -89,7 +89,7 @@ public enum TardisArs implements Ars {
      * Attempts to get the TARDISARS for the given material.
      *
      * @param mat the Material of the ars to get
-     * @return ars if found, or null
+     * @return ARS if found, or null
      */
     public static Ars arsFor(String mat) {
         if (Consoles.getBY_MATERIALS().containsKey(mat)) {

@@ -41,7 +41,7 @@ class TardisCubeCommand {
         // check they have tardis
         if (TardisPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return true;
             }

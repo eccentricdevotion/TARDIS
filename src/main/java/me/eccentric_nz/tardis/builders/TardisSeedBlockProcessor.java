@@ -84,7 +84,7 @@ public class TardisSeedBlockProcessor {
             String playerNameStr = player.getName();
             // check to see if they already have a tardis
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 // check it is not another Time Lords home location
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("world", Objects.requireNonNull(l.getWorld()).getName());

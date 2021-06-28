@@ -29,10 +29,10 @@ import org.bukkit.plugin.Plugin;
 public class TardisAngelsApi {
 
     /**
-     * Get TARDISWeepingAngelsAPI.
+     * Get {@link TardisWeepingAngelsApi}.
      *
-     * @param plugin - a tardis plugin instance
-     * @return the TARDISWeepingAngelsAPI
+     * @param plugin - a TARDIS plugin instance
+     * @return the {@link TardisWeepingAngelsApi}
      */
     public static TardisWeepingAngelsApi getApi(TardisPlugin plugin) {
         Plugin p = plugin.getPluginManager().getPlugin("TARDISWeepingAngels");

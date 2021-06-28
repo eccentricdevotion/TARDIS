@@ -137,7 +137,7 @@ public class TardisRecipeCommands implements CommandExecutor {
                     TardisMessage.send(player, "ARG_NOT_VALID");
                     return true;
                 }
-                showTARDISRecipe(player, args[1]);
+                showTardisRecipe(player, args[1]);
                 return true;
             }
             String which = args[0].toLowerCase();
@@ -279,7 +279,7 @@ public class TardisRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
-    private void showTARDISRecipe(Player player, String type) {
+    private void showTardisRecipe(Player player, String type) {
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch

@@ -33,8 +33,7 @@ public final class TardisDesktopThemeEvent extends TardisEvent {
     }
 
     /**
-     * Returns a desktop theme data object. You can use the {@link TardisUpgradeData
-     * TARDISUpgradeData} to determine the previous theme, the theme that the tardis is changing to, the wall and floor
+     * Returns a desktop theme data object. You can use the {@link TardisUpgradeData} to determine the previous theme, the theme that the tardis is changing to, the wall and floor
      * block types using the object's getter methods.
      *
      * @return the desktop theme data object

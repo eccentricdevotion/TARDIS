@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.disguise;
 
-import net.minecraft.server.v1_16_R3.EntityMushroomCow;
+import net.minecraft.world.entity.animal.EntityMushroomCow;
 import org.bukkit.entity.MushroomCow;
 
 public enum Mooshroom {
 
-    BROWN(EntityMushroomCow.Type.BROWN),
-    RED(EntityMushroomCow.Type.RED);
+    BROWN(EntityMushroomCow.Type.b), // BROWN
+    RED(EntityMushroomCow.Type.a); // RED
 
     private final EntityMushroomCow.Type nmsType;
 

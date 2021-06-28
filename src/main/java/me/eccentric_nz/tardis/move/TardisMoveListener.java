@@ -55,7 +55,7 @@ public class TardisMoveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
+    public void onPlayerMoveToFromTardis(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
             return;
@@ -69,7 +69,7 @@ public class TardisMoveListener implements Listener {
          * calculations... This is to prevent huge performance drops on high
          * player count servers.
          */
-        TardisMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(p);
+        TardisMoveSession tms = plugin.getTrackerKeeper().getTardisMoveSession(p);
         tms.setStaleLocation(loc);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around

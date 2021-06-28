@@ -45,7 +45,7 @@ public interface InmsHandler {
     void sendChunkSectionsUpdate(World world, int chunkX, int chunkZ, int sectionsMaskSky, int sectionsMaskBlock, Player player);
 
     // Utils...
-    boolean isValidSectionY(int sectionY);
+    boolean isValidSectionY(World world, int sectionY);
 
     int asSectionMask(int sectionY);
 

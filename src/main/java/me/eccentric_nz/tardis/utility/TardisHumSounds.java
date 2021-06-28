@@ -68,7 +68,7 @@ public class TardisHumSounds {
     /**
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
      */
-    public void playTARDISHum() {
+    public void playTardisHum() {
         if (TardisPlugin.plugin.getConfig().getBoolean("allow.sfx")) {
             new BukkitRunnable() {
                 @Override

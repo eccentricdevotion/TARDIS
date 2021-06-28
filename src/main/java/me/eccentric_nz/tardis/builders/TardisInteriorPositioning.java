@@ -176,8 +176,8 @@ public class TardisInteriorPositioning {
                     usedSlots.add(s);
                 }
             }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
+        } catch (SQLException sqlException) {
+            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + sqlException.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -186,8 +186,8 @@ public class TardisInteriorPositioning {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
+            } catch (SQLException sqlException) {
+                plugin.debug("Error closing tardis table (getting TIPS slots)! " + sqlException.getMessage());
             }
         }
         return usedSlots;
@@ -204,7 +204,7 @@ public class TardisInteriorPositioning {
             TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
             Location exitLocation = dl.getL();
             String[][][] json = TardisArsMethods.getGridFromJSON(rs.getJson());
-            Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+            Chunk c = plugin.getLocationUtils().getTardisChunk(id);
             for (Entity e : c.getEntities()) {
                 removeEntity(e, exitLocation);
             }

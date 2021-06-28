@@ -39,7 +39,7 @@ public class TardisLocationGetters {
      * @param id the database record id of the tardis to get the chunk for
      * @return the tardis interior chunk
      */
-    public Chunk getTARDISChunk(int id) {
+    public Chunk getTardisChunk(int id) {
         ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
         if (rs.fromID(id)) {
             String c = rs.getChunk();

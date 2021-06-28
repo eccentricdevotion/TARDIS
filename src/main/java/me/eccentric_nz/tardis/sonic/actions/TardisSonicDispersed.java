@@ -34,7 +34,7 @@ public class TardisSonicDispersed {
             UUID uuid = player.getUniqueId();
             // get tardis id
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (rs.fromUUID(uuid.toString())) {
+            if (rs.fromUuid(uuid.toString())) {
                 // rebuild
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
                 plugin.getTrackerKeeper().getDispersedTARDII().remove(rs.getTardisId());

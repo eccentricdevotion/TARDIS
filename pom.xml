@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.tardis</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.7.0</version>
+    <version>4.7.2</version>
     <packaging>jar</packaging>
     <name>TARDIS</name>
     <description>A Doctor Who plugin</description>
@@ -174,28 +174,6 @@
                 <!-- Get the build number from Jenkins -->
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <!-- Attach Javadocs -->
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.1-SNAPSHOT</version>
-                        <configuration>
-                            <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>javadoc-jar</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
     <build>
@@ -221,6 +199,21 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Attach Javadocs -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -354,7 +347,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
@@ -367,7 +360,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
@@ -571,14 +564,14 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.7.0</version>
+            <version>4.7.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.eccentric_nz.tardisweepingangels</groupId>
             <artifactId>TARDISWeepingAngels</artifactId>
-            <version>3.3.3</version>
+            <version>3.4.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

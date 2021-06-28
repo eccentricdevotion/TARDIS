@@ -252,7 +252,7 @@ public class TardisMaterialIdConverter {
         LEGACY_ID_LOOKUP.put(205, Material.PURPUR_SLAB);
         LEGACY_ID_LOOKUP.put(206, Material.END_STONE_BRICKS);
         LEGACY_ID_LOOKUP.put(207, Material.BEETROOTS);
-        LEGACY_ID_LOOKUP.put(208, Material.GRASS_PATH);
+        LEGACY_ID_LOOKUP.put(208, Material.DIRT_PATH);
         LEGACY_ID_LOOKUP.put(209, Material.END_GATEWAY);
         LEGACY_ID_LOOKUP.put(210, Material.REPEATING_COMMAND_BLOCK);
         LEGACY_ID_LOOKUP.put(211, Material.CHAIN_COMMAND_BLOCK);

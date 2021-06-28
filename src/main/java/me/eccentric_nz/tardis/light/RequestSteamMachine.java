@@ -24,6 +24,7 @@
  */
 package me.eccentric_nz.tardis.light;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -60,20 +61,19 @@ public class RequestSteamMachine implements Runnable {
         return started;
     }
 
-    public boolean addToQueue(Runnable request) {
+    public void addToQueue(Runnable request) {
         if (request != null) {
             REQUEST_QUEUE.add(request);
-            return true;
         }
-        return false;
     }
 
     public void addChunkToUpdate(ChunkInfo chunkInfo, LightType lightType, Collection<? extends Player> receivers) {
-        int SectionY = chunkInfo.getChunkY();
+        int sectionY = chunkInfo.getChunkY();
+        World world = chunkInfo.getWorld();
         InmsHandler nmsHandler = new NmsHandler();
-        if (nmsHandler.isValidSectionY(SectionY)) {
+        if (nmsHandler.isValidSectionY(world, sectionY)) {
             ChunkLocation chunkLocation = new ChunkLocation(chunkInfo.getWorld(), chunkInfo.getChunkX(), chunkInfo.getChunkZ());
-            int sectionYMask = nmsHandler.asSectionMask(SectionY);
+            int sectionYMask = nmsHandler.asSectionMask(sectionY);
             Collection<Player> players = new ArrayList<>(receivers != null ? receivers : chunkInfo.getReceivers());
             addToQueue(() -> {
                 ChunkUpdateInfo chunkUpdateInfo = chunksToUpdate.get(chunkLocation);

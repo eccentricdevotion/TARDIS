@@ -40,7 +40,7 @@ public class TardisEntityTracker {
         this.plugin = plugin;
     }
 
-    public void addNPCs(Location exterior, Location interior, UUID uuid) {
+    public void addNpcs(Location exterior, Location interior, UUID uuid) {
         List<Entity> ents = TardisScanner.getNearbyEntities(exterior, 6);
         List<UUID> npcids = new ArrayList<>();
         for (Entity e : ents) {
@@ -140,18 +140,18 @@ public class TardisEntityTracker {
             }
         }
         if (npcids.size() > 0) {
-            plugin.getTrackerKeeper().getRenderedNPCs().put(uuid, npcids);
+            plugin.getTrackerKeeper().getRenderedNpcs().put(uuid, npcids);
         }
     }
 
-    public void removeNPCs(UUID uuid) {
-        plugin.getTrackerKeeper().getRenderedNPCs().get(uuid).forEach((i) -> {
+    public void removeNpcs(UUID uuid) {
+        plugin.getTrackerKeeper().getRenderedNpcs().get(uuid).forEach((i) -> {
             Entity npc = Bukkit.getEntity(i);
             if (npc != null) {
                 TardisArmorStandDisguiser.undisguiseArmourStand((ArmorStand) npc);
                 npc.remove();
             }
         });
-        plugin.getTrackerKeeper().getRenderedNPCs().remove(uuid);
+        plugin.getTrackerKeeper().getRenderedNpcs().remove(uuid);
     }
 }

@@ -83,7 +83,7 @@ public class TardisCondenserListener implements Listener {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                         switch (plugin.getWorldManager()) {
                             case MULTIVERSE:
-                                if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
+                                if (!plugin.getMultiverseHelper().isWorldSurvival(loc.getWorld())) {
                                     TardisMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }

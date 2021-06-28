@@ -56,10 +56,10 @@ public class TardisHostileAction {
                 if (rsp.isHadsOn() && powered) {
                     switch (rsp.getHadsType()) {
                         case DISPLACEMENT:
-                            new TardisHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
+                            new TardisHostileDisplacement(plugin).moveTardis(id, uuid, hostile, preset);
                             break;
                         case DISPERSAL:
-                            new TardisHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                            new TardisHostileDispersal(plugin).disperseTardis(id, uuid, hostile, preset);
                             break;
                         default:
                             break;

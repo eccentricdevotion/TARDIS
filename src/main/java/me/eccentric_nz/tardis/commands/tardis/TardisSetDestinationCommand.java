@@ -47,7 +47,7 @@ class TardisSetDestinationCommand {
     boolean doSetDestination(Player player, String[] args) {
         if (TardisPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }

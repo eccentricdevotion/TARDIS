@@ -68,7 +68,7 @@ public class TardisThemeButton {
     private int getTardisId(String uuid) {
         int tid = 0;
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID(uuid)) {
+        if (rs.fromUuid(uuid)) {
             tid = rs.getTardisId();
         }
         return tid;

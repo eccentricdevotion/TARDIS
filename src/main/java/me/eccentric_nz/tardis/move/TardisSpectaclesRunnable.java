@@ -59,7 +59,7 @@ public class TardisSpectaclesRunnable implements Runnable {
                 String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
                 if (b.equals(value.toString())) {
                     ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                    if (rs.fromUUID(key.toString())) {
+                    if (rs.fromUuid(key.toString())) {
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", rs.getTardisId());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

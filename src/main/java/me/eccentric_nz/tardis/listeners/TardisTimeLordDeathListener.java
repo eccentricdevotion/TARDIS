@@ -108,8 +108,8 @@ public class TardisTimeLordDeathListener implements Listener {
                                             List<UUID> data = rst.getData();
                                             if (data.size() > 0 && !data.contains(uuid)) {
                                                 // schedule the NPC to appear
-                                                TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
+                                                TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tardisEpsRunnable, 20L);
                                             }
                                         }
                                     }
@@ -314,7 +314,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);
                                     if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
-                                        Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+                                        Chunk c = plugin.getLocationUtils().getTardisChunk(id);
                                         TardisSiegeArea tsa = new TardisSiegeArea(id, c);
                                         if (plugin.getConfig().getInt("siege.breeding") > 0) {
                                             List<TardisSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());

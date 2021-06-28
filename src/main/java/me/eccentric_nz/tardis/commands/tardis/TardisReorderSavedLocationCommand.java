@@ -45,7 +45,7 @@ class TardisReorderSavedLocationCommand {
                 return false;
             }
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUuid(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }

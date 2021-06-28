@@ -238,7 +238,7 @@ public class TardisExteriorRenderer {
         }
         // if enabled add static entities
         if (plugin.getConfig().getBoolean("preferences.render_entities")) {
-            new TardisEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
+            new TardisEntityTracker(plugin).addNpcs(exterior, location, p.getUniqueId());
         }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<>();

@@ -108,7 +108,7 @@ class TardisListCommand {
                         TardisMessage.send(sender, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TardisAliasResolver.getWorldAlias(rsc.getWorld());
+                    String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(rsc.getWorld()) : TardisAliasResolver.getWorldAlias(rsc.getWorld());
                     TextComponent tct = new TextComponent(String.format("%s %s", t.getTardisId(), t.getOwner()));
                     tct.setColor(ChatColor.GREEN);
                     tct.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, rsc.getX(), rsc.getY(), rsc.getZ()))));

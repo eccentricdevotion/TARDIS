@@ -17,14 +17,27 @@
 package me.eccentric_nz.tardis.disguise;
 
 import me.eccentric_nz.tardischunkgenerator.TardisHelperPlugin;
-import net.minecraft.server.v1_16_R3.Entity;
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.core.IRegistry;
+import net.minecraft.network.chat.ChatMessage;
+import net.minecraft.world.entity.EntityAgeable;
+import net.minecraft.world.entity.EntityTameableAnimal;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EnumItemSlot;
+import net.minecraft.world.entity.ambient.EntityBat;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.horse.*;
+import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.npc.EntityVillager;
+import net.minecraft.world.item.EnumColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.IBlockData;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_16_R3.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_17_R1.util.CraftNamespacedKey;
 import org.bukkit.entity.*;
 
 import java.lang.reflect.Constructor;
@@ -43,41 +56,128 @@ public class TardisDisguise {
         this.options = options;
     }
 
-    public static Entity createMobDisguise(TardisDisguise disguise, World world) {
-        String string = switch (disguise.getEntityType()) {
-            case ZOMBIE_HORSE, SKELETON_HORSE, ELDER_GUARDIAN, WITHER_SKELETON, TRADER_LLAMA -> switchAndCapitalise(disguise.getEntityType().toString());
-            case WANDERING_TRADER -> "VillagerTrader";
-            case HUSK -> "ZombieHusk";
-            case STRAY -> "SkeletonStray";
-            case PUFFERFISH -> "PufferFish";
-            case ILLUSIONER -> "IllagerIllusioner";
-            case GIANT -> "GiantZombie";
-            case DONKEY, MULE -> "Horse" + capitalise(disguise.getEntityType().toString());
-            default -> capitalise(disguise.getEntityType().toString());
-        };
+    public static net.minecraft.world.entity.Entity createMobDisguise(TardisDisguise disguise, World w) {
+        String string;
+        String packagePath = "net.minecraft.world.entity.";
+        boolean hasEntityString = true;
+        switch (disguise.getEntityType()) {
+            case AXOLOTL -> {
+                string = "Axolotl";
+                packagePath += "animal.axolotl.";
+                hasEntityString = false;
+            }
+            case BAT -> {
+                string = "Bat";
+                packagePath += "ambient.";
+            }
+            case GOAT -> {
+                string = "Goat";
+                packagePath += "animal.goat.";
+                hasEntityString = false;
+            }
+            case ZOMBIE_HORSE, SKELETON_HORSE, TRADER_LLAMA -> {
+                string = switchAndCapitalise(disguise.getEntityType().toString());
+                packagePath += "animal.horse.";
+            }
+            case ELDER_GUARDIAN, WITHER_SKELETON -> {
+                string = switchAndCapitalise(disguise.getEntityType().toString());
+                packagePath += "monster.";
+            }
+            case WANDERING_TRADER -> {
+                string = "VillagerTrader";
+                packagePath += "npc.";
+            }
+            case HUSK -> {
+                string = "ZombieHusk";
+                packagePath += "monster.";
+            }
+            case STRAY -> {
+                string = "SkeletonStray";
+                packagePath += "monster.";
+            }
+            case PUFFERFISH -> {
+                string = "PufferFish";
+                packagePath += "animal.";
+            }
+            case ILLUSIONER -> {
+                string = "IllagerIllusioner";
+                packagePath += "monster.";
+            }
+            case GIANT -> {
+                string = "GiantZombie";
+                packagePath += "monster.";
+            }
+            case HORSE, LLAMA -> {
+                string = capitalise(disguise.getEntityType().toString());
+                packagePath += "animal.horse.";
+            }
+            case DONKEY, MULE -> {
+                string = "Horse" + capitalise(disguise.getEntityType().toString());
+                packagePath += "animal.horse.";
+            }
+            case VILLAGER -> {
+                string = "Villager";
+                packagePath += "npc.";
+            }
+            case ZOMBIFIED_PIGLIN -> {
+                string = "PigZombie";
+                packagePath += "monster.";
+            }
+            case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE, PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR, WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
+                string = capitalise(disguise.getEntityType().toString());
+                packagePath += "monster.";
+            }
+            case HOGLIN -> {
+                string = "Hoglin";
+                packagePath += "monster.hoglin.";
+            }
+            case WITHER -> {
+                string = "Wither";
+                packagePath += "boss.wither.";
+            }
+            case PIGLIN, PIGLIN_BRUTE -> {
+                string = capitalise(disguise.getEntityType().toString());
+                packagePath += "monster.piglin.";
+            }
+            case GLOW_SQUID -> {
+                string = "GlowSquid";
+                //                packagePath = "";
+                hasEntityString = false;
+            }
+            default -> {
+                string = capitalise(disguise.getEntityType().toString());
+                packagePath += "animal.";
+            }
+        }
         try {
-            Class<? extends Entity> entityClass = (Class<? extends Entity>) Class.forName("net.minecraft.server.v1_16_R3.Entity" + string);
-            Constructor<? extends Entity> constructor = entityClass.getConstructor(EntityTypes.class, net.minecraft.server.v1_16_R3.World.class);
-            EntityTypes<? extends Entity> type = IRegistry.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
-            net.minecraft.server.v1_16_R3.World world1 = ((CraftWorld) world).getHandle();
-            Entity entity = constructor.newInstance(type, world1);
+            String entityPackage = packagePath + ((hasEntityString) ? "Entity" : "") + string;
+            Class entityClass = Class.forName(entityPackage);
+            Constructor constructor = entityClass.getConstructor(EntityTypes.class, net.minecraft.world.level.World.class);
+            EntityTypes type = IRegistry.Y.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
+            net.minecraft.world.level.World world = ((CraftWorld) w).getHandle();
+            net.minecraft.world.entity.Entity entity = (net.minecraft.world.entity.Entity) constructor.newInstance(type, world);
             if (disguise.getOptions() != null) {
                 for (Object object : disguise.getOptions()) {
                     if (object instanceof DyeColor) {
                         // colour a sheep / wolf collar
                         switch (disguise.getEntityType()) {
-                            case SHEEP:
+                            case SHEEP -> {
                                 EntitySheep sheep = (EntitySheep) entity;
                                 sheep.setColor(EnumColor.valueOf(object.toString()));
-                                break;
-                            case WOLF:
+                            }
+                            case WOLF -> {
                                 EntityWolf wolf = (EntityWolf) entity;
                                 wolf.setTamed(true);
                                 wolf.setCollarColor(EnumColor.valueOf(object.toString()));
-                                break;
-                            default:
-                                break;
+                            }
+                            default -> {
+                            }
                         }
+                    }
+                    if (object instanceof Axolotl.Variant && disguise.getEntityType().equals(EntityType.AXOLOTL)) {
+                        net.minecraft.world.entity.animal.axolotl.Axolotl axolotl = (net.minecraft.world.entity.animal.axolotl.Axolotl) entity;
+                        net.minecraft.world.entity.animal.axolotl.Axolotl.Variant variant = net.minecraft.world.entity.animal.axolotl.Axolotl.Variant.values()[((Axolotl.Variant) object).ordinal()];
+                        axolotl.setVariant(variant);
                     }
                     if (object instanceof Rabbit.Type && disguise.getEntityType().equals(EntityType.RABBIT)) {
                         EntityRabbit rabbit = (EntityRabbit) entity;
@@ -110,7 +210,7 @@ public class TardisDisguise {
                         EntityCat cat = (EntityCat) entity;
                         cat.setCatType(((Cat.Type) object).ordinal());
                     }
-                    if (object instanceof me.eccentric_nz.tardis.disguise.Fox && disguise.getEntityType().equals(EntityType.FOX)) {
+                    if (object instanceof Fox && disguise.getEntityType().equals(EntityType.FOX)) {
                         EntityFox fox = (EntityFox) entity;
                         fox.setFoxType(((Fox) object).getNmsType());
                     }
@@ -126,80 +226,78 @@ public class TardisDisguise {
                         // tamed fox, wolf, cat / decorated llama, chest carrying mule or donkey / trusting ocelot
                         // rainbow sheep / saddled pig / block carrying enderman / powered creeper / hanging bat / blazing blaze
                         switch (disguise.getEntityType()) {
-                            case FOX:
-                            case WOLF:
-                            case CAT:
+                            case FOX, WOLF, CAT -> {
                                 EntityTameableAnimal tameable = (EntityTameableAnimal) entity;
                                 tameable.setTamed((Boolean) object);
-                                break;
-                            case DONKEY:
-                            case MULE:
+                            }
+                            case DONKEY, MULE -> {
                                 EntityHorseChestedAbstract chesty = (EntityHorseChestedAbstract) entity;
                                 chesty.setCarryingChest((Boolean) object);
-                                break;
-                            case SHEEP:
+                            }
+                            case SHEEP -> {
                                 if ((Boolean) object) {
                                     entity.setCustomName(new ChatMessage("jeb_"));
                                     entity.setCustomNameVisible(true);
                                 }
-                                break;
-                            case PIG:
+                            }
+                            case PIG -> {
                                 EntityPig pig = (EntityPig) entity;
                                 pig.saddle(null);
-                                break;
-                            case ENDERMAN:
+                            }
+                            case ENDERMAN -> {
                                 if ((Boolean) object) {
                                     EntityEnderman enderman = (EntityEnderman) entity;
-                                    IBlockData block = Blocks.PURPUR_BLOCK.getBlockData();
+                                    IBlockData block = Blocks.iN.getBlockData(); // iN = PURPUR_BLOCK
                                     enderman.setCarried(block);
                                 }
-                                break;
-                            case CREEPER:
+                            }
+                            case CREEPER -> {
                                 EntityCreeper creeper = (EntityCreeper) entity;
                                 creeper.setPowered((Boolean) object);
-                                break;
-                            case BAT:
+                            }
+                            case BAT -> {
                                 EntityBat bat = (EntityBat) entity;
                                 bat.setAsleep((Boolean) object);
-                                break;
-                            case SNOWMAN:
+                            }
+                            case SNOWMAN -> {
                                 EntitySnowman snowman = (EntitySnowman) entity;
                                 snowman.setHasPumpkin(!(Boolean) object);
-                                break;
-                            case PILLAGER:
+                            }
+                            case PILLAGER -> {
                                 if ((Boolean) object) {
                                     EntityPillager pillager = (EntityPillager) entity;
                                     ItemStack crossbow = CraftItemStack.asNMSCopy(new org.bukkit.inventory.ItemStack(org.bukkit.Material.CROSSBOW));
-                                    pillager.setSlot(EnumItemSlot.MAINHAND, crossbow);
+                                    pillager.setSlot(EnumItemSlot.a, crossbow); // a = MAINHAND
                                     pillager.a(pillager, 1.0f);
                                 }
-                                break;
-                            case LLAMA:
+                            }
+                            case LLAMA -> {
                                 EntityLlama llama = (EntityLlama) entity;
                                 org.bukkit.inventory.ItemStack bukkitItemStack = new org.bukkit.inventory.ItemStack(Carpet.values()[ThreadLocalRandom.current().nextInt(16)].getCarpet());
                                 ItemStack nmsItemStack = CraftItemStack.asNMSCopy(bukkitItemStack);
-                                llama.inventoryChest.setItem(1, nmsItemStack);
-                            default:
-                                break;
+                                llama.cd.setItem(1, nmsItemStack); // cd = inventoryChest
+                            }
+                            default -> {
+                            }
                         }
                     }
                     if (object instanceof Integer) {
                         // magma cube and slime size / pufferfish state
                         switch (disguise.getEntityType()) {
-                            case MAGMA_CUBE:
+                            case MAGMA_CUBE -> {
                                 EntityMagmaCube magma = (EntityMagmaCube) entity;
                                 magma.setSize((Integer) object, false);
-                                break;
-                            case SLIME:
+                            }
+                            case SLIME -> {
                                 EntitySlime slime = (EntitySlime) entity;
                                 slime.setSize((Integer) object, false);
-                                break;
-                            case PUFFERFISH:
+                            }
+                            case PUFFERFISH -> {
                                 EntityPufferFish puffer = (EntityPufferFish) entity;
                                 puffer.setPuffState((Integer) object);
-                                break;
-                            default:
-                                break;
+                            }
+                            default -> {
+                            }
                         }
                     }
                     if (object instanceof TropicalFish.Pattern && disguise.getEntityType().equals(EntityType.TROPICAL_FISH)) {
@@ -225,18 +323,18 @@ public class TardisDisguise {
         return null;
     }
 
-    private static String switchAndCapitalise(String string) {
-        String[] split = string.split("_");
+    private static String switchAndCapitalise(String s) {
+        String[] split = s.split("_");
         return uppercaseFirst(split[1]) + uppercaseFirst(split[0]);
     }
 
-    private static String capitalise(String string) {
-        String[] split = string.split("_");
+    private static String capitalise(String s) {
+        String[] split = s.split("_");
         return (split.length > 1) ? uppercaseFirst(split[0]) + uppercaseFirst(split[1]) : uppercaseFirst(split[0]);
     }
 
-    private static String uppercaseFirst(String string) {
-        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+    private static String uppercaseFirst(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
     public EntityType getEntityType() {

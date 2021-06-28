@@ -43,7 +43,7 @@ public class CreativeCommand {
         Creative creative;
         try {
             creative = Creative.valueOf(args[2].toLowerCase(Locale.ENGLISH));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException illegalArgumentException) {
             return false;
         }
         // do stuff

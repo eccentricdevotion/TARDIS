@@ -102,7 +102,7 @@ public class TardisConsoleLoader {
                 String seed = Objects.requireNonNull(plugin.getCustomConsolesConfig().getString(console + ".seed")).toUpperCase(Locale.ENGLISH);
                 try {
                     Material.valueOf(seed);
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException illegalArgumentException) {
                     plugin.debug("Invalid custom seed block material for " + console + "!");
                     continue;
                 }
@@ -135,8 +135,8 @@ public class TardisConsoleLoader {
             // save custom consoles config
             try {
                 plugin.getCustomConsolesConfig().save(new File(plugin.getDataFolder(), "custom_consoles.yml"));
-            } catch (IOException io) {
-                plugin.debug("Could not save custom_consoles.yml, " + io);
+            } catch (IOException ioException) {
+                plugin.debug("Could not save custom_consoles.yml, " + ioException);
             }
         }
     }

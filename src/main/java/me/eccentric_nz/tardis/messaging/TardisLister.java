@@ -80,7 +80,7 @@ public class TardisLister {
                 if (!s.startsWith("rift")) {
                     String w;
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        w = plugin.getMVHelper().getAlias(TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
+                        w = plugin.getMultiverseHelper().getAlias(TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
                     } else {
                         w = TardisAliasResolver.getWorldAlias(TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
                     }
@@ -135,7 +135,7 @@ public class TardisLister {
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TardisPlugin.plugin, wherehl);
                     rsh.resultSet();
-                    String homeWorld = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TardisAliasResolver.getWorldAlias(rsh.getWorld());
+                    String homeWorld = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(rsh.getWorld()) : TardisAliasResolver.getWorldAlias(rsh.getWorld());
                     TextComponent tch = new TextComponent(plugin.getLanguage().getString("HOME"));
                     tch.setColor(ChatColor.GREEN);
                     tch.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", homeWorld, rsh.getX(), rsh.getY(), rsh.getZ()))));
@@ -149,7 +149,7 @@ public class TardisLister {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
-                                String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TardisAliasResolver.getWorldAlias(map.get("world"));
+                                String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(map.get("world")) : TardisAliasResolver.getWorldAlias(map.get("world"));
                                 TextComponent tcd = new TextComponent(map.get("dest_name"));
                                 tcd.setColor(ChatColor.GREEN);
                                 tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));

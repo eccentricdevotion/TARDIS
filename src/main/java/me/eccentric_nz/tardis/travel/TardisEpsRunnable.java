@@ -93,7 +93,7 @@ public class TardisEpsRunnable implements Runnable {
                     l.setYaw(yaw);
                 }
                 // create NPC
-                int npcID = TardisEpsDisguiser.spawnEmergencyProgrammeOne(tl, l);
+                int npcId = TardisEpsDisguiser.spawnEmergencyProgrammeOne(tl, l);
                 players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
@@ -107,7 +107,7 @@ public class TardisEpsRunnable implements Runnable {
                             TardisMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
-                    TardisEpsDisguiser.removeNpc(npcID, l.getWorld());
+                    TardisEpsDisguiser.removeNpc(npcId, l.getWorld());
                 }, 1000L);
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());

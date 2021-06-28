@@ -33,7 +33,7 @@ class TardisHandlesRemoveCommand {
 
     boolean purge(Player player) {
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
+        if (rs.fromUuid(player.getUniqueId().toString())) {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", rs.getTardisId());
             whereh.put("type", 26);

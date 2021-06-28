@@ -48,7 +48,7 @@ class TardisCheckLocCommand {
         }
         // check they are a timelord
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
+        if (!rs.fromUuid(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }

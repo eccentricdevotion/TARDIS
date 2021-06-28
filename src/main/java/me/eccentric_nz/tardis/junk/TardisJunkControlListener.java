@@ -63,7 +63,7 @@ public class TardisJunkControlListener implements Listener {
         repeaterMap.put(2, 10);
         repeaterMap.put(3, 100);
         repeaterMap.put(4, 1000);
-        worlds = this.plugin.getTardisApi().getOverWorlds();
+        worlds = this.plugin.getTardisApi().getOverworlds();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -212,7 +212,7 @@ public class TardisJunkControlListener implements Listener {
             }
             World w;
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                w = plugin.getMVHelper().getWorld(line1);
+                w = plugin.getMultiverseHelper().getWorld(line1);
             } else {
                 w = TardisAliasResolver.getWorldFromAlias(line1);
             }

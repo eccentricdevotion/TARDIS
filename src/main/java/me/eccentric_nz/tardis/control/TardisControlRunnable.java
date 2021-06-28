@@ -58,7 +58,7 @@ public class TardisControlRunnable implements Runnable {
                             } else {
                                 String worldname = (rsc.getWorld() != null) ? TardisAliasResolver.getWorldAlias(rsc.getWorld()) : "";
                                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
-                                    worldname = plugin.getMVHelper().getAlias(worldname);
+                                    worldname = plugin.getMultiverseHelper().getAlias(worldname);
                                 }
                                 sign.setLine(0, ChatColor.DARK_PURPLE + worldname);
                                 sign.setLine(1, ChatColor.BLACK + rsc.getLocation());

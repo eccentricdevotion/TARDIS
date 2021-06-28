@@ -82,7 +82,7 @@ public class TardisSudoCommand extends TardisCompleter implements CommandExecuto
                 }
                 UUID uuid = offlinePlayer.getUniqueId();
                 ResultSetTardisId rs = new ResultSetTardisId(plugin);
-                if (!rs.fromUUID(uuid.toString())) {
+                if (!rs.fromUuid(uuid.toString())) {
                     TardisMessage.send(sender, "PLAYER_NO_TARDIS");
                     return true;
                 }

@@ -127,7 +127,7 @@ public class TardisSaveSignInventory {
                         assert im != null;
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
-                        String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TardisAliasResolver.getWorldAlias(map.get("world"));
+                        String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMultiverseHelper().getAlias(map.get("world")) : TardisAliasResolver.getWorldAlias(map.get("world"));
                         lore.add(world);
                         lore.add(map.get("x"));
                         lore.add(map.get("y"));
@@ -176,7 +176,7 @@ public class TardisSaveSignInventory {
         ItemStack own = null;
         // is it this player's TARDIS?
         ResultSetTardisId rstid = new ResultSetTardisId(plugin);
-        if (rstid.fromUUID(player.getUniqueId().toString())) {
+        if (rstid.fromUuid(player.getUniqueId().toString())) {
             // add button to view own saves (if in another player's TARDIS)
             if (rstid.getTardisId() != id) {
                 own = new ItemStack(GuiSaves.LOAD_MY_SAVES.getMaterial(), 1);

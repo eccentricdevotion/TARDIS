@@ -49,7 +49,7 @@ class TardisRegionFlagCommand {
         }
         String world_name = plugin.getConfig().getString("creation.default_world_name");
         // get all regions for the default world
-        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TardisAliasResolver.getWorldFromAlias(world_name));
+        List<String> world_regions = plugin.getWorldGuardUtils().getTardisRegions(TardisAliasResolver.getWorldFromAlias(world_name));
         world_regions.forEach((region_id) -> {
             if (flag.endsWith("entry")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);
