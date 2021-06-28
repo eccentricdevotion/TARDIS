@@ -11,7 +11,7 @@ dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
 version: maven-version-number
 build-number: maven-build-number
-api-version: 1.16
+api-version: 1.17
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
