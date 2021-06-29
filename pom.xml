@@ -160,20 +160,10 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>org.rauschig:jarchivelib</include>
-                                    <include>org.apache.commons:commons-compress</include>
                                     <include>io.papermc:paperlib</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
-                                <relocation>
-                                    <pattern>org.apache.commons:commons-compress</pattern>
-                                    <shadedPattern>lib:commons-compress</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.rauschig:jarchivelib</pattern>
-                                    <shadedPattern>lib:jarchivelib</shadedPattern>
-                                </relocation>
                                 <relocation>
                                     <pattern>io.papermc:lib</pattern>
                                     <shadedPattern>lib:paperlib</shadedPattern>
@@ -419,14 +409,11 @@
             <systemPath>${basedir}/lib/dynmap-api.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.rauschig</groupId>
-            <artifactId>jarchivelib</artifactId>
-            <version>0.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.20</version>
+            <groupId>org.geysermc.floodgate</groupId>
+            <artifactId>floodgate</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/floodgate-api.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>

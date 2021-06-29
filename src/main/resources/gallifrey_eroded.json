@@ -149,6 +149,8 @@
       "minecraft:rare_small_dripstone"
     ],
     [
+      "tardis:gallifrey_grass",
+      "tardis:gallifrey_tree",
       "minecraft:glow_lichen",
       "minecraft:patch_grass_badlands",
       "minecraft:patch_dead_bush_badlands",
