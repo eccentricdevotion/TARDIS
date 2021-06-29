@@ -44,9 +44,10 @@ public class TARDISRespawnListener implements Listener {
         UUID uuid = player.getUniqueId();
         // check if we should re-arch this player
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTARDISWorld(event.getRespawnLocation())) {
             // reset player time
             player.resetPlayerTime();
+
             // remove the player from the travellers table if they respawned in a non-TARDIS world
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
