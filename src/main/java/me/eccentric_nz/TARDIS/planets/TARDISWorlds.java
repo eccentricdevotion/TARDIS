@@ -130,7 +130,7 @@ public class TARDISWorlds {
         return false;
     }
 
-    private boolean isTARDISDataPackWorld(String p) {
-        return (p.endsWith("tardis_gallifrey") || p.endsWith("tardis_siluria") || p.endsWith("tardis_skaro"));
+    private boolean isTARDISDataPackWorld(String planet) {
+        return (planet.endsWith("tardis_gallifrey") || planet.endsWith("tardis_siluria") || planet.endsWith("tardis_skaro"));
     }
 }

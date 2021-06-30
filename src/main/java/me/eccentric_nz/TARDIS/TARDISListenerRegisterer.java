@@ -151,6 +151,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getPM().registerEvents(new TARDISCircuitRepairListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISChunkLoad(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCompanionGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCompanionAddGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCondenserListener(plugin), plugin);
