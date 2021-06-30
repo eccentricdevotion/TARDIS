@@ -32,7 +32,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "list", "set_biome", "stats", "tree");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints");
-    private final ImmutableList<String> BIOME_SUBS = ImmutableList.of("tardis:gallifrey_badlands", "tardis:gallifrey_plateau", "tardis:gallifrey_eroded", "tardis:skaro_desert", "tardis:skaro_hills", "tardis:skaro_lakes");
+    private final ImmutableList<String> BIOME_SUBS = ImmutableList.of("by_walking", "tardis:gallifrey_badlands", "tardis:gallifrey_eroded", "tardis:gallifrey_plateau", "tardis:skaro_lakes", "tardis:skaro_desert", "tardis:skaro_hills");
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {

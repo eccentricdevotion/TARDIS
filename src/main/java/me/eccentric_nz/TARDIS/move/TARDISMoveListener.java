@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,7 +57,7 @@ public class TARDISMoveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
+        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId()) && !plugin.getTrackerKeeper().getBiomeSetters().contains(p.getUniqueId())) {
             return;
         }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
@@ -74,6 +75,19 @@ public class TARDISMoveListener implements Listener {
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
         if (tms.isStaleLocation()) {
             return;
+        }
+        if (plugin.getTrackerKeeper().getBiomeSetters().contains(p.getUniqueId())) {
+            String name = l.getWorld().getName();
+            if (name.endsWith("tardis_gallifrey") || name.endsWith("tardis_skaro")) {
+                Chunk chunk = l.getChunk();
+                String biomeKey = plugin.getTardisHelper().getBiomeKey(chunk);
+                if (biomeKey.startsWith("minecraft")) {
+                    String key = name.contains("gallifrey") ? "tardis:gallifrey_badlands" : "tardis:skaro_lakes";
+                    plugin.getTardisHelper().setCustomBiome(key, chunk);
+                } else {
+                    plugin.getTardisHelper().setCustomBiome(biomeKey, chunk);
+                }
+            }
         }
         // check the block they're on
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {

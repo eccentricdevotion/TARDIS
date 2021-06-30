@@ -37,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Command /tardisadmin [arguments].
@@ -96,8 +97,19 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("set_biome")) {
                     if (sender instanceof Player p) {
-                        Chunk chunk = p.getLocation().getChunk();
-                        plugin.getTardisHelper().setCustomBiome(args[1], chunk);
+                        if (args[1].equalsIgnoreCase("by_walking")) {
+                            UUID uuid = p.getUniqueId();
+                            if (plugin.getTrackerKeeper().getBiomeSetters().contains(uuid)) {
+                                plugin.getTrackerKeeper().getBiomeSetters().remove(p.getUniqueId());
+                                TARDISMessage.message(p, "by_walking OFF");
+                            } else {
+                                plugin.getTrackerKeeper().getBiomeSetters().add(p.getUniqueId());
+                                TARDISMessage.message(p, "by_walking ON");
+                            }
+                        } else {
+                            Chunk chunk = p.getLocation().getChunk();
+                            plugin.getTardisHelper().setCustomBiome(args[1], chunk);
+                        }
                         return true;
                     }
                 }
