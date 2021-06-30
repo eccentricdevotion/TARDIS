@@ -8,7 +8,7 @@
   "category": "mesa",
   "player_spawn_friendly": false,
   "effects": {
-    "sky_color": 16763002,
+    "sky_color": 16763001,
     "fog_color": 16771522,
     "water_color": 4184548,
     "water_fog_color": 340786,
