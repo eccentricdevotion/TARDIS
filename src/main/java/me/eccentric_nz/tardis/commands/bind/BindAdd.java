@@ -14,36 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.commands.bind;
+package me.eccentric_nz.TARDIS.commands.bind;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.blueprints.TardisPermission;
-import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
-import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
-import me.eccentric_nz.tardis.enumeration.Bind;
-import me.eccentric_nz.tardis.enumeration.Preset;
-import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.UUID;
 
-public class BindAdd {
+class BindAdd {
 
-    private final TardisPlugin plugin;
+    private final TARDIS plugin;
 
-    public BindAdd(TardisPlugin plugin) {
+    BindAdd(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setClick(Bind bind, Player player, int id, String[] args) {
+    boolean setClick(Bind bind, Player player, int id, String[] args) {
         String which = (args.length > 2) ? args[2] : "";
-        UUID uuid = player.getUniqueId();
-        int bindId = 0;
+        int bind_id = 0;
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         switch (bind) {
@@ -53,12 +53,12 @@ public class BindAdd {
                 whered.put("name", which);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    TardisMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+                    TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
                     return true;
                 } else {
                     set.put("type", 0);
                     set.put("name", which);
-                    bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                    bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 }
                 break;
             case CAVE: // type 1
@@ -69,17 +69,21 @@ public class BindAdd {
             case REBUILD:
                 set.put("type", 1);
                 set.put("name", bind.toString().toLowerCase());
-                bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 break;
             case PLAYER: // type 2
                 // get player online or offline
                 Player p = plugin.getServer().getPlayer(which);
                 if (p == null) {
-                    plugin.getServer().getOfflinePlayer(uuid);
+                    OfflinePlayer offp = TARDISStaticUtils.getOfflinePlayer(which);
+                    if (offp == null) {
+                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        return true;
+                    }
                 }
                 set.put("name", which);
                 set.put("type", 2);
-                bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 break;
             case AREA: // type 3
                 // check area name
@@ -87,16 +91,16 @@ public class BindAdd {
                 wherea.put("area_name", which);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                 if (!rsa.resultSet()) {
-                    TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return true;
                 }
-                if (!TardisPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
-                    TardisMessage.send(player, "BIND_NO_AREA_PERM", which);
+                if (!TARDISPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
+                    TARDISMessage.send(player, "BIND_NO_AREA_PERM", which);
                     return true;
                 }
                 set.put("name", which.toLowerCase(Locale.ENGLISH));
                 set.put("type", 3);
-                bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 break;
             case BIOME:  // type 4
                 // check valid biome
@@ -106,10 +110,10 @@ public class BindAdd {
                     if (!biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
                         set.put("name", biome.toString());
-                        bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                        bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                     }
                 } catch (IllegalArgumentException iae) {
-                    TardisMessage.send(player, "BIOME_NOT_VALID");
+                    TARDISMessage.send(player, "BIOME_NOT_VALID");
                     return true;
                 }
                 break;
@@ -118,18 +122,18 @@ public class BindAdd {
                     set.put("name", which.toUpperCase(Locale.ENGLISH));
                 } else {
                     // check valid preset
-                    Preset preset;
+                    PRESET preset;
                     try {
-                        preset = Preset.valueOf(which.toUpperCase(Locale.ENGLISH));
+                        preset = PRESET.valueOf(which.toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
                         // abort
-                        TardisMessage.send(player, "ARG_PRESET");
+                        TARDISMessage.send(player, "ARG_PRESET");
                         return true;
                     }
                     set.put("name", preset.toString());
                 }
                 set.put("type", 5);
-                bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 break;
             case TRANSMAT: // type 6
                 // check transmat location exists
@@ -139,21 +143,21 @@ public class BindAdd {
                         set.put("name", which);
                     } else {
                         // abort
-                        TardisMessage.send(player, "TRANSMAT_NOT_FOUND");
+                        TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
                         return true;
                     }
                 } else {
                     set.put("name", "console");
                 }
                 set.put("type", 6);
-                bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
+                bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 break;
             default:
                 break;
         }
-        if (bindId != 0) {
-            plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bindId);
-            TardisMessage.send(player, "BIND_CLICK");
+        if (bind_id != 0) {
+            plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bind_id);
+            TARDISMessage.send(player, "BIND_CLICK");
             return true;
         }
         return false;

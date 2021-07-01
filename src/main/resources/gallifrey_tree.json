@@ -1,35 +1,32 @@
 {
-    "type": "minecraft:decorated",
-    "config": {
-        "decorator": {
-            "type": "minecraft:count_multilayer",
-            "config": {
-                "count": {
-                    "base": 0,
-                    "spread": 4
-                }
-            }
+  "type": "minecraft:decorated",
+  "config": {
+    "decorator": {
+      "type": "minecraft:count_multilayer",
+      "config": {
+        "count": 1
+      }
+    },
+    "feature": {
+      "type": "minecraft:huge_fungus",
+      "config": {
+        "hat_state": {
+          "Name": "minecraft:cobweb"
         },
-        "feature": {
-            "type": "minecraft:huge_fungus",
-            "config": {
-                "hat_state": {
-                    "Name": "minecraft:cobweb"
-                },
-                "decor_state": {
-                    "Name": "minecraft:red_wool"
-                },
-                "stem_state": {
-                    "Name": "minecraft:stripped_birch_wood",
-                    "Properties": {
-                        "axis": "y"
-                    }
-                },
-                "valid_base_block": {
-                    "Name": "minecraft:red_sand"
-                },
-                "planted": false
-            }
-        }
+        "decor_state": {
+          "Name": "minecraft:red_wool"
+        },
+        "stem_state": {
+          "Name": "minecraft:stripped_birch_wood",
+          "Properties": {
+            "axis": "y"
+          }
+        },
+        "valid_base_block": {
+          "Name": "minecraft:red_sand"
+        },
+        "planted": false
+      }
     }
+  }
 }

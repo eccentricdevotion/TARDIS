@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.eccentric_nz.tardis.universaltranslator;
+package me.eccentric_nz.TARDIS.universaltranslator;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -30,7 +30,7 @@ import java.net.URL;
  * Makes the generic Yandex API calls. Different service classes can then extend this to make the specific service
  * calls.
  */
-public abstract class YandexTranslatorApi {
+public abstract class YandexTranslatorAPI {
     //Encoding type
 
     static final String ENCODING = "UTF-8";
@@ -82,7 +82,9 @@ public abstract class YandexTranslatorApi {
             }
             return result;
         } finally {
-            uc.disconnect();
+            if (uc != null) {
+                uc.disconnect();
+            }
         }
     }
 
@@ -97,7 +99,7 @@ public abstract class YandexTranslatorApi {
      */
     protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
-        JsonObject jsonObj = JsonParser.parseString(response).getAsJsonObject();
+        JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
         return jsonObj.get(jsonValProperty).toString();
     }
 
@@ -105,20 +107,19 @@ public abstract class YandexTranslatorApi {
      * Forms a request, sends it using the GET method and returns the contents of the array of strings with the given
      * label, with multiple strings concatenated.
      *
-     * @param url             a uniform resource locator
-     * @param jsonValProperty a JSON string
+     * @param url a uniform resource locator
      * @return a string of concatenated values
      * @throws java.lang.Exception a generic exception
      */
-    static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
+    static String retrievePropArrString(URL url) throws Exception {
         String response = retrieveResponse(url);
-        return jsonObjValToStringArr(response, jsonValProperty);
+        return jsonObjValToStringArr(response);
     }
 
-    // Helper method to parse a JsonObject containing an array of Strings with the given label.
-    private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) {
-        JsonObject jsonObj = JsonParser.parseString(inputString).getAsJsonObject();
-        JsonArray jsonArr = jsonObj.get(subObjPropertyName).getAsJsonArray();
+    // Helper method to parse a JsonObject containing an array of Strings with the label "text".
+    private static String jsonObjValToStringArr(String inputString) {
+        JsonObject jsonObj = new JsonParser().parse(inputString).getAsJsonObject();
+        JsonArray jsonArr = jsonObj.get("text").getAsJsonArray();
         return jsonArr.getAsString();
     }
 

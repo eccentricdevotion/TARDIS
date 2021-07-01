@@ -14,18 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.commands.tardis;
+package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
-import me.eccentric_nz.tardis.blueprints.TardisPermission;
-import me.eccentric_nz.tardis.companiongui.TardisCompanionAddInventory;
-import me.eccentric_nz.tardis.database.data.Tardis;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.messaging.TardisMessage;
-import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -38,28 +40,28 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisAddCompanionCommand {
+class TARDISAddCompanionCommand {
 
-    private final TardisPlugin plugin;
+    private final TARDIS plugin;
 
-    TardisAddCompanionCommand(TardisPlugin plugin) {
+    TARDISAddCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doAddGui(Player player) {
-        if (TardisPermission.hasPermission(player, "tardis.add")) {
-            ItemStack[] items = new TardisCompanionAddInventory(plugin, player).getPlayers();
+    boolean doAddGUI(Player player) {
+        if (TARDISPermission.hasPermission(player, "tardis.add")) {
+            ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
             presetinv.setContents(items);
             player.openInventory(presetinv);
         } else {
-            TardisMessage.send(player, "NO_PERMS");
+            TARDISMessage.send(player, "NO_PERMS");
         }
         return true;
     }
 
     boolean doAdd(Player player, String[] args) {
-        if (TardisPermission.hasPermission(player, "tardis.add")) {
+        if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -68,21 +70,21 @@ class TardisAddCompanionCommand {
             int id;
             String owner;
             if (!rs.resultSet()) {
-                TardisMessage.send(player, "NO_TARDIS");
+                TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             } else {
                 Tardis tardis = rs.getTardis();
-                id = tardis.getTardisId();
+                id = tardis.getTardis_id();
                 comps = tardis.getCompanions();
                 data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
-                TardisMessage.send(player, "TOO_FEW_ARGS");
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
-                TardisMessage.send(player, "PLAYER_NOT_VALID");
+            if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
+                TARDISMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
@@ -92,29 +94,35 @@ class TardisAddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    UUID olUuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                    tid.put("tardis_id", id);
-                    if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
-                        // add to the list
-                        String newList = comps + ":" + olUuid;
-                        set.put("companions", newList);
+                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
+                    if (offlinePlayer != null) {
+                        UUID oluuid = offlinePlayer.getUniqueId();
+                        tid.put("tardis_id", id);
+                        if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
+                            // add to the list
+                            String newList = comps + ":" + oluuid;
+                            set.put("companions", newList);
+                        } else {
+                            // make a list
+                            set.put("companions", oluuid.toString());
+                        }
+                        // are we doing an achievement?
+                        if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
+                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
+                            taf.doAchievement(1);
+                        }
                     } else {
-                        // make a list
-                        set.put("companions", olUuid.toString());
-                    }
-                    // are we doing an achievement?
-                    if (plugin.getAdvancementConfig().getBoolean("friends.enabled")) {
-                        TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.FRIENDS, 1);
-                        taf.doAdvancement(1);
+                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        return true;
                     }
                 }
                 // if using WorldGuard, add them to the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = TardisStaticLocationGetters.getWorld(data);
+                    World w = TARDISStaticLocationGetters.getWorld(data);
                     if (w != null) {
                         if (addAll) {
                             // remove all members
-                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName());
+                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName(), player.getUniqueId());
                             // set entry and exit flags to allow
                             plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), true);
                         } else {
@@ -126,14 +134,14 @@ class TardisAddCompanionCommand {
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 if (addAll) {
-                    TardisMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
-                    TardisMessage.send(player, "COMPANIONS_EVERYONE");
+                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                    TARDISMessage.send(player, "COMPANIONS_EVERYONE");
                 } else {
-                    TardisMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
+                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                 }
             }
         } else {
-            TardisMessage.send(player, "NO_PERMS");
+            TARDISMessage.send(player, "NO_PERMS");
         }
         return true;
     }

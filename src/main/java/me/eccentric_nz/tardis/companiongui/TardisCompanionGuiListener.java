@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.companiongui;
+package me.eccentric_nz.TARDIS.companionGUI;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.data.Tardis;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.listeners.TardisMenuListener;
-import me.eccentric_nz.tardis.messaging.TardisMessage;
-import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -41,18 +41,18 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TardisCompanionGuiListener extends TardisMenuListener implements Listener {
+public class TARDISCompanionGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TardisPlugin plugin;
+    private final TARDIS plugin;
     private final HashMap<UUID, Integer> selected_head = new HashMap<>();
 
-    public TardisCompanionGuiListener(TardisPlugin plugin) {
+    public TARDISCompanionGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onCompanionGuiClick(InventoryClickEvent event) {
+    public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Companions")) {
@@ -68,7 +68,7 @@ public class TardisCompanionGuiListener extends TardisMenuListener implements Li
                             break;
                         case 48: // add
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] items = new TardisCompanionAddInventory(plugin, player).getPlayers();
+                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
                                 Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
                                 presetinv.setContents(items);
                                 player.openInventory(presetinv);
@@ -81,20 +81,17 @@ public class TardisCompanionGuiListener extends TardisMenuListener implements Li
                                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                                 if (rs.resultSet()) {
                                     Tardis tardis = rs.getTardis();
-                                    int id = tardis.getTardisId();
+                                    int id = tardis.getTardis_id();
                                     String comps = tardis.getCompanions();
                                     ItemStack h = view.getItem(selected_head.get(uuid));
-                                    assert h != null;
                                     ItemMeta m = h.getItemMeta();
-                                    assert m != null;
                                     List<String> l = m.getLore();
-                                    assert l != null;
                                     String u = l.get(0);
                                     removeCompanion(id, comps, u, player);
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                         if (!comps.equalsIgnoreCase("everyone")) {
                                             String[] data = tardis.getChunk().split(":");
-                                            removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                                            removeFromRegion(data[0], tardis.getOwner(), UUID.fromString(u));
                                         }
                                     }
                                     close(player);
@@ -115,7 +112,7 @@ public class TardisCompanionGuiListener extends TardisMenuListener implements Li
 
     private void removeCompanion(int id, String comps, String uuid, Player player) {
         if (comps.equalsIgnoreCase("everyone")) {
-            TardisMessage.send(player, "COMPANIONS_ALL");
+            TARDISMessage.send(player, "COMPANIONS_ALL");
         } else {
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
@@ -143,10 +140,10 @@ public class TardisCompanionGuiListener extends TardisMenuListener implements Li
         }
     }
 
-    private void removeFromRegion(String world, String owner, String player) {
-        World w = TardisAliasResolver.getWorldFromAlias(world);
+    private void removeFromRegion(String world, String owner, UUID uuid) {
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
-            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, player);
+            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, uuid);
         }
     }
 }
