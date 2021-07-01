@@ -95,11 +95,6 @@ public class TARDISSpawnListener implements Listener {
                 plugin.setTardisSpawn(false);
                 return;
             }
-            if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
-                int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
-                ((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
-                return;
-            }
             // if not an allowable TARDIS spawn reason, cancel
             if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
