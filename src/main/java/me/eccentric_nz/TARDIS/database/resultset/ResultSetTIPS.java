@@ -23,8 +23,6 @@ public class ResultSetTIPS {
 
     /**
      * Make a list of the currently used TIPS slots.
-     *
-     * @return a list of slot numbers
      */
     public void fillUsedSlotList() {
         Statement statement = null;
