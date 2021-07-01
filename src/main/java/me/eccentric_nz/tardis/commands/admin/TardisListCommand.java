@@ -84,7 +84,7 @@ class TardisListCommand {
                 return true;
             }
         } else {
-            // get all tardis positions - max 18
+            // get all TARDIS positions - max 18
             int start = 0, end = 18;
             if (args.length > 1) {
                 int tmp = TardisNumberParsers.parseInt(args[1]);

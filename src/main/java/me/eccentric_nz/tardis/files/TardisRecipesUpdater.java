@@ -84,7 +84,7 @@ public class TardisRecipesUpdater {
 
     public void addRecipes() {
         int i = 0;
-        // update tardis key recipe
+        // update TARDIS key recipe
         if (Objects.requireNonNull(recipes_config.getString("shaped.tardis Key.easy_shape")).contains("-")) {
             recipes_config.set("shaped.tardis Key.easy_shape", "R,G");
             recipes_config.set("shaped.tardis Key.hard_shape", "C,G");

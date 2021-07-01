@@ -22,7 +22,7 @@ import org.bukkit.Material;
 
 public enum GuiKeyPreferences {
 
-    // tardis Key Prefs Menu
+    // TARDIS Key Prefs Menu
     BRASS_YALE(1, 0, Material.GOLD_NUGGET, "First & Sixth Doctors", ChatColor.AQUA),
     BRASS_PLAIN(2, 1, Material.GOLD_NUGGET, "Second Doctor", ChatColor.DARK_BLUE),
     SPADE_SHAPED(3, 2, Material.GOLD_NUGGET, "Third, Fourth & Eighth Doctors", ChatColor.LIGHT_PURPLE),

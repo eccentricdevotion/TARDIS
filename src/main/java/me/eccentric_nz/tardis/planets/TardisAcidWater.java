@@ -12,7 +12,7 @@
   You should have received a copy of the GNU General Public License along with ASkyBlock. If not, see
   <http://www.gnu.org/licenses/>.
   <p>
-  Adapted by eccentric_nz for the tardis plugin
+  Adapted by eccentric_nz for the TARDIS plugin
  */
 package me.eccentric_nz.tardis.planets;
 

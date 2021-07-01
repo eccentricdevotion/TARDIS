@@ -27,19 +27,21 @@ public class Farm {
     private final String bamboo;
     private final String birdcage;
     private final String farm;
+    private final String geode;
     private final String hutch;
     private final String igloo;
     private final String stable;
     private final String stall;
     private final String village;
 
-    public Farm(int tardisId, String apiary, String aquarium, String bamboo, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
+    public Farm(int tardisId, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String stable, String stall, String village) {
         this.tardisId = tardisId;
         this.apiary = apiary;
         this.aquarium = aquarium;
         this.bamboo = bamboo;
         this.birdcage = birdcage;
         this.farm = farm;
+        this.geode = geode;
         this.hutch = hutch;
         this.igloo = igloo;
         this.stable = stable;
@@ -48,16 +50,16 @@ public class Farm {
     }
 
     /**
-     * Returns the numerical id of this tardis.
+     * Returns the numerical id of this TARDIS.
      *
-     * @return the tardis id
+     * @return the TARDIS id
      */
     public int getTardisId() {
         return tardisId;
     }
 
     /**
-     * Returns a String representation of the Apiary room bee spawn location in this tardis. It is in the form of {@code
+     * Returns a String representation of the Apiary room bee spawn location in this TARDIS. It is in the form of {@code
      * World name:x:y:z}
      *
      * @return the Apiary room bee spawn location string, or an empty string if the room does not exist
@@ -67,7 +69,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Aquarium room fish spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Aquarium room fish spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Aquarium room fish spawn location string, or an empty string if the room does not exist
@@ -77,7 +79,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Bamboo room panda spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Bamboo room panda spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Bamboo room panda spawn location string, or an empty string if the room does not exist
@@ -87,7 +89,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Birdcage room parrot spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Birdcage room parrot spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Birdcage room parrot spawn location string, or an empty string if the room does not exist
@@ -97,7 +99,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Farm room mob spawn location in this tardis. It is in the form of {@code
+     * Returns a String representation of the Farm room mob spawn location in this TARDIS. It is in the form of {@code
      * World name:x:y:z}
      *
      * @return the Farm room mob spawn location string, or an empty string if the room does not exist
@@ -107,7 +109,17 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Hutch room rabbit spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Geode room mob spawn location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
+     *
+     * @return the Geode room mob spawn location string, or an empty string if the room does not exist
+     */
+    public String getGeode() {
+        return geode;
+    }
+
+    /**
+     * Returns a String representation of the Hutch room rabbit spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Hutch room rabbit spawn location string, or an empty string if the room does not exist
@@ -117,7 +129,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Igloo room polar bear spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Igloo room polar bear spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Igloo room polar bear spawn location string, or an empty string if the room does not exist
@@ -127,7 +139,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Stable room horse spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Stable room horse spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Stable room horse spawn location string, or an empty string if the room does not exist
@@ -137,7 +149,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Stall room llama spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Stall room llama spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Stall room llama spawn location string, or an empty string if the room does not exist
@@ -147,7 +159,7 @@ public class Farm {
     }
 
     /**
-     * Returns a String representation of the Village room villager spawn location in this tardis. It is in the form of
+     * Returns a String representation of the Village room villager spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
      * @return the Village room villager spawn location string, or an empty string if the room does not exist

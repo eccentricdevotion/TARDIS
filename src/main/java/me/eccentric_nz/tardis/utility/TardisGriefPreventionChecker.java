@@ -23,7 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * The tardis grants its passengers the ability to understand and speak other languages. This is due to the tardis's
+ * The TARDIS grants its passengers the ability to understand and speak other languages. This is due to the TARDIS's
  * telepathic field.
  *
  * @author eccentric_nz

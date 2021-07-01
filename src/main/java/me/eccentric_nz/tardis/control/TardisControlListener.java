@@ -110,7 +110,7 @@ public class TardisControlListener implements Listener {
             if (validBlocks.contains(blockType)) {
                 // get clicked block location
                 Location blockLocation = block.getLocation();
-                // get tardis from saved button location
+                // get TARDIS from saved button location
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("location", blockLocation.toString());
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
@@ -267,10 +267,10 @@ public class TardisControlListener implements Listener {
                                     break;
                                 case 14: // Disk Storage
                                     UUID playerUuid = player.getUniqueId();
-                                    if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUuid)) {
+                                    if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUuid)) {
                                         return;
                                     }
-                                    // only the time lord of this tardis
+                                    // only the time lord of this TARDIS
                                     if (!ownerUuid.equals(playerUuid)) {
                                         TardisMessage.send(player, "NOT_OWNER");
                                         return;

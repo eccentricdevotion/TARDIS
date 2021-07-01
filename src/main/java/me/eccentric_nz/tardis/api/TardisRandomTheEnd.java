@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -29,13 +29,13 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISRandomTheEnd extends TARDISRandomLocation {
+public class TardisRandomTheEnd extends TardisRandomLocation {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
     private final Parameters param;
     private final List<World> worlds;
 
-    TARDISRandomTheEnd(TARDIS plugin, List<String> list, Parameters param) {
+    TardisRandomTheEnd(TardisPlugin plugin, List<String> list, Parameters param) {
         super(plugin);
         worlds = getWorlds(list);
         this.plugin = plugin;
@@ -43,21 +43,21 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
     }
 
     @Override
-    public Location getlocation() {
-        WorldAndRange war = getWorldandRange(worlds);
+    public Location getLocation() {
+        WorldAndRange war = getWorldAndRange(worlds);
         // loop till random attempts limit reached
         int limit = plugin.getConfig().getInt("travel.random_attempts");
         for (int n = 0; n < limit; n++) {
             // get random values in range
-            int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
-            int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
+            int randX = TardisConstants.RANDOM.nextInt(war.getRangeX());
+            int randZ = TardisConstants.RANDOM.nextInt(war.getRangeZ());
             // get the x coord
             int x = war.getMinX() + randX;
             // get the z coord
             int z = war.getMinZ() + randZ;
             // get the spawn point
             Location endSpawn = war.getWorld().getSpawnLocation();
-            int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getWorld(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+            int highest = TardisStaticLocationGetters.getHighestYIn3x3(war.getWorld(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
             int startx, starty, startz, resetx, resetz, count = 0;
             if (highest > 40) {
                 Block currentBlock = war.getWorld().getBlockAt(x, highest, z);
@@ -68,13 +68,13 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                     }
                     if (param.spaceTardis()) {
                         // get start location for checking there is enough space
-                        int[] gsl = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
+                        int[] gsl = TardisTimeTravel.getStartLocation(chunk_loc, param.getDirection());
                         startx = gsl[0];
                         resetx = gsl[1];
                         starty = chunk_loc.getBlockY() + 1;
                         startz = gsl[2];
                         resetz = gsl[3];
-                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getWorld(), param.getCompass());
+                        count = TardisTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getWorld(), param.getDirection());
                     }
                 } else {
                     count = 1;

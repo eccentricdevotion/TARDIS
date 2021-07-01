@@ -49,7 +49,7 @@ public class TardisAbandonUpdater {
         String query;
         try {
             service.testConnection(connection);
-            // tardis table
+            // TARDIS table
             query = "UPDATE " + prefix + "tardis SET abandoned = 1, powered_on = 0, companions = '' WHERE tardis_id = ?";
             ps = connection.prepareStatement(query);
             ps.setInt(1, id);

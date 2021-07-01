@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
  *
  * @author eccentric_nz
  */
@@ -49,10 +49,10 @@ public class ResultSetTardisTimeLord {
     }
 
     /**
-     * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
+     * Attempts to see whether the supplied TARDIS id is in the TARDIS table. This method builds an SQL query string
      * from the parameters supplied and then executes the query.
      *
-     * @param id the tardis id to check
+     * @param id the TARDIS id to check
      * @return true or false depending on whether the Time Lord uuid exists in the table
      */
     public boolean fromID(int id) {

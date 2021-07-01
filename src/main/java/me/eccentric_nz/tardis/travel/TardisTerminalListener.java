@@ -20,6 +20,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TardisCircuitDamager;
 import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.TardisEmergencyRelocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -71,7 +72,7 @@ public class TardisTerminalListener implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
      * accordingly.
      *
      * @param event a player clicking an inventory slot
@@ -86,7 +87,7 @@ public class TardisTerminalListener implements Listener {
             if (slot >= 0 && slot < 54) {
                 Player player = (Player) event.getWhoClicked();
                 UUID uuid = player.getUniqueId();
-                // get the tardis the player is in
+                // get the TARDIS the player is in
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
@@ -165,12 +166,13 @@ public class TardisTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
+                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
                                 plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 close(player);
                                 TardisMessage.send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
                                     new TardisLand(plugin, terminalIDs.get(uuid), player).exitVortex();
+                                    plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));
                                 }
                                 // damage the circuit if configured
                                 if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {

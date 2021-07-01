@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Emergency Programme One was a feature of the Doctor's tardis designed to return a companion to a designated place in
+ * Emergency Programme One was a feature of the Doctor's TARDIS designed to return a companion to a designated place in
  * case of extreme emergency.
  *
  * @author eccentric_nz

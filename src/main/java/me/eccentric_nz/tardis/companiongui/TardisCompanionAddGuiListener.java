@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.companionGUI;
+package me.eccentric_nz.tardis.companiongui;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -40,11 +40,11 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements Listener {
+public class TardisCompanionAddGuiListener extends TardisMenuListener implements Listener {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISCompanionAddGUIListener(TARDIS plugin) {
+    public TardisCompanionAddGuiListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -72,13 +72,13 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                             ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
                             if (rsa.resultSet()) {
                                 Tardis tardis = rsa.getTardis();
-                                int id = tardis.getTardis_id();
+                                int id = tardis.getTardisId();
                                 String comps = tardis.getCompanions();
                                 addCompanion(id, comps, "everyone");
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                     // remove all members
                                     String[] data = tardis.getChunk().split(":");
-                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
+                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TardisAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
                                     // set entry and exit flags to allow
                                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                                 }
@@ -94,11 +94,14 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
-                                int id = tardis.getTardis_id();
+                                int id = tardis.getTardisId();
                                 String comps = tardis.getCompanions();
                                 ItemStack h = view.getItem(slot);
+                                assert h != null;
                                 ItemMeta m = h.getItemMeta();
+                                assert m != null;
                                 List<String> l = m.getLore();
+                                assert l != null;
                                 String u = l.get(0);
                                 addCompanion(id, comps, u);
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -119,13 +122,13 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     private void list(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-            if (rs.fromUUID(player.getUniqueId().toString())) {
+            if (rs.fromUuid(player.getUniqueId().toString())) {
                 String comps = rs.getCompanions();
                 ItemStack[] items;
                 if (comps.equalsIgnoreCase("everyone")) {
-                    items = new TARDISEveryoneCompanionInventory(plugin, player).getSkulls();
+                    items = new TardisEveryoneCompanionInventory(plugin, player).getSkulls();
                 } else {
-                    items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
+                    items = new TardisCompanionInventory(plugin, comps.split(":")).getSkulls();
                 }
                 Inventory cominv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
                 cominv.setContents(items);
@@ -151,7 +154,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 
     private void addToRegion(String world, String owner, String player) {
         // if using WorldGuard, add them to the region membership
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TardisAliasResolver.getWorldFromAlias(world);
         if (w != null) {
             plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player);
         }

@@ -32,8 +32,8 @@ import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
- * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
+ * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz
@@ -63,7 +63,7 @@ public class TardisThemeInventory {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
+        for (Schematic a : Consoles.getByNames().values()) {
             Material m = Material.getMaterial(a.getSeed());
             assert m != null;
             if (!m.equals(Material.COBBLESTONE)) {

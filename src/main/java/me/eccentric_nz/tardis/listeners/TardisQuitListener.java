@@ -61,7 +61,7 @@ public class TardisQuitListener implements Listener {
             }
             plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
         }
-        // if
+        // if 
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
@@ -98,8 +98,8 @@ public class TardisQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(Preset.ADAPTIVE)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    if (preset.equals(Preset.ADAPTIVE) || preset.usesItemFrame()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {

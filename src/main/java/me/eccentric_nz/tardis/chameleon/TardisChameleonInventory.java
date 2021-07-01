@@ -28,12 +28,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
- * A tardis with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
- * circuit to make it assume a specific shape. If no appearance is specified, the tardis automatically choses its own
- * shape. When a tardis materialises in a new location, within the first nanosecond of landing, its chameleon circuit
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
+ * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically choses its own
+ * shape. When a TARDIS materialises in a new location, within the first nanosecond of landing, its chameleon circuit
  * analyses the surrounding area, calculates a twelve-dimensional data map of all objects within a thousand-mile radius
  * and then determines which outer shell will best blend in with the environment. According to the Eleventh Doctor, the
- * tardis would perform these functions, but then disguise itself as a 1960s era police box anyway.
+ * TARDIS would perform these functions, but then disguise itself as a 1960s era police box anyway.
  *
  * @author eccentric_nz
  */

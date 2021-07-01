@@ -114,10 +114,10 @@ public enum Preset {
     POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 16, "", "", false, false, "Weeping Angel");
 
-    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
-    private final static Map<Material, Preset> BY_MATERIAL = Maps.newHashMap();
-    private final static Map<Integer, Preset> BY_SLOT = Maps.newHashMap();
-    private final static Map<Integer, Preset> IF_BY_SLOT = Maps.newHashMap();
+    public static final List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
+    private static final Map<Material, Preset> BY_MATERIAL = Maps.newHashMap();
+    private static final Map<Integer, Preset> BY_SLOT = Maps.newHashMap();
+    private static final Map<Integer, Preset> IF_BY_SLOT = Maps.newHashMap();
 
     static {
         for (Preset preset : values()) {

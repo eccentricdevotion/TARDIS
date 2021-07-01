@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis Police Box
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
  * blocks.
  *
  * @author eccentric_nz

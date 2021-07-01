@@ -32,7 +32,7 @@ import java.util.Objects;
 
 /**
  * The Helmic Orientators are slide controls (some consoles have a keyboard) used by the operator for setting the
- * Space-Time Coordinates. The coordinates must take into account the motion of objects relative to a tardis' current
+ * Space-Time Coordinates. The coordinates must take into account the motion of objects relative to a TARDIS's current
  * location, gravity's distortion of the Space-Time Vortex, and the exact time the operator wishes to travel to.
  *
  * @author eccentric_nz

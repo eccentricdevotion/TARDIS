@@ -20,7 +20,7 @@ import me.eccentric_nz.tardis.builders.MaterialisationData;
 import org.bukkit.Location;
 
 /**
- * Data class for building the tardis exterior.
+ * Data class for building the TARDIS exterior.
  *
  * @author eccentric_nz
  */

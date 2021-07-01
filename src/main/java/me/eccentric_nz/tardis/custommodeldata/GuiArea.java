@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiArea {
 
-    // tardis Areas
+    // TARDIS Areas
     LOAD_TARDIS_SAVES(1, 1, Material.MAP);
 
     private final int customModelData;

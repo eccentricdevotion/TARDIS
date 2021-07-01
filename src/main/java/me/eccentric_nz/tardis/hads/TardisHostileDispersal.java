@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's tardis. When the
- * outer shell of the vessel came under attack, the unit dematerialised the tardis and re-materialised it a short
+ * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
+ * outer shell of the vessel came under attack, the unit dematerialised the TARDIS and re-materialised it a short
  * distance away after the attacker had gone, in a safer locale. The HADS had to be manually set, and the Doctor often
  * forgot to do so.
  *
@@ -197,7 +197,7 @@ class TardisHostileDispersal {
             }
         }, 15L);
         plugin.getTrackerKeeper().getDispersed().put(uuid, l);
-        plugin.getTrackerKeeper().getDispersedTARDII().add(id);
+        plugin.getTrackerKeeper().getDispersedTardises().add(id);
         plugin.getPluginManager().callEvent(new TardisHadsEvent(hostile, id, l, Hads.DISPERSAL));
     }
 

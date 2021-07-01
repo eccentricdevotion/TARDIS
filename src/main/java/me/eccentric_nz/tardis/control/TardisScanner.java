@@ -46,7 +46,7 @@ import java.util.*;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
- * outside a tardis. Chief among these is the visual signal, which is displayed on the Scanner Screen found in any of
+ * outside a TARDIS. Chief among these is the visual signal, which is displayed on the Scanner Screen found in any of
  * the Control Rooms.
  *
  * @author eccentric_nz
@@ -331,7 +331,7 @@ public class TardisScanner {
     }
 
     public void scan(Player player, int id, String renderer, int level) {
-        // get tardis from saved scanner location
+        // get TARDIS from saved scanner location
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("type", 33);

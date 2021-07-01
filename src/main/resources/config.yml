@@ -77,6 +77,7 @@ preferences:
   respect_factions: true
   respect_grief_prevention: true
   respect_red_protect: true
+  enable_dynmap: true
   sfx_volume: 10
   difficulty: easy
   strike_lightning: true
@@ -98,8 +99,8 @@ preferences:
   spawn_limit: 10
   no_coords: false
   no_creative_condense: false
+  no_enchanted_condense: true
   vortex_fall: kill
-  wake_bees: true
   chat_width: 55
 # desktop theme
 desktop:
@@ -184,7 +185,7 @@ archive:
   limit: 3
 blueprints:
   enabled: false
-rechargers: {}
+rechargers: { }
 display:
   all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
 # don't touch

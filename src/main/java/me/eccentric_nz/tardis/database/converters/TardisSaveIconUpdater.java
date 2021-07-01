@@ -49,7 +49,7 @@ public class TardisSaveIconUpdater {
             connection.setAutoCommit(false);
             select = "SELECT dest_id, slot FROM " + prefix + "destinations";
             rs = statement.executeQuery(select);
-            // tardis table
+            // TARDIS table
             query = "UPDATE " + prefix + "destinations SET icon = ? WHERE dest_id = ?";
             ps = connection.prepareStatement(query);
             int i = 0;

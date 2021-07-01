@@ -83,7 +83,6 @@ public class TardisMushroomBlockData {
             put(36, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
             // legacy_redstone
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
-            // TODO Change pandorica to item frame model
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master
@@ -151,6 +150,10 @@ public class TardisMushroomBlockData {
             put(54, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]");
             // animated seed grow
             put(55, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
+            // cave seed block
+            put(56, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=true]");
+            // weathered seed block
+            put(57, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=false]");
         }
     };
 }

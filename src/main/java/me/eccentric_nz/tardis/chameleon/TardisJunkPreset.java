@@ -19,10 +19,10 @@ package me.eccentric_nz.tardis.chameleon;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 
 /**
- * The Junk tardis is a makeshift tardis created by the Eleventh Doctor and Idris (the embodied matrix of his tardis).
+ * The Junk TARDIS is a makeshift TARDIS created by the Eleventh Doctor and Idris (the embodied matrix of his TARDIS).
  * <p>
  * They built it from bits of TARDISes in the Bubble universe's junkyard, a task which Idris called "impossible". This
- * tardis consisted solely of a console (complete with time rotor) and only three walls. Because it lacked a proper
+ * TARDIS consisted solely of a console (complete with time rotor) and only three walls. Because it lacked a proper
  * shell, the Doctor said it would be very dangerous to fly.
  *
  * @author eccentric_nz

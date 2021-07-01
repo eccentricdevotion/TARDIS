@@ -55,7 +55,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * There was also a safety mechanism for when tardis rooms were deleted, automatically relocating any living beings in
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
  * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
@@ -67,12 +67,15 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
     private final TardisUpgradeData tud;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
@@ -256,6 +259,8 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
+            postDripstoneBlocks.forEach(Block::setBlockData);
+            postLichenBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -269,8 +274,8 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak wall sign
-                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
+                // always make the control centre the first oak sign
+                if (s == 0 && (psb.getType().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && psb.getType().equals(Material.OAK_SIGN)))) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -290,6 +295,10 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
+            if (tud.getSchematic().getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
+            }
             if (postBedrock != null) {
                 postBedrock.setBlockData(TardisConstants.GLASS);
             }
@@ -302,7 +311,7 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
-            // finished processing - update tardis table!
+            // finished processing - update TARDIS table!
             if (set.size() > 0) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
@@ -530,11 +539,17 @@ public class TardisThemeRepairRunnable extends TardisThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (Tag.WALL_SIGNS.isTagged(type)) {
+                } else if (Tag.WALL_SIGNS.isTagged(type) || (tud.getSchematic().getPermission().equals("cave") && type.equals(Material.OAK_SIGN))) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (TardisMaterials.infested.contains(type)) {
+                } else if (type.equals(Material.POINTED_DRIPSTONE)) {
+                    postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.GLOW_LICHEN)) {
+                    postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (TardisMaterials.INFESTED.contains(type)) {
                     // legacy monster egg stone for controls
                     TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                } else if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
+                    iceBlocks.add(world.getBlockAt(x, y, z));
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {

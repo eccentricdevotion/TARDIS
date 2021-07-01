@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis Police Box
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
  * blocks.
  *
  * @author Technoguyfication, eccentric_nz

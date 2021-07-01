@@ -35,12 +35,12 @@ public class TardisJunkReturnRunnable implements Runnable {
 
     @Override
     public void run() {
-        // get time junk tardis was last used
+        // get time junk TARDIS was last used
         long lastUsed = plugin.getGeneralKeeper().getJunkTime();
         // get current time
         long now = System.currentTimeMillis();
         if (lastUsed + waitTime > now) {
-            // check the Junk tardis is not home already
+            // check the Junk TARDIS is not home already
             TardisJunkLocation tjl = new TardisJunkLocation(plugin);
             // compare locations
             if (tjl.isNotHome()) {

@@ -94,7 +94,7 @@ class TardisRoomCommand {
         String chunk = tardis.getChunk();
         Schematic schm = tardis.getSchematic();
         int tips = tardis.getTips();
-        // check they are in the tardis
+        // check they are in the TARDIS
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         wheret.put("tardis_id", id);

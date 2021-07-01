@@ -34,10 +34,10 @@ class TardisDispersedCommand {
     boolean assemble(CommandSender sender, String which) {
         if (which.equalsIgnoreCase("clear")) {
             plugin.getTrackerKeeper().getDispersed().clear();
-            plugin.getTrackerKeeper().getDispersedTARDII().clear();
+            plugin.getTrackerKeeper().getDispersedTardises().clear();
             TardisMessage.send(sender, "ASSEMBLE_ALL");
         } else if (which.equalsIgnoreCase("list")) {
-            plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
+            plugin.getTrackerKeeper().getDispersedTardises().forEach((d) -> plugin.debug("TARDIS id: " + d));
         }
         return true;
     }

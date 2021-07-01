@@ -27,10 +27,10 @@ import org.bukkit.block.data.Directional;
 public class TardisTorchRecalculator {
 
     /**
-     * Recalculate the data for directional block (TORCH) when the tardis preset changes direction.
+     * Recalculate the data for directional block (TORCH) when the TARDIS preset changes direction.
      *
      * @param b the block data stored in the preset data
-     * @param d the new direction of the tardis
+     * @param d the new direction of the TARDIS
      * @return the recalculated block data
      */
     public BlockData recalculate(BlockData b, CardinalDirection d) {

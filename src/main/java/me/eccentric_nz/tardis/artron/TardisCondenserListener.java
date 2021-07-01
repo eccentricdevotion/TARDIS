@@ -31,6 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +41,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -61,8 +63,9 @@ public class TardisCondenserListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the tardis condenser chest. When the chest is closed, any DIRT, SAND, GRAVEL,
-     * COBBLESTONE or ROTTEN FLESH is converted to Artron Energy at a ratio of 1:1.
+     * Listens for player interaction with the TARDIS condenser chest. When the chest is closed, any
+     * condensable items {@see TARDISCondensables} are converted to Artron Energy at a ratio of 2:1
+     * e.g. 2 COBBLESTONE gives 1 Artron energy.
      *
      * @param event a chest closing
      */
@@ -112,69 +115,116 @@ public class TardisCondenserListener implements Listener {
                     rs = new ResultSetTardis(plugin, where, "", false, 0);
                     isCondenser = (plugin.getArtronConfig().contains("condenser") && Objects.equals(plugin.getArtronConfig().getString("condenser"), chest_loc) && rs.resultSet());
                 }
+
                 if (isCondenser) {
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
                     int amount = 0;
+                    // non-condensable items we need to return to the player
+                    ArrayList<ItemStack> returnedItems = new ArrayList<>();
+                    // how many items we neglected to condense due to them being enchanted
+                    int savedEnchantedItems = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
                     Inventory inv = event.getInventory();
                     for (ItemStack is : inv.getContents()) {
-                        if (is != null) {
-                            String item = is.getType().toString();
-                            if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
-                                int stack_size = is.getAmount();
-                                if (item.equals("BLAZE_ROD") && isSonic(is)) {
-                                    List<String> lore = Objects.requireNonNull(is.getItemMeta()).getLore();
-                                    double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
-                                    amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
-                                    assert lore != null;
-                                    if (lore.contains("Bio-scanner Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
-                                    }
-                                    if (lore.contains("Diamond Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
-                                    }
-                                    if (lore.contains("Emerald Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
-                                    }
-                                    if (lore.contains("Redstone Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
-                                    }
-                                    if (lore.contains("Painter Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
-                                    }
-                                    if (lore.contains("Ignite Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
-                                    }
-                                    if (lore.contains("Pickup Arrows Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
-                                    }
-                                    if (lore.contains("Knockback Upgrade")) {
-                                        amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
-                                    }
-                                } else if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
-                                    // blueprint disk
-                                    BlueprintProcessor.addPermission(plugin, is, player);
-                                    amount += plugin.getCondensables().get(item);
-                                } else {
-                                    amount += stack_size * plugin.getCondensables().get(item);
+                        // skip empty slots
+                        if (is == null) {
+                            continue;
+                        }
+                        String item = is.getType().toString();
+                        // condense sonic screwdriver
+                        if (item.equals("BLAZE_ROD") && isSonic(is)) {
+                            // add artron for base screwdriver
+                            double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
+                            amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
+                            // add extra artron for any sonic upgrades
+                            if (Objects.requireNonNull(is.getItemMeta()).hasLore()) {
+                                List<String> lore = is.getItemMeta().getLore();
+                                assert lore != null;
+                                if (lore.contains("Bio-scanner Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                                 }
-                                String blockData = is.getType().toString();
-                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
-                                    if (item_counts.containsKey(blockData)) {
-                                        Integer add_this = (item_counts.get(blockData) + stack_size);
-                                        item_counts.put(blockData, add_this);
-                                    } else {
-                                        item_counts.put(blockData, stack_size);
-                                    }
+
+                                if (lore.contains("Diamond Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
                                 }
+
+                                if (lore.contains("Emerald Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
+                                }
+
+                                if (lore.contains("Redstone Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
+                                }
+
+                                if (lore.contains("Painter Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
+                                }
+
+                                if (lore.contains("Ignite Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+                                }
+
+                                if (lore.contains("Pickup Arrows Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
+                                }
+
+                                if (lore.contains("Knockback Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+                                }
+                            }
+                            inv.remove(is);
+                            continue;
+                        }
+                        // condense blueprint disk
+                        if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
+                            BlueprintProcessor.addPermission(plugin, is, player);
+                            amount += plugin.getCondensables().get(item);
+                            inv.remove(is);
+                            continue;
+                        }
+                        // don't condense enchanted items so players don't accidentally condense their
+                        // gear ignores curse enchantments
+                        // note: i would really love to use Enchantment#isCursed() here for forwards
+                        // compatibility but it's deprecated with no good alternative
+                        if (plugin.getConfig().getBoolean("preferences.no_enchanted_condense")) {
+                            if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
+                                savedEnchantedItems++;
+                                returnedItems.add(is);
                                 inv.remove(is);
-                            } else {
-                                // return items that can't be condensed
-                                player.getInventory().addItem(is);
-                                player.updateInventory();
+                                continue;
                             }
                         }
+                        // condense other blocks and items
+                        if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
+                            int stack_size = is.getAmount();
+                            // add item artron value
+                            amount += stack_size * plugin.getCondensables().get(item);
+                            // count blocks towards room growth and repair if enabled
+                            String block_data = is.getType().toString();
+                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")
+                                    || plugin.getConfig().getBoolean("allow.repair")) {
+                                if (item_counts.containsKey(block_data)) {
+                                    Integer add_this = (item_counts.get(block_data) + stack_size);
+                                    item_counts.put(block_data, add_this);
+                                } else {
+                                    item_counts.put(block_data, stack_size);
+                                }
+                            }
+                            inv.remove(is);
+                            continue;
+                        }
+                        // give the player the item back since it wasn't condensed
+                        returnedItems.add(is);
+                        // remove the item from the condenser
+                        inv.remove(is);
+                    }
+                    // return non-condensed items to the player
+                    HashMap<Integer, ItemStack> didntFit = player.getInventory().addItem(returnedItems.toArray(new ItemStack[0]));
+                    player.updateInventory();
+                    // drop items that didn't fit in the player's inventory on the ground
+                    for (ItemStack is : didntFit.values()) {
+                        player.getWorld().dropItem(player.getLocation(), is);
                     }
                     Tardis tardis = rs.getTardis();
                     if (tardis != null) {
@@ -198,13 +248,17 @@ public class TardisCondenserListener implements Listener {
                                 }
                             });
                         }
+                        // warn players about not condensing enchanted items
+                        if (savedEnchantedItems > 0) {
+                            TardisMessage.send(player, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
+                        }
                         // halve it cause 1:1 is too much...
                         amount = Math.round(amount / 2.0F);
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", tardis.getTardisId());
                         plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                         if (amount > 0) {
-                            // are we doing an advancement?
+                            // are we doing an achievement?
                             if (plugin.getAdvancementConfig().getBoolean("energy.enabled")) {
                                 // determine the current percentage
                                 int current_level = tardis.getArtronLevel() + amount;
@@ -222,7 +276,7 @@ public class TardisCondenserListener implements Listener {
                             TardisMessage.send(player, "CONDENSE_NO_VALID");
                         }
                     } else {
-                        plugin.debug("tardis data was null!");
+                        plugin.debug("TARDIS data was null!");
                     }
                 }
             }
@@ -290,7 +344,7 @@ public class TardisCondenserListener implements Listener {
             ItemMeta im = is.getItemMeta();
             assert im != null;
             if (im.hasDisplayName()) {
-                return im.getDisplayName().equals("tardis Blueprint Disk");
+                return im.getDisplayName().equals("TARDIS Blueprint Disk");
             }
         }
         return false;

@@ -21,6 +21,8 @@ import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
+
 /**
  * @author eccentric_nz
  */
@@ -34,13 +36,7 @@ class TardisDefaultWorldNameCommand {
 
     public boolean setName(CommandSender sender, String[] args) {
         // get world name
-        int count = args.length;
-        StringBuilder buf = new StringBuilder();
-        for (int i = 1; i < count; i++) {
-            buf.append(args[i]).append(" ");
-        }
-        String tmp = buf.toString();
-        String t = tmp.substring(0, tmp.length() - 1);
+        String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         // need to make there are no periods(.) in the text
         String nodots = StringUtils.replace(t, ".", "_");
         plugin.getConfig().set("creation.default_world_name", nodots);

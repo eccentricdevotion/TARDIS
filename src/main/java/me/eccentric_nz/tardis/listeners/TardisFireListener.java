@@ -40,8 +40,8 @@ public class TardisFireListener implements Listener {
     }
 
     /**
-     * Listens for block burn and ignite events around the tardis. If the affected block is part of the tardis, then the
-     * event is canceled there by providing protection for the tardis blocks
+     * Listens for block burn and ignite events around the TARDIS. If the affected block is part of the TARDIS, then the
+     * event is canceled there by providing protection for the TARDIS blocks
      *
      * @param event a block catching fire
      */

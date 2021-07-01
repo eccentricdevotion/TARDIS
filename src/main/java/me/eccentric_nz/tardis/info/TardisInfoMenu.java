@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.info;
 import java.util.TreeMap;
 
 /**
- * Articles in the tardis Information System were accessed by typing in an initialism for the subject. Entering IF, for
+ * Articles in the TARDIS Information System were accessed by typing in an initialism for the subject. Entering IF, for
  * example, brought up the database's index file.
  *
  * @author bootthanoo, eccentric_nz
@@ -177,6 +177,9 @@ public enum TardisInfoMenu {
     ENDER("TIS|tardis Types|Ender", "TYPES", "d"),
     CORAL("TIS|tardis Types|Coral", "TYPES", "o"),
     COPPER_11TH("TIS|tardis Types|Copper", "TYPES", "1"),
+    DELTA("TIS|TARDIS Types|Delta=", "TYPES", "="),
+    CAVE("TIS|TARDIS Types|Cave", "TYPES", "v"),
+    WEATHERED("TIS|TARDIS Types|Weathered", "TYPES", "h"),
     CUSTOM("TIS|tardis Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),

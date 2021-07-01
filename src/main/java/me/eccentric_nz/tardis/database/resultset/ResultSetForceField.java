@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
  * travel to.
  *
  * @author eccentric_nz
@@ -83,7 +83,7 @@ public class ResultSetForceField {
                 int y = rs.getInt("y");
                 int z = rs.getInt("z");
                 location = new Location(world, x, y, z);
-                // check location is not in a tardis area
+                // check location is not in a TARDIS area
                 if (!plugin.getTardisArea().areaCheckInExisting(location)) {
                     TardisMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
                     return false;

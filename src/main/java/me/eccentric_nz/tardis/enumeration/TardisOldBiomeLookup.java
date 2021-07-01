@@ -25,7 +25,7 @@ import java.util.HashMap;
  */
 public class TardisOldBiomeLookup {
 
-    public final static HashMap<String, Biome> OLD_BIOME_LOOKUP = new HashMap<>();
+    public static final HashMap<String, Biome> OLD_BIOME_LOOKUP = new HashMap<>();
 
     static {
         OLD_BIOME_LOOKUP.put("BEACHES", Biome.BEACH);

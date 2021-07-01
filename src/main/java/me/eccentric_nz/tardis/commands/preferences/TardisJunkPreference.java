@@ -43,7 +43,7 @@ class TardisJunkPreference {
     public boolean toggle(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
-        // get tardis
+        // get TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", ustr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -52,7 +52,7 @@ class TardisJunkPreference {
             int id = tardis.getTardisId();
             // get current preset
             String current = tardis.getPreset().toString();
-            // must be outside of the tardis
+            // must be outside of the TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", ustr);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -116,7 +116,7 @@ class TardisJunkPreference {
                 TardisMessage.send(player, "JUNK_PRESET_OFF");
                 cham_set = preset;
             }
-            // update tardis table
+            // update TARDIS table
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", ustr);
             plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);

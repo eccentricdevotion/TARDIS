@@ -87,7 +87,7 @@ public class TardisJunkControlListener implements Listener {
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
                 if (rsh.resultSet()) {
                     int id = rsh.getTardisId();
-                    // is it the Junk tardis?
+                    // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
@@ -113,7 +113,7 @@ public class TardisJunkControlListener implements Listener {
                             Switch lever = (Switch) block.getBlockData();
                             lever.setPowered(!lever.isPowered());
                             block.setBlockData(lever);
-                            // destroy junk tardis
+                            // destroy Junk TARDIS
                             DestroyData dd = new DestroyData();
                             dd.setPlayer(player);
                             dd.setDirection(CardinalDirection.SOUTH);
@@ -139,7 +139,7 @@ public class TardisJunkControlListener implements Listener {
                 ResultSetControls rst = new ResultSetControls(plugin, where, false);
                 if (rst.resultSet()) {
                     int id = rst.getTardisId();
-                    // is it the Junk tardis?
+                    // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
@@ -157,7 +157,7 @@ public class TardisJunkControlListener implements Listener {
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
                 if (rsh.resultSet()) {
                     int id = rsh.getTardisId();
-                    // is it the Junk tardis?
+                    // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
@@ -175,7 +175,7 @@ public class TardisJunkControlListener implements Listener {
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
                 if (rsh.resultSet()) {
                     int id = rsh.getTardisId();
-                    // is it the Junk tardis?
+                    // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                     if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();

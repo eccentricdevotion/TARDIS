@@ -109,7 +109,7 @@ class TardisHomeCommand {
                     TardisMessage.send(player, "NO_MEM_CIRCUIT");
                     return true;
                 }
-                // check they are not in the tardis
+                // check they are not in the TARDIS
                 HashMap<String, Object> wherettrav = new HashMap<>();
                 wherettrav.put("uuid", player.getUniqueId().toString());
                 wherettrav.put("tardis_id", id);

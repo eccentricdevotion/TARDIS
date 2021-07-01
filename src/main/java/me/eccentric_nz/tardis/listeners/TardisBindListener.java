@@ -137,7 +137,7 @@ public class TardisBindListener implements Listener {
                                     return;
                                 }
                                 // make sure TARDIS is not dispersed
-                                if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                if (type != 6 && plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                                     TardisMessage.send(player, "NOT_WHILE_DISPERSED");
                                     return;
                                 }

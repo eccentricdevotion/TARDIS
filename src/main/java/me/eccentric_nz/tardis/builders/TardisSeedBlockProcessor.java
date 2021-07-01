@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
+import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
@@ -44,7 +45,7 @@ import java.util.Objects;
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
  * <p>
- * The tardis had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
  * many incarnations' travels.
  *
  * @author eccentric_nz
@@ -58,7 +59,7 @@ public class TardisSeedBlockProcessor {
     }
 
     /**
-     * Turns a seed block, that has been right-clicked by a player into a tardis.
+     * Turns a seed block, that has been right-clicked by a player into a TARDIS.
      *
      * @param seed   the build data for this seed block
      * @param l      the location of the placed seed block
@@ -82,7 +83,7 @@ public class TardisSeedBlockProcessor {
                 }
             }
             String playerNameStr = player.getName();
-            // check to see if they already have a tardis
+            // check to see if they already have a TARDIS
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUuid(player.getUniqueId().toString())) {
                 // check it is not another Time Lords home location
@@ -107,16 +108,16 @@ public class TardisSeedBlockProcessor {
                 String cw;
                 World chunkworld;
                 boolean tips = false;
-                // TODO Name worlds without player name
+                // TODO name worlds without player name
                 if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-                    // create a new world to store this tardis
+                    // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TardisSpace space = new TardisSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
                 } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TardisPermission.hasPermission(player, "tardis.create_world")) {
-                    // create a new world to store this tardis
+                    // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TardisSpace space = new TardisSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);
@@ -143,9 +144,19 @@ public class TardisSeedBlockProcessor {
                 }
                 // get player direction
                 String d = TardisStaticUtils.getPlayersDirection(player, false);
+                // get TIPs slot
+                int slot = -1000001;
+                if (schm.getPermission().equals("junk")) {
+                    slot = -999;
+                } else if (tips) {
+                    slot = new TardisInteriorPositioning(plugin).getFreeSlot();
+                    TardisBuilderInstanceKeeper.getTipsSlots().add(slot);
+                }
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 HashMap<String, Object> set = new HashMap<>();
+                // save the slot
+                set.put("tips", slot);
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
@@ -159,7 +170,7 @@ public class TardisSeedBlockProcessor {
                 } else {
                     now = System.currentTimeMillis();
                 }
-                set.put("last_use", now);
+                set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
                 String preset = Objects.requireNonNull(plugin.getConfig().getString("police_box.default_preset")).toUpperCase(Locale.ENGLISH);
                 set.put("chameleon_preset", preset);
@@ -197,7 +208,7 @@ public class TardisSeedBlockProcessor {
                 setlocs.put("z", l.getBlockZ());
                 setlocs.put("direction", d);
                 plugin.getQueryFactory().insertLocations(setlocs, TardisStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-                // turn the block stack into a tardis
+                // turn the block stack into a TARDIS
                 BuildData bd = new BuildData(player.getUniqueId().toString());
                 bd.setDirection(CardinalDirection.valueOf(d));
                 bd.setLocation(l);
@@ -211,7 +222,7 @@ public class TardisSeedBlockProcessor {
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
                     plugin.getPluginManager().callEvent(new TardisCreationEvent(player, lastInsertId, l));
-                    TardisBuilderInner builder = new TardisBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
+                    TardisBuilderInner builder = new TardisBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                     builder.setTask(task);
                     // delay building exterior
@@ -219,7 +230,7 @@ public class TardisSeedBlockProcessor {
                         plugin.getPresetBuilder().buildPreset(bd);
                         l.getBlock().setBlockData(TardisConstants.AIR);
                     }, schm.getConsoleSize().getDelay());
-                    // set advancement completed
+                    // set achievement completed
                     if (TardisPermission.hasPermission(player, "tardis.book")) {
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("completed", 1);
@@ -237,12 +248,12 @@ public class TardisSeedBlockProcessor {
                     setc.put("count", player_count + 1);
                     setc.put("grace", grace_count);
                     if (has_count) {
-                        // update the player's tardis count
+                        // update the player's TARDIS count
                         HashMap<String, Object> wheretc = new HashMap<>();
                         wheretc.put("uuid", player.getUniqueId().toString());
                         plugin.getQueryFactory().doUpdate("t_count", setc, wheretc);
                     } else {
-                        // insert new tardis count record
+                        // insert new TARDIS count record
                         setc.put("uuid", player.getUniqueId().toString());
                         plugin.getQueryFactory().doInsert("t_count", setc);
                     }

@@ -24,9 +24,9 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 /**
- * Artron energy is used as a source of energy in the tardis. Visually, artron energy resembles a sort of blue
- * electricity. Within the tardis' generator room is an Artron Energy Capacitor. Artron energy can be absorbed by
- * travelling through time, such as by travellers in a tardis.
+ * Artron energy is used as a source of energy in the TARDIS. Visually, artron energy resembles a sort of blue
+ * electricity. Within the TARDIS's generator room is an Artron Energy Capacitor. Artron energy can be absorbed by
+ * travelling through time, such as by travellers in a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -39,10 +39,10 @@ public class TardisArtronLevels {
     }
 
     /**
-     * Starts a repeating task to recharge the tardis. The task is started each time the player exits the tardis after
-     * travelling. If the tardis moves away from the recharge location the task is cancelled.
+     * Starts a repeating task to recharge the TARDIS. The task is started each time the player exits the TARDIS after
+     * travelling. If the TARDIS moves away from the recharge location the task is cancelled.
      *
-     * @param id the unique tardis database key
+     * @param id the unique TARDIS database key
      */
     public void recharge(int id) {
         HashMap<String, Object> set = new HashMap<>();
@@ -56,13 +56,13 @@ public class TardisArtronLevels {
     }
 
     /**
-     * Checks whether the tardis has sufficient Artron Energy levels. If the energy level will drop below 100, then the
+     * Checks whether the TARDIS has sufficient Artron Energy levels. If the energy level will drop below 100, then the
      * player is warned.
      *
-     * @param id       the unique tardis database key
+     * @param id       the unique TARDIS database key
      * @param required the amount of Artron energy needed
      * @param p        the player to message
-     * @return a boolean - true if the tardis has sufficient energy
+     * @return a boolean - true if the TARDIS has sufficient energy
      */
     public boolean checkLevel(int id, int required, Player p) {
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

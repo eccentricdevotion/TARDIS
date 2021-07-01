@@ -75,7 +75,7 @@ public class TardisMinecartListener implements Listener {
                 int bz = block_loc.getBlockZ();
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
                 switch (material) {
-                    case ACACIA_DOOR: // is it a tardis door?
+                    case ACACIA_DOOR: // is it a TARDIS door?
                     case BIRCH_DOOR:
                     case CRIMSON_DOOR:
                     case DARK_OAK_DOOR:

@@ -54,7 +54,7 @@ public class TardisJettisonSeeder implements Listener {
     }
 
     /**
-     * Listens for player interaction with a TNT block. If the block is clicked with the tardis key after running the
+     * Listens for player interaction with a TNT block. If the block is clicked with the TARDIS key after running the
      * command /tardis jettison [room type], the TNT block's location and the room type are used to determine a cuboid
      * region that is set to AIR. The room walls are left in place as they maybe attached to other rooms/passage ways.
      *
@@ -68,7 +68,7 @@ public class TardisJettisonSeeder implements Listener {
         Player player = event.getPlayer();
         String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
-        // check that player is in tardis
+        // check that player is in TARDIS
         if (!plugin.getTrackerKeeper().getJettison().containsKey(uuid)) {
             return;
         }
@@ -83,7 +83,7 @@ public class TardisJettisonSeeder implements Listener {
             } else {
                 key = plugin.getConfig().getString("preferences.key");
             }
-            // only proceed if they are clicking a seed block with the tardis key!
+            // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(Objects.requireNonNull(plugin.getArtronConfig().getString("jettison_seed"))))) {
                 assert key != null;
                 if (inhand.equals(Material.getMaterial(key))) {
@@ -99,7 +99,7 @@ public class TardisJettisonSeeder implements Listener {
                     BlockFace facing = trd.getFace();
                     // get clicked block location
                     Location l = block.getRelative(facing, 3).getLocation();
-                    // get the tardis id
+                    // get the TARDIS id
                     ResultSetTardisId rs = new ResultSetTardisId(plugin);
                     if (rs.fromUuid(player.getUniqueId().toString())) {
                         int id = rs.getTardisId();

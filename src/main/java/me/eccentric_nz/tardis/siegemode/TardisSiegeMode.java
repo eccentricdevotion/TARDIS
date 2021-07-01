@@ -45,8 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Siege mode is a feature of the tardis that can be activated using a lever under the console to prevent entry or exit.
- * Additionally, it makes the tardis impervious to all external damage. Siege mode requires power to activate or
+ * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
+ * Additionally, it makes the TARDIS impervious to all external damage. Siege mode requires power to activate or
  * deactivate.
  *
  * @author eccentric_nz
@@ -140,11 +140,11 @@ public class TardisSiegeMode {
             TardisMessage.send(p, "SIEGE_OFF");
         } else {
             // make sure TARDIS is not dispersed
-            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
+            if (plugin.getTrackerKeeper().getDispersedTardises().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TardisMessage.send(p, "NOT_WHILE_DISPERSED");
                 return;
             }
-            // destroy tardis
+            // destroy TARDIS
             DestroyData dd = new DestroyData();
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);

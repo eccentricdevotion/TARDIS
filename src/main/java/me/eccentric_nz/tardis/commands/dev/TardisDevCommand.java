@@ -19,10 +19,12 @@ package me.eccentric_nz.tardis.commands.dev;
 import com.google.common.collect.Sets;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
+import me.eccentric_nz.tardis.bstats.ArsRoomCounts;
 import me.eccentric_nz.tardis.builders.FractalFence;
 import me.eccentric_nz.tardis.commands.TardisCommandHelper;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -33,6 +35,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,7 +49,7 @@ import java.util.Set;
  */
 public class TardisDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "set_biome", "stats", "tree");
     private final TardisPlugin plugin;
 
     public TardisDevCommand(TardisPlugin plugin) {
@@ -71,6 +74,14 @@ public class TardisDevCommand implements CommandExecutor {
                     if (first.equals("add_regions")) {
                         return new TardisAddRegionsCommand(plugin).doCheck(sender);
                     }
+                    if (first.equals("stats")) {
+                        ArsRoomCounts arsRoomCounts = new ArsRoomCounts(plugin);
+                        for (Map.Entry<String, Integer> entry : arsRoomCounts.getRoomCounts().entrySet()) {
+                            plugin.debug(entry.getKey() + ": " + entry.getValue());
+                        }
+                        plugin.debug(arsRoomCounts.getMedian());
+                        return true;
+                    }
                 }
                 if (first.equals("advancements")) {
                     TardisAdvancementFactory.checkAdvancement(args[1]);
@@ -83,9 +94,16 @@ public class TardisDevCommand implements CommandExecutor {
                     TardisMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
-                if (first.equals("tree")) {
+                if (first.equals("set_biome")) {
                     if (sender instanceof Player p) {
-                        Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
+                        Chunk chunk = p.getLocation().getChunk();
+                        plugin.getTardisHelper().setCustomBiome(args[1], chunk);
+                        return true;
+                    }
+                }
+                if (first.equals("tree")) {
+                    if (sender instanceof Player player) {
+                        Block l = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
                         int which = TardisNumberParsers.parseInt(args[1]);
                         FractalFence.grow(l, which);
                     }

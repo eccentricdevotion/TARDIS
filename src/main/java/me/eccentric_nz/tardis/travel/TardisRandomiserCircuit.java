@@ -32,8 +32,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The Randomiser is a device that ensures a tardis lands at unpredictable times and places. When activated it scrambles
- * the tardis' coordinate settings, giving the Doctor even less control than usual over the destination of his ship.
+ * The Randomiser is a device that ensures a TARDIS lands at unpredictable times and places. When activated it scrambles
+ * the TARDIS's coordinate settings, giving the Doctor even less control than usual over the destination of his ship.
  *
  * @author eccentric_nz
  */
@@ -70,7 +70,7 @@ public class TardisRandomiserCircuit {
             }
         });
         Parameters params = new Parameters(p, Flag.getDefaultFlags());
-        params.setCompass(d);
+        params.setDirection(d);
         return plugin.getTardisApi().getRandomLocation(allowedWorlds, null, params);
     }
 }

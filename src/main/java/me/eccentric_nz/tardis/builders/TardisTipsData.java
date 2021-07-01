@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.builders;
 
 /**
- * Data storage container for the tardis Interior Positioning System. It stores the coordinates of the TIPS slot.
+ * Data storage container for the TARDIS Interior Positioning System. It stores the coordinates of the TIPS slot.
  * <p>
  * minx, maxx, minz and maxz are the diagonal corners of a cuboid region. centrex, centrez are the coordinates where the
- * tardis will tart to be grown from.
+ * TARDIS will start to be grown from.
  *
  * @author eccentric_nz
  */

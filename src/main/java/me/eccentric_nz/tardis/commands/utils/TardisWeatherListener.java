@@ -55,7 +55,7 @@ public class TardisWeatherListener extends TardisMenuListener implements Listene
             if (slot >= 0 && slot < 9) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
-                    // get the tardis the player is in
+                    // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);

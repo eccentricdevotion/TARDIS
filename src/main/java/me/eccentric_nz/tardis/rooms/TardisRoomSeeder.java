@@ -41,7 +41,7 @@ import java.util.UUID;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well as clothing for other people in the
- * tardis wardrobe. At least some of the clothes had pockets that were bigger on the inside.
+ * TARDIS wardrobe. At least some of the clothes had pockets that were bigger on the inside.
  *
  * @author eccentric_nz
  */
@@ -58,7 +58,7 @@ public class TardisRoomSeeder implements Listener {
      * tardis key after running the command /tardis room [room type], the seed block will start growing into the room
      * type specified.
      * <p>
-     * Requires the tardis to have sufficient Artron Energy to grow the room.
+     * Requires the TARDIS to have sufficient Artron Energy to grow the room.
      *
      * @param event a player clicking a block
      */
@@ -81,11 +81,11 @@ public class TardisRoomSeeder implements Listener {
             } else {
                 key = plugin.getConfig().getString("preferences.key");
             }
-            // only proceed if they are clicking a seed block with the tardis key!
+            // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType)) {
                 assert key != null;
                 if (inhand.equals(Material.getMaterial(key))) {
-                    // check they are still in the tardis world
+                    // check they are still in the TARDIS world
                     if (!plugin.getUtils().inTardisWorld(player)) {
                         TardisMessage.send(player, "ROOM_IN_WORLD");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);

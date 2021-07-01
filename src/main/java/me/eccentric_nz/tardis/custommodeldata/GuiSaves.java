@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiSaves {
 
-    // tardis saves
+    // TARDIS saves
     REARRANGE_SAVES(5, 45, Material.ARROW),
     LOAD_TARDIS_AREAS(1, 53, Material.MAP),
     DELETE_SAVE(1, 47, Material.BUCKET),

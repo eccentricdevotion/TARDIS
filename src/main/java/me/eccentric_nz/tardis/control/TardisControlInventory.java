@@ -53,7 +53,7 @@ public class TardisControlInventory {
      */
     private ItemStack[] getItemStack() {
 
-        // get tardis options
+        // get TARDIS options
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -172,7 +172,7 @@ public class TardisControlInventory {
         }
         gle.setCustomModelData(tcmd);
         tog.setItemMeta(gle);
-        // tardis map
+        // TARDIS map
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta me = map.getItemMeta();
         assert me != null;

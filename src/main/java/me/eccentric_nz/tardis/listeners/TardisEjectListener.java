@@ -20,6 +20,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.mobfarming.TardisLlama;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,7 +56,7 @@ public class TardisEjectListener implements Listener {
         if (!plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
             return;
         }
-        // check they are still in the tardis world - they could have exited after running the command
+        // check they are still in the TARDIS world - they could have exited after running the command
         if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "EJECT_WORLD");
             return;
@@ -66,7 +67,7 @@ public class TardisEjectListener implements Listener {
             return;
         }
         // get the exit location
-        TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        TardisDoorLocation dl = TardisDoorListener.getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
         Location l = dl.getL();
         // set the entity's direction as you would for a player when exiting
         switch (dl.getD()) {
@@ -88,20 +89,20 @@ public class TardisEjectListener implements Listener {
             }
         }
         switch (ent.getType()) {
-            // can't eject OPs or tardis admins
+            // can't eject OPs or TARDIS admins
             case PLAYER -> {
                 Player p = (Player) ent;
                 if (p.isOp() || TardisPermission.hasPermission(p, "tardis.admin")) {
                     TardisMessage.send(player, "EJECT_PLAYER");
                     return;
                 }
-                // check the clicked player is in a tardis world
+                // check the clicked player is in a TARDIS world
                 if (!plugin.getUtils().inTardisWorld(p)) {
                     TardisMessage.send(player, "EJECT_WORLD");
                     return;
                 }
                 // teleport player and remove from travellers table
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true, false);
                 TardisMessage.send(p, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
@@ -375,7 +376,6 @@ public class TardisEjectListener implements Listener {
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
                 }
-                plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
                 ent.remove();
             }
             default -> TardisMessage.send(player, "EJECT_NOT_VALID");

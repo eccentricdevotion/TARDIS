@@ -46,8 +46,8 @@ import java.util.*;
 import static me.eccentric_nz.tardis.schematic.TardisBannerSetter.setBanners;
 
 /**
- * The tardis had a swimming pool. After the tardis' crash following the Doctor's tenth regeneration, the pool's water -
- * or perhaps the pool itself - fell into the library. After the tardis had fixed itself, the swimming pool was restored
+ * The TARDIS had a swimming pool. After the TARDIS's crash following the Doctor's tenth regeneration, the pool's water -
+ * or perhaps the pool itself - fell into the library. After the TARDIS had fixed itself, the swimming pool was restored
  * but the Doctor did not know where it was.
  *
  * @author eccentric_nz
@@ -149,7 +149,7 @@ public class TardisRoomRunnable implements Runnable {
     }
 
     /**
-     * A runnable task that builds tardis rooms block by block.
+     * A runnable task that builds TARDIS rooms block by block.
      */
     @Override
     public void run() {
@@ -606,7 +606,7 @@ public class TardisRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardisId, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startX + ":" + startY + ":" + startZ);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -631,6 +631,7 @@ public class TardisRoomRunnable implements Runnable {
                         case VILLAGE -> data = Material.COBBLESTONE.createBlockData();
                         case HUTCH, STABLE, STALL, MAZE -> data = Material.GRASS_BLOCK.createBlockData();
                         case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
+                        case GEODE -> data = Material.CLAY.createBlockData();
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         default -> {

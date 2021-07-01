@@ -29,7 +29,7 @@ import java.util.Objects;
 
 /**
  * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
- * unnoticeable. The Doctor was able to construct a perception filter around three keys to the tardis, activated when
+ * unnoticeable. The Doctor was able to construct a perception filter around three keys to the TARDIS, activated when
  * they were worn around the neck on a chain.
  *
  * @author eccentric_nz

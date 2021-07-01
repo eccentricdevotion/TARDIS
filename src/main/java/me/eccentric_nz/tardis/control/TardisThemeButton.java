@@ -47,7 +47,7 @@ public class TardisThemeButton {
     }
 
     public void clickButton() {
-        // check player is in own tardis
+        // check player is in own TARDIS
         int p_tid = getTardisId(player.getUniqueId().toString());
         if (p_tid != id) {
             TardisMessage.send(player, "UPGRADE_OWN");

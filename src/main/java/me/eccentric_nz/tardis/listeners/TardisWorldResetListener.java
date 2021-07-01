@@ -24,7 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
- * Track Multiverse Adventure world resetting. If the world is being reset, prevent time travel in tardis that were in
+ * Track Multiverse Adventure world resetting. If the world is being reset, prevent time travel in TARDIS that were in
  * the world being reset.
  *
  * @author eccentric_nz
@@ -40,12 +40,12 @@ public class TardisWorldResetListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAReset(MVAResetEvent event) {
         String world = event.getWorld();
-        plugin.getTrackerKeeper().getReset().add(world);
+        plugin.getTrackerKeeper().getResetWorlds().add(world);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAResetFinished(MVAResetFinishedEvent event) {
         String world = event.getWorld();
-        plugin.getTrackerKeeper().getReset().remove(world);
+        plugin.getTrackerKeeper().getResetWorlds().remove(world);
     }
 }

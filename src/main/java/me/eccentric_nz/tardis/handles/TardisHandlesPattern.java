@@ -23,11 +23,11 @@ import java.util.regex.Pattern;
 
 public class TardisHandlesPattern {
 
-    private static final HashMap<String, Pattern> patterns = new HashMap<>();
+    private static final HashMap<String, Pattern> PATTERNS = new HashMap<>();
 
     public static Pattern getPattern(String key) {
-        if (patterns.containsKey(key)) {
-            return patterns.get(key);
+        if (PATTERNS.containsKey(key)) {
+            return PATTERNS.get(key);
         } else {
             // cache key
             return buildPattern(key);
@@ -35,8 +35,8 @@ public class TardisHandlesPattern {
     }
 
     public static Pattern getPattern(String key, boolean custom) {
-        if (patterns.containsKey(key)) {
-            return patterns.get(key);
+        if (PATTERNS.containsKey(key)) {
+            return PATTERNS.get(key);
         } else {
             // cache key
             if (custom) {
@@ -53,7 +53,7 @@ public class TardisHandlesPattern {
         String regex = TardisPlugin.plugin.getHandlesConfig().getString(key);
         if (regex != null) {
             pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-            patterns.put(key, pattern);
+            PATTERNS.put(key, pattern);
         }
         return pattern;
     }

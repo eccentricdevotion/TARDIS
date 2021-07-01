@@ -49,12 +49,12 @@ public class TardisArtronFurnaceListener implements Listener {
 
     private final TardisPlugin plugin;
     private final double burnFactor;
-    private final short cookTime;
+    private final int cookTime;
 
     public TardisArtronFurnaceListener(TardisPlugin plugin) {
         this.plugin = plugin;
         burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
-        cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
+        cookTime = 200 * this.plugin.getArtronConfig().getInt("artron_furnace.cook_time");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -113,9 +113,11 @@ public class TardisArtronFurnaceListener implements Listener {
         Furnace furnace = (Furnace) event.getInventory().getHolder();
         // Setting cookTime when the furnace is empty but already burning
         assert furnace != null;
-        if (plugin.getTardisHelper().isArtronFurnace(furnace.getBlock()) && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString()) && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
-                && Objects.requireNonNull(event.getCursor()).getType() != Material.AIR // With an item
-                && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
+        if (plugin.getTardisHelper().isArtronFurnace(furnace.getBlock())
+                && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString())
+                && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
+                && Objects.requireNonNull(event.getCursor()).getType() != Material.AIR    // With an item
+                && furnace.getCookTime() > cookTime) {            // The furnace is not already burning something
             furnace.setCookTimeTotal(cookTime);
         }
     }
@@ -145,7 +147,7 @@ public class TardisArtronFurnaceListener implements Listener {
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);
             }
-            plugin.getTardisHelper().nameFurnaceGui(b, "TARDIS Artron Furnace");
+            plugin.getTardisHelper().nameFurnaceGui(b);
         } else {
             event.setCancelled(true);
             TardisMessage.send(player, "NO_PERM_FURNACE");

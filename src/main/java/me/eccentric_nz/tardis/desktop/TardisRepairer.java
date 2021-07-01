@@ -92,7 +92,7 @@ public class TardisRepairer {
             long initial_delay = (hasLava) ? 45L : 5L;
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, initial_delay, delay);
-            ttr.setTaskID(task);
+            ttr.setTaskId(task);
         }
     }
 

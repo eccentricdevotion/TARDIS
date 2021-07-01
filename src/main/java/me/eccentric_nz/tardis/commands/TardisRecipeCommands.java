@@ -40,7 +40,7 @@ import java.util.*;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a tardis by broadcasting Stattenheim
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
  * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
@@ -62,6 +62,7 @@ public class TardisRecipeCommands implements CommandExecutor {
         t.put("ars", Material.QUARTZ_BLOCK); // ars
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("BUDGET", Material.IRON_BLOCK); // budget
+        t.put("CAVE", Material.DRIPSTONE_BLOCK); // dripstone cave
         t.put("COPPER", Material.WARPED_PLANKS); // copper schematic designed by vistaero
         t.put("CORAL", Material.NETHER_WART_BLOCK); // coral schematic designed by vistaero
         t.put("DELTA", Material.CRYING_OBSIDIAN); // delta
@@ -77,6 +78,7 @@ public class TardisRecipeCommands implements CommandExecutor {
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
+        t.put("WEATHERED", Material.WEATHERED_COPPER); // weathered
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
@@ -160,7 +162,7 @@ public class TardisRecipeCommands implements CommandExecutor {
         ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         player.closeInventory();
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
@@ -232,7 +234,7 @@ public class TardisRecipeCommands implements CommandExecutor {
         ShapelessRecipe recipe = plugin.getShapelessRecipe().getShapelessRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         int glowstoneCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
@@ -280,7 +282,7 @@ public class TardisRecipeCommands implements CommandExecutor {
     }
 
     private void showTardisRecipe(Player player, String type) {
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
@@ -302,11 +304,11 @@ public class TardisRecipeCommands implements CommandExecutor {
         in_floor.setItemMeta(fl_meta);
         // seed block
         ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
-        // tardis type
+        // TARDIS type
         ItemStack tardis;
         // should be mushroom block
         int model;
-        if (Consoles.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
+        if (Consoles.getByNames().get(type.toUpperCase()).isCustom()) {
             model = 45;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("DELTA")) {
@@ -318,8 +320,14 @@ public class TardisRecipeCommands implements CommandExecutor {
         } else if (type.equalsIgnoreCase("COPPER")) {
             model = 46;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("CAVE")) {
+            model = 56;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("WEATHERED")) {
+            model = 57;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else {
-            model = TardisSeedModel.modelByString(type.toUpperCase());
+            model = TardisSeedModel.getModelByString(type.toUpperCase());
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
         }
         ItemMeta seed = tardis.getItemMeta();

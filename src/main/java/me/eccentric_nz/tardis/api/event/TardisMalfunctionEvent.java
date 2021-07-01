@@ -33,7 +33,7 @@ public final class TardisMalfunctionEvent extends TardisEvent {
     }
 
     /**
-     * Returns the Bukkit Location the tardis will travel to.
+     * Returns the Bukkit Location the TARDIS will travel to.
      *
      * @return the malfunction location
      */

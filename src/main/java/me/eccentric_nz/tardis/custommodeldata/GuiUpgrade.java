@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiUpgrade {
 
-    // tardis Upgrade Menu
+    // TARDIS Upgrade Menu
     ARCHIVE_CONSOLES(4, 46, Material.BOWL),
     REPAIR_CONSOLE(72, 47, Material.BOWL),
     CLEAN(34, 48, Material.BOWL),

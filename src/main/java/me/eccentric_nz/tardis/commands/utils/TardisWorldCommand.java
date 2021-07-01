@@ -35,7 +35,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 
 /**
@@ -165,7 +167,8 @@ public class TardisWorldCommand extends TardisCompleter implements CommandExecut
                             case "siluria" -> new TardisSiluria(plugin).loadSilurianUnderworld();
                             default -> new TardisSkaro(plugin).loadDalekWorld();
                         }
-                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "planets_template.yml"));
+                        Reader reader = new InputStreamReader(Objects.requireNonNull(plugin.getResource("planets_template.yml")));
+                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(reader);
                         ConfigurationSection section = pConfig.getConfigurationSection("planets." + TardisStringUtils.uppercaseFirst(name));
                         ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TardisStringUtils.uppercaseFirst(name) + ".gamerules");
                         String s_world = plugin.getServer().getWorlds().get(0).getName();
@@ -178,6 +181,11 @@ public class TardisWorldCommand extends TardisCompleter implements CommandExecut
                         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
                         if (name.equals(s_world + "_tardis_skaro")) {
                             plugin.getPlanetsConfig().set("planets." + name + ".acid_potions", Arrays.asList("WEAKNESS", "POISON"));
+                        }
+                        try {
+                            reader.close();
+                        } catch (IOException ioException) {
+                            plugin.debug("Could not close input stream reader!");
                         }
                     } else {
                         // try to load the world

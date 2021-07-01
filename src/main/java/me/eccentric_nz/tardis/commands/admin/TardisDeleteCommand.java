@@ -21,7 +21,6 @@ import me.eccentric_nz.tardis.api.event.TardisDestructionEvent;
 import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -54,7 +53,7 @@ public class TardisDeleteCommand {
     public static void cleanDatabase(int id) {
         TardisBlockLoader bl = new TardisBlockLoader(TardisPlugin.plugin);
         bl.unloadProtectedBlocks(id);
-        List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = Arrays.asList("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
@@ -75,19 +74,6 @@ public class TardisDeleteCommand {
         HashMap<String, Object> where = new HashMap<>();
         Player player = null;
         if (tmp == -1) {
-            // this should be run from the console if the player running it is the player to be deleted
-            if (sender instanceof Player) {
-                player = (Player) sender;
-                if (player.getName().equals(args[1])) {
-                    HashMap<String, Object> wherep = new HashMap<>();
-                    wherep.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                    if (rst.resultSet()) {
-                        TardisMessage.send(sender, "TARDIS_DELETE_NO");
-                        return true;
-                    }
-                }
-            }
             // Look up this player's UUID
             UUID uuid;
             if (junk) {

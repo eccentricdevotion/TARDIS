@@ -30,6 +30,7 @@ upgrades:
   ars: 5000
   bigger: 7500
   budget: 5000
+  cave: 5000
   copper: 20000
   coral: 8000
   deluxe: 10000
@@ -47,6 +48,7 @@ upgrades:
   tom: 5000
   twelfth: 7500
   war: 5000
+  weathered: 5000
   legacy_bigger: 7500
   legacy_budget: 5000
   legacy_deluxe: 10000

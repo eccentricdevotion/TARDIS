@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 /**
- * Soon after taking Amy Pond on board for the first time, the tardis console provided the Doctor with a new sonic
+ * Soon after taking Amy Pond on board for the first time, the TARDIS console provided the Doctor with a new sonic
  * screwdriver, as the previous one had been destroyed.
  *
  * @author eccentric_nz

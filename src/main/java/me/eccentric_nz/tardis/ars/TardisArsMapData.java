@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.ars;
 
 /**
- * Architectural Configuration is the ability a tardis has to move rooms around and delete rooms as if it were a
- * computer. If a tardis is sluggish, a room could be jettisoned (or "deleted").
+ * Architectural Configuration is the ability a TARDIS has to move rooms around and delete rooms as if it were a
+ * computer. If a TARDIS is sluggish, a room could be jettisoned (or "deleted").
  *
  * @author eccentric_nz
  */

@@ -436,7 +436,7 @@ public interface TardisApi {
      *
      * @param id      the TARDIS ID to set the destination for
      * @param preset  the exterior preset to use
-     * @param rebuild whether to rebuild the tardis exterior
+     * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
     boolean setChameleonPreset(int id, Preset preset, boolean rebuild);

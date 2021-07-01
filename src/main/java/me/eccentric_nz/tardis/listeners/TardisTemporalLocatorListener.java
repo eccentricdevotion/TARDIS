@@ -47,7 +47,7 @@ public class TardisTemporalLocatorListener extends TardisMenuListener implements
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
      * accordingly.
      *
      * @param event a player clicking an inventory slot

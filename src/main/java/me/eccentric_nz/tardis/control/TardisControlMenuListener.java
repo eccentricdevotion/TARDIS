@@ -30,6 +30,7 @@ import me.eccentric_nz.tardis.commands.tardis.TardisRebuildCommand;
 import me.eccentric_nz.tardis.companiongui.TardisCompanionInventory;
 import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
@@ -74,14 +75,14 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
     public void onControlMenuInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "tardis Control Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 54) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
-                    // get the tardis the player is in
+                    // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -123,7 +124,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         break;
                                 }
                             }
-                            boolean lightsOn = tardis.isLightsOn();
+                            boolean lights = tardis.isLightsOn();
                             int level = tardis.getArtronLevel();
                             TardisCircuitChecker tcc = null;
                             if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
@@ -141,7 +142,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
-                                    close(player);
+                                    close(player, false);
                                     // give the GUI time to close first
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
                                     break;
@@ -180,7 +181,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                    if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                                         TardisMessage.send(player, "NOT_WHILE_DISPERSED");
                                         return;
                                     }
@@ -192,7 +193,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     break;
                                 case 6:
                                     // artron level
-                                    close(player);
+                                    close(player, true);
                                     new TardisArtronIndicator(plugin).showArtronLevel(player, id, 0);
                                     break;
                                 case 8:
@@ -208,7 +209,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     }
                                     Location zero = TardisStaticLocationGetters.getLocationFromDB(tardis.getZero());
                                     if (zero != null) {
-                                        close(player);
+                                        close(player, false);
                                         TardisMessage.send(player, "ZERO_READY");
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisExteriorRenderer(plugin).transmat(player, CardinalDirection.SOUTH, zero), 20L);
                                         plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
@@ -231,7 +232,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     }
                                     TardisSaveSignInventory tssi = new TardisSaveSignInventory(plugin, tardis.getTardisId(), player);
                                     ItemStack[] saves = tssi.getTerminal();
-                                    Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+                                    Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                                     saved.setContents(saves);
                                     player.openInventory(saved);
                                     break;
@@ -253,12 +254,12 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "NO_MAT_CIRCUIT");
                                         return;
                                     }
-                                    close(player);
+                                    close(player, true);
                                     new TardisSiegeButton(plugin, player, tardis.isPowered(), id).clickButton();
                                     break;
                                 case 15:
                                     // scanner
-                                    close(player);
+                                    close(player, false);
                                     TardisScanner.scan(player, id, plugin.getServer().getScheduler());
                                     break;
                                 case 17:
@@ -277,21 +278,21 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
-                                    close(player);
+                                    close(player, false);
                                     new TardisFastReturnButton(plugin, player, id, level).clickButton();
                                     break;
                                 case 20:
                                     // power up/down
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        close(player);
-                                        new TardisPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), lightsOn, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
+                                        close(player, true);
+                                        new TardisPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
                                     } else {
                                         TardisMessage.send(player, "POWER_DOWN_DISABLED");
                                     }
                                     break;
                                 case 22:
                                     // hide
-                                    close(player);
+                                    close(player, true);
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
@@ -300,14 +301,14 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     break;
                                 case 24:
                                     // TIS
-                                    close(player);
+                                    close(player, false);
                                     new TardisInfoMenuButton(plugin, player).clickButton();
                                     break;
                                 case 26:
                                     // Companions Menu
                                     String comps = tardis.getCompanions();
                                     if (comps == null || comps.isEmpty()) {
-                                        close(player);
+                                        close(player, true);
                                         TardisMessage.send(player, "COMPANIONS_NONE");
                                         return;
                                     }
@@ -329,7 +330,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     }
                                     TardisAreasInventory tai = new TardisAreasInventory(plugin, player);
                                     ItemStack[] areas = tai.getTerminal();
-                                    Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis areas");
+                                    Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
                                     areainv.setContents(areas);
                                     player.openInventory(areainv);
                                     break;
@@ -339,16 +340,16 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    if (!lightsOn && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
+                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
                                         TardisMessage.send(player, "POWER_DOWN");
                                         return;
                                     }
-                                    close(player);
-                                    new TardisLightSwitch(plugin, id, lightsOn, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                                    close(player, true);
+                                    new TardisLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
                                     break;
                                 case 31:
                                     // rebuild
-                                    close(player);
+                                    close(player, true);
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
@@ -358,7 +359,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                 case 33:
                                     // transmat
                                     ItemStack[] tran = new TardisTransmatInventory(plugin, id).getMenu();
-                                    Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis transmats");
+                                    Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
                                     smat.setContents(tran);
                                     player.openInventory(smat);
                                     break;
@@ -387,7 +388,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    close(player);
+                                    close(player, true);
                                     new TardisBlackWoolToggler(plugin).toggleBlocks(id, player);
                                     break;
                                 case 40:
@@ -420,7 +421,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     break;
                                 case 47:
                                     // tardis map
-                                    Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Map");
+                                    Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Map");
                                     // open new inventory
                                     new_inv.setContents(new TardisArsMap(plugin).getMap());
                                     player.openInventory(new_inv);
@@ -442,7 +443,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                     break;
                                 case 53:
                                     // close
-                                    close(player);
+                                    close(player, false);
                                     break;
                                 default:
                                     break;
@@ -451,6 +452,19 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                     }
                 }
             }
+        }
+    }
+
+    private void close(Player p, boolean check) {
+        boolean close = true;
+        if (check) {
+            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+            if (rspp.resultSet()) {
+                close = rspp.isCloseGuiOn();
+            }
+        }
+        if (close) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
         }
     }
 }

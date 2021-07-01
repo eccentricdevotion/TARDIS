@@ -25,7 +25,7 @@ import org.bukkit.entity.EntityType;
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for tardis mobs.
+ * Data storage class for TARDIS mobs.
  *
  * @author eccentric_nz
  */

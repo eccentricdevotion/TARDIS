@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
+import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.TardisBuilderUtility;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -25,6 +26,7 @@ import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -53,16 +55,24 @@ public class TardisDematerialisePoliceBox implements Runnable {
     @Override
     public void run() {
         World world = dd.getLocation().getWorld();
+        Block light = dd.getLocation().getBlock().getRelative(BlockFace.UP, 2);
         if (i < loops) {
             i++;
-            int cmd = switch (i % 3) {
-                case 2 -> // stained
-                        1003;
-                case 1 -> // glass
-                        1004;
-                default -> // preset
-                        1001;
-            };
+            int cmd;
+            switch (i % 3) {
+                case 2 -> { // stained
+                    cmd = 1003;
+                    light.setBlockData(TardisConstants.AIR);
+                }
+                case 1 -> { // glass
+                    cmd = 1004;
+                    light.setBlockData(TardisConstants.AIR);
+                }
+                default -> { // preset
+                    cmd = 1001;
+                    light.setBlockData(TardisConstants.LIGHT);
+                }
+            }
             // first run - play sound
             if (i == 1) {
                 boolean found = false;
@@ -102,16 +112,19 @@ public class TardisDematerialisePoliceBox implements Runnable {
                     }
                 }
             }
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            im.setCustomModelData(cmd);
-            is.setItemMeta(im);
-            frame.setItem(is, false);
-            frame.setFixed(true);
-            frame.setVisible(false);
+            if (is != null) {
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                im.setCustomModelData(cmd);
+                is.setItemMeta(im);
+                frame.setItem(is, false);
+                frame.setFixed(true);
+                frame.setVisible(false);
+            }
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            light.setBlockData(TardisConstants.AIR);
             new TardisDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
         }
     }

@@ -43,7 +43,7 @@ public class TardisAdminTabComplete extends TardisCompleter implements TabComple
     private final ImmutableList<String> ENTITY_SUBS;
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
     private final ImmutableList<String> PRESETS;
-    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
+    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getByNames().keySet());
     private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 

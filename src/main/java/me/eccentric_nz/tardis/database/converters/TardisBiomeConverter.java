@@ -121,7 +121,7 @@ public class TardisBiomeConverter {
         if (l != null && biome != null) {
             int sbx = l.getBlockX();
             int sbz = l.getBlockZ();
-            World w = l.getWorld();
+            World world = l.getWorld();
             List<Chunk> chunks = new ArrayList<>();
             Chunk chunk = l.getChunk();
             chunks.add(chunk);
@@ -129,17 +129,19 @@ public class TardisBiomeConverter {
             TardisBiome blockBiome = TardisStaticUtils.getBiomeAt(l);
             if (blockBiome.equals(TardisBiome.DEEP_OCEAN) || blockBiome.equals(TardisBiome.THE_VOID) || (blockBiome.equals(TardisBiome.THE_END) && !Objects.requireNonNull(l.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
-                for (int c = -3; c < 4; c++) {
-                    for (int r = -3; r < 4; r++) {
-                        try {
-                            assert w != null;
-                            w.setBiome(sbx + c, sbz + r, biome);
-                            Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
-                            if (!chunks.contains(tmp_chunk)) {
-                                chunks.add(tmp_chunk);
+                for (int row = -3; row <= 4; row++) {
+                    for (int column = -5; column <= 5; column++) {
+                        for (int aisle = -3; aisle <= 4; aisle++) {
+                            try {
+                                assert world != null;
+                                world.setBiome(sbx + row, column, sbz + aisle, biome);
+                                Chunk tmp_chunk = world.getChunkAt(new Location(world, sbx + row, 64, sbz + aisle));
+                                if (!chunks.contains(tmp_chunk)) {
+                                    chunks.add(tmp_chunk);
+                                }
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
                             }
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
                         }
                     }
                 }

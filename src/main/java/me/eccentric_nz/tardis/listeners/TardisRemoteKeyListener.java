@@ -46,8 +46,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * At one point, the Tenth Doctor installed a system that allowed him to lock the tardis remotely using a fob. As a
- * joke, the tardis roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
+ * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
+ * joke, the TARDIS roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
  *
  * @author eccentric_nz
  */
@@ -58,7 +58,7 @@ public class TardisRemoteKeyListener implements Listener {
 
     public TardisRemoteKeyListener(TardisPlugin plugin) {
         this.plugin = plugin;
-        rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.tardis Remote Key.result"));
+        rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -93,7 +93,7 @@ public class TardisRemoteKeyListener implements Listener {
                 TardisMessage.send(player, "SIEGE_NO_CONTROL");
                 return;
             }
-            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+            if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                 TardisMessage.send(player, "NOT_WHILE_DISPERSED");
                 return;
             }
@@ -123,8 +123,8 @@ public class TardisRemoteKeyListener implements Listener {
                     TardisMessage.send(player, "DOOR_LOCK", message);
                     TardisAdaptiveBoxLampToggler tpblt = new TardisAdaptiveBoxLampToggler(plugin);
                     TardisSounds.playTardisSound(l, "tardis_lock");
-                    tpblt.toggleLamp(id, !powered);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered), 6L);
+                    tpblt.toggleLamp(id, !powered, preset);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
                 }
             } else if (preset.equals(Preset.INVISIBLE)) {
                 HashMap<String, Object> whered = new HashMap<>();

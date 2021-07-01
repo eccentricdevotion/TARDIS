@@ -34,10 +34,10 @@ public class TardisLocationGetters {
     }
 
     /**
-     * Get the chunk where the interior tardis is.
+     * Get the chunk where the interior TARDIS is.
      *
-     * @param id the database record id of the tardis to get the chunk for
-     * @return the tardis interior chunk
+     * @param id the database record id of the TARDIS to get the chunk for
+     * @return the TARDIS interior chunk
      */
     public Chunk getTardisChunk(int id) {
         ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
@@ -54,9 +54,9 @@ public class TardisLocationGetters {
     }
 
     /**
-     * Gets a start location for building the inner tardis.
+     * Gets a start location for building the inner TARDIS.
      *
-     * @param id the tardis this location belongs to.
+     * @param id the TARDIS this location belongs to.
      * @return an array of ints.
      */
     public int[] getStartLocation(int id) {

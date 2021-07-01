@@ -69,7 +69,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                     int cmd = dim.getCustomModelData();
                     if ((cmd == 1001 || cmd == 1002) && TardisPermission.hasPermission(player, "tardis.enter")) {
                         UUID playerUuid = player.getUniqueId();
-                        // get tardis from location
+                        // get TARDIS from location
                         Location location = frame.getLocation();
                         String doorloc = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
                         HashMap<String, Object> where = new HashMap<>();
@@ -112,7 +112,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                 key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
                                                 willFarm = rspref.isFarmOn();
                                                 if (rspref.isAutoPowerUpOn() && plugin.getConfig().getBoolean("allow.power_down")) {
-                                                    // check tardis is not abandoned
+                                                    // check TARDIS is not abandoned
                                                     canPowerUp = !tardis.isAbandoned();
                                                 }
                                             } else {
@@ -122,7 +122,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                             if (player.getInventory().getItemInMainHand().getType().equals(m)) {
                                                 if (player.isSneaking()) {
                                                     // tp to the interior
-                                                    // get INNER tardis location
+                                                    // get INNER TARDIS location
                                                     TardisDoorLocation idl = getDoor(1, id);
                                                     Location tardis_loc = idl.getL();
                                                     World cw = idl.getW();
@@ -137,11 +137,11 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                         TardisFarmer tf = new TardisFarmer(plugin);
                                                         petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
                                                     }
-                                                    // if WorldGuard is on the server check for tardis region protection and add admin as member
+                                                    // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TardisPermission.hasPermission(player, "tardis.skeletonkey")) {
                                                         plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
                                                     }
-                                                    // enter tardis!
+                                                    // enter TARDIS!
                                                     cw.getChunkAt(tardis_loc).load();
                                                     tardis_loc.setPitch(player.getLocation().getPitch());
                                                     // get inner door direction so we can adjust yaw if necessary
@@ -150,7 +150,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                         yaw += adjustYaw(pd, innerD);
                                                     }
                                                     tardis_loc.setYaw(yaw);
-                                                    movePlayer(player, tardis_loc, false, playerWorld, rspref.isQuotesOn(), 1, rspref.isMinecartOn());
+                                                    movePlayer(player, tardis_loc, false, playerWorld, rspref.isQuotesOn(), 1, rspref.isMinecartOn(), false);
                                                     if (petsAndFollowers != null) {
                                                         if (petsAndFollowers.getPets().size() > 0) {
                                                             movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
@@ -165,7 +165,7 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
                                                         }
                                                     }
                                                     if (canPowerUp && !tardis.isPowered() && !tardis.isAbandoned()) {
-                                                        // power up the tardis
+                                                        // power up the TARDIS
                                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
                                                     }
                                                     // put player into travellers table

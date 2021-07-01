@@ -31,8 +31,8 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Cat.Type;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Cat.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -50,6 +50,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
 
     private final TardisPlugin plugin;
     private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
+    private final HashMap<UUID, Integer> axolotls = new HashMap<>();
     private final HashMap<UUID, Integer> cats = new HashMap<>();
     private final HashMap<UUID, Integer> foxes = new HashMap<>();
     private final HashMap<UUID, Integer> genes = new HashMap<>();
@@ -282,6 +283,11 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                             EntityType dt = EntityType.valueOf(disguise);
                             Object[] options = null;
                             switch (dt) {
+                                case AXOLOTL:
+                                    if (!plugin.isDisguisesOnServer()) {
+                                        options = new Object[]{getAxolotlVariant(view), Age.getFromBoolean(getBaby(view))};
+                                    }
+                                    break;
                                 case CAT:
                                     if (plugin.isDisguisesOnServer()) {
                                         new TardisLazarusLibs(player, disguise, getCatType(view), getBoolean(view), getBaby(view)).createDisguise();
@@ -485,6 +491,15 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
         String t = null;
         int o;
         switch (d) {
+            case "AXOLOTL":
+                if (axolotls.containsKey(uuid)) {
+                    o = (axolotls.get(uuid) + 1 < 5) ? axolotls.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Axolotl.Variant.values()[o].toString();
+                axolotls.put(uuid, o);
+                break;
             case "SNOWMAN":
                 boolean derp;
                 if (snowmen.containsKey(uuid)) {
@@ -681,6 +696,18 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
             return Llama.Color.valueOf(Objects.requireNonNull(im.getLore()).get(0));
         } catch (IllegalArgumentException e) {
             return org.bukkit.entity.Llama.Color.CREAMY;
+        }
+    }
+
+    private Axolotl.Variant getAxolotlVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        assert is != null;
+        ItemMeta im = is.getItemMeta();
+        try {
+            assert im != null;
+            return Axolotl.Variant.valueOf(Objects.requireNonNull(im.getLore()).get(0));
+        } catch (IllegalArgumentException e) {
+            return Axolotl.Variant.WILD;
         }
     }
 

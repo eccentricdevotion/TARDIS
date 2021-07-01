@@ -56,8 +56,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * During tardis operation, a distinctive grinding and whirring sound is usually heard. River Song once demonstrated a
- * tardis was capable of materialising silently, teasing the Doctor that the noise was actually caused by him leaving
+ * During TARDIS operation, a distinctive grinding and whirring sound is usually heard. River Song once demonstrated a
+ * TARDIS was capable of materialising silently, teasing the Doctor that the noise was actually caused by him leaving
  * the brakes on.
  *
  * @author eccentric_nz
@@ -398,7 +398,7 @@ public class TardisDoorWalkListener extends TardisDoorListener implements Listen
                                                 }
                                             }
                                             // exit TARDIS!
-                                            movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
+                                            movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart, false);
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && TardisPermission.hasPermission(player, "tardis.farm")) {
                                                 TardisFarmer tf = new TardisFarmer(plugin);
                                                 TardisPetsAndFollowers petsAndFollowers = tf.exitPets(player);
@@ -469,7 +469,7 @@ public class TardisDoorWalkListener extends TardisDoorListener implements Listen
                                                 yaw += adjustYaw(pd, innerD);
                                             }
                                             tardis_loc.setYaw(yaw);
-                                            movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart);
+                                            movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart, false);
                                             if (petsAndFollowers != null) {
                                                 if (petsAndFollowers.getPets().size() > 0) {
                                                     movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
@@ -525,7 +525,7 @@ public class TardisDoorWalkListener extends TardisDoorListener implements Listen
                                         }
                                         inner_loc.setYaw(yaw);
                                         inner_loc.setPitch(pitch);
-                                        movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart);
+                                        movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart, false);
                                         if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                             if (!rsp.getTextureIn().isEmpty()) {
                                                 new TardisResourcePackChanger(plugin).changeResourcePack(player, rsp.getTextureIn());
@@ -601,7 +601,7 @@ public class TardisDoorWalkListener extends TardisDoorListener implements Listen
                                         }
                                         outer_loc.setYaw(yaw);
                                         outer_loc.setPitch(pitch);
-                                        movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart);
+                                        movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart, false);
                                         if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                             new TardisResourcePackChanger(plugin).changeResourcePack(player, rsp.getTextureOut());
                                         }

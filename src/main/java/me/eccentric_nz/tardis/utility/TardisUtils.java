@@ -44,7 +44,7 @@ import java.util.Objects;
 /**
  * Various utility methods.
  * <p>
- * The tardis can be programmed to execute automatic functions based on certain conditions. It also automatically
+ * The TARDIS can be programmed to execute automatic functions based on certain conditions. It also automatically
  * repairs after too much damage.
  *
  * @author eccentric_nz
@@ -117,7 +117,7 @@ public class TardisUtils {
      * Checks if player has storage record, and update the tardis_id field if they do.
      *
      * @param uuid the player's UUID
-     * @param id   the player's tardis ID
+     * @param id   the player's TARDIS ID
      */
     public void updateStorageId(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
@@ -178,7 +178,7 @@ public class TardisUtils {
                     inGracePeriod = true;
                     if (update) {
                         TardisMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
-                        // update the grace count if the tardis has travelled
+                        // update the grace count if the TARDIS has travelled
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
                         HashMap<String, Object> set = new HashMap<>();

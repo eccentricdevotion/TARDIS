@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -33,9 +33,9 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -44,26 +44,26 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * Before a TARDIS becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
- * by simply having a Time Lord operate the TARDIS for the first time.
+ * Before a Tardis becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
+ * by simply having a Time Lord operate the Tardis for the first time.
  *
  * @author eccentric_nz
  */
-public class TARDISWorldGuardUtils {
+public class TardisWorldGuardUtils {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
     private WorldGuardPlugin wgp;
     private WorldGuardPlatform wg;
 
     /**
      * Checks if WorldGuard is on the server.
      *
-     * @param plugin an instance of the TARDIS plugin
+     * @param plugin an instance of the Tardis plugin
      */
-    public TARDISWorldGuardUtils(TARDIS plugin) {
+    public TardisWorldGuardUtils(TardisPlugin plugin) {
         this.plugin = plugin;
         if (plugin.isWorldGuardOnServer()) {
-            wgp = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
+            wgp = (WorldGuardPlugin) plugin.getPluginManager().getPlugin("WorldGuard");
             wg = WorldGuard.getInstance().getPlatform();
         }
     }
@@ -78,6 +78,7 @@ public class TARDISWorldGuardUtils {
     public boolean canBuild(Player p, Location l) {
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+        assert rm != null;
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
     }
@@ -92,6 +93,7 @@ public class TARDISWorldGuardUtils {
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
         String f = plugin.getConfig().getString("preferences.respect_worldguard");
+        assert f != null;
         if (f.toLowerCase(Locale.ENGLISH).equals("none")) {
             return true;
         }
@@ -99,24 +101,26 @@ public class TARDISWorldGuardUtils {
         if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
             BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+            assert rm != null;
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
             return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
         }
         // get the flag to check
-        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
+        StateFlag flag = TardisWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
         if (flag == null) {
             return true;
         }
         // get the regions for this location
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+        assert rm != null;
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(null, flag);
     }
 
     /**
-     * Adds a WorldGuard protected region to the inner TARDIS location. This stops other players and mobs from griefing
-     * the TARDIS :)
+     * Adds a WorldGuard protected region to the inner Tardis location. This stops other players and mobs from griefing
+     * the Tardis :)
      *
      * @param p   the player to assign as the owner of the region
      * @param one a start location of a cuboid region
@@ -132,13 +136,13 @@ public class TARDISWorldGuardUtils {
             b1 = BlockVector3.at(cube, 256, cube);
             b2 = BlockVector3.at(-cube, 0, -cube);
         } else {
-            // just get the TARDIS size
+            // just get the Tardis size
             b1 = makeBlockVector(one);
             b2 = makeBlockVector(two);
         }
         // check floodgate
-        String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
-        ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + name, b1, b2);
+        String name = (TardisFloodgate.isFloodgateEnabled() && TardisFloodgate.isBedrockPlayer(p.getUniqueId())) ? TardisFloodgate.sanitisePlayerName(p.getName()) : p.getName();
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("Tardis_" + name, b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
         region.setOwners(dd);
@@ -151,23 +155,24 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for Tardis! " + e.getMessage());
         }
     }
 
     /**
-     * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the TARDIS
+     * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the Tardis
      * :)
      *
      * @param player the player to assign as the owner of the region
      * @param data   a TIPS Data container
      * @param world  the world we are creating the region in
      */
-    public void addWGProtection(Player player, TARDISTIPSData data, World world, boolean junk) {
+    public void addWGProtection(Player player, TardisTipsData data, World world, boolean junk) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
@@ -179,9 +184,9 @@ public class TARDISWorldGuardUtils {
         } else {
             uuid = player.getUniqueId();
             // check floodgate for region name
-            name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(player.getName()) : player.getName();
+            name = (TardisFloodgate.isFloodgateEnabled() && TardisFloodgate.isBedrockPlayer(player.getUniqueId())) ? TardisFloodgate.sanitisePlayerName(player.getName()) : player.getName();
         }
-        String region_id = "TARDIS_" + name;
+        String region_id = "Tardis_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(uuid);
@@ -196,6 +201,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         if (!junk) {
             // deny exit to all
@@ -205,23 +211,23 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for Tardis! " + e.getMessage());
         }
     }
 
     /**
-     * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the TARDIS
+     * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the Tardis
      * :)
      *
      * @param name  the player to assign as the owner of the region
      * @param data  a TIPS Data container
      * @param world the world we are creating the region in
      */
-    public void addWGProtection(UUID uuid, String name, TARDISTIPSData data, World world) {
+    public void addWGProtection(UUID uuid, String name, TardisTipsData data, World world) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
-        String region_id = "TARDIS_" + name;
+        String region_id = "Tardis_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(uuid);
@@ -236,6 +242,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         // deny exit to all
         // usage = "<id> <flag> [-w world] [-g group] [value]",
@@ -243,7 +250,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for Tardis! " + e.getMessage());
         }
     }
 
@@ -273,6 +280,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LAVA_FLOW, State.DENY);
         flags.put(Flags.LIGHTER, State.DENY);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
@@ -294,8 +302,8 @@ public class TARDISWorldGuardUtils {
         BlockVector3 b2;
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
-        if (TARDISFloodgate.isFloodgateEnabled()) {
-            name = TARDISFloodgate.sanitisePlayerName(name);
+        if (TardisFloodgate.isFloodgateEnabled()) {
+            name = TardisFloodgate.sanitisePlayerName(name);
         }
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
@@ -307,6 +315,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.LEAF_DECAY, State.DENY);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
@@ -316,33 +325,36 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Removes the WorldGuard region when the TARDIS is deleted.
+     * Removes the WorldGuard region when the Tardis is deleted.
      *
      * @param world the world the region is located in
      * @param name  the player's name
      */
     public void removeRegion(World world, String name) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
-        Set<ProtectedRegion> regions = rm.removeRegion("TARDIS_" + name);
-        if (regions.size() == 0 && TARDISFloodgate.isFloodgateEnabled()) {
+        assert rm != null;
+        Set<ProtectedRegion> regions = rm.removeRegion("Tardis_" + name);
+        assert regions != null;
+        if (regions.size() == 0 && TardisFloodgate.isFloodgateEnabled()) {
             // try sanitised name
-            rm.removeRegion("TARDIS_" + TARDISFloodgate.sanitisePlayerName(name));
+            rm.removeRegion("Tardis_" + TardisFloodgate.sanitisePlayerName(name));
         }
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for Tardis! " + e.getMessage());
         }
     }
 
     /**
-     * Removes the WorldGuard region when the TARDIS is deleted.
+     * Removes the WorldGuard region when the Tardis is deleted.
      *
-     * @param l the TARDIS interior location
+     * @param l the Tardis interior location
      */
     public void removeRegion(Location l) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -361,10 +373,10 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for Tardis! " + e.getMessage());
             }
         } else {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not get WorldGuard region for TARDIS location!");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not get WorldGuard region for Tardis location!");
         }
     }
 
@@ -374,8 +386,9 @@ public class TARDISWorldGuardUtils {
      * @param name the name of the recharger to remove
      */
     public void removeRechargerRegion(String name) {
-        World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
+        World w = TardisAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+        assert rm != null;
         rm.removeRegion("tardis_recharger_" + name);
         try {
             rm.save();
@@ -385,7 +398,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Removes the exterior rendering room region when the room is jettisoned or the TARDIS is deleted.
+     * Removes the exterior rendering room region when the room is jettisoned or the Tardis is deleted.
      *
      * @param world the world the region is located in
      * @param name  the player's name
@@ -394,11 +407,12 @@ public class TARDISWorldGuardUtils {
     public void removeRoomRegion(World world, String name, String room) {
         boolean save = false;
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        assert rm != null;
         if (rm.hasRegion(room + "_" + name)) {
             rm.removeRegion(room + "_" + name);
             save = true;
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(name);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(name);
             if (rm.hasRegion(room + "_" + sanitised)) {
                 rm.removeRegion(room + "_" + sanitised);
                 save = true;
@@ -423,10 +437,10 @@ public class TARDISWorldGuardUtils {
     public void addMemberToRegion(World w, String owner, String a) {
         boolean save = false;
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        ProtectedRegion protectedRegion;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + a + " -w " + w.getName());
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember Tardis_" + owner + " " + a + " -w " + w.getName());
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
 
         }
         if (save) {
@@ -448,12 +462,13 @@ public class TARDISWorldGuardUtils {
     public void removeMemberFromRegion(World world, String owner, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion protectedRegion = null;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            protectedRegion = rm.getRegion("TARDIS_" + owner);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                protectedRegion = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            protectedRegion = rm.getRegion("Tardis_" + owner);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                protectedRegion = rm.getRegion("Tardis_" + sanitised);
             }
         }
         if (protectedRegion != null) {
@@ -476,12 +491,13 @@ public class TARDISWorldGuardUtils {
     public void removeAllMembersFromRegion(World w, String owner, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         ProtectedRegion protectedRegion = null;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            protectedRegion = rm.getRegion("TARDIS_" + owner);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                protectedRegion = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            protectedRegion = rm.getRegion("Tardis_" + owner);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                protectedRegion = rm.getRegion("Tardis_" + sanitised);
             }
         }
         if (protectedRegion != null) {
@@ -490,12 +506,12 @@ public class TARDISWorldGuardUtils {
             members.removeAll();
             // add the owner back in
             members.addPlayer(uuid);
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getName());
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember Tardis_" + owner + " " + owner + " -w " + w.getName());
         }
     }
 
     /**
-     * Updates the TARDIS WorldGuard region when the player name has changed.
+     * Updates the Tardis WorldGuard region when the player name has changed.
      *
      * @param world the world the region is located in
      * @param owner the owner's name
@@ -505,28 +521,31 @@ public class TARDISWorldGuardUtils {
     public void updateRegionForNameChange(World world, String owner, UUID uuid, String which) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         String region = which + "_" + owner;
+        assert rm != null;
         if (rm.hasRegion(region)) {
             ProtectedRegion pr = rm.getRegion(region);
+            assert pr != null;
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
             pr.setOwners(dd);
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for Tardis owner name change! " + e.getMessage());
             }
         }
     }
 
     /**
-     * Updates the TARDIS WorldGuard region when the TARDIS has been claimed by a new player.
+     * Updates the Tardis WorldGuard region when the Tardis has been claimed by a new player.
      *
-     * @param location the TARDIS interior location
+     * @param location the Tardis interior location
      * @param uuid     the UUID of the player
      */
     public void updateRegionForClaim(Location location, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(location.getWorld()));
         BlockVector3 vector = BlockVector3.at(location.getX(), location.getY(), location.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -543,6 +562,7 @@ public class TARDISWorldGuardUtils {
             parentNames.forEach(regions::remove);
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
+            assert pr != null;
             pr.setFlag(Flags.ENTRY, State.DENY);
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
@@ -550,13 +570,13 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned Tardis claim! " + e.getMessage());
             }
         }
     }
 
     /**
-     * Sets a player's CHEST_ACCESS flag to DENY in their TARDIS region.
+     * Sets a player's CHEST_ACCESS flag to DENY in their Tardis region.
      *
      * @param world the world the region is located in
      * @param owner the player whose region it is
@@ -564,12 +584,13 @@ public class TARDISWorldGuardUtils {
     public void lockContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            region = rm.getRegion("TARDIS_" + owner);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                region = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            region = rm.getRegion("Tardis_" + owner);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                region = rm.getRegion("Tardis_" + sanitised);
             }
         }
         if (region != null) {
@@ -584,7 +605,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Sets a player's CHEST_ACCESS flag to ALLOW in their TARDIS region.
+     * Sets a player's CHEST_ACCESS flag to ALLOW in their Tardis region.
      *
      * @param world the world the region is located in
      * @param owner the player whose region it is
@@ -592,12 +613,13 @@ public class TARDISWorldGuardUtils {
     public void unlockContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            region = rm.getRegion("TARDIS_" + owner);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                region = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            region = rm.getRegion("Tardis_" + owner);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                region = rm.getRegion("Tardis_" + sanitised);
             }
         }
         if (region != null) {
@@ -612,7 +634,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Gets the state of a player's CHEST_ACCESS flag in their TARDIS region.
+     * Gets the state of a player's CHEST_ACCESS flag in their Tardis region.
      *
      * @param world the world the region is located in
      * @param owner the player whose region it is
@@ -621,12 +643,13 @@ public class TARDISWorldGuardUtils {
     public boolean queryContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
-        if (rm.hasRegion("TARDIS_" + owner)) {
-            region = rm.getRegion("TARDIS_" + owner);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                region = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + owner)) {
+            region = rm.getRegion("Tardis_" + owner);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                region = rm.getRegion("Tardis_" + sanitised);
             }
         }
         if (region != null) {
@@ -663,39 +686,41 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Gets a TARDIS WorldGuard region.
+     * Gets a Tardis WorldGuard region.
      *
      * @param world the world the region is in
      * @param name  the Time Lord whose region it is
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String name) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TardisAliasResolver.getWorldFromAlias(world);
         if (w == null) {
             return null;
         }
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         ProtectedRegion protectedRegion = null;
-        if (rm.hasRegion("TARDIS_" + name)) {
-            protectedRegion = rm.getRegion("TARDIS_" + name);
-        } else if (TARDISFloodgate.isFloodgateEnabled()) {
-            String sanitised = TARDISFloodgate.sanitisePlayerName(name);
-            if (rm.hasRegion("TARDIS_" + sanitised)) {
-                protectedRegion = rm.getRegion("TARDIS_" + sanitised);
+        assert rm != null;
+        if (rm.hasRegion("Tardis_" + name)) {
+            protectedRegion = rm.getRegion("Tardis_" + name);
+        } else if (TardisFloodgate.isFloodgateEnabled()) {
+            String sanitised = TardisFloodgate.sanitisePlayerName(name);
+            if (rm.hasRegion("Tardis_" + sanitised)) {
+                protectedRegion = rm.getRegion("Tardis_" + sanitised);
             }
         }
         return protectedRegion;
     }
 
     /**
-     * Gets a List of all TARDIS regions in a world.
+     * Gets a List of all Tardis regions in a world.
      *
      * @param world the world to get the regions for
-     * @return a list of TARDIS region names for this world
+     * @return a list of Tardis region names for this world
      */
-    public List<String> getTARDISRegions(World world) {
+    public List<String> getTardisRegions(World world) {
         List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        assert rm != null;
         rm.getRegions().forEach((key, value) -> {
             if (key.contains("tardis")) {
                 regions.add(key);
@@ -713,6 +738,7 @@ public class TARDISWorldGuardUtils {
     public boolean mobsCanSpawnAtLocation(Location l) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         return ars.testState(null, Flags.MOB_SPAWNING);
     }
@@ -725,16 +751,17 @@ public class TARDISWorldGuardUtils {
      * @param allow whether the flag state should be set to allow or deny
      */
     public void setEntryExitFlags(String world, String owner, boolean allow) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TardisAliasResolver.getWorldFromAlias(world);
         ProtectedRegion region = null;
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-            if (rm.hasRegion("TARDIS_" + owner)) {
-                region = rm.getRegion("TARDIS_" + owner);
-            } else if (TARDISFloodgate.isFloodgateEnabled()) {
-                String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
-                if (rm.hasRegion("TARDIS_" + sanitised)) {
-                    region = rm.getRegion("TARDIS_" + sanitised);
+            assert rm != null;
+            if (rm.hasRegion("Tardis_" + owner)) {
+                region = rm.getRegion("Tardis_" + owner);
+            } else if (TardisFloodgate.isFloodgateEnabled()) {
+                String sanitised = TardisFloodgate.sanitisePlayerName(owner);
+                if (rm.hasRegion("Tardis_" + sanitised)) {
+                    region = rm.getRegion("Tardis_" + sanitised);
                 }
             }
             if (region != null) {

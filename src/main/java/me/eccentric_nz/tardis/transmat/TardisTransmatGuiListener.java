@@ -46,7 +46,7 @@ public class TardisTransmatGuiListener extends TardisMenuListener implements Lis
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
      * accordingly.
      *
      * @param event a player clicking an inventory slot
@@ -62,7 +62,7 @@ public class TardisTransmatGuiListener extends TardisMenuListener implements Lis
             if (slot >= 0 && slot < 54) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
-                    // get the tardis the player is in
+                    // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);

@@ -67,7 +67,7 @@ public class TardisSonicGeneratorListener implements Listener {
             return;
         }
         String location = block.getLocation().toString();
-        // get tardis from saved location
+        // get TARDIS from saved location
         HashMap<String, Object> where = new HashMap<>();
         where.put("type", 24);
         where.put("location", location);
@@ -228,7 +228,7 @@ public class TardisSonicGeneratorListener implements Listener {
             String uuid = p.getUniqueId().toString();
             String l = event.getBlock().getLocation().toString();
             // generator was crafted
-            // get tardis player is in
+            // get TARDIS player is in
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
@@ -254,7 +254,7 @@ public class TardisSonicGeneratorListener implements Listener {
                 }
             } else {
                 event.setCancelled(true);
-                // only in tardis
+                // only in TARDIS
                 TardisMessage.send(p, "NOT_IN_TARDIS");
             }
         }

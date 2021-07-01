@@ -33,7 +33,6 @@ class TardisSqlLocationsUpdater implements Runnable {
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final HashMap<String, Object> data;
-    private final String biome;
     private final int id;
     private final String prefix;
 
@@ -45,10 +44,9 @@ class TardisSqlLocationsUpdater implements Runnable {
      * @param data   a HashMap<String, Object> of table fields and values to insert.
      * @param id     the tardis_id
      */
-    TardisSqlLocationsUpdater(TardisPlugin plugin, HashMap<String, Object> data, String biome, int id) {
+    TardisSqlLocationsUpdater(TardisPlugin plugin, HashMap<String, Object> data, int id) {
         this.plugin = plugin;
         this.data = data;
-        this.biome = biome;
         this.id = id;
         prefix = this.plugin.getPrefix();
     }

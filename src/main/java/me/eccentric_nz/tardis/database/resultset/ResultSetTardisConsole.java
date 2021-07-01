@@ -54,7 +54,7 @@ public class ResultSetTardisConsole {
     }
 
     /**
-     * Attempts to get the TARDIS schematic from the size stored in the tardis table. This method builds an SQL query string
+     * Attempts to get the TARDIS schematic from the size stored in the TARDIS table. This method builds an SQL query string
      * from the parameters supplied and then executes the query.
      *
      * @param uuid the Time Lord uuid to check
@@ -71,7 +71,7 @@ public class ResultSetTardisConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                schematic = Consoles.getBY_NAMES().get(rs.getString("size"));
+                schematic = Consoles.getByNames().get(rs.getString("size"));
                 return true;
             }
             return false;

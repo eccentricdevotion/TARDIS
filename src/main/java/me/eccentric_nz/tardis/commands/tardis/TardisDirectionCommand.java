@@ -96,7 +96,7 @@ public class TardisDirectionCommand {
                 TardisMessage.send(player, "NOT_WHILE_MAT");
                 return true;
             }
-            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+            if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                 TardisMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }

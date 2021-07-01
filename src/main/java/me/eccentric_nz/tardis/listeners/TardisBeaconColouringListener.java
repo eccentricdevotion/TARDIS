@@ -34,9 +34,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 /**
- * The time rotor is a component in the central column of the tardis console. While the tardis is in flight, the rotor
- * rises and falls, stopping when the tardis has reached a destination. It is associated with the 'whooshing' noise
- * heard when the tardis is in flight.
+ * The time rotor is a component in the central column of the TARDIS console. While the TARDIS is in flight, the rotor
+ * rises and falls, stopping when the TARDIS has reached a destination. It is associated with the 'whooshing' noise
+ * heard when the TARDIS is in flight.
  *
  * @author eccentric_nz
  */
@@ -59,11 +59,11 @@ public class TardisBeaconColouringListener implements Listener {
             return;
         }
         ItemStack dye = player.getInventory().getItemInMainHand();
-        if (!TardisMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
+        if (!TardisMaterials.DYES.contains(player.getInventory().getItemInMainHand().getType())) {
             TardisMessage.send(player, "COLOUR_DYE");
             return;
         }
-        if (!TardisMaterials.glass.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
+        if (!TardisMaterials.GLASS.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
             TardisMessage.send(player, "COLOUR_GLASS");
             return;
         }

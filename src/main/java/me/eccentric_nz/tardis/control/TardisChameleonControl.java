@@ -50,7 +50,7 @@ class TardisChameleonControl {
             TardisMessage.send(player, "SIEGE_NO_CONTROL");
             return;
         }
-        if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+        if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
             TardisMessage.send(player, "NOT_WHILE_DISPERSED");
             return;
         }

@@ -31,7 +31,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import java.util.HashMap;
 
 /**
- * Artron energy is vital in the running of a tardis; it can run low and when down to 10% it means even backup power is
+ * Artron energy is vital in the running of a TARDIS; it can run low and when down to 10% it means even backup power is
  * unavailable, as this requires artron energy as well.
  *
  * @author eccentric_nz
@@ -71,7 +71,7 @@ public class TardisLightningListener implements Listener {
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (rsc.resultSet()) {
                         World w = rsc.getWorld();
-                        // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
+                        // only if the TARDIS is in the same world as the lightning strike and is not at a beacon recharger!
                         assert strikeworld != null;
                         if (strikeworld.equals(w) && !charging) {
                             Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());

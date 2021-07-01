@@ -48,7 +48,7 @@ public class TardisSeedRecipe {
     }
 
     public void addSeedRecipes() {
-        for (Schematic schematic : Consoles.getBY_MATERIALS().values()) {
+        for (Schematic schematic : Consoles.getByMaterials().values()) {
             plugin.getServer().addRecipe(makeSeedRecipe(schematic));
         }
     }
@@ -57,9 +57,9 @@ public class TardisSeedRecipe {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
         int model;
-        if (TardisSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
-            model = TardisSeedModel.modelByMaterial(s.getSeedMaterial());
-            if (s.getPermission().equals("delta") || s.getPermission().equals("rotor")) {
+        if (TardisSeedModel.MATERIAL_MAP.containsKey(s.getSeedMaterial())) {
+            model = TardisSeedModel.getModelByMaterial(s.getSeedMaterial());
+            if (s.getPermission().equals("copper") || s.getPermission().equals("delta") || s.getPermission().equals("rotor") || s.getPermission().equals("cave") || s.getPermission().equals("weathered")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

@@ -31,7 +31,7 @@ import java.util.Map;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the location of special areas the
- * tardis can travel to.
+ * TARDIS can travel to.
  *
  * @author eccentric_nz
  */

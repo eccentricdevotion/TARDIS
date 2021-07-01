@@ -36,7 +36,7 @@ public class TardisDoorCommand {
             TardisMessage.send(player, "NO_PERMS");
             return true;
         }
-        // must have a tardis
+        // must have a TARDIS
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUuid(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");

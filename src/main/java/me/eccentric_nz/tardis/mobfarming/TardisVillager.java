@@ -33,11 +33,10 @@ class TardisVillager extends TardisMob {
     private List<MerchantRecipe> trades;
     private int level;
     private Villager.Type villagerType;
-    private boolean willing;
     private int experience;
 
     /**
-     * Data storage class for tardis villagers.
+     * Data storage class for TARDIS villagers.
      */
 
     Profession getProfession() {
@@ -70,14 +69,6 @@ class TardisVillager extends TardisMob {
 
     void setVillagerType(Villager.Type villagerType) {
         this.villagerType = villagerType;
-    }
-
-    boolean isWilling() {
-        return willing;
-    }
-
-    void setWilling(boolean willing) {
-        this.willing = willing;
     }
 
     public int getExperience() {

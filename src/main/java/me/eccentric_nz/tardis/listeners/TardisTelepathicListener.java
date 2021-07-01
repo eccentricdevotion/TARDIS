@@ -61,14 +61,14 @@ public class TardisTelepathicListener implements Listener {
             return;
         }
         String location = block.getLocation().toString();
-        // get tardis from saved location
+        // get TARDIS from saved location
         HashMap<String, Object> where = new HashMap<>();
         where.put("type", 23);
         where.put("location", location);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             int id = rsc.getTardisId();
-            // get the Time Lord of this tardis
+            // get the Time Lord of this TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);

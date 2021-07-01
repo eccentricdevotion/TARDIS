@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiInteriorSounds {
 
-    // tardis Interior Sounds
+    // TARDIS Interior Sounds
     ALIEN(3, 0, Material.BOWL),
     ATMOSPHERE(7, 1, Material.BOWL),
     COMPUTER(46, 2, Material.BOWL),

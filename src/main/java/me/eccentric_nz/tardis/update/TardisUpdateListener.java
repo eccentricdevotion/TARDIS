@@ -51,9 +51,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * The tardis interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
+ * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
  * the Doctor's own regeneration. Some of these changes were physical in nature (involving secondary control rooms,
- * etc.), but it was also possible to re-arrange the interior design of the tardis with ease, using the Architectural
+ * etc.), but it was also possible to re-arrange the interior design of the TARDIS with ease, using the Architectural
  * Configuration system.
  *
  * @author eccentric_nz
@@ -81,8 +81,8 @@ public class TardisUpdateListener implements Listener {
         UUID playerUuid = player.getUniqueId();
         Updateable updateable;
         boolean secondary = false;
-        if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUuid)) {
-            updateable = Updateable.valueOf(TardisStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(playerUuid)));
+        if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUuid)) {
+            updateable = Updateable.valueOf(TardisStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getUpdatePlayers().get(playerUuid)));
         } else if (plugin.getTrackerKeeper().getSecondary().containsKey(playerUuid)) {
             updateable = plugin.getTrackerKeeper().getSecondary().get(playerUuid);
             secondary = true;
@@ -153,7 +153,7 @@ public class TardisUpdateListener implements Listener {
             if (secondary) {
                 plugin.getTrackerKeeper().getSecondary().remove(playerUuid);
             } else {
-                plugin.getTrackerKeeper().getPlayers().remove(playerUuid);
+                plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUuid);
             }
             if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
                 TardisMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());

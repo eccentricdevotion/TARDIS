@@ -24,7 +24,7 @@ public enum BlueprintRoom {
     //    ROOM("tardis.room"), // all room perms
 
     //    VAULT("tardis.vault"), // can use vault room
-    //    FARM("tardis.farm"), // can farm mobs into tardis - must have appropriate room
+    //    FARM("tardis.farm"), // can farm mobs into TARDIS - must have appropriate room
     //    LAZARUS("tardis.lazarus"), // can use the genetic manipulator
 
     ANTIGRAVITY("tardis.room.antigravity"),

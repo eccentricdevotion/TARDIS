@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The distinctive tardis sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
+ * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
  * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
  * old, gutted piano. The resulting sound was recorded and electronically processed with echo and reverb.
  *

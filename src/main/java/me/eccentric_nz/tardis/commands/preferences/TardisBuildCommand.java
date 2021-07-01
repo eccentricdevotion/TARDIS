@@ -44,7 +44,7 @@ class TardisBuildCommand {
             return true;
         }
         String playerNameStr = player.getName();
-        // get the player's tardis world
+        // get the player's TARDIS world
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

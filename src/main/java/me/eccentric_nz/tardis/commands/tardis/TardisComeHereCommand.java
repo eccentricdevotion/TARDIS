@@ -97,7 +97,7 @@ class TardisComeHereCommand {
                         return true;
                     }
                 }
-                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                     TardisMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                     return true;
                 }
@@ -116,7 +116,7 @@ class TardisComeHereCommand {
                     TardisMessage.send(player, "NO_PB_IN_WORLD");
                     return true;
                 }
-                // check they are not in the tardis
+                // check they are not in the TARDIS
                 HashMap<String, Object> wherettrav = new HashMap<>();
                 wherettrav.put("uuid", uuid.toString());
                 wherettrav.put("tardis_id", id);

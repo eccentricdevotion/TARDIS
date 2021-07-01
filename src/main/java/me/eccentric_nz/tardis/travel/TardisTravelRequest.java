@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 
 /**
- * The telepathic password to the tardis was "the colour crimson, the number eleven, the feeling of delight, and the
+ * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
  * smell of dust after rain".
  *
  * @author eccentric_nz
@@ -44,7 +44,7 @@ public class TardisTravelRequest {
 
     /**
      * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
-     * borders and tardis areas.
+     * borders and TARDIS areas.
      *
      * @param p  the player who is travelling.
      * @param to the player to request travel to.

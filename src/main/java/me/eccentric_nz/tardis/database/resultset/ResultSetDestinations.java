@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
  * travel to.
  *
  * @author eccentric_nz

@@ -130,6 +130,8 @@ public class TardisChecker {
             TardisChecker.copy(dimension + "_d.json", dimFile);
             File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
             TardisChecker.copy(dimension + "_dt.json", dimTypeFile);
+            File metaFile = new File(dataPacksRoot + dimension, "pack.mcmeta");
+            TardisChecker.copy("pack_" + dimension + ".mcmeta", metaFile);
             switch (dimension) {
                 case "skaro":
                     File tree = new File(featureDir, "skaro_tree.json");

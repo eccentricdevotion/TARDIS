@@ -40,11 +40,11 @@ class TardisAssembleCommand {
     boolean assemble(CommandSender sender, String player) {
         if (player.equalsIgnoreCase("all")) {
             plugin.getTrackerKeeper().getDispersed().clear();
-            plugin.getTrackerKeeper().getDispersedTARDII().clear();
+            plugin.getTrackerKeeper().getDispersedTardises().clear();
             TardisMessage.send(sender, "ASSEMBLE_ALL");
             return true;
         } else if (player.equalsIgnoreCase("list")) {
-            plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("tardis id: " + d));
+            plugin.getTrackerKeeper().getDispersedTardises().forEach((d) -> plugin.debug("tardis id: " + d));
             return true;
         } else {
             // turn off dispersal for this player
@@ -52,14 +52,14 @@ class TardisAssembleCommand {
             if (p != null) {
                 UUID uuid = p.getUniqueId();
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
-                // get players tardis
+                // get player's TARDIS
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
-                    while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardisId())) {
-                        plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
+                    while (plugin.getTrackerKeeper().getDispersedTardises().contains(tardis.getTardisId())) {
+                        plugin.getTrackerKeeper().getDispersedTardises().remove(tardis.getTardisId());
                     }
                     TardisMessage.send(sender, "ASSEMBLE_PLAYER", player);
                 }

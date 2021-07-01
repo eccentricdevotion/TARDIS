@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.info;
 
 /**
- * The Master had modified the Doctor's tardis using Block Transfer Computation as part of his plan to ensnare the
+ * The Master had modified the Doctor's TARDIS using Block Transfer Computation as part of his plan to ensnare the
  * Doctor in Castrovalva. At least some of the TIS's contents, such as the entry on Castrovalva, would not otherwise
  * have existed.
  *
@@ -108,6 +108,9 @@ public enum TardisDescription {
     ENDER("An End Stone and Purpur tardis - console design by ToppanaFIN."),
     COPPER_11TH("The 11th Doctor's Copper tardis - console design by vistaero."),
     CORAL("The 10th Doctor's tardis - console design by vistaero."),
+    DELTA("A Nether Delta TARDIS."),
+    CAVE("A dripstone cave TARDIS."),
+    WEATHERED("A weather copper TARDIS."),
     CUSTOM("A custom designed server tardis"),
     ANTIGRAVITY("Going up..."),
     AQUARIUM("Tanks for your fish."),

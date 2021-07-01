@@ -282,25 +282,24 @@ public class QueryFactory {
     /**
      * Updates data in an SQLite database table. This method executes the SQL in a separate thread.
      *
-     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to update.
-     * @param biome the biome value to update
-     * @param id    the tardis_id
+     * @param data a HashMap&lt;String, Object&gt; of table fields and values to update.
+     * @param id   the tardis_id
      */
-    public void updateLocations(HashMap<String, Object> data, String biome, int id) {
-        TardisSqlLocationsUpdater locate = new TardisSqlLocationsUpdater(plugin, data, biome, id);
+    public void updateLocations(HashMap<String, Object> data, int id) {
+        TardisSqlLocationsUpdater locate = new TardisSqlLocationsUpdater(plugin, data, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 
     /**
      * Updates the Artron condenser block count for a specific block.
      *
-     * @param new_size  the newly calculated total number of blocks condensed
-     * @param id        the tardis_id of the record to update
-     * @param blockData the block_data of the record to update
+     * @param new_size   the newly calculated total number of blocks condensed
+     * @param id         the tardis_id of the record to update
+     * @param block_data the block_data of the record to update
      */
-    public void updateCondensedBlockCount(int new_size, int id, String blockData) {
+    public void updateCondensedBlockCount(int new_size, int id, String block_data) {
         Statement statement = null;
-        String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + blockData + "'";
+        String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + block_data + "'";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
@@ -345,21 +344,21 @@ public class QueryFactory {
     }
 
     /**
-     * Claim an abandoned tardis.
+     * Claim an abandoned TARDIS.
      *
      * @param player the claiming player
-     * @param id     the tardis id
+     * @param id     the TARDIS id
      * @return true if the claim was a success
      */
     public boolean claimTardis(Player player, int id) {
         PreparedStatement ps = null;
-        // check if they have a non-abandoned tardis
+        // check if they have a non-abandoned TARDIS
         HashMap<String, Object> where = new HashMap<>();
         String uuid = player.getUniqueId().toString();
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, last_use = ? WHERE tardis_id = ?";
+            String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
             try {
                 service.testConnection(connection);
                 long now;
@@ -384,7 +383,7 @@ public class QueryFactory {
                 }
                 return bool;
             } catch (SQLException e) {
-                plugin.debug("Update error for claiming abandoned tardis! " + e.getMessage());
+                plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
                 return false;
             } finally {
                 try {
@@ -392,7 +391,7 @@ public class QueryFactory {
                         ps.close();
                     }
                 } catch (SQLException e) {
-                    plugin.debug("Error closing abandoned tardis claim statement! " + e.getMessage());
+                    plugin.debug("Error closing abandoned TARDIS claim statement! " + e.getMessage());
                 }
             }
         } else {

@@ -32,7 +32,7 @@ import java.util.UUID;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
- * may be the problem, the sound of the tardis materialisation is heard. The tardis materialises around them, shocking
+ * may be the problem, the sound of the TARDIS materialisation is heard. The TARDIS materialises around them, shocking
  * Brian in place.
  *
  * @author eccentric_nz
@@ -83,7 +83,7 @@ public class TardisZeroRoomChatListener implements Listener {
                         // track the timelord
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
                     }
-                    // if it is a tardis command run it as the time lord
+                    // if it is a TARDIS command run it as the time lord
                     event.setPlayer(timelord);
                     TardisMessage.send(player, "TELEPATHIC_RUN", command);
                 } else {

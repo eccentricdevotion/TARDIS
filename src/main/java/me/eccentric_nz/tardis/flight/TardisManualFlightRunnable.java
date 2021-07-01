@@ -30,7 +30,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * After materialization, the Astrosextant Rectifier will attempt to confirm that a tardis has arrived at the correct
+ * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct
  * coordinates. A damaged Sterometer will reduce the accuracy of the Rectifier to within a few thousand light years.
  *
  * @author eccentric_nz

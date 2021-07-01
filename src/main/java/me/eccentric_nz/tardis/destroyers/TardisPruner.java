@@ -69,14 +69,14 @@ public class TardisPruner {
                         wherecl.put("tardis_id", rs.getInt("tardis_id"));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (rsc.resultSet()) {
-                            // double check that this is an unused tardis
+                            // double check that this is an unused TARDIS
                             Timestamp lastUse = new Timestamp(rs.getLong("last_use"));
                             if (lastUse.before(prune)) {
                                 String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                                 // write line to file
                                 bw.write(line);
                                 bw.newLine();
-                                // display the tardis prune list
+                                // display the TARDIS prune list
                                 sender.sendMessage(line);
                             }
                         } else {
@@ -114,10 +114,10 @@ public class TardisPruner {
             rs = statement.executeQuery(query);
             TardisExterminator te = new TardisExterminator(plugin);
             while (rs.next()) {
-                // double check that this is an unused tardis
+                // double check that this is an unused TARDIS
                 Timestamp lastUse = new Timestamp(rs.getLong("last_use"));
                 if (lastUse.before(prune)) {
-                    // remove the tardis
+                    // remove the TARDIS
                     if (te.exterminate(rs.getInt("tardis_id"))) {
                         sender.sendMessage("Pruned " + rs.getString("owner") + "'s tardis");
                     }

@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The Wibbly lever was a part of The Doctor's tardis console. The lever had at least two functions: opening and closing
- * doors and controlling implosions used to revert paradoxes in which the tardis had materialised within itself.
+ * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
+ * doors and controlling implosions used to revert paradoxes in which the TARDIS had materialised within itself.
  *
  * @author eccentric_nz
  */

@@ -52,7 +52,7 @@ public class TardisAbandoned {
         World chunkworld = TardisAliasResolver.getWorldFromAlias(cw);
         int cx = chunk.getX();
         int cz = chunk.getZ();
-        // save data to database (tardis table)
+        // save data to database (TARDIS table)
         String chun = cw + ":" + cx + ":" + cz;
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());

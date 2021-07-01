@@ -146,7 +146,7 @@ public class TardisBlockSetters {
      * @param y    the y co-ordinate of the block.
      * @param z    the z co-ordinate of the block.
      * @param data the block data to apply to the block.
-     * @param id   the tardis this block belongs to.
+     * @param id   the TARDIS this block belongs to.
      */
     public static void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
         Block b = w.getBlockAt(x, y, z);
@@ -171,7 +171,7 @@ public class TardisBlockSetters {
      * @param y        the y co-ordinate of the block.
      * @param z        the z co-ordinate of the block.
      * @param material the material to set the block.
-     * @param id       the tardis this block belongs to.
+     * @param id       the TARDIS this block belongs to.
      */
     public static void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
         Block b = w.getBlockAt(x, y, z);
@@ -193,7 +193,7 @@ public class TardisBlockSetters {
      *
      * @param b    the block to set and remember
      * @param m    the typeId to set the block to
-     * @param id   the tardis this block belongs to
+     * @param id   the TARDIS this block belongs to
      * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon up block)
      */
     public static void setBlockAndRemember(Block b, Material m, int id, int type) {
@@ -211,14 +211,14 @@ public class TardisBlockSetters {
     }
 
     /**
-     * Sets the block under the tardis Police Box door to the specified typeId and data and remembers the block for
+     * Sets the block under the TARDIS Police Box door to the specified typeId and data and remembers the block for
      * replacement later on.
      *
      * @param w      the world the block is in.
      * @param x      the x coordinate of the block.
      * @param y      the y coordinate of the block.
      * @param z      the z coordinate of the block.
-     * @param id     the tardis this block belongs to.
+     * @param id     the TARDIS this block belongs to.
      * @param portal whether a chest can be in the portal block location
      */
     public static void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {

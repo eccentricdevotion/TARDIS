@@ -19,6 +19,7 @@ package me.eccentric_nz.tardis.builders;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Location;
@@ -55,16 +56,16 @@ public class TardisInstantPoliceBox {
         World world = bd.getLocation().getWorld();
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
-            UUID playerUuid = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
-            Player saved = plugin.getServer().getPlayer(playerUuid);
+            UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
+            Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
+                TardisDoorLocation idl = TardisDoorListener.getDoor(1, bd.getTardisId());
                 Location l = idl.getL();
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", bd.getTardisId());
-                set.put("uuid", playerUuid.toString());
+                set.put("uuid", playerUUID.toString());
                 plugin.getQueryFactory().doInsert("travellers", set);
             }
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
@@ -82,8 +83,8 @@ public class TardisInstantPoliceBox {
                 break;
             }
         }
+        Block block = bd.getLocation().getBlock();
         if (!found) {
-            Block block = bd.getLocation().getBlock();
             Block under = block.getRelative(BlockFace.DOWN);
             block.setBlockData(TardisConstants.AIR);
             TardisBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
@@ -105,5 +106,7 @@ public class TardisInstantPoliceBox {
         frame.setItem(is, false);
         frame.setFixed(true);
         frame.setVisible(false);
+        // set a light block
+        block.getRelative(BlockFace.UP, 2).setBlockData(TardisConstants.LIGHT);
     }
 }

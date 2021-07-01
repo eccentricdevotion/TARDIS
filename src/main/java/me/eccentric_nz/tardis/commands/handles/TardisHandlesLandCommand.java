@@ -19,6 +19,7 @@ package me.eccentric_nz.tardis.commands.handles;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TardisCircuitDamager;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.artron.TardisArtronIndicator;
 import me.eccentric_nz.tardis.artron.TardisArtronLevels;
 import me.eccentric_nz.tardis.database.data.Tardis;
@@ -29,11 +30,13 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisHandbrake;
 import me.eccentric_nz.tardis.flight.TardisHandbrakeListener;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.travel.TardisRandomiserCircuit;
+import me.eccentric_nz.tardis.travel.TravelCostAndType;
 import me.eccentric_nz.tardis.utility.TardisSounds;
 import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
@@ -92,9 +95,10 @@ class TardisHandlesLandCommand {
                     plugin.getTrackerKeeper().getSubmarine().remove(id);
                     where_next.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("random_circuit"), TravelType.RANDOM));
                     plugin.getTrackerKeeper().getHasRandomised().add(id);
                     new TardisLand(plugin, id, player).exitVortex();
+                    plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.RANDOM, id));
                     // delay setting handbrake
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         HashMap<String, Object> whereh = new HashMap<>();
@@ -104,7 +108,6 @@ class TardisHandlesLandCommand {
                         ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                         if (rsc.resultSet()) {
                             Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-                            assert location != null;
                             TardisSounds.playTardisSound(location, "tardis_handbrake_engage");
                             // Changes the lever to on
                             TardisHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
@@ -122,7 +125,7 @@ class TardisHandlesLandCommand {
                             }
                             // Remove energy from TARDIS and sets database
                             TardisMessage.send(player, "HANDBRAKE_ON");
-                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);

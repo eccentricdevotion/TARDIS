@@ -48,12 +48,12 @@ public class TardisHandlesTeleportCommand {
     public void beamMeUp(Player player) {
         // set destination to the player's location
         Location location = player.getLocation();
-        // must be outside the tardis
+        // must be outside the TARDIS
         if (plugin.getUtils().inTardisWorld(location)) {
             TardisMessage.handlesSend(player, "TARDIS_OUTSIDE");
             return;
         }
-        // get tardis data
+        // get TARDIS data
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -83,7 +83,7 @@ public class TardisHandlesTeleportCommand {
                 TardisMessage.handlesSend(player, "CURRENT_NOT_FOUND");
             }
             int[] start_loc = TardisTimeTravel.getStartLocation(location, rsc.getDirection());
-            // check destination has room for tardis
+            // check destination has room for TARDIS
             int count = TardisTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
             if (count > 0) {
                 TardisMessage.handlesSend(player, "RESCUE_NOT_SAFE");
@@ -101,13 +101,13 @@ public class TardisHandlesTeleportCommand {
             set.put("z", location.getBlockZ());
             set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", set, tid);
-            plugin.getTrackerKeeper().getDamage().remove(id);
+            plugin.getTrackerKeeper().getHadsDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);
             UUID uuid = player.getUniqueId();
             // rescue
             plugin.getTrackerKeeper().getRescue().put(id, uuid);
-            // destroy tardis
+            // destroy TARDIS
             DestroyData dd = new DestroyData();
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);
@@ -121,7 +121,7 @@ public class TardisHandlesTeleportCommand {
                 plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(dd);
             }, delay);
-            // move tardis
+            // move TARDIS
             BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(location);

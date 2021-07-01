@@ -26,33 +26,34 @@ public enum GuiPlayerPreferences {
     AUTONOMOUS_SIEGE(21, 1, Material.REPEATER),
     AUTO_RESCUE(22, 2, Material.REPEATER),
     BEACON(23, 3, Material.REPEATER),
-    DO_NOT_DISTURB(24, 4, Material.REPEATER),
-    EMERGENCY_PROGRAMME_ONE(25, 5, Material.REPEATER),
-    HOSTILE_ACTION_DISPLACEMENT_SYSTEM(26, 6, Material.REPEATER),
-    HADS_TYPE(27, 7, Material.REPEATER),
-    WHO_QUOTES(28, 8, Material.REPEATER),
-    EXTERIOR_RENDERING_ROOM(29, 9, Material.REPEATER),
-    INTERIOR_SFX(30, 9, Material.REPEATER),
-    SUBMARINE_MODE(31, 10, Material.REPEATER),
-    RESOURCE_PACK_SWITCHING(32, 11, Material.REPEATER),
-    COMPANION_BUILD(33, 12, Material.REPEATER),
-    WOOL_FOR_LIGHTS_OFF(34, 13, Material.REPEATER),
-    PRESET_SIGN(36, 14, Material.REPEATER),
-    TRAVEL_BAR(37, 15, Material.REPEATER),
-    MOB_FARMING(39, 16, Material.REPEATER),
-    TELEPATHIC_CIRCUIT(40, 17, Material.REPEATER),
-    JUNK_TARDIS(41, 18, Material.REPEATER),
-    AUTO_POWER_UP(42, 19, Material.REPEATER),
-    FORCE_FIELD(43, 20, Material.REPEATER),
-    LANTERNS(44, 21, Material.REPEATER),
-    MINECART_SOUNDS(45, 22, Material.REPEATER),
-    EASY_DIFFICULTY(46, 23, Material.REPEATER),
-    LOCK_CONTAINERS(49, 24, Material.REPEATER),
-    FLIGHT_MODE(1, 25, Material.ELYTRA),
-    INTERIOR_HUM_SOUND(58, 26, Material.BOWL),
-    HANDBRAKE(1, 27, Material.LEVER),
-    TARDIS_MAP(3, 29, Material.MAP),
-    SONIC_CONFIGURATOR(135, 31, Material.BOWL),
+    CLOSE_GUI(50, 4, Material.REPEATER),
+    DO_NOT_DISTURB(24, 5, Material.REPEATER),
+    EMERGENCY_PROGRAMME_ONE(25, 6, Material.REPEATER),
+    HOSTILE_ACTION_DISPLACEMENT_SYSTEM(26, 7, Material.REPEATER),
+    HADS_TYPE(27, 8, Material.REPEATER),
+    WHO_QUOTES(28, 9, Material.REPEATER),
+    EXTERIOR_RENDERING_ROOM(29, 10, Material.REPEATER),
+    INTERIOR_SFX(30, 11, Material.REPEATER),
+    SUBMARINE_MODE(31, 12, Material.REPEATER),
+    RESOURCE_PACK_SWITCHING(32, 13, Material.REPEATER),
+    COMPANION_BUILD(33, 14, Material.REPEATER),
+    WOOL_FOR_LIGHTS_OFF(34, 15, Material.REPEATER),
+    PRESET_SIGN(36, 16, Material.REPEATER),
+    TRAVEL_BAR(37, 17, Material.REPEATER),
+    MOB_FARMING(39, 18, Material.REPEATER),
+    TELEPATHIC_CIRCUIT(40, 19, Material.REPEATER),
+    JUNK_TARDIS(41, 20, Material.REPEATER),
+    AUTO_POWER_UP(42, 21, Material.REPEATER),
+    FORCE_FIELD(43, 22, Material.REPEATER),
+    LANTERNS(44, 23, Material.REPEATER),
+    MINECART_SOUNDS(45, 24, Material.REPEATER),
+    EASY_DIFFICULTY(46, 25, Material.REPEATER),
+    LOCK_CONTAINERS(49, 26, Material.REPEATER),
+    FLIGHT_MODE(1, 27, Material.ELYTRA),
+    INTERIOR_HUM_SOUND(58, 28, Material.BOWL),
+    HANDBRAKE(1, 29, Material.LEVER),
+    TARDIS_MAP(3, 30, Material.MAP),
+    SONIC_CONFIGURATOR(135, 32, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;
@@ -79,16 +80,18 @@ public enum GuiPlayerPreferences {
 
     public String getName() {
         String s = toString();
-        if (s.startsWith("tardis")) {
-            return "tardis Map";
+        if (s.startsWith("TARDIS")) {
+            return "TARDIS Map";
         } else if (s.startsWith("HADS")) {
             return "HADS Type";
-        } else if (s.endsWith("tardis")) {
-            return "Junk tardis";
+        } else if (s.endsWith("TARDIS")) {
+            return "Junk TARDIS";
         } else if (s.endsWith("RESCUE")) {
             return "Auto-rescue";
         } else if (s.endsWith("SFX")) {
             return "Interior SFX";
+        } else if (s.endsWith("GUI")) {
+            return "Close GUI";
         } else {
             return TardisStringUtils.capitalise(s);
         }

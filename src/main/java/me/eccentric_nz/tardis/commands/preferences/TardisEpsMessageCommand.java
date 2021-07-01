@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +36,7 @@ class TardisEpsMessageCommand {
         String message;
         int count = args.length;
         ItemStack bq = player.getInventory().getItemInMainHand();
-        if (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK)) {
+        if (bq != null && (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK))) {
             BookMeta bm = (BookMeta) bq.getItemMeta();
             assert bm != null;
             List<String> pages = bm.getPages();
@@ -47,12 +48,7 @@ class TardisEpsMessageCommand {
                 TardisMessage.send(player, "EP1_NEED");
                 return false;
             }
-            StringBuilder buf = new StringBuilder();
-            for (int i = 1; i < count; i++) {
-                buf.append(args[i]).append(" ");
-            }
-            String tmp = buf.toString();
-            message = tmp.substring(0, tmp.length() - 1);
+            message = String.join(" ", Arrays.copyOfRange(args, 1, count));
         }
         HashMap<String, Object> sete = new HashMap<>();
         sete.put("eps_message", message);

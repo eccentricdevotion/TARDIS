@@ -19,17 +19,15 @@ package me.eccentric_nz.tardis.commands.handles;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 /**
  * @author eccentric_nz
  */
 class TardisHandlesSayCommand {
 
     boolean say(Player player, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < args.length; i++) {
-            sb.append(args[i]).append(" ");
-        }
-        String message = sb.toString();
+        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
         TardisMessage.handlesMessage(player, message);
         return true;
     }

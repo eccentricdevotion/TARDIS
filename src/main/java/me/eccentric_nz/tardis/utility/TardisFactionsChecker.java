@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 /**
  * The Cloister Bell is a signal to the crew that a galaxy-scale catastrophe is occurring or a warning that they are in
  * immediate danger. In short it is a call to "battle-stations." Though it is located in the Cloister Room, the Bell can
- * be heard from anywhere in a tardis.
+ * be heard from anywhere in a TARDIS.
  *
  * @author eccentric_nz
  */

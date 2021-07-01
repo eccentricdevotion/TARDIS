@@ -46,7 +46,7 @@ class TardisDesiegeCommand {
         if (p != null && p.isOnline()) {
             // get the player's UUID
             UUID uuid = p.getUniqueId();
-            // get the player's tardis id
+            // get the player's TARDIS id
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUuid(uuid.toString())) {
                 TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
@@ -79,7 +79,7 @@ class TardisDesiegeCommand {
                 setc.put("direction", rsh.getDirection().toString());
                 setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
-                // rebuild the tardis
+                // rebuild the TARDIS
                 BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(rsh.getDirection());
                 bd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));

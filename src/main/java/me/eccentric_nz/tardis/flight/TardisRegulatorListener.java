@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The helmic regulator was a component of the control panel of a Type 40 tardis. This device's principle function was
+ * The helmic regulator was a component of the control panel of a Type 40 TARDIS. This device's principle function was
  * to control the accuracy of travel through the Time Vortex. If incorrectly handled, the helmic regulator could greatly
- * change the landing position of the tardis.
+ * change the landing position of the TARDIS.
  *
  * @author eccentric_nz
  */

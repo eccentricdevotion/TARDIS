@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class TardisSeedModel {
 
-    public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
+    public static final HashMap<Material, Integer> MATERIAL_MAP = new HashMap<>() {
         {
             // ars
             put(Material.QUARTZ_BLOCK, 14);
@@ -74,12 +74,22 @@ public class TardisSeedModel {
             put(Material.CRYING_OBSIDIAN, 43);
             // copper
             put(Material.WARPED_PLANKS, 42);
+            // cave
+            put(Material.DRIPSTONE_BLOCK, 56);
+            // weathered
+            put(Material.WEATHERED_COPPER, 57);
+            // custom
+            // put(Material.MUSHROOM_STEM, 45);
+            // // templates
+            // put(Material.COBBLESTONE, 41);
+            // // archive
+            // put(Material.BONE_BLOCK, 42);
         }
     };
 
-    public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
+    public static final HashMap<String, Integer> CONSOLE_MAP = new HashMap<>() {
         {
-            put("ars", 14);
+            put("ARS", 14);
             put("BIGGER", 15);
             put("BUDGET", 16);
             put("CORAL", 17);
@@ -104,15 +114,17 @@ public class TardisSeedModel {
             put("COPPER", 42);
             put("DELTA", 43);
             put("ROTOR", 44);
+            put("CAVE", 56);
+            put("WEATHERED", 57);
             put("CUSTOM", 45);
         }
     };
 
-    public static int modelByMaterial(Material material) {
-        return materialMap.get(material);
+    public static int getModelByMaterial(Material material) {
+        return MATERIAL_MAP.get(material);
     }
 
-    public static int modelByString(String console) {
-        return consoleMap.get(console);
+    public static int getModelByString(String console) {
+        return CONSOLE_MAP.get(console);
     }
 }

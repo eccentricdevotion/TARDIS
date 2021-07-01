@@ -145,7 +145,7 @@ public class TardisArtronStorageCommand implements CommandExecutor {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             im.addItemFlags(ItemFlag.values());
             is.setItemMeta(im);
-            // remove the energy from the tardis/timelord
+            // remove the energy from the TARDIS/timelord
             HashMap<String, Object> where = new HashMap<>();
             String table;
             if (which.equals("tardis")) {

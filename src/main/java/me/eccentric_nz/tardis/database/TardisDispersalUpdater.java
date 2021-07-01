@@ -40,7 +40,7 @@ class TardisDispersalUpdater {
     }
 
     /**
-     * Convert pre-tardis v2.3 controls to the new system.
+     * Convert pre-TARDIS v2.3 controls to the new system.
      */
     void updateTardisIds() {
         int i = 0;
@@ -53,7 +53,7 @@ class TardisDispersalUpdater {
             service.testConnection(connection);
             statement = connection.createStatement();
             rs = statement.executeQuery("SELECT d_id, uuid FROM " + prefix + "dispersed");
-            // insert values from tardis table
+            // insert values from TARDIS table
             if (rs.isBeforeFirst()) {
                 ps_select = connection.prepareStatement("SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ?");
                 ps_update = connection.prepareStatement("UPDATE " + prefix + "dispersed SET tardis_id = ? WHERE d_id = ?");

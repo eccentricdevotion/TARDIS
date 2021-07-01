@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.eccentric_nz.TARDIS.universaltranslator;
+package me.eccentric_nz.tardis.universaltranslator;
 
 import java.net.URL;
 import java.net.URLEncoder;
@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 /**
  * Makes calls to the Yandex machine translation web service API
  */
-public final class Translate extends YandexTranslatorAPI {
+public final class Translate extends YandexTranslatorApi {
 
     private static final String SERVICE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
 

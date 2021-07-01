@@ -39,7 +39,7 @@ class TardisJunkLocation {
     }
 
     boolean isNotHome() {
-        // check the Junk tardis is not home already
+        // check the Junk TARDIS is not home already
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUuid("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardisId();

@@ -26,18 +26,30 @@ public class TardisException extends Exception {
     @Serial
     private static final long serialVersionUID = -5152771166812835530L;
 
-    public TardisException() {
-
-    }
-
-    public TardisException(String message) {
+    /**
+     * Constructs a new exception with the specified detail message.
+     *
+     * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
+     */
+    TardisException(String message) {
         super(message);
     }
 
+    /**
+     * Constructs a new exception with the specified cause.
+     *
+     * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).
+     */
     public TardisException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     * Constructs a new exception with the specified detail message and cause.
+     *
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause   the cause (which is saved for later retrieval by the {@link #getCause()} method).
+     */
     public TardisException(String message, Throwable cause) {
         super(message, cause);
     }

@@ -24,7 +24,7 @@ import org.bukkit.Location;
 import java.util.HashMap;
 
 /**
- * Within the tardis' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
+ * Within the TARDIS's generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
  * to make toast.
  *
  * @author eccentric_nz
@@ -41,7 +41,7 @@ class TardisArtronRunnable implements Runnable {
     }
 
     /**
-     * A runnable task that recharges the tardis.
+     * A runnable task that recharges the TARDIS.
      */
     @Override
     public void run() {
@@ -58,13 +58,13 @@ class TardisArtronRunnable implements Runnable {
         } else if (near) {
             // calculate percentage
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
-            // update tardis artron_level
+            // update TARDIS artron_level
             plugin.getQueryFactory().alterEnergyLevel("tardis", onepercent, where, null);
         }
     }
 
     /**
-     * Checks whether the tardis is near a recharge location.
+     * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
         HashMap<String, Object> where = new HashMap<>();
@@ -93,7 +93,7 @@ class TardisArtronRunnable implements Runnable {
     }
 
     /**
-     * Gets the current Artron Energy Level for the specified tardis.
+     * Gets the current Artron Energy Level for the specified TARDIS.
      */
     private int isFull(int id) {
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

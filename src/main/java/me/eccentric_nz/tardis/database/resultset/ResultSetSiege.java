@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis Siege
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Siege
  * Cube.
  *
  * @author eccentric_nz

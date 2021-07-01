@@ -27,9 +27,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Destroys the inner tardis.
+ * Destroys the inner TARDIS.
  * <p>
- * If a tardis landed in the same space and time as another tardis, a time ram could occur, destroying both TARDISes,
+ * If a TARDIS landed in the same space and time as another TARDIS, a time ram could occur, destroying both TARDISes,
  * their occupants and even cause a black hole that would tear a hole in the universe
  *
  * @author eccentric_nz
@@ -43,15 +43,15 @@ public class TardisDestroyerInner {
     }
 
     /**
-     * Destroys the inside of the tardis.
+     * Destroys the inside of the TARDIS.
      *
      * @param schematic the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
-     * @param id        the unique key of the record for this tardis in the database.
-     * @param w         the world where the tardis is to be built.
+     * @param id        the unique key of the record for this TARDIS in the database.
+     * @param w         the world where the TARDIS is to be built.
      * @param slot      the TIPS slot number
      */
     public void destroyInner(Schematic schematic, int id, World w, int slot) {
-        // destroy tardis
+        // destroy TARDIS
         if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.debug(TardisPlugin.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
             return;
@@ -68,7 +68,7 @@ public class TardisDestroyerInner {
         wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
+        where.put("police_box", 0);
         plugin.getQueryFactory().doDelete("blocks", where);
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));

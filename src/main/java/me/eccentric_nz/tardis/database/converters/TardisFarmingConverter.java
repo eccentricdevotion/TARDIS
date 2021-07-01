@@ -45,7 +45,7 @@ public class TardisFarmingConverter {
             connection.setAutoCommit(false);
             // do condenser data
             statement = connection.createStatement();
-            // transfer farming locations from `tardis` table to `farming` table
+            // transfer farming locations from `TARDIS` table to `farming` table
             String farmQuery = "SELECT farm_id FROM " + prefix + "farming";
             ResultSet rsf = statement.executeQuery(farmQuery);
             if (!rsf.isBeforeFirst()) {

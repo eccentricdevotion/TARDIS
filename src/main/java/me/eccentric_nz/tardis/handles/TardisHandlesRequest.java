@@ -124,7 +124,7 @@ public class TardisHandlesRequest {
                         if (groups != null) {
                             String tardis = groups.get(1);
                             if (tardis == null || tardis.isEmpty()) {
-                                // tardis recipes
+                                // TARDIS recipes
                                 for (String item : TardisRecipeTabComplete.ROOT_SUBS) {
                                     if (groups.get(2).equalsIgnoreCase(item)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + item), 1L);
@@ -132,7 +132,7 @@ public class TardisHandlesRequest {
                                     }
                                 }
                             } else {
-                                // tardis seed block
+                                // TARDIS seed block
                                 for (String seed : TardisRecipeTabComplete.TARDIS_TYPES) {
                                     if (groups.get(0).equalsIgnoreCase(seed)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
@@ -207,7 +207,7 @@ public class TardisHandlesRequest {
                     case "lights":
                         if (groups != null) {
                             boolean onoff = groups.get(0).equalsIgnoreCase("on");
-                            // get tardis
+                            // get TARDIS
                             HashMap<String, Object> wherel = new HashMap<>();
                             wherel.put("tardis_id", id);
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
@@ -222,7 +222,7 @@ public class TardisHandlesRequest {
                     case "power":
                         if (groups != null) {
                             boolean onoff = groups.get(0).equalsIgnoreCase("off");
-                            // get tardis
+                            // get TARDIS
                             HashMap<String, Object> wherel = new HashMap<>();
                             wherel.put("tardis_id", id);
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
@@ -256,7 +256,7 @@ public class TardisHandlesRequest {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
                         break;
                     case "travel.random":
-                        // get tardis
+                        // get TARDIS
                         HashMap<String, Object> wherel = new HashMap<>();
                         wherel.put("tardis_id", id);
                         ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);

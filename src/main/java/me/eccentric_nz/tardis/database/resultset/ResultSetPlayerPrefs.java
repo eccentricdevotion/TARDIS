@@ -48,6 +48,7 @@ public class ResultSetPlayerPrefs {
     private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean buildOn;
+    private boolean closeGuiOn;
     private boolean dndOn;
     private boolean easyDifficulty;
     private boolean epsOn;
@@ -107,7 +108,7 @@ public class ResultSetPlayerPrefs {
             statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.next()) {
-                ppId = rs.getInt("ppId");
+                ppId = rs.getInt("pp_id");
                 uuid = UUID.fromString(rs.getString("uuid"));
                 key = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 sfxOn = rs.getBoolean("sfx_on");
@@ -131,6 +132,7 @@ public class ResultSetPlayerPrefs {
                 siegeWall = rs.getString("siege_wall");
                 siegeFloor = rs.getString("siege_floor");
                 buildOn = rs.getBoolean("build_on");
+                closeGuiOn = rs.getBoolean("close_gui_on");
                 epsOn = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
@@ -154,7 +156,7 @@ public class ResultSetPlayerPrefs {
                 lanternsOn = rs.getBoolean("lanterns_on");
                 flightMode = rs.getInt("flying_mode");
                 throttle = rs.getInt("throttle");
-                easyDifficulty = rs.getBoolean("easyDifficulty");
+                easyDifficulty = rs.getBoolean("difficulty");
                 autoPowerUpOn = rs.getBoolean("auto_powerup_on");
                 hum = rs.getString("hum");
             } else {
@@ -240,6 +242,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isBuildOn() {
         return buildOn;
+    }
+
+    public boolean isCloseGuiOn() {
+        return closeGuiOn;
     }
 
     public boolean isEpsOn() {

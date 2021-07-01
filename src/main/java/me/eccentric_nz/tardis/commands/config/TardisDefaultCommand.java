@@ -20,6 +20,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -35,13 +36,7 @@ class TardisDefaultCommand {
 
     boolean setDefaultItem(CommandSender sender, String[] args) {
         String which = args[0].toLowerCase(Locale.ENGLISH);
-        int count = args.length;
-        StringBuilder buf = new StringBuilder();
-        for (int i = 1; i < count; i++) {
-            buf.append(args[i]).append("_");
-        }
-        String tmp = buf.toString();
-        String sonic = tmp.substring(0, tmp.length() - 1);
+        String sonic = String.join("_", Arrays.copyOfRange(args, 1, args.length));
         plugin.getConfig().set("preferences." + which, sonic);
         plugin.saveConfig();
         TardisMessage.send(sender, "CONFIG_UPDATED");

@@ -24,11 +24,11 @@ public enum FlightMode {
     REGULATOR(2),
     MANUAL(3);
 
-    private static final HashMap<Integer, FlightMode> byMode = new HashMap<>();
+    private static final HashMap<Integer, FlightMode> BY_MODE = new HashMap<>();
 
     static {
         for (FlightMode fm : values()) {
-            byMode.put(fm.mode, fm);
+            BY_MODE.put(fm.mode, fm);
         }
     }
 
@@ -39,7 +39,7 @@ public enum FlightMode {
     }
 
     public static HashMap<Integer, FlightMode> getByMode() {
-        return byMode;
+        return BY_MODE;
     }
 
     public int getMode() {

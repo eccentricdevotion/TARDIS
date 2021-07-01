@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the chameleon location of the tardis
+ * Many facts, figures, and formulas are contained within the Matrix, including... the chameleon location of the TARDIS
  * interior.
  *
  * @author eccentric_nz

@@ -71,7 +71,7 @@ public class TardisRoomMap {
     }
 
     /**
-     * Reads a tardis schematic file and maps the data for rooms_require_blocks.
+     * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
      *
      * @param fileStr the schematic file to read
      * @param s       the schematic name

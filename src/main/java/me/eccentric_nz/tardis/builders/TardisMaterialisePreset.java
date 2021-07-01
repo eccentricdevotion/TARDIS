@@ -27,6 +27,7 @@ import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Adaption;
 import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import me.eccentric_nz.tardis.utility.TardisParticles;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A dematerialisation circuit was an essential part of a Type 40 tardis which enabled it to dematerialise from normal
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
  * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
@@ -154,17 +155,17 @@ class TardisMaterialisePreset implements Runnable {
                 }
                 // rescue player?
                 if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
-                    UUID playerUuid = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
-                    Player saved = plugin.getServer().getPlayer(playerUuid);
+                    UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
+                    Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
-                        TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
+                        TardisDoorLocation idl = TardisDoorListener.getDoor(1, bd.getTardisId());
                         Location l = idl.getL();
-                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
+                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                         TardisSounds.playTardisSound(saved, "tardis_land_fast", 5L);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisId());
-                        set.put("uuid", playerUuid.toString());
+                        set.put("uuid", playerUUID.toString());
                         plugin.getQueryFactory().doInsert("travellers", set);
                     }
                     plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
@@ -829,7 +830,7 @@ class TardisMaterialisePreset implements Runnable {
                         plugin.getQueryFactory().doDelete("blocks", whered);
                     }
                     // tardis has moved so remove HADS damage count
-                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
+                    plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisId());
                     // update demat field in database
                     TardisBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
                 }

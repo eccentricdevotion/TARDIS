@@ -77,7 +77,7 @@ class TardisToggleOnOffCommand {
                 setp.put(pref + "_on", 1);
                 if (pref.equals("beacon")) {
                     UUID uuid = player.getUniqueId();
-                    // get tardis id
+                    // get TARDIS id
                     ResultSetTardisId rsi = new ResultSetTardisId(plugin);
                     if (rsi.fromUuid(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
@@ -94,7 +94,7 @@ class TardisToggleOnOffCommand {
                 setp.put(pref + "_on", 0);
                 if (pref.equals("beacon")) {
                     UUID uuid = player.getUniqueId();
-                    // get tardis id
+                    // get TARDIS id
                     ResultSetTardisId rsi = new ResultSetTardisId(plugin);
                     if (rsi.fromUuid(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);

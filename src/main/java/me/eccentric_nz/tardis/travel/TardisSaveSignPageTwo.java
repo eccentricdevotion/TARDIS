@@ -130,10 +130,10 @@ public class TardisSaveSignPageTwo {
             delete.setCustomModelData(GuiSaves.DELETE_SAVE.getCustomModelData());
             bucket.setItemMeta(delete);
             ItemStack own;
-            // is it this player's tardis?
+            // is it this player's TARDIS?
             ResultSetTardisId rstid = new ResultSetTardisId(plugin);
             if (rstid.fromUuid(player.getUniqueId().toString())) {
-                // add button to view own saves (if in another player's tardis)
+                // add button to view own saves (if in another player's TARDIS)
                 if (rstid.getTardisId() != id) {
                     own = new ItemStack(GuiSaves.LOAD_MY_SAVES.getMaterial(), 1);
                     ItemMeta saves = own.getItemMeta();
@@ -142,7 +142,7 @@ public class TardisSaveSignPageTwo {
                     saves.setCustomModelData(GuiSaves.LOAD_MY_SAVES.getCustomModelData());
                     own.setItemMeta(saves);
                 } else {
-                    // get tardis id of tardis player is in as they may have switched using the 'load my saves' button
+                    // get TARDIS id of TARDIS player is in as they may have switched using the 'load my saves' button
                     int tid = TardisInteriorPositioning.getTardisIdFromLocation(player.getLocation());
                     if (tid != id) {
                         own = new ItemStack(GuiSaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
@@ -161,7 +161,7 @@ public class TardisSaveSignPageTwo {
             page.setDisplayName(GuiSaves.GO_TO_PAGE_1.getName());
             page.setCustomModelData(GuiSaves.GO_TO_PAGE_1.getCustomModelData());
             prev.setItemMeta(page);
-            // add button to load tardis areas
+            // add button to load TARDIS areas
             ItemStack map = new ItemStack(Material.MAP, 1);
             ItemMeta switchTo = map.getItemMeta();
             assert switchTo != null;

@@ -52,7 +52,7 @@ public class TardisRenderRoomListener implements Listener {
         if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (Objects.equals(event.getHand(), EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
-                // tp the player back to the tardis console
+                // tp the player back to the TARDIS console
                 transmat(player);
                 player.updateInventory();
             }
@@ -61,7 +61,7 @@ public class TardisRenderRoomListener implements Listener {
 
     public void transmat(Player p) {
         TardisMessage.send(p, "TRANSMAT");
-        // get the tardis the player is in
+        // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);

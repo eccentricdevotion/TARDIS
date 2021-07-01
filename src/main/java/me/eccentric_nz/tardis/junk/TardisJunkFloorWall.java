@@ -24,6 +24,7 @@ import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -47,13 +48,7 @@ class TardisJunkFloorWall {
         }
         String wall_mat;
         if (args.length > 2) {
-            int count = args.length;
-            StringBuilder buf = new StringBuilder();
-            for (int i = 1; i < count; i++) {
-                buf.append(args[i]).append("_");
-            }
-            String tmp = buf.toString();
-            String t = tmp.substring(0, tmp.length() - 1);
+            String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             wall_mat = t.toUpperCase(Locale.ENGLISH);
         } else {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);

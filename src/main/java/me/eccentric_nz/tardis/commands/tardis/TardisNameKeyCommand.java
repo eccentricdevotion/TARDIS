@@ -24,6 +24,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 /**
  * @author eccentric_nz
  */
@@ -60,15 +62,11 @@ class TardisNameKeyCommand {
         if (count < 2) {
             return false;
         }
-        StringBuilder buf = new StringBuilder(args[1]);
-        for (int i = 2; i < count; i++) {
-            buf.append(" ").append(args[i]);
-        }
-        String tmp = buf.toString();
-        if (!tmp.isEmpty()) {
+        String newName = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+        if (!newName.isEmpty()) {
             TardisItemRenamer ir = new TardisItemRenamer(plugin, player, is);
-            ir.setName(tmp, false);
-            TardisMessage.send(player, "KEY_RENAMED", tmp);
+            ir.setName(newName, false);
+            TardisMessage.send(player, "KEY_RENAMED", newName);
             return true;
         } else {
             return false;

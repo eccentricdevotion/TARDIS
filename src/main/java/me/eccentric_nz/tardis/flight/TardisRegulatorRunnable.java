@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The helmic regulator also appeared in the Tenth Doctor's tardis in the form of a bicycle pump. It is one of the last
+ * The helmic regulator also appeared in the Tenth Doctor's TARDIS in the form of a bicycle pump. It is one of the last
  * things he needed to do before taking off, along with closing down the gravitic anomaliser, and turning off the
  * handbrake.
  *

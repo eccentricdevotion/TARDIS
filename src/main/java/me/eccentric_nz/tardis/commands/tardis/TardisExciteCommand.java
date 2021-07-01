@@ -38,7 +38,7 @@ class TardisExciteCommand {
             TardisMessage.send(player, "CMD_EXCITE");
             return true;
         }
-        // get tardis id
+        // get TARDIS id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUuid(player.getUniqueId().toString())) {
             new TardisAtmosphericExcitation(plugin).excite(rs.getTardisId(), player);

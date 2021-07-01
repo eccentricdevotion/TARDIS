@@ -36,7 +36,7 @@ public class TardisBuilderUtility {
         String doorLoc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TardisPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when TARDIS is first made, and then update location there after!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisId());

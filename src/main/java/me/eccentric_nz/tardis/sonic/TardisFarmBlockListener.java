@@ -66,7 +66,7 @@ public class TardisFarmBlockListener implements Listener {
         }
         Block block = event.getBlock();
         Material material = block.getType();
-        if (!TardisMaterials.crops.contains(material)) {
+        if (!TardisMaterials.CROPS.contains(material)) {
             return;
         }
         ItemStack stack = player.getInventory().getItemInMainHand();

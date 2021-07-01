@@ -50,7 +50,7 @@ public class TardisZeroRoomBuilder {
         int slot = tips;
         if (tips == -1) {
             slot = tintpos.getFreeSlot();
-            // uodate tardis table with new slot number
+            // uodate TARDIS table with new slot number
             HashMap<String, Object> set = new HashMap<>();
             set.put("tips", slot);
             HashMap<String, Object> where = new HashMap<>();

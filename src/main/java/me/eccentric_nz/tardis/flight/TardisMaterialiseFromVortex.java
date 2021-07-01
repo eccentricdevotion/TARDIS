@@ -110,7 +110,7 @@ public class TardisMaterialiseFromVortex implements Runnable {
                         setsave.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
+                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -278,8 +278,8 @@ public class TardisMaterialiseFromVortex implements Runnable {
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
-                        if (plugin.getAdvancementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
-                            if (Objects.requireNonNull(l.getWorld()).equals(final_location.getWorld())) {
+                        if (plugin.getAdvancementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(rscl.getWorld().getName())) {
+                            if (Objects.equals(l.getWorld(), final_location.getWorld())) {
                                 int distance = (int) l.distance(final_location);
                                 if (distance > 0 && plugin.getAdvancementConfig().getBoolean("travel.enabled")) {
                                     TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.TRAVEL, 1);
@@ -292,7 +292,7 @@ public class TardisMaterialiseFromVortex implements Runnable {
                             plugin.getTrackerKeeper().getFlightData().remove(uuid);
                         }
                     }, materialisation_delay);
-                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    plugin.getTrackerKeeper().getHadsDamage().remove(id);
                     // set last use
                     long now;
                     if (TardisPermission.hasPermission(player, "tardis.prune.bypass")) {

@@ -26,7 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
  * <p>
  * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
  * environment-repeater 6 = artron button
@@ -42,7 +42,7 @@ public class ResultSetTardisPreset {
     private Preset preset;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the TARDIS table.
      *
      * @param plugin an instance of the main class.
      */
@@ -52,11 +52,11 @@ public class ResultSetTardisPreset {
     }
 
     /**
-     * Gets to the chameleon_preset of a tardis. This method builds an SQL query string from the parameters supplied and
+     * Gets to the chameleon_preset of a TARDIS. This method builds an SQL query string from the parameters supplied and
      * then executes the query.
      *
      * @param id the Tardis ID to check
-     * @return true or false depending on whether the tardis is powered on
+     * @return true or false depending on whether the TARDIS is powered on
      */
     public boolean fromID(int id) {
         PreparedStatement statement = null;

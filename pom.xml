@@ -1,13 +1,16 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.tardis</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.7.2</version>
+    <version>4.7.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>TARDIS</name>
-    <description>A Doctor Who plugin</description>
+    <description>
+        A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the
+        inside!
+    </description>
     <url>https://github.com/eccentricdevotion/TARDIS</url>
     <inceptionYear>2012</inceptionYear>
     <properties>
@@ -19,7 +22,7 @@
     <licenses>
         <license>
             <name>GNU General Public License v3.0</name>
-            <url>https://github.com/eccentricdevotion/TARDIS/blob/master/LICENSE</url>
+            <url>https://github.com/eccentricdevotion/TARDIS/blob/master/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -37,28 +40,35 @@
     </ciManagement>
     <repositories>
         <repository>
-            <!-- Spigot API -->
+            <!-- Spigot -->
             <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <!-- PaperLib -->
+            <!-- Paper -->
             <id>paper-repo</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>maven-shade-plugin</id>
-            <url>https://repository.apache.org/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <!-- PlaceholderAPI -->
-            <id>placeholderapi-repo</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <!-- Floodgate -->
+            <id>opencollab-snapshot-repo</id>
+            <url>https://repo.opencollab.dev/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <!-- TARDIS -->
             <id>tardis-repo</id>
             <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <!-- PlaceholderAPI -->
+            <id>placeholderapi-repo</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
             <!-- WorldEdit, WorldGuard -->
@@ -73,15 +83,15 @@
         <repository>
             <!-- Multiverse -->
             <id>multiverse-repo</id>
-            <url>http://repo.onarandombox.com/content/groups/public/</url>
+            <url>https://repo.onarandombox.com/content/repositories/multiverse-snapshots/</url>
         </repository>
         <repository>
-            <!-- Various -->
+            <!-- BlockLocker -->
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
         <repository>
-            <!-- Various -->
+            <!-- LWCX (Lightweight Chests Extended) -->
             <id>ender-zone-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
@@ -91,9 +101,9 @@
             <url>https://repo.dmulloy2.net/repository/public/</url>
         </repository>
         <repository>
-            <!-- Various -->
+            <!-- LibsDisguises -->
             <id>md_5-public</id>
-            <url>https://repo.md-5.net/content/groups/public/</url>
+            <url>https://repo.md-5.net/content/repositories/public/</url>
         </repository>
         <repository>
             <!-- EssentialsX releases -->
@@ -123,60 +133,32 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
+            <!-- Apache Snapshots -->
             <id>apache.snapshots</id>
             <url>https://repository.apache.org/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
-    <profiles>
-        <!-- Profiles are used to detect whether this is a local or Jenkins build and adjust the build number accordingly -->
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <!-- Set the build number to the date and time of the build -->
-                <project.build.number>${timestamp}</project.build.number>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>buildnumber-maven-plugin</artifactId>
-                        <version>1.4</version>
-                        <configuration>
-                            <revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>create-timestamp-id</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>create-timestamp</goal>
-                                </goals>
-                                <configuration>
-                                    <timestampFormat>yyyy.MM.dd-HH.mm.ss</timestampFormat>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>jenkins</id>
-            <activation>
-                <property>
-                    <name>env.BUILD_NUMBER</name>
-                </property>
-            </activation>
-            <properties>
-                <!-- Get the build number from Jenkins -->
-                <project.build.number>${env.BUILD_NUMBER}</project.build.number>
-            </properties>
-        </profile>
-    </profiles>
     <build>
+        <directory>${project.basedir}/target</directory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+        <outputDirectory>${project.basedir}/target/classes</outputDirectory>
+        <testOutputDirectory>${project.basedir}/target/test-classes</testOutputDirectory>
+        <resources>
+            <resource>
+                <!-- Use POM properties in plugin.yml -->
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <defaultGoal>clean package install</defaultGoal>
         <plugins>
@@ -221,33 +203,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <!-- Insert the version and build numbers into plugin.yml -->
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>replacer</artifactId>
-                <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <file>target/classes/plugin.yml</file>
-                    <replacements>
-                        <replacement>
-                            <token>maven-version-number</token>
-                            <value>${project.version}-${project.build.number}</value>
-                        </replacement>
-                        <replacement>
-                            <token>maven-build-number</token>
-                            <value>${project.build.number}</value>
-                        </replacement>
-                    </replacements>
-                </configuration>
-            </plugin>
-            <plugin>
                 <!-- Shade all libs -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -286,7 +241,6 @@
                             <Main-Class>me.eccentric_nz.tardis.database.tool.Main</Main-Class>
                             <Implementation-Title>${project.name}</Implementation-Title>
                             <Implementation-Version>${project.version}</Implementation-Version>
-                            <Implementation-Build>${project.build.number}</Implementation-Build>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -295,263 +249,305 @@
     </build>
     <dependencies>
         <dependency>
+            <!-- Plexus Common Utilities -->
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>3.3.0</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Swing Layout Extensions -->
             <groupId>org.swinglabs</groupId>
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Gson (because Spigot is behind in their version) -->
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.7</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- JetBrains Java Annotations -->
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>21.0.1</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Spigot-API -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.17-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                </exclusion>
-            </exclusions>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Spigot-Server -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.17-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.spigotmc</groupId>
-                    <artifactId>spigot-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                </exclusion>
-            </exclusions>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- PaperLib -->
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>1.0.6-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.sk89q.worldedit</groupId>
-            <artifactId>worldedit-core</artifactId>
-            <version>7.3.0-SNAPSHOT</version>
+            <!-- Floodgate -->
+            <groupId>org.geysermc.floodgate</groupId>
+            <artifactId>api</artifactId>
+            <version>2.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- TARDISChunkGenerator -->
+            <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
+            <artifactId>TARDISChunkGenerator</artifactId>
+            <version>4.7.3-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <!-- TARDISWeepingAngels -->
+            <groupId>me.eccentric_nz.tardisweepingangels</groupId>
+            <artifactId>TARDISWeepingAngels</artifactId>
+            <version>3.4.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <!-- WorldEdit -->
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
             <version>7.3.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- WorldGuard -->
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.5-SNAPSHOT</version>
+            <version>7.0.6-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-core</artifactId>
-            <version>7.0.5-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
+            <!-- TownyAdvanced -->
             <groupId>com.github.TownyAdvanced</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.97.0.0</version>
+            <version>0.97.0.8</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- WorldBorder 1.15+ -->
             <groupId>com.github.PryPurity</groupId>
             <artifactId>WorldBorder</artifactId>
             <version>2.1.2</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Multiverse-Core -->
             <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
-            <version>4.2.3-SNAPSHOT</version>
+            <version>4.3.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Multiverse-Inventories -->
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
             <version>4.2.3-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Multiverse-Adventure -->
             <groupId>com.onarandombox.multiverseadventure</groupId>
             <artifactId>Multiverse-Adventure</artifactId>
-            <version>2.5</version>
+            <version>2.5.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- PerWorldInventory -->
             <groupId>com.github.EbonJaeger</groupId>
             <artifactId>perworldinventory-kt</artifactId>
             <version>v2.3.2</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- MassiveCore3 -->
             <groupId>com.massivecraft.massivecore</groupId>
             <artifactId>MassiveCore</artifactId>
             <version>3.3.3</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Factions3 -->
             <groupId>com.massivecraft.factions</groupId>
             <artifactId>Factions</artifactId>
             <version>3.3.3</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- LockettePro (brunyman) -->
             <groupId>me.crafter.mc</groupId>
             <artifactId>lockettepro</artifactId>
             <version>2.10.10</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/LockettePro-2.10.10.jar</systemPath>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- GriefPrevention -->
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.17.1</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- BlockLocker -->
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.9.3-SNAPSHOT</version>
+            <version>1.10</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- LWCX (Lightweight Chests Extended) -->
             <groupId>com.griefcraft.lwc</groupId>
             <artifactId>LWCX</artifactId>
             <version>2.2.7</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
-        <!-- only need ProtocolLib to support LibsDisguises -->
         <dependency>
+            <!-- ProtocolLib (to support LibsDisguises) -->
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>4.6.0</version>
+            <version>4.7.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- LibsDisguises -->
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>10.0.24</version>
+            <version>10.0.25-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>net.ess3</groupId>
+            <!-- EssentialsX -->
+            <groupId>net.essentialsx</groupId>
             <artifactId>EssentialsX</artifactId>
-            <version>2.18.2</version>
+            <version>2.19.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- PlaceholderAPI -->
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- RedProtect-Core -->
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
             <artifactId>RedProtect-Core</artifactId>
             <version>7.7.3</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- RedProtect-Spigot -->
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
             <artifactId>RedProtect-Spigot</artifactId>
             <version>7.7.3</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- RedProtect Javadocs -->
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
             <artifactId>RedProtect-Spigot</artifactId>
             <version>7.7.3</version>
             <type>jar</type>
             <scope>compile</scope>
             <classifier>javadoc</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- CoreProtect -->
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
             <version>19.5</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
+            <!-- Dynmap-API -->
             <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>3.1-SNAPSHOT</version>
+            <version>3.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
-            <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.7.2</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.eccentric_nz.tardisweepingangels</groupId>
-            <artifactId>TARDISWeepingAngels</artifactId>
-            <version>3.4.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

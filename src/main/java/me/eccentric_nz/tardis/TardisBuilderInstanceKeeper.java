@@ -36,8 +36,9 @@ import java.util.UUID;
 public class TardisBuilderInstanceKeeper {
 
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
-    private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
+    private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER", "JUKEBOX", "NOTE_BLOCK");
     private static final Set<Material> PRECIOUS = new HashSet<>();
+    private static final Set<Integer> TIPS_SLOTS = new HashSet<>();
 
     static {
         BLOCK_CONVERSION.put("ACACIA_LEAVES", "ACACIA_SAPLING");
@@ -45,6 +46,7 @@ public class TardisBuilderInstanceKeeper {
         BLOCK_CONVERSION.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
         BLOCK_CONVERSION.put("CAKE", "LEVER");
         BLOCK_CONVERSION.put("CARROTS", "CARROT");
+        BLOCK_CONVERSION.put("CAVE_VINES", "GLOW_BERRIES");
         BLOCK_CONVERSION.put("COBWEB", "STRING");
         BLOCK_CONVERSION.put("COCOA", "COCOA_BEANS");
         BLOCK_CONVERSION.put("DARK_OAK_LEAVES", "DARK_OAK_SAPLING");
@@ -71,6 +73,8 @@ public class TardisBuilderInstanceKeeper {
         BLOCK_CONVERSION.put("BIRCH_WALL_SIGN", "BIRCH_SIGN");
         BLOCK_CONVERSION.put("JUNGLE_WALL_SIGN", "JUNGLE_SIGN");
         BLOCK_CONVERSION.put("ACACIA_WALL_SIGN", "ACACIA_SIGN");
+        BLOCK_CONVERSION.put("CRIMSON_WALL_SIGN", "CRIMSON_SIGN");
+        BLOCK_CONVERSION.put("WARPED_WALL_SIGN", "WARPED_SIGN");
         BLOCK_CONVERSION.put("WHEAT", "WHEAT_SEEDS");
         // potted plants
         BLOCK_CONVERSION.put("POTTED_ACACIA_SAPLING", "ACACIA_SAPLING");
@@ -101,11 +105,13 @@ public class TardisBuilderInstanceKeeper {
         // precious blocks
         PRECIOUS.add(Material.BEACON);
         PRECIOUS.add(Material.BEDROCK);
+        PRECIOUS.add(Material.BUDDING_AMETHYST);
         PRECIOUS.add(Material.CONDUIT);
         PRECIOUS.add(Material.DIAMOND_BLOCK);
         PRECIOUS.add(Material.EMERALD_BLOCK);
         PRECIOUS.add(Material.GOLD_BLOCK);
         PRECIOUS.add(Material.IRON_BLOCK);
+        PRECIOUS.add(Material.LIGHT);
         PRECIOUS.add(Material.NETHERITE_BLOCK);
         PRECIOUS.add(Material.REDSTONE_BLOCK);
     }
@@ -116,38 +122,93 @@ public class TardisBuilderInstanceKeeper {
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
     private HashMap<Material, String> seeds;
 
+    /**
+     * Gets a list of precious blocks to protect
+     *
+     * @return a list of precious blocks
+     */
     public static Set<Material> getPrecious() {
         return PRECIOUS;
     }
 
+    /**
+     * Gets a list of used TIPS slots
+     *
+     * @return a list of slots
+     */
+    public static Set<Integer> getTipsSlots() {
+        return TIPS_SLOTS;
+    }
+
+    /**
+     * Gets a map of locations and TARDIS seed data
+     *
+     * @return a map of locations and TARDIS seed data
+     */
     public HashMap<Location, TardisBuildData> getTrackTardisSeed() {
         return trackTardisSeed;
     }
 
+    /**
+     * Gets a map of room names and block counts
+     *
+     * @return a map of room names and block counts
+     */
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
         return roomBlockCounts;
     }
 
+    /**
+     * Gets a lookup utility to convert blocks to their stained glass equivalent
+     *
+     * @return the TARDIS Stained Glass Lookup class
+     */
     public TardisStainedGlassLookupTable getStainedGlassLookup() {
         return stainedGlassLookup;
     }
 
+    /**
+     * Gets a map of Material and TARDIS seed names
+     *
+     * @return a map of Material and TARDIS seed names
+     */
     public HashMap<Material, String> getSeeds() {
         return seeds;
     }
 
+    /**
+     * Sets a map of Material and TARDIS seed names
+     *
+     * @param t_seeds a Map of Material keys and console name values
+     */
     public void setSeeds(HashMap<Material, String> t_seeds) {
         seeds = t_seeds;
     }
 
+    /**
+     * Gets a map of Material names where the key is a block that needs to be changed to the item in the map value.
+     * This is needed when condensing blocks for rooms.
+     *
+     * @return a map of Material names for conversion
+     */
     public HashMap<String, String> getBlockConversion() {
         return BLOCK_CONVERSION;
     }
 
+    /**
+     * Get a list of blocks that will be ignored by the rooms_require_blocks option
+     *
+     * @return a list of block names
+     */
     public Set<String> getIgnoreBlocks() {
         return IGNORE_BLOCKS;
     }
 
+    /**
+     * Gets a map of player UUIDs and the amount of room growing progress.
+     *
+     * @return a map
+     */
     public HashMap<UUID, Integer> getRoomProgress() {
         return roomProgress;
     }

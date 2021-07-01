@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardis.listeners;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.arch.TardisArchInventory;
 import me.eccentric_nz.tardis.arch.TardisArchPersister;
 import me.eccentric_nz.tardis.artron.TardisAdaptiveBoxLampToggler;
@@ -30,10 +31,7 @@ import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.desktop.TardisWallFloorRunnable;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.CardinalDirection;
-import me.eccentric_nz.tardis.enumeration.Preset;
-import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.hads.TardisCloisterBell;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.move.TardisDoorCloser;
@@ -54,7 +52,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.*;
 
 /**
- * Several events can trigger an Automatic Emergency Landing. Under these circumstances a tardis will use the coordinate
+ * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
  * override to initiate an Automatic Emergency Landing on the "nearest" available habitable planet.
  *
  * @author eccentric_nz
@@ -93,7 +91,7 @@ public class TardisTimeLordDeathListener implements Listener {
                         if (rsp.resultSet()) {
                             SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             // do they have the autonomous circuit on?
-                            if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                            if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                                 // close doors
                                 new TardisDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
@@ -108,8 +106,8 @@ public class TardisTimeLordDeathListener implements Listener {
                                             List<UUID> data = rst.getData();
                                             if (data.size() > 0 && !data.contains(uuid)) {
                                                 // schedule the NPC to appear
-                                                TardisEpsRunnable tardisEpsRunnable = new TardisEpsRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tardisEpsRunnable, 20L);
+                                                TardisEpsRunnable epsRunnable = new TardisEpsRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, epsRunnable, 20L);
                                             }
                                         }
                                     }
@@ -166,7 +164,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                     // if the TARDIS is already at the home location, do nothing
                                     if (!compareCurrentToHome(rsc, rsh)) {
                                         // check for creation area
-                                        if (!Objects.requireNonNull(plugin.getConfig().getString("creation.area")).equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
+                                        if (!Objects.equals(plugin.getConfig().getString("creation.area"), "none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
@@ -231,6 +229,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                             HashMap<String, Object> wheret = new HashMap<>();
                                             wheret.put("tardis_id", id);
                                             plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
+                                            plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.AUTONOMOUS, id));
                                         }, 500L);
                                         // set current
                                         HashMap<String, Object> setc = new HashMap<>();
@@ -266,8 +265,8 @@ public class TardisTimeLordDeathListener implements Listener {
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (tardis.getPreset().equals(Preset.ADAPTIVE)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), 1L);
+                                            if (tardis.getPreset().equals(Preset.ADAPTIVE) || tardis.getPreset().usesItemFrame()) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, tardis.getPreset()), 1L);
                                             }
                                             // if lights are on, turn them off
                                             new TardisLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
@@ -345,7 +344,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                         TardisWallFloorRunnable ttr = new TardisWallFloorRunnable(plugin, player.getUniqueId(), tud);
                                         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
-                                        ttr.setTaskID(task);
+                                        ttr.setTaskId(task);
                                     }
                                     // update the database
                                     plugin.getQueryFactory().doUpdate("tardis", set, wheres);

@@ -19,7 +19,6 @@ package me.eccentric_nz.tardis.listeners;
 import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
@@ -37,7 +36,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and Psionosauropodomorpha, are a species of Earth
@@ -54,8 +52,8 @@ public class TardisBlockBreakListener implements Listener {
     }
 
     /**
-     * Listens for the tardis Police Box sign being broken. If the sign is broken, then the tardis is destroyed, the
-     * database records removed and the tardis world deleted.
+     * Listens for the TARDIS Police Box sign being broken. If the sign is broken, then the TARDIS is destroyed, the
+     * database records removed and the TARDIS world deleted.
      *
      * @param event a player breaking a block
      */
@@ -63,7 +61,7 @@ public class TardisBlockBreakListener implements Listener {
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            // prevent tardis block breakage
+            // prevent TARDIS block breakage
             Block b = event.getBlock();
             String l = b.getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
@@ -107,16 +105,6 @@ public class TardisBlockBreakListener implements Listener {
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();
-                if (TardisPermission.hasPermission(player, "tardis.exterminate")) {
-                    UUID uuid = player.getUniqueId();
-                    // check it is their tardis
-                    plugin.getTrackerKeeper().getExterminate().put(uuid, block);
-                    long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    TardisMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid), timeout * 20);
-                } else {
-                    TardisMessage.send(player, "NO_PERM_DELETE");
-                }
             }
         }
         if (blockType == Material.BEACON) {

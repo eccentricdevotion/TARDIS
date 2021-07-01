@@ -31,6 +31,13 @@ public class TardisArtronEvent extends Event {
     private final int tardisId;
     private int artronLevel = 0;
 
+    /**
+     * A TARDIS Artron energy event.
+     *
+     * @param player   the player who is using the TARDIS
+     * @param amount   the amount of artron energy
+     * @param tardisId the id of the TARDIS
+     */
     public TardisArtronEvent(Player player, int amount, int tardisId) {
         this.player = player;
         this.amount = amount;
@@ -64,9 +71,9 @@ public class TardisArtronEvent extends Event {
     }
 
     /**
-     * Returns the tardis id involved in this event.
+     * Returns the TARDIS id involved in this event.
      *
-     * @return the tardis id
+     * @return the TARDIS id
      */
     public int getTardisId() {
         return tardisId;
@@ -75,9 +82,9 @@ public class TardisArtronEvent extends Event {
     /**
      * Returns the Artron Level after the amount has been added / subtracted.
      *
-     * @return the player
+     * @return the Artron level
      */
-    public int getLevel() {
+    public int getArtronLevel() {
         return artronLevel;
     }
 

@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.mobfarming.TardisHorse;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -71,7 +72,7 @@ public class TardisHorseListener implements Listener {
                             return;
                         }
                         // get spawn location
-                        TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+                        TardisDoorLocation dl = TardisDoorListener.getDoor(0, id);
                         Location l = dl.getL();
                         // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {
@@ -159,7 +160,7 @@ public class TardisHorseListener implements Listener {
                             equine.setOwner(p);
 
                             // teleport player and remove from travellers table
-                            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true, false);
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", p.getUniqueId().toString());
                             plugin.getQueryFactory().doDelete("travellers", where);

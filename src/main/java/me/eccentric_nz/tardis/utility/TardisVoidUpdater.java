@@ -50,7 +50,7 @@ public class TardisVoidUpdater {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            // get start chunk for this tardis
+            // get start chunk for this TARDIS
             String[] cstr = tardis.getChunk().split(":");
             World w = TardisAliasResolver.getWorldFromAlias(cstr[0]);
             int cx = TardisNumberParsers.parseInt(cstr[1]);

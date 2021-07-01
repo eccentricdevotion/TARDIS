@@ -50,7 +50,7 @@ public class TardisBeaconToggler {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Schematic schm = tardis.getSchematic();
-            if (Consoles.getNO_BEACON().contains(schm)) {
+            if (Consoles.getNoBeacon().contains(schm)) {
                 // doesn't have a beacon!
                 return;
             }
@@ -79,7 +79,7 @@ public class TardisBeaconToggler {
     }
 
     private void updateBeacon(Schematic schm, UUID uuid) {
-        // determine beacon location and update the tardis table so we don't have to do this again
+        // determine beacon location and update the TARDIS table so we don't have to do this again
         TardisUpgradeData tud = new TardisUpgradeData();
         tud.setSchematic(schm);
         tud.setPrevious(schm);

@@ -27,7 +27,7 @@ import java.sql.SQLException;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the tardis itself.
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -44,7 +44,7 @@ public class ResultSetFarming {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.
      *
      * @param plugin   an instance of the main class.
-     * @param tardisId the id of the tardis to get the farm locations for.
+     * @param tardisId the id of the TARDIS to get the farm locations for.
      */
     public ResultSetFarming(TardisPlugin plugin, int tardisId) {
         this.plugin = plugin;
@@ -70,7 +70,7 @@ public class ResultSetFarming {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                data = new Farm(rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village"));
+                data = new Farm(rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village"));
             } else {
                 return false;
             }

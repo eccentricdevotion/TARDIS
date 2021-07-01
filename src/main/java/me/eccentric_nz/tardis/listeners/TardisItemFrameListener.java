@@ -42,9 +42,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -52,6 +50,7 @@ import java.util.UUID;
 public class TardisItemFrameListener implements Listener {
 
     private final TardisPlugin plugin;
+    private final List<Integer> talkingHandles = new ArrayList<>();
 
     public TardisItemFrameListener(TardisPlugin plugin) {
         this.plugin = plugin;
@@ -63,10 +62,10 @@ public class TardisItemFrameListener implements Listener {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction|frame|rotor|map` command?
-            if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
-                Control control = Control.valueOf(plugin.getTrackerKeeper().getPlayers().get(uuid).toUpperCase());
+            if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(uuid)) {
+                Control control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
-                    // check they have a tardis
+                    // check they have a TARDIS
                     ResultSetTardisId rst = new ResultSetTardisId(plugin);
                     if (!rst.fromUuid(uuid.toString())) {
                         TardisMessage.send(player, "NO_TARDIS");
@@ -76,7 +75,7 @@ public class TardisItemFrameListener implements Listener {
                     switch (control) {
                         case DIRECTION, FRAME, MAP -> {
                             if (control.equals(Control.MAP) && !TardisPermission.hasPermission(player, "tardis.scanner.map")) {
-                                plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                                plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 TardisMessage.send(player, "NO_PERM_MAP");
                                 return;
                             }
@@ -84,7 +83,7 @@ public class TardisItemFrameListener implements Listener {
                                 // frame must have a MAP or FILLED_MAP in it
                                 ItemStack map = frame.getItem();
                                 if (map.getType() != Material.MAP && map.getType() != Material.FILLED_MAP) {
-                                    plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                                    plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                     TardisMessage.send(player, "SCANNER_NO_MAP");
                                     return;
                                 }
@@ -107,7 +106,7 @@ public class TardisItemFrameListener implements Listener {
                                 // add control
                                 plugin.getQueryFactory().insertControl(id, control.getId(), l, 0);
                             }
-                            plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                            plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             String which;
                             if (control.equals(Control.DIRECTION)) {
                                 which = "Direction";
@@ -134,21 +133,21 @@ public class TardisItemFrameListener implements Listener {
                             // set fixed and invisible
                             frame.setFixed(true);
                             frame.setVisible(false);
-                            plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                            plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             TardisMessage.send(player, "ROTOR_UPDATE");
                         }
                     }
                     return;
                 }
             }
-            // check if it is a tardis direction item frame
+            // check if it is a TARDIS direction item frame
             String l = frame.getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
             where.put("location", l);
             where.put("type", 18);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
-                // it's a tardis direction frame
+                // it's a TARDIS direction frame
                 int id = rs.getTardisId();
                 // prevent other players from stealing the tripwire hook
                 HashMap<String, Object> wherep = new HashMap<>();
@@ -204,7 +203,7 @@ public class TardisItemFrameListener implements Listener {
                 } else {
                     // are they placing a tripwire hook?
                     if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        // get current tardis direction
+                        // get current TARDIS direction
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
                         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
@@ -236,7 +235,9 @@ public class TardisItemFrameListener implements Listener {
                 }
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
+                    Integer handlesId = rsh.getTardisId();
                     // play sound
+                    talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by TARDIS id)
                     TardisSounds.playTardisSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
@@ -244,6 +245,7 @@ public class TardisItemFrameListener implements Listener {
                     is.setItemMeta(im);
                     frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         frame.setItem(is, false);
@@ -291,13 +293,13 @@ public class TardisItemFrameListener implements Listener {
                         TardisMessage.send(player, "NO_PERMS");
                         return;
                     }
-                    // cannot place unless inside the tardis
+                    // cannot place unless inside the TARDIS
                     if (!plugin.getUtils().inTardisWorld(event.getPlayer())) {
                         TardisMessage.handlesSend(player, "HANDLES_TARDIS");
                         event.setCancelled(true);
                         return;
                     }
-                    // must have a tardis
+                    // must have a TARDIS
                     ResultSetTardisId rst = new ResultSetTardisId(plugin);
                     if (rst.fromUuid(uuid.toString())) {
                         // check if they have a handles block
@@ -339,8 +341,11 @@ public class TardisItemFrameListener implements Listener {
                 if (!rsc.resultSet()) {
                     return;
                 }
+                // set this handles id to its TARDIS id
+                Integer handlesId = rsc.getTardisId();
                 if (player != null) {
                     if (player.isSneaking()) {
+                        talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by TARDIS id)
                         event.setCancelled(true);
                         TardisSounds.playTardisSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
@@ -349,11 +354,19 @@ public class TardisItemFrameListener implements Listener {
                         is.setItemMeta(im);
                         frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
                             im.setCustomModelData(10000001);
                             is.setItemMeta(im);
                             frame.setItem(is, false);
                         }, 40L);
                     } else {
+                        // is the handles currently talking?
+                        // match by predicate in case multiple entries are in list. can happen when handles is clicked many times repeatedly
+                        if (talkingHandles.stream().anyMatch(id -> id.equals(handlesId))) {
+                            event.setCancelled(true);
+                            plugin.debug(String.format("Cancelling breaking handles ID %d because he is still talking", handlesId));
+                            return;
+                        }
                         // is it the players handles?
                         ResultSetTardisId rst = new ResultSetTardisId(plugin);
                         if (rst.fromUuid(player.getUniqueId().toString()) && rsc.getTardisId() == rst.getTardisId()) {

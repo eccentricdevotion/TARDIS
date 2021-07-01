@@ -85,7 +85,7 @@ public class TardisAreasInventory {
                 stack[s] = null;
             }
         }
-        // add button to load tardis areas
+        // add button to load TARDIS areas
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         assert switchto != null;

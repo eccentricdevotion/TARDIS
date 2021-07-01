@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardis.control;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.TardisEmergencyRelocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -24,11 +25,13 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import me.eccentric_nz.tardis.travel.TardisTimeTravel;
+import me.eccentric_nz.tardis.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -48,16 +51,16 @@ public class TardisRandomButton {
     private final HashMap<String, Object> set = new HashMap<>();
     private final int secondary;
     private final String comps;
-    private final UUID ownerUuid;
+    private final UUID ownerUUID;
 
-    public TardisRandomButton(TardisPlugin plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUuid) {
+    public TardisRandomButton(TardisPlugin plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUUID) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
         this.level = level;
         this.secondary = secondary;
         this.comps = comps;
-        this.ownerUuid = ownerUuid;
+        this.ownerUUID = ownerUUID;
     }
 
     public void clickButton() {
@@ -70,7 +73,7 @@ public class TardisRandomButton {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rscl.resultSet()) {
-            // emergency tardis relocation
+            // emergency TARDIS relocation
             new TardisEmergencyRelocation(plugin).relocate(id, player);
             return;
         }
@@ -105,7 +108,7 @@ public class TardisRandomButton {
                 }
                 if (repeaters[0] == 1) { // first position
                     environment = "THIS";
-                    // check tardis travel is allowed in this world
+                    // check TARDIS travel is allowed in this world
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
                         TardisMessage.send(player, "NO_WORLD_TRAVEL");
                         return;
@@ -146,7 +149,7 @@ public class TardisRandomButton {
                 TardisTimeTravel tt = new TardisTimeTravel(plugin);
                 Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
                 if (rand != null) {
-                    // double check tardis travel is allowed in this world
+                    // double check TARDIS travel is allowed in this world
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(rand.getWorld()).getName() + ".time_travel")) {
                         TardisMessage.send(player, "NO_WORLD_TRAVEL");
                         return;
@@ -170,15 +173,15 @@ public class TardisRandomButton {
                         String[] companions = comps.split(":");
                         for (String c : companions) {
                             // are they online - AND are they travelling
-                            UUID cUuid = UUID.fromString(c);
-                            if (plugin.getServer().getPlayer(cUuid) != null && !cUuid.equals(ownerUuid)) {
+                            UUID cuuid = UUID.fromString(c);
+                            if (plugin.getServer().getPlayer(cuuid) != null && !cuuid.equals(ownerUUID)) {
                                 // are they travelling
                                 HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", id);
                                 wherec.put("uuid", c);
                                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
                                 if (rsv.resultSet() && !plugin.getConfig().getBoolean("preferences.no_coords")) {
-                                    TardisMessage.send(plugin.getServer().getPlayer(cUuid), "DEST", dchat);
+                                    TardisMessage.send(plugin.getServer().getPlayer(cuuid), "DEST", dchat);
                                 }
                             }
                             if (c.equalsIgnoreCase(player.getName())) {
@@ -189,17 +192,18 @@ public class TardisRandomButton {
                     if (!plugin.getConfig().getBoolean("preferences.no_coords")) {
                         if (isTL) {
                             TardisMessage.send(player, "DEST", dchat);
-                        } else if (plugin.getServer().getPlayer(ownerUuid) != null) {
-                            TardisMessage.send(plugin.getServer().getPlayer(ownerUuid), "DEST", dchat);
+                        } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
+                            TardisMessage.send(plugin.getServer().getPlayer(ownerUUID), "DEST", dchat);
                         }
                     }
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(cost, TravelType.RANDOM));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TardisLand(plugin, id, player).exitVortex();
+                        plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.RANDOM, id));
                     }
                 } else if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                     plugin.getTrackerKeeper().getMalfunction().put(id, true);

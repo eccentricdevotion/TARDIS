@@ -39,7 +39,7 @@ public class RoomRequirementsLister {
             wall = rsp.getWall();
             floor = rsp.getFloor();
         }
-        // get the tardis id
+        // get the TARDIS id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUuid(player.getUniqueId().toString())) {
             TardisMessage.send(player, "CONDENSE_REQUIRE", name);

@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiMap {
 
-    // tardis Map
+    // TARDIS Map
     BUTTON_UP(1, 1, Material.CYAN_WOOL),
     BUTTON_DOWN(2, 18, Material.CYAN_WOOL),
     BUTTON_LEFT(3, 9, Material.CYAN_WOOL),

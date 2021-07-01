@@ -57,7 +57,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * There was also a safety mechanism for when tardis rooms were deleted, automatically relocating any living beings in
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
  * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
@@ -69,6 +69,7 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
     private final TardisUpgradeData tud;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -78,6 +79,8 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private boolean running;
     private int id;
     private int slot;
@@ -334,6 +337,8 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
+            postDripstoneBlocks.forEach(Block::setBlockData);
+            postLichenBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -347,18 +352,16 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak wall sign
-                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
-                    if (Tag.WALL_SIGNS.isTagged(psb.getType())) {
-                        Sign cs = (Sign) psb.getState();
-                        cs.setLine(0, "");
-                        cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                        cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                        cs.setLine(3, "");
-                        cs.update();
-                        String controlloc = psb.getLocation().toString();
-                        plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
-                    }
+                // always make the control centre the first oak sign
+                if (s == 0 && (psb.getType().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && psb.getType().equals(Material.OAK_SIGN)))) {
+                    Sign cs = (Sign) psb.getState();
+                    cs.setLine(0, "");
+                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    cs.setLine(3, "");
+                    cs.update();
+                    String controlloc = psb.getLocation().toString();
+                    plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
                     s++;
                 }
             }
@@ -367,6 +370,10 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
+            if (tud.getSchematic().getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
+            }
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
@@ -382,7 +389,7 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
-            // finished processing - update tardis table!
+            // finished processing - update TARDIS table!
             if (set.size() > 0) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
@@ -658,14 +665,16 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, z);
-                    lampBlocks.add(lamp);
+                    lampBlocks.add(world.getBlockAt(x, y, z));
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);
                     setlb.put("location", lloc);
                     plugin.getQueryFactory().doInsert("lamps", setlb);
+                }
+                if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
+                    iceBlocks.add(world.getBlockAt(x, y, z));
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
@@ -739,9 +748,13 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (Tag.WALL_SIGNS.isTagged(type)) {
+                } else if (Tag.SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (TardisMaterials.infested.contains(type)) {
+                } else if (type.equals(Material.POINTED_DRIPSTONE)) {
+                    postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.GLOW_LICHEN)) {
+                    postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (TardisMaterials.INFESTED.contains(type)) {
                     // legacy monster egg stone for controls
                     TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters

@@ -82,8 +82,8 @@ public class TardisStandbyMode implements Runnable {
                         delay = 20L;
                     }
                     // police box lamp, delay it incase the TARDIS needs rebuilding
-                    if (standbyData.getPreset().equals(Preset.ADAPTIVE)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    if (standbyData.getPreset().equals(Preset.ADAPTIVE) || standbyData.getPreset().usesItemFrame()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.getPreset()), delay);
                     }
                     // if lights are on, turn them off
                     if (standbyData.isLights()) {
@@ -105,7 +105,7 @@ public class TardisStandbyMode implements Runnable {
     }
 
     /**
-     * Checks whether the tardis is near a recharge location.
+     * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
         HashMap<String, Object> where = new HashMap<>();

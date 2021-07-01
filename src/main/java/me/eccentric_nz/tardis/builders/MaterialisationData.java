@@ -22,7 +22,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 /**
- * Data class for building the tardis exterior.
+ * Data class for building the TARDIS exterior.
  *
  * @author eccentric_nz
  */

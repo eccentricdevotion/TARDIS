@@ -204,7 +204,7 @@ public class TardisMonsterRunnable implements Runnable {
                 }
             }
             if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
-                // spawn a random mob inside tardis?
+                // spawn a random mob inside TARDIS?
                 // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
                 if (TardisConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TardisConstants.RANDOM.nextInt(4))) {
                     HashMap<String, Object> wheret = new HashMap<>();
@@ -296,7 +296,7 @@ public class TardisMonsterRunnable implements Runnable {
             if (e != null) {
                 e.remove();
             }
-            // if there are players in the tardis sound the cloister bell
+            // if there are players in the TARDIS sound the cloister bell
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
@@ -329,7 +329,7 @@ public class TardisMonsterRunnable implements Runnable {
             while (!loc.getChunk().isLoaded()) {
                 loc.getChunk().load();
             }
-            // spawn a monster in the tardis
+            // spawn a monster in the TARDIS
             plugin.setTardisSpawn(true);
             Entity ent = Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, m.getType());
             switch (m.getType()) {

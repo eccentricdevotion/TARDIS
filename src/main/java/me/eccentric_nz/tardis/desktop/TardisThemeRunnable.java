@@ -26,7 +26,7 @@ public class TardisThemeRunnable implements Runnable {
     TardisThemeRunnable() {
     }
 
-    public void setTaskID(int taskID) {
+    public void setTaskId(int taskID) {
         this.taskID = taskID;
     }
 

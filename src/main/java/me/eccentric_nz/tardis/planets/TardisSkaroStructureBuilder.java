@@ -34,8 +34,8 @@ import org.bukkit.entity.EntityType;
 import java.io.File;
 
 /**
- * The tardis was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the tardis from scratch, he
+ * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
  * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
@@ -52,7 +52,7 @@ class TardisSkaroStructureBuilder implements Runnable {
     /**
      * Builds a Skaro structure.
      *
-     * @param plugin an instance of the main tardis plugin class
+     * @param plugin an instance of the main TARDIS plugin class
      * @param startx the start coordinate on the x-axis
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis

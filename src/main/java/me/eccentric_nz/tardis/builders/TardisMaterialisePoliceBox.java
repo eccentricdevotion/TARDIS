@@ -62,16 +62,26 @@ public class TardisMaterialisePoliceBox implements Runnable {
     public void run() {
         if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisId())) {
             World world = bd.getLocation().getWorld();
+            Block block = bd.getLocation().getBlock();
+            Block light = block.getRelative(BlockFace.UP, 2);
             if (i < loops) {
                 i++;
-                int cmd = switch (i % 3) {
-                    case 2 -> // stained
-                            1003;
-                    case 1 -> // glass
-                            1004;
-                    default -> // preset
-                            1001;
-                };
+                int cmd;
+                switch (i % 3) {
+                    case 2 -> { // stained
+                        cmd = 1003;
+                        light.setBlockData(TardisConstants.AIR);
+                    }
+                    case 1 -> { // glass
+                        cmd = 1004;
+                        light.setBlockData(TardisConstants.AIR);
+                    }
+                    default -> { // preset
+                        cmd = 1001;
+                        // set a light block
+                        light.setBlockData(TardisConstants.LIGHT);
+                    }
+                }
                 // first run
                 if (i == 1) {
                     TardisBuilderUtility.saveDoorLocation(bd);
@@ -86,7 +96,6 @@ public class TardisMaterialisePoliceBox implements Runnable {
                         }
                     }
                     if (!found) {
-                        Block block = bd.getLocation().getBlock();
                         Block under = block.getRelative(BlockFace.DOWN);
                         block.setBlockData(TardisConstants.AIR);
                         TardisBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
@@ -177,7 +186,7 @@ public class TardisMaterialisePoliceBox implements Runnable {
                         plugin.getQueryFactory().doDelete("blocks", whered);
                     }
                     // tardis has moved so remove HADS damage count
-                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
+                    plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisId());
                     // update demat field in database
                     TardisBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
                 }

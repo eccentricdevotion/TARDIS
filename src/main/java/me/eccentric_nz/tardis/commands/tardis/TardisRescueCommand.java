@@ -17,9 +17,11 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.travel.TardisRescue;
@@ -69,13 +71,14 @@ class TardisRescueCommand {
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {
                     // go straight to rescue
                     TardisRescue res = new TardisRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(savedUuid);
+                    plugin.getTrackerKeeper().getChatRescue().remove(savedUuid);
                     // delay it so the chat appears before the message
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TardisRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
                         if (rd.success()) {
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
                                 new TardisLand(plugin, rd.getTardisId(), player).exitVortex();
+                                plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.RESCUE, rd.getTardisId()));
                             } else {
                                 TardisMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
                             }
@@ -83,10 +86,10 @@ class TardisRescueCommand {
                     }, 2L);
                 } else {
                     TardisMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
-                    plugin.getTrackerKeeper().getChat().put(savedUuid, player.getUniqueId());
+                    plugin.getTrackerKeeper().getChatRescue().put(savedUuid, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUuid)) {
-                            plugin.getTrackerKeeper().getChat().remove(savedUuid);
+                        if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUuid)) {
+                            plugin.getTrackerKeeper().getChatRescue().remove(savedUuid);
                             TardisMessage.send(player, "RESCUE_NO_RESPONSE", saved);
                         }
                     }, 1200L);

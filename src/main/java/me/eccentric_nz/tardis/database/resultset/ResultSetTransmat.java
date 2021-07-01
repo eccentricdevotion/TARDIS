@@ -48,7 +48,7 @@ public class ResultSetTransmat {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the transmats table.
      *
      * @param plugin an instance of the main class.
-     * @param id     the tardis id to refine the search.
+     * @param id     the TARDIS id to refine the search.
      * @param name   the name of the transmat location to refine the search.
      */
     public ResultSetTransmat(TardisPlugin plugin, int id, String name) {

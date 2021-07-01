@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis doors in
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS doors in
  * their different dimensions.
  *
  * @author eccentric_nz

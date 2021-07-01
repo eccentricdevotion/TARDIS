@@ -62,7 +62,7 @@ public class TardisArtronIndicator {
             int percent = Math.round((current_level * 100F) / fc);
             if (!isFiltered) {
                 Scoreboard board = manager.getNewScoreboard();
-                Objective objective = board.registerNewObjective("tardis", "Artron", Objects.requireNonNull(plugin.getLanguage().getString("ARTRON_DISPLAY")));
+                Objective objective = board.registerNewObjective("TARDIS", "Artron", Objects.requireNonNull(plugin.getLanguage().getString("ARTRON_DISPLAY")));
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 if (used == 0) {
                     Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
@@ -80,14 +80,16 @@ public class TardisArtronIndicator {
                     amount_used.setScore(used);
                 } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                     Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
-                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
+                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id).getCost());
                 }
                 current.setScore(current_level);
                 percentage.setScore(percent);
                 p.setScoreboard(board);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (p.isOnline() && p.isValid()) {
-                        p.setScoreboard(currentScoreboard);
+                        if (manager != null) {
+                            p.setScoreboard(currentScoreboard);
+                        }
                     }
                 }, 150L);
             } else if (used > 0) {

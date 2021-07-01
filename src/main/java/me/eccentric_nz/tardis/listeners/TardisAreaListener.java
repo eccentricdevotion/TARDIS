@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Within the first nanosecond of landing in a new location, the tardis chameleon circuit analyses the surrounding area,
+ * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
  * calculates a twelve-dimensional data map of all objects within a thousand-mile radius and then determines which outer
  * shell would best blend in with the environment.
  *
@@ -50,7 +50,7 @@ public class TardisAreaListener implements Listener {
 
     /**
      * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
-     * that they are trying to create a tardis area.
+     * that they are trying to create a TARDIS area.
      *
      * @param event a player clicking a block
      */
@@ -63,25 +63,25 @@ public class TardisAreaListener implements Listener {
         UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {
+            if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                    plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
+                    plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
                     TardisMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getTrackerKeeper().getArea().remove(uuid);
-                        plugin.getTrackerKeeper().getBlock().remove(uuid);
+                        plugin.getTrackerKeeper().getAreaStartBlock().remove(uuid);
                     }, 1200L);
                 } else {
                     TardisMessage.send(player, "AREA_INSIDE");
                 }
-            } else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
+            } else if (plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid) && plugin.getTrackerKeeper().getAreaEndBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-                    String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
+                    String[] firstblock = plugin.getTrackerKeeper().getAreaStartBlock().get(uuid).split(":");
                     if (!Objects.requireNonNull(block_loc.getWorld()).getName().equals(firstblock[0])) {
                         TardisMessage.send(player, "AREA_WORLD");
                         return;
@@ -118,8 +118,8 @@ public class TardisAreaListener implements Listener {
                     plugin.getQueryFactory().doInsert("areas", set);
                     TardisMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
                     plugin.getTrackerKeeper().getArea().remove(uuid);
-                    plugin.getTrackerKeeper().getBlock().remove(uuid);
-                    plugin.getTrackerKeeper().getEnd().remove(uuid);
+                    plugin.getTrackerKeeper().getAreaStartBlock().remove(uuid);
+                    plugin.getTrackerKeeper().getAreaEndBlock().remove(uuid);
                 } else {
                     TardisMessage.send(player, "AREA_INSIDE");
                 }

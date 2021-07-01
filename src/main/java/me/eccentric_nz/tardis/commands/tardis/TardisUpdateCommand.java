@@ -144,7 +144,7 @@ class TardisUpdateCommand {
                     }
                     return true;
                 }
-                plugin.getTrackerKeeper().getPlayers().put(playerUuid, tardis_block);
+                plugin.getTrackerKeeper().getUpdatePlayers().put(playerUuid, tardis_block);
                 TardisMessage.send(player, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
                     TardisMessage.send(player, "HOOK_REMIND");

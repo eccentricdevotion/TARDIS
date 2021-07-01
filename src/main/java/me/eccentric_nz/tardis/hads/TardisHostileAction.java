@@ -39,10 +39,10 @@ public class TardisHostileAction {
     }
 
     public void processAction(int id, Player hostile) {
-        if (plugin.getTrackerKeeper().getDamage().get(id) > 99) {
+        if (plugin.getTrackerKeeper().getHadsDamage().get(id) > 99) {
             return;
         }
-        plugin.getTrackerKeeper().getDamage().put(id, 100);
+        plugin.getTrackerKeeper().getHadsDamage().put(id, 100);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -65,11 +65,11 @@ public class TardisHostileAction {
                             break;
                     }
                 } else {
-                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    plugin.getTrackerKeeper().getHadsDamage().remove(id);
                     TardisMessage.send(hostile, "TARDIS_BREAK");
                 }
             } else {
-                plugin.getTrackerKeeper().getDamage().remove(id);
+                plugin.getTrackerKeeper().getHadsDamage().remove(id);
                 TardisMessage.send(hostile, "TARDIS_BREAK");
             }
         }

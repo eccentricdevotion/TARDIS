@@ -17,10 +17,13 @@
 package me.eccentric_nz.tardis.control;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TravelCostAndType;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -35,7 +38,7 @@ public class TardisFastReturnButton {
     private final int id;
     private final int level;
 
-    public TardisFastReturnButton(TardisPlugin plugin, Player player, int id, int level) {
+    TardisFastReturnButton(TardisPlugin plugin, Player player, int id, int level) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
@@ -67,10 +70,11 @@ public class TardisFastReturnButton {
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(cost, TravelType.BACK));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TardisLand(plugin, id, player).exitVortex();
+                        plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.BACK, id));
                     }
                     TardisMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {

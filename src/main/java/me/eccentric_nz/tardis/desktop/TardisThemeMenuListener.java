@@ -155,7 +155,7 @@ public class TardisThemeMenuListener extends TardisMenuListener implements Liste
     }
 
     /**
-     * Initiates a tardis repair. Resets the console back to the original console schematic, Players must condense all
+     * Initiates a TARDIS repair. Resets the console back to the original console schematic, Players must condense all
      * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
      * 'free' repair(s).
      */
@@ -186,7 +186,7 @@ public class TardisThemeMenuListener extends TardisMenuListener implements Liste
     }
 
     /**
-     * Initiates a tardis clean. Removes any blocks that are not part of the original console schematic (missing blocks
+     * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
      * will not be restored).
      */
     private void clean(Player p) {

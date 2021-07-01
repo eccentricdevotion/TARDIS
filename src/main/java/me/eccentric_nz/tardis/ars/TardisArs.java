@@ -36,6 +36,7 @@ public enum TardisArs implements Ars {
     CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1),
     EMPTY("GLASS", "Empty", 1),
     FARM("DIRT", "Mob Farm", 1),
+    GEODE("AMETHYST_BLOCK", "Geode", 1),
     GRAVITY("MOSSY_COBBLESTONE", "Gravity Well", 1),
     GREENHOUSE("MELON", "Greenhouse", 1),
     HARMONY("STONE_BRICK_STAIRS", "Eye of Harmony", 1),
@@ -86,13 +87,13 @@ public enum TardisArs implements Ars {
     }
 
     /**
-     * Attempts to get the TARDISARS for the given material.
+     * Attempts to get the TardisArs for the given material.
      *
-     * @param mat the Material of the ars to get
+     * @param mat the Material of the ARS to get
      * @return ARS if found, or null
      */
     public static Ars arsFor(String mat) {
-        if (Consoles.getBY_MATERIALS().containsKey(mat)) {
+        if (Consoles.getByMaterials().containsKey(mat)) {
             return CONSOLE;
         } else {
             return EXTENDED_MATERIAL.getOrDefault(mat, SLOT);

@@ -38,6 +38,7 @@ import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import me.eccentric_nz.tardis.siegemode.TardisSiegeMode;
 import me.eccentric_nz.tardis.travel.TardisRandomiserCircuit;
 import me.eccentric_nz.tardis.travel.TardisTimeTravel;
+import me.eccentric_nz.tardis.travel.TravelCostAndType;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import me.eccentric_nz.tardis.utility.TardisSounds;
 import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
@@ -108,7 +109,7 @@ public class TardisHandlesProcessor {
             plugin.getQueryFactory().doUpdate("programs", set, where);
             TardisMessage.handlesSend(player, "HANDLES_RUNNING");
         } else {
-            // TODO Check conditions
+            // TODO check conditions
             processCommand(0);
             TardisMessage.handlesSend(player, "HANDLES_EXECUTE");
         }
@@ -233,6 +234,7 @@ public class TardisHandlesProcessor {
                                         int y = rsc.getY();
                                         int z = rsc.getZ();
                                         boolean sub = false;
+                                        TravelType travelType = TravelType.SAVE;
                                         switch (next) {
                                             case RANDOM:
                                                 Location random = new TardisRandomiserCircuit(plugin).getRandomlocation(player, direction);
@@ -242,6 +244,7 @@ public class TardisHandlesProcessor {
                                                     goto_loc = random;
                                                     sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                                                 }
+                                                travelType = TravelType.RANDOM;
                                                 break;
                                             case X:
                                                 // if X comes after travel then we'll look for Y and Z
@@ -263,6 +266,7 @@ public class TardisHandlesProcessor {
                                                     z = getNumber(coordBlockZ, fz);
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                travelType = TravelType.COORDINATES;
                                                 break;
                                             case Y:
                                                 // if Y comes after travel then X use current coords, and we'll look for Z
@@ -277,6 +281,7 @@ public class TardisHandlesProcessor {
                                                     z = getNumber(coordBlockZ, fyz);
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                travelType = TravelType.RELATIVE_COORDINATES;
                                                 break;
                                             case Z:
                                                 // if Z comes after travel then X and Y will use current coords
@@ -284,6 +289,7 @@ public class TardisHandlesProcessor {
                                                 TardisHandlesBlock coordBlockZ = TardisHandlesBlock.valueOf(Objects.requireNonNull(coordZ.getItemMeta()).getDisplayName());
                                                 z = getNumber(coordBlockZ, i + 2);
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                travelType = TravelType.RELATIVE_COORDINATES;
                                                 break;
                                             case HOME:
                                                 // get home location
@@ -308,6 +314,7 @@ public class TardisHandlesProcessor {
                                                     setp.put("adapti_on", 0);
                                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                                 }
+                                                travelType = TravelType.HOME;
                                                 break;
                                             case RECHARGER:
                                                 Location recharger = getRecharger(rsc.getWorld(), player);
@@ -318,6 +325,7 @@ public class TardisHandlesProcessor {
                                                     TardisMessage.handlesSend(player, "NO_MORE_SPOTS");
                                                     continue;
                                                 }
+                                                travelType = TravelType.RECHARGER;
                                                 break;
                                             case AREA_DISK:
                                                 // check the current location is not in this area already
@@ -343,6 +351,7 @@ public class TardisHandlesProcessor {
                                                 }
                                                 TardisMessage.handlesSend(player, "TRAVEL_APPROVED", first);
                                                 goto_loc = l;
+                                                travelType = TravelType.AREA;
                                                 break;
                                             case BIOME_DISK:
                                                 // find a biome location
@@ -378,9 +387,7 @@ public class TardisHandlesProcessor {
                                                     // check location
                                                     while (true) {
                                                         assert bw != null;
-                                                        if (bw.getChunkAt(nsob).isLoaded()) {
-                                                            break;
-                                                        }
+                                                        if (bw.getChunkAt(nsob).isLoaded()) break;
                                                         bw.getChunkAt(nsob).load();
                                                     }
                                                     int[] start_loc = TardisTimeTravel.getStartLocation(nsob, direction);
@@ -395,6 +402,7 @@ public class TardisHandlesProcessor {
                                                     TardisMessage.handlesSend(player, "BIOME_SET");
                                                     goto_loc = nsob;
                                                 }
+                                                travelType = TravelType.BIOME;
                                                 break;
                                             case PLAYER_DISK:
                                                 // get the player's location
@@ -409,9 +417,9 @@ public class TardisHandlesProcessor {
                                                         TardisMessage.handlesSend(player, "NOT_ONLINE");
                                                         continue;
                                                     }
-                                                    UUID toUuid = to.getUniqueId();
+                                                    UUID toUUID = to.getUniqueId();
                                                     // check the to player's DND status
-                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUuid.toString());
+                                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
                                                     if (rspp.resultSet() && rspp.isDndOn()) {
                                                         TardisMessage.handlesSend(player, "DND", first);
                                                         continue;
@@ -440,6 +448,7 @@ public class TardisHandlesProcessor {
                                                     TardisMessage.handlesSend(player, "NO_PERM_PLAYER");
                                                     continue;
                                                 }
+                                                travelType = TravelType.PLAYER;
                                                 break;
                                             case SAVE_DISK:
                                                 if (TardisPermission.hasPermission(player, "tardis.save")) {
@@ -460,7 +469,7 @@ public class TardisHandlesProcessor {
                                                 break;
                                         }
                                         if (goto_loc != null) {
-                                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                            plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                             plugin.getTrackerKeeper().getRescue().remove(id);
                                             if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);

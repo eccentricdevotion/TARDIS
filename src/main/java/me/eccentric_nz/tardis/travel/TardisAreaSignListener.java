@@ -46,7 +46,7 @@ public class TardisAreaSignListener extends TardisMenuListener implements Listen
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
      * accordingly.
      *
      * @param event a player clicking an inventory slot
@@ -60,7 +60,7 @@ public class TardisAreaSignListener extends TardisMenuListener implements Listen
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 45) {
-                // get the tardis the player is in
+                // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -89,9 +89,9 @@ public class TardisAreaSignListener extends TardisMenuListener implements Listen
                 }
             }
             if (slot == 49) {
-                // load tardis saves
+                // load TARDIS saves
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    // get the tardis the player is in
+                    // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);

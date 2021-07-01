@@ -26,8 +26,8 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * A numerical Type designates each model of tardis. Every tardis that is constructed follows the specifications of its
- * specific "Type." For example the Doctor usually operates a Type 40 tardis. Higher Type numbers indicated later model
+ * A numerical Type designates each model of TARDIS. Every TARDIS that is constructed follows the specifications of its
+ * specific "Type." For example the Doctor usually operates a Type 40 TARDIS. Higher Type numbers indicated later model
  * TARDISes.
  *
  * @author eccentric_nz

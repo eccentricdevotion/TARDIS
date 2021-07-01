@@ -45,7 +45,7 @@ public class TardisUpgradeData {
     }
 
     /**
-     * Returns the desktop theme the tardis had previously.
+     * Returns the desktop theme the TARDIS had previously.
      *
      * @return the Schematic
      */

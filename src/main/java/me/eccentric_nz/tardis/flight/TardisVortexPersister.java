@@ -106,7 +106,7 @@ public class TardisVortexPersister {
                         UUID uuid = rs.getTardis().getUuid();
                         if (task == -1) {
                             // interrupted dematerialisation
-                            // get previous location and destroy tardis
+                            // get previous location and destroy TARDIS
                             // previous location = 'back' table
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);

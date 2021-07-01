@@ -42,12 +42,12 @@ public class TardisControlsConverter {
             service.testConnection(connection);
             connection.setAutoCommit(false);
             statement = connection.createStatement();
-            // transfer chameleon (31), save-sign (32) & scanner (33) locations from `tardis` table to `controls` table
+            // transfer chameleon (31), save-sign (32) & scanner (33) locations from `TARDIS` table to `controls` table
             String tardisQuery = "SELECT tardis_id, chameleon, condenser, save_sign, scanner FROM " + prefix + "tardis";
             String controlsInsert = "INSERT INTO " + prefix + "controls (tardis_id, type, location) VALUES (?, ?, ?)";
             ps = connection.prepareStatement(controlsInsert);
             connection.setAutoCommit(false);
-            // get tardis records
+            // get TARDIS records
             ResultSet rst = statement.executeQuery(tardisQuery);
             String location;
             if (rst.isBeforeFirst()) {

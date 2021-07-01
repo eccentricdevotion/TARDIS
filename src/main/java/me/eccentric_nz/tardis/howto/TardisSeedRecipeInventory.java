@@ -25,8 +25,8 @@ import java.util.Arrays;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
- * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
+ * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz
@@ -68,7 +68,7 @@ class TardisSeedRecipeInventory {
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
         in_floor.setItemMeta(fl_meta);
-        // tardis type
+        // TARDIS type
         ItemStack tardis = new ItemStack(block, 1);
         stack[0] = red;
         stack[9] = lapis;

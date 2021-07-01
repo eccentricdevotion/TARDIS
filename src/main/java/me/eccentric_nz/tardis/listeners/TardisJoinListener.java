@@ -111,12 +111,12 @@ public class TardisJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
-        if (plugin.getConfig().getBoolean("allow.tp_switch") && TardisPermission.hasPermission(player, "tardis.texture")) {
-            // are they in the TARDIS?
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid);
-            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-            if (rst.resultSet()) {
+        // are they in the TARDIS?
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (rst.resultSet()) {
+            if (plugin.getConfig().getBoolean("allow.tp_switch") && TardisPermission.hasPermission(player, "tardis.texture")) {
                 // is texture switching on?
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                 if (rsp.resultSet()) {
@@ -124,6 +124,9 @@ public class TardisJoinListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisResourcePackChanger(plugin).changeResourcePack(player, rsp.getTextureIn()), 50L);
                     }
                 }
+            }
+            if (plugin.getConfig().getBoolean("creation.keep_night")) {
+                player.setPlayerTime(18000, false);
             }
         }
         // load and remember the players Police Box chunk

@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
- * tardis to project a beam around a bus in space after it crashed. He manoeuvred it down to Earth and dropped it
+ * TARDIS to project a beam around a bus in space after it crashed. He manoeuvred it down to Earth and dropped it
  * outside Shangri-La camp in southern Wales.
  *
  * @author eccentric_nz
@@ -48,7 +48,7 @@ public class TardisBlockLoader {
     }
 
     /**
-     * Loads Police Box and precious tardis blocks for protection from griefing and harvesting. This speeds the looking
+     * Loads Police Box and precious TARDIS blocks for protection from griefing and harvesting. This speeds the looking
      * up of block locations, as no database interaction is required.
      */
     public void loadProtectedBlocks() {
@@ -59,9 +59,9 @@ public class TardisBlockLoader {
     }
 
     /**
-     * Unloads Police Box and precious tardis blocks from protection. Called when a tardis is deleted.
+     * Unloads Police Box and precious TARDIS blocks from protection. Called when a TARDIS is deleted.
      *
-     * @param id the tardis id to unload protection from
+     * @param id the TARDIS id to unload protection from
      */
     public void unloadProtectedBlocks(int id) {
         HashMap<String, Object> where = new HashMap<>();

@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A dematerialisation circuit was an essential part of a Type 40 tardis which enabled it to dematerialise from normal
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
  * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
@@ -62,12 +62,12 @@ class TardisDematerialisePreset implements Runnable {
     private BlockData stain_colour;
 
     /**
-     * Runnable method to dematerialise the tardis Police Box. Tries to mimic the transparency of dematerialisation by
+     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic the transparency of dematerialisation by
      * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin  instance of the tardis plugin
+     * @param plugin  instance of the TARDIS plugin
      * @param dd      the DestroyData
-     * @param preset  the Chameleon preset currently in use by the tardis
+     * @param preset  the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
      */
     TardisDematerialisePreset(TardisPlugin plugin, DestroyData dd, Preset preset, BlockData cham_id) {
@@ -209,7 +209,7 @@ class TardisDematerialisePreset implements Runnable {
                     default:
                         break;
                 }
-                // only play the sound if the player is outside the tardis
+                // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
                     boolean minecart = false;

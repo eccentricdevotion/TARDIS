@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.tardis.builders;
 
+import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.ars.TardisArsMethods;
 import me.eccentric_nz.tardis.ars.TardisArsSlot;
-import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -31,27 +32,17 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
  */
 public class TardisInteriorPositioning {
 
-    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
     private final TardisPlugin plugin;
-    private final String prefix;
 
     public TardisInteriorPositioning(TardisPlugin plugin) {
         this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -91,10 +82,9 @@ public class TardisInteriorPositioning {
      */
     int getFreeSlot() {
         int limit = plugin.getConfig().getInt("creation.tips_limit");
-        List<Integer> usedSlots = makeUsedSlotList();
         int slot = -1;
         for (int i = 0; i < limit; i++) {
-            if (!usedSlots.contains(i)) {
+            if (!TardisBuilderInstanceKeeper.getTipsSlots().contains(i)) {
                 slot = i;
                 break;
             }
@@ -157,42 +147,6 @@ public class TardisInteriorPositioning {
         return data;
     }
 
-    /**
-     * Make a list of the currently used TIPS slots.
-     *
-     * @return a list of slot numbers
-     */
-    private List<Integer> makeUsedSlotList() {
-        List<Integer> usedSlots = new ArrayList<>();
-        Statement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT tips FROM " + prefix + "tardis";
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int s = rs.getInt("tips");
-                    usedSlots.add(s);
-                }
-            }
-        } catch (SQLException sqlException) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + sqlException.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException sqlException) {
-                plugin.debug("Error closing tardis table (getting TIPS slots)! " + sqlException.getMessage());
-            }
-        }
-        return usedSlots;
-    }
-
     // won't remove manually grown rooms...
     public void reclaimChunks(World w, int id) {
         // get ARS data
@@ -201,7 +155,7 @@ public class TardisInteriorPositioning {
         ResultSetArs rs = new ResultSetArs(plugin, where);
         if (rs.resultSet()) {
             // get the exit location
-            TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+            TardisDoorLocation dl = TardisDoorListener.getDoor(0, id);
             Location exitLocation = dl.getL();
             String[][][] json = TardisArsMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTardisChunk(id);
@@ -255,7 +209,7 @@ public class TardisInteriorPositioning {
     }
 
     private void teleportPlayerToExit(Player player, Location exit) {
-        plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exit, true, player.getWorld(), false, 0, true);
+        plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exit, true, player.getWorld(), false, 0, true, true);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doDelete("travellers", wheret);

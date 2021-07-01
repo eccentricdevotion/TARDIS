@@ -38,7 +38,7 @@ class TardisHandlesLockUnlockCommand {
     }
 
     boolean toggleLock(Player player, int id, boolean lock) {
-        // get the tardis current location
+        // get the TARDIS current location
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

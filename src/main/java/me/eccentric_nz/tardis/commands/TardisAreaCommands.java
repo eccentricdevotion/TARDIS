@@ -97,11 +97,11 @@ public class TardisAreaCommands implements CommandExecutor {
                     TardisMessage.send(player, "AREA_CLICK_START");
                     return true;
                 case "end":
-                    if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
+                    if (!plugin.getTrackerKeeper().getAreaStartBlock().containsKey(player.getUniqueId())) {
                         TardisMessage.send(player, "AREA_NO_START");
                         return false;
                     }
-                    plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
+                    plugin.getTrackerKeeper().getAreaEndBlock().put(player.getUniqueId(), "end");
                     TardisMessage.send(player, "AREA_CLICK_END");
                     return true;
                 case "parking":

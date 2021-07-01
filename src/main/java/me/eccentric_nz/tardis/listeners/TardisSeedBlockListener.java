@@ -58,10 +58,10 @@ public class TardisSeedBlockListener implements Listener {
     }
 
     /**
-     * Store the tardis Seed block's values for use when clicked with the tardis key to activate growing, or to return
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
      * the block if broken.
      *
-     * @param event The tardis Seed block placement event
+     * @param event The TARDIS Seed block placement event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
@@ -79,7 +79,7 @@ public class TardisSeedBlockListener implements Listener {
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                 MultipleFacing multipleFacing;
-                if (which >= 42 && which <= 45) {
+                if (which >= 42 && which <= 57) {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                 } else {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.RED_MUSHROOM_DATA.get(which));
@@ -88,7 +88,7 @@ public class TardisSeedBlockListener implements Listener {
             }
             List<String> lore = im.getLore();
             assert lore != null;
-            Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
+            Schematic schm = Consoles.getByNames().get(lore.get(0));
             Material wall = Material.valueOf(TardisStringUtils.getValuesFromWallString(lore.get(1)));
             Material floor = Material.valueOf(TardisStringUtils.getValuesFromWallString(lore.get(2)));
             TardisBuildData seed = new TardisBuildData();
@@ -98,12 +98,12 @@ public class TardisSeedBlockListener implements Listener {
             Location l = event.getBlockPlaced().getLocation();
             plugin.getBuildKeeper().getTrackTardisSeed().put(l, seed);
             TardisMessage.send(player, "SEED_PLACE");
-            // now the player has to click the block with the tardis key
+            // now the player has to click the block with the TARDIS key
         }
     }
 
     /**
-     * Return the tardis seed block to the player after it is broken.
+     * Return the TARDIS seed block to the player after it is broken.
      *
      * @param event a block break event
      */
@@ -116,7 +116,7 @@ public class TardisSeedBlockListener implements Listener {
             if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                 // get the Seed block data
                 TardisBuildData data = plugin.getBuildKeeper().getTrackTardisSeed().get(l);
-                // drop a tardis Seed Block
+                // drop a TARDIS Seed Block
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
                 ItemMeta im = is.getItemMeta();
@@ -125,8 +125,8 @@ public class TardisSeedBlockListener implements Listener {
                 }
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
                 int model;
-                if (TardisSeedModel.consoleMap.containsKey(console)) {
-                    model = TardisSeedModel.modelByString(console);
+                if (TardisSeedModel.CONSOLE_MAP.containsKey(console)) {
+                    model = TardisSeedModel.getModelByString(console);
                 } else {
                     model = 45;
                 }
@@ -149,7 +149,7 @@ public class TardisSeedBlockListener implements Listener {
     }
 
     /**
-     * Process the tardis seed block and turn it into a tardis!
+     * Process the TARDIS seed block and turn it into a TARDIS!
      *
      * @param event a block interact event
      */
@@ -181,7 +181,7 @@ public class TardisSeedBlockListener implements Listener {
                             return;
                         }
                     }
-                    // grow a tardis
+                    // grow a TARDIS
                     TardisBuildData seed = plugin.getBuildKeeper().getTrackTardisSeed().get(l);
                     // process seed data
                     if (new TardisSeedBlockProcessor(plugin).processBlock(seed, l, player)) {

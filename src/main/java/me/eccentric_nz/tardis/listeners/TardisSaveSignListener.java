@@ -18,17 +18,16 @@ package me.eccentric_nz.tardis.listeners;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
-import me.eccentric_nz.tardis.travel.TardisAreaCheck;
-import me.eccentric_nz.tardis.travel.TardisAreasInventory;
-import me.eccentric_nz.tardis.travel.TardisSaveSignInventory;
-import me.eccentric_nz.tardis.travel.TardisSaveSignPageTwo;
+import me.eccentric_nz.tardis.travel.*;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -70,6 +69,10 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
      */
     @EventHandler(ignoreCancelled = true)
     public void onSaveTerminalClick(InventoryClickEvent event) {
+        if (event.getClickedInventory() == null) {
+            // player clicked outside inventory
+            return;
+        }
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
@@ -228,12 +231,14 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
                                     plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                    TravelType travelType = (is.getItemMeta().getDisplayName().equals("Home")) ? TravelType.HOME : TravelType.SAVE;
+                                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
                                     TardisMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TardisLand(plugin, id, player).exitVortex();
+                                        plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, travelType, id));
                                     }
                                 } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
                                     lore.add(ChatColor.GOLD + "Current location");
@@ -260,7 +265,7 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
                         TardisMessage.send(player, "NOT_OWNER");
                     }
                 }
-                ItemStack own = Objects.requireNonNull(event.getClickedInventory()).getItem(49);
+                ItemStack own = event.getClickedInventory().getItem(49);
                 if (slot == 49 && own != null) {
                     // custom model data of item
                     int cmd = Objects.requireNonNull(own.getItemMeta()).getCustomModelData();
@@ -331,10 +336,10 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
     @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
         String inv_name = event.getView().getTitle();
-        if (inv_name.startsWith(ChatColor.DARK_RED + "tardis saves")) {
-            boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "tardis saves 2");
+        if (inv_name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+            boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
             UUID uuid = event.getPlayer().getUniqueId();
-            // get the tardis the player is in
+            // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);

@@ -27,11 +27,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a tardis by broadcasting Stattenheim
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
  * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
@@ -39,7 +40,7 @@ import java.util.Locale;
 public class TardisSayCommand implements CommandExecutor {
 
     private final TardisPlugin plugin;
-    private final String UT = ChatColor.GOLD + "[tardis Universal Translator]" + ChatColor.RESET + " ";
+    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
 
     public TardisSayCommand(TardisPlugin plugin) {
         this.plugin = plugin;
@@ -65,11 +66,7 @@ public class TardisSayCommand implements CommandExecutor {
                     }
                 }
             }
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                sb.append(" ").append(args[i]);
-            }
-            String whatToTranslate = sb.substring(1);
+            String whatToTranslate = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             String lang = args[0].toUpperCase(Locale.ENGLISH);
             try {
                 Language to = Language.valueOf(lang);

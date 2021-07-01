@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 /**
- * tardis corridors normally used anti-gravity, as the corridors went vertically as well as horizontally. House disabled
+ * TARDIS corridors normally used anti-gravity, as the corridors went vertically as well as horizontally. House disabled
  * the anti-gravity in the corridors in an attempt to kill Amy Pond and Rory Williams.
  *
  * @author eccentric_nz

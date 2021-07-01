@@ -61,7 +61,7 @@ class TardisJettisonCommand {
                 return true;
             }
             int id = rs.getTardisId();
-            // check they are in the tardis
+            // check they are in the TARDIS
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             wheret.put("tardis_id", id);

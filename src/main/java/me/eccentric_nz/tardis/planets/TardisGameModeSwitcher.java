@@ -43,7 +43,7 @@ public class TardisGameModeSwitcher implements Listener {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
         if (plugin.getWorldManager().equals(WorldManager.NONE) && !TardisPermission.hasPermission(player, "tardis.gamemode.bypass")) {
-            // tardis is managing worlds so switch player GameMode if necessary
+            // TARDIS is managing worlds so switch player GameMode if necessary
             try {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
                 player.setGameMode(gm);

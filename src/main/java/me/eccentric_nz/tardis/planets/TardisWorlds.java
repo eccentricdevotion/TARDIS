@@ -21,10 +21,12 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
 
 public class TardisWorlds {
 
@@ -86,32 +88,16 @@ public class TardisWorlds {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
             }
         });
-        // revert lowercase TARDIS world names
-        if (plugin.getConfig().getBoolean("conversions.level_names")) {
-            for (Map.Entry<String, String> level : TardisConstants.REVERT_LEVELS.entrySet()) {
-                // set the LevelName in level.dat
-                plugin.getTardisHelper().setLevelName(level.getKey(), level.getValue());
-                // rename the planet in planets.yml
-                ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + level.getKey());
-                if (section != null) {
-                    Map<String, Object> map = section.getValues(true);
-                    plugin.getPlanetsConfig().set("planets." + level.getValue(), map);
-                    plugin.getPlanetsConfig().set("planets." + level.getKey(), null);
-                }
-            }
-            plugin.getConfig().set("conversions.level_names", null);
-            plugin.saveConfig();
-        }
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         cWorlds.forEach((cw) -> {
-            if (!TardisConstants.PLANETS.contains(cw) && TardisAliasResolver.getWorldFromAlias(cw) == null) {
+            if (!TardisConstants.isDataPackWorld(cw) && TardisAliasResolver.getWorldFromAlias(cw) == null) {
                 if ((plugin.getWorldManager().equals(WorldManager.NONE) || Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }
             } else {
-                if (!TardisConstants.PLANETS.contains(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
+                if (!TardisConstants.isDataPackWorld(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
                     // remove records from database that may contain the removed world

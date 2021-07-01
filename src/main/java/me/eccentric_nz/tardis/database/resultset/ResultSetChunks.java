@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the chunk location of the tardis
+ * Many facts, figures, and formulas are contained within the Matrix, including... the chunk location of the TARDIS
  * interior.
  *
  * @author eccentric_nz

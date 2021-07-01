@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -46,18 +47,14 @@ class TardisHandlesDiskCommand {
         }
         // check if item in hand is a Handles program disk
         ItemStack disk = player.getInventory().getItemInMainHand();
-        if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+        if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
             ItemMeta dim = disk.getItemMeta();
             assert dim != null;
             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                 // get the program_id from the disk
                 int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
                 // get the name - must be 32 chars or less
-                StringBuilder sb = new StringBuilder();
-                for (int s = 1; s < args.length; s++) {
-                    sb.append(args[s]).append(" ");
-                }
-                String name = sb.toString().trim();
+                String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
                     TardisMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return true;

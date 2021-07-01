@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
  * <p>
  * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
  * environment-repeater 6 = artron button
@@ -55,7 +55,7 @@ public class ResultSetTardisSize {
     }
 
     /**
-     * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
+     * Attempts to see whether the supplied TARDIS id is in the TARDIS table. This method builds an SQL query string
      * from the parameters supplied and then executes the query.
      *
      * @param uuid the Time Lord uuid to check
@@ -82,7 +82,7 @@ public class ResultSetTardisSize {
                         consoleSize = rsa.getArchive().getConsoleSize();
                     }
                 } else {
-                    consoleSize = Consoles.getBY_NAMES().get(rs.getString("size")).getConsoleSize();
+                    consoleSize = Consoles.getByNames().get(rs.getString("size")).getConsoleSize();
                 }
                 return true;
             }

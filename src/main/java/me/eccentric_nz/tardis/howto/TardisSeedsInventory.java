@@ -18,7 +18,6 @@ package me.eccentric_nz.tardis.howto;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
-import me.eccentric_nz.tardis.custommodeldata.GuiSeeds;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Material;
@@ -31,8 +30,8 @@ import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
- * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
+ * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz
@@ -58,7 +57,7 @@ public class TardisSeedsInventory {
         ItemStack[] stack = new ItemStack[27];
         int i = 0;
         // get consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
+        for (Schematic a : Consoles.getByNames().values()) {
             if (TardisPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 assert m != null;
@@ -80,7 +79,7 @@ public class TardisSeedsInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GuiSeeds.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

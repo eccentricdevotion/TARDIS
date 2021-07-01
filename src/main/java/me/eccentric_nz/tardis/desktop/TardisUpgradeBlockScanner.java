@@ -139,7 +139,7 @@ public class TardisUpgradeBlockScanner {
                         if (type.equals(Material.MUSHROOM_STEM)) {
                             type = Material.REPEATER;
                         }
-                        if (TardisMaterials.infested.contains(type)) {
+                        if (TardisMaterials.INFESTED.contains(type)) {
                             type = Material.AIR;
                         }
                         if (type.equals(Material.BEDROCK)) {

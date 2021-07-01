@@ -119,7 +119,7 @@ public class TardisDematerialiseToVortex implements Runnable {
                 dd.setThrottle(SpaceTimeThrottle.JUNK);
             }
             plugin.getPluginManager().callEvent(new TardisDematerialisationEvent(player, tardis, l));
-            if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
+            if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                 // play demat sfx
                 if (!minecart) {
                     if (!preset.equals(Preset.JUNK_MODE)) {

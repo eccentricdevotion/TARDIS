@@ -63,15 +63,15 @@ public class TardisRandomOverworld extends TardisRandomLocation {
             int x = war.getMinX() + randX;
             // get the z coord
             int z = war.getMinZ() + randZ;
-            Location tmp = new Location(war.getW(), x, 64, z);
-            while (!war.getW().getChunkAt(tmp).isLoaded()) {
-                war.getW().getChunkAt(tmp).load();
+            Location tmp = new Location(war.getWorld(), x, 64, z);
+            while (!war.getWorld().getChunkAt(tmp).isLoaded()) {
+                war.getWorld().getChunkAt(tmp).load();
             }
             // get the y coord
             if (param.spaceTardis()) {
-                if (safeOverworld(war.getW(), x, z, param.getCompass())) {
+                if (safeOverworld(war.getWorld(), x, z, param.getDirection())) {
                     if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TardisStaticUtils.isOceanBiome(TardisStaticUtils.getBiomeAt(dest))) {
-                        if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
+                        if (safeSubmarine(dest, param.getDirection(), param.getPlayer())) {
                             break;
                         }
                     }
@@ -79,8 +79,8 @@ public class TardisRandomOverworld extends TardisRandomLocation {
                 }
             } else {
                 // space for a player / check plugin respect
-                int highest = TardisStaticLocationGetters.getHighestYIn3x3(war.getW(), x, z);
-                Location chk = new Location(war.getW(), x, highest, z);
+                int highest = TardisStaticLocationGetters.getHighestYIn3x3(war.getWorld(), x, z);
+                Location chk = new Location(war.getWorld(), x, highest, z);
                 if (plugin.getPluginRespect().getRespect(chk, param)) {
                     return chk;
                 }
@@ -134,21 +134,21 @@ public class TardisRandomOverworld extends TardisRandomLocation {
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < 5; n++) {
             int[] s = TardisTimeTravel.getStartLocation(loc, d);
-            int level, row, col, rowCount, colCount;
-            int startY = loc.getBlockY();
+            int level, row, col, rowcount, colcount;
+            int starty = loc.getBlockY();
             switch (d) {
                 case EAST, WEST -> {
-                    rowCount = 3;
-                    colCount = 4;
+                    rowcount = 3;
+                    colcount = 4;
                 }
                 default -> {
-                    rowCount = 4;
-                    colCount = 3;
+                    rowcount = 4;
+                    colcount = 3;
                 }
             }
-            for (level = startY; level < startY + 4; level++) {
-                for (row = s[0]; row < s[0] + rowCount; row++) {
-                    for (col = s[2]; col < s[2] + colCount; col++) {
+            for (level = starty; level < starty + 4; level++) {
+                for (row = s[0]; row < s[0] + rowcount; row++) {
+                    for (col = s[2]; col < s[2] + colcount; col++) {
                         Material mat = Objects.requireNonNull(loc.getWorld()).getBlockAt(row, level, col).getType();
                         if (!TardisConstants.GOOD_WATER.contains(mat)) {
                             count++;
@@ -158,10 +158,10 @@ public class TardisRandomOverworld extends TardisRandomLocation {
             }
             if (count == 0) {
                 safe = true;
-                // get tardis id
-                HashMap<String, Object> whereP = new HashMap<>();
-                whereP.put("uuid", p.getUniqueId().toString());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, whereP, false);
+                // get TARDIS id
+                HashMap<String, Object> wherep = new HashMap<>();
+                wherep.put("uuid", p.getUniqueId().toString());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                 if (rst.resultSet()) {
                     plugin.getTrackerKeeper().getSubmarine().add(rst.getTardisId());
                 }

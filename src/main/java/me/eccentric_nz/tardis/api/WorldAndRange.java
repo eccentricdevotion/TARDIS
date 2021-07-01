@@ -23,36 +23,70 @@ import org.bukkit.World;
  */
 public class WorldAndRange {
 
-    private final World w;
+    private final World world;
     private final int minX;
     private final int minZ;
     private final int rangeX;
     private final int rangeZ;
 
-    WorldAndRange(World w, int minX, int minZ, int rangeX, int rangeZ) {
-        this.w = w;
+    /**
+     * Data storage for generating random time travel coordinates
+     *
+     * @param world  the world
+     * @param minX   the minimum x coordinate
+     * @param minZ   the minimum z coordinate
+     * @param rangeX the upper range x value
+     * @param rangeZ the upper range z value
+     */
+    WorldAndRange(World world, int minX, int minZ, int rangeX, int rangeZ) {
+        this.world = world;
         this.minX = minX;
         this.minZ = minZ;
         this.rangeX = rangeX;
         this.rangeZ = rangeZ;
     }
 
-    public World getW() {
-        return w;
+    /**
+     * Gets the world
+     *
+     * @return a world
+     */
+    public World getWorld() {
+        return world;
     }
 
+    /**
+     * Gets the min x coordinate
+     *
+     * @return the min x
+     */
     public int getMinX() {
         return minX;
     }
 
+    /**
+     * Gets the min z coordinate
+     *
+     * @return the min z
+     */
     public int getMinZ() {
         return minZ;
     }
 
+    /**
+     * Gets the x range
+     *
+     * @return the x range
+     */
     int getRangeX() {
         return rangeX;
     }
 
+    /**
+     * Gets the z range
+     *
+     * @return the z range
+     */
     int getRangeZ() {
         return rangeZ;
     }

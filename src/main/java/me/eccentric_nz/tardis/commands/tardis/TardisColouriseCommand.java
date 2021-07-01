@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * As with the rest of the Doctor's tardis, the aesthetic design of the time rotor occasionally changed throughout the
+ * As with the rest of the Doctor's TARDIS, the aesthetic design of the time rotor occasionally changed throughout the
  * Doctor's travels. As it varied through designs, it alternated between being a single column and a series of
  * components that moved into each other from above and below.
  *
@@ -48,12 +48,12 @@ class TardisColouriseCommand {
             TardisMessage.send(player, "NO_PERMS");
             return;
         }
-        // check they are still in the tardis world
+        // check they are still in the TARDIS world
         if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "CMD_IN_WORLD");
             return;
         }
-        // must have a tardis
+        // must have a TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -80,7 +80,7 @@ class TardisColouriseCommand {
             return;
         }
         int thisid = rst.getTardisId();
-        // must be timelord of the tardis
+        // must be timelord of the TARDIS
         if (thisid != ownerid) {
             TardisMessage.send(player, "CMD_ONLY_TL");
             return;

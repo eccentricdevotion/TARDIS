@@ -48,7 +48,7 @@ public class TardisEntityGriefListener implements Listener {
     }
 
     /**
-     * Listens for Fireball, Wither and Dragon entity interaction with the tardis blocks. If the block is a tardis
+     * Listens for Fireball, Wither and Dragon entity interaction with the TARDIS blocks. If the block is a TARDIS
      * block, then the block change event is cancelled.
      *
      * @param event an entity affecting a block

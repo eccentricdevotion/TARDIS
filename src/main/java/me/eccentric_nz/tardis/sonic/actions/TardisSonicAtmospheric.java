@@ -40,7 +40,7 @@ public class TardisSonicAtmospheric {
         String line1 = ChatColor.stripColor(sign.getLine(1));
         String line2 = ChatColor.stripColor(sign.getLine(2));
         if (isPresetSign(plugin, line0, line1, line2)) {
-            // get tardis id
+            // get TARDIS id
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (rs.fromUuid(player.getUniqueId().toString())) {
                 int tid = rs.getTardisId();

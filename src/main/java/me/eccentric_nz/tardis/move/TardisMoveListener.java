@@ -81,7 +81,7 @@ public class TardisMoveListener implements Listener {
             TardisTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
             UUID uuid = p.getUniqueId();
             int id = tpl.getTardisId();
-            // are they a companion of this tardis?
+            // are they a companion of this TARDIS?
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (tpl.isAbandoned() || companions.contains(uuid)) {
                 Location to = tpl.getLocation();
@@ -122,15 +122,15 @@ public class TardisMoveListener implements Listener {
                     set.put("tardis_id", id);
                     set.put("uuid", uuid.toString());
                     plugin.getQueryFactory().doSyncInsert("travellers", set);
-                    // check to see whether the tardis has been updated to VOID biome
+                    // check to see whether the TARDIS has been updated to VOID biome
                     if (!new ResultSetVoid(plugin, id).hasUpdatedToVOID()) {
                         new TardisVoidUpdater(plugin, id).updateBiome();
-                        // add tardis id to void table
+                        // add TARDIS id to void table
                         plugin.getQueryFactory().addToVoid(id);
                     }
                 }
                 // tp player
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
                 if (petsAndFollowers != null) {
                     if (petsAndFollowers.getPets().size() > 0) {
                         plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), p, d, true);
@@ -140,7 +140,7 @@ public class TardisMoveListener implements Listener {
                     }
                 }
                 if (canPowerUp && !exit) {
-                    // power up the tardis
+                    // power up the TARDIS
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);

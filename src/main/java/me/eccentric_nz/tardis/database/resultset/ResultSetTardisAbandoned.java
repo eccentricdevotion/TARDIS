@@ -60,11 +60,11 @@ public class ResultSetTardisAbandoned {
     }
 
     /**
-     * Gets to the tardis data required to claim abandon a tardis. This method builds an SQL query string from the
+     * Gets to the TARDIS data required to claim abandon a TARDIS. This method builds an SQL query string from the
      * parameters supplied and then executes the query.
      *
      * @param uuid the Time Lord uuid to check
-     * @return true if the tardis is not yet abandoned
+     * @return true if the TARDIS is not yet abandoned
      */
     public boolean fromUuid(String uuid) {
         PreparedStatement statement = null;

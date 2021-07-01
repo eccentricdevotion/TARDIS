@@ -4,19 +4,16 @@
 
 ## Next version `4.7.3`
 
-1. Update to Spigot-API 1.17.0
-    * Add Cave & Weathered consoles
-    * Add Geode room
-    * Add Axolotls to farming -> Geode room
-    * Add new blocks & items to condensables, wall/floor/under door blocks, stained glass lookup, smeltables
-    * Add new mobs to Lazarus device
+1. Use Java 16 `record` data type?
 2. Update documentation...
 3. Use the Vortex Manipulator to teleport past force fields
 4. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 5. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
 6. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-7. TCG API - use Police Box location instead of player location?
-8. All the things...
+7. TCG API - use Police Box location instead of player location? _can't remember what this is about..._
+8. Add some metrics tracking
+    * how often each type of travel is enabled/used (saves, biome, cave, village, etc.)
+9. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 

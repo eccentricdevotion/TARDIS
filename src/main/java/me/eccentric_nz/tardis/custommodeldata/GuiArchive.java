@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiArchive {
 
-    // tardis Archive
+    // TARDIS Archive
     BACK(8, 18, Material.BOWL),
     SET_SIZE(77, 19, Material.BOWL),
     SCAN_CONSOLE(75, 20, Material.BOWL),

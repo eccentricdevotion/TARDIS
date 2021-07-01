@@ -34,7 +34,7 @@ public class TardisSonicRespect {
     /**
      * Check whether a player can alter a block with their Sonic Screwdriver
      *
-     * @param plugin an instance of the tardis plugin
+     * @param plugin an instance of the TARDIS plugin
      * @param player the player to check
      * @param block  the block to check
      * @return true if the player has permission to alter the block, otherwise false

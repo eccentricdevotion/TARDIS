@@ -63,7 +63,7 @@ class TardisJunkDeleter {
                 TardisMessage.send(sender, "CURRENT_NOT_FOUND");
                 return true;
             }
-            // destroy junk tardis
+            // destroy junk TARDIS
             DestroyData dd = new DestroyData();
             dd.setDirection(CardinalDirection.SOUTH);
             dd.setLocation(bb_loc);
@@ -73,9 +73,9 @@ class TardisJunkDeleter {
             dd.setTardisId(id);
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
-            // destroy the vortex tardis
+            // destroy the vortex TARDIS
             World cw = plugin.getServer().getWorld(Objects.requireNonNull(plugin.getConfig().getString("creation.default_world_name")));
-            // give the tardis time to remove itself as it's not hidden
+            // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);

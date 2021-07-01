@@ -63,6 +63,8 @@ public class TardisRoomsUpdater {
         booleanOptions.put("rooms.EMPTY.user", false);
         booleanOptions.put("rooms.FARM.enabled", true);
         booleanOptions.put("rooms.FARM.user", false);
+        booleanOptions.put("rooms.GEODE.enabled", true);
+        booleanOptions.put("rooms.GEODE.user", false);
         booleanOptions.put("rooms.GRAVITY.enabled", true);
         booleanOptions.put("rooms.GRAVITY.user", false);
         booleanOptions.put("rooms.GREENHOUSE.enabled", true);
@@ -136,6 +138,8 @@ public class TardisRoomsUpdater {
         integerOptions.put("rooms.EMPTY.offset", -4);
         integerOptions.put("rooms.FARM.cost", 350);
         integerOptions.put("rooms.FARM.offset", -4);
+        integerOptions.put("rooms.GEODE.cost", 650);
+        integerOptions.put("rooms.GEODE.offset", -4);
         integerOptions.put("rooms.GRAVITY.cost", 625);
         integerOptions.put("rooms.GRAVITY.offset", -20);
         integerOptions.put("rooms.GREENHOUSE.cost", 450);
@@ -198,6 +202,7 @@ public class TardisRoomsUpdater {
         stringOptions.put("rooms.CHEMISTRY.seed", "BLAST_FURNACE");
         stringOptions.put("rooms.EMPTY.seed", "GLASS");
         stringOptions.put("rooms.FARM.seed", "DIRT");
+        stringOptions.put("rooms.GEODE.seed", "AMETHYST_BLOCK");
         stringOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
         stringOptions.put("rooms.GREENHOUSE.seed", "MELON");
         stringOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");

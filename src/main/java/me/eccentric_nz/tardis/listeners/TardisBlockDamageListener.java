@@ -56,7 +56,7 @@ public class TardisBlockDamageListener implements Listener {
     }
 
     /**
-     * Listens for block damage to the tardis Police Box. If the block is a Police Box block then the event is
+     * Listens for block damage to the TARDIS Police Box. If the block is a Police Box block then the event is
      * cancelled, and the player warned.
      *
      * @param event a block being damaged
@@ -78,21 +78,21 @@ public class TardisBlockDamageListener implements Listener {
                     Material sonic = Material.valueOf(split[0]);
                     ItemStack is = event.getItemInHand();
                     if (is.getType().equals(sonic)) {
-                        // unhide tardis
+                        // unhide TARDIS
                         unhide(id, p);
                     }
                 }
                 boolean m = false;
                 boolean isDoor = false;
-                int damage = plugin.getTrackerKeeper().getDamage().getOrDefault(id, 0);
-                if (damage <= plugin.getConfig().getInt("preferences.hads_damage") && plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                    if (TardisMaterials.doors.contains(b.getType())) {
+                int damage = plugin.getTrackerKeeper().getHadsDamage().getOrDefault(id, 0);
+                if (damage <= plugin.getConfig().getInt("preferences.hads_damage") && plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
+                    if (TardisMaterials.DOORS.contains(b.getType())) {
                         if (isOwner(id, p.getUniqueId().toString())) {
                             isDoor = true;
                         }
                     }
                     if (!isDoor && rb.getPoliceBox() == 1) {
-                        plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
+                        plugin.getTrackerKeeper().getHadsDamage().put(id, damage + 1);
                         if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                             new TardisHostileAction(plugin).processAction(id, p);
                             m = true;
@@ -143,7 +143,7 @@ public class TardisBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
         if (rst.resultSet() && rst.getTardis().isHidden()) {
-            // unhide this tardis
+            // unhide this TARDIS
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

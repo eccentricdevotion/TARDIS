@@ -19,6 +19,7 @@ package me.eccentric_nz.tardis.artron;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,23 +38,32 @@ public class TardisAdaptiveBoxLampToggler {
         this.plugin = plugin;
     }
 
-    public void toggleLamp(int id, boolean on) {
+    public void toggleLamp(int id, boolean on, Preset preset) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (rs.resultSet()) {
-            Block lamp = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 3);
-            Block redstone = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 2);
-            while (!lamp.getChunk().isLoaded()) {
-                lamp.getChunk().load();
-            }
-            if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
+            Location location = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+            Block light = location.getBlock().getRelative(BlockFace.UP, 2);
+            if (preset.usesItemFrame()) {
                 if (on) {
-                    // turn on
-                    redstone.setBlockData(TardisConstants.POWER);
+                    light.setBlockData(TardisConstants.LIGHT);
                 } else {
-                    // turn off
-                    redstone.setBlockData(Material.BLUE_WOOL.createBlockData());
+                    light.setBlockData(TardisConstants.AIR);
+                }
+            } else {
+                Block lamp = location.getBlock().getRelative(BlockFace.UP, 3);
+                while (!lamp.getChunk().isLoaded()) {
+                    lamp.getChunk().load();
+                }
+                if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
+                    if (on) {
+                        // turn on
+                        light.setBlockData(TardisConstants.POWER);
+                    } else {
+                        // turn off
+                        light.setBlockData(Material.BLUE_WOOL.createBlockData());
+                    }
                 }
             }
         }

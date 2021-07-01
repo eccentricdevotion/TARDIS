@@ -25,8 +25,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
- * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
+ * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz

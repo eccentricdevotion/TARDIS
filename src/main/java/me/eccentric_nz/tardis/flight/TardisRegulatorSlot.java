@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Using data collected from the Interstitial Antenna, the Mean Free Path Tracker shows a tardis' planned path through
- * the Space-Time Vortex. It allows the operator to spot approaching turbulence in a tardis' flight path.
+ * Using data collected from the Interstitial Antenna, the Mean Free Path Tracker shows a TARDIS's planned path through
+ * the Space-Time Vortex. It allows the operator to spot approaching turbulence in a TARDIS's flight path.
  *
  * @author eccentric_nz
  */

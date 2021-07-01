@@ -81,7 +81,7 @@ public class TardisSiegeRunnable implements Runnable {
                     }
                 }
             }
-            // give players inside tardis a health boost
+            // give players inside TARDIS a health boost
             if (plugin.getConfig().getBoolean("siege.healing")) {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);

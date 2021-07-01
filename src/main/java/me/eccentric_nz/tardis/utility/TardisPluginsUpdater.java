@@ -50,7 +50,7 @@ public class TardisPluginsUpdater {
                     }
                     for (int i = 0; i < URLS.size(); i++) {
                         File dest = new File("plugins/update/" + FILES.get(i));
-                        // connect to tardis jenkins
+                        // connect to TARDIS jenkins
                         URL url = new URL(URLS.get(i));
                         // create a connection
                         HttpURLConnection con = (HttpURLConnection) url.openConnection();

@@ -69,8 +69,8 @@ public class TardisSqliteDatabase {
             statement.executeUpdate(queryAreas);
 
             // Table structure for table 'ars'
-            String queryArs = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
-            statement.executeUpdate(queryArs);
+            String queryARS = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
+            statement.executeUpdate(queryARS);
 
             // Table structure for table 'back'
             String queryBack = "CREATE TABLE IF NOT EXISTS " + prefix + "back (back_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0)";
@@ -121,7 +121,7 @@ public class TardisSqliteDatabase {
             statement.executeUpdate(queryDoors);
 
             // Table structure for table 'farming'
-            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
+            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', geode TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
             statement.executeUpdate(queryFarming);
 
             // Table structure for table 'forcefield'
@@ -161,7 +161,7 @@ public class TardisSqliteDatabase {
             statement.executeUpdate(queryPaperBag);
 
             // Table structure for table 'player_prefs'
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', auto_on INTEGER DEFAULT 0, beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, wool_lights_on INTEGER DEFAULT 0, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lanterns_on INTEGER DEFAULT 0, auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, difficulty INTEGER DEFAULT 0, auto_powerup_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', auto_on INTEGER DEFAULT 0, beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, close_gui_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, wool_lights_on INTEGER DEFAULT 0, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lanterns_on INTEGER DEFAULT 0, auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, difficulty INTEGER DEFAULT 0, auto_powerup_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'portals'
@@ -218,6 +218,10 @@ public class TardisSqliteDatabase {
             // Table structure for table 'transmats'
             String queryTransmats = "CREATE TABLE IF NOT EXISTS " + prefix + "transmats (transmat_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0)";
             statement.executeUpdate(queryTransmats);
+
+            // Table structure for table 'travel_stats'
+            String queryTravelStats = "CREATE TABLE IF NOT EXISTS " + prefix + "travel_stats (travel_stats_id INTEGER PRIMARY KEY NOT NULL, travel_type TEXT DEFAULT '', tardis_id INTEGER, uuid TEXT DEFAULT '')";
+            statement.executeUpdate(queryTravelStats);
 
             // Table structure for table 'traveled_to'
             String queryTraveledTo = "CREATE TABLE IF NOT EXISTS " + prefix + "traveled_to (uuid TEXT NOT NULL, environment TEXT NOT NULL)";

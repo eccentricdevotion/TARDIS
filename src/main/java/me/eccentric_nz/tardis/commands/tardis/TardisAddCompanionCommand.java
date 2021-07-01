@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.companiongui.TardisCompanionAddInventory;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -40,28 +40,28 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISAddCompanionCommand {
+class TardisAddCompanionCommand {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
 
-    TARDISAddCompanionCommand(TARDIS plugin) {
+    TardisAddCompanionCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    boolean doAddGUI(Player player) {
-        if (TARDISPermission.hasPermission(player, "tardis.add")) {
-            ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
+    boolean doAddGui(Player player) {
+        if (TardisPermission.hasPermission(player, "tardis.add")) {
+            ItemStack[] items = new TardisCompanionAddInventory(plugin, player).getPlayers();
             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
             presetinv.setContents(items);
             player.openInventory(presetinv);
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
         }
         return true;
     }
 
     boolean doAdd(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.add")) {
+        if (TardisPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -70,21 +70,21 @@ class TARDISAddCompanionCommand {
             int id;
             String owner;
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_Tardis");
                 return true;
             } else {
                 Tardis tardis = rs.getTardis();
-                id = tardis.getTardis_id();
+                id = tardis.getTardisId();
                 comps = tardis.getCompanions();
                 data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
-                TARDISMessage.send(player, "PLAYER_NOT_VALID");
+                TardisMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
@@ -94,7 +94,7 @@ class TARDISAddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
+                    OfflinePlayer offlinePlayer = TardisStaticUtils.getOfflinePlayer(args[1]);
                     if (offlinePlayer != null) {
                         UUID oluuid = offlinePlayer.getUniqueId();
                         tid.put("tardis_id", id);
@@ -107,18 +107,18 @@ class TARDISAddCompanionCommand {
                             set.put("companions", oluuid.toString());
                         }
                         // are we doing an achievement?
-                        if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
-                            taf.doAchievement(1);
+                        if (plugin.getAdvancementConfig().getBoolean("friends.enabled")) {
+                            TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.FRIENDS, 1);
+                            taf.doAdvancement(1);
                         }
                     } else {
-                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        TardisMessage.send(player, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                 }
                 // if using WorldGuard, add them to the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = TARDISStaticLocationGetters.getWorld(data);
+                    World w = TardisStaticLocationGetters.getWorld(data);
                     if (w != null) {
                         if (addAll) {
                             // remove all members
@@ -134,14 +134,14 @@ class TARDISAddCompanionCommand {
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 if (addAll) {
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
-                    TARDISMessage.send(player, "COMPANIONS_EVERYONE");
+                    TardisMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                    TardisMessage.send(player, "COMPANIONS_EVERYONE");
                 } else {
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
+                    TardisMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
         }
         return true;
     }

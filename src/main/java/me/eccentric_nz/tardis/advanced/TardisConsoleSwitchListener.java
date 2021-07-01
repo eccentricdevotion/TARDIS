@@ -63,7 +63,7 @@ public class TardisConsoleSwitchListener implements Listener {
         InventoryView inventoryView = event.getView();
         if (inventoryView.getTitle().equals(ChatColor.DARK_RED + "TARDIS Console")) {
             Player player = (Player) event.getWhoClicked();
-            // check they're in the tardis
+            // check they're in the TARDIS
             HashMap<String, Object> whereTardis = new HashMap<>();
             whereTardis.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers resultSetTravellers = new ResultSetTravellers(plugin, whereTardis, false);

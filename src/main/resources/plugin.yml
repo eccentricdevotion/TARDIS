@@ -1,11 +1,11 @@
-authors: [ eccentric_nz ]
+authors: [eccentric_nz]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
-loadbefore: [ ItemSlotMachine ]
-depend: [ TARDISChunkGenerator ]
-softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
+loadbefore: [ItemSlotMachine]
+depend: [TARDISChunkGenerator]
+softdepend: [Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -659,7 +659,7 @@ commands:
       description: Allows a player to change the colour of their TARDIS beacon glass with a Sonic Screwdriver.
       usage: /<command> colourise
       permission: tardis.upgrade
-      aliases: [ colorize ]
+      aliases: [colorize]
     cube:
       description: Show a list of players who are carrying a Siege Cube.
       usage: /<command> cube
@@ -668,7 +668,7 @@ commands:
       description: Open the Desktop Theme GUI.
       usage: /<command> desktop
       permission: tardis.upgrade
-      aliases: [ theme,upgrade ]
+      aliases: [theme,upgrade]
     eject:
       description: Allows a player to eject entities from their TARDIS.
       usage: /<command> eject
@@ -845,7 +845,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardissudo:
-    aliases: [ tsudo ]
+    aliases: [tsudo]
     description: Used by TARDIS admins to run commands as another Time Lord or fix players' TARDISes.
     permission: tardis.admin
     usage: /<command> [player] [ars|assemble|back|chameleon|clean|comehere|deadlock|desiege|handbrake|hide|isomorphic|rebuild|repair|travel|update] [...]
@@ -1129,7 +1129,7 @@ commands:
     permission: tardis.remote
     permission-message: You don't have the permission <permission> to use this command
   tardisschematic:
-    aliases: [ tschematic, ts ]
+    aliases: [tschematic, ts]
     description: Save, load or paste a TARDIS schematic.
     usage: /<command> [save|load|paste|clear|replace] [name]
     save:
@@ -1150,7 +1150,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
-    aliases: [ tnetherportal, tnp ]
+    aliases: [tnetherportal, tnp]
     description: Get coordinates for linking Nether Portals.
     usage: /<command> <[x] [y] [z] [overworld|nether]>
     permission: tardis.help
@@ -1181,11 +1181,11 @@ commands:
       permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   'tardis?':
-    aliases: [ 't?', tardishelp ]
+    aliases: ['t?', tardishelp]
     description: Get help with TARDIS commands.
     usage: /<command> [command] [argument]
   handles:
-    aliases: [ tardishandles, thandles ]
+    aliases: [tardishandles, thandles]
     description: These commands are used by the console to enable the Handles companion.
     usage: /<command> disk [disk name]
     takeoff:
@@ -1225,7 +1225,7 @@ commands:
       permission: tardis.handles.use
     permission-message: You don't have the permission <permission> to use this command
   tardisteleport:
-    aliases: [ tardistp, ttp ]
+    aliases: [tardistp, ttp]
     description: Teleport to a world's spawn point
     usage: /<command> [world]
     permission: tardis.admin
@@ -1237,7 +1237,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgamemode:
-    aliases: [ tgm, tgms, tgmc, tgma, tgmsp ]
+    aliases: [tgm, tgms, tgmc, tgma, tgmsp]
     description: Set a player's gamemode
     usage: /<command> [GameMode] <player>
     permission: tardis.admin

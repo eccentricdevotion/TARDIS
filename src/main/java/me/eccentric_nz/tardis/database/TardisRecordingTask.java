@@ -86,7 +86,7 @@ public class TardisRecordingTask implements Runnable {
                         String loco = Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromBukkitString(a)).add(0.0d, -1.0d, 0.0d).toString();
                         s.setInt(1, rs.getReplacedBlock().getTardisId());
                         s.setString(2, loco);
-                        s.setString(3, "minecraft:grass_path");
+                        s.setString(3, "minecraft:dirt_path");
                         s.addBatch();
                     }
                     // Break out of the loop and just commit what we have

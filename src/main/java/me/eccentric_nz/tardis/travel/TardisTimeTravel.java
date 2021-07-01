@@ -64,7 +64,7 @@ public class TardisTimeTravel {
     }
 
     /**
-     * Checks if a random location is safe for the tardis Police Box to land at. The Police Box requires a clear 4 x 3 x
+     * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
      * 4 (d x w x h) area.
      *
      * @param startx a starting position in the x direction.
@@ -158,18 +158,18 @@ public class TardisTimeTravel {
     }
 
     /**
-     * Retrieves a random location determined from the tardis repeater or terminal settings.
+     * Retrieves a random location determined from the TARDIS repeater or terminal settings.
      *
      * @param p           a player object used to check permissions against.
      * @param rx          the delay setting of the x-repeater, this determines the distance in the x direction.
      * @param rz          the delay setting of the z-repeater, this determines the distance in the z direction.
      * @param ry          the delay setting of the y-repeater, this determines the multiplier for both the x and z
      *                    directions.
-     * @param d           the direction the tardis Police Box faces.
+     * @param d           the direction the TARDIS Police Box faces.
      * @param e           the environment(s) the player has chosen (or is allowed) to travel to.
      * @param this_world  the world the Police Box is currently in
      * @param malfunction whether there should be a malfunction
-     * @param current     the current location of the tardis
+     * @param current     the current location of the TARDIS
      * @return a random Location
      */
     public Location randomDestination(Player p, int rx, int rz, int ry, CardinalDirection d, String e, World this_world, boolean malfunction, Location current) {
@@ -377,7 +377,7 @@ public class TardisTimeTravel {
     }
 
     /**
-     * Checks if a location is safe for the tardis Police Box to land at. Used for debugging purposes only. The Police
+     * Checks if a location is safe for the TARDIS Police Box to land at. Used for debugging purposes only. The Police
      * Box requires a clear 4 x 3 x 4 (d x w x h) area.
      *
      * @param loc the location to test
@@ -492,7 +492,7 @@ public class TardisTimeTravel {
      * @param rx      the delay of the x-repeater setting.
      * @param ry      the delay of the y-repeater setting.
      * @param e       a string to determine where to start the random search from
-     * @param l       the current tardis location
+     * @param l       the current TARDIS location
      */
     private int randomX(int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
@@ -517,7 +517,7 @@ public class TardisTimeTravel {
      * @param rz      the delay of the x-repeater setting.
      * @param ry      the delay of the y-repeater setting.
      * @param e       a string to determine where to start the random search from
-     * @param l       the current tardis location
+     * @param l       the current TARDIS location
      */
     private int randomZ(int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
@@ -540,7 +540,7 @@ public class TardisTimeTravel {
         do {
             block = block.getRelative(BlockFace.DOWN);
             type = block.getType();
-        } while (TardisMaterials.submarine_blocks.contains(type));
+        } while (TardisMaterials.SUBMARINE_BLOCKS.contains(type));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < attempts; n++) {
             if (isSafeSubmarine(loc, d)) {

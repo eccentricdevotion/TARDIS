@@ -75,7 +75,7 @@ public class TardisShellRoomConstructor {
                     assert w != null;
                     Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                     if (!fb.getType().isAir()) {
-                        if (TardisMaterials.doors.contains(fb.getType())) {
+                        if (TardisMaterials.DOORS.contains(fb.getType())) {
                             hasDoor = true;
                         } else {
                             hasBlock = true;
@@ -106,7 +106,7 @@ public class TardisShellRoomConstructor {
                     }
                     if (y == (fy + 3)) {
                         sb_blue_data.append(addQuotes(data.getAsString()));
-                        if (TardisMaterials.not_glass.contains(material)) {
+                        if (TardisMaterials.NOT_GLASS.contains(material)) {
                             sb_stain_data.append(dataStr);
                             sb_glass_data.append(dataStr);
                         } else {
@@ -116,7 +116,7 @@ public class TardisShellRoomConstructor {
                         }
                     } else {
                         sb_blue_data.append(addQuotes(data.getAsString())).append(",");
-                        if (TardisMaterials.not_glass.contains(material)) {
+                        if (TardisMaterials.NOT_GLASS.contains(material)) {
                             sb_stain_data.append(dataStr).append(",");
                             sb_glass_data.append(dataStr).append(",");
                         } else {

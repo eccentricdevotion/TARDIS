@@ -81,7 +81,7 @@ public class TardisFileCopier {
     }
 
     /**
-     * Copies files for use by the tardis builder classes.
+     * Copies files for use by the TARDIS builder classes.
      */
     public void copyFiles() {
         // make directories if they don't exist
@@ -112,7 +112,7 @@ public class TardisFileCopier {
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        Consoles.getBY_NAMES().values().forEach((ts) -> {
+        Consoles.getByNames().values().forEach((ts) -> {
             if (!ts.isCustom()) {
                 String str = basepath + ts.getPermission() + ".tschm";
                 copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
@@ -148,7 +148,7 @@ public class TardisFileCopier {
     }
 
     /**
-     * Copies a file to the tardis plugin directory if it is not present.
+     * Copies a file to the TARDIS plugin directory if it is not present.
      *
      * @param filename the name of the file to copy
      * @return a File

@@ -37,8 +37,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's tardis. When the
- * outer shell of the vessel came under attack, the unit dematerialised the tardis and re-materialised it a short
+ * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
+ * outer shell of the vessel came under attack, the unit dematerialised the TARDIS and re-materialised it a short
  * distance away after the attacker had gone, in a safer locale. The HADS had to be manually set, and the Doctor often
  * forgot to do so.
  *
@@ -126,7 +126,7 @@ class TardisHostileDisplacement {
                         set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", set, tid);
                         long delay = 1L;
-                        // move tardis
+                        // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         DestroyData dd = new DestroyData();
                         dd.setDirection(d);
@@ -178,7 +178,7 @@ class TardisHostileDisplacement {
                     new TardisHostileDispersal(plugin).disperseTardis(id, uuid, hostile, preset);
                 }
             } else {
-                plugin.getTrackerKeeper().getDamage().remove(id);
+                plugin.getTrackerKeeper().getHadsDamage().remove(id);
                 TardisMessage.send(player, "HADS_NO_WATER");
             }
         }

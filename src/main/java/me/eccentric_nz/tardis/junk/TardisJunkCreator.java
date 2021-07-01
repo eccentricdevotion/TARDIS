@@ -58,7 +58,7 @@ class TardisJunkCreator {
             TardisMessage.send(p, "JUNK_DISABLED");
             return true;
         }
-        // check if there is a junk tardis already
+        // check if there is a junk TARDIS already
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -74,12 +74,13 @@ class TardisJunkCreator {
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
         set.put("size", "JUNK");
+        set.put("tips", -999);
         set.put("artron_level", Integer.MAX_VALUE);
         set.put("tardis_init", 1);
         set.put("powered_on", 1);
         set.put("chameleon_preset", "JUNK");
         set.put("chameleon_demat", "JUNK");
-        set.put("last_use", System.currentTimeMillis());
+        set.put("lastuse", System.currentTimeMillis());
         int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // get wall floor prefs
         Material wall_type = Material.ORANGE_WOOL;
@@ -108,7 +109,7 @@ class TardisJunkCreator {
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", "SOUTH");
         plugin.getQueryFactory().insertLocations(setlocs, TardisStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-        // build the tardis at the location
+        // build the TARDIS at the location
         BuildData bd = new BuildData(null);
         bd.setDirection(CardinalDirection.SOUTH);
         bd.setLocation(l);
@@ -119,11 +120,11 @@ class TardisJunkCreator {
         bd.setSubmarine(false);
         bd.setTardisId(lastInsertId);
         bd.setThrottle(SpaceTimeThrottle.JUNK);
-        // build the tardis in the Vortex
-        TardisBuilderInner builder = new TardisBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
+        // build the TARDIS in the Vortex
+        TardisBuilderInner builder = new TardisBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, -999);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
         builder.setTask(task);
-        // build the tardis in the world
+        // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
         return true;
     }

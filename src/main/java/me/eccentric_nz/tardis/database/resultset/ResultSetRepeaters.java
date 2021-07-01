@@ -53,7 +53,7 @@ public class ResultSetRepeaters {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.
      *
      * @param plugin    an instance of the main class.
-     * @param id        the tardis id to search for.
+     * @param id        the TARDIS id to search for.
      * @param secondary the level of control to look for.
      */
     public ResultSetRepeaters(TardisPlugin plugin, int id, int secondary) {

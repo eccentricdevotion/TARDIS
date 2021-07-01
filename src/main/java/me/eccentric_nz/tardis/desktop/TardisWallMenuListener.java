@@ -110,7 +110,7 @@ public class TardisWallMenuListener extends TardisMenuListener implements Listen
                     default:
                         // get block type and data
                         ItemStack choice = view.getItem(slot);
-                        // set the tardis wall/floor block
+                        // set the TARDIS wall/floor block
                         assert choice != null;
                         setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
                         break;
@@ -168,7 +168,6 @@ public class TardisWallMenuListener extends TardisMenuListener implements Listen
      */
     private void floor(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
             ItemStack[] wall_blocks = new TardisWallsInventory(plugin).getMenu();
             Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Floor Menu");
             wall.setContents(wall_blocks);

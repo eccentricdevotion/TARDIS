@@ -57,7 +57,7 @@ public class TardisSonicAdmin {
             ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
             if (rsd.resultSet()) {
                 int id = rsd.getTardisId();
-                // get the tardis owner's name
+                // get the TARDIS owner's name
                 HashMap<String, Object> wheren = new HashMap<>();
                 wheren.put("tardis_id", id);
                 ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);

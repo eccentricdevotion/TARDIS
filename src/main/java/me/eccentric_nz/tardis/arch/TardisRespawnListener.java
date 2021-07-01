@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.arch;
+package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,11 +30,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRespawnListener implements Listener {
+public class TardisRespawnListener implements Listener {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRespawnListener(TARDIS plugin) {
+    public TardisRespawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -43,8 +43,8 @@ public class TARDISRespawnListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // check if we should re-arch this player
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisArchPersister(plugin).reArch(uuid), 5L);
+        if (!plugin.getUtils().inTardisWorld(player)) {
             // reset player time
             player.resetPlayerTime();
             // remove the player from the travellers table if they respawned in a non-TARDIS world

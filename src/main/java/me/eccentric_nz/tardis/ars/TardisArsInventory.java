@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * During his exile on Earth, the Third Doctor altered the tardis' Architectural Configuration software to relocate the
+ * During his exile on Earth, the Third Doctor altered the TARDIS's Architectural Configuration software to relocate the
  * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz

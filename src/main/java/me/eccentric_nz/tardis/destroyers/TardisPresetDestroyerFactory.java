@@ -41,9 +41,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * Destroy the tardis Police Box.
+ * Destroy the TARDIS Police Box.
  * <p>
- * The chameleon circuit is the component of a tardis which changes its outer plasmic shell to assume a shape which
+ * The chameleon circuit is the component of a TARDIS which changes its outer plasmic shell to assume a shape which
  * blends in with its surroundings.
  *
  * @author eccentric_nz

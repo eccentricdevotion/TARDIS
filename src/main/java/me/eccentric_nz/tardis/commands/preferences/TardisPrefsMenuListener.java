@@ -66,6 +66,7 @@ public class TardisPrefsMenuListener extends TardisMenuListener implements Liste
         lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
+        lookup.put("Close GUI", "close_gui_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Easy Difficulty", "difficulty");
@@ -197,7 +198,7 @@ public class TardisPrefsMenuListener extends TardisMenuListener implements Liste
                                         // Remove energy from TARDIS and sets database
                                         TardisMessage.send(p, "HANDBRAKE_ON");
                                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+                                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                                             HashMap<String, Object> wheref = new HashMap<>();
                                             wheref.put("tardis_id", id);
                                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);

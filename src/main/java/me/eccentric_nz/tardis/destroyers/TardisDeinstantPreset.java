@@ -39,8 +39,8 @@ import java.util.HashMap;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
- * Early in the First Doctor's travels, the tardis assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the tardis became locked into that shape.
+ * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
  *
  * @author eccentric_nz
  */

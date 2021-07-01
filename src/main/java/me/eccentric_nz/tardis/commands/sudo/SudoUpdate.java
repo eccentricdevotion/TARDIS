@@ -123,7 +123,7 @@ class SudoUpdate {
                     return true;
                 }
                 TardisSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
-                plugin.getTrackerKeeper().getPlayers().put(player.getUniqueId(), tardis_block);
+                plugin.getTrackerKeeper().getUpdatePlayers().put(player.getUniqueId(), tardis_block);
                 TardisMessage.send(player, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
                     TardisMessage.send(player, "HOOK_REMIND");

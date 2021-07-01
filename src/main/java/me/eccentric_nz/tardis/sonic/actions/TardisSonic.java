@@ -33,44 +33,44 @@ import java.util.Objects;
 
 public class TardisSonic {
 
-    private static final List<Material> distance = new ArrayList<>();
+    private static final List<Material> DISTANCE = new ArrayList<>();
 
     static {
-        distance.add(Material.ACACIA_BUTTON);
-        distance.add(Material.ACACIA_DOOR);
-        distance.add(Material.ACACIA_FENCE_GATE);
-        distance.add(Material.BIRCH_BUTTON);
-        distance.add(Material.BIRCH_DOOR);
-        distance.add(Material.BIRCH_FENCE_GATE);
-        distance.add(Material.CRIMSON_BUTTON);
-        distance.add(Material.CRIMSON_DOOR);
-        distance.add(Material.CRIMSON_FENCE_GATE);
-        distance.add(Material.DARK_OAK_BUTTON);
-        distance.add(Material.DARK_OAK_DOOR);
-        distance.add(Material.DARK_OAK_FENCE_GATE);
-        distance.add(Material.IRON_DOOR);
-        distance.add(Material.JUNGLE_BUTTON);
-        distance.add(Material.JUNGLE_DOOR);
-        distance.add(Material.JUNGLE_FENCE_GATE);
-        distance.add(Material.LEVER);
-        distance.add(Material.OAK_BUTTON);
-        distance.add(Material.OAK_DOOR);
-        distance.add(Material.OAK_FENCE_GATE);
-        distance.add(Material.OAK_FENCE_GATE);
-        distance.add(Material.POLISHED_BLACKSTONE_BUTTON);
-        distance.add(Material.SPRUCE_BUTTON);
-        distance.add(Material.SPRUCE_DOOR);
-        distance.add(Material.SPRUCE_FENCE_GATE);
-        distance.add(Material.STONE_BUTTON);
-        distance.add(Material.WARPED_BUTTON);
-        distance.add(Material.WARPED_DOOR);
-        distance.add(Material.WARPED_FENCE_GATE);
+        DISTANCE.add(Material.ACACIA_BUTTON);
+        DISTANCE.add(Material.ACACIA_DOOR);
+        DISTANCE.add(Material.ACACIA_FENCE_GATE);
+        DISTANCE.add(Material.BIRCH_BUTTON);
+        DISTANCE.add(Material.BIRCH_DOOR);
+        DISTANCE.add(Material.BIRCH_FENCE_GATE);
+        DISTANCE.add(Material.CRIMSON_BUTTON);
+        DISTANCE.add(Material.CRIMSON_DOOR);
+        DISTANCE.add(Material.CRIMSON_FENCE_GATE);
+        DISTANCE.add(Material.DARK_OAK_BUTTON);
+        DISTANCE.add(Material.DARK_OAK_DOOR);
+        DISTANCE.add(Material.DARK_OAK_FENCE_GATE);
+        DISTANCE.add(Material.IRON_DOOR);
+        DISTANCE.add(Material.JUNGLE_BUTTON);
+        DISTANCE.add(Material.JUNGLE_DOOR);
+        DISTANCE.add(Material.JUNGLE_FENCE_GATE);
+        DISTANCE.add(Material.LEVER);
+        DISTANCE.add(Material.OAK_BUTTON);
+        DISTANCE.add(Material.OAK_DOOR);
+        DISTANCE.add(Material.OAK_FENCE_GATE);
+        DISTANCE.add(Material.OAK_FENCE_GATE);
+        DISTANCE.add(Material.POLISHED_BLACKSTONE_BUTTON);
+        DISTANCE.add(Material.SPRUCE_BUTTON);
+        DISTANCE.add(Material.SPRUCE_DOOR);
+        DISTANCE.add(Material.SPRUCE_FENCE_GATE);
+        DISTANCE.add(Material.STONE_BUTTON);
+        DISTANCE.add(Material.WARPED_BUTTON);
+        DISTANCE.add(Material.WARPED_DOOR);
+        DISTANCE.add(Material.WARPED_FENCE_GATE);
     }
 
     public static void standardSonic(TardisPlugin plugin, Player player, long now) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
-        if (distance.contains(blockType)) {
+        if (DISTANCE.contains(blockType)) {
             TardisSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
             // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
             if (TardisSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
@@ -91,7 +91,7 @@ public class TardisSonic {
                         } else {
                             lowerdoor = targetBlock;
                         }
-                        // is it a tardis door?
+                        // is it a TARDIS door?
                         HashMap<String, Object> where = new HashMap<>();
                         String doorloc = Objects.requireNonNull(lowerdoor.getLocation().getWorld()).getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
                         where.put("door_location", doorloc);

@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * While phoning Amy and Rory about his adventures without them, the Eleventh Doctor mentioned how he should be
- * returning to them "any day", but the tardis' helmic regulator was playing up.
+ * returning to them "any day", but the TARDIS's helmic regulator was playing up.
  *
  * @author eccentric_nz
  */

@@ -38,7 +38,7 @@ class TardisCubeCommand {
     }
 
     boolean whoHasCube(Player player) {
-        // check they have tardis
+        // check they have TARDIS
         if (TardisPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUuid(player.getUniqueId().toString())) {

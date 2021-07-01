@@ -46,12 +46,12 @@ class TardisHandlesTakeoffCommand {
     }
 
     public boolean enterVortex(Player player, String[] args) {
-        // must be inside tardis
+        // must be inside TARDIS
         HashMap<String, Object> whereu = new HashMap<>();
         whereu.put("uuid", args[1]);
         ResultSetTravellers rsv = new ResultSetTravellers(plugin, whereu, false);
         if (rsv.resultSet()) {
-            // get tardis
+            // get TARDIS
             int id = TardisNumberParsers.parseInt(args[2]);
             HashMap<String, Object> wherei = new HashMap<>();
             wherei.put("tardis_id", id);

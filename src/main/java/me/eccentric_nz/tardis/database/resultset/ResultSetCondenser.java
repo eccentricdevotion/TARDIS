@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the condensed blocks and items of the
- * tardis's condenser.
+ * TARDIS's condenser.
  *
  * @author eccentric_nz
  */

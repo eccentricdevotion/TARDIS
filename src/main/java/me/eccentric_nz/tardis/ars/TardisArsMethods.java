@@ -39,7 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
  * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
  * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
  * the total sum of any currency.
@@ -53,7 +53,7 @@ public class TardisArsMethods {
     final HashMap<UUID, Integer> selected_slot = new HashMap<>();
     final HashMap<UUID, TardisArsSaveData> save_map_data = new HashMap<>();
     final HashMap<UUID, TardisArsMapData> map_data = new HashMap<>();
-    final Set<String> consoleBlocks = Consoles.getBY_MATERIALS().keySet();
+    final Set<String> consoleBlocks = Consoles.getByMaterials().keySet();
     final HashMap<UUID, Integer> ids = new HashMap<>();
     final List<UUID> hasLoadedMap = new ArrayList<>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
@@ -95,7 +95,7 @@ public class TardisArsMethods {
     private void saveAll(UUID playerUuid) {
         TardisArsMapData md = map_data.get(playerUuid);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
@@ -114,7 +114,7 @@ public class TardisArsMethods {
     private void revert(UUID playerUuid) {
         TardisArsSaveData sd = save_map_data.get(playerUuid);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
@@ -473,7 +473,7 @@ public class TardisArsMethods {
      *
      * @param uuid the UUID of the player to check for
      * @param map  a HashMap where the key is the changed room slot and the value is the ars room type
-     * @param id   the tardis id
+     * @param id   the TARDIS id
      * @return true or false
      */
     private boolean hasCondensables(String uuid, HashMap<TardisArsSlot, Ars> map, int id) {

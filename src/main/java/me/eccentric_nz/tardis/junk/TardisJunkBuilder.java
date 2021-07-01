@@ -93,7 +93,7 @@ public class TardisJunkBuilder implements Runnable {
                         floor_type = Material.LIGHT_GRAY_WOOL;
                         wall_type = Material.ORANGE_WOOL;
                     }
-                    // build tardis and remember BLOCKS
+                    // build TARDIS and remember BLOCKS
                     Material type;
                     BlockData data;
                     Block postTerminalBlock = null;
@@ -149,7 +149,7 @@ public class TardisJunkBuilder implements Runnable {
                                     String comparator = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 3, comparator, 0);
                                 }
-                                if (TardisMaterials.infested.contains(type)) {
+                                if (TardisMaterials.INFESTED.contains(type)) {
                                     // insert / update control 9
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 9, (new Location(world, x, y, z)).toString(), 0);
                                     // remember block

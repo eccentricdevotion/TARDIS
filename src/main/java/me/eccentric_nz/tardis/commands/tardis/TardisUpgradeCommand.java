@@ -51,7 +51,7 @@ class TardisUpgradeCommand {
             TardisMessage.send(player, "NO_PERM_UPGRADE");
             return true;
         }
-        // they must have an existing tardis
+        // they must have an existing TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -60,12 +60,12 @@ class TardisUpgradeCommand {
             return false;
         }
         Tardis tardis = rs.getTardis();
-        // console must in a tardis world
+        // console must in a TARDIS world
         if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
             TardisMessage.send(player, "UPGRADE_ABORT_WORLD");
             return true;
         }
-        // it must be their own tardis
+        // it must be their own TARDIS
         boolean own;
         Location pl = player.getLocation();
         String current_world = Objects.requireNonNull(pl.getWorld()).getName();
@@ -74,7 +74,7 @@ class TardisUpgradeCommand {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TardisPermission.hasPermission(player, "tardis.create_world")) {
                 own = (current_world.equals(split[0]));
             } else {
-                // get if player is in TIPS area for their tardis
+                // get if player is in TIPS area for their TARDIS
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
                 TardisTipsData pos = tintpos.getTipsData(tardis.getTips());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());

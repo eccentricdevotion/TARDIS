@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiWeather {
 
-    // tardis Weather Menu
+    // TARDIS Weather Menu
     CLEAR(1, 0, Material.SUNFLOWER),
     RAIN(2, 1, Material.WATER_BUCKET),
     THUNDER(4, 2, Material.GUNPOWDER),

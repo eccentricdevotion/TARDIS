@@ -34,7 +34,7 @@ public class TardisHandbrake {
         lever.setPowered(powered);
         block.setBlockData(lever);
         if (inside) {
-            // get other handbrakes in this tardis
+            // get other handbrakes in this TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("type", 0);

@@ -101,8 +101,8 @@ public class TardisHideCommand {
                 TardisMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
             }
-            // make sure tardis is not dispersed
-            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+            // make sure TARDIS is not dispersed
+            if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                 TardisMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }

@@ -171,7 +171,7 @@ public class TardisSonicPainter {
     }
 
     public static void paint(TardisPlugin plugin, Player player, Block b) {
-        // must be in tardis world
+        // must be in TARDIS world
         if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "UPDATE_IN_WORLD");
             return;
@@ -183,7 +183,7 @@ public class TardisSonicPainter {
             // check for dye in slot
             PlayerInventory inv = player.getInventory();
             ItemStack dye = inv.getItem(8);
-            if (dye == null || !TardisMaterials.dyes.contains(dye.getType())) {
+            if (dye == null || !TardisMaterials.DYES.contains(dye.getType())) {
                 TardisMessage.send(player, "SONIC_DYE");
                 return;
             }

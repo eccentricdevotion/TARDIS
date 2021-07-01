@@ -34,8 +34,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * The tardis information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
- * and Tegan from a readout in the control room. The Fifth Doctor called it the tardis databank.
+ * The TARDIS information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
+ * and Tegan from a readout in the control room. The Fifth Doctor called it the TARDIS databank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -68,7 +68,7 @@ public class TardisInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Listens for player typing a tardis Information System key code. The player must be found in the trackInfoMenu
+     * Listens for player typing a TARDIS Information System key code. The player must be found in the trackInfoMenu
      * HashMap, where their position in the TIS is stored. The key code is then processed.
      *
      * @param event a player typing in chat
@@ -544,6 +544,15 @@ public class TardisInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("1")) {
                     showInfo(p, TardisInfoMenu.COPPER_11TH);
+                }
+                if (chat.equalsIgnoreCase("=")) {
+                    showInfo(p, TardisInfoMenu.DELTA);
+                }
+                if (chat.equalsIgnoreCase("v")) {
+                    showInfo(p, TardisInfoMenu.CAVE);
+                }
+                if (chat.equalsIgnoreCase("h")) {
+                    showInfo(p, TardisInfoMenu.WEATHERED);
                 }
                 break;
             case FOOD_ACCESSORIES:
@@ -1310,7 +1319,7 @@ public class TardisInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Displays information about a tardis room. Descriptions are stored in the TARDISDescription enum. Other values are
+     * Displays information about a TARDIS room. Descriptions are stored in the TARDISDescription enum. Other values are
      * pulled directly from the rooms.yml configuration file.
      *
      * @param p    the player to show the room information to
@@ -1329,10 +1338,10 @@ public class TardisInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Displays information about an item or tardis type. Descriptions are stored in the TARDISDescription enum.
+     * Displays information about an item or TARDIS type. Descriptions are stored in the TARDISDescription enum.
      *
      * @param p    the player to show the information to
-     * @param item the item or tardis type to display
+     * @param item the item or TARDIS type to display
      */
     private void showInfo(Player p, TardisInfoMenu item) {
         p.sendMessage("---");
@@ -1381,7 +1390,7 @@ public class TardisInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Exits the tardis Information System menu
+     * Exits the TARDIS Information System menu
      *
      * @param p the player to exit
      */

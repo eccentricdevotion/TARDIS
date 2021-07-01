@@ -44,7 +44,7 @@ class TardisJunkFind {
             TardisMessage.send(sender, "JUNK_NO_PERM");
             return true;
         }
-        // get junk tardis id
+        // get junk TARDIS id
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUuid("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location

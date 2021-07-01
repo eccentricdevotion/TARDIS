@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis Police Box
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
  * blocks.
  *
  * @author eccentric_nz
@@ -41,7 +41,7 @@ public class ResultSetAntiBuild {
     private Integer tardisId;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the TARDIS &amp; travellers table.
      *
      * @param plugin an instance of the main class.
      * @param uuid   the uuid who is trying to build.
@@ -53,7 +53,7 @@ public class ResultSetAntiBuild {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis &amp; travellers table. This method builds an SQL query string from
+     * Retrieves an SQL ResultSet from the TARDIS &amp; travellers table. This method builds an SQL query string from
      * the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query

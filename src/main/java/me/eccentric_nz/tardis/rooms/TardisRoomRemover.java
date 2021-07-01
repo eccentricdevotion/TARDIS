@@ -33,7 +33,7 @@ import java.util.Locale;
 
 /**
  * When the Eleventh Doctor was trying to get out of his universe, he said he was deleting the scullery room and squash
- * court seven to give the tardis an extra boost.
+ * court seven to give the TARDIS an extra boost.
  *
  * @author eccentric_nz
  */
@@ -54,7 +54,7 @@ class TardisRoomRemover {
     }
 
     /**
-     * Jettison a tardis room, leaving just the walls behind. We will probably need to get the dimensions of the room
+     * Jettison a TARDIS room, leaving just the walls behind. We will probably need to get the dimensions of the room
      * from the schematic, if user supplied room schematics will be allowed.
      *
      * @return false if the room has already been jettisoned

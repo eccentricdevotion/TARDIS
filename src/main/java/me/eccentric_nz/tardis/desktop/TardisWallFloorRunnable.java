@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * There was also a safety mechanism for when tardis rooms were deleted, automatically relocating any living beings in
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
  * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz

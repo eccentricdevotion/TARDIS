@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * Gets a list of tardis ids whose power is on.
+ * Gets a list of TARDIS ids whose power is on.
  *
  * @author eccentric_nz
  */
@@ -78,7 +78,7 @@ public class ResultSetStandby {
                             }
                             sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
                         }
-                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getByNames().get(rs.getString("size")).hasLanterns());
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

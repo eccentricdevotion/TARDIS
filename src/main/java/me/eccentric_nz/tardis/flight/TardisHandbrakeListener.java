@@ -52,7 +52,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * The handbrake was a utensil on the tardis used for quick stops. River song once claimed that the tardis made it's
+ * The handbrake was a utensil on the TARDIS used for quick stops. River song once claimed that the TARDIS made it's
  * "whoosh" noise because the Doctor had left the handbrake on.
  *
  * @author eccentric_nz
@@ -129,7 +129,7 @@ public class TardisHandbrakeListener implements Listener {
                         TardisMessage.send(player, "SIEGE_NO_CONTROL");
                         return;
                     }
-                    if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                    if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                         TardisMessage.send(player, "NOT_WHILE_DISPERSED");
                         return;
                     }
@@ -142,8 +142,8 @@ public class TardisHandbrakeListener implements Listener {
                         if (preset.equals(Preset.JUNK)) {
                             return;
                         }
-                        UUID ownerUuid = tardis.getUuid();
-                        if ((tardis.isIsoOn() && !uuid.equals(ownerUuid) && event.useInteractedBlock().equals(Event.Result.DENY) && !TardisPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                        UUID ownerUUID = tardis.getUuid();
+                        if ((tardis.isIsoOn() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TardisPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
                             TardisMessage.send(player, "ISO_HANDS_OFF");
                             return;
@@ -219,12 +219,12 @@ public class TardisHandbrakeListener implements Listener {
                                     // Remove energy from TARDIS and sets database
                                     TardisMessage.send(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
+                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                                        if (!uuid.equals(ownerUuid)) {
-                                            Player ptl = plugin.getServer().getPlayer(ownerUuid);
+                                        if (!uuid.equals(ownerUUID)) {
+                                            Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
                                                 new TardisArtronIndicator(plugin).showArtronLevel(ptl, id, Math.abs(amount));
                                             }

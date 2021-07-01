@@ -688,7 +688,7 @@ public class TardisMaterialIdConverter {
         LEGACY_TYPE_LOOKUP.put("WOOL", "ORANGE_WOOL");
         LEGACY_TYPE_LOOKUP.put("WORKBENCH", "CRAFTING_TABLE");
         LEGACY_TYPE_LOOKUP.put("YELLOW_FLOWER", "DANDELION");
-        // LEGACY tardis Wall descriptors
+        // LEGACY TARDIS Wall descriptors
         LEGACY_TYPE_LOOKUP.put("ACACIA_WOOD", "ACACIA_PLANKS");
         LEGACY_TYPE_LOOKUP.put("BIRCH_WOOD", "BIRCH_PLANKS");
         LEGACY_TYPE_LOOKUP.put("BLACK_CLAY", "BLACK_TERRACOTTA");

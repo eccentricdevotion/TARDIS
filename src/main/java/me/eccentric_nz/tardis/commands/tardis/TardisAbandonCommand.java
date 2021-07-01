@@ -206,7 +206,7 @@ public class TardisAbandonCommand {
                     return true;
                 } else {
                     Preset preset = rs.getPreset();
-                    // need to be in tardis
+                    // need to be in TARDIS
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);

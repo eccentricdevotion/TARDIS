@@ -41,7 +41,7 @@ import java.util.Objects;
 /**
  * Command /tardis [arguments].
  * <p>
- * A tardis console room or control room is the area which houses the tardis' control console, by which the tardis was
+ * A TARDIS console room or control room is the area which houses the TARDIS's control console, by which the TARDIS was
  * operated.
  *
  * @author eccentric_nz
@@ -130,7 +130,7 @@ public class TardisCommands implements CommandExecutor {
                     return new TardisDirectionCommand(plugin).changeDirection(player, args);
                 case DOOR:
                     return new TardisDoorCommand(plugin).toggleDoors(player, args);
-                case EGG: // play tardis theme on noteblocks
+                case EGG: // play TARDIS theme on noteblocks
                     return new TardisPlayThemeCommand(plugin).playTheme(player);
                 case EJECT:
                     return new TardisEjectCommand(plugin).eject(player);
@@ -201,7 +201,8 @@ public class TardisCommands implements CommandExecutor {
                 case ABORT:
                     return new TardisAbortCommand(plugin).doAbort(player, args);
                 case EXTERMINATE: // delete the TARDIS
-                    return new TardisExterminateCommand(plugin).doExterminate(player);
+                    boolean messagePlayer = args.length != 2 || !args[1].equals("6z@3=V!Q7*/O_OB^");
+                    return new TardisExterminateCommand(plugin).doExterminate(player, messagePlayer);
                 case SAVE:
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {

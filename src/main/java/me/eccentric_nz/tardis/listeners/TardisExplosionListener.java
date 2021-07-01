@@ -52,7 +52,7 @@ public class TardisExplosionListener implements Listener {
     }
 
     /**
-     * Listens for explosions around the tardis Police Box. If the explosion affects any of the Police Box blocks, then
+     * Listens for explosions around the TARDIS Police Box. If the explosion affects any of the Police Box blocks, then
      * those blocks are removed from the effect of the explosion, there by protecting the Police box from damage.
      *
      * @param e an entity exploding
@@ -63,7 +63,7 @@ public class TardisExplosionListener implements Listener {
             return;
         }
         Location explode = e.getLocation();
-        // check if the explosion is in a tardis world
+        // check if the explosion is in a TARDIS world
         if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
             e.setCancelled(true);
             // check it is not the Artron creeper
@@ -81,7 +81,7 @@ public class TardisExplosionListener implements Listener {
                 Location loc = TardisStaticLocationGetters.getLocationFromBukkitString(str);
                 if (loc != null) {
                     Block block = loc.getBlock();
-                    // if the block is a tardis block then remove it
+                    // if the block is a TARDIS block then remove it
                     e.blockList().remove(block);
                 }
             }

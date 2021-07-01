@@ -33,7 +33,7 @@ public final class TardisMaterialisationEvent extends TardisEvent {
     }
 
     /**
-     * Returns the Bukkit Location where the tardis exterior preset will materialise.
+     * Returns the Bukkit Location where the TARDIS exterior preset will materialise.
      *
      * @return the location of the materialisation event
      */

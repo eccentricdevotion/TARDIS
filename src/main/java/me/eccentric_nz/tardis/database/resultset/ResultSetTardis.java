@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the tardis itself.
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -48,7 +48,7 @@ public class ResultSetTardis {
     private Tardis tardis;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the TARDIS table.
      *
      * @param plugin    an instance of the main class.
      * @param where     a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
@@ -66,7 +66,7 @@ public class ResultSetTardis {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
+     * Retrieves an SQL ResultSet from the TARDIS table. This method builds an SQL query string from the parameters
      * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query

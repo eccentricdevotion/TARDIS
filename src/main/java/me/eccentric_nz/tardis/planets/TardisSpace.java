@@ -26,11 +26,8 @@ import me.eccentric_nz.tardis.perms.TardisPermissionsExHandler;
 import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
-
-import java.util.List;
 
 /**
  * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
@@ -106,25 +103,6 @@ public class TardisSpace {
         tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         return tardisWorld;
-    }
-
-    public void keepNight() {
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, this::timechk, 60L, 1200L);
-    }
-
-    private void timechk() {
-        List<World> serverWorlds = plugin.getServer().getWorlds();
-        serverWorlds.forEach((w) -> {
-            if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
-                long now = w.getTime();
-                long dawn = 14000L;
-                long dusk = 21000L;
-                if (now < dawn || now > dusk) {
-                    // set the time to dawn
-                    w.setTime(dawn);
-                }
-            }
-        });
     }
 
     public void createDefaultWorld(String name) {

@@ -27,10 +27,10 @@ import org.bukkit.block.data.Directional;
 public class TardisStairRecalculator {
 
     /**
-     * Recalculate the data for directional block (STAIR) when the tardis preset changes direction.
+     * Recalculate the data for directional block (STAIR) when the TARDIS preset changes direction.
      *
      * @param b    the block data stored in the preset data
-     * @param d    the new direction of the tardis
+     * @param d    the new direction of the TARDIS
      * @param col  the preset column that is being calculated
      * @param duck whether this is the Rubber Duck preset
      * @return the recalculated block data

@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Undefined Storage Holds make up most of a tardis's interior volume. Each Hold has an identifying number.
+ * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold has an identifying number.
  *
  * @author eccentric_nz
  */
@@ -57,15 +57,15 @@ public class TardisFarmer {
     }
 
     /**
-     * Checks whether there are any animals around the tardis Police Box. If mobs are found they are teleported to the
+     * Checks whether there are any animals around the TARDIS Police Box. If mobs are found they are teleported to the
      * 'farm' room (if present), otherwise a spawn egg for the mob type is placed in the player's inventory. Only cows,
      * sheep, pigs, chickens and mooshrooms will be processed.
      * <p>
      * Also allows players to teleport their pets (tamed wolves and Cats) with them.
      *
-     * @param l    The location to check for animals. This will be the current location of the tardis Police Box.
+     * @param l    The location to check for animals. This will be the current location of the TARDIS Police Box.
      * @param d    the direction the Police Box is facing
-     * @param id   The database key of the tardis.
+     * @param id   The database key of the TARDIS.
      * @param p    the player to award achievements or give spawn eggs to
      * @param to   the world to
      * @param from the world from
@@ -87,6 +87,7 @@ public class TardisFarmer {
         List<TardisPet> pets = new ArrayList<>();
         List<TardisFollower> followers = new ArrayList<>();
         if (mobs.size() > 0) {
+            List<TardisAxolotl> axolotls = new ArrayList<>();
             List<TardisHorse> horses = new ArrayList<>();
             List<TardisLlama> llamas = new ArrayList<>();
             List<TardisMob> chickens = new ArrayList<>();
@@ -117,6 +118,7 @@ public class TardisFarmer {
                 String bamboo = farming.getBamboo();
                 String birdcage = farming.getBirdcage();
                 String farm = farming.getFarm();
+                String geode = farming.getGeode();
                 String hutch = farming.getHutch();
                 String igloo = farming.getIgloo();
                 String stable = farming.getStable();
@@ -132,6 +134,20 @@ public class TardisFarmer {
                                     followers.add(follower);
                                     entity.remove();
                                 }
+                            }
+                            break;
+                        case AXOLOTL:
+                            TardisAxolotl tmaxl = new TardisAxolotl();
+                            tmaxl.setAxolotlVariant(((Axolotl) entity).getVariant());
+                            tmaxl.setAge(((Axolotl) entity).getAge());
+                            tmaxl.setBaby(!((Axolotl) entity).isAdult());
+                            tmaxl.setName(entity.getCustomName());
+                            axolotls.add(tmaxl);
+                            if (!geode.isEmpty() || (geode.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAdvancement("AXOLOTL");
                             }
                             break;
                         case BEE:
@@ -419,7 +435,6 @@ public class TardisFarmer {
                             tv.setLevel(v.getVillagerLevel());
                             tv.setVillagerType(v.getVillagerType());
                             tv.setExperience(v.getVillagerExperience());
-                            tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             villagers.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 entity.remove();
@@ -458,9 +473,9 @@ public class TardisFarmer {
                     }
                 }
                 ItemStack fishBucket = p.getInventory().getItemInOffHand();
-                if (fishBucket != null && TardisMaterials.fish_buckets.contains(fishBucket.getType())) {
+                if (fishBucket != null && TardisMaterials.FISH_BUCKETS.contains(fishBucket.getType())) {
                     fish = new TardisFish();
-                    fish.setType(TardisMaterials.fishMap.get(fishBucket.getType()));
+                    fish.setType(TardisMaterials.FISH_MAP.get(fishBucket.getType()));
                     if (fishBucket.getType().equals(Material.TROPICAL_FISH_BUCKET)) {
                         TropicalFishBucketMeta fbim = (TropicalFishBucketMeta) fishBucket.getItemMeta();
                         fish.setColour(fbim.getBodyColor());
@@ -468,7 +483,7 @@ public class TardisFarmer {
                         fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0) {
+                if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0) {
                     boolean canfarm = switch (plugin.getInventoryManager()) {
                         case MULTIVERSE -> TardisMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                         case PER_WORLD -> TardisPerWorldInventoryChecker.checkWorldsCanShare(from, to);
@@ -481,7 +496,7 @@ public class TardisFarmer {
                     }
                 }
                 if (!apiary.isEmpty()) {
-                    // get location of farm room
+                    // get location of apiary room
                     World world = TardisStaticLocationGetters.getWorld(apiary);
                     if (bees.size() > 0) {
                         Location beehive = TardisStaticLocationGetters.getSpawnLocationFromDB(apiary);
@@ -515,7 +530,7 @@ public class TardisFarmer {
                     TardisMessage.send(p, "FARM_APIARY");
                 }
                 if (!aquarium.isEmpty() && fish != null) {
-                    // get location of farm room
+                    // get location of aquarium room
                     World world = TardisStaticLocationGetters.getWorld(aquarium);
                     Location fish_tank = TardisStaticLocationGetters.getSpawnLocationFromDB(aquarium);
                     switch (fish.getType()) {
@@ -701,6 +716,38 @@ public class TardisFarmer {
                 } else if (farmtotal > 0) {
                     TardisMessage.send(p, "FARM");
                 }
+                if (!geode.isEmpty()) {
+                    // get location of geode room
+                    World world = TardisStaticLocationGetters.getWorld(geode);
+                    if (axolotls.size() > 0) {
+                        Location pool = TardisStaticLocationGetters.getSpawnLocationFromDB(geode);
+                        while (!world.getChunkAt(pool).isLoaded()) {
+                            world.getChunkAt(pool).load();
+                        }
+                        axolotls.forEach((x) -> {
+                            plugin.setTardisSpawn(true);
+                            Axolotl axolotl = (Axolotl) world.spawnEntity(pool, EntityType.AXOLOTL);
+                            axolotl.setVariant(x.getAxolotlVariant());
+                            axolotl.setAge(x.getAge());
+                            if (x.isBaby()) {
+                                axolotl.setBaby();
+                            }
+                            String name = x.getName();
+                            if (name != null && !name.isEmpty()) {
+                                axolotl.setCustomName(name);
+                            }
+                            axolotl.setRemoveWhenFarAway(false);
+                        });
+                    }
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && axolotls.size() > 0) {
+                    // give spawn eggs
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.AXOLOTL_SPAWN_EGG, axolotls.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (axolotls.size() > 0) {
+                    TardisMessage.send(p, "FARM_GEODE");
+                }
                 if (!stable.isEmpty() && horses.size() > 0) {
                     // get location of stable room
                     World world = TardisStaticLocationGetters.getWorld(stable);
@@ -866,7 +913,6 @@ public class TardisFarmer {
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
                         }
-                        plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         npc.setRemoveWhenFarAway(false);
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && villagers.size() > 0) {

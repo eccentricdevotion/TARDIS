@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
  * travel to.
  *
  * @author eccentric_nz
@@ -42,7 +42,7 @@ public class ResultSetHidden {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param id     the tardis id to get the hidden status for.
+     * @param id     the TARDIS id to get the hidden status for.
      */
     public ResultSetHidden(TardisPlugin plugin, int id) {
         this.plugin = plugin;
@@ -51,7 +51,7 @@ public class ResultSetHidden {
     }
 
     /**
-     * Retrieves the visibility for the specified tardis.
+     * Retrieves the visibility for the specified TARDIS.
      *
      * @return true if visible, false if hidden.
      */

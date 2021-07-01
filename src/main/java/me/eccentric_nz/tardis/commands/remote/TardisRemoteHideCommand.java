@@ -59,7 +59,7 @@ public class TardisRemoteHideCommand {
         if (sender instanceof Player) {
             olp = (OfflinePlayer) sender;
         } else {
-            // get tardis owner
+            // get TARDIS owner
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);

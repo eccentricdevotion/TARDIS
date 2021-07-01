@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
  * travel to.
  *
  * @author eccentric_nz
@@ -48,7 +48,7 @@ public class ResultSetCompanions {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param id     the tardis id to get the companions for.
+     * @param id     the TARDIS id to get the companions for.
      */
     public ResultSetCompanions(TardisPlugin plugin, int id) {
         this.plugin = plugin;
@@ -57,7 +57,7 @@ public class ResultSetCompanions {
     }
 
     /**
-     * Retrieves list of companion UUIDs from the tardis table.
+     * Retrieves list of companion UUIDs from the TARDIS table.
      *
      * @return a list of companion UUIDs or if none an empty list.
      */
@@ -71,7 +71,7 @@ public class ResultSetCompanions {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                // always add the Time Lord of the tardis
+                // always add the Time Lord of the TARDIS
                 companions.add(UUID.fromString(rs.getString("uuid")));
                 String comps = rs.getString("companions");
                 if (!rs.wasNull() && !comps.isEmpty()) {

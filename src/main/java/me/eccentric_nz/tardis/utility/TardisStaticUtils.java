@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisBiome;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -32,12 +32,13 @@ import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISStaticUtils {
+public class TardisStaticUtils {
 
     private static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
@@ -52,20 +53,12 @@ public class TARDISStaticUtils {
         // get player direction
         String d = p.getFacing().toString();
         if (swap) {
-            switch (p.getFacing()) {
-                case EAST:
-                    d = "WEST";
-                    break;
-                case NORTH:
-                    d = "SOUTH";
-                    break;
-                case WEST:
-                    d = "EAST";
-                    break;
-                default:
-                    d = "NORTH";
-                    break;
-            }
+            d = switch (p.getFacing()) {
+                case EAST -> "WEST";
+                case NORTH -> "SOUTH";
+                case WEST -> "EAST";
+                default -> "NORTH";
+            };
         }
         return d;
     }
@@ -76,22 +69,11 @@ public class TARDISStaticUtils {
      * @param b the biome to check
      * @return true if it is ocean
      */
-    public static boolean isOceanBiome(TARDISBiome b) {
-        switch (b.name()) {
-            case "OCEAN":
-            case "COLD_OCEAN":
-            case "DEEP_COLD_OCEAN":
-            case "DEEP_FROZEN_OCEAN":
-            case "DEEP_LUKEWARM_OCEAN":
-            case "DEEP_OCEAN":
-            case "DEEP_WARM_OCEAN":
-            case "FROZEN_OCEAN":
-            case "LUKEWARM_OCEAN":
-            case "WARM_OCEAN":
-                return true;
-            default:
-                return false;
-        }
+    public static boolean isOceanBiome(TardisBiome b) {
+        return switch (b.name()) {
+            case "OCEAN", "COLD_OCEAN", "DEEP_COLD_OCEAN", "DEEP_FROZEN_OCEAN", "DEEP_LUKEWARM_OCEAN", "DEEP_OCEAN", "DEEP_WARM_OCEAN", "FROZEN_OCEAN", "LUKEWARM_OCEAN", "WARM_OCEAN" -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -161,17 +143,13 @@ public class TARDISStaticUtils {
      * @param d the direction of the Police Box
      * @return the column
      */
-    public static int getCol(COMPASS d) {
-        switch (d) {
-            case NORTH:
-                return 6;
-            case WEST:
-                return 4;
-            case SOUTH:
-                return 2;
-            default:
-                return 0;
-        }
+    public static int getColumn(CardinalDirection d) {
+        return switch (d) {
+            case NORTH -> 6;
+            case WEST -> 4;
+            case SOUTH -> 2;
+            default -> 0;
+        };
     }
 
     /**
@@ -185,7 +163,7 @@ public class TARDISStaticUtils {
     public static void setSign(String loc, int line, String text, Player p) {
         if (!loc.isEmpty()) {
             // get sign block so we can update it
-            Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
+            Location l = TardisStaticLocationGetters.getLocationFromDB(loc);
             if (l != null) {
                 Chunk chunk = l.getChunk();
                 while (!chunk.isLoaded()) {
@@ -197,7 +175,7 @@ public class TARDISStaticUtils {
                     sign.setLine(line, text);
                     sign.update();
                 } else {
-                    TARDISMessage.send(p, "CHAM", " " + text);
+                    TardisMessage.send(p, "CHAM", " " + text);
                 }
             }
         }
@@ -212,7 +190,7 @@ public class TARDISStaticUtils {
     public static String getLastLine(String loc) {
         // get sign block so we can read it
         String str = "";
-        Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
+        Location l = TardisStaticLocationGetters.getLocationFromDB(loc);
         if (l != null) {
             Block cc = l.getBlock();
             if (Tag.SIGNS.isTagged(cc.getType())) {
@@ -224,62 +202,23 @@ public class TARDISStaticUtils {
     }
 
     public static boolean isInfested(Material material) {
-        switch (material) {
-            case INFESTED_CHISELED_STONE_BRICKS:
-            case INFESTED_COBBLESTONE:
-            case INFESTED_CRACKED_STONE_BRICKS:
-            case INFESTED_MOSSY_STONE_BRICKS:
-            case INFESTED_STONE:
-            case INFESTED_STONE_BRICKS:
-                return true;
-            default:
-                return false;
-        }
+        return switch (material) {
+            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS -> true;
+            default -> false;
+        };
     }
 
     public static boolean isBanner(Material material) {
-        switch (material) {
-            case BLACK_BANNER:
-            case BLUE_BANNER:
-            case BROWN_BANNER:
-            case CYAN_BANNER:
-            case GRAY_BANNER:
-            case GREEN_BANNER:
-            case LIGHT_BLUE_BANNER:
-            case LIGHT_GRAY_BANNER:
-            case LIME_BANNER:
-            case MAGENTA_BANNER:
-            case ORANGE_BANNER:
-            case PINK_BANNER:
-            case PURPLE_BANNER:
-            case RED_BANNER:
-            case WHITE_BANNER:
-            case YELLOW_BANNER:
-            case BLACK_WALL_BANNER:
-            case BLUE_WALL_BANNER:
-            case BROWN_WALL_BANNER:
-            case CYAN_WALL_BANNER:
-            case GRAY_WALL_BANNER:
-            case GREEN_WALL_BANNER:
-            case LIGHT_BLUE_WALL_BANNER:
-            case LIGHT_GRAY_WALL_BANNER:
-            case LIME_WALL_BANNER:
-            case MAGENTA_WALL_BANNER:
-            case ORANGE_WALL_BANNER:
-            case PINK_WALL_BANNER:
-            case PURPLE_WALL_BANNER:
-            case RED_WALL_BANNER:
-            case WHITE_WALL_BANNER:
-            case YELLOW_WALL_BANNER:
-                return true;
-            default:
-                return false;
-        }
+        return switch (material) {
+            case BLACK_BANNER, BLUE_BANNER, BROWN_BANNER, CYAN_BANNER, GRAY_BANNER, GREEN_BANNER, LIGHT_BLUE_BANNER, LIGHT_GRAY_BANNER, LIME_BANNER, MAGENTA_BANNER, ORANGE_BANNER, PINK_BANNER, PURPLE_BANNER, RED_BANNER, WHITE_BANNER, YELLOW_BANNER, BLACK_WALL_BANNER, BLUE_WALL_BANNER, BROWN_WALL_BANNER, CYAN_WALL_BANNER, GRAY_WALL_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_WALL_BANNER, MAGENTA_WALL_BANNER, ORANGE_WALL_BANNER, PINK_WALL_BANNER, PURPLE_WALL_BANNER, RED_WALL_BANNER, WHITE_WALL_BANNER, YELLOW_WALL_BANNER -> true;
+            default -> false;
+        };
     }
 
     public static String getNick(UUID uuid) {
         if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
             Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            assert essentials != null;
             User user = essentials.getUser(uuid);
             String prefix = essentials.getSettings().getNicknamePrefix();
             return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
@@ -296,6 +235,7 @@ public class TARDISStaticUtils {
     public static String getNick(Player player) {
         if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
             Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            assert essentials != null;
             User user = essentials.getUser(player.getUniqueId());
             String prefix = essentials.getSettings().getNicknamePrefix();
             return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
@@ -303,7 +243,7 @@ public class TARDISStaticUtils {
         return player.getName();
     }
 
-    public static UUID getZERO_UUID() {
+    public static UUID getZeroUuid() {
         return ZERO_UUID;
     }
 
@@ -318,16 +258,10 @@ public class TARDISStaticUtils {
     }
 
     public static boolean isMusicDisk(ItemStack is) {
-        switch (is.getType()) {
-            case MUSIC_DISC_BLOCKS:
-            case MUSIC_DISC_CAT:
-            case MUSIC_DISC_CHIRP:
-            case MUSIC_DISC_MALL:
-            case MUSIC_DISC_WAIT:
-                return true;
-            default:
-                return false;
-        }
+        return switch (is.getType()) {
+            case MUSIC_DISC_BLOCKS, MUSIC_DISC_CAT, MUSIC_DISC_CHIRP, MUSIC_DISC_MALL, MUSIC_DISC_WAIT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -342,8 +276,8 @@ public class TARDISStaticUtils {
      */
     public static List<Chunk> getChunks(World w, int x, int z, int wid, int len) {
         List<Chunk> chunks = new ArrayList<>();
-        int cw = TARDISNumberParsers.roundUp(wid, 16);
-        int cl = TARDISNumberParsers.roundUp(len, 16);
+        int cw = TardisNumberParsers.roundUp(wid, 16);
+        int cl = TardisNumberParsers.roundUp(len, 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
@@ -360,13 +294,13 @@ public class TARDISStaticUtils {
      * @param location the location to get the biome of
      * @return the biome at the location
      */
-    public static TARDISBiome getBiomeAt(Location location) {
+    public static TardisBiome getBiomeAt(Location location) {
         // get biome
-        String biomeKey = TARDIS.plugin.getTardisHelper().getBiomeKey(location);
+        String biomeKey = TardisPlugin.plugin.getTardisHelper().getBiomeKey(location);
         // convert to TARDISBiome
         String[] split = biomeKey.split(":");
         NamespacedKey key = new NamespacedKey(split[0], split[1]);
-        return TARDISBiome.of(key);
+        return TardisBiome.of(key);
     }
 
     /**
@@ -376,7 +310,7 @@ public class TARDISStaticUtils {
      */
     public static OfflinePlayer getOfflinePlayer(String name) {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (player.getName().equals(name)) {
+            if (Objects.equals(player.getName(), name)) {
                 return player;
             }
         }

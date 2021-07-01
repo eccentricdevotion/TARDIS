@@ -43,7 +43,7 @@ import java.util.Objects;
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
  * <p>
- * The tardis had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
  * many incarnations' travels.
  *
  * @author eccentric_nz
@@ -57,7 +57,7 @@ public class TardisBlockPlaceListener implements Listener {
     }
 
     /**
-     * Listens for a player placing a block. If the player places a brown mushroom block with a tardis namespaced key,
+     * Listens for a player placing a block. If the player places a brown mushroom block with a TARDIS namespaced key,
      * then convert it to one of the unused brown mushroom block states.
      *
      * @param event a player placing a block

@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class TardisAliasResolver {
 
-    private static final HashMap<String, TardisPlanet> planets = new HashMap<>();
+    private static final HashMap<String, TardisPlanet> PLANETS = new HashMap<>();
 
     public static String getWorldAlias(World world) {
         return getWorldAlias(world.getName());
@@ -40,7 +40,7 @@ public class TardisAliasResolver {
         if (world != null) {
             return world;
         } else {
-            for (TardisPlanet planet : planets.values()) {
+            for (TardisPlanet planet : PLANETS.values()) {
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getWorld();
                 }
@@ -54,7 +54,7 @@ public class TardisAliasResolver {
         if (world != null) {
             return alias;
         } else {
-            for (TardisPlanet planet : planets.values()) {
+            for (TardisPlanet planet : PLANETS.values()) {
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getName();
                 }
@@ -73,15 +73,15 @@ public class TardisAliasResolver {
                 tp.setName(s);
                 tp.setWorld(world);
                 if (!alias.isEmpty()) {
-                    planets.put(alias, tp);
+                    PLANETS.put(alias, tp);
                 } else {
-                    planets.put(s, tp);
+                    PLANETS.put(s, tp);
                 }
             }
         }
     }
 
     public static HashMap<String, TardisPlanet> getPlanets() {
-        return planets;
+        return PLANETS;
     }
 }

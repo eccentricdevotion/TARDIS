@@ -35,7 +35,7 @@ public class TardisWeatherInventory {
     }
 
     /**
-     * Constructs an inventory for the tardis Weather GUI.
+     * Constructs an inventory for the TARDIS Weather GUI.
      *
      * @return an Array of itemStacks (an inventory)
      */

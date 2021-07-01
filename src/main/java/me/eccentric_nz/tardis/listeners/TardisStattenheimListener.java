@@ -57,8 +57,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 /**
- * The handheld Recall Button on the tardis Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
- * summons the operator's tardis when the operator is in the field.
+ * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
+ * summons the operator's TARDIS when the operator is in the field.
  *
  * @author eccentric_nz
  */
@@ -72,9 +72,9 @@ public class TardisStattenheimListener implements Listener {
         this.plugin = plugin;
         // add useless blocks
         useless.add(Material.SNOW);
-        useless.addAll(TardisMaterials.carpet);
-        useless.addAll(TardisMaterials.plants);
-        useless.addAll(TardisMaterials.saplings);
+        useless.addAll(TardisMaterials.CARPET);
+        useless.addAll(TardisMaterials.PLANTS);
+        useless.addAll(TardisMaterials.SAPLINGS);
         remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 
@@ -105,7 +105,7 @@ public class TardisStattenheimListener implements Listener {
                     TardisMessage.send(player, "SIEGE_NO_CONTROL");
                     return;
                 }
-                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                if (plugin.getTrackerKeeper().getDispersedTardises().contains(id)) {
                     TardisMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                     return;
                 }
@@ -337,8 +337,8 @@ public class TardisStattenheimListener implements Listener {
                             new TardisBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
-                        if (preset.equals(Preset.ADAPTIVE)) {
-                            new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
+                        if (preset.equals(Preset.ADAPTIVE) || preset.usesItemFrame()) {
+                            new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     }

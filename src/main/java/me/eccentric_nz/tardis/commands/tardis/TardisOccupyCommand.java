@@ -45,7 +45,7 @@ class TardisOccupyCommand {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
             if (rst.resultSet()) {
-                // only if they're not in the tardis world
+                // only if they're not in the TARDIS world
                 if (!plugin.getUtils().inTardisWorld(player)) {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("uuid", player.getUniqueId().toString());

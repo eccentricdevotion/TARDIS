@@ -41,12 +41,12 @@ class TardisEjectCommand {
             TardisMessage.send(player, "NO_PERMS");
             return true;
         }
-        // check they are still in the tardis world
+        // check they are still in the TARDIS world
         if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "CMD_IN_WORLD");
             return true;
         }
-        // must have a tardis
+        // must have a TARDIS
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUuid(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");
@@ -61,7 +61,7 @@ class TardisEjectCommand {
             return false;
         }
         int thisid = rst.getTardisId();
-        // must be timelord of the tardis
+        // must be timelord of the TARDIS
         if (thisid != ownerid) {
             TardisMessage.send(player, "CMD_ONLY_TL");
             return false;

@@ -18,8 +18,10 @@ package me.eccentric_nz.tardis.travel;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
@@ -39,8 +41,8 @@ public class TardisBiomeFinder {
         this.plugin = plugin;
     }
 
-    public void run(World w, Biome biome, Player player, int id, CardinalDirection direction) {
-        Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
+    public void run(World w, Biome biome, Player player, int id, CardinalDirection direction, Location current) {
+        Location tb = plugin.getTardisHelper().searchBiome(w, biome, player, current);
         // cancel biome finder
         if (tb == null) {
             TardisMessage.send(player, "BIOME_NOT_FOUND");
@@ -59,9 +61,7 @@ public class TardisBiomeFinder {
         // check location
         while (true) {
             assert bw != null;
-            if (bw.getChunkAt(tb).isLoaded()) {
-                break;
-            }
+            if (bw.getChunkAt(tb).isLoaded()) break;
             bw.getChunkAt(tb).load();
         }
         int highest = tb.getWorld().getHighestBlockYAt(tb);
@@ -89,10 +89,11 @@ public class TardisBiomeFinder {
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
         TardisMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.BIOME));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TardisLand(plugin, id, player).exitVortex();
+            plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, TravelType.BIOME, id));
         }
     }
 

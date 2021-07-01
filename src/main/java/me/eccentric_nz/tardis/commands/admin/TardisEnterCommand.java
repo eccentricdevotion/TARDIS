@@ -111,11 +111,11 @@ class TardisEnterCommand {
                         tardis_loc.setZ(getz + 0.5);
                     }
                 }
-                // if WorldGuard is on the server check for tardis region protection and add admin as member
+                // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
                 }
-                // enter tardis!
+                // enter TARDIS!
                 cw.getChunkAt(tardis_loc).load();
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
@@ -132,7 +132,7 @@ class TardisEnterCommand {
                 }
                 tardis_loc.setYaw(yaw);
                 World playerWorld = player.getLocation().getWorld();
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true, false);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);

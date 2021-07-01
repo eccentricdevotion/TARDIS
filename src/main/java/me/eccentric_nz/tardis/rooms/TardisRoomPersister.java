@@ -112,7 +112,7 @@ public class TardisRoomPersister {
                     List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
                     rd.setPostBlocks(postBlocks);
                     long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-                    // get the player whose tardis this is
+                    // get the player whose TARDIS this is
                     ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
                     if (rst.fromID(id)) {
                         Player player = plugin.getServer().getPlayer(rst.getUuid());

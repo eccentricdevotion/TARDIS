@@ -45,7 +45,7 @@ public enum BiomeLookup {
     LILY_PAD_B("SWAMP", "SWAMP_HILLS"),
     BAMBOO_B("BAMBOO_JUNGLE", "BAMBOO_JUNGLE_HILLS");
 
-    public final static Map<String, BiomeLookup> BY_REG = Maps.newHashMap();
+    public static final Map<String, BiomeLookup> BY_REG = Maps.newHashMap();
 
     static {
         for (BiomeLookup bm : values()) {

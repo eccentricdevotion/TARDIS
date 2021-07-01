@@ -187,7 +187,7 @@ class TardisThemeProcessor {
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
-        // update tardis
+        // update TARDIS
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
         HashMap<String, Object> wheret = new HashMap<>();
@@ -217,7 +217,7 @@ class TardisThemeProcessor {
         long initial_delay = (hasLava) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, initial_delay, delay);
-        ttr.setTaskID(task);
+        ttr.setTaskId(task);
     }
 
     private boolean checkArsGrid(ConsoleSize prev, ConsoleSize next, UUID uuid) {

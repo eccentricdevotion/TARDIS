@@ -103,7 +103,7 @@ public class TardisExteriorRenderer {
                 xx = 0;
                 yy++;
             }
-            // render a glass tardis
+            // render a glass TARDIS
             // get relative locations
             int x = location.getBlockX();
             int plusx = (location.getBlockX() + 1);

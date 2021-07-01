@@ -80,7 +80,7 @@ public class TardisChameleonConstructorListener extends TardisMenuListener imple
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
      * accordingly.
      *
      * @param event a player clicking an inventory slot
@@ -97,7 +97,7 @@ public class TardisChameleonConstructorListener extends TardisMenuListener imple
                 event.setCancelled(true);
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
-                    // get the tardis the player is in
+                    // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -161,7 +161,7 @@ public class TardisChameleonConstructorListener extends TardisMenuListener imple
                                             ItemStack d = view.getItem(s + c);
                                             if (d != null) {
                                                 Material type = d.getType();
-                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TardisMaterials.precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
+                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TardisMaterials.PRECIOUS.contains(type)) || Tag.CARPETS.isTagged(type)) {
                                                     TardisMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);
@@ -310,7 +310,7 @@ public class TardisChameleonConstructorListener extends TardisMenuListener imple
     }
 
     private void buildConstruct(String preset, int id, Player player) {
-        // update tardis table
+        // update TARDIS table
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
         sett.put("chameleon_demat", preset);

@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * The tardis scanner was the main method for the occupants of the vessel to observe the outside environment. The
+ * The TARDIS scanner was the main method for the occupants of the vessel to observe the outside environment. The
  * appearance and specifications of the scanner system varied significantly in the course of the Doctor's travels.
  *
  * @author eccentric_nz
@@ -56,8 +56,8 @@ class TardisLampsCommand {
     /**
      * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
      *
-     * @param owner the Timelord of the tardis
-     * @return true if the tardis has not been updated, otherwise false
+     * @param owner the Timelord of the TARDIS
+     * @return true if the TARDIS has not been updated, otherwise false
      */
 
     boolean addLampBlocks(Player owner) {
@@ -82,7 +82,7 @@ class TardisLampsCommand {
                 wheredel.put("tardis_id", id);
                 plugin.getQueryFactory().doDelete("lamps", wheredel);
             }
-            // get the tardis console chunks
+            // get the TARDIS console chunks
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);

@@ -150,6 +150,12 @@ rooms:
     offset: -4
     seed: ACACIA_LOG
     user: false
+  GEODE:
+    enabled: true
+    cost: 650
+    offset: -4
+    seed: AMETHYST_BLOCK
+    user: false
   IGLOO:
     enabled: true
     cost: 650

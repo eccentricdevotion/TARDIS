@@ -31,6 +31,12 @@ public final class TardisChameleonArchEvent extends Event {
     private final Player player;
     private final TardisWatchData tardisWatchData;
 
+    /**
+     * A TARDIS Chameleon Arch event.
+     *
+     * @param player          the player who is using the Chameleon Arch
+     * @param tardisWatchData the data involved in the event
+     */
     public TardisChameleonArchEvent(Player player, TardisWatchData tardisWatchData) {
         this.player = player;
         this.tardisWatchData = tardisWatchData;
@@ -50,7 +56,7 @@ public final class TardisChameleonArchEvent extends Event {
     }
 
     /**
-     * Returns the Chameleon Arch {@link TardisWatchData} object. This
+     * Returns the Chameleon Arch {@link me.eccentric_nz.tardis.arch.TardisWatchData} object. This
      * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
      *
      * @return the TardisWatchData object

@@ -37,7 +37,7 @@ public class TardisVoidFall {
     }
 
     public void teleport(Player p) {
-        // get tardis player was in
+        // get TARDIS player was in
         int id = plugin.getTardisApi().getIdOfTardisPlayerIsIn(p);
         // get inner door location
         HashMap<String, Object> wherei = new HashMap<>();
@@ -74,7 +74,7 @@ public class TardisVoidFall {
                     tardis_loc.setZ(getz + 0.5);
                 }
             }
-            // enter tardis!
+            // enter TARDIS!
             cw.getChunkAt(tardis_loc).load();
             float yaw = p.getLocation().getYaw();
             float pitch = p.getLocation().getPitch();
@@ -82,7 +82,7 @@ public class TardisVoidFall {
             tardis_loc.setYaw(yaw);
             World playerWorld = p.getLocation().getWorld();
             p.setFallDistance(0.0f);
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true);
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true, false);
         } else {
             p.setHealth(0);
         }

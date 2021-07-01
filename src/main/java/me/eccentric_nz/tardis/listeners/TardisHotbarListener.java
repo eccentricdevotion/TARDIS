@@ -59,7 +59,7 @@ public class TardisHotbarListener implements Listener {
                     is.setItemMeta(im);
                 }
                 if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("tardis Locator")) {
-                    // get tardis location
+                    // get TARDIS location
                     ResultSetTardisId rs = new ResultSetTardisId(plugin);
                     if (rs.fromUuid(player.getUniqueId().toString())) {
                         HashMap<String, Object> wherecl = new HashMap<>();

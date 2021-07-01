@@ -18,6 +18,7 @@ package me.eccentric_nz.tardis.travel;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.api.event.TardisTravelEvent;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -25,6 +26,7 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.TravelType;
 import me.eccentric_nz.tardis.flight.TardisLand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
@@ -56,7 +58,7 @@ public class TardisRescue {
      *
      * @param player  The Time Lord
      * @param saved   The player to be rescued
-     * @param id      The tardis unique ID
+     * @param id      The TARDIS unique ID
      * @param d       the direction the Police Box is facing
      * @param rescue  whether to rescue the player
      * @param request whether this is a travel to player request
@@ -97,13 +99,15 @@ public class TardisRescue {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, where);
+        TravelType travelType = (rescue) ? TravelType.RESCUE : TravelType.PLAYER;
         if (!rescue) {
             TardisMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 new TardisLand(plugin, id, player).exitVortex();
+                plugin.getPluginManager().callEvent(new TardisTravelEvent(player, null, travelType, id));
             }
         }
-        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
         if (rescue) {
             plugin.getTrackerKeeper().getRescue().put(id, saved);
         }
@@ -141,8 +145,8 @@ public class TardisRescue {
                 TardisMessage.send(player, "NOT_IN_TARDIS");
                 return new RescueData(false, 0);
             }
-            int tardisId = rst.getTardisId();
-            if (tardisId != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
+            int tardis_id = rst.getTardisId();
+            if (tardis_id != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
                 TardisMessage.send(player, "CMD_ONLY_TL");
                 return new RescueData(false, 0);
             }

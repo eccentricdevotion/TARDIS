@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
  * travel to.
  *
  * @author eccentric_nz
@@ -50,7 +50,7 @@ public class ResultSetDoorBlocks {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
      *
      * @param plugin an instance of the main class.
-     * @param id     the tardis id to get the doors for.
+     * @param id     the TARDIS id to get the doors for.
      */
     public ResultSetDoorBlocks(TardisPlugin plugin, int id) {
         this.plugin = plugin;

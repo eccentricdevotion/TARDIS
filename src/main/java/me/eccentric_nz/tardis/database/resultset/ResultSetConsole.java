@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis Police Box
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
  * blocks.
  *
  * @author eccentric_nz
@@ -61,7 +61,7 @@ public class ResultSetConsole {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis, current and controls tables. This method builds an SQL query string
+     * Retrieves an SQL ResultSet from the TARDIS, current and controls tables. This method builds an SQL query string
      * from the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
@@ -114,7 +114,7 @@ public class ResultSetConsole {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis, current and controls tables. This method builds an SQL query string
+     * Retrieves an SQL ResultSet from the TARDIS, current and controls tables. This method builds an SQL query string
      * from the parameters supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query

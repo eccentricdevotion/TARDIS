@@ -43,7 +43,7 @@ public class TardisMySqlDatabase {
     }
 
     /**
-     * Creates the tardis default tables in the database.
+     * Creates the TARDIS default tables in the database.
      */
     public void createTables() {
         service.setIsMySQL(true);

@@ -151,11 +151,11 @@ public class TardisDisguise {
         }
         try {
             String entityPackage = packagePath + ((hasEntityString) ? "Entity" : "") + string;
-            Class entityClass = Class.forName(entityPackage);
-            Constructor constructor = entityClass.getConstructor(EntityTypes.class, net.minecraft.world.level.World.class);
-            EntityTypes type = IRegistry.Y.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
+            Class<? extends net.minecraft.world.entity.Entity> entityClass = (Class<? extends net.minecraft.world.entity.Entity>) Class.forName(entityPackage);
+            Constructor<? extends net.minecraft.world.entity.Entity> constructor = entityClass.getConstructor(EntityTypes.class, net.minecraft.world.level.World.class);
+            EntityTypes<? extends net.minecraft.world.entity.Entity> type = IRegistry.Y.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
             net.minecraft.world.level.World world = ((CraftWorld) w).getHandle();
-            net.minecraft.world.entity.Entity entity = (net.minecraft.world.entity.Entity) constructor.newInstance(type, world);
+            net.minecraft.world.entity.Entity entity = constructor.newInstance(type, world);
             if (disguise.getOptions() != null) {
                 for (Object object : disguise.getOptions()) {
                     if (object instanceof DyeColor) {

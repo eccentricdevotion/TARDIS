@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -29,19 +29,19 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISPlayerCountCommand {
+class TardisPlayerCountCommand {
 
-    private final TARDIS plugin;
+    private final TardisPlugin plugin;
 
-    TARDISPlayerCountCommand(TARDIS plugin) {
+    TardisPlayerCountCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean countPlayers(CommandSender sender, String[] args) {
         int max_count = plugin.getConfig().getInt("creation.count");
-        OfflinePlayer player = TARDISStaticUtils.getOfflinePlayer(args[1]);
+        OfflinePlayer player = TardisStaticUtils.getOfflinePlayer(args[1]);
         if (player == null) {
-            TARDISMessage.send(sender, "PLAYER_NOT_VALID");
+            TardisMessage.send(sender, "PLAYER_NOT_VALID");
             return true;
         }
         String uuid = player.getUniqueId().toString();
@@ -49,19 +49,19 @@ class TARDISPlayerCountCommand {
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = TARDISNumberParsers.parseInt(args[2]);
+                int count = TardisNumberParsers.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
                 plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
-                TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
+                TardisMessage.send(sender, "COUNT_SET", args[1], count, max_count);
             } else {
                 // display count
-                TARDISMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
+                TardisMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
             }
         } else {
-            TARDISMessage.send(sender, "COUNT_NOT_FOUND");
+            TardisMessage.send(sender, "COUNT_NOT_FOUND");
         }
         return true;
     }

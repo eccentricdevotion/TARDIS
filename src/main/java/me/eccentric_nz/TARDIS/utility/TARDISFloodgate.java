@@ -1,11 +1,11 @@
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import org.bukkit.Bukkit;
 import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.util.UUID;
 
-public class TARDISFloodgate {
+public class TardisFloodgate {
 
     public static boolean isBedrockPlayer(UUID uuid) {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);

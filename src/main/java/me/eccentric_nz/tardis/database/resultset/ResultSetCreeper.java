@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the location of the tardis doors in
+ * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS doors in
  * their different dimensions.
  *
  * @author eccentric_nz
@@ -39,7 +39,7 @@ public class ResultSetCreeper {
     private final String prefix;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the TARDIS table.
      *
      * @param plugin   an instance of the main class.
      * @param location the location to check for.
@@ -51,7 +51,7 @@ public class ResultSetCreeper {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
+     * Retrieves an SQL ResultSet from the TARDIS table. This method builds an SQL query string from the parameters
      * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query

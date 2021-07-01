@@ -64,7 +64,7 @@ public class TardisSonicListener implements Listener {
         diamond.add(Material.IRON_BARS);
         diamond.add(Material.SNOW);
         diamond.add(Material.SNOW_BLOCK);
-        diamond.addAll(TardisMaterials.glass);
+        diamond.addAll(TardisMaterials.GLASS);
         doors.add(Material.ACACIA_DOOR);
         doors.add(Material.ACACIA_TRAPDOOR);
         doors.add(Material.BIRCH_DOOR);
@@ -154,7 +154,7 @@ public class TardisSonicListener implements Listener {
                     Block block = event.getClickedBlock();
                     assert block != null;
                     if (doors.contains(block.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        // display tardis info
+                        // display TARDIS info
                         TardisSonicAdmin.displayInfo(plugin, player, block);
                     }
                     if (Tag.WALL_SIGNS.isTagged(block.getType()) && TardisPermission.hasPermission(player, "tardis.atmospheric")) {

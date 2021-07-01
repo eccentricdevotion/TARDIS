@@ -98,6 +98,7 @@ public class TardisConfigCommand implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
+        firstsBool.put("enable_dynmap", "preferences");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
@@ -114,6 +115,7 @@ public class TardisConfigCommand implements CommandExecutor {
         firstsBool.put("nether", "travel");
         firstsBool.put("no_coords", "preferences");
         firstsBool.put("no_creative_condense", "preferences");
+        firstsBool.put("no_enchanted_condense", "preferences");
         firstsBool.put("open_door_policy", "preferences");
         firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
@@ -239,6 +241,9 @@ public class TardisConfigCommand implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
+                }
+                if (first.equals("include") || first.equals("exclude")) {
+                    return new TardisSetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
                 }
                 if (first.equals("siege")) {
                     return new TardisSiegeCommand(plugin).setOption(sender, args);

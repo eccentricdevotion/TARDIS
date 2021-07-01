@@ -74,16 +74,7 @@ class TardisConstructCommand {
             set.put("asymmetric", rscs.isAsymmetric() ? 0 : 1);
         } else {
             int l = TardisNumberParsers.parseInt(args[1]);
-            // concat line
-            StringBuilder sb = new StringBuilder();
-            for (int i = 2; i < args.length; i++) {
-                if (i != 2) {
-                    sb.append(" ").append(args[i]);
-                } else {
-                    sb.append(args[i]);
-                }
-            }
-            String raw = ChatColor.translateAlternateColorCodes('&', sb.toString());
+            String raw = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
             // strip color codes and check length
             if (ChatColor.stripColor(raw).length() > 16) {
                 TardisMessage.send(player, "CONSTRUCT_LINE_LEN");

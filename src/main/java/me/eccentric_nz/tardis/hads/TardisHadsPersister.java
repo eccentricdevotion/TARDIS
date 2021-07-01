@@ -96,7 +96,7 @@ public class TardisHadsPersister {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
                     plugin.getTrackerKeeper().getDispersed().put(uuid, l);
-                    plugin.getTrackerKeeper().getDispersedTARDII().add(rs.getInt("tardis_id"));
+                    plugin.getTrackerKeeper().getDispersedTardises().add(rs.getInt("tardis_id"));
                     count++;
                 }
             }

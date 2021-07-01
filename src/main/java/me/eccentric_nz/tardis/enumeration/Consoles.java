@@ -28,10 +28,10 @@ import java.util.TreeMap;
  */
 public class Consoles {
 
-    private final static TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
-    private final static HashMap<String, Schematic> BY_PERMS = new HashMap<>();
-    private final static HashMap<String, Schematic> BY_MATERIALS = new HashMap<>();
-    private final static List<Schematic> NO_BEACON = new ArrayList<>();
+    private static final TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
+    private static final HashMap<String, Schematic> BY_PERMS = new HashMap<>();
+    private static final HashMap<String, Schematic> BY_MATERIALS = new HashMap<>();
+    private static final List<Schematic> NO_BEACON = new ArrayList<>();
 
     /**
      * Attempts to get the Schematic with the given name.
@@ -71,15 +71,15 @@ public class Consoles {
         BY_MATERIALS.put("BONE_BLOCK", archive);
     }
 
-    public static TreeMap<String, Schematic> getBY_NAMES() {
+    public static TreeMap<String, Schematic> getByNames() {
         return BY_NAMES;
     }
 
-    public static HashMap<String, Schematic> getBY_MATERIALS() {
+    public static HashMap<String, Schematic> getByMaterials() {
         return BY_MATERIALS;
     }
 
-    public static List<Schematic> getNO_BEACON() {
+    public static List<Schematic> getNoBeacon() {
         return NO_BEACON;
     }
 }

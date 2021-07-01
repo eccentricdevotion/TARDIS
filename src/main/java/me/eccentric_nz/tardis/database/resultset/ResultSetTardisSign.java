@@ -28,7 +28,7 @@ import java.util.UUID;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the tardis itself.
+ * the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -50,7 +50,7 @@ public class ResultSetTardisSign {
     private int which;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table, for use with the
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the TARDIS table, for use with the
      * Sign Listener.
      *
      * @param plugin an instance of the main class.
@@ -63,7 +63,7 @@ public class ResultSetTardisSign {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
+     * Retrieves an SQL ResultSet from TARDIS table. This method builds an SQL query string from the parameters
      * supplied and then executes the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether a record matches the query

@@ -41,19 +41,19 @@ public class TardisPowerButton {
     private final Preset preset;
     private final boolean powered;
     private final boolean hidden;
-    private final boolean lightsOn;
+    private final boolean lights;
     private final Location loc;
     private final int level;
     private final boolean lanterns;
 
-    public TardisPowerButton(TardisPlugin plugin, int id, Player player, Preset preset, boolean powered, boolean hidden, boolean lightsOn, Location loc, int level, boolean lanterns) {
+    public TardisPowerButton(TardisPlugin plugin, int id, Player player, Preset preset, boolean powered, boolean hidden, boolean lights, Location loc, int level, boolean lanterns) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
         this.preset = preset;
         this.powered = powered;
         this.hidden = hidden;
-        this.lightsOn = lightsOn;
+        this.lights = lights;
         this.loc = loc;
         this.level = level;
         this.lanterns = lanterns;
@@ -82,11 +82,11 @@ public class TardisPowerButton {
                 delay = 20L;
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
-            if (isAdaptive) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+            if (isAdaptive || preset.usesItemFrame()) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
             }
             // if lights are on, turn them off
-            if (lightsOn) {
+            if (lights) {
                 new TardisLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
             }
             // if beacon is on turn it off
@@ -107,7 +107,7 @@ public class TardisPowerButton {
             setp.put("powered_on", 1);
             TardisMessage.send(player, "POWER_ON");
             // if lights are off, turn them on
-            if (lightsOn) {
+            if (lights) {
                 new TardisLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
             }
             // determine beacon prefs
@@ -121,8 +121,8 @@ public class TardisPowerButton {
                 new TardisBeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
-            if (isAdaptive) {
-                new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
+            if (isAdaptive || preset.usesItemFrame()) {
+                new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
             }
         }
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

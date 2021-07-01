@@ -44,7 +44,7 @@ public class TardisRecipeListener implements Listener {
         InventoryType type = top.getType();
         if (type == InventoryType.CHEST) {
             Player player = (Player) event.getWhoClicked();
-            if (plugin.getTrackerKeeper().getRecipeView().contains(player.getUniqueId())) {
+            if (plugin.getTrackerKeeper().getRecipeViewers().contains(player.getUniqueId())) {
                 event.setCancelled(true);
             }
         }
@@ -57,8 +57,8 @@ public class TardisRecipeListener implements Listener {
         if (type == InventoryType.CHEST) {
             Player p = (Player) event.getPlayer();
             UUID uuid = p.getUniqueId();
-            if (plugin.getTrackerKeeper().getRecipeView().contains(uuid)) {
-                plugin.getTrackerKeeper().getRecipeView().remove(uuid);
+            if (plugin.getTrackerKeeper().getRecipeViewers().contains(uuid)) {
+                plugin.getTrackerKeeper().getRecipeViewers().remove(uuid);
                 event.getView().getTopInventory().clear();
                 p.updateInventory();
             }

@@ -33,7 +33,7 @@ public class TardisLlama extends TardisHorse {
     private ItemStack decor;
 
     /**
-     * Data storage class for tardis Llama.
+     * Data storage class for TARDIS Llama.
      */
     public TardisLlama() {
     }

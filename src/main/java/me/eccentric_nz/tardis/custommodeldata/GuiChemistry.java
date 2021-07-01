@@ -21,7 +21,7 @@ import org.bukkit.Material;
 
 public enum GuiChemistry {
 
-    // tardis Areas
+    // TARDIS Areas
     CLOSE(1, 1, Material.BOWL),
     INFO(57, 1, Material.BOWL),
     CHECK(89, 1, Material.BOWL),

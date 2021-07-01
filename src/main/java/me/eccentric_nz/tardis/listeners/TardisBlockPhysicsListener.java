@@ -55,14 +55,14 @@ public class TardisBlockPhysicsListener implements Listener {
             if (state instanceof TrapDoor) {
                 Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
                 if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TardisMaterials.stained_glass.contains(blockBehind.getType())) {
+                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TardisMaterials.STAINED_GLASS.contains(blockBehind.getType())) {
                         event.setCancelled(true);
                     }
                 }
             }
             if (state instanceof Door) {
                 Block blockBelow = getBlockBelow(block);
-                if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TardisMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TardisMaterials.STAINED_GLASS.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                     event.setCancelled(true);
                 }
             }

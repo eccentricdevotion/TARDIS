@@ -55,7 +55,6 @@ public class TardisSeedMenuListener extends TardisMenuListener implements Listen
                 if (is != null) {
                     // close
                     event.setCancelled(true);
-                    close(p);
                     if (slot != 26) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             ItemStack[] recipe = new TardisSeedRecipeInventory(plugin, is.getType()).getMenu();
