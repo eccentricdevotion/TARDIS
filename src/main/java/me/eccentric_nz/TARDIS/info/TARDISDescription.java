@@ -111,7 +111,7 @@ public enum TARDISDescription {
     CORAL("The 10th Doctor's TARDIS - console design by vistaero."),
     DELTA("A Nether Delta TARDIS."),
     CAVE("A dripstone cave TARDIS."),
-    WEATHERED("A weather copper TARDIS."),
+    WEATHERED("A weathered copper TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),
     AQUARIUM("Tanks for your fish."),
@@ -142,156 +142,157 @@ public enum TARDISDescription {
     ALT_CONTROLS("Please refer to the Advanced Console, the Save Sign,  the Keyboard, the Destination Terminal and the travel commands."),
     MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunction happening that deposits the TARDIS in an unexpected location."),
     CONSOLE_ARS("""
-         INFO: The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS
-        USAGE: Right-click.
-        UPDATING: /tardis update ARS
-        BLOCK: SIGN"""),
+            INFO: The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS
+            USAGE: Right-click.
+            UPDATING: /tardis update ARS
+            BLOCK: SIGN"""),
     ADVANCED("""
-        The TARDIS Advanced Console is the TARDISes control centre, it enables TARDIS Circuits and processes location Storage Disks.
-        USAGE: Right-click.
-        UPDATING: /tardis update advanced
-        BLOCK: JUKEBOX"""),
+            The TARDIS Advanced Console is the TARDISes control centre, it enables TARDIS Circuits and processes location Storage Disks.
+            USAGE: Right-click.
+            UPDATING: /tardis update advanced
+            BLOCK: JUKEBOX"""),
     ARTRON("""
-         INFO: When pressed, it performs various Artron Energy functions.
-        USAGE: Right-click with the TARDIS key to initialise the Artron Energy Capacitor.
-        USAGE: Right-click while sneaking to transfer Time Lord energy.
-        USAGE: Right-click with the full charge item (default: NETHER_STAR) to boost the Artron Energy Capacitor to 100%.
-        USAGE: Right-click with any item other than the TARDIS key to view the reserve percentage.
-        UPDATING: /tardis update artron
-        BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
+            INFO: When pressed, it performs various Artron Energy functions.
+            USAGE: Right-click with the TARDIS key to initialise the Artron Energy Capacitor.
+            USAGE: Right-click while sneaking to transfer Time Lord energy.
+            USAGE: Right-click with the full charge item (default: NETHER_STAR) to boost the Artron Energy Capacitor to 100%.
+            USAGE: Right-click with any item other than the TARDIS key to view the reserve percentage.
+            USAGE: Left-click while sneaking with the TARDIS key to respawn the charged Creeper.
+            UPDATING: /tardis update artron
+            BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
     BACKDOOR("""
-         INFO: The backdoor allows an extra point of entry/exit in the TARDIS
-        USAGE: Place an IRON_DOOR inside the TARDIS and another IRON_DOOR outside the TARDIS. Right-click to enter/exit.
-        UPDATING: /tardis update backdoor (on both IRON_DOORs)
-        BLOCK: IRON_DOOR"""),
+            INFO: The backdoor allows an extra point of entry/exit in the TARDIS
+            USAGE: Place an IRON_DOOR inside the TARDIS and another IRON_DOOR outside the TARDIS. Right-click to enter/exit.
+            UPDATING: /tardis update backdoor (on both IRON_DOORs)
+            BLOCK: IRON_DOOR"""),
     BUTTON("""
-         INFO: The button calculates a random destination to travel to based on the coordinate repeaters.
-        USAGE: Right-click.
-        UPDATING: /tardis update button
-        BLOCK: LEVER, STONE_BUTTON or WOODEN_BUTTON"""),
+            INFO: The button calculates a random destination to travel to based on the coordinate repeaters.
+            USAGE: Right-click.
+            UPDATING: /tardis update button
+            BLOCK: LEVER, STONE_BUTTON or WOODEN_BUTTON"""),
     CHAMELEON("""
-         INFO: The Chameleon sign allows the Chameleon Circuit to be turned on or off, and for presets to be selected. The Chameleon Circuit makes the TARDIS exterior become the block it lands on.
-        USAGE: Right-click the sign.
-        UPDATING: /tardis update chameleon
-        BLOCK: SIGN"""),
+            INFO: The Chameleon sign allows the Chameleon Circuit to be turned on or off, and for presets to be selected. The Chameleon Circuit makes the TARDIS exterior become the block it lands on.
+            USAGE: Right-click the sign.
+            UPDATING: /tardis update chameleon
+            BLOCK: SIGN"""),
     CONDENSER("""
-         INFO: The condenser chest condenses materials into Artron Energy.
-        USAGE: Right-click to open the chest. Place items in the chest.
-        UPDATING: /tardis update condenser
-        BLOCK: CHEST"""),
+            INFO: The condenser chest condenses materials into Artron Energy.
+            USAGE: Right-click to open the chest. Place items in the chest.
+            UPDATING: /tardis update condenser
+            BLOCK: CHEST"""),
     CREEPER("""
-         INFO: Updates the position where the charged Creeper spawns.
-        UPDATING: /tardis update creeper
-        BLOCK: any"""),
+            INFO: Updates the position where the charged Creeper spawns.
+            UPDATING: /tardis update creeper
+            BLOCK: any"""),
     DOOR("""
-         INFO: This is the door used to enter and exit the TARDIS.
-        USAGE: Right-click with the TARDIS key.
-        UPDATING: /tardis update door
-        BLOCK: IRON_DOOR"""),
+            INFO: This is the door used to enter and exit the TARDIS.
+            USAGE: Right-click with the TARDIS key.
+            UPDATING: /tardis update door
+            BLOCK: IRON_DOOR"""),
     EPS("""
-         INFO: Updates the block that the Emergency Programme One appears on when enacted.
-        USAGE: Right-click the block to update
-        UPDATING: /tardis update EPS
-        BLOCK: any"""),
+            INFO: Updates the block that the Emergency Programme One appears on when enacted.
+            USAGE: Right-click the block to update
+            UPDATING: /tardis update EPS
+            BLOCK: any"""),
     CONSOLE_FARM("""
-         INFO: Updates the block that animals spawn relative to when entering the TARDIS.
-        USAGE: Right-click the block to update.
-        UPDATING: /tardis update farm
-        BLOCK: any"""),
+            INFO: Updates the block that animals spawn relative to when entering the TARDIS.
+            USAGE: Right-click the block to update.
+            UPDATING: /tardis update farm
+            BLOCK: any"""),
     HANDBRAKE("""
-         INFO: The Handbrake is used to start the dematerialization and rematerialization of the TARDIS.
-        USAGE: Right-click to disengage, left-click do engage.
-        UPDATING: /tardis update handbrake
-        BLOCK: LEVER"""),
+            INFO: The Handbrake is used to start the dematerialization and rematerialization of the TARDIS.
+            USAGE: Right-click to disengage, left-click do engage.
+            UPDATING: /tardis update handbrake
+            BLOCK: LEVER"""),
     INFO("""
-         INFO: The TARDIS Information System is the TARDIS's computer and information database. It contains information and documentation about the plugin.
-        USAGE: Right-click. Type the white letter into chat to select the menu item.
-        UPDATING: /tardis update info
-        BLOCK: SIGN"""),
+            INFO: The TARDIS Information System is the TARDIS's computer and information database. It contains information and documentation about the plugin.
+            USAGE: Right-click. Type the white letter into chat to select the menu item.
+            UPDATING: /tardis update info
+            BLOCK: SIGN"""),
     KEYBOARD("""
-         INFO: The Keyboard allows the player to type in specific coordinate, the 'home' location, a saved location, a player, a TARDIS area or a biome to materialize to.
-        USAGE: Right-click with a sign in hand.
-        USAGE: Line 1: home, save name, player name, area name or biome type.
-        or
-        USAGE: Line 1: World.
-        USAGE: Line 2: x coordinate.
-        USAGE: Line 3: y coordinate
-        USAGE: Line 4: z coordinate.
-        UPDATING:
-        BLOCK: SIGN"""),
+            INFO: The Keyboard allows the player to type in specific coordinate, the 'home' location, a saved location, a player, a TARDIS area or a biome to materialize to.
+            USAGE: Right-click with a sign in hand.
+            USAGE: Line 1: home, save name, player name, area name or biome type.
+            or
+            USAGE: Line 1: World.
+            USAGE: Line 2: x coordinate.
+            USAGE: Line 3: y coordinate
+            USAGE: Line 4: z coordinate.
+            UPDATING:
+            BLOCK: SIGN"""),
     LIGHT("""
-         INFO: When pressed, the lamps in the TARDIS control room are toggled on/off.
-        USAGE: Right-click.
-        UPDATING: /tardis update light
-        BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
+            INFO: When pressed, the lamps in the TARDIS control room are toggled on/off.
+            USAGE: Right-click.
+            UPDATING: /tardis update light
+            BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
     TOGGLE("""
-         INFO: When pressed, the black wool blocks behind the TARDIS interior door are toggled AIR/WOOL to provide access to the Vortex.
-        USAGE: Right-click.
-        UPDATING: /tardis update toggle_wool
-        BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
+            INFO: When pressed, the black wool blocks behind the TARDIS interior door are toggled AIR/WOOL to provide access to the Vortex.
+            USAGE: Right-click.
+            UPDATING: /tardis update toggle_wool
+            BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
     CONSOLE_RAIL("""
-         INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.
-        USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.
-        UPDATING: /tardis update rail
-        BLOCK: FENCE"""),
+            INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.
+            USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.
+            UPDATING: /tardis update rail
+            BLOCK: FENCE"""),
     SAVE_SIGN("""
-         INFO: The save sign can be used to quickly set the TARDIS destination. When Right-clicked, it opens up a GUI that allows the player to select a saved location to travel to.
-        USAGE: Right-click.
-        UPDATING: /tardis update save-sign
-        BLOCK: SIGN"""),
+            INFO: The save sign can be used to quickly set the TARDIS destination. When Right-clicked, it opens up a GUI that allows the player to select a saved location to travel to.
+            USAGE: Right-click.
+            UPDATING: /tardis update save-sign
+            BLOCK: SIGN"""),
     SCANNER("""
-         INFO: The scanner will show information for the current location of the TARDIS Police Box, or, if a destination has been set, the next travel location.
-        USAGE: Right-click.
-        UPDATING: /tardis update scanner
-        BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
+            INFO: The scanner will show information for the current location of the TARDIS Police Box, or, if a destination has been set, the next travel location.
+            USAGE: Right-click.
+            UPDATING: /tardis update scanner
+            BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
     CONSOLE_STABLE("""
-         INFO: Updates the block that horses spawn on when entering the TARDIS.
-        USAGE: Right-click the block that horses are to spawn on.
-        UPDATING: /tardis update stable
-        BLOCK: any"""),
+            INFO: Updates the block that horses spawn on when entering the TARDIS.
+            USAGE: Right-click the block that horses are to spawn on.
+            UPDATING: /tardis update stable
+            BLOCK: any"""),
     CONSOLE_STALL("""
-         INFO: Updates the block that llamas spawn on when entering the TARDIS.
-        USAGE: Right-click the block that llamas are to spawn on.
-        UPDATING: /tardis update stall
-        BLOCK: any"""),
+            INFO: Updates the block that llamas spawn on when entering the TARDIS.
+            USAGE: Right-click the block that llamas are to spawn on.
+            UPDATING: /tardis update stall
+            BLOCK: any"""),
     STORAGE("""
-        The Disk Storage Container lets you store Storage Disks and Circuits.
-        USAGE: Right-click.
-        UPDATING: /tardis update storage
-        BLOCK: NOTEBLOCK"""),
+            The Disk Storage Container lets you store Storage Disks and Circuits.
+            USAGE: Right-click.
+            UPDATING: /tardis update storage
+            BLOCK: NOTEBLOCK"""),
     TERMINAL("""
-         INFO: The Terminal is the GUI alternative to setting TARDIS coordinates.
-        USAGE: Right-click.
-        UPDATING: /tardis update terminal
-        BLOCK: SIGN"""),
+            INFO: The Terminal is the GUI alternative to setting TARDIS coordinates.
+            USAGE: Right-click.
+            UPDATING: /tardis update terminal
+            BLOCK: SIGN"""),
     TEMPORAL("""
-         INFO: The Temporal Locator sets the time the Time Lord will be in when exiting the TARDIS.
-        USAGE: Right-click. Select the time of day you want to be in.
-        UPDATING: /tardis update temporal
-        BLOCK: SIGN"""),
+            INFO: The Temporal Locator sets the time the Time Lord will be in when exiting the TARDIS.
+            USAGE: Right-click. Select the time of day you want to be in.
+            UPDATING: /tardis update temporal
+            BLOCK: SIGN"""),
     WORLD_REPEATER("""
-         INFO: The World Repater controls the environment type of the world you will travel to.
-        USAGE: 1-tick: Select a location within the current world.
-        USAGE: 2-tick: Select a location from a random (Normal) Overworld.
-        USAGE: 3-tick: Select a location from The Nether worlds.
-        USAGE: 4-tick: Select a location from The End worlds.
-        UPDATING: /tardis update world-repeater
-        BLOCK: REPEATER"""),
+            INFO: The World Repater controls the environment type of the world you will travel to.
+            USAGE: 1-tick: Select a location within the current world.
+            USAGE: 2-tick: Select a location from a random (Normal) Overworld.
+            USAGE: 3-tick: Select a location from The Nether worlds.
+            USAGE: 4-tick: Select a location from The End worlds.
+            UPDATING: /tardis update world-repeater
+            BLOCK: REPEATER"""),
     X_REPEATER("""
-         INFO: The X Repeater controls the X coordinate. The more ticks, the greater distance travelled on the X axis.
-        USAGE: Right-click the repeater to set the ticks.
-        UPDATING: /tardis update x-repeater
-        BLOCK: REPEATER"""),
+            INFO: The X Repeater controls the X coordinate. The more ticks, the greater distance travelled on the X axis.
+            USAGE: Right-click the repeater to set the ticks.
+            UPDATING: /tardis update x-repeater
+            BLOCK: REPEATER"""),
     Y_REPEATER("""
-         INFO: The Y Repeater is a multiplier for distance traveled. The more ticks, the greater distance travelled.
-        USAGE: Right-click the repeater to set the ticks.
-        UPDATING: /tardis update y-repeater
-        BLOCK: REPEATER"""),
+             INFO: The Y Repeater is a multiplier for distance traveled. The more ticks, the greater distance travelled.
+            USAGE: Right-click the repeater to set the ticks.
+            UPDATING: /tardis update y-repeater
+            BLOCK: REPEATER"""),
     Z_REPEATER("""
-         INFO: The Z Repeater controls the Z coordinate. The more ticks, the greater distance travelled on the Z axis.
-        USAGE: Right-click the repeater to set the ticks.
-        UPDATING: /tardis update z-repeater
-        BLOCK: REPEATER"""),
+            INFO: The Z Repeater controls the Z coordinate. The more ticks, the greater distance travelled on the Z axis.
+            USAGE: Right-click the repeater to set the ticks.
+            UPDATING: /tardis update z-repeater
+            BLOCK: REPEATER"""),
     ;
     private final String desc;
 
