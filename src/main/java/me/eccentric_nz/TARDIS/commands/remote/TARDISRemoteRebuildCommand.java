@@ -40,18 +40,18 @@ public class TARDISRemoteRebuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
+    public void doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-            return true;
+            return;
         }
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
-            return true;
+            return;
         }
         BuildData bd = new BuildData(player.getUniqueId().toString());
         bd.setDirection(rsc.getDirection());
@@ -73,6 +73,5 @@ public class TARDISRemoteRebuildCommand {
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
         }
-        return true;
     }
 }

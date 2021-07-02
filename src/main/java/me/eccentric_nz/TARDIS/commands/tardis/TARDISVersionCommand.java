@@ -38,7 +38,7 @@ class TARDISVersionCommand {
         this.plugin = plugin;
     }
 
-    boolean displayVersion(CommandSender sender) {
+    void displayVersion(CommandSender sender) {
         String pluginName = plugin.getPluginName();
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
@@ -62,6 +62,5 @@ class TARDISVersionCommand {
             sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
         }
-        return true;
     }
 }

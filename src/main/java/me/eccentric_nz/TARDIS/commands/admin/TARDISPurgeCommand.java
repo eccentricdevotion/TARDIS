@@ -38,7 +38,7 @@ class TARDISPurgeCommand {
         this.plugin = plugin;
     }
 
-    boolean clearAll(CommandSender sender, String[] args) {
+    void clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
         UUID uuid = null;
         if (args[1].toLowerCase(Locale.ENGLISH).equals("junk")) {
@@ -54,7 +54,7 @@ class TARDISPurgeCommand {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(uuid.toString())) {
                 TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
-                return true;
+                return;
             }
             int id = rs.getTardis_id();
             TARDISExterminator purger = new TARDISExterminator(plugin);
@@ -64,6 +64,5 @@ class TARDISPurgeCommand {
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", args[1]);
         }
-        return true;
     }
 }

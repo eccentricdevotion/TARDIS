@@ -41,7 +41,7 @@ class TARDISPortalCommand {
         prefix = this.plugin.getPrefix();
     }
 
-    boolean clearAll(CommandSender sender) {
+    void clearAll(CommandSender sender) {
         // clear all portals on the server
         plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players
@@ -63,6 +63,5 @@ class TARDISPortalCommand {
             }
         }
         TARDISMessage.send(sender, "PURGE_PORTAL");
-        return true;
     }
 }

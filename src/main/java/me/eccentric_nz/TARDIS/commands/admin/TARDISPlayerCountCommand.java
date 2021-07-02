@@ -37,12 +37,12 @@ class TARDISPlayerCountCommand {
         this.plugin = plugin;
     }
 
-    boolean countPlayers(CommandSender sender, String[] args) {
+    void countPlayers(CommandSender sender, String[] args) {
         int max_count = plugin.getConfig().getInt("creation.count");
         OfflinePlayer player = TARDISStaticUtils.getOfflinePlayer(args[1]);
         if (player == null) {
             TARDISMessage.send(sender, "PLAYER_NOT_VALID");
-            return true;
+            return;
         }
         String uuid = player.getUniqueId().toString();
         ResultSetCount rsc = new ResultSetCount(plugin, uuid);
@@ -63,6 +63,5 @@ class TARDISPlayerCountCommand {
         } else {
             TARDISMessage.send(sender, "COUNT_NOT_FOUND");
         }
-        return true;
     }
 }

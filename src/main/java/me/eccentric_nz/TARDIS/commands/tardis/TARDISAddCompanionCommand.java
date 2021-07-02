@@ -48,7 +48,7 @@ class TARDISAddCompanionCommand {
         this.plugin = plugin;
     }
 
-    boolean doAddGUI(Player player) {
+    void doAddGUI(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
@@ -57,7 +57,6 @@ class TARDISAddCompanionCommand {
         } else {
             TARDISMessage.send(player, "NO_PERMS");
         }
-        return true;
     }
 
     boolean doAdd(Player player, String[] args) {

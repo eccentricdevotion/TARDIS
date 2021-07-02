@@ -44,18 +44,18 @@ class TARDISEnterCommand {
         this.plugin = plugin;
     }
 
-    boolean enterTARDIS(CommandSender sender, String[] args) {
+    void enterTARDIS(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
         }
         if (player == null) {
             TARDISMessage.send(sender, "CMD_PLAYER");
-            return true;
+            return;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
             TARDISMessage.send(player, "NO_PERMS");
-            return true;
+            return;
         }
         int tmp = -1;
         try {
@@ -138,12 +138,10 @@ class TARDISEnterCommand {
                 set.put("tardis_id", id);
                 set.put("uuid", player.getUniqueId().toString());
                 plugin.getQueryFactory().doInsert("travellers", set);
-                return true;
             }
         } else {
             String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
             TARDISMessage.send(player, message);
         }
-        return true;
     }
 }

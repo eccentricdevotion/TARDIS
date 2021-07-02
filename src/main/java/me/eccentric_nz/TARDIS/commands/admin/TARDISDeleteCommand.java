@@ -62,7 +62,7 @@ public class TARDISDeleteCommand {
         });
     }
 
-    boolean deleteTARDIS(CommandSender sender, String[] args) {
+    void deleteTARDIS(CommandSender sender, String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
         int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;
@@ -103,7 +103,7 @@ public class TARDISDeleteCommand {
             World cw = TARDISAliasResolver.getWorldFromAlias(wname);
             if (cw == null) {
                 TARDISMessage.send(sender, "WORLD_DELETED");
-                return true;
+                return;
             }
             // get the current location
             Location bb_loc = null;
@@ -117,7 +117,7 @@ public class TARDISDeleteCommand {
             }
             if (bb_loc == null) {
                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
             // destroy outer TARDIS
@@ -156,9 +156,7 @@ public class TARDISDeleteCommand {
                     }
                     plugin.getServer().unloadWorld(cw, true);
                     File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
-                    if (!deleteFolder(world_folder)) {
-                        plugin.debug("Could not delete world <" + wname + ">");
-                    }
+                    deleteFolder(world_folder);
                 } else {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
@@ -167,8 +165,6 @@ public class TARDISDeleteCommand {
             }, 40L);
         } else {
             TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
-            return true;
         }
-        return true;
     }
 }

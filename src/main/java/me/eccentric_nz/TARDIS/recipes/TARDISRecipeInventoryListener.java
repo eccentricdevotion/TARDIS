@@ -67,7 +67,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                             close(player);
                             break;
                         default:
-                            String command = ChatColor.stripColor(Objects.requireNonNull(is.getItemMeta().getLore()).get(0)).substring(1);
+                            String command = ChatColor.stripColor(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(0)).substring(1);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 player.performCommand(command);
                                 plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());

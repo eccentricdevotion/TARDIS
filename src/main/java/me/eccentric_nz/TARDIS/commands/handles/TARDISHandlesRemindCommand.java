@@ -36,13 +36,13 @@ class TARDISHandlesRemindCommand {
         this.plugin = plugin;
     }
 
-    boolean doReminder(Player player, String[] args) {
+    void doReminder(Player player, String[] args) {
         String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length - 1));
         // the last argument should be a number
         long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
         if (when == 0) {
             TARDISMessage.handlesMessage(player, "HANDLES_NUMBER");
-            return true;
+            return;
         }
         TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
         TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
@@ -56,6 +56,5 @@ class TARDISHandlesRemindCommand {
         data.put("reminder", message);
         data.put("time", when);
         plugin.getQueryFactory().doInsert("reminders", data);
-        return true;
     }
 }

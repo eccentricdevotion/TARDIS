@@ -109,11 +109,10 @@ public class TARDISMessage {
 
     public static void send(Player p, String key, String sub, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
+        assert local != null;
         if (handbrake) {
-            assert local != null;
             message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
         } else {
-            assert local != null;
             message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
         }
     }

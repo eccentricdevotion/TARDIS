@@ -34,7 +34,7 @@ class TARDISDefaultWorldNameCommand {
         this.plugin = plugin;
     }
 
-    public boolean setName(CommandSender sender, String[] args) {
+    public void setName(CommandSender sender, String[] args) {
         // get world name
         String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         // need to make there are no periods(.) in the text
@@ -42,6 +42,5 @@ class TARDISDefaultWorldNameCommand {
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        return true;
     }
 }

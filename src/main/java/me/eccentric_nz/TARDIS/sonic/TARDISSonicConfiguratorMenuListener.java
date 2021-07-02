@@ -310,11 +310,10 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             ItemStack sonic = view.getItem(18);
             if (isSonic(sonic)) {
                 ItemMeta im = sonic.getItemMeta();
+                assert im != null;
                 if (upgrades.size() > 1) {
-                    assert im != null;
                     im.setLore(upgrades);
                 } else {
-                    assert im != null;
                     im.setLore(null);
                 }
                 sonic.setItemMeta(im);

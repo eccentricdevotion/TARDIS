@@ -53,7 +53,8 @@ public class TARDISJunkCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
             if (args.length == 0) {
                 // find Junk TARDIS
-                return new TARDISJunkFind(plugin).find(sender);
+                new TARDISJunkFind(plugin).find(sender);
+                return true;
             }
             String first = args[0].toLowerCase(Locale.ENGLISH);
             if (args.length == 1 && firstArgs.contains(first)) {
@@ -66,19 +67,24 @@ public class TARDISJunkCommands implements CommandExecutor {
                         TARDISMessage.send(sender, "CMD_PLAYER");
                         return false;
                     }
-                    return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
+                    new TARDISJunkCreator(plugin, p).createJunkTARDIS();
+                    return true;
                 }
                 if (first.equals("find")) {
-                    return new TARDISJunkFind(plugin).find(sender);
+                    new TARDISJunkFind(plugin).find(sender);
+                    return true;
                 }
                 if (first.equals("time")) {
-                    return new TARDISJunkTime(plugin).elapsed(sender);
+                    new TARDISJunkTime(plugin).elapsed(sender);
+                    return true;
                 }
                 if (first.equals("return")) {
-                    return new TARDISJunkReturn(plugin).recall(sender);
+                    new TARDISJunkReturn(plugin).recall(sender);
+                    return true;
                 }
                 if (first.equals("delete")) {
-                    return new TARDISJunkDelete(plugin).delete(sender);
+                    new TARDISJunkDelete(plugin).delete(sender);
+                    return true;
                 }
                 return true;
             }

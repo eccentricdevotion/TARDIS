@@ -213,14 +213,16 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1 && first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    return true;
                 }
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
                 if (first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
+                    new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
+                    return true;
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
@@ -229,7 +231,8 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISConfigOptionsCommand(plugin).showConfigOptions(sender, args);
                 }
                 if (first.equals("language")) {
-                    return new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                    new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                    return true;
                 }
                 if (first.equals("power_down")) {
                     return new TARDISPowerDownCommand(plugin).togglePowerDown(sender, args);
@@ -249,7 +252,8 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISSiegeCommand(plugin).setOption(sender, args);
                 }
                 if (first.equals("sign_colour")) {
-                    return new TARDISSignColourCommand(plugin).setColour(sender, args);
+                    new TARDISSignColourCommand(plugin).setColour(sender, args);
+                    return true;
                 }
                 if (first.equals("key") || first.equals("custom_schematic_seed")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
@@ -258,10 +262,12 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args);
                 }
                 if (first.equals("default_key") || first.equals("default_sonic")) {
-                    return new TARDISDefaultCommand(plugin).setDefaultItem(sender, args);
+                    new TARDISDefaultCommand(plugin).setDefaultItem(sender, args);
+                    return true;
                 }
                 if (first.equals("default_world_name")) {
-                    return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
+                    new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
+                    return true;
                 }
                 if (first.equals("respect_towny")) {
                     return new TARDISSetRespectCommand(plugin).setRegion(sender, args);

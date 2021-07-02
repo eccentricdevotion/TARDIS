@@ -41,18 +41,18 @@ class TARDISEmergencyProgrammeCommand {
         this.plugin = plugin;
     }
 
-    boolean showEP1(Player p) {
+    void showEP1(Player p) {
         if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 TARDISMessage.send(p, "CMD_IN_WORLD");
-                return true;
+                return;
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(p, "NOT_A_TIMELORD");
-                return true;
+                return;
             }
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
@@ -63,11 +63,11 @@ class TARDISEmergencyProgrammeCommand {
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
                 TARDISMessage.send(p, "NOT_IN_TARDIS");
-                return true;
+                return;
             }
             if (rsm.getTardis_id() != id) {
                 TARDISMessage.send(p, "NOT_IN_TARDIS");
-                return true;
+                return;
             }
             // get player prefs
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
@@ -88,10 +88,8 @@ class TARDISEmergencyProgrammeCommand {
             }
             TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
-            return true;
         } else {
             TARDISMessage.send(p, "EP1_DISABLED");
-            return true;
         }
     }
 }

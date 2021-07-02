@@ -36,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -109,7 +110,7 @@ public class TARDISRoomSeeder implements Listener {
                     BlockFace facing = trd.getFace();
                     // get seed data
                     TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
-                    Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
+                    Chunk c = Objects.requireNonNull(b.getWorld()).getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", sd.getId());
                     where.put("world", c.getWorld().getName());
@@ -144,34 +145,33 @@ public class TARDISRoomSeeder implements Listener {
                     Location l = block.getRelative(facing, 3).getLocation();
                     // build the room
                     TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
-                    if (builder.build()) {
-                        // remove seed block and set door blocks to AIR as well
-                        block.setBlockData(TARDISConstants.AIR);
-                        Block doorway = block.getRelative(facing, 2);
-                        doorway.setBlockData(TARDISConstants.AIR);
-                        doorway.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
-                        plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
-                        // ok, room growing was successful, so take their energy!
-                        int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
-                        HashMap<String, Object> set = new HashMap<>();
-                        set.put("uuid", player.getUniqueId().toString());
-                        plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, player);
-                        // remove blocks from condenser table if rooms_require_blocks is true
-                        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                            TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
-                            c_data.getBlockIDCount().forEach((key1, value) -> {
-                                HashMap<String, Object> wherec = new HashMap<>();
-                                wherec.put("tardis_id", c_data.getTardis_id());
-                                wherec.put("block_data", key1);
-                                plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
-                            });
-                            plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
-                        }
-                        // are we doing an achievement?
-                        if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
-                            taf.doAchievement(r);
-                        }
+                    builder.build();
+                    // remove seed block and set door blocks to AIR as well
+                    block.setBlockData(TARDISConstants.AIR);
+                    Block doorway = block.getRelative(facing, 2);
+                    doorway.setBlockData(TARDISConstants.AIR);
+                    doorway.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
+                    // ok, room growing was successful, so take their energy!
+                    int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("uuid", player.getUniqueId().toString());
+                    plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, player);
+                    // remove blocks from condenser table if rooms_require_blocks is true
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                        TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
+                        c_data.getBlockIDCount().forEach((key1, value) -> {
+                            HashMap<String, Object> wherec = new HashMap<>();
+                            wherec.put("tardis_id", c_data.getTardis_id());
+                            wherec.put("block_data", key1);
+                            plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
+                        });
+                        plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
+                    }
+                    // are we doing an achievement?
+                    if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
+                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                        taf.doAchievement(r);
                     }
                 }
             }

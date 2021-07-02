@@ -126,7 +126,7 @@ public class TARDISHorseListener implements Listener {
                             // load the chunk
                             while (true) {
                                 assert world != null;
-                                if (!!world.getChunkAt(l).isLoaded())
+                                if (world.getChunkAt(l).isLoaded())
                                     break;
                                 world.getChunkAt(l).load();
                             }

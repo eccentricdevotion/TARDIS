@@ -57,7 +57,7 @@ class TARDISHandlesLandCommand {
         this.plugin = plugin;
     }
 
-    public boolean exitVortex(Player player, int id, String uuid) {
+    public void exitVortex(Player player, int id, String uuid) {
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
@@ -65,15 +65,15 @@ class TARDISHandlesLandCommand {
             Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(PRESET.JUNK)) {
                 TARDISMessage.handlesSend(player, "HANDLES_JUNK");
-                return true;
+                return;
             }
             if (tardis.isHandbrake_on()) {
                 TARDISMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
-                return true;
+                return;
             }
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
-                return true;
+                return;
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
@@ -160,6 +160,5 @@ class TARDISHandlesLandCommand {
                 TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
             }
         }
-        return true;
     }
 }

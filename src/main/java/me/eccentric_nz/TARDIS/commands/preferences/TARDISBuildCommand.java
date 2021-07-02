@@ -38,10 +38,10 @@ class TARDISBuildCommand {
         this.plugin = plugin;
     }
 
-    boolean toggleCompanionBuilding(Player player, String[] args) {
+    void toggleCompanionBuilding(Player player, String[] args) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
             TARDISMessage.send(player, "CMD_DISABLED");
-            return true;
+            return;
         }
         String playerNameStr = player.getName();
         // get the player's TARDIS world
@@ -50,7 +50,7 @@ class TARDISBuildCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, "NO_TARDIS");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         Integer id = tardis.getTardis_id();
@@ -70,7 +70,7 @@ class TARDISBuildCommand {
             ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[0], playerNameStr);
             if (pr == null) {
                 TARDISMessage.send(player, "WG_NOT_FOUND");
-                return true;
+                return;
             }
             Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
             Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
@@ -81,6 +81,5 @@ class TARDISBuildCommand {
             TARDISMessage.send(player, "ANTIBUILD_OFF");
         }
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
-        return true;
     }
 }

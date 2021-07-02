@@ -137,13 +137,17 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                     plugin.getQueryFactory().doInsert("ars", seta);
                                 }
                             }
-                            return new SudoARS(plugin).showARS((Player) sender, uuid);
+                            new SudoARS(plugin).showARS((Player) sender, uuid);
+                            return true;
                         case "assemble":
-                            return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
+                            new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
+                            return true;
                         case "back":
-                            return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardis_id(), offlinePlayer);
+                            new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardis_id(), offlinePlayer);
+                            return true;
                         case "chameleon":
-                            return new SudoChameleon(plugin).setPreset(sender, rs.getTardis_id(), args, offlinePlayer);
+                            new SudoChameleon(plugin).setPreset(sender, rs.getTardis_id(), args, offlinePlayer);
+                            return true;
                         case "clean":
                             return new SudoRepair(plugin, uuid, true).repair();
                         case "comehere":
@@ -151,26 +155,31 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
+                            new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
+                            return true;
                         case "deadlock":
                             // toggle door deadlocks
-                            return new SudoDeadlock(plugin).toggleDeadlock(uuid, sender);
+                            new SudoDeadlock(plugin).toggleDeadlock(uuid, sender);
+                            return true;
                         case "desiege":
                             if (offlinePlayer.isOnline()) {
-                                return new SudoDesiege(plugin).restore(sender, uuid, rs.getTardis_id());
+                                new SudoDesiege(plugin).restore(sender, uuid, rs.getTardis_id());
                             } else {
                                 TARDISMessage.send(sender, "NOT_ONLINE");
-                                return true;
                             }
+                            return true;
                         case "handbrake":
                             return new SudoHandbrake(plugin).toggle(sender, args, uuid);
                         case "hide":
-                            return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardis_id());
+                            new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardis_id());
+                            return true;
                         case "isomorphic":
                             // toggle isomorphic
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
+                            new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
+                            return true;
                         case "rebuild":
-                            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardis_id(), offlinePlayer, true);
+                            new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardis_id(), offlinePlayer, true);
+                            return true;
                         case "repair":
                             return new SudoRepair(plugin, uuid, false).repair();
                         case "travel":

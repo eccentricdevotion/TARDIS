@@ -67,6 +67,7 @@ public class TARDISThemeInventory {
         for (Schematic a : Consoles.getBY_NAMES().values()) {
             Material m = Material.getMaterial(a.getSeed());
             if (!Objects.equals(m, Material.COBBLESTONE)) {
+                assert m != null;
                 ItemStack is = new ItemStack(m, 1);
                 ItemMeta im = is.getItemMeta();
                 assert im != null;

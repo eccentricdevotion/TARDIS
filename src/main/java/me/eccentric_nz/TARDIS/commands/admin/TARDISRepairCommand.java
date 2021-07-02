@@ -37,22 +37,22 @@ class TARDISRepairCommand {
         this.plugin = plugin;
     }
 
-    boolean setFreeCount(CommandSender sender, String[] args) {
+    void setFreeCount(CommandSender sender, String[] args) {
         if (args.length < 3) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         // Look up this player's UUID
         OfflinePlayer op = TARDISStaticUtils.getOfflinePlayer(args[1]);
         if (op == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
         String uuid = op.getUniqueId().toString();
         ResultSetCount rs = new ResultSetCount(plugin, uuid);
         if (!rs.resultSet()) {
             TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
-            return true;
+            return;
         }
         // set repair
         int r = 1;
@@ -65,6 +65,5 @@ class TARDISRepairCommand {
         set.put("repair", r);
         plugin.getQueryFactory().doUpdate("t_count", set, where);
         TARDISMessage.send(sender, "REPAIR_SET", args[1], "" + r);
-        return true;
     }
 }

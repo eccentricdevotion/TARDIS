@@ -23,6 +23,7 @@ import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
 
@@ -47,9 +48,10 @@ public class TARDISScannerMap {
         view.setScale(MapView.Scale.CLOSEST);
         view.setTrackingPosition(true);
         view.setLocked(true);
-        ItemStack map = new ItemStack(Material.FILLED_MAP, 1, (short) view.getId());
+        ItemStack map = new ItemStack(Material.FILLED_MAP, 1);
         MapMeta meta = (MapMeta) map.getItemMeta();
         assert meta != null;
+        ((Damageable) meta).setDamage((short) view.getId());
         meta.setMapView(view);
         map.setItemMeta(meta);
         itemFrame.setItem(map, false);

@@ -33,21 +33,19 @@ class TARDISHelpCommand {
         this.plugin = plugin;
     }
 
-    boolean showHelp(CommandSender sender, String[] args) {
+    void showHelp(CommandSender sender, String[] args) {
         TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
         if (args.length == 1) {
             tch.getCommand("", sender);
-            return true;
+            return;
         }
         if (args.length == 2) {
             tch.getCommand(args[1].toLowerCase(Locale.ENGLISH), sender);
-            return true;
+            return;
         }
         if (args.length > 2) {
             String cmds = args[1].toLowerCase(Locale.ENGLISH) + " " + args[2].toLowerCase(Locale.ENGLISH);
             tch.getCommand(cmds, sender);
-            return true;
         }
-        return true;
     }
 }

@@ -92,7 +92,7 @@ public class TARDISCondenserListener implements Listener {
                                 }
                                 break;
                             case NONE:
-                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
+                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(loc.getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }

@@ -30,7 +30,7 @@ public class TARDISDisguiseCommand {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, String[] args) {
+    public void disguise(CommandSender sender, String[] args) {
         if (args[0].equalsIgnoreCase("disguise")) {
             Player player = null;
             if (args.length == 3) {
@@ -40,14 +40,14 @@ public class TARDISDisguiseCommand {
             }
             if (player == null) {
                 TARDISMessage.message(sender, "You need to specify a player!");
-                return true;
+                return;
             }
             EntityType entityType;
             try {
                 entityType = EntityType.valueOf(args[1]);
             } catch (IllegalArgumentException e) {
                 TARDISMessage.message(sender, "You need to specify a valid living entity type!");
-                return true;
+                return;
             }
             plugin.getTardisHelper().disguise(entityType, player);
         }
@@ -60,10 +60,9 @@ public class TARDISDisguiseCommand {
             }
             if (player == null) {
                 TARDISMessage.message(sender, "You need to specify a player!");
-                return true;
+                return;
             }
             plugin.getTardisHelper().undisguise(player);
         }
-        return true;
     }
 }

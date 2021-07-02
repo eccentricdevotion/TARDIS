@@ -277,7 +277,7 @@ public class TARDISTerminalListener implements Listener {
     private int getValue(int max, int slot, boolean signed, UUID uuid) {
         int step = terminalStep.getOrDefault(uuid, 50);
         int val = max - slot;
-        int intval = switch (val) {
+        return switch (val) {
             case 0 -> (signed) ? (3 * step) : 7;
             case 1 -> (signed) ? (2 * step) : 6;
             case 2 -> (signed) ? step : 5;
@@ -286,7 +286,6 @@ public class TARDISTerminalListener implements Listener {
             case 6 -> (signed) ? -(3 * step) : 1;
             default -> (signed) ? 0 : 4;
         };
-        return intval;
     }
 
     private void setSlots(InventoryView view, int min, int max, boolean pos, String row, boolean signed, UUID uuid) {
@@ -429,8 +428,8 @@ public class TARDISTerminalListener implements Listener {
         int[] slots = new int[]{36, 38, 40, 42};
         boolean found = false;
         for (int i : slots) {
-            if (Objects.requireNonNull(view.getItem(i).getItemMeta()).hasLore()) {
-                String world = Objects.requireNonNull(view.getItem(i).getItemMeta().getLore()).get(0);
+            if (Objects.requireNonNull(Objects.requireNonNull(view.getItem(i)).getItemMeta()).hasLore()) {
+                String world = Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(view.getItem(i)).getItemMeta()).getLore()).get(0);
                 if (!world.equals("No permission")) {
                     found = true;
                     World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : TARDISAliasResolver.getWorldFromAlias(world);

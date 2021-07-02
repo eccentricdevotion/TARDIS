@@ -129,6 +129,7 @@ public class TARDISUpgradeBlockScanner {
                         if (Objects.equals(type, Material.SPONGE)) {
                             type = Material.AIR;
                         }
+                        assert type != null;
                         if (type.equals(Material.CAKE)) {
                             type = Material.LEVER;
                         }

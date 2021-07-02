@@ -49,13 +49,12 @@ class TARDISBuildSilurianStructure {
      * @param startx the start coordinate on the x-axis
      * @param starty the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
-     * @return false when the build task has finished
      */
-    boolean buildCity(int startx, int starty, int startz) {
+    void buildCity(int startx, int starty, int startz) {
         File file = new File(paths[0]);
         if (!file.exists()) {
             plugin.debug("Could not find the Silurian schematics!");
-            return false;
+            return;
         }
         TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
@@ -90,7 +89,6 @@ class TARDISBuildSilurianStructure {
             int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
             secondary.setTask(secondaryTask);
         }
-        return false;
     }
 
     private Vector isChunkLoaded(COMPASS compass, Block block) {

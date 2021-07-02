@@ -37,16 +37,16 @@ class TARDISCondenserCommand {
         this.plugin = plugin;
     }
 
-    public boolean set(CommandSender sender) {
+    public void set(CommandSender sender) {
         if (!(sender instanceof Player player)) {
             TARDISMessage.send(sender, "CMD_PLAYER");
-            return true;
+            return;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
         Material chest = b.getType();
         if (!chest.equals(Material.CHEST)) {
             TARDISMessage.send(sender, "UPDATE_CONDENSER");
-            return true;
+            return;
         }
         String loc = b.getLocation().toString();
         // update the artron config
@@ -57,6 +57,5 @@ class TARDISCondenserCommand {
             plugin.debug("Could not save artron.yml, " + io);
         }
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        return true;
     }
 }

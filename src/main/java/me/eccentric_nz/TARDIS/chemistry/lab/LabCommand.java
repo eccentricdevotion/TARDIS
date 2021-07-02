@@ -32,16 +32,15 @@ public class LabCommand {
         this.plugin = plugin;
     }
 
-    public boolean combine(Player player) {
+    public void combine(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab");
-            return true;
+            return;
         }
         // do stuff
         ItemStack[] menu = new LabInventory(plugin).getMenu();
         Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Lab table");
         products.setContents(menu);
         player.openInventory(products);
-        return true;
     }
 }

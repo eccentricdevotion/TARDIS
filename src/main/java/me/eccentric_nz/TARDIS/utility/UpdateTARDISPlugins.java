@@ -30,10 +30,10 @@ public class UpdateTARDISPlugins {
         URLS.add("http://tardisjenkins.duckdns.org:8080/job/TARDISChunkGenerator/lastSuccessfulBuild/artifact/target/TARDISChunkGenerator.jar");
     }
 
-    public boolean fetchFromJenkins(CommandSender sender) {
+    public void fetchFromJenkins(CommandSender sender) {
         if (updateInProgress.get()) {
             sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "An update is already in progress!");
-            return true;
+            return;
         }
         sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading TARDIS & TARDISChunkGenerator ...");
         new BukkitRunnable() {
@@ -79,6 +79,5 @@ public class UpdateTARDISPlugins {
                 }
             }
         }.runTaskAsynchronously(plugin);
-        return true;
     }
 }

@@ -137,7 +137,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                 return new TARDISHideCommand(plugin).hide(p);
                             } else {
-                                return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, id);
+                                new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, id);
+                                return true;
                             }
                         case REBUILD:
                             // if it's a non-admin player or command block running the command
@@ -145,16 +146,17 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                 return new TARDISRebuildCommand(plugin).rebuildPreset(p);
                             } else {
-                                return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
+                                new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
+                                return true;
                             }
                         case COMEHERE:
                             // NOT non-admin players, command blocks or the console
                             if (sender instanceof Player player && sender.hasPermission("tardis.admin")) {
-                                return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere(player, uuid);
+                                new TARDISRemoteComehereCommand(plugin).doRemoteComeHere(player, uuid);
                             } else {
                                 TARDISMessage.send(sender, "NO_PERMS");
-                                return true;
                             }
+                            return true;
                         case BACK:
                             // NOT non-admin players or command blocks
                             if ((sender instanceof Player && sender.hasPermission("tardis.admin")) || sender instanceof ConsoleCommandSender) {
@@ -162,11 +164,11 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     TARDISMessage.send(sender, "NOT_WHILE_TRAVELLING");
                                     return true;
                                 }
-                                return new TARDISRemoteBackCommand(plugin).sendBack(sender, id, p);
+                                new TARDISRemoteBackCommand(plugin).sendBack(sender, id, p);
                             } else {
                                 TARDISMessage.send(sender, "NO_PERMS");
-                                return true;
                             }
+                            return true;
                         default: // TRAVEL
                             if (args.length < 3) {
                                 TARDISMessage.send(sender, "ARG_REMOTE");

@@ -43,17 +43,17 @@ public class TARDISRemoteHideCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteHide(CommandSender sender, int id) {
+    public void doRemoteHide(CommandSender sender, int id) {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             TARDISMessage.send(sender, "NOT_IN_VORTEX");
-            return true;
+            return;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-            return true;
+            return;
         }
         OfflinePlayer olp = null;
         if (sender instanceof Player) {
@@ -71,7 +71,7 @@ public class TARDISRemoteHideCommand {
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
-            return true;
+            return;
         }
         assert olp != null;
         UUID uuid = olp.getUniqueId();
@@ -97,6 +97,5 @@ public class TARDISRemoteHideCommand {
             plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
             TARDISMessage.send(sender, "FORCE_FIELD", "OFF");
         }
-        return true;
     }
 }

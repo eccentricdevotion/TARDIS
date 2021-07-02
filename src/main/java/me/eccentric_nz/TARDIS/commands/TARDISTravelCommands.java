@@ -402,13 +402,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 new TARDISLand(plugin, id, player).exitVortex();
                                 plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
                             }
-                            return true;
                         } else {
-                            return travelPlayer(player, args[0], id);
+                            travelPlayer(player, args[0], id);
                         }
+                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("player")) {
-                        return travelPlayer(player, args[1], id);
+                        travelPlayer(player, args[1], id);
+                        return true;
                     }
                     if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
@@ -634,11 +635,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                             } else {
                                 TARDISMessage.send(player, "SAVE_NO_WORLD");
                             }
-                            return true;
                         } else {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_SAVE");
-                            return true;
                         }
+                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
@@ -878,40 +878,39 @@ public class TARDISTravelCommands implements CommandExecutor {
         return false;
     }
 
-    private boolean travelPlayer(Player player, String p, int id) {
+    private void travelPlayer(Player player, String p, int id) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
             if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                 TARDISMessage.send(player, "ADV_PLAYER");
-                return true;
+                return;
             }
             if (player.getName().equalsIgnoreCase(p)) {
                 TARDISMessage.send(player, "TRAVEL_NO_SELF");
-                return true;
+                return;
             }
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             // check the player
             Player saved = plugin.getServer().getPlayer(p);
             if (saved == null) {
                 TARDISMessage.send(player, "NOT_ONLINE");
-                return true;
+                return;
             }
             // check the to player's DND status
             ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
             if (rspp.resultSet() && rspp.isDND()) {
                 TARDISMessage.send(player, "DND", p);
-                return true;
+                return;
             }
             new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getDirection(), false, false);
         } else {
             TARDISMessage.send(player, "NO_PERM_PLAYER");
         }
-        return true;
     }
 
     private String getQuotedString(String[] args) {

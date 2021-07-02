@@ -49,7 +49,7 @@ class TARDISListCommand {
         this.plugin = plugin;
     }
 
-    boolean listStuff(CommandSender sender, String[] args) {
+    void listStuff(CommandSender sender, String[] args) {
         if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned"))) {
             if (args[1].equalsIgnoreCase("save")) {
                 ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), "", true, 1);
@@ -63,7 +63,7 @@ class TARDISListCommand {
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
                                     TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                                    return true;
+                                    return;
                                 }
                                 String line = "ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                                 bw.write(line);
@@ -75,13 +75,10 @@ class TARDISListCommand {
                     }
                 }
                 TARDISMessage.send(sender, "FILE_SAVED");
-                return true;
             } else if (args[1].equalsIgnoreCase("portals")) {
                 plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
-                return true;
             } else { // abandoned
                 new TARDISAbandonLister(plugin).list(sender);
-                return true;
             }
         } else {
             // get all tardis positions - max 18
@@ -106,7 +103,7 @@ class TARDISListCommand {
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                        return true;
+                        return;
                     }
                     String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     TextComponent tct = new TextComponent(String.format("%s %s", t.getTardis_id(), t.getOwner()));
@@ -121,7 +118,6 @@ class TARDISListCommand {
             } else {
                 TARDISMessage.send(sender, "TARDIS_LOCS_NONE");
             }
-            return true;
         }
     }
 }

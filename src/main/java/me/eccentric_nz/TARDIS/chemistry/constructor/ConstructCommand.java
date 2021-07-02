@@ -32,16 +32,15 @@ public class ConstructCommand {
         this.plugin = plugin;
     }
 
-    public boolean build(Player player) {
+    public void build(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.construct.build")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Construct");
-            return true;
+            return;
         }
         // do stuff
         ItemStack[] menu = new ConstructorInventory().getMenu();
         Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Element constructor");
         products.setContents(menu);
         player.openInventory(products);
-        return true;
     }
 }

@@ -27,9 +27,9 @@ public class TARDISPlayThemeCommand {
         this.plugin = plugin;
     }
 
-    public boolean playTheme(Player p) {
+    public void playTheme(Player p) {
         if (plugin.getTrackerKeeper().getEggs().contains(p.getUniqueId())) {
-            return true;
+            return;
         }
         plugin.getTrackerKeeper().getEggs().add(p.getUniqueId());
         Song s = NBSDecoder.parse(plugin.getResource("theme.nbs"));
@@ -37,6 +37,5 @@ public class TARDISPlayThemeCommand {
         sp.addPlayer(p);
         sp.setPlaying(true);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), 2200L);
-        return true;
     }
 }

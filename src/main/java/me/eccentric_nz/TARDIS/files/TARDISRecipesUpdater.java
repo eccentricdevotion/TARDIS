@@ -746,11 +746,11 @@ public class TARDISRecipesUpdater {
             i++;
         } else {
             String easyValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.easy_ingredients.W");
-            if (Objects.equals(easyValue, "POTION:8206") || easyValue.equals("POTION")) {
+            if (Objects.equals(easyValue, "POTION:8206") || Objects.equals(easyValue, "POTION")) {
                 recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
             }
             String hardValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.hard_ingredients.W");
-            if (Objects.equals(hardValue, "POTION:8270") || hardValue.equals("POTION")) {
+            if (Objects.equals(hardValue, "POTION:8270") || Objects.equals(hardValue, "POTION")) {
                 recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
             }
         }
@@ -768,7 +768,7 @@ public class TARDISRecipesUpdater {
             i++;
         } else {
             String value = recipes_config.getString("shaped.TARDIS Telepathic Circuit.hard_ingredients.P");
-            if (Objects.equals(value, "POTION:373") || value.equals("POTION")) {
+            if (Objects.equals(value, "POTION:373") || Objects.equals(value, "POTION")) {
                 recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION>AWKWARD");
             }
         }
@@ -905,8 +905,11 @@ public class TARDISRecipesUpdater {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
             }
             String r_key_5 = recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.K");
-            if (r_key_5 != null && !key.equals(r_key_5)) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
+            if (r_key_5 != null) {
+                assert key != null;
+                if (!key.equals(r_key_5)) {
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
+                }
             }
         } catch (IOException io) {
             plugin.debug("Could not save recipes.yml, " + io);

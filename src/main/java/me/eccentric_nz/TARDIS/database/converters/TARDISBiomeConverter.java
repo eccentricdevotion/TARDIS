@@ -120,6 +120,7 @@ public class TARDISBiomeConverter {
         }
         if (l != null && biome != null) {
             int sbx = l.getBlockX();
+            int sby = l.getBlockY();
             int sbz = l.getBlockZ();
             World w = l.getWorld();
             List<Chunk> chunks = new ArrayList<>();
@@ -129,17 +130,19 @@ public class TARDISBiomeConverter {
             TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
             if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(l.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
-                for (int c = -3; c < 4; c++) {
-                    for (int r = -3; r < 4; r++) {
-                        try {
-                            assert w != null;
-                            w.setBiome(sbx + c, sbz + r, biome);
-                            Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
-                            if (!chunks.contains(tmp_chunk)) {
-                                chunks.add(tmp_chunk);
+                for (int xx = -3; xx < 4; xx++) {
+                    for (int yy = -5; yy < 5; yy++) {
+                        for (int zz = -3; zz < 4; zz++) {
+                            try {
+                                assert w != null;
+                                w.setBiome(sbx + xx, sby + yy,sbz + zz, biome);
+                                Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + xx, 64, sbz + zz));
+                                if (!chunks.contains(tmp_chunk)) {
+                                    chunks.add(tmp_chunk);
+                                }
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
                             }
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
                         }
                     }
                 }

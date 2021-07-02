@@ -40,12 +40,12 @@ class TARDISARSRemoveCommand {
         this.plugin = plugin;
     }
 
-    boolean resetARS(Player player) {
+    void resetARS(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         int id = rs.getTardis_id();
         // get the sign location so we can reset the sign text
@@ -70,10 +70,8 @@ class TARDISARSRemoveCommand {
                 plugin.getQueryFactory().doDelete("controls", del);
                 TARDISMessage.send(player, "ARS_REMOVED");
             }
-            return true;
         } else {
             TARDISMessage.send(player, "NO_ARS");
-            return true;
         }
     }
 }

@@ -40,32 +40,32 @@ class TARDISConstructCommand {
         this.plugin = plugin;
     }
 
-    public boolean setLine(Player player, String[] args) {
+    public void setLine(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TARDISMessage.send(player, "NO_TARDIS");
-            return true;
+            return;
         }
         int id = rs.getTardis_id();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {
             TARDISMessage.send(player, "NO_CONSTRUCT");
-            return true;
+            return;
         }
         boolean isAsymmetric = args[1].equalsIgnoreCase("asymmetric");
         if (!isAsymmetric && args.length < 3) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         // check line number
         if (!lineNumbers.contains(args[1])) {
             TARDISMessage.send(player, "CONSTRUCT_LINE_NUM");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -78,7 +78,7 @@ class TARDISConstructCommand {
             // strip color codes and check length
             if (ChatColor.stripColor(raw).length() > 16) {
                 TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
-                return true;
+                return;
             }
             set.put("line" + l, raw);
         }
@@ -86,6 +86,5 @@ class TARDISConstructCommand {
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
         String message = (isAsymmetric) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
         TARDISMessage.send(player, message);
-        return true;
     }
 }

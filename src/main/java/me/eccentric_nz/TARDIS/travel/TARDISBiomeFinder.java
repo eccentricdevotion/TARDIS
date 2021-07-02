@@ -61,7 +61,7 @@ public class TARDISBiomeFinder {
         // check location
         while (true) {
             assert bw != null;
-            if (!!bw.getChunkAt(tb).isLoaded())
+            if (bw.getChunkAt(tb).isLoaded())
                 break;
             bw.getChunkAt(tb).load();
         }

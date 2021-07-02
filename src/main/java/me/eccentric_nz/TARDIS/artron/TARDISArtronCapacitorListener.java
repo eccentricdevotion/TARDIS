@@ -156,7 +156,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                                 }
                                                 break;
                                             case NONE:
-                                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
+                                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(block.getLocation().getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
@@ -234,7 +234,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             c.setRemoveWhenFarAway(false);
                                             if (tardis.getSchematic().hasBeacon()) {
                                                 String beacon = tardis.getBeacon();
-                                                Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
+                                                Block bl = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(beacon)).getBlock();
                                                 bl.setBlockData(TARDISConstants.GLASS);
                                             }
                                         }

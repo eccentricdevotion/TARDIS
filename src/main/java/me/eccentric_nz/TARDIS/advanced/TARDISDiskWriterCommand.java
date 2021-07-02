@@ -229,7 +229,7 @@ public class TARDISDiskWriterCommand {
         return true;
     }
 
-    public boolean eraseDisk(Player player) {
+    public void eraseDisk(Player player) {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta() && disks.contains(Objects.requireNonNull(is.getItemMeta()).getDisplayName())) {
             ItemMeta im = is.getItemMeta();
@@ -240,7 +240,6 @@ public class TARDISDiskWriterCommand {
         } else {
             TARDISMessage.send(player, "DISK_HAND_ERASE");
         }
-        return true;
     }
 
     public boolean writeSaveToControlDisk(Player player, String[] args) {

@@ -81,15 +81,20 @@ public class TARDISChemistryCommand implements CommandExecutor {
                         }
                         return new CreativeCommand(plugin).open(player, args);
                     case "construct":
-                        return new ConstructCommand(plugin).build(player);
+                        new ConstructCommand(plugin).build(player);
+                        return true;
                     case "compound":
-                        return new CompoundCommand(plugin).create(player);
+                        new CompoundCommand(plugin).create(player);
+                        return true;
                     case "reduce":
-                        return new ReduceCommand(plugin).use(player);
+                        new ReduceCommand(plugin).use(player);
+                        return true;
                     case "product":
-                        return new ProductCommand(plugin).craft(player);
+                        new ProductCommand(plugin).craft(player);
+                        return true;
                     case "lab":
-                        return new LabCommand(plugin).combine(player);
+                        new LabCommand(plugin).combine(player);
+                        return true;
                     default:
                         return true;
                 }

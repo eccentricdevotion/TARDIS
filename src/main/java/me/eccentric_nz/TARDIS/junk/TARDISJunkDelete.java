@@ -43,10 +43,10 @@ class TARDISJunkDelete {
         this.plugin = plugin;
     }
 
-    public boolean delete(CommandSender sender) {
+    public void delete(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
-            return true;
+            return;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
@@ -61,7 +61,7 @@ class TARDISJunkDelete {
             }
             if (bb_loc == null) {
                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             // destroy junk TARDIS
             DestroyData dd = new DestroyData();
@@ -84,6 +84,5 @@ class TARDISJunkDelete {
                 }, 20L);
             }
         }
-        return true;
     }
 }

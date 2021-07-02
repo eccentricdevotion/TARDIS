@@ -380,7 +380,7 @@ public class TARDISARSMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     void loadMap(InventoryView view, UUID playerUUID) {
-        if (Objects.requireNonNull(view.getItem(10).getItemMeta()).hasLore()) {
+        if (Objects.requireNonNull(Objects.requireNonNull(view.getItem(10)).getItemMeta()).hasLore()) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
         }

@@ -36,19 +36,19 @@ class TARDISSetSizeCommand {
         this.plugin = plugin;
     }
 
-    public boolean overwrite(CommandSender sender, String[] args) {
+    public void overwrite(CommandSender sender, String[] args) {
         // /tadmin set_size [player] [size]
         // get the player
         Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null) { // player must be online
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
         String type = args[2].toUpperCase(Locale.ENGLISH);
         // check size
         if (!Consoles.getBY_NAMES().containsKey(type)) {
             TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
-            return true;
+            return;
         }
         String uuid = p.getUniqueId().toString();
         HashMap<String, Object> where = new HashMap<>();
@@ -57,6 +57,5 @@ class TARDISSetSizeCommand {
         set.put("size", type);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
         TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
-        return true;
     }
 }

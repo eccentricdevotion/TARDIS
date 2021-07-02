@@ -240,7 +240,7 @@ public class TARDISMazeGenerator {
         }
     }
 
-    private int cutNextUp() {
+    private void cutNextUp() {
         // gets the current location
         Integer[] current = tracker.peekFirst();
         // temp var to access the stack
@@ -257,10 +257,9 @@ public class TARDISMazeGenerator {
         loc[1] = nxt_col;
         // adds the new index to the stack
         tracker.addFirst(loc);
-        return 1;
     }
 
-    private int cutNextDown() {
+    private void cutNextDown() {
         // gets the current location
         Integer[] current = tracker.peekFirst();
         // temp variable to access stack
@@ -276,10 +275,9 @@ public class TARDISMazeGenerator {
         loc[1] = nxt_col;
         // adds new index to stack
         tracker.addFirst(loc);
-        return 1;
     }
 
-    private int cutNextRight() {
+    private void cutNextRight() {
         // gets the current location
         Integer[] current = tracker.peekFirst();
         // dummy variable to access stack
@@ -295,10 +293,9 @@ public class TARDISMazeGenerator {
         loc[1] = nxt_col;
         // adds index to stack
         tracker.addFirst(loc);
-        return 1;
     }
 
-    private int cutNextLeft() {
+    private void cutNextLeft() {
         // gets current location
         Integer[] current = tracker.peekFirst();
         // temp variable to access stack
@@ -314,7 +311,6 @@ public class TARDISMazeGenerator {
         loc[1] = nxt_col;
         // adds new index to stack
         tracker.addFirst(loc);
-        return 1;
     }
 
     private void back() {

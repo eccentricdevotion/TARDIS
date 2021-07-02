@@ -122,15 +122,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 assert is != null;
                 ItemMeta im = is.getItemMeta();
                 if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
+                    assert im != null;
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-                        assert im != null;
                         boolean isOff = Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_OFF"));
                         String onoff = isOff ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
                         im.setLore(Collections.singletonList(onoff));
                         int cmd = isOff ? 2 : 3;
                         im.setCustomModelData(cmd);
                     } else {
-                        assert im != null;
                         im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                     }
                 } else {

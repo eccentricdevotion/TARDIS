@@ -38,10 +38,10 @@ class TARDISLanguageCommand {
         this.plugin = plugin;
     }
 
-    boolean setLanguage(CommandSender sender, String[] args) {
+    void setLanguage(CommandSender sender, String[] args) {
         if (!codes.contains(args[1])) {
             TARDISMessage.send(sender, "LANG_NOT_VALID");
-            return true;
+            return;
         }
         // check file exists
         File file;
@@ -49,7 +49,7 @@ class TARDISLanguageCommand {
         if (!file.isFile()) {
             // file not found
             TARDISMessage.send(sender, "LANG_NOT_FOUND", args[1]);
-            return true;
+            return;
         }
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
@@ -57,6 +57,5 @@ class TARDISLanguageCommand {
         // set and save the config
         plugin.getConfig().set("preferences.language", args[1]);
         plugin.saveConfig();
-        return true;
     }
 }

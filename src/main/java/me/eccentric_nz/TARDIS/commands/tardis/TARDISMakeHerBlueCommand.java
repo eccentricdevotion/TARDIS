@@ -43,10 +43,10 @@ class TARDISMakeHerBlueCommand {
         this.plugin = plugin;
     }
 
-    public boolean show(Player player) {
+    public void show(Player player) {
         if (!plugin.getConfig().getBoolean("allow.invisibility")) {
             TARDISMessage.send(player, "INVISIBILITY_DISABLED");
-            return true;
+            return;
         }
         // do the usual checks
         UUID uuid = player.getUniqueId();
@@ -56,7 +56,7 @@ class TARDISMakeHerBlueCommand {
             long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
             if (now < then) {
                 TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
-                return true;
+                return;
             }
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -64,16 +64,16 @@ class TARDISMakeHerBlueCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
             TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
-            return true;
+            return;
         }
         if (!tardis.getPreset().equals(PRESET.INVISIBLE) && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
-            return true;
+            return;
         }
         int id = tardis.getTardis_id();
         TARDISCircuitChecker tcc = null;
@@ -84,20 +84,20 @@ class TARDISMakeHerBlueCommand {
         if (tcc != null) {
             if (!tcc.hasInvisibility() && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_MISSING");
-                return true;
+                return;
             }
             if (!tcc.hasMaterialisation()) {
                 TARDISMessage.send(player.getPlayer(), "NO_MAT_CIRCUIT");
-                return true;
+                return;
             }
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
-            return true;
+            return;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
             TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
-            return true;
+            return;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", tardis.getTardis_id());
@@ -105,14 +105,14 @@ class TARDISMakeHerBlueCommand {
         if (!rsc.resultSet()) {
             TARDISMessage.send(player.getPlayer(), "CURRENT_NOT_FOUND");
             TARDISMessage.send(player.getPlayer(), "REBUILD_FAIL");
-            return true;
+            return;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         int level = tardis.getArtron_level();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
             TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
-            return true;
+            return;
         }
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // set the preset to POLICE_BOX_BLUE
@@ -137,6 +137,5 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
-        return true;
     }
 }

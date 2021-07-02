@@ -59,10 +59,9 @@ class TARDISPruneCommand {
         }
     }
 
-    boolean listPrunes(CommandSender sender, String[] args) {
+    void listPrunes(CommandSender sender, String[] args) {
         int days = TARDISNumberParsers.parseInt(args[1]);
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);
-        return true;
     }
 }

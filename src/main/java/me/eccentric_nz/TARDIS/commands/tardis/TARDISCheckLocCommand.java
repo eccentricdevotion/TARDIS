@@ -39,7 +39,7 @@ class TARDISCheckLocCommand {
         this.plugin = plugin;
     }
 
-    boolean doACheckLocation(Player player) {
+    void doACheckLocation(Player player) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {
@@ -50,18 +50,17 @@ class TARDISCheckLocCommand {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", rs.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             TARDISMessage.send(player, "DIRECTION_NOT_FOUND");
-            return true;
+            return;
         }
         COMPASS d = rsc.getDirection();
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         tt.testSafeLocation(eyeLocation, d);
-        return true;
     }
 }

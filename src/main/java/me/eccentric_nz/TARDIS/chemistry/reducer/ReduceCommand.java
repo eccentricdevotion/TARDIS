@@ -32,16 +32,15 @@ public class ReduceCommand {
         this.plugin = plugin;
     }
 
-    public boolean use(Player player) {
+    public void use(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Reduction");
-            return true;
+            return;
         }
         // do stuff
         ItemStack[] menu = new ReducerInventory(plugin).getMenu();
         Inventory reductions = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Material reducer");
         reductions.setContents(menu);
         player.openInventory(reductions);
-        return true;
     }
 }

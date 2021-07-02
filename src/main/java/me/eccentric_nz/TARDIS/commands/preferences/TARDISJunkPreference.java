@@ -40,7 +40,7 @@ class TARDISJunkPreference {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String arg) {
+    public void toggle(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
         // get TARDIS
@@ -58,7 +58,7 @@ class TARDISJunkPreference {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 TARDISMessage.send(player, "JUNK_PRESET_OUTSIDE");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
                 long now = System.currentTimeMillis();
@@ -66,17 +66,17 @@ class TARDISJunkPreference {
                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                 if (now < then) {
                     TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
-                    return true;
+                    return;
                 }
             }
             // make sure is opposite
             if (current.equals("JUNK_MODE") && arg.equalsIgnoreCase("on")) {
                 TARDISMessage.send(player, "JUNK_ALREADY_ON");
-                return true;
+                return;
             }
             if (!current.equals("JUNK_MODE") && arg.equalsIgnoreCase("off")) {
                 TARDISMessage.send(player, "JUNK_ALREADY_OFF");
-                return true;
+                return;
             }
             // check if they have a junk record
             HashMap<String, Object> wherej = new HashMap<>();
@@ -132,8 +132,6 @@ class TARDISJunkPreference {
             }
             // rebuild
             player.performCommand("tardis rebuild");
-            return true;
         }
-        return true;
     }
 }

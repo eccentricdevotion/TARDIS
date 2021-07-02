@@ -37,15 +37,15 @@ class TARDISRegionFlagCommand {
         this.plugin = plugin;
     }
 
-    boolean toggleEntryExit(CommandSender sender, String[] args) {
+    void toggleEntryExit(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!which.contains(flag)) {
             TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             TARDISMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
-            return true;
+            return;
         }
         String world_name = plugin.getConfig().getString("creation.default_world_name");
         // get all regions for the default world
@@ -61,6 +61,5 @@ class TARDISRegionFlagCommand {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
             }
         });
-        return true;
     }
 }

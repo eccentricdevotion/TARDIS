@@ -167,7 +167,8 @@ class TARDISRoomCommand {
             plugin.getGeneralKeeper().getRoomCondenserData().put(uuid, c_data);
         }
         if (room.equals("ZERO")) {
-            return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
+            new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
+            return true;
         }
         TARDISSeedData sd = new TARDISSeedData();
         sd.setId(id);

@@ -39,19 +39,19 @@ class TARDISRechargerCommand {
         this.plugin = plugin;
     }
 
-    boolean setRecharger(CommandSender sender, String[] args) {
+    void setRecharger(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
         }
         if (player == null) {
             TARDISMessage.send(sender, "CHARGER_NO");
-            return true;
+            return;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
             TARDISMessage.send(player, "CHARGER_BEACON");
-            return true;
+            return;
         }
         // make sure they're not targeting their inner TARDIS beacon
         HashMap<String, Object> where = new HashMap<>();
@@ -59,7 +59,7 @@ class TARDISRechargerCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             TARDISMessage.send(player, "ENERGY_NO_BEACON");
-            return true;
+            return;
         }
         Location l = b.getLocation();
         plugin.getConfig().set("rechargers." + args[1] + ".world", Objects.requireNonNull(l.getWorld()).getName());
@@ -80,6 +80,5 @@ class TARDISRechargerCommand {
         }
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        return true;
     }
 }

@@ -99,7 +99,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     if (first.equals("condenser")) {
-                        return new TARDISCondenserCommand(plugin).set(sender);
+                        new TARDISCondenserCommand(plugin).set(sender);
+                        return true;
                     }
                     if (first.equals("convert_database")) {
                         try {
@@ -115,7 +116,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                             TARDISMessage.message(sender, "You must be a server operator to run this command!");
                             return true;
                         }
-                        return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
+                        new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
+                        return true;
                     }
                     if (first.equals("maze")) {
                         if (sender instanceof Player p) {
@@ -129,13 +131,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                 }
                 if (first.equals("list")) {
-                    return new TARDISListCommand(plugin).listStuff(sender, args);
+                    new TARDISListCommand(plugin).listStuff(sender, args);
+                    return true;
                 }
                 if (first.equals("purge_portals")) {
-                    return new TARDISPortalCommand(plugin).clearAll(sender);
+                    new TARDISPortalCommand(plugin).clearAll(sender);
+                    return true;
                 }
                 if (first.equals("undisguise")) {
-                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    return true;
                 }
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
@@ -143,55 +148,69 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("arch")) {
                     if (args.length > 2) {
-                        return new TARDISArchCommand(plugin).force(sender, args);
+                        new TARDISArchCommand(plugin).force(sender, args);
                     } else {
-                        return new TARDISArchCommand(plugin).whois(sender, args);
+                        new TARDISArchCommand(plugin).whois(sender, args);
                     }
+                    return true;
                 }
                 if (first.equals("assemble")) {
-                    return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
+                    new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
+                    return true;
                 }
                 if (first.equals("set_size")) {
-                    return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
+                    new TARDISSetSizeCommand(plugin).overwrite(sender, args);
+                    return true;
                 }
                 if (first.equals("spawn_abandoned")) {
-                    return new TARDISAbandonedCommand(plugin).spawn(sender, args);
+                    new TARDISAbandonedCommand(plugin).spawn(sender, args);
+                    return true;
                 }
                 if (first.equals("make_preset")) {
                     return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
                 }
                 if (first.equals("playercount")) {
-                    return new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
+                    new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
+                    return true;
                 }
                 if (first.equals("prune")) {
                     return new TARDISPruneCommand(plugin).startPruning(sender, args);
                 }
                 if (first.equals("prunelist")) {
-                    return new TARDISPruneCommand(plugin).listPrunes(sender, args);
+                    new TARDISPruneCommand(plugin).listPrunes(sender, args);
+                    return true;
                 }
                 if (first.equals("purge")) {
-                    return new TARDISPurgeCommand(plugin).clearAll(sender, args);
+                    new TARDISPurgeCommand(plugin).clearAll(sender, args);
+                    return true;
                 }
                 if (first.equals("recharger")) {
-                    return new TARDISRechargerCommand(plugin).setRecharger(sender, args);
+                    new TARDISRechargerCommand(plugin).setRecharger(sender, args);
+                    return true;
                 }
                 if (first.equals("decharge")) {
-                    return new TARDISDechargeCommand(plugin).removeChargerStatus(sender, args);
+                    new TARDISDechargeCommand(plugin).removeChargerStatus(sender, args);
+                    return true;
                 }
                 if (first.equals("disguise")) {
-                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    return true;
                 }
                 if (first.equals("enter")) {
-                    return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
+                    new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
+                    return true;
                 }
                 if (first.equals("delete")) {
-                    return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
+                    new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
+                    return true;
                 }
                 if (first.equals("repair")) {
-                    return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
+                    new TARDISRepairCommand(plugin).setFreeCount(sender, args);
+                    return true;
                 }
                 if (first.equals("revoke")) {
-                    return new TARDISRevokeCommand(plugin).removePermission(sender, args);
+                    new TARDISRevokeCommand(plugin).removePermission(sender, args);
+                    return true;
                 }
                 return true;
             } else {

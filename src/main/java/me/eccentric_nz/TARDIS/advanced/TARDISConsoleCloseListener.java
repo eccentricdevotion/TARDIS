@@ -201,7 +201,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 // check location
                                                 while (true) {
                                                     assert bw != null;
-                                                    if (!!bw.getChunkAt(nsob).isLoaded())
+                                                    if (bw.getChunkAt(nsob).isLoaded())
                                                         break;
                                                     bw.getChunkAt(nsob).load();
                                                 }

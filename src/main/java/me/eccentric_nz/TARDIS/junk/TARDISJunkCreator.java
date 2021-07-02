@@ -49,14 +49,14 @@ class TARDISJunkCreator {
         this.p = p;
     }
 
-    boolean createJunkTARDIS() {
+    void createJunkTARDIS() {
         if (!TARDISPermission.hasPermission(p, "tardis.admin")) {
             TARDISMessage.send(p, "CMD_ADMIN");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("junk.enabled") || !plugin.getConfig().getBoolean("creation.default_world")) {
             TARDISMessage.send(p, "JUNK_DISABLED");
-            return true;
+            return;
         }
         // check if there is a junk TARDIS already
         HashMap<String, Object> where = new HashMap<>();
@@ -64,7 +64,7 @@ class TARDISJunkCreator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             TARDISMessage.send(p, "JUNK_EXISTS");
-            return true;
+            return;
         }
         // get player's target block
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
@@ -126,6 +126,5 @@ class TARDISJunkCreator {
         builder.setTask(task);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
-        return true;
     }
 }

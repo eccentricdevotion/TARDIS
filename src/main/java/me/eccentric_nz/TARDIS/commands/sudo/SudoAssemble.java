@@ -36,7 +36,7 @@ class SudoAssemble {
         this.plugin = plugin;
     }
 
-    boolean restore(CommandSender sender, UUID uuid, String player) {
+    void restore(CommandSender sender, UUID uuid, String player) {
         // turn off dispersal for this player
         plugin.getTrackerKeeper().getDispersed().remove(uuid);
         // get players TARDIS
@@ -50,6 +50,5 @@ class SudoAssemble {
             }
             TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
         }
-        return true;
     }
 }

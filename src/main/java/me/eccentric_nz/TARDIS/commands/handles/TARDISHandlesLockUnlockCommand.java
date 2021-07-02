@@ -37,7 +37,7 @@ class TARDISHandlesLockUnlockCommand {
         this.plugin = plugin;
     }
 
-    boolean toggleLock(Player player, int id, boolean lock) {
+    void toggleLock(Player player, int id, boolean lock) {
         // get the TARDIS current location
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
@@ -61,6 +61,5 @@ class TARDISHandlesLockUnlockCommand {
                 TARDISSounds.playTARDISSound(l, "tardis_lock");
             }
         }
-        return true;
     }
 }

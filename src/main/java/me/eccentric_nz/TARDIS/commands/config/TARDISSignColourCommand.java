@@ -36,15 +36,14 @@ class TARDISSignColourCommand {
         this.plugin = plugin;
     }
 
-    boolean setColour(CommandSender sender, String[] args) {
+    void setColour(CommandSender sender, String[] args) {
         String colour = args[1].toUpperCase(Locale.ENGLISH);
         if (!COLOURS.contains(colour)) {
             TARDISMessage.send(sender, "ARG_COLOUR");
-            return true;
+            return;
         }
         plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        return true;
     }
 }

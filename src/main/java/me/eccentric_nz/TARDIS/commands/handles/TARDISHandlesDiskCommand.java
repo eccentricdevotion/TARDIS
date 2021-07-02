@@ -39,11 +39,11 @@ class TARDISHandlesDiskCommand {
         this.plugin = plugin;
     }
 
-    boolean renameDisk(Player player, String[] args) {
+    void renameDisk(Player player, String[] args) {
         // check perms
         if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
             TARDISMessage.send(player, "NO_PERMS");
-            return true;
+            return;
         }
         // check if item in hand is a Handles program disk
         ItemStack disk = player.getInventory().getItemInMainHand();
@@ -57,7 +57,7 @@ class TARDISHandlesDiskCommand {
                 String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
-                    return true;
+                    return;
                 }
                 // rename the disk
                 HashMap<String, Object> set = new HashMap<>();
@@ -73,6 +73,5 @@ class TARDISHandlesDiskCommand {
         } else {
             TARDISMessage.send(player, "HANDLES_DISK");
         }
-        return true;
     }
 }

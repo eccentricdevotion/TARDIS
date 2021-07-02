@@ -31,7 +31,7 @@ class TARDISJunkTime {
         this.plugin = plugin;
     }
 
-    boolean elapsed(CommandSender sender) {
+    void elapsed(CommandSender sender) {
         // check the Junk TARDIS is not home already
         if (new TARDISJunkLocation(plugin).isNotHome()) {
             long conf = plugin.getConfig().getLong("junk.return");
@@ -50,6 +50,5 @@ class TARDISJunkTime {
         } else {
             TARDISMessage.send(sender, "JUNK_AT_HOME");
         }
-        return true;
     }
 }

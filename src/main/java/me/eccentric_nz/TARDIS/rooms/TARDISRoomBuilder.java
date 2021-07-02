@@ -61,9 +61,8 @@ public class TARDISRoomBuilder {
      * This needs to be set up to use the actual dimensions from the schematic files, if user supplied room schematics
      * are allowed to be used.
      *
-     * @return true or false
      */
-    public boolean build() {
+    public void build() {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(p.getUniqueId().toString())) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
@@ -118,6 +117,5 @@ public class TARDISRoomBuilder {
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
             TARDISMessage.send(p, "ROOM_CANCEL", String.format("%d", taskID));
         }
-        return true;
     }
 }

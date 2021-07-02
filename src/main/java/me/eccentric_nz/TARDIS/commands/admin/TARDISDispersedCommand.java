@@ -31,7 +31,7 @@ class TARDISDispersedCommand {
         this.plugin = plugin;
     }
 
-    boolean assemble(CommandSender sender, String which) {
+    void assemble(CommandSender sender, String which) {
         if (which.equalsIgnoreCase("clear")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();
@@ -39,6 +39,5 @@ class TARDISDispersedCommand {
         } else if (which.equalsIgnoreCase("list")) {
             plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
         }
-        return true;
     }
 }

@@ -299,7 +299,7 @@ public class TARDISStaticUtils {
         String biomeKey = TARDIS.plugin.getTardisHelper().getBiomeKey(location);
         // convert to TARDISBiome
         String[] split = biomeKey.split(":");
-        NamespacedKey key = new NamespacedKey(split[0], split[1]);
+        NamespacedKey key = new NamespacedKey(TARDIS.plugin, split[1]);
         return TARDISBiome.of(key);
     }
 

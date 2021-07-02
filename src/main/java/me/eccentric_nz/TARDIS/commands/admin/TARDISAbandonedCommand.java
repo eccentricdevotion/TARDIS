@@ -44,25 +44,25 @@ class TARDISAbandonedCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String[] args) {
+    public void spawn(CommandSender sender, String[] args) {
         if (!plugin.getConfig().getBoolean("abandon.enabled")) {
             TARDISMessage.send(sender, "ABANDONED_DISABLED");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             TARDISMessage.send(sender, "ABANDONED_SPAWN");
-            return true;
+            return;
         }
         // tardisadmin spawn_abandoned Schematic PRESET COMPASS world x y z
         if (args.length < 4) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             TARDISMessage.send(sender, "ABANDONED_ARGS");
-            return true;
+            return;
         }
         String schm = args[1].toUpperCase(Locale.ENGLISH);
         if (!Consoles.getBY_NAMES().containsKey(schm)) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         Schematic s = Consoles.getBY_NAMES().get(schm);
         PRESET preset;
@@ -70,14 +70,14 @@ class TARDISAbandonedCommand {
             preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "ABANDONED_PRESET");
-            return true;
+            return;
         }
         COMPASS d;
         try {
             d = COMPASS.valueOf(args[3].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "ABANDONED_COMPASS");
-            return true;
+            return;
         }
         Location l;
         if (sender instanceof Player p) {
@@ -86,24 +86,22 @@ class TARDISAbandonedCommand {
             if (args.length < 8) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 TARDISMessage.send(sender, "ABANDONED_ARGS");
-
-                return true;
+                return;
             }
             World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
             if (w == null) {
                 TARDISMessage.send(sender, "WORLD_NOT_FOUND");
-                return true;
+                return;
             }
             int x = TARDISNumberParsers.parseInt(args[5]);
             int y = TARDISNumberParsers.parseInt(args[6]);
             int z = TARDISNumberParsers.parseInt(args[7]);
             if (x == 0 || y == 0 || z == 0) {
                 TARDISMessage.send(sender, "WORLD_NOT_FOUND");
-                return true;
+                return;
             }
             l = new Location(w, x, y, z);
         }
         new TARDISAbandoned(plugin).spawn(l, s, preset, d, (sender instanceof Player) ? (Player) sender : null);
-        return true;
     }
 }

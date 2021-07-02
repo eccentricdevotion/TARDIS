@@ -40,7 +40,7 @@ public class SudoChameleon {
         this.plugin = plugin;
     }
 
-    public boolean setPreset(CommandSender sender, int id, String[] args, OfflinePlayer offlinePlayer) {
+    public void setPreset(CommandSender sender, int id, String[] args, OfflinePlayer offlinePlayer) {
         try {
             PRESET preset = PRESET.valueOf(args[2].toUpperCase());
             if (preset.getSlot() == -1) {
@@ -53,11 +53,10 @@ public class SudoChameleon {
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
                 TARDISMessage.send(sender, "CHAM_SET", preset.toString());
                 // perform rebuild
-                return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
+                new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
             }
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "ABANDONED_PRESET");
         }
-        return true;
     }
 }

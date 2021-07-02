@@ -35,10 +35,10 @@ class TARDISJunkReturn {
         this.plugin = plugin;
     }
 
-    boolean recall(CommandSender sender) {
+    void recall(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
             TARDISMessage.send(sender, "CMD_ADMIN");
-            return true;
+            return;
         }
         TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
         if (tjl.isNotHome()) {
@@ -57,10 +57,8 @@ class TARDISJunkReturn {
             plugin.getGeneralKeeper().setJunkTravelling(true);
             plugin.getGeneralKeeper().setJunkDestination(home);
             TARDISMessage.send(sender, "JUNK_RETURN");
-            return true;
         } else {
             TARDISMessage.send(sender, "JUNK_AT_HOME");
-            return true;
         }
     }
 }

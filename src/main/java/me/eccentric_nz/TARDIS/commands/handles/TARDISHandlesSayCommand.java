@@ -26,9 +26,8 @@ import java.util.Arrays;
  */
 class TARDISHandlesSayCommand {
 
-    boolean say(Player player, String[] args) {
+    void say(Player player, String[] args) {
         String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
         TARDISMessage.handlesMessage(player, message);
-        return true;
     }
 }

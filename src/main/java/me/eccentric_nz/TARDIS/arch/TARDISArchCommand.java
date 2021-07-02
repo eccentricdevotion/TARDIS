@@ -37,11 +37,11 @@ public class TARDISArchCommand {
         this.plugin = plugin;
     }
 
-    public boolean getTime(Player player) {
+    public void getTime(Player player) {
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
             TARDISMessage.send(player, "ARCH_NOT_VALID");
-            return true;
+            return;
         }
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
         long now = System.currentTimeMillis();
@@ -53,29 +53,27 @@ public class TARDISArchCommand {
         } else {
             TARDISMessage.send(player, "ARCH_FREE");
         }
-        return true;
     }
 
-    public boolean whois(CommandSender sender, String[] args) {
+    public void whois(CommandSender sender, String[] args) {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
                 TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
-                return true;
+                return;
             }
         }
         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-        return true;
     }
 
-    public boolean force(CommandSender sender, String[] args) {
+    public void force(CommandSender sender, String[] args) {
         if (args[2].length() < 2) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
         UUID uuid = player.getUniqueId();
         boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
@@ -121,6 +119,5 @@ public class TARDISArchCommand {
             }, 5L);            // remove player from arched table
             new TARDISArchPersister(plugin).removeArch(uuid);
         }
-        return true;
     }
 }

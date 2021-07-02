@@ -37,17 +37,16 @@ class TARDISReloadCommand {
         this.plugin = plugin;
     }
 
-    boolean reloadConfig(CommandSender sender) {
+    void reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
         TARDISWorlds tc = new TARDISWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
         TARDISMessage.send(sender, "RELOADED");
-        return true;
     }
 
-    boolean reloadOtherConfig(CommandSender sender, String[] args) {
+    void reloadOtherConfig(CommandSender sender, String[] args) {
         try {
             Config config = Config.valueOf(args[1].toLowerCase());
             File file = new File(plugin.getDataFolder(), config + ".yml");
@@ -63,17 +62,14 @@ class TARDISReloadCommand {
                 case signs -> plugin.getSigns().load(file);
                 default -> {
                     TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
-                    return true;
+                    return;
                 }
             }
             TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
-            return true;
         } catch (InvalidConfigurationException | IOException e) {
             TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
-            return true;
         }
-        return true;
     }
 }

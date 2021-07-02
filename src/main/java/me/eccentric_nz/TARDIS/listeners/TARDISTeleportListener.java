@@ -55,7 +55,7 @@ public class TARDISTeleportListener implements Listener {
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {
             String world_from = Objects.requireNonNull(event.getFrom().getWorld()).getName();
-            String world_to = Objects.requireNonNull(event.getTo().getWorld()).getName();
+            String world_to = Objects.requireNonNull(Objects.requireNonNull(event.getTo()).getWorld()).getName();
             Player player = event.getPlayer();
             String uuid = player.getUniqueId().toString();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {

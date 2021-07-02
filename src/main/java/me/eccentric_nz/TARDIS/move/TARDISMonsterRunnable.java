@@ -135,7 +135,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             tm.setAggressive(pigzombie.isAngry());
                             tm.setAnger(pigzombie.getAnger());
                             tm.setEquipment(pigzombie.getEquipment());
-                            if (twa && Objects.requireNonNull(pigzombie.getEquipment()).getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && Objects.requireNonNull(pigzombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+                            if (twa && Objects.requireNonNull(pigzombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(pigzombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(pigzombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
                                 String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
                                 if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
                                     dn = name.substring(0, name.length() - 5);
@@ -149,7 +149,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         case WITHER_SKELETON:
                             Skeleton skeleton = (Skeleton) e;
                             tm.setEquipment(skeleton.getEquipment());
-                            if (twa && Objects.requireNonNull(skeleton.getEquipment()).getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && Objects.requireNonNull(skeleton.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+                            if (twa && Objects.requireNonNull(skeleton.getEquipment()).getHelmet() != null && Objects.requireNonNull(skeleton.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(skeleton.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
                                 String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
                                 if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
                                     dn = name.substring(0, name.length() - 5);
@@ -169,7 +169,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             Zombie zombie = (Zombie) e;
                             tm.setBaby(!zombie.isAdult());
                             tm.setEquipment(zombie.getEquipment());
-                            if (twa && Objects.requireNonNull(zombie.getEquipment()).getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && Objects.requireNonNull(zombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+                            if (twa && Objects.requireNonNull(zombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(zombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(zombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
                                 String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
                                 if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
                                     dn = name.substring(0, name.length() - 5);

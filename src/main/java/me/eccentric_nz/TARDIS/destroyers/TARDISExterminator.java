@@ -50,7 +50,7 @@ public class TARDISExterminator {
         this.plugin = plugin;
     }
 
-    public static boolean deleteFolder(File folder) {
+    public static void deleteFolder(File folder) {
         File[] files = folder.listFiles();
         if (files != null) { //some JVMs return null for empty dirs
             for (File f : files) {
@@ -62,7 +62,6 @@ public class TARDISExterminator {
             }
         }
         folder.delete();
-        return true;
     }
 
     boolean exterminate(int id) {
@@ -267,9 +266,7 @@ public class TARDISExterminator {
             }
             plugin.getServer().unloadWorld(w, true);
             File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
-            if (!deleteFolder(world_folder)) {
-                plugin.debug("Could not delete world <" + name + ">");
-            }
+            deleteFolder(world_folder);
         }
     }
 

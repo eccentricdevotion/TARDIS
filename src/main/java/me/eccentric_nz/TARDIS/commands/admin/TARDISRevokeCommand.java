@@ -32,16 +32,16 @@ class TARDISRevokeCommand {
         this.plugin = plugin;
     }
 
-    boolean removePermission(CommandSender sender, String[] args) {
+    void removePermission(CommandSender sender, String[] args) {
         // tardisadmin revoke [player] [permission]
         if (args.length < 3) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
         int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), args[2].toLowerCase());
         if (id != -1) {
@@ -53,6 +53,5 @@ class TARDISRevokeCommand {
         } else {
             TARDISMessage.send(sender, "BLUEPRINT_NOT_FOUND");
         }
-        return true;
     }
 }

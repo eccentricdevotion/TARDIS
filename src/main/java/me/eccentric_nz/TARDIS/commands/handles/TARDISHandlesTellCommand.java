@@ -33,12 +33,11 @@ class TARDISHandlesTellCommand {
         this.plugin = plugin;
     }
 
-    boolean message(String[] args) {
+    void message(String[] args) {
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player != null) {
             String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
             TARDISMessage.handlesMessage(player, message);
         }
-        return true;
     }
 }

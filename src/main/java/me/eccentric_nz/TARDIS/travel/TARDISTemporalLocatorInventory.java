@@ -51,11 +51,10 @@ public class TARDISTemporalLocatorInventory {
         for (GUITemporalLocator clock : GUITemporalLocator.values()) {
             ItemStack is = new ItemStack(clock.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (clock.ordinal() < 4) {
-                assert im != null;
                 im.setDisplayName(plugin.getLanguage().getString(clock.toString()));
             } else {
-                assert im != null;
                 im.setDisplayName(clock.getName());
             }
             if (clock.getLore().contains("~")) {

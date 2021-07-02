@@ -27,26 +27,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISItemCommand {
 
-    public boolean update(Player player, String[] args) {
+    public void update(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory")) {
             TARDISMessage.send(player, "ARG_ITEM");
-            return true;
+            return;
         }
         if (args[1].equalsIgnoreCase("hand")) {
             ItemStack inHand = player.getInventory().getItemInMainHand();
             if (inHand == null || !inHand.hasItemMeta()) {
                 TARDISMessage.send(player, "ITEM_IN_HAND");
-                return true;
+                return;
             }
             ItemMeta im = inHand.getItemMeta();
             assert im != null;
             if (!im.hasDisplayName()) {
                 TARDISMessage.send(player, "ITEM_IN_HAND");
-                return true;
+                return;
             }
             // strip color codes
             String stripped = ChatColor.stripColor(im.getDisplayName());
@@ -63,7 +63,7 @@ public class TARDISItemCommand {
                 } else {
                     if (im.hasCustomModelData()) {
                         TARDISMessage.send(player, "ITEM_HAS_DATA");
-                        return true;
+                        return;
                     }
                     inHand.setItemMeta(im);
                 }
@@ -110,6 +110,5 @@ public class TARDISItemCommand {
                 player.updateInventory();
             }
         }
-        return true;
     }
 }

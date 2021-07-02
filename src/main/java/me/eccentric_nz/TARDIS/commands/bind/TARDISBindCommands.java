@@ -93,7 +93,8 @@ public class TARDISBindCommands implements CommandExecutor {
                 }
                 return new BindAdd(plugin).setClick(bind, player, id, args);
             } else if (args[0].equalsIgnoreCase("remove")) {
-                return new BindRemove(plugin).setClick(bind, player);
+                new BindRemove(plugin).setClick(bind, player);
+                return true;
             }
         }
         return false;

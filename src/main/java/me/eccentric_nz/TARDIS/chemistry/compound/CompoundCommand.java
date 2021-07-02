@@ -32,16 +32,15 @@ public class CompoundCommand {
         this.plugin = plugin;
     }
 
-    public boolean create(Player player) {
+    public void create(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.compound.create")) {
             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Compound");
-            return true;
+            return;
         }
         // do stuff
         ItemStack[] menu = new CompoundInventory(plugin).getMenu();
         Inventory compounds = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemical compounds");
         compounds.setContents(menu);
         player.openInventory(compounds);
-        return true;
     }
 }

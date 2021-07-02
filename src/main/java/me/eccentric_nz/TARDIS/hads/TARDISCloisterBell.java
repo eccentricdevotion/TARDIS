@@ -128,7 +128,7 @@ public class TARDISCloisterBell implements Runnable {
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     assert current != null;
                     if (!isInPoliceBoxRange(current, location)) {
-                        location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
+                        Objects.requireNonNull(location.getWorld()).playSound(location, "cloister_bell", 1.0f, 1.0f);
                     }
                 }
             }

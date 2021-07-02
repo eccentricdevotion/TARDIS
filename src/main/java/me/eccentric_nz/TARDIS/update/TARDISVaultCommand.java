@@ -37,14 +37,14 @@ class TARDISVaultCommand {
         this.plugin = plugin;
     }
 
-    boolean addDropChest(Player player, int id, Block b) {
+    void addDropChest(Player player, int id, Block b) {
         // player is in their own TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet() && rst.getTardis_id() != id) {
             TARDISMessage.send(player, "CMD_ONLY_TL");
-            return true;
+            return;
         }
         Location l = b.getLocation();
         // determine the min x, y, z coords
@@ -75,6 +75,5 @@ class TARDISVaultCommand {
         } else {
             plugin.getQueryFactory().doInsert("vaults", set);
         }
-        return true;
     }
 }

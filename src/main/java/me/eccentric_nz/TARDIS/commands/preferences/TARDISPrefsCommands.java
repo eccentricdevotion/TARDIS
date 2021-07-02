@@ -151,7 +151,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         case "hum":
                             return new TARDISHumCommand().setHumPref(player, args);
                         case "isomorphic":
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                            new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                            return true;
                         case "key":
                             return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
                         case "language":
@@ -189,11 +190,20 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                 }
                                 return true;
                             }
-                            return switch (pref) {
-                                case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                                case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
-                                default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
-                            };
+                            switch (pref) {
+                                case "build" -> {
+                                    new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                                    return true;
+                                }
+                                case "junk" -> {
+                                    new TARDISJunkPreference(plugin).toggle(player, args[1]);
+                                    return true;
+                                }
+                                default -> {
+                                    new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+                                    return true;
+                                }
+                            }
                     }
                 } else {
                     TARDISMessage.send(player, "NO_PERMS");

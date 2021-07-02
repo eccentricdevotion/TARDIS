@@ -34,13 +34,12 @@ class TARDISDefaultCommand {
         this.plugin = plugin;
     }
 
-    boolean setDefaultItem(CommandSender sender, String[] args) {
+    void setDefaultItem(CommandSender sender, String[] args) {
         String which = args[0].toLowerCase(Locale.ENGLISH);
         String sonic = String.join("_", Arrays.copyOfRange(args, 1, args.length));
         plugin.getConfig().set("preferences." + which, sonic);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         TARDISMessage.send(sender, "RESTART");
-        return true;
     }
 }

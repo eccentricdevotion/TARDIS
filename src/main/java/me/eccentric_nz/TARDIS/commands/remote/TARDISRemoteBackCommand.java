@@ -41,7 +41,7 @@ public class TARDISRemoteBackCommand {
         this.plugin = plugin;
     }
 
-    public boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
+    public void sendBack(CommandSender sender, int id, OfflinePlayer player) {
 
         // get fast return location
         HashMap<String, Object> wherebl = new HashMap<>();
@@ -51,7 +51,7 @@ public class TARDISRemoteBackCommand {
             if (sender instanceof Player) {
                 TARDISMessage.send((Player) sender, "PREV_NOT_FOUND");
             }
-            return true;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", rsb.getWorld().getName());
@@ -68,7 +68,7 @@ public class TARDISRemoteBackCommand {
             if (sender instanceof Player) {
                 TARDISMessage.send((Player) sender, "CURRENT_NOT_FOUND");
             }
-            return true;
+            return;
         }
         // set hidden false
         HashMap<String, Object> sett = new HashMap<>();
@@ -108,6 +108,5 @@ public class TARDISRemoteBackCommand {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
         plugin.getTrackerKeeper().getHasDestination().remove(id);
         plugin.getTrackerKeeper().getRescue().remove(id);
-        return true;
     }
 }

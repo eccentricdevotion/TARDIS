@@ -110,7 +110,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     selectedSlot.put(uuid, null);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
@@ -128,7 +128,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     HashMap<String, Object> set = new HashMap<>();
@@ -137,6 +137,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     // update lore
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
+                    assert lore != null;
                     lore.remove(3);
                     im.setLore(lore);
                     is.setItemMeta(im);
@@ -150,7 +151,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     plugin.getQueryFactory().doDelete("programs", where);

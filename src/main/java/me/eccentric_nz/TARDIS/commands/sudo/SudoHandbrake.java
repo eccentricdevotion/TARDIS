@@ -32,15 +32,14 @@ public class SudoHandbrake {
         this.plugin = plugin;
     }
 
-    public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
+    public void toggle(CommandSender sender, String[] args, UUID uuid) {
         if (args.length < 3) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(uuid.toString())) {
-            return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardis_id(), args, true);
+            new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardis_id(), args, true);
         }
-        return true;
     }
 }

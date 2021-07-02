@@ -151,13 +151,12 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             slotWasNull = true;
                         }
                         sonic_im = sonic.getItemMeta();
+                        assert sonic_im != null;
                         if (slotWasNull) {
-                            assert sonic_im != null;
                             sonic_im.setDisplayName("Sonic Screwdriver");
                             view.setItem(49, sonic);
                         } else {
                             // remove lore
-                            assert sonic_im != null;
                             sonic_im.setLore(null);
                         }
                         sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());

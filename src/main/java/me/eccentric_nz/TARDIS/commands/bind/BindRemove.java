@@ -29,9 +29,8 @@ class BindRemove {
         this.plugin = plugin;
     }
 
-    boolean setClick(Bind bind, Player player) {
+    void setClick(Bind bind, Player player) {
         plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
         TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
-        return true;
     }
 }
