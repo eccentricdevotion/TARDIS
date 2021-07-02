@@ -241,19 +241,23 @@ public class TARDISGiveCommand implements CommandExecutor {
         if (item.equals("invisible")) {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             List<String> lore = im.getLore();
-            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            assert lore != null;
             lore.set(1, uses);
             im.setLore(lore);
             result.setItemMeta(im);
         }
         if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);
         }
         if (item.equals("key") || item.equals("control")) {
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             List<String> lore = im.getLore();
             if (lore == null) {
@@ -283,12 +287,14 @@ public class TARDISGiveCommand implements CommandExecutor {
             result = recipe.getResult();
             if (result.hasItemMeta()) {
                 ItemMeta im = result.getItemMeta();
+                assert im != null;
                 if (im.hasDisplayName() && (im.getDisplayName().contains("Key") || im.getDisplayName().contains("Authorised Control Disk"))) {
                     im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                     if (im.hasLore()) {
                         List<String> lore = im.getLore();
                         String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
                         String what = im.getDisplayName().contains("Key") ? "key" : "disk";
+                        assert lore != null;
                         lore.add(format + "This " + what + " belongs to");
                         lore.add(format + player.getName());
                         im.setLore(lore);
@@ -408,6 +414,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
                 }
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setCustomModelData(10000000 + model);
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                 // set display name
@@ -457,8 +464,10 @@ public class TARDISGiveCommand implements CommandExecutor {
         result.setAmount(amount);
         // add lore and enchantment
         ItemMeta im = result.getItemMeta();
+        assert im != null;
         List<String> lore = im.getLore();
         int max = plugin.getArtronConfig().getInt("full_charge");
+        assert lore != null;
         lore.set(1, "" + max);
         im.setLore(lore);
         im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -476,23 +485,27 @@ public class TARDISGiveCommand implements CommandExecutor {
         for (Map.Entry<String, String> map : items.entrySet()) {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
-                    case "bow-tie":
+                    case "bow-tie" -> {
                         List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+                            assert kbm != null;
                             kbm.addRecipe(nsk);
                         });
-                        break;
-                    case "jelly-baby":
+                    }
+                    case "jelly-baby" -> {
                         List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+                            assert kbm != null;
                             kbm.addRecipe(nsk);
                         });
-                        break;
-                    default:
+                    }
+                    default -> {
                         NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                        assert kbm != null;
                         kbm.addRecipe(nsk);
+                    }
                 }
             }
         }
@@ -509,25 +522,29 @@ public class TARDISGiveCommand implements CommandExecutor {
         KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
         String message = item_to_give;
         switch (item) {
-            case "bow-tie":
+            case "bow-tie" -> {
                 List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+                    assert kbm != null;
                     kbm.addRecipe(nsk);
                 });
                 message = "Bow Ties";
-                break;
-            case "jelly-baby":
+            }
+            case "jelly-baby" -> {
                 List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+                    assert kbm != null;
                     kbm.addRecipe(nsk);
                 });
                 message = "Jelly Babies";
-                break;
-            default:
+            }
+            default -> {
                 NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                assert kbm != null;
                 kbm.addRecipe(nsk);
+            }
         }
         book.setItemMeta(kbm);
         player.getInventory().addItem(book);
@@ -546,23 +563,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         for (Map.Entry<String, String> map : items.entrySet()) {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
-                    case "bow-tie":
+                    case "bow-tie" -> {
                         List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                             keys.add(nsk);
                         });
-                        break;
-                    case "jelly-baby":
+                    }
+                    case "jelly-baby" -> {
                         List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                             keys.add(nsk);
                         });
-                        break;
-                    default:
+                    }
+                    default -> {
                         NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
                         keys.add(nsk);
+                    }
                 }
             }
         }
@@ -583,23 +601,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         Set<NamespacedKey> keys = new HashSet<>();
         switch (item) {
-            case "bow-tie":
+            case "bow-tie" -> {
                 List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     keys.add(nsk);
                 });
-                break;
-            case "jelly-baby":
+            }
+            case "jelly-baby" -> {
                 List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     keys.add(nsk);
                 });
-                break;
-            default:
+            }
+            default -> {
                 NamespacedKey nsk = new NamespacedKey(plugin, items.get(item).replace(" ", "_").toLowerCase(Locale.ENGLISH));
                 keys.add(nsk);
+            }
         }
         player.discoverRecipes(keys);
         return true;

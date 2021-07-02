@@ -22,6 +22,7 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class TARDISPermissionLister {
 
@@ -32,7 +33,7 @@ public class TARDISPermissionLister {
     }
 
     void listPerms(CommandSender sender) {
-        List<String> perms = new ArrayList(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true));
+        List<String> perms = new ArrayList<>(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions")).getKeys(true));
         perms.sort(Comparator.naturalOrder());
         String lastPerm = "";
         for (int i = perms.size() - 1; i >= 0; i--) {

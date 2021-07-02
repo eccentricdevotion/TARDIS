@@ -52,6 +52,7 @@ public class CompoundsCreativeInventory {
         // elements
         ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
         ItemMeta eim = elements.getItemMeta();
+        assert eim != null;
         eim.setDisplayName("Elements");
         eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
         elements.setItemMeta(eim);
@@ -59,6 +60,7 @@ public class CompoundsCreativeInventory {
         // products
         ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
         ItemMeta pim = products.getItemMeta();
+        assert pim != null;
         pim.setDisplayName("Products");
         pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
         products.setItemMeta(pim);
@@ -66,6 +68,7 @@ public class CompoundsCreativeInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

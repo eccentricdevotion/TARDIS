@@ -114,27 +114,15 @@ public class TARDISChemistryCommand implements CommandExecutor {
     private void showBlockRecipe(Player player, String which) {
         player.closeInventory();
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Material surround;
-        switch (which) {
-            case "creative":
-                surround = Material.DIAMOND;
-                break;
-            case "construct":
-                surround = Material.LAPIS_LAZULI;
-                break;
-            case "compound":
-                surround = Material.REDSTONE;
-                break;
-            case "reduce":
-                surround = Material.GOLD_NUGGET;
-                break;
-            case "product":
-                surround = Material.IRON_NUGGET;
-                break;
-            default: // lab
-                surround = Material.COAL;
-                break;
-        }
+        Material surround = switch (which) {
+            case "creative" -> Material.DIAMOND;
+            case "construct" -> Material.LAPIS_LAZULI;
+            case "compound" -> Material.REDSTONE;
+            case "reduce" -> Material.GOLD_NUGGET;
+            case "product" -> Material.IRON_NUGGET;
+            default -> // lab
+                    Material.COAL;
+        };
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
         ItemStack ingredient = new ItemStack(surround, 1);
         inv.setItem(0, ingredient);
@@ -149,6 +137,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
         ItemStack result = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
         ItemMeta im = result.getItemMeta();
         RecipeData data = ChemistryBlock.RECIPES.get(which);
+        assert im != null;
         im.setDisplayName(data.getDisplayName());
         im.setLore(data.getLore());
         im.setCustomModelData(data.getCustomModelData());

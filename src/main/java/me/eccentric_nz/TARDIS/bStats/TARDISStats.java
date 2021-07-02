@@ -33,8 +33,8 @@ public class TARDISStats {
         metrics.addCustomChart(new Metrics.AdvancedPie("condensed_blocks", () -> new CondenserCounts(plugin).getCounts()));
         // most commonly grown rooms / median number of ARS rooms per TARDIS
         ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);
-        metrics.addCustomChart(new Metrics.AdvancedPie("rooms", () -> arsRoomCounts.getRoomCounts()));
-        metrics.addCustomChart(new Metrics.SimplePie("median_rooms_per_tardis", () -> arsRoomCounts.getMedian()));
+        metrics.addCustomChart(new Metrics.AdvancedPie("rooms", arsRoomCounts::getRoomCounts));
+        metrics.addCustomChart(new Metrics.SimplePie("median_rooms_per_tardis", arsRoomCounts::getMedian));
         // how many servers/players use hard or easy mode
         metrics.addCustomChart(new Metrics.SimplePie("server_difficulty", () -> plugin.getConfig().getString("preferences.difficulty", "easy")));
         metrics.addCustomChart(new Metrics.AdvancedPie("player_difficulty", () -> new PlayerDifficulty(plugin).getModes()));

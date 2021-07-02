@@ -34,6 +34,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -86,7 +87,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 if (rs.resultSet()) {
                     // teleport players to vortex
-                    vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
+                    vortexJunkLoc = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper())).add(3.0d, 0.0d, 2.0d);
                     getJunkTravellers().forEach((e) -> {
                         if (e instanceof Player p) {
                             Location relativeLoc = getRelativeLocation(p);
@@ -151,7 +152,7 @@ public class TARDISJunkDestroyer implements Runnable {
 
     private List<Entity> getJunkTravellers() {
         // spawn an entity
-        Entity orb = junkLoc.getWorld().spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
+        Entity orb = Objects.requireNonNull(junkLoc.getWorld()).spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
         List<Entity> ents = orb.getNearbyEntities(4.0, 4.0, 4.0);
         orb.remove();
         return ents;

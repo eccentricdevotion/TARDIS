@@ -140,6 +140,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         close(player);
                         ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         im.setDisplayName("Handles Program Disk");
                         im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
                         im.addItemFlags(ItemFlag.values());
@@ -244,6 +245,7 @@ public class TARDISHandlesProgramListener implements Listener {
     private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
         ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName(block.getDisplayName());
         if (block.getLore() != null) {
             im.setLore(block.getLore());

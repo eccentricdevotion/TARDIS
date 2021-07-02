@@ -57,6 +57,7 @@ class TARDISPresetInventory {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     im.setDisplayName(preset.getDisplayName());
                     is.setItemMeta(im);
                     stacks[preset.getSlot()] = is;
@@ -66,6 +67,7 @@ class TARDISPresetInventory {
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
+        assert but != null;
         but.setDisplayName("Back");
         but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
         back.setItemMeta(but);
@@ -73,6 +75,7 @@ class TARDISPresetInventory {
         // page two
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta two = page.getItemMeta();
+        assert two != null;
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
         page.setItemMeta(two);
@@ -80,6 +83,7 @@ class TARDISPresetInventory {
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
+        assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(can);

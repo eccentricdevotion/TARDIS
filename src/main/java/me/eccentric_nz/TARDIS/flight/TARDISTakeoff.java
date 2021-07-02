@@ -100,6 +100,7 @@ public class TARDISTakeoff {
                 spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
             }
             // set the handbrake
+            assert handbrake != null;
             TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardis_id(), plugin);
             if (plugin.getConfig().getBoolean("circuits.damage")) {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
@@ -134,6 +135,7 @@ public class TARDISTakeoff {
 
     private void toggleBeacon(String str) {
         Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+        assert bl != null;
         Block b = bl.getBlock();
         b.setBlockData(TARDISConstants.GLASS);
     }

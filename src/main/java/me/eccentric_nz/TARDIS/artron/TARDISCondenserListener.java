@@ -44,6 +44,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -91,7 +92,7 @@ public class TARDISCondenserListener implements Listener {
                                 }
                                 break;
                             case NONE:
-                                if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
@@ -112,7 +113,7 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     where.put("uuid", player.getUniqueId().toString());
                     rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+                    isCondenser = (plugin.getArtronConfig().contains("condenser") && Objects.equals(plugin.getArtronConfig().getString("condenser"), chest_loc) && rs.resultSet());
                 }
 
                 if (isCondenser) {
@@ -121,7 +122,7 @@ public class TARDISCondenserListener implements Listener {
                     // non-condensable items we need to return to the player
                     ArrayList<ItemStack> returnedItems = new ArrayList<>();
                     // how many items we neglected to condense due to them being enchanted
-                    Integer savedEnchantedItems = 0;
+                    int savedEnchantedItems = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
                     Inventory inv = event.getInventory();
@@ -137,8 +138,9 @@ public class TARDISCondenserListener implements Listener {
                             double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
                             amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
                             // add extra artron for any sonic upgrades
-                            if (is.getItemMeta().hasLore()) {
+                            if (Objects.requireNonNull(is.getItemMeta()).hasLore()) {
                                 List<String> lore = is.getItemMeta().getLore();
+                                assert lore != null;
                                 if (lore.contains("Bio-scanner Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                                 }
@@ -248,7 +250,7 @@ public class TARDISCondenserListener implements Listener {
                         }
                         // warn players about not condensing enchanted items
                         if (savedEnchantedItems > 0) {
-                            TARDISMessage.send(player, "CONDENSE_NO_ENCHANTED", savedEnchantedItems.toString());
+                            TARDISMessage.send(player, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
                         }
                         // halve it cause 1:1 is too much...
                         amount = Math.round(amount / 2.0F);
@@ -302,7 +304,7 @@ public class TARDISCondenserListener implements Listener {
                 if (!plugin.getArtronConfig().contains("condenser")) {
                     return;
                 }
-                if (plugin.getArtronConfig().getString("condenser").equals(loc.toString())) {
+                if (Objects.equals(plugin.getArtronConfig().getString("condenser"), loc.toString())) {
                     event.setCancelled(true);
                     openCondenser(b, event.getPlayer(), "Server Condenser");
                 }
@@ -326,6 +328,7 @@ public class TARDISCondenserListener implements Listener {
     private boolean isSonic(ItemStack is) {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (im.hasDisplayName()) {
                 return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
             }
@@ -339,6 +342,7 @@ public class TARDISCondenserListener implements Listener {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (im.hasDisplayName()) {
                 return im.getDisplayName().equals("TARDIS Blueprint Disk");
             }

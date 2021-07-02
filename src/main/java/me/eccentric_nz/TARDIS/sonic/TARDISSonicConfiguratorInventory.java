@@ -42,6 +42,7 @@ public class TARDISSonicConfiguratorInventory {
             if (gui.getSlot() != -1) {
                 ItemStack is = new ItemStack(gui.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName(gui.getName());
                 if (!gui.getLore().isEmpty()) {
                     im.setLore(Arrays.asList(gui.getLore().split("~")));
@@ -53,12 +54,14 @@ public class TARDISSonicConfiguratorInventory {
         }
         ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         ItemMeta pim = place.getItemMeta();
+        assert pim != null;
         pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
         pim.setCustomModelData(GUISonicConfigurator.PLACE_SONIC.getCustomModelData());
         place.setItemMeta(pim);
         stack[9] = place;
         ItemStack wool = new ItemStack(GUISonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
+        assert wim != null;
         wim.setDisplayName(" ");
         wim.setCustomModelData(GUISonicConfigurator.WAITING.getCustomModelData());
         wool.setItemMeta(wim);

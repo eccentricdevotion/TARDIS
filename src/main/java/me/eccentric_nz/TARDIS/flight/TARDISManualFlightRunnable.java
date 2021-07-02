@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,7 +67,7 @@ class TARDISManualFlightRunnable implements Runnable {
             int r = TARDISConstants.RANDOM.nextInt(4);
             Location loc = target.get(r);
             TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
-            loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
+            Objects.requireNonNull(loc.getWorld()).playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
         } else {
             int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());

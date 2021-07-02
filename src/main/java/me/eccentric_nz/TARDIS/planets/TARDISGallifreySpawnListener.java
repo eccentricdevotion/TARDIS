@@ -27,6 +27,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
+import java.util.Objects;
+
 /**
  * @author eccentric_nz
  */
@@ -40,7 +42,7 @@ public final class TARDISGallifreySpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGallifreyanSpawn(CreatureSpawnEvent event) {
-        if (!event.getLocation().getWorld().getName().endsWith("gallifrey")) {
+        if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("gallifrey")) {
             return;
         }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();

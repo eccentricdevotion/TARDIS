@@ -31,6 +31,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -49,7 +50,7 @@ public class TARDISAbandonLister {
         if (rst.resultSet()) {
             boolean click = (sender instanceof Player);
             if (click) {
-                sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
+                sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_CLICK")));
             }
             int i = 1;
             for (Tardis t : rst.getData()) {
@@ -76,7 +77,7 @@ public class TARDISAbandonLister {
                 }
             }
         } else {
-            sender.sendMessage(plugin.getLanguage().getString("ABANDONED_NONE"));
+            sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_NONE")));
         }
     }
 }

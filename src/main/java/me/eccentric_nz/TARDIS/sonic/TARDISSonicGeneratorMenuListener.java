@@ -39,6 +39,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -127,9 +128,12 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         }
                         // get Display name of selected sonic
                         ItemStack choice = view.getItem(slot);
+                        assert choice != null;
                         ItemMeta choice_im = choice.getItemMeta();
+                        assert choice_im != null;
                         String choice_name = choice_im.getDisplayName();
                         sonic_im = sonic.getItemMeta();
+                        assert sonic_im != null;
                         sonic_im.setDisplayName(choice_name);
                         sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
@@ -148,10 +152,12 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         }
                         sonic_im = sonic.getItemMeta();
                         if (slotWasNull) {
+                            assert sonic_im != null;
                             sonic_im.setDisplayName("Sonic Screwdriver");
                             view.setItem(49, sonic);
                         } else {
                             // remove lore
+                            assert sonic_im != null;
                             sonic_im.setLore(null);
                         }
                         sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
@@ -167,7 +173,9 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                     case 34:
                     case 35:
                         ItemStack upgrade = view.getItem(slot);
+                        assert upgrade != null;
                         ItemMeta upgrade_im = upgrade.getItemMeta();
+                        assert upgrade_im != null;
                         String upgrade_name = upgrade_im.getDisplayName();
                         sonic = view.getItem(49);
                         if (sonic == null) {
@@ -176,6 +184,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         }
                         sonic_im = sonic.getItemMeta();
                         List<String> lore;
+                        assert sonic_im != null;
                         if (sonic_im.hasLore()) {
                             // get the current sonic's upgrades
                             lore = sonic_im.getLore();
@@ -185,6 +194,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             lore.add("Upgrades:");
                         }
                         // if they don't already have the upgrade
+                        assert lore != null;
                         if (!lore.contains(upgrade_name)) {
                             lore.add(upgrade_name);
                             sonic_im.setLore(lore);
@@ -232,17 +242,21 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         String dn = im.getDisplayName();
         // get ChatColor from display name
         String colour = "";
         if (!dn.startsWith("Sonic")) {
-            colour = ChatColor.getByChar(dn.substring(1, 2)).name();
+            colour = Objects.requireNonNull(ChatColor.getByChar(dn.substring(1, 2))).name();
         }
         set.put("sonic_type", colour);
         set.put("model", im.getCustomModelData());
         if (im.hasLore()) {
             List<String> lore = im.getLore();
-            fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));
+            fields.forEach((key, value) -> {
+                assert lore != null;
+                set.put(value, (lore.contains(key)) ? 1 : 0);
+            });
         } else {
             // has been reset to standard sonic
             fields.forEach((key, value) -> set.put(value, 0));
@@ -262,7 +276,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
             if (cost < level) {
                 ItemStack is = sonic.clone();
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);
-                Entity drop = location.getWorld().dropItem(loc, is);
+                Entity drop = Objects.requireNonNull(location.getWorld()).dropItem(loc, is);
                 drop.setVelocity(new Vector(0, 0, 0));
                 plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
                 // remove the Artron energy
@@ -278,15 +292,20 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
 
     private int getCost(InventoryView view) {
         ItemStack is = view.getItem(45);
+        assert is != null;
         ItemMeta im = is.getItemMeta();
-        String c = im.getLore().get(0);
+        assert im != null;
+        String c = Objects.requireNonNull(im.getLore()).get(0);
         return TARDISNumberParsers.parseInt(c);
     }
 
     private void setCost(InventoryView view, int cost) {
         ItemStack is = view.getItem(45);
+        assert is != null;
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         List<String> lore = im.getLore();
+        assert lore != null;
         lore.set(0, "" + cost);
         im.setLore(lore);
         is.setItemMeta(im);

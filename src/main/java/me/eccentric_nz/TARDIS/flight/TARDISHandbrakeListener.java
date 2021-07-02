@@ -48,6 +48,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -65,7 +66,7 @@ public class TARDISHandbrakeListener implements Listener {
     }
 
     public static void toggleBeacon(String str, boolean on) {
-        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
+        Block b = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(str)).getBlock();
         b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
@@ -261,7 +262,7 @@ public class TARDISHandbrakeListener implements Listener {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
+            Block door = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location())).getBlock();
             return TARDISStaticUtils.isDoorOpen(door);
         }
         return false;

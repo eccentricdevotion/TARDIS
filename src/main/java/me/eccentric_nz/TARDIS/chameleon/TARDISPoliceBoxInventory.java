@@ -62,6 +62,7 @@ class TARDISPoliceBoxInventory {
                 String dye = underscored.toUpperCase() + "_DYE";
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName(s + " Police Box");
                 im.setCustomModelData(1001);
                 is.setItemMeta(im);
@@ -72,6 +73,7 @@ class TARDISPoliceBoxInventory {
         // weeping angel
         ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName("Weeping Angel");
         im.setCustomModelData(1001);
         is.setItemMeta(im);
@@ -79,6 +81,7 @@ class TARDISPoliceBoxInventory {
         // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();
+        assert one != null;
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
         page.setItemMeta(one);
@@ -86,6 +89,7 @@ class TARDISPoliceBoxInventory {
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
+        assert but != null;
         but.setDisplayName("Back");
         but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
         back.setItemMeta(but);
@@ -93,6 +97,7 @@ class TARDISPoliceBoxInventory {
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
+        assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
         close.setItemMeta(can);

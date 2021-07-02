@@ -30,11 +30,9 @@ import java.net.URLConnection;
 public class TARDISSpigotChecker implements Runnable {
 
     private final TARDIS plugin;
-    private final JsonParser jp;
 
     public TARDISSpigotChecker(TARDIS plugin) {
         this.plugin = plugin;
-        jp = new JsonParser();
     }
 
     @Override
@@ -76,7 +74,7 @@ public class TARDISSpigotChecker implements Runnable {
             URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
             URLConnection request = url.openConnection();
             request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");
@@ -93,7 +91,7 @@ public class TARDISSpigotChecker implements Runnable {
             URL url = new URL("https://hub.spigotmc.org/versions/1.17.json");
             URLConnection request = url.openConnection();
             request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");

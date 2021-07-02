@@ -287,10 +287,8 @@ public class TARDISBlocksUpdater {
             under.add("WEATHERED_CUT_COPPER_STAIRS");
             under.add("WHITE_CANDLE");
             under.add("YELLOW_CANDLE");
-            if (under.contains("GRASS_PATH")) {
-                // replace with DIRT_PATH
-                under.remove("GRASS_PATH");
-            }
+            // replace with DIRT_PATH
+            under.remove("GRASS_PATH");
             under.sort(Comparator.naturalOrder());
             blocks_config.set("under_door_blocks", under);
             blocks_config.set("version", 10);

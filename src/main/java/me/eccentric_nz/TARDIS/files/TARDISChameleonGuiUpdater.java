@@ -22,10 +22,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -58,7 +55,7 @@ public class TARDISChameleonGuiUpdater {
     }
 
     public void checkChameleonConfig() {
-        if (chameleon_config.getString("SAVE").equals("Save construction")) {
+        if (Objects.equals(chameleon_config.getString("SAVE"), "Save construction")) {
             chameleon_config.set("SAVE", "Save construct");
         }
         int i = 0;

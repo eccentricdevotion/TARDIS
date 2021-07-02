@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -75,7 +76,7 @@ public class TARDISRoomLister {
         LinkedHashMap<String, List<String>> room_options = new LinkedHashMap<>();
         List<String> default_rooms = new ArrayList<>();
         List<String> custom_rooms = new ArrayList<>();
-        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((room) -> {
+        Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((room) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".enabled")) {
                 if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".user")) {
                     custom_rooms.add(room);

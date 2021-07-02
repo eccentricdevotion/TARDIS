@@ -39,6 +39,7 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Various utility methods.
@@ -57,7 +58,7 @@ public class TARDISUtils {
     }
 
     public boolean compareLocations(Location a, Location b) {
-        if (a.getWorld().equals(b.getWorld())) {
+        if (Objects.equals(a.getWorld(), b.getWorld())) {
             double rd = plugin.getArtronConfig().getDouble("recharge_distance");
             double squared = rd * rd;
             return (a.distanceSquared(b) <= squared);
@@ -83,6 +84,7 @@ public class TARDISUtils {
         String name = "";
         if (player != null && player.isOnline()) {
             world = player.getLocation().getWorld();
+            assert world != null;
             name = world.getName();
         }
         ChunkGenerator gen = world.getGenerator();
@@ -92,12 +94,14 @@ public class TARDISUtils {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
         boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && gen instanceof TARDISChunkGenerator);
+        assert player != null;
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
     public boolean inTARDISWorld(Location loc) {
         // check they are still in the TARDIS world
         World world = loc.getWorld();
+        assert world != null;
         String name = world.getName();
         ChunkGenerator gen = world.getGenerator();
         // get default world name
@@ -201,7 +205,7 @@ public class TARDISUtils {
 
     public List<Entity> getJunkTravellers(Location loc) {
         // spawn an entity
-        Entity orb = loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+        Entity orb = Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.EXPERIENCE_ORB);
         List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
         orb.remove();
         return ents;
@@ -264,37 +268,13 @@ public class TARDISUtils {
 
     public String actionBarFormat(Player player) {
         TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
-        switch (displayType) {
-            case BIOME:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
-                );
-            case COORDS:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                );
-            case DIRECTION:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%FACING%", getFacing(player))
-                        .replace("%FACING_XZ%", getFacingXZ(player))
-                );
-            case TARGET_BLOCK:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
-            default: // ALL
-                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                        .replace("%FACING%", getFacing(player))
-                        .replace("%FACING_XZ%", getFacingXZ(player))
-                        .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                        .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
-                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-                );
-        }
+        return switch (displayType) {
+            case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name()));
+            case COORDS -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%X%", String.format("%,d", player.getLocation().getBlockX())).replace("%Y%", String.format("%,d", player.getLocation().getBlockY())).replace("%Z%", String.format("%,d", player.getLocation().getBlockZ())));
+            case DIRECTION -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%FACING%", getFacing(player)).replace("%FACING_XZ%", getFacingXZ(player)));
+            case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+            default -> // ALL
+                    ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getConfig().getString("display.all")).replace("%X%", String.format("%,d", player.getLocation().getBlockX())).replace("%Y%", String.format("%,d", player.getLocation().getBlockY())).replace("%Z%", String.format("%,d", player.getLocation().getBlockZ())).replace("%FACING%", getFacing(player)).replace("%FACING_XZ%", getFacingXZ(player)).replace("%YAW%", String.format("%.1f", player.getLocation().getYaw())).replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch())).replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name()).replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+        };
     }
 }

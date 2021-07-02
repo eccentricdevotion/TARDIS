@@ -41,6 +41,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -60,7 +61,7 @@ public class TARDISMoveListener implements Listener {
         if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId()) && !plugin.getTrackerKeeper().getBiomeSetters().contains(p.getUniqueId())) {
             return;
         }
-        Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
+        Location l = new Location(Objects.requireNonNull(event.getTo()).getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
         Location loc = p.getLocation(); // Grab Location
 
         /*
@@ -77,7 +78,7 @@ public class TARDISMoveListener implements Listener {
             return;
         }
         if (plugin.getTrackerKeeper().getBiomeSetters().contains(p.getUniqueId())) {
-            String name = l.getWorld().getName();
+            String name = Objects.requireNonNull(l.getWorld()).getName();
             if (name.endsWith("tardis_gallifrey") || name.endsWith("tardis_skaro")) {
                 Chunk chunk = l.getChunk();
                 String biomeKey = plugin.getTardisHelper().getBiomeKey(chunk);
@@ -99,13 +100,13 @@ public class TARDISMoveListener implements Listener {
             if (tpl.isAbandoned() || companions.contains(uuid)) {
                 Location to = tpl.getLocation();
                 boolean exit;
-                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(plugin.getServer().getPlayer(uuid), "tardis.create_world")) {
-                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(Objects.requireNonNull(plugin.getServer().getPlayer(uuid)), "tardis.create_world")) {
+                    exit = !(Objects.requireNonNull(to.getWorld()).getName().contains("TARDIS"));
                 } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                     // check default world name
-                    exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
+                    exit = !(Objects.requireNonNull(to.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name")));
                 } else {
-                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                    exit = !(Objects.requireNonNull(to.getWorld()).getName().contains("TARDIS"));
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
@@ -125,7 +126,7 @@ public class TARDISMoveListener implements Listener {
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                    petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                    petsAndFollowers = tf.farmAnimals(l, d, id, p, Objects.requireNonNull(tpl.getLocation().getWorld()).getName(), Objects.requireNonNull(l.getWorld()).getName());
                 }
                 // set travelling status
                 plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);

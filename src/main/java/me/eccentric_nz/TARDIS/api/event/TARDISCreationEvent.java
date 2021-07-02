@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public final class TARDISCreationEvent extends TARDISLocationEvent {
-    
+
     /**
      * A TARDIS creation event.
      *

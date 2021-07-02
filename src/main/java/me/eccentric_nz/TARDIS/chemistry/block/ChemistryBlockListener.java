@@ -45,6 +45,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ChemistryBlockListener implements Listener {
 
@@ -84,8 +85,9 @@ public class ChemistryBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChemistryBlockInteract(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Objects.equals(event.getHand(), EquipmentSlot.HAND)) {
             Block block = event.getClickedBlock();
+            assert block != null;
             Material material = block.getType();
             if (!material.equals(Material.RED_MUSHROOM_BLOCK)) {
                 return;
@@ -171,6 +173,7 @@ public class ChemistryBlockListener implements Listener {
             if (name != null) {
                 ItemStack is = new ItemStack(mush, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName(name);
                 int cmd = models.get(name);
                 im.setCustomModelData(10000000 + cmd);
@@ -189,7 +192,7 @@ public class ChemistryBlockListener implements Listener {
     public void onChemistryBlockPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
         Material material = event.getBlock().getType();
-        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
+        if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
             event.setCancelled(true);
         }
     }

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -154,7 +155,7 @@ public class TARDISInteriorPostioning {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             // get the exit location
-            TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+            TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
             Location exitLocation = dl.getL();
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);

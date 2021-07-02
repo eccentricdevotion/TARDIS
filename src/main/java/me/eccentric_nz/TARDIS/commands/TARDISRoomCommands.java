@@ -32,10 +32,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -62,9 +59,9 @@ public class TARDISRoomCommands implements CommandExecutor {
                 return true;
             }
             switch (args[0].toLowerCase(Locale.ENGLISH)) {
-                case "blocks": {
+                case "blocks" -> {
                     String name = args[1].toUpperCase(Locale.ENGLISH);
-                    Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+                    Set<String> rooms = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
                     if (name.equals("SAVE")) {
                         if (!sender.hasPermission("tardis.admin")) {
                             TARDISMessage.send(sender, "NO_PERMS");
@@ -126,7 +123,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                case "required": {
+                case "required" -> {
                     Player player = null;
                     if (sender instanceof Player) {
                         player = (Player) sender;
@@ -136,7 +133,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         return true;
                     }
                     String name = args[1].toUpperCase(Locale.ENGLISH);
-                    Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+                    Set<String> rooms = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
                     if (!rooms.contains(name)) {
                         TARDISMessage.send(player, "COULD_NOT_FIND_ROOM");
                         return true;
@@ -144,7 +141,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     RoomRequiredLister.listCondensables(plugin, name, player);
                     return true;
                 }
-                case "add": {
+                case "add" -> {
                     if (!sender.hasPermission("tardis.admin")) {
                         TARDISMessage.send(sender, "NO_PERMS");
                         return false;
@@ -186,7 +183,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "ROOM_ADDED");
                     return true;
                 }
-                default: {
+                default -> {
                     if (!sender.hasPermission("tardis.admin")) {
                         TARDISMessage.send(sender, "NO_PERMS");
                         return false;
@@ -248,7 +245,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                                 return false;
                             }
                             // check seed material is not already in use
-                            for (String m : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+                            for (String m : Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false)) {
                                 if (setMaterial.equalsIgnoreCase(plugin.getRoomsConfig().getString("rooms." + m + ".seed"))) {
                                     TARDISMessage.send(sender, "ROOM_SEED_EXISTS");
                                     return true;

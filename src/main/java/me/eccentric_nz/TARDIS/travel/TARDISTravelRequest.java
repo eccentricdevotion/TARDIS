@@ -26,6 +26,8 @@ import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 /**
  * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
  * smell of dust after rain".
@@ -52,14 +54,14 @@ public class TARDISTravelRequest {
     public boolean getRequest(Player p, Player to, Location l) {
         boolean bool = true;
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
-            String perm = l.getWorld().getName();
+            String perm = Objects.requireNonNull(l.getWorld()).getName();
             if (!TARDISPermission.hasPermission(p, "tardis.travel." + perm)) {
                 TARDISMessage.send(p, "TRAVEL_NO_PERM_WORLD", perm);
                 bool = false;
             }
         }
         // nether travel
-        if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+        if (Objects.requireNonNull(l.getWorld()).getEnvironment().equals(Environment.NETHER)) {
             // check if nether enabled
             if (!plugin.getConfig().getBoolean("travel.nether")) {
                 TARDISMessage.send(p, "TRAVEL_DISABLED", "Nether");
@@ -98,7 +100,7 @@ public class TARDISTravelRequest {
             TARDISMessage.send(p, "WORLDGUARD");
             bool = false;
         }
-        if (plugin.getPluginRespect().isTownyOnServer() && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !plugin.getPluginRespect().getTychk().checkTowny(to, l)) {
+        if (plugin.getPluginRespect().isTownyOnServer() && !Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") && !plugin.getPluginRespect().getTychk().checkTowny(to, l)) {
             TARDISMessage.send(p, "TOWNY");
             bool = false;
         }

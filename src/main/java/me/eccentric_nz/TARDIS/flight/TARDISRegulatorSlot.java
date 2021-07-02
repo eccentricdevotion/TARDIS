@@ -44,6 +44,7 @@ class TARDISRegulatorSlot {
     TARDISRegulatorSlot() {
         box = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta ler = box.getItemMeta();
+        assert ler != null;
         ler.setDisplayName("Regulator");
         box.setItemMeta(ler);
         vortex = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);

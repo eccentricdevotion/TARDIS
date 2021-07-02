@@ -37,6 +37,7 @@ import org.bukkit.block.data.BlockData;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,6 +67,7 @@ public class TARDISUpgradeBlockScanner {
         // get JSON
         JsonObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
+        assert obj != null;
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
         int h = dimensions.get("height").getAsInt();
         int w = dimensions.get("width").getAsInt();
@@ -121,10 +123,10 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.ORANGE_WOOL)) {
                             type = wall_type;
                         }
-                        if (type.equals(Material.LIGHT_GRAY_WOOL)) {
+                        if (Objects.equals(type, Material.LIGHT_GRAY_WOOL)) {
                             type = floor_type;
                         }
-                        if (type.equals(Material.SPONGE)) {
+                        if (Objects.equals(type, Material.SPONGE)) {
                             type = Material.AIR;
                         }
                         if (type.equals(Material.CAKE)) {
@@ -160,17 +162,11 @@ public class TARDISUpgradeBlockScanner {
                             switch (type) {
                                 case ORANGE_WOOL:
                                     if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
-                                        switch (use_clay) {
-                                            case TERRACOTTA:
-                                                type = Material.ORANGE_TERRACOTTA;
-                                                break;
-                                            case CONCRETE:
-                                                type = Material.ORANGE_CONCRETE;
-                                                break;
-                                            default:
-                                                type = Material.ORANGE_WOOL;
-                                                break;
-                                        }
+                                        type = switch (use_clay) {
+                                            case TERRACOTTA -> Material.ORANGE_TERRACOTTA;
+                                            case CONCRETE -> Material.ORANGE_CONCRETE;
+                                            default -> Material.ORANGE_WOOL;
+                                        };
                                     } else {
                                         type = wall_type;
                                     }
@@ -178,17 +174,11 @@ public class TARDISUpgradeBlockScanner {
                                 case LIGHT_GRAY_WOOL:
                                     if (!tud.getSchematic().getPermission().equals("eleventh")) {
                                         if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                            switch (use_clay) {
-                                                case TERRACOTTA:
-                                                    type = Material.LIGHT_GRAY_TERRACOTTA;
-                                                    break;
-                                                case CONCRETE:
-                                                    type = Material.LIGHT_GRAY_CONCRETE;
-                                                    break;
-                                                default:
-                                                    type = Material.LIGHT_GRAY_WOOL;
-                                                    break;
-                                            }
+                                            type = switch (use_clay) {
+                                                case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA;
+                                                case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;
+                                                default -> Material.LIGHT_GRAY_WOOL;
+                                            };
                                         } else {
                                             type = floor_type;
                                         }
@@ -217,6 +207,7 @@ public class TARDISUpgradeBlockScanner {
                                     type = Material.getMaterial(m);
                             }
                         }
+                        assert type != null;
                         if (type.isAir()) {
                             v--;
                         }

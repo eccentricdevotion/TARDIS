@@ -48,6 +48,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -102,7 +103,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         HashMap<String, Object> wheress = new HashMap<>();
                         wheress.put("tardis_id", id);
                         HashMap<String, Object> setsave = new HashMap<>();
-                        setsave.put("world", exit.getWorld().getName());
+                        setsave.put("world", Objects.requireNonNull(exit.getWorld()).getName());
                         setsave.put("x", exit.getBlockX());
                         setsave.put("y", exit.getBlockY());
                         setsave.put("z", exit.getBlockZ());
@@ -141,7 +142,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     }
                 }
                 if (exit != null) {
-                    if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+                    if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
                         exit.getWorld().loadChunk(exit.getChunk());
                     }
                     PRESET preset = tardis.getPreset();
@@ -175,26 +176,26 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     long travel_time;
                     String landSFX;
                     switch (spaceTimeThrottle) {
-                        case WARP:
+                        case WARP -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
                             travel_time = (malfunction) ? 400L : 94L;
                             landSFX = "tardis_land_warp";
-                            break;
-                        case RAPID:
+                        }
+                        case RAPID -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
                             travel_time = (malfunction) ? 400L : 188L;
                             landSFX = "tardis_land_rapid";
-                            break;
-                        case FASTER:
+                        }
+                        case FASTER -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
                             travel_time = (malfunction) ? 400L : 282L;
                             landSFX = "tardis_land_faster";
-                            break;
-                        default: // NORMAL
+                        }
+                        default -> { // NORMAL
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
                             travel_time = (malfunction) ? 400L : 375L;
                             landSFX = "tardis_land";
-                            break;
+                        }
                     }
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
@@ -244,7 +245,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                                 TARDISSounds.playTARDISSound(sound_loc, "junk_land");
                             }
                         } else {
-                            handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                            Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
                         HashMap<String, Object> setcurrent = new HashMap<>();
                         HashMap<String, Object> wherecurrent = new HashMap<>();
@@ -253,7 +254,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         HashMap<String, Object> setdoor = new HashMap<>();
                         HashMap<String, Object> wheredoor = new HashMap<>();
                         // current
-                        setcurrent.put("world", final_location.getWorld().getName());
+                        setcurrent.put("world", Objects.requireNonNull(final_location.getWorld()).getName());
                         setcurrent.put("x", final_location.getBlockX());
                         setcurrent.put("y", final_location.getBlockY());
                         setcurrent.put("z", final_location.getBlockZ());
@@ -278,7 +279,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
                         if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(rscl.getWorld().getName())) {
-                            if (l.getWorld().equals(final_location.getWorld())) {
+                            if (Objects.equals(l.getWorld(), final_location.getWorld())) {
                                 int distance = (int) l.distance(final_location);
                                 if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
                                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.TRAVEL, 1);
@@ -311,6 +312,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 
     private void setBeaconUpBlock(String str, int id) {
         Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+        assert bl != null;
         Block b = bl.getBlock();
         while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
             b = b.getRelative(BlockFace.DOWN);

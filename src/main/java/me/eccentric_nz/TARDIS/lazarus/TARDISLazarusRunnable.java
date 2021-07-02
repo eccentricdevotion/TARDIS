@@ -52,15 +52,14 @@ class TARDISLazarusRunnable implements Runnable {
         if (i < LOOPS) {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 switch (face) {
-                    case EAST:
-                    case WEST:
+                    case EAST, WEST -> {
                         MOSSY = EAST_WEST_MOSSY;
                         PLAIN = EAST_WEST;
-                        break;
-                    default:
+                    }
+                    default -> {
                         MOSSY = NORTH_SOUTH_MOSSY;
                         PLAIN = NORTH_SOUTH;
-                        break;
+                    }
                 }
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
@@ -76,13 +75,8 @@ class TARDISLazarusRunnable implements Runnable {
         } else {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
                 switch (face) {
-                    case EAST:
-                    case WEST:
-                        PLAIN = EAST_WEST;
-                        break;
-                    default:
-                        PLAIN = NORTH_SOUTH;
-                        break;
+                    case EAST, WEST -> PLAIN = EAST_WEST;
+                    default -> PLAIN = NORTH_SOUTH;
                 }
                 block.getRelative(face).setBlockData(PLAIN);
                 block.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);

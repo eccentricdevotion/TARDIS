@@ -31,17 +31,20 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class GlueListener implements Listener {
 
     @EventHandler
     public void onGlueUse(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Objects.equals(event.getHand(), EquipmentSlot.HAND)) {
             Player player = event.getPlayer();
             Block block = event.getClickedBlock();
             if (TARDISPermission.hasPermission(player, "tardis.chemistry.glue") && block != null && block.getType().equals(Material.PISTON)) {
                 ItemStack is = event.getItem();
                 if (is != null && is.getType().equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     if (im.hasDisplayName() && im.getDisplayName().equals("Glue") && im.hasCustomModelData() && im.getCustomModelData() == 10000011) {
                         player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.0f, 1.0f);
                         // switch piston to sticky piston

@@ -147,53 +147,20 @@ class TARDISSchematicPaster implements Runnable {
                 plugin.getBlockLogger().logRemoval(block);
             }
             switch (data.getMaterial()) {
-                case REDSTONE_TORCH:
-                    postRedstoneTorches.put(block, data);
-                    break;
-                case BLACK_BANNER:
-                case BLACK_WALL_BANNER:
-                case BLUE_BANNER:
-                case BLUE_WALL_BANNER:
-                case BROWN_BANNER:
-                case BROWN_WALL_BANNER:
-                case CYAN_BANNER:
-                case CYAN_WALL_BANNER:
-                case GRAY_BANNER:
-                case GRAY_WALL_BANNER:
-                case GREEN_BANNER:
-                case GREEN_WALL_BANNER:
-                case LIGHT_BLUE_BANNER:
-                case LIGHT_BLUE_WALL_BANNER:
-                case LIGHT_GRAY_BANNER:
-                case LIGHT_GRAY_WALL_BANNER:
-                case LIME_BANNER:
-                case LIME_WALL_BANNER:
-                case MAGENTA_BANNER:
-                case MAGENTA_WALL_BANNER:
-                case ORANGE_BANNER:
-                case ORANGE_WALL_BANNER:
-                case PINK_BANNER:
-                case PINK_WALL_BANNER:
-                case PURPLE_BANNER:
-                case PURPLE_WALL_BANNER:
-                case RED_BANNER:
-                case RED_WALL_BANNER:
-                case WHITE_BANNER:
-                case WHITE_WALL_BANNER:
-                case YELLOW_BANNER:
-                case YELLOW_WALL_BANNER:
+                case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
+                case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
                     JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
                         postBanners.put(block, tbd);
                     }
-                    break;
-                default:
+                }
+                default -> {
                     block.setBlockData(data, true);
                     if (plugin.getBlockLogger().isLogging()) {
                         plugin.getBlockLogger().logPlacement(block);
                     }
-                    break;
+                }
             }
             double progress = counter / div;
             bb.setProgress(progress);

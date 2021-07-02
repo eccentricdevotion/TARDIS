@@ -54,6 +54,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -81,7 +82,7 @@ public class TARDISHandlesProcessor {
         String event = "";
         for (ItemStack is : program.getInventory()) {
             if (is != null) {
-                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
                 switch (thb) {
                     case ARTRON:
                     case DEATH:
@@ -118,7 +119,7 @@ public class TARDISHandlesProcessor {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
-                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
                 TARDISHandlesBlock next = getNext(i + 1);
                 if (next != null) {
                     UUID uuid = player.getUniqueId();
@@ -188,6 +189,7 @@ public class TARDISHandlesProcessor {
                                         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
                                         if (rsh.resultSet()) {
                                             Location handles = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
+                                            assert handles != null;
                                             Block block = handles.getBlock();
                                             Powerable button = (Powerable) block.getBlockData();
                                             if (!button.isPowered()) {
@@ -216,7 +218,7 @@ public class TARDISHandlesProcessor {
                                     continue;
                                 }
                                 ItemStack after = program.getInventory()[i + 1];
-                                List<String> lore = after.getItemMeta().getLore();
+                                List<String> lore = Objects.requireNonNull(after.getItemMeta()).getLore();
                                 if (lore != null) {
                                     String first = lore.get(0);
                                     // get current location
@@ -247,20 +249,20 @@ public class TARDISHandlesProcessor {
                                             case X:
                                                 // if X comes after travel then we'll look for Y and Z
                                                 ItemStack coordX = program.getInventory()[i + 2];
-                                                TARDISHandlesBlock coordBlockX = TARDISHandlesBlock.valueOf(coordX.getItemMeta().getDisplayName());
+                                                TARDISHandlesBlock coordBlockX = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordX.getItemMeta()).getDisplayName());
                                                 x = getNumber(coordBlockX, i + 2);
                                                 // find Y
                                                 int fy = find(TARDISHandlesBlock.Y, i + 3);
                                                 if (fy > 0) {
                                                     ItemStack coordY = program.getInventory()[fy];
-                                                    TARDISHandlesBlock coordBlockY = TARDISHandlesBlock.valueOf(coordY.getItemMeta().getDisplayName());
+                                                    TARDISHandlesBlock coordBlockY = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordY.getItemMeta()).getDisplayName());
                                                     y = getNumber(coordBlockY, fy);
                                                 }
                                                 // find Z
                                                 int fz = find(TARDISHandlesBlock.Z, i + 3);
                                                 if (fz > 0) {
                                                     ItemStack coordZ = program.getInventory()[fz];
-                                                    TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
+                                                    TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordZ.getItemMeta()).getDisplayName());
                                                     z = getNumber(coordBlockZ, fz);
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
@@ -269,13 +271,13 @@ public class TARDISHandlesProcessor {
                                             case Y:
                                                 // if Y comes after travel then X use current coords, and we'll look for Z
                                                 ItemStack coordY = program.getInventory()[i + 2];
-                                                TARDISHandlesBlock coordBlockY = TARDISHandlesBlock.valueOf(coordY.getItemMeta().getDisplayName());
+                                                TARDISHandlesBlock coordBlockY = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordY.getItemMeta()).getDisplayName());
                                                 y = getNumber(coordBlockY, i + 2);
                                                 // find Z
                                                 int fyz = find(TARDISHandlesBlock.Z, i + 3);
                                                 if (fyz > 0) {
                                                     ItemStack coordZ = program.getInventory()[fyz];
-                                                    TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
+                                                    TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordZ.getItemMeta()).getDisplayName());
                                                     z = getNumber(coordBlockZ, fyz);
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
@@ -284,7 +286,7 @@ public class TARDISHandlesProcessor {
                                             case Z:
                                                 // if Z comes after travel then X and Y will use current coords
                                                 ItemStack coordZ = program.getInventory()[i + 2];
-                                                TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
+                                                TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(Objects.requireNonNull(coordZ.getItemMeta()).getDisplayName());
                                                 z = getNumber(coordBlockZ, i + 2);
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
@@ -383,7 +385,10 @@ public class TARDISHandlesProcessor {
                                                     }
                                                     World bw = nsob.getWorld();
                                                     // check location
-                                                    while (!bw.getChunkAt(nsob).isLoaded()) {
+                                                    while (true) {
+                                                        assert bw != null;
+                                                        if (!!bw.getChunkAt(nsob).isLoaded())
+                                                            break;
                                                         bw.getChunkAt(nsob).load();
                                                     }
                                                     int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, direction);
@@ -428,7 +433,7 @@ public class TARDISHandlesProcessor {
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
                                                         continue;
                                                     }
-                                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
+                                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(player_loc.getWorld()).getName() + ".time_travel")) {
                                                         TARDISMessage.handlesSend(player, "NO_WORLD_TRAVEL");
                                                         continue;
                                                     }
@@ -451,7 +456,7 @@ public class TARDISHandlesProcessor {
                                                     int sx = TARDISNumberParsers.parseInt(lore.get(2));
                                                     int sy = TARDISNumberParsers.parseInt(lore.get(3));
                                                     int sz = TARDISNumberParsers.parseInt(lore.get(4));
-                                                    if (current.getWorld().getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
+                                                    if (Objects.requireNonNull(current.getWorld()).getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
                                                         continue;
                                                     }
                                                     TARDISMessage.handlesSend(player, "LOC_SET");
@@ -528,7 +533,7 @@ public class TARDISHandlesProcessor {
                                             }, 500L);
                                             // set current
                                             HashMap<String, Object> setc = new HashMap<>();
-                                            setc.put("world", goto_loc.getWorld().getName());
+                                            setc.put("world", Objects.requireNonNull(goto_loc.getWorld()).getName());
                                             setc.put("x", goto_loc.getBlockX());
                                             setc.put("y", goto_loc.getBlockY());
                                             setc.put("z", goto_loc.getBlockZ());
@@ -591,7 +596,7 @@ public class TARDISHandlesProcessor {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
-                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
                 switch (thb) {
                     case LESS_THAN:
                     case LESS_THAN_EQUAL:
@@ -616,6 +621,7 @@ public class TARDISHandlesProcessor {
                             // get the current Artron level
                             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
                             if (rs.fromUUID(player.getUniqueId().toString())) {
+                                assert comparison != null;
                                 process = switch (comparison) {
                                     case LESS_THAN -> (level < rs.getArtronLevel());
                                     case LESS_THAN_EQUAL -> (level <= rs.getArtronLevel());
@@ -643,7 +649,7 @@ public class TARDISHandlesProcessor {
         }
         ItemStack num = program.getInventory()[i];
         if (num != null) {
-            return TARDISHandlesBlock.BY_NAME.get(num.getItemMeta().getDisplayName());
+            return TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(num.getItemMeta()).getDisplayName());
         }
         return null;
     }
@@ -668,7 +674,7 @@ public class TARDISHandlesProcessor {
         int n = 1;
         ItemStack num = program.getInventory()[i + n];
         while (num != null) {
-            TARDISHandlesBlock numBlock = TARDISHandlesBlock.BY_NAME.get(num.getItemMeta().getDisplayName());
+            TARDISHandlesBlock numBlock = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(num.getItemMeta()).getDisplayName());
             if (numBlock.getCategory().equals(TARDISHandlesCategory.NUMBER)) {
                 tmp += numBlock.getDisplayName();
             } else {
@@ -687,7 +693,7 @@ public class TARDISHandlesProcessor {
         for (int n = i; n < 34; n++) {
             ItemStack yOrZ = program.getInventory()[n];
             if (yOrZ != null) {
-                TARDISHandlesBlock block = TARDISHandlesBlock.BY_NAME.get(yOrZ.getItemMeta().getDisplayName());
+                TARDISHandlesBlock block = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(yOrZ.getItemMeta()).getDisplayName());
                 if (block == thb) {
                     return n + 1;
                 }

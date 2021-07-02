@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.Objects;
+
 public class TARDISDisplayListener implements Listener {
 
     private final TARDIS plugin;
@@ -20,7 +22,7 @@ public class TARDISDisplayListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId())) {
-            if (event.getFrom().getWorld().getName().contains("TARDIS")) {
+            if (Objects.requireNonNull(event.getFrom().getWorld()).getName().contains("TARDIS")) {
                 return;
             }
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.getUtils().actionBarFormat(player)));

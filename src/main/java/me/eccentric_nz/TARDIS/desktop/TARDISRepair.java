@@ -41,6 +41,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -223,11 +224,11 @@ public class TARDISRepair {
                         if (rsc.getBlock_count() < map.getValue()) {
                             hasRequired = false;
                             int diff = map.getValue() - rsc.getBlock_count();
-                            TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
+                            TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
                         }
                     } else {
                         hasRequired = false;
-                        TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
+                        TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
                     }
                 }
                 if (!hasRequired) {

@@ -29,6 +29,8 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
+import java.util.Objects;
+
 /**
  * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
  * transdimensional spiral that connected all points in space and time.
@@ -54,6 +56,7 @@ public class TARDISSpace {
         if (tardisWorld == null) {
             tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
             // set the time to night
+            assert tardisWorld != null;
             tardisWorld.setTime(14000L);
             // add world to config, but time travel disabled by default
             plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
@@ -68,9 +71,10 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
             plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-            if (!inventory_group.equals("0")) {
+            if (!Objects.equals(inventory_group, "0")) {
                 if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
                     MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+                    assert mi != null;
                     WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
                     wgp.addWorld(name);
                 }

@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -63,7 +64,7 @@ public class TARDISLister {
      */
     public void list(Player player, String list) {
         if (list.equals("rechargers")) {
-            Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+            Set<String> therechargers = Objects.requireNonNull(TARDIS.plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
             if (therechargers.size() < 1) {
                 TARDISMessage.send(player, "CHARGER_NONE");
             }

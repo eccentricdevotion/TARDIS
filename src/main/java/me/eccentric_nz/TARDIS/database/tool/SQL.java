@@ -119,103 +119,6 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
 
     );
-
-    static final List<String> INSERTS = Arrays.asList(
-
-            "INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES ",
-
-            "INSERT INTO `%sarched` (`uuid`, `arch_name`, `arch_time`) VALUES ",
-
-            "INSERT INTO `%sarchive` (`archive_id`, `uuid`, `name`, `console_size`, `beacon`, `lanterns`, `use`, `y`, `data`, `description`) VALUES ",
-
-            "INSERT INTO `%sareas` (`area_id`, `area_name`, `world`, `minx`, `minz`, `maxx`, `maxz`, `y`, `parking_distance`, `invisibility`, `direction`) VALUES ",
-
-            "INSERT INTO `%sars` (`ars_id`, `tardis_id`, `uuid`, `player`, `ars_x_east`, `ars_z_south`, `ars_y_layer`, `json`) VALUES ",
-
-            "INSERT INTO `%sback` (`back_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
-
-            "INSERT INTO `%sbind` (`bind_id`, `tardis_id`, `type`, `location`, `name`) VALUES ",
-
-            "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `data`, `police_box`) VALUES ",
-
-            "INSERT INTO `%sblueprint` (`bp_id`, `uuid`, `permission`) VALUES ",
-
-            "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintData`, `stainData`, `glassData`, `line1`, `line2`, `line3`, `line4`, `asymmetric`) VALUES ",
-
-            "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `world`, `x`, `z`) VALUES ",
-
-            "INSERT INTO `%scondenser` (`c_id`, `tardis_id`, `block_data`, `block_count`) VALUES ",
-
-            "INSERT INTO `%scontrols` (`c_id`, `tardis_id`, `type`, `location`, `secondary`) VALUES ",
-
-            "INSERT INTO `%scurrent` (`current_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`, `biome`) VALUES ",
-
-            "INSERT INTO `%sdestinations` (`dest_id`, `tardis_id`, `dest_name`, `world`, `x`, `y`, `z`, `direction`, `preset`, `bind`, `type`, `submarine`, `slot`, `icon`) VALUES ",
-
-            "INSERT INTO `%sdispersed` (`d_id`, `uuid`, `world`, `x`, `y`, `z`, `tardis_id`) VALUES ",
-
-            "INSERT INTO `%sdoors` (`door_id`, `tardis_id`, `door_type`, `door_location`, `door_direction`, `locked`) VALUES ",
-
-            "INSERT INTO `%sfarming` (`farm_id`, `tardis_id`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `hutch`, `igloo`, `stable`, `stall`, `village`) VALUES ",
-
-            "INSERT INTO `%sforcefield` (`uuid`, `location`) VALUES ",
-
-            "INSERT INTO `%sgravity_well` (`g_id`, `tardis_id`, `location`, `direction`, `distance`, `velocity`) VALUES ",
-
-            "INSERT INTO `%shomes` (`home_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`, `preset`) VALUES ",
-
-            "INSERT INTO `%sinventories` (`id`, `uuid`, `player`, `arch`, `inventory`, `armour`, `attributes`, `armour_attributes`) VALUES ",
-
-            "INSERT INTO `%sjunk` (`id`, `uuid`, `tardis_id`, `save_sign`, `handbrake`, `wall`, `floor`, `preset`) VALUES ",
-
-            "INSERT INTO `%slamps` (`l_id`, `tardis_id`, `location`) VALUES ",
-
-            "INSERT INTO `%smovers` (`uuid`) VALUES ",
-
-            "INSERT INTO `%snext` (`next_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
-
-            "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES ",
-
-            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `auto_on`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `texture_on`, `texture_in`, `texture_out`, `submarine_on`, `dnd_on`, `minecart_on`, `renderer_on`, `wool_lights_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `farm_on`,  `lanterns_on`, `auto_siege_on`, `flying_mode`, `throttle`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
-
-            "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
-
-            "INSERT INTO `%sprograms` (`program_id`, `uuid`, `name`, `inventory`, `parsed`, `checked`) VALUES ",
-
-            "INSERT INTO `%sreminders` (`reminder_id`, `uuid`, `reminder`, `time`) VALUES ",
-
-            "INSERT INTO `%sroom_progress` (`progress_id`, `direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES ",
-
-            "INSERT INTO `%sseeds` (`seed_id`, `schematic`, `wall`, `floor`, `location`) VALUES ",
-
-            "INSERT INTO `%ssiege` (`siege_id`, `uuid`, `tardis_id`) VALUES ",
-
-            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `sonic_type`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `sonic_uuid`) VALUES ",
-
-            "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`) VALUES ",
-
-            "INSERT INTO `%st_count` (`t_id`, `uuid`, `player`, `count`, `grace`, `repair`) VALUES ",
-
-            "INSERT INTO `%stag` (`tag_id`, `player`, `time`) VALUES ",
-
-            "INSERT INTO `%stardis` (`tardis_id`, `uuid`, `owner`, `last_known_name`, `chunk`, `tips`, `size`, `abandoned`, `artron_level`, `replaced`, `companions`, `handbrake_on`, `iso_on`, `hidden`, `recharging`, `tardis_init`, `adapti_on`, `chameleon_preset`, `chameleon_demat`, `creeper`, `beacon`, `eps`, `rail`, `renderer`, `zero`, `rotor`, `powered_on`, `lights_on`, `siege_on`, `lastuse`, `monsters`) VALUES ",
-
-            "INSERT INTO `%stransmats` (`transmat_id`, `tardis_id`, `name`, `world`, `x`, `y`, `z`, `yaw`) VALUES ",
-
-            "INSERT INTO `%stravel_stats` (`travel_stats_id`, `travel_ype`, `tardis_id`, `uuid`) VALUES ",
-
-            "INSERT INTO `%straveled_to` (`uuid`, `environment`) VALUES ",
-
-            "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES ",
-
-            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `chest_type`, `x`, `y`, `z`) VALUES ",
-
-            "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
-
-            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
-
-    );
-
     public static final List<String> VALUES = Arrays.asList(
 
             "(%s, '%s', '%s', '%s', '%s', %s)",
@@ -311,7 +214,101 @@ public class SQL {
             "(%s, %s)"
 
     );
+    static final List<String> INSERTS = Arrays.asList(
 
+            "INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES ",
+
+            "INSERT INTO `%sarched` (`uuid`, `arch_name`, `arch_time`) VALUES ",
+
+            "INSERT INTO `%sarchive` (`archive_id`, `uuid`, `name`, `console_size`, `beacon`, `lanterns`, `use`, `y`, `data`, `description`) VALUES ",
+
+            "INSERT INTO `%sareas` (`area_id`, `area_name`, `world`, `minx`, `minz`, `maxx`, `maxz`, `y`, `parking_distance`, `invisibility`, `direction`) VALUES ",
+
+            "INSERT INTO `%sars` (`ars_id`, `tardis_id`, `uuid`, `player`, `ars_x_east`, `ars_z_south`, `ars_y_layer`, `json`) VALUES ",
+
+            "INSERT INTO `%sback` (`back_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
+
+            "INSERT INTO `%sbind` (`bind_id`, `tardis_id`, `type`, `location`, `name`) VALUES ",
+
+            "INSERT INTO `%sblocks` (`b_id`, `tardis_id`, `location`, `data`, `police_box`) VALUES ",
+
+            "INSERT INTO `%sblueprint` (`bp_id`, `uuid`, `permission`) VALUES ",
+
+            "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintData`, `stainData`, `glassData`, `line1`, `line2`, `line3`, `line4`, `asymmetric`) VALUES ",
+
+            "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `world`, `x`, `z`) VALUES ",
+
+            "INSERT INTO `%scondenser` (`c_id`, `tardis_id`, `block_data`, `block_count`) VALUES ",
+
+            "INSERT INTO `%scontrols` (`c_id`, `tardis_id`, `type`, `location`, `secondary`) VALUES ",
+
+            "INSERT INTO `%scurrent` (`current_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`, `biome`) VALUES ",
+
+            "INSERT INTO `%sdestinations` (`dest_id`, `tardis_id`, `dest_name`, `world`, `x`, `y`, `z`, `direction`, `preset`, `bind`, `type`, `submarine`, `slot`, `icon`) VALUES ",
+
+            "INSERT INTO `%sdispersed` (`d_id`, `uuid`, `world`, `x`, `y`, `z`, `tardis_id`) VALUES ",
+
+            "INSERT INTO `%sdoors` (`door_id`, `tardis_id`, `door_type`, `door_location`, `door_direction`, `locked`) VALUES ",
+
+            "INSERT INTO `%sfarming` (`farm_id`, `tardis_id`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `hutch`, `igloo`, `stable`, `stall`, `village`) VALUES ",
+
+            "INSERT INTO `%sforcefield` (`uuid`, `location`) VALUES ",
+
+            "INSERT INTO `%sgravity_well` (`g_id`, `tardis_id`, `location`, `direction`, `distance`, `velocity`) VALUES ",
+
+            "INSERT INTO `%shomes` (`home_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`, `preset`) VALUES ",
+
+            "INSERT INTO `%sinventories` (`id`, `uuid`, `player`, `arch`, `inventory`, `armour`, `attributes`, `armour_attributes`) VALUES ",
+
+            "INSERT INTO `%sjunk` (`id`, `uuid`, `tardis_id`, `save_sign`, `handbrake`, `wall`, `floor`, `preset`) VALUES ",
+
+            "INSERT INTO `%slamps` (`l_id`, `tardis_id`, `location`) VALUES ",
+
+            "INSERT INTO `%smovers` (`uuid`) VALUES ",
+
+            "INSERT INTO `%snext` (`next_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
+
+            "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES ",
+
+            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `auto_on`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `texture_on`, `texture_in`, `texture_out`, `submarine_on`, `dnd_on`, `minecart_on`, `renderer_on`, `wool_lights_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `farm_on`,  `lanterns_on`, `auto_siege_on`, `flying_mode`, `throttle`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
+
+            "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
+
+            "INSERT INTO `%sprograms` (`program_id`, `uuid`, `name`, `inventory`, `parsed`, `checked`) VALUES ",
+
+            "INSERT INTO `%sreminders` (`reminder_id`, `uuid`, `reminder`, `time`) VALUES ",
+
+            "INSERT INTO `%sroom_progress` (`progress_id`, `direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES ",
+
+            "INSERT INTO `%sseeds` (`seed_id`, `schematic`, `wall`, `floor`, `location`) VALUES ",
+
+            "INSERT INTO `%ssiege` (`siege_id`, `uuid`, `tardis_id`) VALUES ",
+
+            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `sonic_type`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `sonic_uuid`) VALUES ",
+
+            "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`) VALUES ",
+
+            "INSERT INTO `%st_count` (`t_id`, `uuid`, `player`, `count`, `grace`, `repair`) VALUES ",
+
+            "INSERT INTO `%stag` (`tag_id`, `player`, `time`) VALUES ",
+
+            "INSERT INTO `%stardis` (`tardis_id`, `uuid`, `owner`, `last_known_name`, `chunk`, `tips`, `size`, `abandoned`, `artron_level`, `replaced`, `companions`, `handbrake_on`, `iso_on`, `hidden`, `recharging`, `tardis_init`, `adapti_on`, `chameleon_preset`, `chameleon_demat`, `creeper`, `beacon`, `eps`, `rail`, `renderer`, `zero`, `rotor`, `powered_on`, `lights_on`, `siege_on`, `lastuse`, `monsters`) VALUES ",
+
+            "INSERT INTO `%stransmats` (`transmat_id`, `tardis_id`, `name`, `world`, `x`, `y`, `z`, `yaw`) VALUES ",
+
+            "INSERT INTO `%stravel_stats` (`travel_stats_id`, `travel_ype`, `tardis_id`, `uuid`) VALUES ",
+
+            "INSERT INTO `%straveled_to` (`uuid`, `environment`) VALUES ",
+
+            "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES ",
+
+            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `chest_type`, `x`, `y`, `z`) VALUES ",
+
+            "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
+
+            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
+
+    );
     static final String COMMENT = "--";
     static final String DUMP = "-- Dumping data for table ";
     static final String STRUCTURE = "-- Table structure for table ";

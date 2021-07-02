@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -65,30 +67,30 @@ public class TARDISEjectListener implements Listener {
             return;
         }
         // get the exit location
-        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
         Location l = dl.getL();
         // set the entity's direction as you would for a player when exiting
         switch (dl.getD()) {
-            case NORTH:
+            case NORTH -> {
                 l.setZ(l.getZ() + 2.5f);
                 l.setYaw(0.0f);
-                break;
-            case WEST:
+            }
+            case WEST -> {
                 l.setX(l.getX() + 2.5f);
                 l.setYaw(270.0f);
-                break;
-            case SOUTH:
+            }
+            case SOUTH -> {
                 l.setZ(l.getZ() - 2.5f);
                 l.setYaw(180.0f);
-                break;
-            default:
+            }
+            default -> {
                 l.setX(l.getX() - 2.5f);
                 l.setYaw(90.0f);
-                break;
+            }
         }
         switch (ent.getType()) {
             // can't eject OPs or TARDIS admins
-            case PLAYER:
+            case PLAYER -> {
                 Player p = (Player) ent;
                 if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
                     TARDISMessage.send(player, "EJECT_PLAYER");
@@ -105,10 +107,10 @@ public class TARDISEjectListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().doDelete("travellers", where);
-                break;
-            case BEE:
+            }
+            case BEE -> {
                 Bee b = (Bee) ent;
-                Bee bee = (Bee) l.getWorld().spawnEntity(l, EntityType.BEE);
+                Bee bee = (Bee) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.BEE);
                 bee.setTicksLived(b.getTicksLived());
                 if (!b.isAdult()) {
                     bee.setBaby();
@@ -121,10 +123,10 @@ public class TARDISEjectListener implements Listener {
                 bee.setHasNectar(b.hasNectar());
                 bee.setAnger(b.getAnger());
                 ent.remove();
-                break;
-            case CHICKEN:
+            }
+            case CHICKEN -> {
                 Chicken k = (Chicken) ent;
-                Chicken chicken = (Chicken) l.getWorld().spawnEntity(l, EntityType.CHICKEN);
+                Chicken chicken = (Chicken) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CHICKEN);
                 chicken.setTicksLived(k.getTicksLived());
                 if ((!k.isAdult())) {
                     chicken.setBaby();
@@ -134,10 +136,10 @@ public class TARDISEjectListener implements Listener {
                     chicken.setCustomName(chickname);
                 }
                 ent.remove();
-                break;
-            case COW:
+            }
+            case COW -> {
                 Cow c = (Cow) ent;
-                Cow cow = (Cow) l.getWorld().spawnEntity(l, EntityType.COW);
+                Cow cow = (Cow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.COW);
                 cow.setTicksLived(c.getTicksLived());
                 if ((!c.isAdult())) {
                     cow.setBaby();
@@ -147,21 +149,15 @@ public class TARDISEjectListener implements Listener {
                     cow.setCustomName(cowname);
                 }
                 ent.remove();
-                break;
-            case DONKEY:
-            case HORSE:
-            case MULE:
-            case SKELETON_HORSE:
-            case ZOMBIE_HORSE:
-                TARDISMessage.send(player, "EJECT_HORSE");
-                break;
-            case LLAMA:
+            }
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TARDISMessage.send(player, "EJECT_HORSE");
+            case LLAMA -> {
                 event.setCancelled(true);
                 Llama ll = (Llama) ent;
                 TARDISLlama tmlla = new TARDISLlama();
                 tmlla.setAge(ll.getAge());
                 tmlla.setBaby(!ll.isAdult());
-                double mh = ll.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                double mh = Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
                 tmlla.setHorseHealth(mh);
                 tmlla.setHealth(ll.getHealth());
                 // get horse colour, style and variant
@@ -176,7 +172,7 @@ public class TARDISEjectListener implements Listener {
                 tmlla.setHorseInventory(ll.getInventory().getContents());
                 tmlla.setDomesticity(ll.getDomestication());
                 tmlla.setJumpStrength(ll.getJumpStrength());
-                tmlla.setSpeed(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                tmlla.setSpeed(Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).getBaseValue());
                 // check the leash
                 if (ll.isLeashed()) {
                     Entity leash = ll.getLeashHolder();
@@ -187,7 +183,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 LlamaInventory llinv = ll.getInventory();
                 tmlla.setDecor(llinv.getDecor());
-                Llama llama = (Llama) l.getWorld().spawnEntity(l, EntityType.LLAMA);
+                Llama llama = (Llama) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.LLAMA);
                 llama.setColor(tmlla.getLlamacolor());
                 llama.setStrength(tmlla.getStrength());
                 llama.setAge(tmlla.getAge());
@@ -195,6 +191,7 @@ public class TARDISEjectListener implements Listener {
                     llama.setBaby();
                 }
                 AttributeInstance attribute = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                assert attribute != null;
                 attribute.setBaseValue(tmlla.getHorseHealth());
                 String name = tmlla.getName();
                 if (name != null && !name.isEmpty()) {
@@ -218,12 +215,12 @@ public class TARDISEjectListener implements Listener {
                     pinv.addItem(leash);
                     player.updateInventory();
                 }
-                llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
+                Objects.requireNonNull(llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(tmlla.getSpeed());
                 ent.remove();
-                break;
-            case MUSHROOM_COW:
+            }
+            case MUSHROOM_COW -> {
                 MushroomCow m = (MushroomCow) ent;
-                MushroomCow mush = (MushroomCow) l.getWorld().spawnEntity(l, EntityType.MUSHROOM_COW);
+                MushroomCow mush = (MushroomCow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.MUSHROOM_COW);
                 mush.setTicksLived(m.getTicksLived());
                 if ((!m.isAdult())) {
                     mush.setBaby();
@@ -234,10 +231,10 @@ public class TARDISEjectListener implements Listener {
                     mush.setCustomName(mushname);
                 }
                 ent.remove();
-                break;
-            case PANDA:
+            }
+            case PANDA -> {
                 Panda inner_panda = (Panda) ent;
-                Panda outer_panda = (Panda) l.getWorld().spawnEntity(l, EntityType.PANDA);
+                Panda outer_panda = (Panda) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PANDA);
                 outer_panda.setTicksLived(inner_panda.getTicksLived());
                 if (!inner_panda.isAdult()) {
                     outer_panda.setBaby();
@@ -249,10 +246,10 @@ public class TARDISEjectListener implements Listener {
                     outer_panda.setCustomName(panda_name);
                 }
                 ent.remove();
-                break;
-            case PARROT:
+            }
+            case PARROT -> {
                 Parrot inner_parrot = (Parrot) ent;
-                Parrot outer_parrot = (Parrot) l.getWorld().spawnEntity(l, EntityType.PARROT);
+                Parrot outer_parrot = (Parrot) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PARROT);
                 outer_parrot.setTicksLived(inner_parrot.getTicksLived());
                 String parrot_name = ent.getCustomName();
                 if (parrot_name != null && !parrot_name.isEmpty()) {
@@ -260,12 +257,12 @@ public class TARDISEjectListener implements Listener {
                 }
                 outer_parrot.setVariant(inner_parrot.getVariant());
                 ent.remove();
-                break;
-            case PIG:
+            }
+            case PIG -> {
                 Pig g = (Pig) ent;
                 // eject any passengers
                 g.eject();
-                Pig pig = (Pig) l.getWorld().spawnEntity(l, EntityType.PIG);
+                Pig pig = (Pig) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PIG);
                 pig.setTicksLived(g.getTicksLived());
                 if ((!g.isAdult())) {
                     pig.setBaby();
@@ -278,10 +275,10 @@ public class TARDISEjectListener implements Listener {
                     pig.setSaddle(true);
                 }
                 ent.remove();
-                break;
-            case POLAR_BEAR:
+            }
+            case POLAR_BEAR -> {
                 PolarBear polar = (PolarBear) ent;
-                PolarBear bear = (PolarBear) l.getWorld().spawnEntity(l, EntityType.POLAR_BEAR);
+                PolarBear bear = (PolarBear) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.POLAR_BEAR);
                 bear.setTicksLived(polar.getTicksLived());
                 if ((!polar.isAdult())) {
                     bear.setBaby();
@@ -291,10 +288,10 @@ public class TARDISEjectListener implements Listener {
                     bear.setCustomName(bearname);
                 }
                 ent.remove();
-                break;
-            case SHEEP:
+            }
+            case SHEEP -> {
                 Sheep s = (Sheep) ent;
-                Sheep sheep = (Sheep) l.getWorld().spawnEntity(l, EntityType.SHEEP);
+                Sheep sheep = (Sheep) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.SHEEP);
                 sheep.setTicksLived(s.getTicksLived());
                 if ((!s.isAdult())) {
                     sheep.setBaby();
@@ -305,10 +302,10 @@ public class TARDISEjectListener implements Listener {
                 }
                 sheep.setColor(s.getColor());
                 ent.remove();
-                break;
-            case RABBIT:
+            }
+            case RABBIT -> {
                 Rabbit r = (Rabbit) ent;
-                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
+                Rabbit bunny = (Rabbit) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.RABBIT);
                 bunny.setTicksLived(r.getTicksLived());
                 if ((!r.isAdult())) {
                     bunny.setBaby();
@@ -319,12 +316,12 @@ public class TARDISEjectListener implements Listener {
                 }
                 bunny.setRabbitType(r.getRabbitType());
                 ent.remove();
-                break;
-            case WOLF:
+            }
+            case WOLF -> {
                 Tameable wtamed = (Tameable) ent;
-                if (wtamed.isTamed() && wtamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
+                if (wtamed.isTamed() && Objects.requireNonNull(wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
                     Wolf w = (Wolf) ent;
-                    Wolf wolf = (Wolf) l.getWorld().spawnEntity(l, EntityType.WOLF);
+                    Wolf wolf = (Wolf) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.WOLF);
                     wolf.setTicksLived(w.getTicksLived());
                     if ((!w.isAdult())) {
                         wolf.setBaby();
@@ -339,12 +336,12 @@ public class TARDISEjectListener implements Listener {
                     wolf.setHealth(health);
                     ent.remove();
                 }
-                break;
-            case CAT:
+            }
+            case CAT -> {
                 Tameable otamed = (Tameable) ent;
-                if (otamed.isTamed() && otamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
+                if (otamed.isTamed() && Objects.requireNonNull(otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
                     Cat o = (Cat) ent;
-                    Cat cat = (Cat) l.getWorld().spawnEntity(l, EntityType.CAT);
+                    Cat cat = (Cat) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CAT);
                     cat.setTicksLived(o.getTicksLived());
                     if ((!o.isAdult())) {
                         cat.setBaby();
@@ -360,11 +357,11 @@ public class TARDISEjectListener implements Listener {
                     cat.setHealth(health);
                     ent.remove();
                 }
-                break;
-            case VILLAGER:
+            }
+            case VILLAGER -> {
                 event.setCancelled(true);
                 Villager v = (Villager) ent;
-                Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
+                Villager villager = (Villager) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
                 villager.setAge(v.getTicksLived());
                 if (!v.isAdult()) {
@@ -380,10 +377,8 @@ public class TARDISEjectListener implements Listener {
                     villager.setCustomName(vilname);
                 }
                 ent.remove();
-                break;
-            default:
-                TARDISMessage.send(player, "EJECT_NOT_VALID");
-                break;
+            }
+            default -> TARDISMessage.send(player, "EJECT_NOT_VALID");
         }
         // stop tracking player
         plugin.getTrackerKeeper().getEjecting().remove(uuid);

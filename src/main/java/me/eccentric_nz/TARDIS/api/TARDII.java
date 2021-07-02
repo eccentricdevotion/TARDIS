@@ -148,7 +148,7 @@ public class TARDII implements TardisAPI {
             String chameleon = tardis.getPreset().toString();
             String door = "Closed";
             for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
-                if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                if (!Objects.requireNonNull(map.getKey().getWorld()).getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
                     if (id == map.getValue().getTardisId()) {
                         door = "Open";
                         break;
@@ -174,14 +174,11 @@ public class TARDII implements TardisAPI {
                 environment = Environment.NORMAL;
             }
         }
-        switch (environment) {
-            case NETHER:
-                return new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
-            case THE_END:
-                return new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
-            default:
-                return new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
-        }
+        return switch (environment) {
+            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
+            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
+            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
+        };
     }
 
     @Override
@@ -436,19 +433,23 @@ public class TARDII implements TardisAPI {
         if (item.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             List<String> lore = im.getLore();
-            String uses = (TARDIS.plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (Objects.equals(TARDIS.plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
+            assert lore != null;
             lore.set(1, uses);
             im.setLore(lore);
             result.setItemMeta(im);
         }
         if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);
         }
         if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
+            assert im != null;
             im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             List<String> lore = im.getLore();
             if (lore == null) {
@@ -480,6 +481,7 @@ public class TARDII implements TardisAPI {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
             }
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setCustomModelData(10000000 + model);
             im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
             // set display name
@@ -514,38 +516,39 @@ public class TARDII implements TardisAPI {
             String upper = item.toUpperCase().substring(sub);
             String perm;
             switch (type) {
-                case CONSOLE:
+                case CONSOLE -> {
                     BlueprintConsole console = BlueprintConsole.valueOf(upper);
                     perm = console.getPermission();
-                    break;
-                case FEATURE:
+                }
+                case FEATURE -> {
                     BlueprintFeature feature = BlueprintFeature.valueOf(upper);
                     perm = feature.getPermission();
-                    break;
-                case PRESET:
+                }
+                case PRESET -> {
                     BlueprintPreset preset = BlueprintPreset.valueOf(upper);
                     perm = preset.getPermission();
-                    break;
-                case ROOM:
+                }
+                case ROOM -> {
                     BlueprintRoom room = BlueprintRoom.valueOf(upper);
                     perm = room.getPermission();
-                    break;
-                case SONIC:
+                }
+                case SONIC -> {
                     BlueprintSonic sonic = BlueprintSonic.valueOf(upper);
                     perm = sonic.getPermission();
-                    break;
-                case TRAVEL:
+                }
+                case TRAVEL -> {
                     BlueprintTravel travel = BlueprintTravel.valueOf(upper);
                     perm = travel.getPermission();
-                    break;
-                default: // BASE
+                }
+                default -> { // BASE
                     BlueprintBase base = BlueprintBase.valueOf(upper);
                     perm = base.getPermission();
-                    break;
+                }
             }
             if (perm != null) {
                 ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setCustomModelData(10000001);
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
@@ -580,7 +583,7 @@ public class TARDII implements TardisAPI {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", Objects.requireNonNull(location.getWorld()).getName());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());

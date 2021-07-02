@@ -116,6 +116,7 @@ public class TARDISAchievementFactory {
                     String reward_type = plugin.getAchievementConfig().getString(advancement.getConfigName() + ".reward_type");
                     // display a proper advancement if possible
                     grantAdvancement(advancement, player);
+                    assert reward_type != null;
                     if (reward_type.equalsIgnoreCase("XP")) {
                         new TARDISXPRewarder(player).changeExp(reward_amount);
                     } else {

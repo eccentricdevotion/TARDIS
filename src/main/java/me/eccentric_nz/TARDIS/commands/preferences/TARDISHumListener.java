@@ -29,10 +29,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -102,6 +99,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                     close(p);
                                     TARDISMessage.send(p, "HUM_WAIT");
                                 } else {
+                                    assert im != null;
                                     TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
                                     last.put(uuid, slot);
                                     cooldown.put(uuid, System.currentTimeMillis());
@@ -110,6 +108,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 HashMap<String, Object> set = new HashMap<>();
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("uuid", uuid.toString());
+                                assert im != null;
                                 set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                 plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                                 close(p);
@@ -124,14 +123,18 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
 
     private void setPlay(InventoryView view, String str) {
         ItemStack play = view.getItem(15);
+        assert play != null;
         ItemMeta save = play.getItemMeta();
+        assert save != null;
         save.setLore(Collections.singletonList(str));
         play.setItemMeta(save);
     }
 
     private boolean isPlay(InventoryView view) {
         ItemStack play = view.getItem(15);
+        assert play != null;
         ItemMeta save = play.getItemMeta();
-        return (save.getLore().get(0).endsWith("PLAY"));
+        assert save != null;
+        return (Objects.requireNonNull(save.getLore()).get(0).endsWith("PLAY"));
     }
 }

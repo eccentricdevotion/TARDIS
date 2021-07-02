@@ -72,11 +72,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();
             UUID uuid;
-            if (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) {
-                uuid = TARDISSudoTracker.SUDOERS.get(playerUUID);
-            } else {
-                uuid = playerUUID;
-            }
+            uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {
@@ -144,6 +140,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                             ItemStack is = view.getItem(slot);
                             if (is != null) {
                                 ItemMeta im = is.getItemMeta();
+                                assert im != null;
                                 String dn = im.getDisplayName();
                                 if (!dn.equals("Empty slot")) {
                                     selectedLocation.put(playerUUID, is.getType().toString());
@@ -210,8 +207,10 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 // get itemstack to change lore
                 int slot = ((row - south) * 9) + 4 + (col - east);
                 ItemStack is = view.getItem(slot);
+                assert is != null;
                 is.setType(Material.ARROW);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setLore(Collections.singletonList(plugin.getLanguage().getString("ARS_MAP_HERE")));
                 im.setCustomModelData(6);
                 is.setItemMeta(im);

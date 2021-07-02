@@ -28,6 +28,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISHandlesEventListener implements Listener {
@@ -43,15 +44,17 @@ public class TARDISHandlesEventListener implements Listener {
             for (ItemStack is : stack) {
                 // find the ARTRON / DO
                 if (is != null) {
-                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
                     TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
                     switch (thb) {
-                        case ARTRON:
+                        case ARTRON -> {
                             processor.processArtronCommand(i + 1);
                             return;
-                        case DO:
+                        }
+                        case DO -> {
                             processor.processCommand(i + 1);
                             return;
+                        }
                     }
                 }
                 i++;

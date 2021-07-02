@@ -1,17 +1,17 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:compass"
-        },
-        "title": "Doctor Who",
-        "description": "Exploration in space and time",
-        "background": "minecraft:textures/block/soul_sand.png",
-        "show_toast": false,
-        "announce_to_chat": false
+  "display": {
+    "icon": {
+      "item": "minecraft:compass"
     },
-    "criteria": {
-        "place_block": {
-            "trigger": "minecraft:placed_block"
-        }
+    "title": "Doctor Who",
+    "description": "Exploration in space and time",
+    "background": "minecraft:textures/block/soul_sand.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "place_block": {
+      "trigger": "minecraft:placed_block"
     }
+  }
 }

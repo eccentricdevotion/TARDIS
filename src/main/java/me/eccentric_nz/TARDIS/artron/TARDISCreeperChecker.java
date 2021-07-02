@@ -61,6 +61,7 @@ public class TARDISCreeperChecker {
                     if (w != null) {
                         Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                         plugin.setTardisSpawn(true);
+                        assert l != null;
                         Entity e = w.spawnEntity(l.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
                         // if there is a creeper there already get rid of it!
                         for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {

@@ -27,6 +27,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Objects;
+
 public class GlowStickRunnable implements Runnable {
 
     private final TARDIS plugin;
@@ -43,11 +45,11 @@ public class GlowStickRunnable implements Runnable {
             PlayerInventory inventory = player.getInventory();
             // item in hands
             ItemStack mainHand = inventory.getItemInMainHand();
-            if (mainHand != null && isGlowStick(mainHand)) {
+            if (isGlowStick(mainHand)) {
                 damage(mainHand, player, inventory, true);
             }
             ItemStack offHand = inventory.getItemInOffHand();
-            if (offHand != null && isGlowStick(offHand)) {
+            if (isGlowStick(offHand)) {
                 damage(offHand, player, inventory, false);
             }
         }
@@ -55,6 +57,7 @@ public class GlowStickRunnable implements Runnable {
 
     private void damage(ItemStack glowStick, Player player, PlayerInventory inventory, boolean main) {
         ItemMeta im = glowStick.getItemMeta();
+        assert im != null;
         PersistentDataContainer pdk = im.getPersistentDataContainer();
         if (pdk.has(namespacedKey, PersistentDataType.INTEGER)) {
             int damage = pdk.get(namespacedKey, PersistentDataType.INTEGER) - 5;
@@ -74,6 +77,6 @@ public class GlowStickRunnable implements Runnable {
     }
 
     private boolean isGlowStick(ItemStack glowStick) {
-        return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) && glowStick.hasItemMeta() && glowStick.getItemMeta().hasCustomModelData() && glowStick.containsEnchantment(Enchantment.LOYALTY);
+        return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) && glowStick.hasItemMeta() && Objects.requireNonNull(glowStick.getItemMeta()).hasCustomModelData() && glowStick.containsEnchantment(Enchantment.LOYALTY);
     }
 }

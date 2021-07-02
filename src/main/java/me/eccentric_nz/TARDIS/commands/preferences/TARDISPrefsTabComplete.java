@@ -68,31 +68,19 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            switch (sub) {
-                case "add":
-                case "remove":
-                    // return null to default to online player name matching
-                    return null;
-                case "floor":
-                case "wall":
-                case "siege_floor":
-                case "siege_wall":
-                    return partial(lastArg, MAT_SUBS);
-                case "key":
-                    return partial(lastArg, KEY_SUBS);
-                case "language":
-                    return partial(lastArg, LANGUAGE_SUBS);
-                case "flight":
-                    return partial(lastArg, FLIGHT_SUBS);
-                case "difficulty":
-                    return partial(lastArg, DIFF_SUBS);
-                case "hads_type":
-                    return partial(lastArg, HADS_SUBS);
-                case "hum":
-                    return partial(lastArg, HUM_SUBS);
-                default:
-                    return partial(lastArg, ONOFF_SUBS);
-            }
+            return switch (sub) {
+                case "add", "remove" ->
+                        // return null to default to online player name matching
+                        null;
+                case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
+                case "key" -> partial(lastArg, KEY_SUBS);
+                case "language" -> partial(lastArg, LANGUAGE_SUBS);
+                case "flight" -> partial(lastArg, FLIGHT_SUBS);
+                case "difficulty" -> partial(lastArg, DIFF_SUBS);
+                case "hads_type" -> partial(lastArg, HADS_SUBS);
+                case "hum" -> partial(lastArg, HUM_SUBS);
+                default -> partial(lastArg, ONOFF_SUBS);
+            };
         }
         return ImmutableList.of();
     }

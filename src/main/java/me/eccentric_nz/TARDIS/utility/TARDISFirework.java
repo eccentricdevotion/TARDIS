@@ -28,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class TARDISFirework {
@@ -97,7 +98,7 @@ public class TARDISFirework {
     }
 
     private Firework launch(Location l) {
-        Firework f = l.getWorld().spawn(l, Firework.class);
+        Firework f = Objects.requireNonNull(l.getWorld()).spawn(l, Firework.class);
         f.setFireworkMeta(meta);
         return f;
     }

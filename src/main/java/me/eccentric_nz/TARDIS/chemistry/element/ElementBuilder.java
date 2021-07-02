@@ -27,6 +27,7 @@ public class ElementBuilder {
     public static ItemStack getElement(Element element) {
         ItemStack is = new ItemStack(Material.FEATHER, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName(element.toString());
         if (element.equals(Element.Unknown)) {
             im.setLore(Arrays.asList("?", "?"));

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -138,7 +137,7 @@ public class TARDISDeleteCommand {
             // destroy the inner TARDIS
             // give the TARDIS time to remove itself as it's not hidden
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("TARDIS_WORLD_")) {
+                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || Objects.requireNonNull(wname).contains("TARDIS_WORLD_")) {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));

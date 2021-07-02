@@ -60,22 +60,23 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             i++;
             int cmd;
             switch (i % 3) {
-                case 2: // stained
+                case 2 -> { // stained
                     cmd = 1003;
                     light.setBlockData(TARDISConstants.AIR);
-                    break;
-                case 1: // glass
+                }
+                case 1 -> { // glass
                     cmd = 1004;
                     light.setBlockData(TARDISConstants.AIR);
-                    break;
-                default: // preset
+                }
+                default -> { // preset
                     cmd = 1001;
                     light.setBlockData(TARDISConstants.LIGHT);
-                    break;
+                }
             }
             // first run - play sound
             if (i == 1) {
                 boolean found = false;
+                assert world != null;
                 for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ItemFrame) {
                         frame = (ItemFrame) e;
@@ -100,17 +101,11 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                         spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                     }
                     if (!minecart) {
-                        String sound;
-                        switch (spaceTimeThrottle) {
-                            case WARP:
-                            case RAPID:
-                            case FASTER:
-                                sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-                                break;
-                            default: // NORMAL
-                                sound = "tardis_takeoff";
-                                break;
-                        }
+                        String sound = switch (spaceTimeThrottle) {
+                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            default -> // NORMAL
+                                    "tardis_takeoff";
+                        };
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
@@ -119,6 +114,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             }
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setCustomModelData(cmd);
                 is.setItemMeta(im);
                 frame.setItem(is, false);

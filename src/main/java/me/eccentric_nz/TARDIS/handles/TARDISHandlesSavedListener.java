@@ -33,6 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -72,8 +73,10 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         ItemStack disk = view.getItem(slot);
                         if (disk != null && record.isSimilar(disk)) {
                             ItemMeta im = disk.getItemMeta();
+                            assert im != null;
                             List<String> lore = im.getLore();
                             // ckeck in
+                            assert lore != null;
                             int pid = TARDISNumberParsers.parseInt(lore.get(1));
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("checked", 0);
@@ -106,7 +109,8 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 // load program
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
-                    int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
+                    assert is != null;
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
                     selectedSlot.put(uuid, null);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
@@ -123,7 +127,8 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 // deactivate program
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
-                    int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
+                    assert is != null;
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     HashMap<String, Object> set = new HashMap<>();
@@ -144,12 +149,13 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 // delete program
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
-                    int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
+                    assert is != null;
+                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(is.getItemMeta().getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     plugin.getQueryFactory().doDelete("programs", where);
                     // remove item stack
-                    event.getClickedInventory().clear(selectedSlot.get(uuid));
+                    Objects.requireNonNull(event.getClickedInventory()).clear(selectedSlot.get(uuid));
                     setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                 } else {
@@ -162,7 +168,9 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         List<String> lore = im.getLore();
+                        assert lore != null;
                         if (lore.get(2).equals("Checked OUT")) {
                             TARDISMessage.send(player, "HANDLES_CHECKED");
                             return;
@@ -205,8 +213,10 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             ItemStack is = view.getItem(s);
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 List<String> lore = im.getLore();
                 if (s == slot) {
+                    assert lore != null;
                     if (lore.contains(ChatColor.GREEN + "Selected")) {
                         if (lore.contains(ChatColor.AQUA + "Running")) {
                             lore.remove(4);

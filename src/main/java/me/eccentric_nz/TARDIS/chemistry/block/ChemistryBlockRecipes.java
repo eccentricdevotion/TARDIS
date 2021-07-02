@@ -35,6 +35,7 @@ public class ChemistryBlockRecipes {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
             ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName(data.getDisplayName());
             im.setLore(data.getLore());
             im.setCustomModelData(data.getCustomModelData());

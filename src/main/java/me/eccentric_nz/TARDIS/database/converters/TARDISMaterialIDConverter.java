@@ -25,6 +25,7 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -925,7 +926,7 @@ public class TARDISMaterialIDConverter {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String check = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
+        String check = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
         String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
         String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
         int i = 0;

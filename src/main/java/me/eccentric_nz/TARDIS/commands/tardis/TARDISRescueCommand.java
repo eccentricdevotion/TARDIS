@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -64,7 +65,7 @@ class TARDISRescueCommand {
                     return true;
                 }
                 UUID savedUUID = destPlayer.getUniqueId();
-                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
+                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? Objects.requireNonNull(plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID))).getName() : player.getName();
                 // get auto_rescue_on preference
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {

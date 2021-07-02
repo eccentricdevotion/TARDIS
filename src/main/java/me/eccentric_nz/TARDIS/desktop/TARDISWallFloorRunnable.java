@@ -86,6 +86,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             // get JSON
             JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();

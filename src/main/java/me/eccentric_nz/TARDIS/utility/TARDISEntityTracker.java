@@ -25,6 +25,7 @@ import org.bukkit.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -56,7 +57,7 @@ public class TARDISEntityTracker {
                 l.setPitch(location.getPitch());
                 // create NPC
                 plugin.setTardisSpawn(true);
-                ArmorStand stand = (ArmorStand) interior.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
+                ArmorStand stand = (ArmorStand) Objects.requireNonNull(interior.getWorld()).spawnEntity(l, EntityType.ARMOR_STAND);
                 npcids.add(stand.getUniqueId());
                 Object[] options = null;
                 switch (e.getType()) {
@@ -104,7 +105,7 @@ public class TARDISEntityTracker {
                         options = new Object[]{PROFESSION.getFromVillagerProfession(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case ZOMBIE_VILLAGER:
-                        options = new Object[]{PROFESSION.getFromVillagerProfession(((ZombieVillager) e).getVillagerProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{PROFESSION.getFromVillagerProfession(Objects.requireNonNull(((ZombieVillager) e).getVillagerProfession())), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case SLIME:
                     case MAGMA_CUBE:

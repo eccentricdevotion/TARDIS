@@ -29,10 +29,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -65,7 +62,7 @@ public class TARDISTagListener implements Listener {
             }
             event.getPlayer().sendMessage(plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
             event.getPlayer().sendMessage(plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
-            if (plugin.getTagConfig().get("it").equals("")) {
+            if (Objects.equals(plugin.getTagConfig().get("it"), "")) {
                 Player startit = getRandomPlayer();
                 plugin.getServer().broadcastMessage(plugin.getPluginName() + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 setConfig(startit.getName());
@@ -137,16 +134,12 @@ public class TARDISTagListener implements Listener {
      * @return an ordinal string (1st, 2nd, 3rd, 4th)
      */
     private String getOrdinal(int age) {
-        switch (age % 10) {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
-            default:
-                return "th";
-        }
+        return switch (age % 10) {
+            case 1 -> "st";
+            case 2 -> "nd";
+            case 3 -> "rd";
+            default -> "th";
+        };
     }
 
     /**

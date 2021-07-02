@@ -28,7 +28,8 @@ public class TardisOldBiomeLookup {
     public final static Map<String, Biome> OLD_BIOME_LOOKUP;
 
     static {
-        OLD_BIOME_LOOKUP = Map.ofEntries(
+        //noinspection RedundantTypeArguments (explicit type arguments speedup compilation and analysis time)
+        OLD_BIOME_LOOKUP = Map.<String, Biome>ofEntries(
                 Map.entry("BEACHES", Biome.BEACH),
                 Map.entry("BIRCH_FOREST_HILLS_MOUNTAINS", Biome.BIRCH_FOREST_HILLS),
                 Map.entry("BIRCH_FOREST_MOUNTAINS", Biome.TALL_BIRCH_HILLS),

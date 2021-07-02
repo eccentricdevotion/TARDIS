@@ -66,11 +66,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();
             UUID uuid;
-            if (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) {
-                uuid = TARDISSudoTracker.SUDOERS.get(playerUUID);
-            } else {
-                uuid = playerUUID;
-            }
+            uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerUUID)) {
@@ -151,6 +147,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             } else {
                                 ItemStack stone = new ItemStack(Material.STONE, 1);
                                 ItemMeta s1 = stone.getItemMeta();
+                                assert s1 != null;
                                 s1.setDisplayName("Empty slot");
                                 s1.setCustomModelData(1);
                                 stone.setItemMeta(s1);
@@ -202,6 +199,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             // need to check for gravity wells, and jettison both layers...
                             ItemStack tnt = new ItemStack(Material.TNT, 1);
                             ItemMeta j = tnt.getItemMeta();
+                            assert j != null;
                             j.setDisplayName("Jettison");
                             j.setCustomModelData(1);
                             tnt.setItemMeta(j);
@@ -228,7 +226,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 break;
                             } else {
                                 ItemStack ris = view.getItem(slot);
-                                String displayName = ris.getItemMeta().getDisplayName();
+                                assert ris != null;
+                                String displayName = Objects.requireNonNull(ris.getItemMeta()).getDisplayName();
                                 String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
                                 if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
@@ -338,7 +337,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      */
     private List<String> getCustomRoomNames() {
         List<String> crooms = new ArrayList<>();
-        Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        Set<String> names = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
         names.forEach((cr) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
                 crooms.add(cr);

@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -52,7 +53,7 @@ public class TARDISArea {
      */
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
-        String w = l.getWorld().getName();
+        String w = Objects.requireNonNull(l.getWorld()).getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
@@ -76,7 +77,7 @@ public class TARDISArea {
      * existing TARDIS area
      */
     public TARDISAreaCheck areaCheckInExistingArea(Location l) {
-        String w = l.getWorld().getName();
+        String w = Objects.requireNonNull(l.getWorld()).getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
@@ -105,7 +106,7 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
             Area a = rsa.getArea();
-            String lw = l.getWorld().getName();
+            String lw = Objects.requireNonNull(l.getWorld()).getName();
             // is clicked block within a defined TARDIS area?
             if (a.getWorld().equals(lw) && (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ())) {
                 chk = false;
@@ -123,7 +124,7 @@ public class TARDISArea {
      */
     public boolean areaCheckLocPlayer(Player p, Location l) {
         boolean chk = false;
-        String w = l.getWorld().getName();
+        String w = Objects.requireNonNull(l.getWorld()).getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);

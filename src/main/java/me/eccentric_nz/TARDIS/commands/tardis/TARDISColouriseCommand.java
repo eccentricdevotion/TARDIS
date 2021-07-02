@@ -90,8 +90,6 @@ class TARDISColouriseCommand {
         plugin.getTrackerKeeper().getBeaconColouring().add(uuid);
         // message player
         TARDISMessage.send(player, "COLOUR_TIME");
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
-        }, 1200L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getBeaconColouring().remove(uuid), 1200L);
     }
 }

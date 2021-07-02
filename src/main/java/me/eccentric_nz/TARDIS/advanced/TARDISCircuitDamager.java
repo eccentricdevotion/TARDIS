@@ -81,6 +81,7 @@ public class TARDISCircuitDamager {
                 for (ItemStack is : items) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         if (im.hasDisplayName()) {
                             String dn = im.getDisplayName();
                             if (dn.equals(c)) {

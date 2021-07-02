@@ -88,7 +88,7 @@ public class CureBrewingListener implements Listener {
                             }
                             noPickUps.add(player.getUniqueId());
                             Location particles = cauldron.getLocation().add(0.5, 1.25, 0.5);
-                            location.getWorld().spawnParticle(Particle.WATER_SPLASH, particles, 5);
+                            Objects.requireNonNull(location.getWorld()).spawnParticle(Particle.WATER_SPLASH, particles, 5);
                             player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0F, 1.0F);
                             List<String> items = new ArrayList<>();
                             // add the current item
@@ -100,6 +100,7 @@ public class CureBrewingListener implements Listener {
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
+                                        assert im != null;
                                         if (im.hasDisplayName() && im.hasCustomModelData()) {
                                             String dn = im.getDisplayName();
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
@@ -176,18 +177,22 @@ public class CureBrewingListener implements Listener {
                                             ItemMeta im = is.getItemMeta();
                                             switch (potionType) {
                                                 case AWKWARD -> {
+                                                    assert im != null;
                                                     im.setDisplayName("Antidote");
                                                     im.setCustomModelData(1);
                                                 }
                                                 case MUNDANE -> {
+                                                    assert im != null;
                                                     im.setDisplayName("Elixir");
                                                     im.setCustomModelData(2);
                                                 }
                                                 case THICK -> {
+                                                    assert im != null;
                                                     im.setDisplayName("Eye drops");
                                                     im.setCustomModelData(3);
                                                 }
                                                 default -> { // UNCRAFTABLE
+                                                    assert im != null;
                                                     im.setDisplayName("Tonic");
                                                     im.setCustomModelData(4);
                                                 }
@@ -196,6 +201,7 @@ public class CureBrewingListener implements Listener {
                                         } else {
                                             PotionMeta pm = (PotionMeta) is.getItemMeta();
                                             PotionData potionData = new PotionData(map.getKey(), extend, upgrade);
+                                            assert pm != null;
                                             pm.setBasePotionData(potionData);
                                             is.setItemMeta(pm);
                                         }

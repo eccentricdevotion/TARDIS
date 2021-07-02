@@ -94,6 +94,7 @@ class TARDISInnerDoorCloser {
             }
             // get locations
             // interior portal
+            assert block != null;
             Location inportal = block.getLocation();
             // exterior portal (from current location)
             HashMap<String, Object> where_exportal = new HashMap<>();

@@ -46,6 +46,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -111,6 +112,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 event.setCancelled(true);
                             } else {
                                 ItemMeta cim = cursor.getItemMeta();
+                                assert cim != null;
                                 String save = cim.getDisplayName();
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
@@ -136,7 +138,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         ItemStack is = view.getItem(slot);
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
+                            assert im != null;
                             List<String> lore = im.getLore();
+                            assert lore != null;
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
                                 if (lore.get(0).startsWith("TARDIS_")) {
@@ -264,7 +268,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 ItemStack own = event.getClickedInventory().getItem(49);
                 if (slot == 49 && own != null) {
                     // custom model data of item
-                    int cmd = own.getItemMeta().getCustomModelData();
+                    int cmd = Objects.requireNonNull(own.getItemMeta()).getCustomModelData();
                     int ownId = -1;
                     if (cmd == 138) {
                         // get player's TARDIS id
@@ -346,6 +350,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 for (int i = start; i < 45; i++) {
                     if (stack[i] != null) {
                         ItemMeta im = stack[i].getItemMeta();
+                        assert im != null;
                         String save = im.getDisplayName();
                         HashMap<String, Object> set = new HashMap<>();
                         int slot = (isPageTwo) ? 45 + i : i;

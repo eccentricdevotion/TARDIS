@@ -69,6 +69,7 @@ public class TARDISCircuitRepairListener implements Listener {
             if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
                 // get the item meta
                 ItemMeta fim = first.getItemMeta();
+                assert fim != null;
                 if (fim.hasDisplayName() && fim.hasCustomModelData()) {
                     // get the display name
                     String dnf = fim.getDisplayName();
@@ -76,6 +77,7 @@ public class TARDISCircuitRepairListener implements Listener {
                         if (fim.hasLore()) {
                             // get the lore
                             List<String> flore = fim.getLore();
+                            assert flore != null;
                             String stripped = ChatColor.stripColor(flore.get(1));
                             if (!stripped.equals("unlimited")) {
                                 // get the uses left
@@ -99,6 +101,7 @@ public class TARDISCircuitRepairListener implements Listener {
                                         List<String> clore = new ArrayList<>();
                                         clore.add("Uses left");
                                         clore.add(ChatColor.YELLOW + "" + repair_to);
+                                        assert cim != null;
                                         cim.setLore(clore);
                                         clone.setItemMeta(cim);
                                         // set the item in slot 0 to the new repaired map

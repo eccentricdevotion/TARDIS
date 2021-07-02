@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
@@ -76,10 +77,10 @@ public class ResultSetDoorBlocks {
                     // get block
                     String door = rs.getString("door_location");
                     if (rs.getInt("door_type") == 0) {
-                        outerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
+                        outerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
                         outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
                     } else {
-                        innerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
+                        innerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
                         innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
                     }
                 }

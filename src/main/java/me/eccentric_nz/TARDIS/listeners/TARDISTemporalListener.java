@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -51,7 +52,7 @@ public class TARDISTemporalListener implements Listener {
         Player p = event.getPlayer();
         ItemStack inhand = p.getInventory().getItemInMainHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TARDISPermission.hasPermission(p, "tardis.temporal")) {
-            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
+            if (inhand.hasItemMeta() && Objects.requireNonNull(inhand.getItemMeta()).hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
                 return;
             }
             p.resetPlayerTime();

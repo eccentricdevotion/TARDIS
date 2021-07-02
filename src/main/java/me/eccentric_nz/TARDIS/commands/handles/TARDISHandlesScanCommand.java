@@ -36,10 +36,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
@@ -110,6 +107,7 @@ class TARDISHandlesScanCommand {
                 if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
+                        assert ee != null;
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
                                 case SLIME_BALL: // dalek
@@ -153,6 +151,7 @@ class TARDISHandlesScanCommand {
                     }
                     if (et.equals(EntityType.ARMOR_STAND)) {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
+                        assert ee != null;
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
                                 case YELLOW_DYE: // Judoon
@@ -179,7 +178,7 @@ class TARDISHandlesScanCommand {
                 }
             }
         }
-        long time = scan_loc.getWorld().getTime();
+        long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
         String daynight = TARDISStaticUtils.getTime(time);
         // message the player
         if (inTARDIS) {
@@ -203,38 +202,11 @@ class TARDISHandlesScanCommand {
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
-        String weather;
-        switch (biome) {
-            case "DESERT":
-            case "DESERT_HILLS":
-            case "DESERT_LAKES":
-            case "SAVANNA":
-            case "SAVANNA_PLATEAU":
-            case "SHATTERED_SAVANNA":
-            case "SHATTERED_SAVANNA_PLATEAU":
-            case "BADLANDS":
-            case "BADLANDS_PLATEAU":
-            case "ERODED_BADLANDS":
-            case "MODIFIED_BADLANDS_PLATEAU":
-            case "MODIFIED_WOODED_BADLANDS_PLATEAU":
-            case "WOODED_BADLANDS_PLATEAU":
-                weather = plugin.getLanguage().getString("WEATHER_DRY");
-                break;
-            case "SNOWY_TUNDRA":
-            case "ICE_SPIKES":
-            case "FROZEN_OCEAN":
-            case "FROZEN_RIVER":
-            case "SNOWY_BEACH":
-            case "SNOWY_TAIGA":
-            case "SNOWY_MOUNTAINS":
-            case "SNOWY_TAIGA_HILLS":
-            case "SNOWY_TAIGA_MOUNTAINS":
-                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
-                break;
-            default:
-                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
-                break;
-        }
+        String weather = switch (biome) {
+            case "DESERT", "DESERT_HILLS", "DESERT_LAKES", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> plugin.getLanguage().getString("WEATHER_DRY");
+            case "SNOWY_TUNDRA", "ICE_SPIKES", "FROZEN_OCEAN", "FROZEN_RIVER", "SNOWY_BEACH", "SNOWY_TAIGA", "SNOWY_MOUNTAINS", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
+            default -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+        };
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_WEATHER", weather), 80L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);

@@ -42,6 +42,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -224,12 +225,12 @@ public class TARDISAntiBuildListener implements Listener {
         } else {
             m = Material.AIR;
         }
-        if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
+        if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
             TARDISMessage.send(p, "ANTIBUILD");
         }
-        if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
+        if (Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
             Block b = event.getClickedBlock();
@@ -265,8 +266,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player p = (Player) event.getDamager();
+        if (event.getDamager() instanceof Player p) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 return;
             }
@@ -285,8 +285,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreakHanging(HangingBreakByEntityEvent event) {
-        if (event.getRemover() instanceof Player) {
-            Player p = (Player) event.getRemover();
+        if (event.getRemover() instanceof Player p) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
                 return;
             }

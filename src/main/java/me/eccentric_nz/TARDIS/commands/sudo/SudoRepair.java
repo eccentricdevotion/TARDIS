@@ -43,6 +43,7 @@ public class SudoRepair {
     public boolean repair() {
         Player player = plugin.getServer().getPlayer(uuid);
         HashMap<String, Object> where = new HashMap<>();
+        assert player != null;
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {

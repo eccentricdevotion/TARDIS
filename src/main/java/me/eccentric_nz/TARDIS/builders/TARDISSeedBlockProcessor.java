@@ -40,6 +40,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
@@ -87,7 +88,7 @@ public class TARDISSeedBlockProcessor {
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 // check it is not another Time Lords home location
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("world", l.getWorld().getName());
+                where.put("world", Objects.requireNonNull(l.getWorld()).getName());
                 where.put("x", l.getBlockX());
                 where.put("y", l.getBlockY());
                 where.put("z", l.getBlockZ());
@@ -171,7 +172,7 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
-                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
+                String preset = Objects.requireNonNull(plugin.getConfig().getString("police_box.default_preset")).toUpperCase(Locale.ENGLISH);
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
                 // determine wall block material from HashMap
@@ -183,7 +184,7 @@ public class TARDISSeedBlockProcessor {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (!rsp.resultSet()) {
                     setpp.put("uuid", player.getUniqueId().toString());
-                    String key = (plugin.getConfig().getString("storage.database").equals("mysql")) ? "key_item" : "key";
+                    String key = (Objects.equals(plugin.getConfig().getString("storage.database"), "mysql")) ? "key_item" : "key";
                     String default_key = plugin.getConfig().getString("preferences.key");
                     setpp.put(key, default_key);
                     plugin.getQueryFactory().doSyncInsert("player_prefs", setpp);

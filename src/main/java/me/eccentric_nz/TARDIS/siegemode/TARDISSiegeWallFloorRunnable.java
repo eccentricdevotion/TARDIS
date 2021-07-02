@@ -115,6 +115,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 obj = archive.getJSON();
             }
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();

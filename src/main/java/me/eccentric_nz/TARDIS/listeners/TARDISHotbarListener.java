@@ -32,6 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -50,7 +51,7 @@ public class TARDISHotbarListener implements Listener {
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(event.getNewSlot());
         if (is != null) {
-            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+            if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
                     int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
@@ -73,11 +74,7 @@ public class TARDISHotbarListener implements Listener {
                 } else {
                     Location bedspawn = player.getBedSpawnLocation();
                     // if player has bed spawn set
-                    if (bedspawn != null) {
-                        player.setCompassTarget(bedspawn);
-                    } else {
-                        player.setCompassTarget(player.getWorld().getSpawnLocation());
-                    }
+                    player.setCompassTarget(Objects.requireNonNullElseGet(bedspawn, () -> player.getWorld().getSpawnLocation()));
                 }
             }
         }

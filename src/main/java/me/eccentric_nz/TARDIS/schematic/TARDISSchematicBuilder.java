@@ -79,20 +79,15 @@ public class TARDISSchematicBuilder {
             if (rsc.resultSet()) {
                 Location location = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
                 switch (c) {
-                    case 2:
-                        // world repeater
-                    case 3:
-                        // x repeater
-                    case 4:
-                        // z repeater
-                    case 5:
-                        // distance multiplier
-                        map.put(c, location);
-                        break;
-                    default:
-                        // handbrake
-                        h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-                        break;
+                    // world repeater
+                    // x repeater
+                    // z repeater
+                    case 2, 3, 4, 5 ->
+                            // distance multiplier
+                            map.put(c, location);
+                    default ->
+                            // handbrake
+                            h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                 }
             }
         }

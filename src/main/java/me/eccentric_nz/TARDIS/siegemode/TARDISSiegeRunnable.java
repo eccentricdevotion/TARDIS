@@ -29,6 +29,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -61,7 +62,8 @@ public class TARDISSiegeRunnable implements Runnable {
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
                     Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                     // spawn an entity so we can check for the creeper
-                    Entity ent = l.getWorld().spawnEntity(l, EntityType.EGG);
+                    assert l != null;
+                    Entity ent = Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.EGG);
                     List<Entity> creeps = ent.getNearbyEntities(1d, 1d, 1d);
                     ent.remove();
                     boolean boost = false;

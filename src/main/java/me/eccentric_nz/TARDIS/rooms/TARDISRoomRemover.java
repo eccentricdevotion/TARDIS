@@ -72,6 +72,7 @@ class TARDISRoomRemover {
         // get JSON
         JsonObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
+        assert obj != null;
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
         int h = dimensions.get("height").getAsInt();
         int wid = dimensions.get("width").getAsInt();
@@ -101,6 +102,7 @@ class TARDISRoomRemover {
         for (int y = sy; y >= ey; y--) {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {
+                    assert w != null;
                     Block block = w.getBlockAt(x, y, z);
                     block.setBlockData(TARDISConstants.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database

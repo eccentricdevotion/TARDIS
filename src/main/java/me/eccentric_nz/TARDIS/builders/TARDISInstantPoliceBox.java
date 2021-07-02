@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Location;
@@ -58,7 +59,7 @@ public class TARDISInstantPoliceBox {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
             Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
+                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, bd.getTardisID());
                 Location l = idl.getL();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                 // put player into travellers table
@@ -74,6 +75,7 @@ public class TARDISInstantPoliceBox {
         plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
         ItemFrame frame = null;
         boolean found = false;
+        assert world != null;
         for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
             if (e instanceof ItemFrame) {
                 frame = (ItemFrame) e;
@@ -94,6 +96,7 @@ public class TARDISInstantPoliceBox {
         Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
             String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";

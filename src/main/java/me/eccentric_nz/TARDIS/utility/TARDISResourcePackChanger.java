@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -50,7 +51,7 @@ public class TARDISResourcePackChanger {
             new URL(str);
             if (p.isOnline()) {
                 UUID uuid = p.getUniqueId();
-                plugin.getServer().getPlayer(uuid).setResourcePack(str);
+                Objects.requireNonNull(plugin.getServer().getPlayer(uuid)).setResourcePack(str);
             }
         } catch (MalformedURLException e) {
             TARDISMessage.send(p, "URL", e.getMessage());

@@ -34,6 +34,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
@@ -58,6 +59,7 @@ public class TARDISSonicScanner {
                 if (TARDIS.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
+                        assert ee != null;
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
                                 case SLIME_BALL: // dalek
@@ -101,6 +103,7 @@ public class TARDISSonicScanner {
                     }
                     if (et.equals(EntityType.ARMOR_STAND)) {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
+                        assert ee != null;
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
                                 case YELLOW_DYE: // Judoon
@@ -127,7 +130,7 @@ public class TARDISSonicScanner {
                 }
             }
         });
-        long time = scan_loc.getWorld().getTime();
+        long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
         String daynight = TARDISStaticUtils.getTime(time);
         String worldname;
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

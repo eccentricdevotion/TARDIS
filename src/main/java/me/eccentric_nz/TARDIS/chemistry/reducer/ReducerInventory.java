@@ -39,6 +39,7 @@ public class ReducerInventory {
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
+        assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
         info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
@@ -47,6 +48,7 @@ public class ReducerInventory {
         // check formula
         ItemStack check = new ItemStack(Material.BOWL, 1);
         ItemMeta check_im = check.getItemMeta();
+        assert check_im != null;
         check_im.setDisplayName("Reduce");
         check_im.setCustomModelData(GUIChemistry.REDUCE.getCustomModelData());
         check.setItemMeta(check_im);
@@ -54,6 +56,7 @@ public class ReducerInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

@@ -37,10 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
 
@@ -71,25 +68,26 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 i++;
                 int cmd;
                 switch (i % 3) {
-                    case 2: // stained
+                    case 2 -> { // stained
                         cmd = 1003;
                         light.setBlockData(TARDISConstants.AIR);
-                        break;
-                    case 1: // glass
+                    }
+                    case 1 -> { // glass
                         cmd = 1004;
                         light.setBlockData(TARDISConstants.AIR);
-                        break;
-                    default: // preset
+                    }
+                    default -> { // preset
                         cmd = 1001;
                         // set a light block
                         light.setBlockData(TARDISConstants.LIGHT);
-                        break;
+                    }
                 }
                 // first run
                 if (i == 1) {
                     TARDISBuilderUtility.saveDoorLocation(bd);
                     plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
                     boolean found = false;
+                    assert world != null;
                     for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                         if (e instanceof ItemFrame) {
                             frame = (ItemFrame) e;
@@ -114,16 +112,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             if (preset.equals(PRESET.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
-                                switch (bd.getThrottle()) {
-                                    case WARP:
-                                    case RAPID:
-                                    case FASTER:
-                                        sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                        break;
-                                    default: // NORMAL
-                                        sound = "tardis_land";
-                                        break;
-                                }
+                                sound = switch (bd.getThrottle()) {
+                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    default -> // NORMAL
+                                            "tardis_land";
+                                };
                             }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
@@ -132,6 +125,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     }
                 }
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setCustomModelData(cmd);
                 if (bd.shouldAddSign()) {
                     String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
@@ -157,7 +151,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
                 if (!bd.isRebuild()) {
-                    plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(Objects.requireNonNull(bd.getPlayer().getPlayer()).getUniqueId());
                 }
                 // message travellers in tardis
                 if (loops > 3) {

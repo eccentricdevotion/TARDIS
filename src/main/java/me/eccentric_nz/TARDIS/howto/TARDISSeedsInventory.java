@@ -60,8 +60,10 @@ public class TARDISSeedsInventory {
         for (Schematic a : Consoles.getBY_NAMES().values()) {
             if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
+                assert m != null;
                 ItemStack is = new ItemStack(m, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName(a.getDescription());
                 List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
@@ -75,6 +77,7 @@ public class TARDISSeedsInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(1);
         close.setItemMeta(close_im);

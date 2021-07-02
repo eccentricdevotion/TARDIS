@@ -34,6 +34,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -87,7 +88,7 @@ public class TARDISSpawnListener implements Listener {
     public void onEntitySpawn(CreatureSpawnEvent event) {
         SpawnReason spawnReason = event.getSpawnReason();
         Location l = event.getLocation();
-        if (l.getWorld().getName().contains("TARDIS")) {
+        if (Objects.requireNonNull(l.getWorld()).getName().contains("TARDIS")) {
             if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
                 return;
             }
@@ -138,6 +139,7 @@ public class TARDISSpawnListener implements Listener {
          */
         for (int col = -3; col < 4; col++) {
             for (int row = -3; row < 4; row++) {
+                assert w != null;
                 TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
                 if (b.equals(TARDISBiome.DEEP_OCEAN)) {
                     found++;

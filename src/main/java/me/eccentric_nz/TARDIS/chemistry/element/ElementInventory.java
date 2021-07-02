@@ -51,6 +51,7 @@ public class ElementInventory {
         // scroll up
         ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
         ItemMeta uim = scroll_up.getItemMeta();
+        assert uim != null;
         uim.setDisplayName("Scroll up");
         uim.setCustomModelData(GUIChemistry.SCROLL_UP.getCustomModelData());
         scroll_up.setItemMeta(uim);
@@ -58,6 +59,7 @@ public class ElementInventory {
         // scroll down
         ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
         ItemMeta dim = scroll_down.getItemMeta();
+        assert dim != null;
         dim.setDisplayName("Scroll down");
         dim.setCustomModelData(GUIChemistry.SCROLL_DOWN.getCustomModelData());
         scroll_down.setItemMeta(dim);
@@ -65,6 +67,7 @@ public class ElementInventory {
         // compounds
         ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
         ItemMeta cim = compounds.getItemMeta();
+        assert cim != null;
         cim.setDisplayName("Compounds");
         cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
         compounds.setItemMeta(cim);
@@ -72,6 +75,7 @@ public class ElementInventory {
         // products
         ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
         ItemMeta pim = products.getItemMeta();
+        assert pim != null;
         pim.setDisplayName("Products");
         pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
         products.setItemMeta(pim);
@@ -79,6 +83,7 @@ public class ElementInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

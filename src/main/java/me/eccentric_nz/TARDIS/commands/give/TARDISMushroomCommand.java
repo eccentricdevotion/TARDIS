@@ -66,6 +66,7 @@ public class TARDISMushroomCommand {
         if (which != 0) {
             ItemStack is = new ItemStack(mushroom, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName(displayName);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
             im.setCustomModelData(10000000 + which);

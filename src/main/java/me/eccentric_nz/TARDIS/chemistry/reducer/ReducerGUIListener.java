@@ -34,6 +34,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 
 //    private final TARDIS plugin;
@@ -67,7 +69,7 @@ public class ReducerGUIListener extends TARDISMenuListener implements Listener {
                     case 17:
                         // reduce
                         event.setCancelled(true);
-                        reduce(event.getClickedInventory(), player);
+                        reduce(Objects.requireNonNull(event.getClickedInventory()), player);
                         break;
                     case 26:
                         // close
@@ -93,6 +95,7 @@ public class ReducerGUIListener extends TARDISMenuListener implements Listener {
             Material material = is.getType();
             if (material.equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 if (im.hasDisplayName()) {
                     String c = im.getDisplayName().replace(" ", "_");
                     for (Compound compound : Compound.values()) {

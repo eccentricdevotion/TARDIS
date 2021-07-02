@@ -30,6 +30,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Objects;
+
 public class BalloonListener implements Listener {
 
     private final TARDIS plugin;
@@ -114,7 +116,7 @@ public class BalloonListener implements Listener {
     }
 
     private boolean isBalloon(ItemStack is) {
-        return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
+        return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
     }
 
     private boolean isInDataRange(int custom) {
@@ -124,6 +126,7 @@ public class BalloonListener implements Listener {
     private void removeJumpBoost(Player player) {
         if (player.hasPotionEffect(PotionEffectType.JUMP)) {
             PotionEffect potionEffect = player.getPotionEffect(PotionEffectType.JUMP);
+            assert potionEffect != null;
             if (potionEffect.getDuration() > 150000000) {
                 player.removePotionEffect(PotionEffectType.JUMP);
             }

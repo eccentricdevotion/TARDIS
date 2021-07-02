@@ -86,7 +86,7 @@ public class TARDISWallConverter {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     boolean updateRecord = false;
-                    JsonObject json = new JsonParser().parse(rs.getString("data")).getAsJsonObject();
+                    JsonObject json = JsonParser.parseString(rs.getString("data")).getAsJsonObject();
                     // get dimensions
                     JsonObject dimensions = json.get("dimensions").getAsJsonObject();
                     int h = dimensions.get("height").getAsInt();

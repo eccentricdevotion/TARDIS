@@ -65,6 +65,7 @@ public class TARDISChameleonInventory {
         // Apply now
         ItemStack apply = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta now = apply.getItemMeta();
+        assert now != null;
         now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
         now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
         now.setCustomModelData(GUIChameleon.BUTTON_APPLY.getCustomModelData());
@@ -72,6 +73,7 @@ public class TARDISChameleonInventory {
         // Disabled
         ItemStack dis = new ItemStack(Material.BOWL, 1);
         ItemMeta abled = dis.getItemMeta();
+        assert abled != null;
         abled.setDisplayName("Chameleon Circuit");
         abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
         abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.getCustomModelData());
@@ -79,6 +81,7 @@ public class TARDISChameleonInventory {
         // Adaptive
         ItemStack adap = new ItemStack(Material.BOWL, 1);
         ItemMeta tive = adap.getItemMeta();
+        assert tive != null;
         tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
         tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
         tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.getCustomModelData());
@@ -88,6 +91,7 @@ public class TARDISChameleonInventory {
         if (plugin.getConfig().getBoolean("allow.invisibility")) {
             invis = new ItemStack(Material.BOWL, 1);
             ItemMeta ible = invis.getItemMeta();
+            assert ible != null;
             ible.setDisplayName(plugin.getChameleonGuis().getString("INVISIBLE"));
             List<String> ilore = plugin.getChameleonGuis().getStringList("INVISIBLE_LORE");
             if (plugin.getConfig().getBoolean("circuits.damage")) {
@@ -103,6 +107,7 @@ public class TARDISChameleonInventory {
         // Shorted out
         ItemStack shor = new ItemStack(Material.BOWL, 1);
         ItemMeta tout = shor.getItemMeta();
+        assert tout != null;
         tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
         tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
         tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.getCustomModelData());
@@ -110,6 +115,7 @@ public class TARDISChameleonInventory {
         // construction GUI
         ItemStack cons = new ItemStack(Material.BOWL, 1);
         ItemMeta truct = cons.getItemMeta();
+        assert truct != null;
         truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
         truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
         truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
@@ -119,11 +125,13 @@ public class TARDISChameleonInventory {
         ItemStack fac = isFactoryOff ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
         String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+        assert tory != null;
         tory.setDisplayName(donoff);
         fac.setItemMeta(tory);
         // Adaptive radio button
         ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
         ItemMeta block = biome.getItemMeta();
+        assert block != null;
         block.setDisplayName(adapt.getColour() + adapt.toString());
         biome.setItemMeta(block);
         // Invisible radio button
@@ -132,6 +140,7 @@ public class TARDISChameleonInventory {
             not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
             ItemMeta blue = not.getItemMeta();
             String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+            assert blue != null;
             blue.setDisplayName(ionoff);
             not.setItemMeta(blue);
         } else {
@@ -142,17 +151,20 @@ public class TARDISChameleonInventory {
         ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         ItemMeta set = pre.getItemMeta();
         String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        assert set != null;
         set.setDisplayName(sonoff);
         pre.setItemMeta(set);
         // Construct radio button
         ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
         ItemMeta lder = bui.getItemMeta();
         String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        assert lder != null;
         lder.setDisplayName(conoff);
         bui.setItemMeta(lder);
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
+        assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);

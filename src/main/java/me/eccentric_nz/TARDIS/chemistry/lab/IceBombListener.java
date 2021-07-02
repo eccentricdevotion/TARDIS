@@ -34,6 +34,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 
+import java.util.Objects;
+
 public class IceBombListener implements Listener {
 
     private final TARDIS plugin;
@@ -49,7 +51,7 @@ public class IceBombListener implements Listener {
             ProjectileSource shooter = snowball.getShooter();
             if (shooter instanceof Player player) {
                 ItemStack is = player.getInventory().getItemInMainHand();
-                if (is != null && is.getType() == Material.SNOWBALL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Ice Bomb")) {
+                if (is != null && is.getType() == Material.SNOWBALL && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("Ice Bomb")) {
                     snowball.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "Ice_Bomb");
                 }
             }

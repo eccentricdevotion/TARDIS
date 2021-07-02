@@ -25,6 +25,7 @@ import org.bukkit.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 public class TARDISWorlds {
@@ -55,8 +56,9 @@ public class TARDISWorlds {
                     TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
                 }
                 if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
-                    for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
+                    for (String rule : Objects.requireNonNull(TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules")).getKeys(false)) {
                         GameRule gameRule = GameRule.getByName(rule);
+                        assert gameRule != null;
                         w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
                     }
                 }
@@ -87,10 +89,10 @@ public class TARDISWorlds {
             }
         });
         // now load TARDIS worlds / remove worlds that may have been deleted
-        Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+        Set<String> cWorlds = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         cWorlds.forEach((cw) -> {
             if (!TARDISConstants.isDatapackWorld(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {
-                if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+                if ((plugin.getWorldManager().equals(WorldManager.NONE) || Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }

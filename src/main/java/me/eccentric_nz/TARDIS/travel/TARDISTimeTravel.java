@@ -41,10 +41,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * All things related to time travel.
@@ -82,15 +79,14 @@ public class TARDISTimeTravel {
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
-            case EAST:
-            case WEST:
+            case EAST, WEST -> {
                 rowcount = 3;
                 colcount = 4;
-                break;
-            default:
+            }
+            default -> {
                 rowcount = 4;
                 colcount = 3;
-                break;
+            }
         }
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
@@ -141,24 +137,24 @@ public class TARDISTimeTravel {
     public static int[] getStartLocation(Location loc, COMPASS d) {
         int[] startLocation = new int[4];
         switch (d) {
-            case EAST:
+            case EAST -> {
                 startLocation[0] = loc.getBlockX() - 2;
                 startLocation[1] = startLocation[0];
                 startLocation[2] = loc.getBlockZ() - 1;
                 startLocation[3] = startLocation[2];
-                break;
-            case SOUTH:
+            }
+            case SOUTH -> {
                 startLocation[0] = loc.getBlockX() - 1;
                 startLocation[1] = startLocation[0];
                 startLocation[2] = loc.getBlockZ() - 2;
                 startLocation[3] = startLocation[2];
-                break;
-            default:
+            }
+            default -> {
                 startLocation[0] = loc.getBlockX() - 1;
                 startLocation[1] = startLocation[0];
                 startLocation[2] = loc.getBlockZ() - 1;
                 startLocation[3] = startLocation[2];
-                break;
+            }
         }
         return startLocation;
     }
@@ -188,7 +184,7 @@ public class TARDISTimeTravel {
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
         // get worlds
-        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+        Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
 
         if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
@@ -256,7 +252,7 @@ public class TARDISTimeTravel {
                     wherez -= 120;
                     // get the spawn point
                     Location endSpawn = randworld.getSpawnLocation();
-                    highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+                    highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
                     if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         Location chunk_loc = currentBlock.getLocation();
@@ -310,7 +306,7 @@ public class TARDISTimeTravel {
                             // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
                             wherex = randomX(range, quarter, rx, ry, e, current);
                             wherez = randomZ(range, quarter, rz, ry, e, current);
-                            highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, wherex, wherez);
+                            highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, wherex, wherez);
                             if (highest > 3) {
                                 Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                                 if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
@@ -394,35 +390,35 @@ public class TARDISTimeTravel {
         int starty = loc.getBlockY();
         int sx, sz;
         switch (d) {
-            case EAST:
+            case EAST -> {
                 sx = loc.getBlockX() - 2;
                 sz = loc.getBlockZ() - 1;
-                break;
-            case SOUTH:
+            }
+            case SOUTH -> {
                 sx = loc.getBlockX() - 1;
                 sz = loc.getBlockZ() - 2;
-                break;
-            default:
+            }
+            default -> {
                 sx = loc.getBlockX() - 1;
                 sz = loc.getBlockZ() - 1;
-                break;
+            }
         }
         int row, col;
         switch (d) {
-            case EAST:
-            case WEST:
+            case EAST, WEST -> {
                 row = 2;
                 col = 3;
-                break;
-            default:
+            }
+            default -> {
                 row = 3;
                 col = 2;
-                break;
+            }
         }
         int r = row;
         int c = col;
         int startx = sx;
         int startz = sz;
+        assert w != null;
         TARDISBlockSetters.setBlock(w, startx, starty, startz, Material.SNOW_BLOCK);
         TARDISBlockSetters.setBlock(w, startx, starty, startz + row, Material.SNOW_BLOCK);
         TARDISBlockSetters.setBlock(w, startx + col, starty, startz, Material.SNOW_BLOCK);
@@ -563,20 +559,19 @@ public class TARDISTimeTravel {
         int level, row, col, rowcount, colcount, count = 0;
         int starty = l.getBlockY();
         switch (d) {
-            case EAST:
-            case WEST:
+            case EAST, WEST -> {
                 rowcount = 3;
                 colcount = 4;
-                break;
-            default:
+            }
+            default -> {
                 rowcount = 4;
                 colcount = 3;
-                break;
+            }
         }
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
-                    Material mat = l.getWorld().getBlockAt(s[0], starty, s[2]).getType();
+                    Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(s[0], starty, s[2]).getType();
                     if (!TARDISConstants.GOOD_WATER.contains(mat)) {
                         count++;
                     }

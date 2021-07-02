@@ -68,7 +68,7 @@ public class ARSConverter {
                         continue;
                     }
                     String[][][] grid = new String[3][9][9];
-                    JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+                    JsonArray json = JsonParser.parseString(js).getAsJsonArray();
                     for (int y = 0; y < 3; y++) {
                         JsonArray jsonx = json.get(y).getAsJsonArray();
                         for (int x = 0; x < 9; x++) {
@@ -83,7 +83,7 @@ public class ARSConverter {
                         }
                     }
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                    JsonArray arr = new JsonParser().parse(gson.toJson(grid)).getAsJsonArray();
+                    JsonArray arr = JsonParser.parseString(gson.toJson(grid)).getAsJsonArray();
                     update.setString(1, arr.toString());
                     update.setInt(2, id);
                     update.addBatch();

@@ -139,6 +139,7 @@ public class ResultSetSmelter {
 
     private List<Chest> getChests(String location, boolean fuel) {
         Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
+        assert l != null;
         int offset = l.getBlockY() - 68;
         List<Chest> chests = new ArrayList<>();
         List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();

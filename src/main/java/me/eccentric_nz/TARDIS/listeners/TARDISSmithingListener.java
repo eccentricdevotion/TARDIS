@@ -80,6 +80,7 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(1);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
+                    assert rm != null;
                     upgrade = customModelData.get(rm.getCustomModelData());
                     found = true;
                 }
@@ -101,6 +102,7 @@ public class TARDISSmithingListener implements Listener {
                 }
                 ItemMeta sim = sonic.getItemMeta();
                 int cmd = 10000011;
+                assert sim != null;
                 if (sim.hasCustomModelData()) {
                     cmd = sim.getCustomModelData();
                 }
@@ -115,7 +117,9 @@ public class TARDISSmithingListener implements Listener {
                     lore.add("Upgrades:");
                 }
                 // if they don't already have the upgrade
+                assert lore != null;
                 if (!lore.contains(upgrade)) {
+                    assert im != null;
                     im.setDisplayName(dn);
                     im.setCustomModelData(cmd);
                     lore.add(upgrade);
@@ -134,6 +138,7 @@ public class TARDISSmithingListener implements Listener {
         if (is != null) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 if (im.hasDisplayName()) {
                     return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
                 }

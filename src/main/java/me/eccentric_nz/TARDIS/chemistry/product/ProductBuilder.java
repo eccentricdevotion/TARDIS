@@ -27,6 +27,7 @@ public class ProductBuilder {
     public static ItemStack getProduct(Product product) {
         ItemStack is = new ItemStack(product.getItemMaterial(), 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName(product.toString().replace("_", " "));
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         int which = 10000001 + product.ordinal();

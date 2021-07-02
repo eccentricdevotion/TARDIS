@@ -37,6 +37,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -48,7 +49,7 @@ public class TARDISSonicEntityListener implements Listener {
 
     public TARDISSonicEntityListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+        String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
         sonic = Material.valueOf(split[0]);
     }
 
@@ -62,6 +63,7 @@ public class TARDISSonicEntityListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
+            assert im != null;
             if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Entity ent = event.getRightClicked();
@@ -80,7 +82,7 @@ public class TARDISSonicEntityListener implements Listener {
                         TARDISMessage.send(player, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // getHealth() / getMaxHealth() * getHealthScale()
-                            double mh = scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            double mh = Objects.requireNonNull(scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
                             double health = scanned.getHealth() / mh * scanned.getHealthScale();
                             float hunger = (scanned.getFoodLevel() / 20F) * 100;
                             TARDISMessage.send(player, "SONIC_NAME", scanned.getName());

@@ -25,6 +25,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
@@ -218,7 +219,7 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
-        if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
+        if (Objects.equals(config.getString("creation.default_world_name"), "tardis_time_vortex")) {
             plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
             i++;
         }
@@ -271,7 +272,7 @@ public class TARDISConfiguration {
         // check mysql settings
         if (config.contains("storage.mysql.url")) {
             // mysql://localhost:3306/TARDIS
-            String[] firstSplit = config.getString("storage.mysql.url").split(":");
+            String[] firstSplit = Objects.requireNonNull(config.getString("storage.mysql.url")).split(":");
             String host = firstSplit[1].substring(2);
             String[] secondSplit = firstSplit[2].split("/");
             String port = secondSplit[0];

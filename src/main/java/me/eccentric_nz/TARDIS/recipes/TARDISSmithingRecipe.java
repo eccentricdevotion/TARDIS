@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 public class TARDISSmithingRecipe {
@@ -40,7 +41,7 @@ public class TARDISSmithingRecipe {
     }
 
     public void addSmithingRecipes() {
-        Set<String> smithing = plugin.getRecipesConfig().getConfigurationSection("smithing").getKeys(false);
+        Set<String> smithing = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("smithing")).getKeys(false);
         smithing.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
     }
 
@@ -59,10 +60,11 @@ public class TARDISSmithingRecipe {
         Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
         RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
         // addition material to use
-        String[] split = plugin.getRecipesConfig().getString("smithing." + s + ".addition").split("=");
+        String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("smithing." + s + ".addition")).split("=");
         Material am = Material.valueOf(split[0]);
         ItemStack isa = new ItemStack(am, 1);
         ItemMeta im = isa.getItemMeta();
+        assert im != null;
         im.setDisplayName(split[1]);
         im.setCustomModelData(RecipeItem.getByName(split[1]).getCustomModelData());
         isa.setItemMeta(im);

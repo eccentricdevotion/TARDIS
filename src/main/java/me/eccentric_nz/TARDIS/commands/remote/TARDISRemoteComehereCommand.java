@@ -41,7 +41,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -57,7 +59,7 @@ public class TARDISRemoteComehereCommand {
 
     public boolean doRemoteComeHere(Player player, UUID uuid) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return true;
         }
@@ -74,7 +76,7 @@ public class TARDISRemoteComehereCommand {
             eyeLocation.setY(yplusone + 1);
         }
         // check the world is not excluded
-        String world = eyeLocation.getWorld().getName();
+        String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
             TARDISMessage.send(player, "NO_PB_IN_WORLD");
             return true;

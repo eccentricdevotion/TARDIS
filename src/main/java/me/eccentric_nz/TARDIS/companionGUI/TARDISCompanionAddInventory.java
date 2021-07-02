@@ -65,6 +65,7 @@ public class TARDISCompanionAddInventory {
                     if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
                         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                         SkullMeta skull = (SkullMeta) head.getItemMeta();
+                        assert skull != null;
                         skull.setOwningPlayer(p);
                         skull.setDisplayName(p.getName());
                         ArrayList<String> lore = new ArrayList<>();
@@ -80,6 +81,7 @@ public class TARDISCompanionAddInventory {
         // add buttons
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
+        assert ii != null;
         ii.setDisplayName("Info");
         ArrayList<String> info_lore = new ArrayList<>();
         info_lore.add("Click a player head to");
@@ -89,17 +91,20 @@ public class TARDISCompanionAddInventory {
         heads[45] = info;
         ItemStack list = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta ll = list.getItemMeta();
+        assert ll != null;
         ll.setDisplayName("List companions");
         list.setItemMeta(ll);
         heads[47] = list;
         ItemStack every = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta one = every.getItemMeta();
+        assert one != null;
         one.setDisplayName("Add all online players");
         every.setItemMeta(one);
         heads[49] = every;
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
+        assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);

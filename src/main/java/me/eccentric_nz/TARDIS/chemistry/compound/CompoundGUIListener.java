@@ -90,6 +90,7 @@ public class CompoundGUIListener extends TARDISMenuListener implements Listener 
             ItemStack is = inventory.getItem(i);
             if (is != null && is.getType().equals(Material.FEATHER) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 if (im.hasDisplayName()) {
                     try {
                         Element element = Element.valueOf(im.getDisplayName());

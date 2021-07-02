@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,7 +67,7 @@ public class TARDISAbandoned {
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
+        setlocs.put("world", Objects.requireNonNull(l.getWorld()).getName());
         setlocs.put("x", l.getBlockX());
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());

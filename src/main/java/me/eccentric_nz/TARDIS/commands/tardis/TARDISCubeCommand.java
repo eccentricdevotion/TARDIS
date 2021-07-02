@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -52,7 +53,7 @@ class TARDISCubeCommand {
             // get the player who is carrying the Siege cube
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
                 if (map.getValue() == id) {
-                    String p = plugin.getServer().getPlayer(map.getKey()).getName();
+                    String p = Objects.requireNonNull(plugin.getServer().getPlayer(map.getKey())).getName();
                     TARDISMessage.send(player, "SIEGE_CARRIER", p);
                     return true;
                 }

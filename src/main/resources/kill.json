@@ -1,23 +1,23 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:creeper_head"
-        },
-        "title": "Lucky hunter",
-        "description": "Kill a charged creeper",
-        "show_toast": true,
-        "announce_to_chat": true
+  "display": {
+    "icon": {
+      "item": "minecraft:creeper_head"
     },
-    "parent": "tardis:root",
-    "criteria": {
-        "kill_charged_creeper": {
-            "trigger": "minecraft:player_killed_entity",
-            "conditions": {
-                "entity": {
-                    "type": "minecraft:creeper",
-                    "nbt": "{ \"powered\": 1 }"
-                }
-            }
+    "title": "Lucky hunter",
+    "description": "Kill a charged creeper",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "tardis:root",
+  "criteria": {
+    "kill_charged_creeper": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:creeper",
+          "nbt": "{ \"powered\": 1 }"
         }
+      }
     }
+  }
 }

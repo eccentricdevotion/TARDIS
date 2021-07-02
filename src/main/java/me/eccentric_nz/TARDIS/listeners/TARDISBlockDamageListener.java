@@ -39,6 +39,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -73,7 +74,7 @@ public class TARDISBlockDamageListener implements Listener {
                 ReplacedBlock rb = rsb.getReplacedBlock();
                 int id = rb.getTardis_id();
                 if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
-                    String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+                    String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
                     Material sonic = Material.valueOf(split[0]);
                     ItemStack is = event.getItemInHand();
                     if (is != null && is.getType().equals(sonic)) {

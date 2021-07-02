@@ -68,6 +68,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         String area = im.getDisplayName();
                         Location l = plugin.getTardisArea().getNextSpot(area);
                         if (l == null) {

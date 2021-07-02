@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -56,14 +57,13 @@ class TARDISExcitationRunnable implements Runnable {
         if (i < 100) {
             TARDISParticles.sendSnowParticles(location, player);
             player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
-                if (e instanceof Player) {
-                    Player p = (Player) e;
+                if (e instanceof Player p) {
                     TARDISParticles.sendSnowParticles(location, p);
                 }
             });
             if (i % 5 == 0) {
                 Location s = calculateLocationInCircle(location);
-                s.setY(location.getWorld().getHighestBlockYAt(s) + 1);
+                s.setY(Objects.requireNonNull(location.getWorld()).getHighestBlockYAt(s) + 1);
                 Block b = s.getBlock();
                 if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
                     b.setBlockData(TARDISConstants.SNOW);

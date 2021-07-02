@@ -42,10 +42,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -244,6 +241,7 @@ public class TARDISItemFrameListener implements Listener {
                     talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by tardis id)
                     TARDISSounds.playTARDISSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     im.setCustomModelData(10000002);
                     is.setItemMeta(im);
                     frame.setItem(is, false);
@@ -268,9 +266,10 @@ public class TARDISItemFrameListener implements Listener {
                         ItemStack disk = player.getInventory().getItemInMainHand();
                         if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
                             ItemMeta dim = disk.getItemMeta();
+                            assert dim != null;
                             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                                 // get the program_id from the disk
-                                int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+                                int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
                                 // query the database
                                 ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
                                 if (rsp.resultSet()) {
@@ -351,6 +350,7 @@ public class TARDISItemFrameListener implements Listener {
                         event.setCancelled(true);
                         TARDISSounds.playTARDISSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         im.setCustomModelData(10000002);
                         is.setItemMeta(im);
                         frame.setItem(is, false);
@@ -401,6 +401,7 @@ public class TARDISItemFrameListener implements Listener {
     private boolean isHandles(ItemStack is) {
         if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             return im.hasDisplayName() && im.getDisplayName().equals("Handles");
         }
         return false;

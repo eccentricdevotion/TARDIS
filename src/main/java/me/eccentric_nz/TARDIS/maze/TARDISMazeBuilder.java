@@ -46,6 +46,7 @@ public final class TARDISMazeBuilder {
         for (int h = 0; h < 4; h++) {
             for (int w = 0; w < size; w++) {
                 for (int d = 0; d < size; d++) {
+                    assert world != null;
                     Block block = world.getBlockAt(x + w, y + h, z + d);
                     if (maze[w][d]) {
                         block.setBlockData(h < 2 ? log : leaves);
@@ -57,6 +58,7 @@ public final class TARDISMazeBuilder {
         }
         // make openings
         for (int r = 0; r < 2; r++) {
+            assert world != null;
             world.getBlockAt(x + 10, y + r, z + 5).setBlockData(TARDISConstants.AIR);
             world.getBlockAt(x + 5, y + r, z).setBlockData(TARDISConstants.AIR);
             world.getBlockAt(x, y + r, z + 5).setBlockData(TARDISConstants.AIR);

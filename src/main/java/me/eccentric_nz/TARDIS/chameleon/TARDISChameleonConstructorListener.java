@@ -49,10 +49,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -168,7 +165,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);
-                                                    event.getClickedInventory().clear(s + c);
+                                                    Objects.requireNonNull(event.getClickedInventory()).clear(s + c);
                                                     return;
                                                 }
                                                 Material mat = d.getType();

@@ -68,62 +68,62 @@ public class TARDISBiomeFinderOld implements Runnable {
     public void run() {
         if (location == null) {
             switch (directions[i]) {
-                case 0:
+                case 0 -> {
                     // east
                     int east = startx + plus;
                     Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
                     if (chkbe.equals(b)) {
                         TARDISMessage.send(p, "BIOME_E", b.toString());
-                        location = new Location(w, east, TARDISStaticLocationGetters.getHighestYin3x3(w, east, startz), startz);
+                        location = new Location(w, east, TARDISStaticLocationGetters.getHighestYIn3x3(w, east, startz), startz);
                     }
                     plus += 64;
                     if (east >= limite) {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     // south
                     int south = startz + plus;
                     Biome chkbs = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
                     if (chkbs.equals(b)) {
                         TARDISMessage.send(p, "BIOME_S", b.toString());
-                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, south), south);
+                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYIn3x3(w, startx, south), south);
                     }
                     plus += 64;
                     if (south >= limits) {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     // west
                     int west = startx - plus;
                     Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
                     if (chkbw.equals(b)) {
                         TARDISMessage.send(p, "BIOME_W", b.toString());
-                        location = new Location(w, west, TARDISStaticLocationGetters.getHighestYin3x3(w, west, startz), startz);
+                        location = new Location(w, west, TARDISStaticLocationGetters.getHighestYIn3x3(w, west, startz), startz);
                     }
                     plus -= 64;
                     if (west <= limitw) {
                         i++;
                         plus = 0;
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     // north
                     int north = startz - plus;
                     Biome chkbn = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
                     if (chkbn.equals(b)) {
                         TARDISMessage.send(p, "BIOME_N", b.toString());
-                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, north), north);
+                        location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYIn3x3(w, startx, north), north);
                     }
                     plus -= 64;
                     if (north <= limitn) {
                         i++;
                         plus = 0;
                     }
-                    break;
+                }
             }
         }
     }

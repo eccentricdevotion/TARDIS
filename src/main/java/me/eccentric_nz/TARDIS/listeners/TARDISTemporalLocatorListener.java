@@ -62,9 +62,12 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 ItemStack is = view.getItem(slot);
+                assert is != null;
                 if (is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     List<String> lore = im.getLore();
+                    assert lore != null;
                     long time = getTime(lore);
                     plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));

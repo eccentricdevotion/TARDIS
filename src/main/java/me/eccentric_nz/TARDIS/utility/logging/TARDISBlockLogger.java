@@ -41,7 +41,7 @@ public class TARDISBlockLogger {
         if (pm.isPluginEnabled("CoreProtect")) {
             CoreProtect cp = (CoreProtect) pm.getPlugin("CoreProtect");
             // Check that CoreProtect is loaded
-            if (cp == null || !(cp instanceof CoreProtect)) {
+            if (cp == null) {
                 return;
             }
             // Check that the API is enabled

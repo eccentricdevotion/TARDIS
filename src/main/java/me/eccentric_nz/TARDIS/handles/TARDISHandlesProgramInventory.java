@@ -62,6 +62,7 @@ public class TARDISHandlesProgramInventory {
         for (TARDISHandlesBlock b : TARDISHandlesBlock.getButtons()) {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName(b.getDisplayName());
             im.setCustomModelData(b.getCustomModelData());
             is.setItemMeta(im);
@@ -76,6 +77,7 @@ public class TARDISHandlesProgramInventory {
         for (TARDISHandlesBlock b : TARDISHandlesBlock.getControls()) {
             ItemStack is = new ItemStack(Material.PAPER, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName(b.getDisplayName());
             if (b.getLore() != null) {
                 im.setLore(b.getLore());

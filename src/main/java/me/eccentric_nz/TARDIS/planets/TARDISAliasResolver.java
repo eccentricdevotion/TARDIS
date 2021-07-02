@@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class TARDISAliasResolver {
 
@@ -63,7 +64,7 @@ public class TARDISAliasResolver {
     }
 
     public static void createAliasMap() {
-        for (String s : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
+        for (String s : Objects.requireNonNull(TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false)) {
             World world = Bukkit.getServer().getWorld(s);
             if (world != null) {
                 String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);

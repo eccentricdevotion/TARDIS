@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import org.bukkit.*;
 
+import java.util.Objects;
+
 /**
  * @author eccentric_nz
  */
@@ -136,7 +138,7 @@ public class TARDISStaticLocationGetters {
      * @return a String in the style of world:x:y:z
      */
     public static String makeLocationStr(Location location) {
-        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+        return Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
     }
 
     /**
@@ -150,10 +152,11 @@ public class TARDISStaticLocationGetters {
         World cw = Bukkit.getServer().getWorld(split[0]);
         int cx = TARDISNumberParsers.parseInt(split[1]);
         int cz = TARDISNumberParsers.parseInt(split[2]);
+        assert cw != null;
         return cw.getChunkAt(cx, cz);
     }
 
-    public static int getHighestYin3x3(World world, int x, int z) {
+    public static int getHighestYIn3x3(World world, int x, int z) {
         int y = 0;
         for (int xx : threeByThree) {
             for (int zz : threeByThree) {

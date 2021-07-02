@@ -38,6 +38,7 @@ public class TARDISRecipeCategoryInventory {
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
+        assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Click a button below", "to see the items", "in that recipe category"));
         info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
@@ -47,6 +48,7 @@ public class TARDISRecipeCategoryInventory {
             if (!category.equals(RecipeCategory.UNUSED) && category != RecipeCategory.UNCRAFTABLE) {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
+                assert egory != null;
                 egory.setDisplayName(category.getName());
                 egory.setCustomModelData(category.getCustomModelData());
                 egory.addItemFlags(ItemFlag.values());

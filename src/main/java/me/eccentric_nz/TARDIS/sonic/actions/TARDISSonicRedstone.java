@@ -33,6 +33,7 @@ import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 public class TARDISSonicRedstone {
@@ -66,7 +67,7 @@ public class TARDISSonicRedstone {
                         tmp = block.getRelative(BlockFace.DOWN);
                     }
                     // not TARDIS doors!
-                    String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
+                    String doorloc = Objects.requireNonNull(tmp.getLocation().getWorld()).getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
                     HashMap<String, Object> wheredoor = new HashMap<>();
                     wheredoor.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);

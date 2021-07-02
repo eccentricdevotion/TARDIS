@@ -111,6 +111,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                         // get block type and data
                         ItemStack choice = view.getItem(slot);
                         // set the tardis wall/floor block
+                        assert choice != null;
                         setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
                         break;
                 }

@@ -37,6 +37,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
@@ -79,6 +80,7 @@ public class TARDISBlockPlaceListener implements Listener {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 boolean light = false;
+                assert im != null;
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                     int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                     MultipleFacing multipleFacing;
@@ -121,6 +123,7 @@ public class TARDISBlockPlaceListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         if (im.hasDisplayName() && im.getDisplayName().equals("Rift Manipulator")) {
             // make sure they're not inside the TARDIS
             HashMap<String, Object> where = new HashMap<>();
@@ -137,7 +140,7 @@ public class TARDISBlockPlaceListener implements Listener {
             while (plugin.getConfig().contains("rechargers." + name)) {
                 name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             }
-            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+            plugin.getConfig().set("rechargers." + name + ".world", Objects.requireNonNull(l.getWorld()).getName());
             plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
             plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
             plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());

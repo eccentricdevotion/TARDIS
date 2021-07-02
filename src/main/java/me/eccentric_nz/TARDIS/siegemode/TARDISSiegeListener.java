@@ -51,10 +51,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -126,6 +123,7 @@ public class TARDISSiegeListener implements Listener {
         String tl = tardis.getOwner();
         ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName("TARDIS Siege Cube");
         im.setCustomModelData(10000002);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 2);
@@ -178,7 +176,7 @@ public class TARDISSiegeListener implements Listener {
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
             return;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(p.getLocation().getWorld()).getName() + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;
@@ -194,7 +192,7 @@ public class TARDISSiegeListener implements Listener {
                 TARDISMessage.send(p, "SIEGE_NO_SPACE");
                 return;
             }
-            List<String> lore = is.getItemMeta().getLore();
+            List<String> lore = Objects.requireNonNull(is.getItemMeta()).getLore();
             if (lore == null || lore.size() < 2) {
                 TARDISMessage.send(p, "SIEGE_NO_ID");
                 return;
@@ -212,7 +210,7 @@ public class TARDISSiegeListener implements Listener {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", loc.getWorld().getName());
+            set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
             set.put("x", loc.getBlockX());
             set.put("y", loc.getBlockY());
             set.put("z", loc.getBlockZ());
@@ -239,7 +237,7 @@ public class TARDISSiegeListener implements Listener {
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
             return;
         }
-        String w = p.getLocation().getWorld().getName();
+        String w = Objects.requireNonNull(p.getLocation().getWorld()).getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
@@ -259,7 +257,7 @@ public class TARDISSiegeListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", loc.getWorld().getName());
+        set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());
@@ -280,6 +278,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
+        assert b != null;
         if (!isSiegeCube(b)) {
             return;
         }
@@ -400,6 +399,6 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {
-        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Siege Cube"));
+        return (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Siege Cube"));
     }
 }

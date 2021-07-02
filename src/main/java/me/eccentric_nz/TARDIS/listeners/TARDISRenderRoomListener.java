@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -50,7 +51,7 @@ public class TARDISRenderRoomListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
+            if (Objects.equals(event.getHand(), EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
                 // tp the player back to the TARDIS console
                 transmat(player);
                 player.updateInventory();
@@ -73,29 +74,30 @@ public class TARDISRenderRoomListener implements Listener {
             if (rsd.resultSet()) {
                 COMPASS d = rsd.getDoor_direction();
                 Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
+                assert tp_loc != null;
                 int getx = tp_loc.getBlockX();
                 int getz = tp_loc.getBlockZ();
                 switch (d) {
-                    case NORTH:
+                    case NORTH -> {
                         // z -ve
                         tp_loc.setX(getx + 0.5);
                         tp_loc.setZ(getz - 0.5);
-                        break;
-                    case EAST:
+                    }
+                    case EAST -> {
                         // x +ve
                         tp_loc.setX(getx + 1.5);
                         tp_loc.setZ(getz + 0.5);
-                        break;
-                    case SOUTH:
+                    }
+                    case SOUTH -> {
                         // z +ve
                         tp_loc.setX(getx + 0.5);
                         tp_loc.setZ(getz + 1.5);
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         // x -ve
                         tp_loc.setX(getx - 0.5);
                         tp_loc.setZ(getz + 0.5);
-                        break;
+                    }
                 }
                 tp_loc.setPitch(p.getLocation().getPitch());
                 tp_loc.setYaw(p.getLocation().getYaw());

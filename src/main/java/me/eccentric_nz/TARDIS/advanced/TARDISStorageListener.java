@@ -39,10 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
@@ -89,10 +86,11 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                 ItemStack stack = view.getItem(i);
                 if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
                     ItemMeta ims = stack.getItemMeta();
+                    assert ims != null;
                     if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                         Player p = (Player) event.getPlayer();
                         Location loc = p.getLocation();
-                        loc.getWorld().dropItemNaturally(loc, stack);
+                        Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, stack);
                         view.setItem(i, new ItemStack(Material.AIR));
                         TARDISMessage.send(p, "ADV_NO_STORE");
                     }
@@ -210,6 +208,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
         ItemStack stack = event.getItemDrop().getItemStack();
         if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
             ItemMeta ims = stack.getItemMeta();
+            assert ims != null;
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
@@ -224,7 +223,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             ItemStack is = inv.getItem(i);
             if (is != null) {
                 if (!onlythese.contains(is.getType())) {
-                    p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
+                    Objects.requireNonNull(p.getLocation().getWorld()).dropItemNaturally(p.getLocation(), is);
                     inv.setItem(i, new ItemStack(Material.AIR));
                 }
             }
@@ -255,6 +254,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                 for (ItemStack is : stack) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         if (im.hasDisplayName()) {
                             if (is.getType().equals(Material.FILLED_MAP)) {
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());

@@ -47,6 +47,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
@@ -63,13 +64,14 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
             ItemStack dye = frame.getItem();
             if (dye != null && TARDISConstants.DYES.contains(dye.getType()) && dye.hasItemMeta()) {
                 ItemMeta dim = dye.getItemMeta();
+                assert dim != null;
                 if (dim.hasCustomModelData()) {
                     int cmd = dim.getCustomModelData();
                     if ((cmd == 1001 || cmd == 1002) && TARDISPermission.hasPermission(player, "tardis.enter")) {
                         UUID playerUUID = player.getUniqueId();
                         // get TARDIS from location
                         Location location = frame.getLocation();
-                        String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+                        String doorloc = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", doorloc);
                         where.put("door_type", 0);
@@ -133,7 +135,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
                                                         plugin.getTrackerKeeper().getFarming().add(playerUUID);
                                                         TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                        petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+                                                        petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
                                                     }
                                                     // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {

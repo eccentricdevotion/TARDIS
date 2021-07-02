@@ -25,6 +25,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class BlueprintProcessor {
@@ -36,7 +37,7 @@ public class BlueprintProcessor {
             if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 // check disk UUID is same as player UUID
                 UUID diskUuid = pdc.get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
-                if (!diskUuid.equals(player.getUniqueId())) {
+                if (!Objects.equals(diskUuid, player.getUniqueId())) {
                     return;
                 }
                 if (pdc.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
@@ -47,7 +48,7 @@ public class BlueprintProcessor {
                     set.put("uuid", diskUuid.toString());
                     set.put("permission", perm);
                     plugin.getQueryFactory().doInsert("blueprint", set);
-                    TARDISMessage.send(player, "BLUEPRINT", im.getLore().get(0));
+                    TARDISMessage.send(player, "BLUEPRINT", Objects.requireNonNull(im.getLore()).get(0));
                 }
             }
         }

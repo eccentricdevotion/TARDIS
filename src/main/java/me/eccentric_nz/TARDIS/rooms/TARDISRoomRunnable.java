@@ -290,22 +290,21 @@ public class TARDISRoomRunnable implements Runnable {
                             if (world.getBlockAt(ax, minusy, az).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
                                 BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
-                                    case KELP:
+                                    case KELP -> {
                                         world.getBlockAt(ax, y + 1, az).setBlockData(f);
                                         world.getBlockAt(ax, y + 2, az).setBlockData(f);
-                                        break;
-                                    case TALL_SEAGRASS:
+                                    }
+                                    case TALL_SEAGRASS -> {
                                         ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
                                         world.getBlockAt(ax, y, az).setBlockData(f);
                                         ((Bisected) f).setHalf(Bisected.Half.TOP);
                                         world.getBlockAt(ax, y + 1, az).setBlockData(f);
-                                        break;
-                                    case SEA_PICKLE:
+                                    }
+                                    case SEA_PICKLE -> {
                                         ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(ax, y, az).setBlockData(f);
-                                        break;
-                                    default:
-                                        world.getBlockAt(ax, y, az).setBlockData(f);
+                                    }
+                                    default -> world.getBlockAt(ax, y, az).setBlockData(f);
                                 }
                             }
                         }
@@ -315,22 +314,21 @@ public class TARDISRoomRunnable implements Runnable {
                             if (world.getBlockAt(bx, minusy, bz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
                                 BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
-                                    case KELP:
+                                    case KELP -> {
                                         world.getBlockAt(bx, y + 1, bz).setBlockData(f);
                                         world.getBlockAt(bx, y + 2, bz).setBlockData(f);
-                                        break;
-                                    case TALL_SEAGRASS:
+                                    }
+                                    case TALL_SEAGRASS -> {
                                         ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
                                         world.getBlockAt(bx, y, bz).setBlockData(f);
                                         ((Bisected) f).setHalf(Bisected.Half.TOP);
                                         world.getBlockAt(bx, y + 1, bz).setBlockData(f);
-                                        break;
-                                    case SEA_PICKLE:
+                                    }
+                                    case SEA_PICKLE -> {
                                         ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(bx, y, bz).setBlockData(f);
-                                        break;
-                                    default:
-                                        world.getBlockAt(bx, y, bz).setBlockData(f);
+                                    }
+                                    default -> world.getBlockAt(bx, y, bz).setBlockData(f);
                                 }
                             }
                         }
@@ -340,22 +338,21 @@ public class TARDISRoomRunnable implements Runnable {
                             if (world.getBlockAt(cx, minusy, cz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
                                 BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
-                                    case KELP:
+                                    case KELP -> {
                                         world.getBlockAt(cx, y + 1, cz).setBlockData(f);
                                         world.getBlockAt(cx, y + 2, cz).setBlockData(f);
-                                        break;
-                                    case TALL_SEAGRASS:
+                                    }
+                                    case TALL_SEAGRASS -> {
                                         ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
                                         world.getBlockAt(cx, y, cz).setBlockData(f);
                                         ((Bisected) f).setHalf(Bisected.Half.TOP);
                                         world.getBlockAt(cx, y + 1, cz).setBlockData(f);
-                                        break;
-                                    case SEA_PICKLE:
+                                    }
+                                    case SEA_PICKLE -> {
                                         ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(cx, y, cz).setBlockData(f);
-                                        break;
-                                    default:
-                                        world.getBlockAt(cx, y, cz).setBlockData(f);
+                                    }
+                                    default -> world.getBlockAt(cx, y, cz).setBlockData(f);
                                 }
                             }
                         }
@@ -365,22 +362,21 @@ public class TARDISRoomRunnable implements Runnable {
                             if (world.getBlockAt(dx, minusy, dz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
                                 BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
-                                    case KELP:
+                                    case KELP -> {
                                         world.getBlockAt(dx, y + 1, dz).setBlockData(f);
                                         world.getBlockAt(dx, y + 2, dz).setBlockData(f);
-                                        break;
-                                    case TALL_SEAGRASS:
+                                    }
+                                    case TALL_SEAGRASS -> {
                                         ((Bisected) f).setHalf(Bisected.Half.BOTTOM);
                                         world.getBlockAt(dx, y, dz).setBlockData(f);
                                         ((Bisected) f).setHalf(Bisected.Half.TOP);
                                         world.getBlockAt(dx, y + 1, dz).setBlockData(f);
-                                        break;
-                                    case SEA_PICKLE:
+                                    }
+                                    case SEA_PICKLE -> {
                                         ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(dx, y, dz).setBlockData(f);
-                                        break;
-                                    default:
-                                        world.getBlockAt(dx, y, dz).setBlockData(f);
+                                    }
+                                    default -> world.getBlockAt(dx, y, dz).setBlockData(f);
                                 }
                             }
                         }
@@ -502,21 +498,21 @@ public class TARDISRoomRunnable implements Runnable {
                 Material lgw;
                 Material gw;
                 switch (use_clay) {
-                    case TERRACOTTA:
+                    case TERRACOTTA -> {
                         ow = Material.ORANGE_TERRACOTTA;
                         lgw = Material.LIGHT_GRAY_TERRACOTTA;
                         gw = Material.GRAY_TERRACOTTA;
-                        break;
-                    case CONCRETE:
+                    }
+                    case CONCRETE -> {
                         ow = Material.ORANGE_CONCRETE;
                         lgw = Material.LIGHT_GRAY_CONCRETE;
                         gw = Material.GRAY_CONCRETE;
-                        break;
-                    default:
+                    }
+                    default -> {
                         ow = Material.ORANGE_WOOL;
                         lgw = Material.LIGHT_GRAY_WOOL;
                         gw = Material.GRAY_WOOL;
-                        break;
+                    }
                 }
                 if (type.equals(Material.GRAY_WOOL)) {
                     data = gw.createBlockData();
@@ -632,29 +628,13 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     // replace with correct block
                     switch (Room.valueOf(room)) {
-                        case VILLAGE:
-                            data = Material.COBBLESTONE.createBlockData();
-                            break;
-                        case HUTCH:
-                        case STABLE:
-                        case STALL:
-                        case MAZE:
-                            data = Material.GRASS_BLOCK.createBlockData();
-                            break;
-                        case BAMBOO:
-                        case BIRDCAGE:
-                            data = Material.PODZOL.createBlockData();
-                            break;
-                        case GEODE:
-                            data = Material.CLAY.createBlockData();
-                            break;
-                        case IGLOO:
-                            data = Material.PACKED_ICE.createBlockData();
-                            break;
-                        case ZERO:
-                            data = Material.PINK_CARPET.createBlockData();
-                            break;
-                        default:
+                        case VILLAGE -> data = Material.COBBLESTONE.createBlockData();
+                        case HUTCH, STABLE, STALL, MAZE -> data = Material.GRASS_BLOCK.createBlockData();
+                        case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
+                        case GEODE -> data = Material.CLAY.createBlockData();
+                        case IGLOO -> data = Material.PACKED_ICE.createBlockData();
+                        case ZERO -> data = Material.PINK_CARPET.createBlockData();
+                        default -> {
                             data = TARDISConstants.BLACK;
                             // add WorldGuard region
                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -673,7 +653,7 @@ public class TARDISRoomRunnable implements Runnable {
                                     plugin.getWorldGuardUtils().addRendererProtection(name, one, two);
                                 }
                             }
-                            break;
+                        }
                     }
                     if (!room.equals("ZERO") && !room.equals("RENDERER") && !room.equals("MAZE")) {
                         // update player prefs - turn on mob farming
@@ -939,24 +919,25 @@ public class TARDISRoomRunnable implements Runnable {
                     List<Material> controls = Arrays.asList(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);
                     if (controls.contains(type)) {
                         switch (type) {
-                            case STONE_BUTTON: // stone button - TARDISConstants.RANDOM
+                            case STONE_BUTTON -> { // stone button - TARDISConstants.RANDOM
                                 control_type = 1;
                                 loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
-                                break;
-                            case MUSHROOM_STEM: // repeater
+                            }
+                            case MUSHROOM_STEM -> { // repeater
                                 control_type = repeaterOrder.get(r);
                                 loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 Block rb = world.getBlockAt(startx, starty, startz);
                                 mushroomblocks.put(rb, repeaterData[r]);
                                 r++;
-                                break;
-                            case OAK_BUTTON: // oak button - artron
+                            }
+                            case OAK_BUTTON -> { // oak button - artron
                                 control_type = 6;
                                 loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
-                                break;
-                            default: // cake - handbrake
+                            }
+                            default -> { // cake - handbrake
                                 control_type = 0;
                                 loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
+                            }
                         }
                         plugin.getQueryFactory().insertControl(tardis_id, control_type, loc_str, secondary);
                     }

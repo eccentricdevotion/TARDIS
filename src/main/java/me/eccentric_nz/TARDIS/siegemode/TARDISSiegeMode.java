@@ -170,6 +170,7 @@ public class TARDISSiegeMode {
                             // check it is not the Artron Capacitor Creeper
                             Location cl = ent.getLocation();
                             Location dbl = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                            assert dbl != null;
                             if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
                                 continue;
                             }

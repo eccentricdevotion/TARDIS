@@ -59,7 +59,10 @@ public class TARDISBiomeFinder {
         }
         World bw = tb.getWorld();
         // check location
-        while (!bw.getChunkAt(tb).isLoaded()) {
+        while (true) {
+            assert bw != null;
+            if (!!bw.getChunkAt(tb).isLoaded())
+                break;
             bw.getChunkAt(tb).load();
         }
         int highest = tb.getWorld().getHighestBlockYAt(tb);

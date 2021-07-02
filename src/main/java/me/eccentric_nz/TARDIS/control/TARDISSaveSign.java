@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 class TARDISSaveSign {
 
@@ -52,8 +53,9 @@ class TARDISSaveSign {
         }
         if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
             ItemStack disk = player.getInventory().getItemInMainHand();
-            if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+            if (disk.hasItemMeta() && Objects.requireNonNull(disk.getItemMeta()).hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                 List<String> lore = disk.getItemMeta().getLore();
+                assert lore != null;
                 if (!lore.get(0).equals("Blank")) {
                     // read the lore from the disk
                     String world = lore.get(1);

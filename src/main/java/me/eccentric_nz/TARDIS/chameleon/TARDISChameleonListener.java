@@ -121,7 +121,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     // factory
                                     set.put("adapti_on", 0);
                                     ItemStack frb = view.getItem(20);
+                                    assert frb != null;
                                     ItemMeta fact = frb.getItemMeta();
+                                    assert fact != null;
                                     String ory = fact.getDisplayName();
                                     if (ory.equals(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
                                         set.put("chameleon_preset", "FACTORY");
@@ -167,7 +169,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     }
                                     set.put("adapti_on", ca);
                                     ItemStack arb = view.getItem(21);
+                                    assert arb != null;
                                     ItemMeta bio = arb.getItemMeta();
+                                    assert bio != null;
                                     bio.setDisplayName(a.getColour() + a.toString());
                                     arb.setItemMeta(bio);
                                     break;
@@ -175,7 +179,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     // Invisibility
                                     set.put("adapti_on", 0);
                                     ItemStack irb = view.getItem(22);
+                                    assert irb != null;
                                     ItemMeta invis = irb.getItemMeta();
+                                    assert invis != null;
                                     String ible = invis.getDisplayName();
                                     if (ible.equals(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"))) {
                                         // check they have an Invisibility Circuit
@@ -256,7 +262,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         // default to Blue Police Box
         // set preset lore
         ItemStack p = view.getItem(23);
+        assert p != null;
         ItemMeta pim = p.getItemMeta();
+        assert pim != null;
         pim.setDisplayName(ChatColor.GREEN + "POLICE_BOX_BLUE");
         p.setItemMeta(pim);
         TARDISStaticUtils.setSign(chameleon, 3, "POLICE_BOX_BLUE", player);
@@ -266,6 +274,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
     private void toggleOthers(ChameleonOption c, InventoryView view) {
         for (ChameleonOption co : ChameleonOption.values()) {
             ItemStack is = view.getItem(co.getSlot());
+            assert is != null;
             ItemMeta im = is.getItemMeta();
             String onoff;
             Material m;
@@ -276,6 +285,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                 onoff = co.getOnColour() + plugin.getLanguage().getString(co.getOn());
                 m = Material.LIME_WOOL;
             }
+            assert im != null;
             im.setDisplayName(onoff);
             is.setItemMeta(im);
             is.setType(m);

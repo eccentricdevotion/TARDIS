@@ -33,6 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -76,9 +77,12 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
                         }
                         // get display name of selected key
                         ItemStack choice = view.getItem(slot);
+                        assert choice != null;
                         ItemMeta choiceMeta = choice.getItemMeta();
+                        assert choiceMeta != null;
                         String displayName = choiceMeta.getDisplayName();
                         ItemMeta keyMeta = key.getItemMeta();
+                        assert keyMeta != null;
                         keyMeta.setDisplayName(displayName);
                         keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
                         // personalise
@@ -91,6 +95,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
                             lore = new ArrayList<>();
                         }
                         String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                        assert lore != null;
                         if (!lore.contains(format + "This key belongs to")) {
                             lore.add(format + "This key belongs to");
                             lore.add(format + player.getName());
@@ -129,7 +134,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
         if (key != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
-            loc.getWorld().dropItemNaturally(loc, key);
+            Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, key);
             view.setItem(18, new ItemStack(Material.AIR));
         }
     }

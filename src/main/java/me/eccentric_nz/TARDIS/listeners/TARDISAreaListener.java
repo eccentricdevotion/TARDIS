@@ -30,6 +30,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,7 +67,7 @@ public class TARDISAreaListener implements Listener {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-                    String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                    String locStr = Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
                     TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -81,7 +82,7 @@ public class TARDISAreaListener implements Listener {
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getAreaStartBlock().get(uuid).split(":");
-                    if (!block_loc.getWorld().getName().equals(firstblock[0])) {
+                    if (!Objects.requireNonNull(block_loc.getWorld()).getName().equals(firstblock[0])) {
                         TARDISMessage.send(player, "AREA_WORLD");
                         return;
                     }

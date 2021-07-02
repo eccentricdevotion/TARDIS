@@ -69,6 +69,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
             world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt() - 1;
             w = dimensions.get("width").getAsInt();

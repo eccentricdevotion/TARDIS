@@ -114,10 +114,10 @@ public enum PRESET {
     POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 16, "", "", false, false, "Weeping Angel");
 
+    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
     private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
     private final static Map<Integer, PRESET> BY_SLOT = Maps.newHashMap();
     private final static Map<Integer, PRESET> IF_BY_SLOT = Maps.newHashMap();
-    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
     static {
         for (PRESET preset : values()) {
@@ -230,27 +230,9 @@ public enum PRESET {
     }
 
     public boolean usesItemFrame() {
-        switch (this) {
-            case POLICE_BOX_BLUE:
-            case POLICE_BOX_WHITE:
-            case POLICE_BOX_ORANGE:
-            case POLICE_BOX_MAGENTA:
-            case POLICE_BOX_LIGHT_BLUE:
-            case POLICE_BOX_YELLOW:
-            case POLICE_BOX_LIME:
-            case POLICE_BOX_PINK:
-            case POLICE_BOX_GRAY:
-            case POLICE_BOX_LIGHT_GRAY:
-            case POLICE_BOX_CYAN:
-            case POLICE_BOX_PURPLE:
-            case POLICE_BOX_BROWN:
-            case POLICE_BOX_GREEN:
-            case POLICE_BOX_RED:
-            case POLICE_BOX_BLACK:
-            case WEEPING_ANGEL:
-                return true;
-            default:
-                return false;
-        }
+        return switch (this) {
+            case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE, POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK, WEEPING_ANGEL -> true;
+            default -> false;
+        };
     }
 }

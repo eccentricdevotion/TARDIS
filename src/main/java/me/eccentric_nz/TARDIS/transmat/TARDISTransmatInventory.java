@@ -56,6 +56,7 @@ public class TARDISTransmatInventory {
                 }
                 ItemStack is = new ItemStack(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setCustomModelData(4);
                 im.setDisplayName(t.getName());
                 List<String> lore = new ArrayList<>();
@@ -75,6 +76,7 @@ public class TARDISTransmatInventory {
             // info
             ItemStack info = new ItemStack(GUITransmat.INFO.getMaterial(), 1);
             ItemMeta meta = info.getItemMeta();
+            assert meta != null;
             meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
             meta.setCustomModelData(GUITransmat.INFO.getCustomModelData());
             meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
@@ -83,6 +85,7 @@ public class TARDISTransmatInventory {
             // teleport
             ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.getMaterial(), 1);
             ItemMeta port = tele.getItemMeta();
+            assert port != null;
             port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
             port.setCustomModelData(GUITransmat.TRANSMAT.getCustomModelData());
             tele.setItemMeta(port);
@@ -90,6 +93,7 @@ public class TARDISTransmatInventory {
             // delete
             ItemStack delete = new ItemStack(GUITransmat.DELETE.getMaterial(), 1);
             ItemMeta dim = delete.getItemMeta();
+            assert dim != null;
             dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
             dim.setCustomModelData(GUITransmat.DELETE.getCustomModelData());
             delete.setItemMeta(dim);
@@ -98,6 +102,7 @@ public class TARDISTransmatInventory {
         // close
         ItemStack close = new ItemStack(GUITransmat.CLOSE.getMaterial(), 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUITransmat.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

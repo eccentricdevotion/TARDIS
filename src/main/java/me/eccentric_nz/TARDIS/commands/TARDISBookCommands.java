@@ -73,7 +73,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                             b++;
                         }
                     } else {
-                        sender.sendMessage(plugin.getLanguage().getString("BOOK_NONE"));
+                        sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("BOOK_NONE")));
                     }
                     return true;
                 }
@@ -136,7 +136,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 
     private LinkedHashMap<String, String> getAchievements() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
+        Set<String> aset = Objects.requireNonNull(plugin.getAchievementConfig().getRoot()).getKeys(false);
         aset.forEach((a) -> {
             if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
                 String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");

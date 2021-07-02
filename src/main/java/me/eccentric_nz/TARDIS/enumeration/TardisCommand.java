@@ -78,32 +78,9 @@ public enum TardisCommand {
     version;
 
     public boolean noSiege() {
-        switch (this) {
-            case abandon:
-            case archive:
-            case colourise:
-            case colorize:
-            case comehere:
-            case desktop:
-            case direction:
-            case door:
-            case eject:
-            case excite:
-            case exterminate:
-            case hide:
-            case home:
-            case sethome:
-            case lamps:
-            case make_her_blue:
-            case rebuild:
-            case rescue:
-            case room:
-            case setdest:
-            case theme:
-            case upgrade:
-                return true;
-            default:
-                return false;
-        }
+        return switch (this) {
+            case abandon, archive, colourise, colorize, comehere, desktop, direction, door, eject, excite, exterminate, hide, home, sethome, lamps, make_her_blue, rebuild, rescue, room, setdest, theme, upgrade -> true;
+            default -> false;
+        };
     }
 }

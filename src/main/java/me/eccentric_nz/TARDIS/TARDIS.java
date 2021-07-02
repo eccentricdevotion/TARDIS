@@ -217,6 +217,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             Version minver = new Version(min);
+            assert check != null;
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
@@ -400,7 +401,7 @@ public class TARDIS extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
+                difficulty = Difficulty.valueOf(Objects.requireNonNull(getConfig().getString("preferences.difficulty")).toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
                 difficulty = Difficulty.EASY;
@@ -532,9 +533,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPlaceholderExpansion(this).register();
             }
             if (!getConfig().getBoolean("conversions.restore_biomes")) {
-                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                    new TARDISBiomeConverter(this).convertBiomes();
-                }, 1200);
+                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new TARDISBiomeConverter(this).convertBiomes(), 1200);
                 getConfig().set("conversions.restore_biomes", true);
                 conversions++;
             }
@@ -564,7 +563,7 @@ public class TARDIS extends JavaPlugin {
     private void loadDatabase() {
         String dbtype = getConfig().getString("storage.database");
         try {
-            if (dbtype.equals("sqlite")) {
+            if (Objects.equals(dbtype, "sqlite")) {
                 String path = getDataFolder() + File.separator + "TARDIS.db";
                 service.setConnection(path);
                 TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
@@ -904,7 +903,7 @@ public class TARDIS extends JavaPlugin {
      */
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<>();
-        Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        Set<String> rooms = Objects.requireNonNull(getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
         int r = 0;
         for (String s : rooms) {
             if (!getRoomsConfig().contains("rooms." + s + ".user")) {
@@ -1026,7 +1025,7 @@ public class TARDIS extends JavaPlugin {
 
     private void updateTagStats() {
         String it = getTagConfig().getString("it");
-        if (!it.equals("")) {
+        if (!Objects.equals(it, "")) {
             HashMap<String, Object> set = new HashMap<>();
             set.put("player", getTagConfig().getString("it"));
             long time = System.currentTimeMillis() - getTagConfig().getLong("time");
@@ -1040,6 +1039,7 @@ public class TARDIS extends JavaPlugin {
             return;
         }
         String defWorld = getConfig().getString("creation.default_world_name");
+        assert defWorld != null;
         if (getServer().getWorld(defWorld) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(defWorld);
@@ -1061,6 +1061,7 @@ public class TARDIS extends JavaPlugin {
     public boolean checkTWA() {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
+            assert twa != null;
             Version version = new Version(twa.getDescription().getVersion());
             return (version.compareTo(new Version("3.3.1")) >= 0);
         } else {

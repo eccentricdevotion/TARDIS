@@ -57,12 +57,14 @@ class TARDISSeedRecipeInventory {
         // interior wall
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
+        assert in_meta != null;
         in_meta.setDisplayName("Interior walls");
         in_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
+        assert fl_meta != null;
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
         in_floor.setItemMeta(fl_meta);
@@ -76,6 +78,7 @@ class TARDISSeedRecipeInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
@@ -83,6 +86,7 @@ class TARDISSeedRecipeInventory {
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
+        assert back_im != null;
         back_im.setDisplayName("Back");
         back_im.setCustomModelData(8);
         back.setItemMeta(back_im);

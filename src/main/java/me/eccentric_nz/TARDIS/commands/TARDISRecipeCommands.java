@@ -144,27 +144,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             String which = args[0].toLowerCase();
             switch (which) {
-                case "bowl-of-custard":
-                case "jelly-baby":
-                case "biome-storage-disk":
-                case "player-storage-disk":
-                case "preset-storage-disk":
-                case "save-storage-disk":
-                case "schematic-wand":
-                case "admin-upgrade":
-                case "bio-scanner-upgrade":
-                case "redstone-upgrade":
-                case "diamond-upgrade":
-                case "emerald-upgrade":
-                case "painter-upgrade":
-                case "ignite-upgrade":
-                case "pickup-arrows-upgrade":
-                case "knockback-upgrade":
+                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade" -> {
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
-                default:
+                }
+                default -> {
                     showShapedRecipe(player, recipeItems.get(which));
                     return true;
+                }
             }
         }
         return false;
@@ -189,23 +176,28 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST)) {
                     String dn = getDisplayName(str, glowstoneCount);
+                    assert im != null;
                     im.setDisplayName(dn);
                     im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                     glowstoneCount++;
                 }
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
+                    assert im != null;
                     im.setDisplayName("TARDIS Key");
                     im.setCustomModelData(1);
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
+                    assert im != null;
                     im.setDisplayName("Acid Bucket");
                     im.setCustomModelData(1);
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
+                    assert im != null;
                     im.setDisplayName("Acid Battery");
                     im.setCustomModelData(10000001);
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
+                    assert im != null;
                     im.setDisplayName("Rust Bucket");
                     im.setCustomModelData(1);
                 }
@@ -215,6 +207,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
+        assert im != null;
         im.setDisplayName(str);
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
@@ -223,7 +216,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();
-            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            assert lore != null;
             lore.set(1, uses);
             im.setLore(lore);
         }
@@ -247,16 +241,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
             ItemMeta im = ingredients.get(i).getItemMeta();
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
+                assert im != null;
                 im.setDisplayName(dn);
                 im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
+                assert im != null;
                 im.setDisplayName("Blank Storage Disk");
                 im.setCustomModelData(10000001);
                 im.addItemFlags(ItemFlag.values());
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
+                assert im != null;
                 im.setDisplayName("Sonic Screwdriver");
                 im.setCustomModelData(10000010);
             }
@@ -265,6 +262,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
+        assert im != null;
         im.setDisplayName(str);
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
@@ -293,12 +291,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // interior wall
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
+        assert in_meta != null;
         in_meta.setDisplayName("Interior walls");
         in_meta.setLore(Collections.singletonList("Any valid Wall/Floor block"));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
+        assert fl_meta != null;
         fl_meta.setDisplayName("Interior floors");
         fl_meta.setLore(Collections.singletonList("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
@@ -331,6 +331,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
         }
         ItemMeta seed = tardis.getItemMeta();
+        assert seed != null;
         seed.setCustomModelData(10000000 + model);
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
         // set display name

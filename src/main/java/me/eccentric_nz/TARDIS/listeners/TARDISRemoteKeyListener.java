@@ -43,6 +43,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
@@ -75,7 +76,7 @@ public class TARDISRemoteKeyListener implements Listener {
         if (is == null || !is.getType().equals(rkey)) {
             return;
         }
-        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+        if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
             String uuid = player.getUniqueId().toString();
             // has TARDIS?
             HashMap<String, Object> where = new HashMap<>();
@@ -132,7 +133,7 @@ public class TARDISRemoteKeyListener implements Listener {
                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                 if (rsd.resultSet()) {
                     // get inner door block
-                    Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
+                    Block block = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location())).getBlock();
                     boolean open = TARDISStaticUtils.isDoorOpen(block);
                     // toggle door / portals
                     new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();

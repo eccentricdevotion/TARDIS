@@ -27,6 +27,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class SparklerRunnable implements Runnable {
 
     private final Player player;
@@ -58,6 +60,7 @@ public class SparklerRunnable implements Runnable {
                 int amount = sparkler.getAmount();
                 if (amount > 1) {
                     ItemMeta im = sparkler.getItemMeta();
+                    assert im != null;
                     int cmd = im.getCustomModelData() - 2000000;
                     im.setCustomModelData(cmd);
                     im.removeEnchant(Enchantment.LOYALTY);
@@ -76,7 +79,7 @@ public class SparklerRunnable implements Runnable {
     }
 
     private boolean isSparkler(ItemStack sparkler) {
-        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasCustomModelData() && sparkler.containsEnchantment(Enchantment.LOYALTY);
+        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && Objects.requireNonNull(sparkler.getItemMeta()).hasCustomModelData() && sparkler.containsEnchantment(Enchantment.LOYALTY);
     }
 
     private Location getHandLocation() {

@@ -44,12 +44,14 @@ class TARDISChameleonTemplateGUI {
         // back button
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
+        assert bk != null;
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_HELP"));
         bk.setCustomModelData(GUIChameleonTemplate.BACK_HELP.getCustomModelData());
         back.setItemMeta(bk);
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
+        assert io != null;
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_TEMPLATE"));
         io.setCustomModelData(GUIChameleonTemplate.INFO_TEMPLATE.getCustomModelData());
@@ -57,11 +59,13 @@ class TARDISChameleonTemplateGUI {
         // next button
         ItemStack next = new ItemStack(Material.ARROW, 1);
         ItemMeta nt = next.getItemMeta();
+        assert nt != null;
         nt.setDisplayName(plugin.getChameleonGuis().getString("GO_CONSTRUCT"));
         next.setItemMeta(nt);
         // one
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta oe = one.getItemMeta();
+        assert oe != null;
         oe.setDisplayName("1");
         oe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
         oe.setCustomModelData(GUIChameleonTemplate.COL_L_FRONT.getCustomModelData());
@@ -69,6 +73,7 @@ class TARDISChameleonTemplateGUI {
         // two
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta to = two.getItemMeta();
+        assert to != null;
         to.setDisplayName("2");
         to.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
         to.setCustomModelData(GUIChameleonTemplate.COL_L_MIDDLE.getCustomModelData());
@@ -76,6 +81,7 @@ class TARDISChameleonTemplateGUI {
         // three
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta te = three.getItemMeta();
+        assert te != null;
         te.setDisplayName("3");
         te.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_BACK")));
         te.setCustomModelData(GUIChameleonTemplate.COL_L_BACK.getCustomModelData());
@@ -83,6 +89,7 @@ class TARDISChameleonTemplateGUI {
         // four
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta fr = four.getItemMeta();
+        assert fr != null;
         fr.setDisplayName("4");
         fr.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
         fr.setCustomModelData(GUIChameleonTemplate.COL_B_MIDDLE.getCustomModelData());
@@ -90,6 +97,7 @@ class TARDISChameleonTemplateGUI {
         // five
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta fe = five.getItemMeta();
+        assert fe != null;
         fe.setDisplayName("5");
         fe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_BACK")));
         fe.setCustomModelData(GUIChameleonTemplate.COL_R_BACK.getCustomModelData());
@@ -97,6 +105,7 @@ class TARDISChameleonTemplateGUI {
         // six
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta sx = six.getItemMeta();
+        assert sx != null;
         sx.setDisplayName("6");
         sx.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
         sx.setCustomModelData(GUIChameleonTemplate.COL_R_MIDDLE.getCustomModelData());
@@ -104,6 +113,7 @@ class TARDISChameleonTemplateGUI {
         // seven
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta sn = seven.getItemMeta();
+        assert sn != null;
         sn.setDisplayName("7");
         sn.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
         sn.setCustomModelData(GUIChameleonTemplate.COL_R_FRONT.getCustomModelData());
@@ -111,6 +121,7 @@ class TARDISChameleonTemplateGUI {
         // eight
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta et = eight.getItemMeta();
+        assert et != null;
         et.setDisplayName("8");
         et.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
         et.setCustomModelData(GUIChameleonTemplate.COL_F_MIDDLE.getCustomModelData());
@@ -118,6 +129,7 @@ class TARDISChameleonTemplateGUI {
         // nine
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta ne = nine.getItemMeta();
+        assert ne != null;
         ne.setDisplayName("9");
         ne.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
         ne.setCustomModelData(GUIChameleonTemplate.COL_C_LAMP.getCustomModelData());
@@ -126,28 +138,33 @@ class TARDISChameleonTemplateGUI {
         ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP, 1);
         ItemMeta lp = lamp.getItemMeta();
         List<String> lampList = plugin.getChameleonGuis().getStringList("PB_LAMP");
+        assert lp != null;
         lp.setDisplayName(lampList.get(0));
         lp.setLore(Arrays.asList(lampList.get(1), lampList.get(2)));
         lamp.setItemMeta(lp);
         // redstone block
         ItemStack power = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta pr = power.getItemMeta();
+        assert pr != null;
         pr.setDisplayName(plugin.getChameleonGuis().getString("POWER"));
         power.setItemMeta(pr);
         // stone slab
         ItemStack slab = new ItemStack(Material.STONE_SLAB, 1);
         ItemMeta sb = slab.getItemMeta();
+        assert sb != null;
         sb.setDisplayName(plugin.getChameleonGuis().getString("PB_SIGN"));
         slab.setItemMeta(sb);
         // blue wool
         ItemStack blue = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta be = blue.getItemMeta();
+        assert be != null;
         be.setDisplayName(plugin.getChameleonGuis().getString("PB_WALL"));
         blue.setItemMeta(be);
         // iron door
         ItemStack door = new ItemStack(Material.IRON_DOOR, 1);
         ItemMeta dr = door.getItemMeta();
         List<String> doorList = plugin.getChameleonGuis().getStringList("PB_DOOR");
+        assert dr != null;
         dr.setDisplayName(doorList.get(0));
         dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
         door.setItemMeta(dr);

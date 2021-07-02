@@ -31,6 +31,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class ConstructorGUIListener extends TARDISMenuListener implements Listener {
 
     public ConstructorGUIListener(TARDIS plugin) {
@@ -97,7 +99,7 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
                     case 17 -> {
                         event.setCancelled(true);
                         // get clicked ItemStack
-                        ItemStack choice = view.getItem(17).clone();
+                        ItemStack choice = Objects.requireNonNull(view.getItem(17)).clone();
                         choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
                         // add ItemStack to inventory if there is room
                         p.getInventory().addItem(choice);
@@ -116,16 +118,20 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
     private int getCount(InventoryView view, int offset) {
         int oneInt, tenInt = 0, hundredInt = 0;
         ItemStack ones = view.getItem(3 + offset);
+        assert ones != null;
         ItemMeta oneMeta = ones.getItemMeta();
+        assert oneMeta != null;
         oneInt = Integer.parseInt(oneMeta.getDisplayName());
         ItemStack tens = view.getItem(2 + offset);
         if (tens != null) {
             ItemMeta tenMeta = tens.getItemMeta();
+            assert tenMeta != null;
             tenInt = Integer.parseInt(tenMeta.getDisplayName()) * 10;
         }
         ItemStack hundreds = view.getItem(1 + offset);
         if (hundreds != null) {
             ItemMeta hundredMeta = hundreds.getItemMeta();
+            assert hundredMeta != null;
             hundredInt = Integer.parseInt(hundredMeta.getDisplayName()) * 100;
         }
         return oneInt + tenInt + hundredInt;
@@ -136,7 +142,9 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
         int tenInt = (amount / 10) % 10;
         int hundredInt = (amount / 100) % 10;
         ItemStack ones = view.getItem(3 + offset);
+        assert ones != null;
         ItemMeta oneMeta = ones.getItemMeta();
+        assert oneMeta != null;
         oneMeta.setDisplayName("" + oneInt);
         oneMeta.setCustomModelData(26 + oneInt);
         ones.setItemMeta(oneMeta);
@@ -146,6 +154,7 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
                 tens = new ItemStack(Material.PAPER, 1);
             }
             ItemMeta tenMeta = tens.getItemMeta();
+            assert tenMeta != null;
             tenMeta.setDisplayName("" + tenInt);
             tenMeta.setCustomModelData(26 + tenInt);
             tens.setItemMeta(tenMeta);
@@ -159,6 +168,7 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
                 hundreds = new ItemStack(Material.PAPER, 1);
             }
             ItemMeta hundredMeta = hundreds.getItemMeta();
+            assert hundredMeta != null;
             hundredMeta.setDisplayName("" + hundredInt);
             hundredMeta.setCustomModelData(26 + hundredInt);
             hundreds.setItemMeta(hundredMeta);

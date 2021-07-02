@@ -38,11 +38,10 @@ class TARDISCondenserCommand {
     }
 
     public boolean set(CommandSender sender) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             TARDISMessage.send(sender, "CMD_PLAYER");
             return true;
         }
-        Player player = (Player) sender;
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
         Material chest = b.getType();
         if (!chest.equals(Material.CHEST)) {

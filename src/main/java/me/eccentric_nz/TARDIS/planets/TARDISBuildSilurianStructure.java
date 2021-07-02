@@ -66,6 +66,7 @@ class TARDISBuildSilurianStructure {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
         // see if the chunk is loaded
+        assert world != null;
         Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
         if (v1 != null) {
             startx += v1.getBlockX();
@@ -98,22 +99,22 @@ class TARDISBuildSilurianStructure {
         int z = chunk.getZ();
         Vector vector;
         switch (compass) {
-            case WEST:
+            case WEST -> {
                 vector = new Vector(-16, 17, 0);
                 x -= 1;
-                break;
-            case NORTH:
+            }
+            case NORTH -> {
                 vector = new Vector(0, 17, -16);
                 z -= 1;
-                break;
-            case EAST:
+            }
+            case EAST -> {
                 vector = new Vector(16, 17, 0);
                 x += 1;
-                break;
-            default: //SOUTH
+            }
+            default -> { //SOUTH
                 vector = new Vector(0, 17, 16);
                 z += 1;
-                break;
+            }
         }
         // see if the chunk is loaded
         Chunk newChunk = chunk.getWorld().getChunkAt(x, z);

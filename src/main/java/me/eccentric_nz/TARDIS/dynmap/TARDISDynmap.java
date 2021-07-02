@@ -10,20 +10,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
-import org.dynmap.markers.Marker;
-import org.dynmap.markers.MarkerAPI;
-import org.dynmap.markers.MarkerIcon;
-import org.dynmap.markers.MarkerSet;
+import org.dynmap.markers.*;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class TARDISDynmap {
 
-    private final TARDIS plugin;
     private static final String INFO = "<div class=\"regioninfo\"><div class=\"infowindow\"><span style=\"font-weight:bold;\">Time Lord:</span> %owner%<br/><span style=\"font-weight:bold;\">Console type:</span> %console%<br/><span style=\"font-weight:bold;\">Chameleon circuit:</span> %chameleon%<br/><span style=\"font-weight:bold;\">Location:</span> %location%<br/><span style=\"font-weight:bold;\">Door:</span> %door%<br/><span style=\"font-weight:bold;\">Powered on:</span> %powered%<br/><span style=\"font-weight:bold;\">Siege mode:</span> %siege%<br/><span style=\"font-weight:bold;\">Occupants:</span> %occupants%</div></div>";
+    private final TARDIS plugin;
     private Plugin dynmap;
     private DynmapAPI api;
     private MarkerAPI markerapi;
@@ -120,15 +118,15 @@ public class TARDISDynmap {
         window = window.replace("%powered%", data.getPowered());
         window = window.replace("%door%", data.getDoor());
         window = window.replace("%siege%", data.getSiege());
-        String travellers = "";
+        StringBuilder travellers = new StringBuilder();
         if (data.getOccupants().size() > 0) {
             for (String o : data.getOccupants()) {
-                travellers += o + "<br />";
+                travellers.append(o).append("<br />");
             }
         } else {
-            travellers = "Empty";
+            travellers = new StringBuilder("Empty");
         }
-        window = window.replace("%occupants%", travellers);
+        window = window.replace("%occupants%", travellers.toString());
         return window;
     }
 
@@ -172,7 +170,7 @@ public class TARDISDynmap {
             Map<String, TARDISData> marks = getMarkers();
             marks.keySet().forEach((name) -> {
                 Location loc = marks.get(name).getLocation();
-                String wname = loc.getWorld().getName();
+                String wname = Objects.requireNonNull(loc.getWorld()).getName();
                 /*
                  * Get location
                  */
@@ -211,9 +209,7 @@ public class TARDISDynmap {
             /*
              * Now, review old map - anything left is gone
              */
-            markers.values().forEach((oldm) -> {
-                oldm.deleteMarker();
-            });
+            markers.values().forEach(GenericMarker::deleteMarker);
             /*
              * And replace with new map
              */
@@ -254,14 +250,14 @@ public class TARDISDynmap {
         public Map<String, TARDISData> getMarkers() {
             HashMap<String, TARDISData> map = new HashMap<>();
             HashMap<String, Integer> tl = plugin.getTardisAPI().getTimelordMap();
-            tl.entrySet().forEach((lords) -> {
+            tl.forEach((key, value) -> {
                 TARDISData data;
                 try {
-                    data = plugin.getTardisAPI().getTARDISMapData(lords.getValue());
+                    data = plugin.getTardisAPI().getTARDISMapData(value);
                     if (data.getLocation() != null) {
-                        map.put(lords.getKey(), data);
+                        map.put(key, data);
                     }
-                } catch (Exception x) {
+                } catch (Exception ignored) {
                 }
             });
             return map;

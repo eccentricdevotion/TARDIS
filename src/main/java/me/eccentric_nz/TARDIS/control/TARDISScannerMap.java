@@ -40,6 +40,7 @@ public class TARDISScannerMap {
 
     public void setMap() {
         World world = location.getWorld();
+        assert world != null;
         MapView view = plugin.getServer().createMap(world);
         view.setCenterX(location.getBlockX());
         view.setCenterZ(location.getBlockZ());
@@ -48,6 +49,7 @@ public class TARDISScannerMap {
         view.setLocked(true);
         ItemStack map = new ItemStack(Material.FILLED_MAP, 1, (short) view.getId());
         MapMeta meta = (MapMeta) map.getItemMeta();
+        assert meta != null;
         meta.setMapView(view);
         map.setItemMeta(meta);
         itemFrame.setItem(map, false);

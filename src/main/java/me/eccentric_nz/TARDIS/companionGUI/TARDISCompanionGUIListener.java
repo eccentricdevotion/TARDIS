@@ -84,8 +84,11 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                     int id = tardis.getTardis_id();
                                     String comps = tardis.getCompanions();
                                     ItemStack h = view.getItem(selected_head.get(uuid));
+                                    assert h != null;
                                     ItemMeta m = h.getItemMeta();
+                                    assert m != null;
                                     List<String> l = m.getLore();
+                                    assert l != null;
                                     String u = l.get(0);
                                     removeCompanion(id, comps, u, player);
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

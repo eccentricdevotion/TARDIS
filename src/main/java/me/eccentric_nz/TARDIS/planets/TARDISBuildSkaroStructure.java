@@ -82,6 +82,7 @@ class TARDISBuildSkaroStructure implements Runnable {
             // get JSON
             JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt() - 1;
             w = dimensions.get("width").getAsInt();
@@ -114,7 +115,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                 BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                 Material type = data.getMaterial();
                 switch (type) {
-                    case CHEST:
+                    case CHEST -> {
                         TARDISBlockSetters.setBlock(world, x, y, z, data);
                         Block chest = world.getBlockAt(x, y, z);
                         if (chest != null && chest.getType().equals(Material.CHEST)) {
@@ -127,14 +128,14 @@ class TARDISBuildSkaroStructure implements Runnable {
                                 plugin.debug("Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
                             }
                         }
-                        break;
-                    case SPONGE:
+                    }
+                    case SPONGE -> {
                         Block swap_block = world.getBlockAt(x, y, z);
                         if (!swap_block.getType().isOccluding()) {
                             TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                         }
-                        break;
-                    case SPAWNER:
+                    }
+                    case SPAWNER -> {
                         Block spawner = world.getBlockAt(x, y, z);
                         spawner.setBlockData(data);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -142,10 +143,8 @@ class TARDISBuildSkaroStructure implements Runnable {
                             cs.setSpawnedType(EntityType.SKELETON);
                             cs.update();
                         }, 2L);
-                        break;
-                    default:
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
-                        break;
+                    }
+                    default -> TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
                 if (col == d && row < w) {
                     row++;

@@ -23,6 +23,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -89,7 +90,7 @@ public class TARDISArchCommand {
                 TARDISArchDisguise.undisguise(player);
             }
             player.getWorld().strikeLightningEffect(player.getLocation());
-            double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double mh = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
             player.setHealth(mh / 10.0d);
             if (inv) {
                 new TARDISArchInventory().switchInventories(player, 0);

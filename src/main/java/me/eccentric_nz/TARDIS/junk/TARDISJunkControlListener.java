@@ -44,6 +44,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -218,11 +219,12 @@ public class TARDISJunkControlListener implements Listener {
             int x = TARDISNumberParsers.parseInt(line2);
             int z = TARDISNumberParsers.parseInt(line3);
             // load the chunk
+            assert w != null;
             Chunk chunk = w.getChunkAt(x, z);
             while (!chunk.isLoaded()) {
                 w.loadChunk(chunk);
             }
-            int y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+            int y = TARDISStaticLocationGetters.getHighestYIn3x3(w, x, z);
             Location d = new Location(w, x, y, z);
             // check destination
             if (plugin.getPluginRespect().getRespect(d, new Parameters(p, Flag.getNoMessageFlags()))) {
@@ -289,6 +291,7 @@ public class TARDISJunkControlListener implements Listener {
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
             Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+            assert l != null;
             b = l.getBlock();
         }
         return b;
@@ -300,7 +303,7 @@ public class TARDISJunkControlListener implements Listener {
             boolean found = false;
             for (row = 0; row < 6; row++) {
                 for (col = 0; col < 6; col++) {
-                    Material mat = l.getWorld().getBlockAt(startx, starty, startz).getType();
+                    Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(startx, starty, startz).getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         found = true;
                     }

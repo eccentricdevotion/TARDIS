@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a TARDIS is occurring or will
@@ -115,17 +116,20 @@ public class TARDISCloisterBell implements Runnable {
         if (i < loops) {
             if (centre != null) {
                 // play sound in TARDIS with range size of ARS grid
-                centre.getWorld().playSound(centre, "cloister_bell", 10.0f, 1.0f);
+                Objects.requireNonNull(centre.getWorld()).playSound(centre, "cloister_bell", 10.0f, 1.0f);
             }
             if (current != null) {
                 // play sound outside the TARDIS with a range of 32 blocks
-                current.getWorld().playSound(current, "cloister_bell", 2.0f, 1.0f);
+                Objects.requireNonNull(current.getWorld()).playSound(current, "cloister_bell", 2.0f, 1.0f);
             }
             if (player != null && player.isOnline()) {
                 // play sound at Time Lords location (if they are not in the TARDIS and not within range of the TARDIS exterior)
                 Location location = player.getLocation();
-                if (!plugin.getUtils().inTARDISWorld(player) && !isInPoliceBoxRange(current, location)) {
-                    location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    assert current != null;
+                    if (!isInPoliceBoxRange(current, location)) {
+                        location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
+                    }
                 }
             }
             i++;

@@ -80,10 +80,10 @@ class TARDISHostileDisplacement {
             l.setZ(wz);
             boolean bool = true;
             int y;
-            if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+            if (Objects.requireNonNull(l.getWorld()).getEnvironment().equals(Environment.NETHER)) {
                 y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
             } else {
-                y = TARDISStaticLocationGetters.getHighestYin3x3(l.getWorld(), wx, wz);
+                y = TARDISStaticLocationGetters.getHighestYIn3x3(l.getWorld(), wx, wz);
             }
             l.setY(y);
             if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
@@ -119,7 +119,7 @@ class TARDISHostileDisplacement {
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("world", fl.getWorld().getName());
+                        set.put("world", Objects.requireNonNull(fl.getWorld()).getName());
                         set.put("x", fl.getBlockX());
                         set.put("y", fl.getBlockY());
                         set.put("z", fl.getBlockZ());
@@ -155,6 +155,7 @@ class TARDISHostileDisplacement {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // message time lord
                         String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
+                        assert player != null;
                         player.sendMessage(message);
                         String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
                         TARDISMessage.send(player, "HADS_LOC", hads);

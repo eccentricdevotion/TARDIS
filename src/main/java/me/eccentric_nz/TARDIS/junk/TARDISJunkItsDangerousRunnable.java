@@ -64,7 +64,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
             }
         });
         if (remove.size() > 0) {
-            plugin.getGeneralKeeper().getJunkTravellers().removeAll(remove);
+            remove.forEach(plugin.getGeneralKeeper().getJunkTravellers()::remove);
         }
         c++;
     }

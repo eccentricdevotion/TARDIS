@@ -83,7 +83,7 @@ public class TARDISHandlesRequest {
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
-                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !communicator.getItemMeta().getDisplayName().equals("TARDIS Communicator")) {
+                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !Objects.requireNonNull(communicator.getItemMeta()).getDisplayName().equals("TARDIS Communicator")) {
                         TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
                         return;
                     }
@@ -101,7 +101,7 @@ public class TARDISHandlesRequest {
             boolean matched = false;
             String key = "";
             List<String> groups = null;
-            for (String k : plugin.getHandlesConfig().getConfigurationSection("core-commands").getKeys(true)) {
+            for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("core-commands")).getKeys(true)) {
                 if (!k.equals("travel") && !k.equals("door")) {
                     Pattern pattern = TARDISHandlesPattern.getPattern(k, false);
                     Matcher m = pattern.matcher(removed);
@@ -379,7 +379,7 @@ public class TARDISHandlesRequest {
                 }
             } else {
                 // try custom-commands
-                for (String k : plugin.getHandlesConfig().getConfigurationSection("custom-commands").getKeys(false)) {
+                for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("custom-commands")).getKeys(false)) {
                     Pattern pattern = TARDISHandlesPattern.getPattern(k, true);
                     Matcher m = pattern.matcher(removed);
                     if (m.find()) {
@@ -430,6 +430,7 @@ public class TARDISHandlesRequest {
     private ItemStack getHandles() {
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName("Handles");
         im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);

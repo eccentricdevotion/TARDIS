@@ -25,6 +25,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -52,19 +53,21 @@ class TARDISSonicActivatorInventory {
         lore.add("add 1 of each of the following");
         lore.add("items to this inventory:");
         // get the Sonic Generator recipe
-        String difficulty = (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) ? "hard" : "easy";
-        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients").getKeys(false);
+        String difficulty = (Objects.requireNonNull(plugin.getConfig().getString("preferences.difficulty")).equalsIgnoreCase("hard")) ? "hard" : "easy";
+        Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients")).getKeys(false);
         ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
         lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
+        assert info_im != null;
         info_im.setDisplayName("Instructions");
         info_im.setLore(lore);
         info.setItemMeta(info_im);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUISonicActivator.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);

@@ -129,52 +129,47 @@ public class TARDISDoorOpener {
                     COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
                         // clone it because we're going to change it!
+                        assert tmp_loc != null;
                         inportal = tmp_loc.clone();
                         indirection = tmp_direction;
                         // adjust for teleport
                         int getx = tmp_loc.getBlockX();
                         int getz = tmp_loc.getBlockZ();
                         switch (indirection) {
-                            case NORTH:
+                            case NORTH -> {
                                 // z -ve
                                 tmp_loc.setX(getx + 0.5);
                                 tmp_loc.setZ(getz - 0.5);
-                                break;
-                            case EAST:
+                            }
+                            case EAST -> {
                                 // x +ve
                                 tmp_loc.setX(getx + 1.5);
                                 tmp_loc.setZ(getz + 0.5);
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 // z +ve
                                 tmp_loc.setX(getx + 0.5);
                                 tmp_loc.setZ(getz + 1.5);
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 // x -ve
                                 tmp_loc.setX(getx - 0.5);
                                 tmp_loc.setZ(getz + 0.5);
-                                break;
+                            }
                         }
                         indoor = tmp_loc;
                     } else {
+                        assert tmp_loc != null;
                         exdoor = tmp_loc.clone();
                         exdirection = COMPASS.valueOf(map.get("door_direction"));
                         // adjust for teleport
+                        assert preset != null;
                         if (preset.usesItemFrame()) {
                             switch (rsc.getDirection()) {
-                                case NORTH:
-                                    exdoor.add(0.5d, 0.0d, 1.0d);
-                                    break;
-                                case WEST:
-                                    exdoor.add(1.0d, 0.0d, 0.5d);
-                                    break;
-                                case SOUTH:
-                                    exdoor.add(0.5d, 0.0d, -1.0d);
-                                    break;
-                                default:
-                                    exdoor.add(-1.0d, 0.0d, 0.5d);
-                                    break;
+                                case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
+                                case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);
+                                case SOUTH -> exdoor.add(0.5d, 0.0d, -1.0d);
+                                default -> exdoor.add(-1.0d, 0.0d, 0.5d);
                             }
                         } else {
                             exdoor.setX(exdoor.getX() + 0.5);
@@ -196,9 +191,7 @@ public class TARDISDoorOpener {
                     tp_out.setAbandoned(abandoned);
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
-                        uuids.forEach((u) -> {
-                            plugin.getTrackerKeeper().getMover().add(u);
-                        });
+                        uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
                     }
                     // locations
                     if (tardis != null && preset != null && preset.hasPortal()) {
@@ -220,15 +213,11 @@ public class TARDISDoorOpener {
     }
 
     private BlockFace getOppositeFace(COMPASS d) {
-        switch (d) {
-            case SOUTH:
-                return BlockFace.NORTH;
-            case WEST:
-                return BlockFace.EAST;
-            case NORTH:
-                return BlockFace.SOUTH;
-            default:
-                return BlockFace.WEST;
-        }
+        return switch (d) {
+            case SOUTH -> BlockFace.NORTH;
+            case WEST -> BlockFace.EAST;
+            case NORTH -> BlockFace.SOUTH;
+            default -> BlockFace.WEST;
+        };
     }
 }

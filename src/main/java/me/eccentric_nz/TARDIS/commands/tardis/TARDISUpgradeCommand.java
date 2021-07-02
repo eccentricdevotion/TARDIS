@@ -33,6 +33,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -67,7 +68,7 @@ class TARDISUpgradeCommand {
         // it must be their own TARDIS
         boolean own;
         Location pl = player.getLocation();
-        String current_world = pl.getWorld().getName();
+        String current_world = Objects.requireNonNull(pl.getWorld()).getName();
         String[] split = tardis.getChunk().split(":");
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {

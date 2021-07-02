@@ -26,6 +26,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.*;
 
+import java.util.Objects;
+
 /**
  * @author eccentric_nz
  */
@@ -60,7 +62,7 @@ public class TARDISArtronIndicator {
             int percent = Math.round((current_level * 100F) / fc);
             if (!isFiltered) {
                 Scoreboard board = manager.getNewScoreboard();
-                Objective objective = board.registerNewObjective("TARDIS", "Artron", plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                Objective objective = board.registerNewObjective("TARDIS", "Artron", Objects.requireNonNull(plugin.getLanguage().getString("ARTRON_DISPLAY")));
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 if (used == 0) {
                     Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");

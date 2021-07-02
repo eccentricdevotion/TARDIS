@@ -67,6 +67,7 @@ public class ResultSetArchiveButtons {
                 while (rs.next()) {
                     ItemStack is = new ItemStack(terracotta[i], 1);
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     im.setDisplayName(rs.getString("name"));
                     List<String> lore = new ArrayList<>();
                     if (!rs.getString("description").isEmpty()) {

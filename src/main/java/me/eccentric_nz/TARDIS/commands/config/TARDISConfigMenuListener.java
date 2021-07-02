@@ -105,6 +105,7 @@ public class TARDISConfigMenuListener implements Listener {
         ItemStack is = view.getItem(slot);
         if (is != null) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             return im.getDisplayName();
         } else {
             return "";
@@ -114,7 +115,9 @@ public class TARDISConfigMenuListener implements Listener {
     private void setLore(InventoryView view, int slot, String str) {
         List<String> lore = (str != null) ? Collections.singletonList(str) : null;
         ItemStack is = view.getItem(slot);
+        assert is != null;
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setLore(lore);
         int cmd = im.getCustomModelData();
         if (cmd > 100) {

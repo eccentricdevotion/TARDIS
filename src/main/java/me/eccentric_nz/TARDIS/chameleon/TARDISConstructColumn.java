@@ -50,7 +50,7 @@ public class TARDISConstructColumn {
             // convert to String[][] array
             String data = rs.getData().get(field);
             if (data != null) {
-                JsonArray json = new JsonParser().parse(data).getAsJsonArray();
+                JsonArray json = JsonParser.parseString(data).getAsJsonArray();
                 String[][] strings = new String[10][4];
                 for (int i = 0; i < 10; i++) {
                     JsonArray inner = json.get(i).getAsJsonArray();

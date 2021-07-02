@@ -244,7 +244,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         TARDISMessage.send(player, "NO_MORE_SPOTS");
                         return true;
                     }
-                    set.put("world", l.getWorld().getName());
+                    set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                     set.put("x", l.getBlockX());
                     set.put("y", l.getBlockY());
                     set.put("z", l.getBlockZ());
@@ -345,7 +345,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 }
-                                set.put("world", cave.getWorld().getName());
+                                set.put("world", Objects.requireNonNull(cave.getWorld()).getName());
                                 set.put("x", cave.getBlockX());
                                 set.put("y", cave.getBlockY());
                                 set.put("z", cave.getBlockZ());
@@ -374,24 +374,24 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 }
-                                set.put("world", village.getWorld().getName());
+                                set.put("world", Objects.requireNonNull(village.getWorld()).getName());
                                 set.put("x", village.getBlockX());
                                 set.put("y", village.getBlockY());
                                 set.put("z", village.getBlockZ());
                                 set.put("submarine", 0);
                                 switch (village.getWorld().getEnvironment()) {
-                                    case THE_END:
+                                    case THE_END -> {
                                         which = "End City";
                                         travelType = TravelType.VILLAGE_THE_END;
-                                        break;
-                                    case NETHER:
+                                    }
+                                    case NETHER -> {
                                         which = "Nether Fortress";
                                         travelType = TravelType.VILLAGE_NETHER;
-                                        break;
-                                    default:
+                                    }
+                                    default -> {
                                         which = "Village";
                                         travelType = TravelType.VILLAGE_OVERWORLD;
-                                        break;
+                                    }
                                 }
                             }
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);
@@ -679,7 +679,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "NO_MORE_SPOTS");
                             return true;
                         }
-                        set.put("world", l.getWorld().getName());
+                        set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                         set.put("x", l.getBlockX());
                         set.put("y", l.getBlockY());
                         set.put("z", l.getBlockZ());
@@ -734,7 +734,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         parameters.setCompass(rsc.getDirection());
                                         Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
                                         if (l != null) {
-                                            set.put("world", l.getWorld().getName());
+                                            set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                             set.put("x", l.getBlockX());
                                             set.put("y", l.getBlockY());
                                             set.put("z", l.getBlockZ());
@@ -797,7 +797,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                     } else {
-                                        set.put("world", location.getWorld().getName());
+                                        set.put("world", Objects.requireNonNull(location.getWorld()).getName());
                                         set.put("x", location.getBlockX());
                                         set.put("y", location.getBlockY());
                                         set.put("z", location.getBlockZ());
@@ -820,7 +820,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         if (count > 0) {
                                             TARDISMessage.send(player, "NOT_SAFE");
                                         } else {
-                                            set.put("world", determiney.getWorld().getName());
+                                            set.put("world", Objects.requireNonNull(determiney.getWorld()).getName());
                                             set.put("x", determiney.getBlockX());
                                             set.put("y", determiney.getBlockY());
                                             set.put("z", determiney.getBlockZ());
@@ -847,7 +847,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                     } else {
-                                        set.put("world", giveny.getWorld().getName());
+                                        set.put("world", Objects.requireNonNull(giveny.getWorld()).getName());
                                         set.put("x", giveny.getBlockX());
                                         set.put("y", giveny.getBlockY());
                                         set.put("z", giveny.getBlockZ());
@@ -988,7 +988,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             while (!chunk.isLoaded()) {
                 chunk.load();
             }
-            y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+            y = TARDISStaticLocationGetters.getHighestYIn3x3(w, x, z);
         }
         int max = Math.min(plugin.getConfig().getInt("travel.max_distance"), (int) (w.getWorldBorder().getSize() / 2) - 17);
         if (x > max || x < -max || z > max || z < -max) {
@@ -1038,7 +1038,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_E", b.toString());
-                                return new Location(w, east, TARDISStaticLocationGetters.getHighestYin3x3(w, east, startz), startz);
+                                return new Location(w, east, TARDISStaticLocationGetters.getHighestYIn3x3(w, east, startz), startz);
                             }
                         }
                         break;
@@ -1048,7 +1048,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_S", b.toString());
-                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, south), south);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYIn3x3(w, startx, south), south);
                             }
                         }
                         break;
@@ -1058,7 +1058,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_W", b.toString());
-                                return new Location(w, west, TARDISStaticLocationGetters.getHighestYin3x3(w, west, startz), startz);
+                                return new Location(w, west, TARDISStaticLocationGetters.getHighestYIn3x3(w, west, startz), startz);
                             }
                         }
                         break;
@@ -1068,7 +1068,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             Biome chkb = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_N", b.toString());
-                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, north), north);
+                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYIn3x3(w, startx, north), north);
                             }
                         }
                         break;
@@ -1079,7 +1079,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     private int checkLocation(Location location, Player player, int id) {
-        if (location.getWorld().getEnvironment().equals(Environment.NETHER) && location.getY() > 127) {
+        if (Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.NETHER) && location.getY() > 127) {
             TARDISMessage.send(player, "TRAVEL_NETHER");
             return 1;
         }

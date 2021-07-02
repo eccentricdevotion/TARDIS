@@ -39,6 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
@@ -57,6 +58,7 @@ public class TARDISKeyboardListener implements Listener {
     public static boolean isKeyboardEditor(ItemStack is) {
         if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
         }
         return false;
@@ -107,7 +109,7 @@ public class TARDISKeyboardListener implements Listener {
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
             // player?
-            if (plugin.getServer().getPlayer(event.getLine(0)) != null) {
+            if (plugin.getServer().getPlayer(Objects.requireNonNull(event.getLine(0))) != null) {
                 // set location player
                 p.performCommand("tardistravel " + event.getLine(0));
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
@@ -122,7 +124,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
             // home?
-            if (event.getLine(0).equalsIgnoreCase("home")) {
+            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("home")) {
                 // check not already at home location
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
@@ -146,19 +148,19 @@ public class TARDISKeyboardListener implements Listener {
                 }
                 return;
             }
-            if (event.getLine(0).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
+            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
                 p.performCommand("tardistravel cave");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
                 return;
             }
-            if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
+            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
                 p.performCommand("tardistravel village");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
                 return;
             }
             // biome ?
             try {
-                String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
+                String upper = Objects.requireNonNull(event.getLine(0)).toUpperCase(Locale.ENGLISH);
                 Biome.valueOf(upper);
                 if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                     p.performCommand("tardistravel biome " + upper);

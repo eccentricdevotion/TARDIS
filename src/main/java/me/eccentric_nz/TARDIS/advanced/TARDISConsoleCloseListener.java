@@ -48,10 +48,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -88,7 +85,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     if (is != null) {
                         Material mat = is.getType();
                         if (!onlythese.contains(mat)) {
-                            p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
+                            Objects.requireNonNull(p.getLocation().getWorld()).dropItemNaturally(p.getLocation(), is);
                             view.setItem(i, new ItemStack(Material.AIR));
                         }
                     }
@@ -127,12 +124,11 @@ public class TARDISConsoleCloseListener implements Listener {
                             HashMap<String, Object> where_next = new HashMap<>();
                             HashMap<String, Object> where_tardis = new HashMap<>();
                             // process any disks
-                            List<String> lore = is.getItemMeta().getLore();
+                            List<String> lore = Objects.requireNonNull(is.getItemMeta()).getLore();
                             if (lore != null) {
                                 String first = lore.get(0);
                                 if (!first.equals("Blank")) {
                                     TravelType travelType = TravelType.SAVE;
-                                    ;
                                     switch (mat) {
                                         case MUSIC_DISC_BLOCKS: // area
                                             // check the current location is not in this area already
@@ -156,7 +152,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "NO_MORE_SPOTS");
                                                 continue;
                                             }
-                                            set_next.put("world", l.getWorld().getName());
+                                            set_next.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                             set_next.put("x", l.getBlockX());
                                             set_next.put("y", l.getBlockY());
                                             set_next.put("z", l.getBlockZ());
@@ -203,7 +199,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 }
                                                 World bw = nsob.getWorld();
                                                 // check location
-                                                while (!bw.getChunkAt(nsob).isLoaded()) {
+                                                while (true) {
+                                                    assert bw != null;
+                                                    if (!!bw.getChunkAt(nsob).isLoaded())
+                                                        break;
                                                     bw.getChunkAt(nsob).load();
                                                 }
                                                 int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
@@ -265,7 +264,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 int x = TARDISNumberParsers.parseInt(lore.get(2));
                                                 int y = TARDISNumberParsers.parseInt(lore.get(3));
                                                 int z = TARDISNumberParsers.parseInt(lore.get(4));
-                                                if (current.getWorld().getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                                if (Objects.requireNonNull(current.getWorld()).getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
                                                     continue;
                                                 }
                                                 // read the lore from the disk
@@ -322,13 +321,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                     TARDISMessage.send(p, "ADV_BLANK");
                                 }
                             }
-                        } else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
+                        } else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
                             // Randomiser Circuit
                             Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
                             if (l != null) {
                                 HashMap<String, Object> set_next = new HashMap<>();
                                 HashMap<String, Object> where_next = new HashMap<>();
-                                set_next.put("world", l.getWorld().getName());
+                                set_next.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                 set_next.put("x", l.getBlockX());
                                 set_next.put("y", l.getBlockY());
                                 set_next.put("z", l.getBlockZ());

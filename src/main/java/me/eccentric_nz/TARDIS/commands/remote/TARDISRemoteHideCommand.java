@@ -73,6 +73,7 @@ public class TARDISRemoteHideCommand {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
+        assert olp != null;
         UUID uuid = olp.getUniqueId();
         DestroyData dd = new DestroyData();
         dd.setDirection(rsc.getDirection());

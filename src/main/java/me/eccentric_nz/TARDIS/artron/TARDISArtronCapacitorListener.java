@@ -53,6 +53,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 
@@ -155,7 +156,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                                 }
                                                 break;
                                             case NONE:
-                                                if (plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                                                if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
@@ -183,12 +184,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     ItemStack is = player.getInventory().getItemInMainHand();
                                     if (is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
+                                        assert im != null;
                                         String name = im.getDisplayName();
                                         if (!name.equals("Artron Storage Cell")) {
                                             TARDISMessage.send(player, "CELL_NOT_VALID");
                                             return;
                                         }
                                         List<String> lore = im.getLore();
+                                        assert lore != null;
                                         int charge = TARDISNumberParsers.parseInt(lore.get(1)) * is.getAmount();
                                         if (charge <= 0) {
                                             TARDISMessage.send(player, "CELL_NOT_CHARGED");
@@ -206,91 +209,96 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
                                 plugin.getQueryFactory().doUpdate("tardis", set, whereid);
-                            } else if (item.equals(Material.getMaterial(key))) {
-                                // has the TARDIS been initialised?
-                                if (!init) {
-                                    // kickstart the TARDIS Artron Energy Capacitor
-                                    TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
-                                    if (abandoned) {
-                                        // transfer ownership to the player who clicked
-                                        claimAbandoned(player, id, block, tardis);
-                                    }
-                                    // get locations from database
-                                    String creeper = tardis.getCreeper();
-                                    if (!creeper.isEmpty() && !creeper.equals(":")) {
-                                        World w = block.getLocation().getWorld();
-                                        Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
-                                        plugin.setTardisSpawn(true);
-                                        Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
-                                        Creeper c = (Creeper) e;
-                                        c.setPowered(true);
-                                        c.setRemoveWhenFarAway(false);
-                                        if (tardis.getSchematic().hasBeacon()) {
-                                            String beacon = tardis.getBeacon();
-                                            Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
-                                            bl.setBlockData(TARDISConstants.GLASS);
-                                        }
-                                    }
-                                    // set the capacitor to 50% charge
-                                    HashMap<String, Object> set = new HashMap<>();
-                                    int half = Math.round(fc / 2.0F);
-                                    set.put("artron_level", half);
-                                    set.put("tardis_init", 1);
-                                    set.put("powered_on", 1);
-                                    plugin.getQueryFactory().doUpdate("tardis", set, whereid);
-                                    TARDISMessage.send(player, "ENERGY_INIT");
-                                } else { // toggle power
-                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        boolean pu = true;
+                            } else {
+                                assert key != null;
+                                if (item.equals(Material.getMaterial(key))) {
+                                    // has the TARDIS been initialised?
+                                    if (!init) {
+                                        // kickstart the TARDIS Artron Energy Capacitor
+                                        TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
-                                            pu = claimAbandoned(player, id, block, tardis);
+                                            claimAbandoned(player, id, block, tardis);
                                         }
-                                        if (pu) {
-                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                        // get locations from database
+                                        String creeper = tardis.getCreeper();
+                                        if (!creeper.isEmpty() && !creeper.equals(":")) {
+                                            World w = block.getLocation().getWorld();
+                                            Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
+                                            plugin.setTardisSpawn(true);
+                                            assert cl != null;
+                                            assert w != null;
+                                            Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
+                                            Creeper c = (Creeper) e;
+                                            c.setPowered(true);
+                                            c.setRemoveWhenFarAway(false);
+                                            if (tardis.getSchematic().hasBeacon()) {
+                                                String beacon = tardis.getBeacon();
+                                                Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
+                                                bl.setBlockData(TARDISConstants.GLASS);
+                                            }
+                                        }
+                                        // set the capacitor to 50% charge
+                                        HashMap<String, Object> set = new HashMap<>();
+                                        int half = Math.round(fc / 2.0F);
+                                        set.put("artron_level", half);
+                                        set.put("tardis_init", 1);
+                                        set.put("powered_on", 1);
+                                        plugin.getQueryFactory().doUpdate("tardis", set, whereid);
+                                        TARDISMessage.send(player, "ENERGY_INIT");
+                                    } else { // toggle power
+                                        if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                            boolean pu = true;
+                                            if (abandoned) {
+                                                // transfer ownership to the player who clicked
+                                                pu = claimAbandoned(player, id, block, tardis);
+                                            }
+                                            if (pu) {
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                            }
                                         }
                                     }
-                                }
-                            } else if (player.isSneaking()) {
-                                if (!init) {
-                                    TARDISMessage.send(player, "ENERGY_NO_INIT");
-                                    return;
-                                }
-                                // transfer player artron energy into the capacitor
-                                int ten_percent = Math.round(fc * 0.1F);
-                                if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
-                                    TARDISMessage.send(player, "ENERGY_UNDER_10");
-                                    return;
-                                }
-                                if (hasPrefs) {
-                                    int level = rsp.getArtronLevel();
-                                    if (level < 1) {
-                                        TARDISMessage.send(player, "ENERGY_NONE");
+                                } else if (player.isSneaking()) {
+                                    if (!init) {
+                                        TARDISMessage.send(player, "ENERGY_NO_INIT");
                                         return;
                                     }
-                                    int new_level = current_level + level;
-                                    // set player level to 0
-                                    HashMap<String, Object> set = new HashMap<>();
-                                    set.put("artron_level", 0);
-                                    HashMap<String, Object> wherel = new HashMap<>();
-                                    wherel.put("uuid", player.getUniqueId().toString());
-                                    plugin.getQueryFactory().doUpdate("player_prefs", set, wherel);
-                                    // add player level to TARDIS level
-                                    HashMap<String, Object> sett = new HashMap<>();
-                                    sett.put("artron_level", new_level);
-                                    plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
-                                    int percent = Math.round((new_level * 100F) / fc);
-                                    TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
+                                    // transfer player artron energy into the capacitor
+                                    int ten_percent = Math.round(fc * 0.1F);
+                                    if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
+                                        TARDISMessage.send(player, "ENERGY_UNDER_10");
+                                        return;
+                                    }
+                                    if (hasPrefs) {
+                                        int level = rsp.getArtronLevel();
+                                        if (level < 1) {
+                                            TARDISMessage.send(player, "ENERGY_NONE");
+                                            return;
+                                        }
+                                        int new_level = current_level + level;
+                                        // set player level to 0
+                                        HashMap<String, Object> set = new HashMap<>();
+                                        set.put("artron_level", 0);
+                                        HashMap<String, Object> wherel = new HashMap<>();
+                                        wherel.put("uuid", player.getUniqueId().toString());
+                                        plugin.getQueryFactory().doUpdate("player_prefs", set, wherel);
+                                        // add player level to TARDIS level
+                                        HashMap<String, Object> sett = new HashMap<>();
+                                        sett.put("artron_level", new_level);
+                                        plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
+                                        int percent = Math.round((new_level * 100F) / fc);
+                                        TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
+                                    } else {
+                                        TARDISMessage.send(player, "ENERGY_NONE");
+                                    }
                                 } else {
-                                    TARDISMessage.send(player, "ENERGY_NONE");
+                                    if (!init) {
+                                        TARDISMessage.send(player, "ENERGY_NO_INIT");
+                                        return;
+                                    }
+                                    // just tell us how much energy we have
+                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                                 }
-                            } else {
-                                if (!init) {
-                                    TARDISMessage.send(player, "ENERGY_NO_INIT");
-                                    return;
-                                }
-                                // just tell us how much energy we have
-                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                             }
                         }
                     } else if (action == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {

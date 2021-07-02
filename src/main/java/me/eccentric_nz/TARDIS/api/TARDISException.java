@@ -16,11 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import java.io.Serial;
+
 /**
  * @author eccentric_nz
  */
 public class TARDISException extends Exception {
 
+    @Serial
     private static final long serialVersionUID = -5152771166812835530L;
 
     /**

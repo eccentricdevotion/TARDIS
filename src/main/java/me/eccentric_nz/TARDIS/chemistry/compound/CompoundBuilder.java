@@ -32,6 +32,7 @@ public class CompoundBuilder {
             case Rust -> {
                 is = new ItemStack(Material.LAVA_BUCKET, 1);
                 ItemMeta rm = is.getItemMeta();
+                assert rm != null;
                 rm.setDisplayName("Rust Bucket");
                 rm.setCustomModelData(1);
                 is.setItemMeta(rm);
@@ -40,6 +41,7 @@ public class CompoundBuilder {
             case Sulphuric_Acid -> {
                 is = new ItemStack(Material.WATER_BUCKET, 1);
                 ItemMeta am = is.getItemMeta();
+                assert am != null;
                 am.setDisplayName("Acid Bucket");
                 am.setCustomModelData(1);
                 is.setItemMeta(am);
@@ -47,6 +49,7 @@ public class CompoundBuilder {
             default -> {
                 is = new ItemStack(Material.GLASS_BOTTLE, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName(compound.toString().replace("_", " "));
                 im.setLore(Collections.singletonList(compound.getSymbol()));
                 im.setCustomModelData(10000001 + compound.ordinal());

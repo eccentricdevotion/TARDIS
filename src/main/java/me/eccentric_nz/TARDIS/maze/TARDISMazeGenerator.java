@@ -171,9 +171,7 @@ public class TARDISMazeGenerator {
         } else {
             // otherwise trim the array to the right length and return it
             int[] cancut = new int[place];
-            for (int i = 0; i < place; i++) {
-                cancut[i] = cut[i];
-            }
+            System.arraycopy(cut, 0, cancut, 0, place);
             return cancut;
         }
     }
@@ -182,6 +180,7 @@ public class TARDISMazeGenerator {
         // current location
         Integer[] current = tracker.peekFirst();
         // next location
+        assert current != null;
         int nxt_row = current[0] - 2;
         int nxt_col = current[1];
         // if next location is in the array and not already cut, can cut it
@@ -197,6 +196,7 @@ public class TARDISMazeGenerator {
         // current location
         Integer[] current = tracker.peekFirst();
         // next location
+        assert current != null;
         int nxt_row = current[0] + 2;
         int nxt_col = current[1];
         // if the next location is in the array and not already cut, can cut it
@@ -212,6 +212,7 @@ public class TARDISMazeGenerator {
         // current location
         Integer[] current = tracker.peekFirst();
         // next location
+        assert current != null;
         int nxt_row = current[0];
         int nxt_col = current[1] + 2;
         // if the next location is in the array and not already cut, can cut it
@@ -227,6 +228,7 @@ public class TARDISMazeGenerator {
         // current location
         Integer[] current = tracker.peekFirst();
         // next location
+        assert current != null;
         int nxt_row = current[0];
         int nxt_col = current[1] - 2;
         // if next location is in the array and not already cut, can cut it
@@ -244,6 +246,7 @@ public class TARDISMazeGenerator {
         // temp var to access the stack
         Integer[] loc = new Integer[2];
         // the location of the next row index
+        assert current != null;
         int nxt_row = current[0] - 2;
         // Location of next col index
         int nxt_col = current[1];
@@ -263,6 +266,7 @@ public class TARDISMazeGenerator {
         // temp variable to access stack
         Integer[] loc = new Integer[2];
         // Location of next row and col
+        assert current != null;
         int nxt_row = current[0] + 2;
         int nxt_col = current[1];
         // clears the next index and the wall between it
@@ -281,6 +285,7 @@ public class TARDISMazeGenerator {
         // dummy variable to access stack
         Integer[] loc = new Integer[2];
         // location of next row and col
+        assert current != null;
         int nxt_row = current[0];
         int nxt_col = current[1] + 2;
         // clears the necessary locations
@@ -299,6 +304,7 @@ public class TARDISMazeGenerator {
         // temp variable to access stack
         Integer[] loc = new Integer[2];
         // location of next row and col
+        assert current != null;
         int nxt_row = current[0];
         int nxt_col = current[1] - 2;
         // clears the necessary locations

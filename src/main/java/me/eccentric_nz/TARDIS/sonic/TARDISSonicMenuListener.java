@@ -31,6 +31,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
  * you what it does do. It is very good at opening doors!
@@ -77,9 +79,12 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
                         }
                         // get Display name of selected sonic
                         ItemStack choice = view.getItem(slot);
+                        assert choice != null;
                         ItemMeta choice_im = choice.getItemMeta();
+                        assert choice_im != null;
                         String choice_name = choice_im.getDisplayName();
                         ItemMeta sonic_im = sonic.getItemMeta();
+                        assert sonic_im != null;
                         sonic_im.setDisplayName(choice_name);
                         sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
@@ -115,7 +120,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
         if (sonic != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
-            loc.getWorld().dropItemNaturally(loc, sonic);
+            Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, sonic);
             view.setItem(18, new ItemStack(Material.AIR));
         }
     }

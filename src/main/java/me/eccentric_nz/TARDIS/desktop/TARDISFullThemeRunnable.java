@@ -192,6 +192,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 // get JSON
                 JsonObject prevObj = TARDISSchematicGZip.unzip(prevPath);
+                assert prevObj != null;
                 JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
                 ph = prevDimensions.get("height").getAsInt();
                 pw = prevDimensions.get("width").getAsInt();
@@ -203,6 +204,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 size_prev = archive_prev.getConsoleSize();
             }
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();
@@ -244,7 +246,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (!tardis.getCreeper().isEmpty()) {
                 // remove the charged creeper
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
-                Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
+                assert creeper != null;
+                Entity ent = Objects.requireNonNull(creeper.getWorld()).spawnEntity(creeper, EntityType.EGG);
                 ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
                     if (e instanceof Creeper) {
                         e.remove();
@@ -652,7 +655,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 break;
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        JsonArray json = new JsonParser().parse(gson.toJson(existing)).getAsJsonArray();
+                        JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("json", json.toString());
                         HashMap<String, Object> wheres = new HashMap<>();
@@ -761,30 +764,30 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         data = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) data;
                         switch (j) {
-                            case 2:
+                            case 2 -> {
                                 directional.setFacing(BlockFace.WEST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
-                                break;
-                            case 3:
+                            }
+                            case 3 -> {
                                 directional.setFacing(BlockFace.NORTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
-                                break;
-                            case 4:
+                            }
+                            case 4 -> {
                                 directional.setFacing(BlockFace.SOUTH);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
-                                break;
-                            default:
+                            }
+                            default -> {
                                 directional.setFacing(BlockFace.EAST);
                                 data = directional;
                                 postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
                                 plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
-                                break;
+                            }
                         }
                         j++;
                     }

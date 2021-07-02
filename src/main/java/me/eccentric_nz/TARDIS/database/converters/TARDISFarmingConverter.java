@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TARDISFarmingConverter {
 
@@ -58,7 +59,7 @@ public class TARDISFarmingConverter {
                 rooms.put("stall", false);
                 rooms.put("village", false);
                 StringBuilder tardisFarms = new StringBuilder("SELECT tardis_id, ");
-                String check = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%%%s%%'" : "SHOW COLUMNS FROM " + prefix + "tardis LIKE '%s'";
+                String check = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%%%s%%'" : "SHOW COLUMNS FROM " + prefix + "tardis LIKE '%s'";
                 ResultSet rsr;
                 for (Map.Entry<String, Boolean> r : rooms.entrySet()) {
                     String rquery = String.format(check, r.getKey());

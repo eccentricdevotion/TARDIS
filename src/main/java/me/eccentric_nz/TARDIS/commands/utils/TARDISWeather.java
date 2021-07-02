@@ -37,15 +37,9 @@ public class TARDISWeather {
 
     static void setWeather(World world, Weather weather) {
         switch (weather) {
-            case RAIN:
-                setRain(world);
-                break;
-            case THUNDER:
-                setThunder(world);
-                break;
-            default:
-                setClear(world);
-                break;
+            case RAIN -> setRain(world);
+            case THUNDER -> setThunder(world);
+            default -> setClear(world);
         }
     }
 }

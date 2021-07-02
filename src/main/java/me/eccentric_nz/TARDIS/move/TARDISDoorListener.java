@@ -41,6 +41,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -75,6 +76,57 @@ public class TARDISDoorListener {
     }
 
     /**
+     * Get door location data for teleport entry and exit of the TARDIS.
+     *
+     * @param doortype a reference to the door_type field in the doors table
+     * @param id       the unique TARDIS identifier i the database
+     * @return an instance of the TARDISDoorLocation data class
+     */
+    public static TARDISDoorLocation getDoor(int doortype, int id) {
+        TARDISDoorLocation tdl = new TARDISDoorLocation();
+        // get door location
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("door_type", doortype);
+        wherei.put("tardis_id", id);
+        ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, wherei, false);
+        if (rsd.resultSet()) {
+            COMPASS d = rsd.getDoor_direction();
+            tdl.setD(d);
+            String doorLocStr = rsd.getDoor_location();
+            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+            tdl.setW(cw);
+            Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+            assert tmp_loc != null;
+            int getx = tmp_loc.getBlockX();
+            int getz = tmp_loc.getBlockZ();
+            switch (d) {
+                case NORTH -> {
+                    // z -ve
+                    tmp_loc.setX(getx + 0.5);
+                    tmp_loc.setZ(getz - 0.5);
+                }
+                case EAST -> {
+                    // x +ve
+                    tmp_loc.setX(getx + 1.5);
+                    tmp_loc.setZ(getz + 0.5);
+                }
+                case SOUTH -> {
+                    // z +ve
+                    tmp_loc.setX(getx + 0.5);
+                    tmp_loc.setZ(getz + 1.5);
+                }
+                case WEST -> {
+                    // x -ve
+                    tmp_loc.setX(getx - 0.5);
+                    tmp_loc.setZ(getz + 0.5);
+                }
+            }
+            tdl.setL(tmp_loc);
+        }
+        return tdl;
+    }
+
+    /**
      * A method to teleport the player into and out of the TARDIS.
      *
      * @param player   the player to teleport
@@ -94,13 +146,9 @@ public class TARDISDoorListener {
             doPlayerMove(player, location, exit, from, quotes);
         } else {
             // play the door sound 5 ticks (1/4s) later
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                playDoorSound(player, sound, location, minecart);
-            }, 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> playDoorSound(player, sound, location, minecart), 5L);
             // actually teleport the player 10 ticks (1/2s) later
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                doPlayerMove(player, location, exit, from, quotes);
-            }, 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> doPlayerMove(player, location, exit, from, quotes), 10L);
         }
     }
 
@@ -166,15 +214,11 @@ public class TARDISDoorListener {
      * @return true if the world is a SURVIVAL world, otherwise false
      */
     public boolean checkSurvival(World world) {
-        boolean bool = false;
-        switch (plugin.getWorldManager()) {
-            case MULTIVERSE:
-                bool = plugin.getMVHelper().isWorldSurvival(world);
-                break;
-            case NONE:
-                bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
-                break;
-        }
+        boolean bool = switch (plugin.getWorldManager()) {
+            case MULTIVERSE -> plugin.getMVHelper().isWorldSurvival(world);
+            case NONE -> Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode")).equalsIgnoreCase("SURVIVAL");
+            default -> false;
+        };
         return bool;
     }
 
@@ -196,26 +240,27 @@ public class TARDISDoorListener {
             pl.setZ(location.getZ() + 1);
         } else {
             switch (direction) {
-                case NORTH:
+                case NORTH -> {
                     pl.setX(location.getX() + 1);
                     pl.setZ(location.getZ() + 1);
-                    break;
-                case WEST:
+                }
+                case WEST -> {
                     pl.setX(location.getX() + 1);
                     pl.setZ(location.getZ() - 1);
-                    break;
-                case SOUTH:
+                }
+                case SOUTH -> {
                     pl.setX(location.getX() - 1);
                     pl.setZ(location.getZ() - 1);
-                    break;
-                default:
+                }
+                default -> {
                     pl.setX(location.getX() - 1);
                     pl.setZ(location.getZ() + 1);
-                    break;
+                }
             }
         }
         for (TARDISPet pet : pets) {
             plugin.setTardisSpawn(true);
+            assert w != null;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             if (ent.isDead()) {
                 ent.remove();
@@ -286,7 +331,7 @@ public class TARDISDoorListener {
             } else {
                 key = plugin.getConfig().getString("preferences.key");
             }
-            if (!key.equals("AIR")) {
+            if (!Objects.equals(key, "AIR")) {
                 PlayerInventory inv = player.getInventory();
                 Material m = Material.valueOf(key);
                 ItemStack oh = inv.getItemInOffHand();
@@ -310,66 +355,12 @@ public class TARDISDoorListener {
      * @return the angle needed to correct the yaw
      */
     float adjustYaw(COMPASS d1, COMPASS d2) {
-        switch (d1) {
-            case EAST:
-                return adjustYaw[0][d2.ordinal()];
-            case SOUTH:
-                return adjustYaw[1][d2.ordinal()];
-            case WEST:
-                return adjustYaw[2][d2.ordinal()];
-            default:
-                return adjustYaw[3][d2.ordinal()];
-        }
-    }
-
-    /**
-     * Get door location data for teleport entry and exit of the TARDIS.
-     *
-     * @param doortype a reference to the door_type field in the doors table
-     * @param id       the unique TARDIS identifier i the database
-     * @return an instance of the TARDISDoorLocation data class
-     */
-    public static TARDISDoorLocation getDoor(int doortype, int id) {
-        TARDISDoorLocation tdl = new TARDISDoorLocation();
-        // get door location
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("door_type", doortype);
-        wherei.put("tardis_id", id);
-        ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, wherei, false);
-        if (rsd.resultSet()) {
-            COMPASS d = rsd.getDoor_direction();
-            tdl.setD(d);
-            String doorLocStr = rsd.getDoor_location();
-            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
-            tdl.setW(cw);
-            Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
-            int getx = tmp_loc.getBlockX();
-            int getz = tmp_loc.getBlockZ();
-            switch (d) {
-                case NORTH -> {
-                    // z -ve
-                    tmp_loc.setX(getx + 0.5);
-                    tmp_loc.setZ(getz - 0.5);
-                }
-                case EAST -> {
-                    // x +ve
-                    tmp_loc.setX(getx + 1.5);
-                    tmp_loc.setZ(getz + 0.5);
-                }
-                case SOUTH -> {
-                    // z +ve
-                    tmp_loc.setX(getx + 0.5);
-                    tmp_loc.setZ(getz + 1.5);
-                }
-                case WEST -> {
-                    // x -ve
-                    tmp_loc.setX(getx - 0.5);
-                    tmp_loc.setZ(getz + 0.5);
-                }
-            }
-            tdl.setL(tmp_loc);
-        }
-        return tdl;
+        return switch (d1) {
+            case EAST -> adjustYaw[0][d2.ordinal()];
+            case SOUTH -> adjustYaw[1][d2.ordinal()];
+            case WEST -> adjustYaw[2][d2.ordinal()];
+            default -> adjustYaw[3][d2.ordinal()];
+        };
     }
 
     /**
@@ -432,9 +423,7 @@ public class TARDISDoorListener {
                         plugin.getTrackerKeeper().getTemporallyLocated().add(player.getUniqueId());
                     }, 10L);
                 } else {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        player.setPlayerTime(18000, false);
-                    }, 10L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setPlayerTime(18000, false), 10L);
                 }
             } else {
                 player.resetPlayerTime();

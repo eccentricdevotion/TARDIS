@@ -28,11 +28,6 @@ import java.util.*;
  */
 public final class TARDISBiome implements Keyed {
 
-    private static final List<TARDISBiome> BIOMES_LEGACY = new ArrayList<>();
-    private static final Map<String, TARDISBiome> BY_ENUM_NAME_LEGACY = new HashMap<>();
-    private static final Map<NamespacedKey, TARDISBiome> BY_KEY = new HashMap<>();
-    private final NamespacedKey key;
-
     public static final TARDISBiome OCEAN = new TARDISBiome("OCEAN");
     public static final TARDISBiome PLAINS = new TARDISBiome("PLAINS");
     public static final TARDISBiome DESERT = new TARDISBiome("DESERT");
@@ -112,6 +107,10 @@ public final class TARDISBiome implements Keyed {
     public static final TARDISBiome CRIMSON_FOREST = new TARDISBiome("CRIMSON_FOREST");
     public static final TARDISBiome WARPED_FOREST = new TARDISBiome("WARPED_FOREST");
     public static final TARDISBiome BASALT_DELTAS = new TARDISBiome("BASALT_DELTAS");
+    private static final List<TARDISBiome> BIOMES_LEGACY = new ArrayList<>();
+    private static final Map<String, TARDISBiome> BY_ENUM_NAME_LEGACY = new HashMap<>();
+    private static final Map<NamespacedKey, TARDISBiome> BY_KEY = new HashMap<>();
+    private final NamespacedKey key;
 
     /**
      * The legacy constructor used to fill the default biomes
@@ -188,10 +187,9 @@ public final class TARDISBiome implements Keyed {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof TARDISBiome)) {
+        if (!(o instanceof TARDISBiome biome)) {
             return false;
         }
-        TARDISBiome biome = (TARDISBiome) o;
         return Objects.equals(key, biome.key);
     }
 

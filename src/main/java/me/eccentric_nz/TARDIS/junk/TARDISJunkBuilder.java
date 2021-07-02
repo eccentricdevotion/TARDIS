@@ -39,6 +39,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -100,6 +101,7 @@ public class TARDISJunkBuilder implements Runnable {
                     String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
                     JsonObject obj = TARDISSchematicGZip.unzip(path);
                     // get dimensions
+                    assert obj != null;
                     JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                     int h = dimensions.get("height").getAsInt();
                     int w = dimensions.get("width").getAsInt();
@@ -159,18 +161,15 @@ public class TARDISJunkBuilder implements Runnable {
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
                                 }
                                 switch (type) {
-                                    case SPONGE:
-                                    case AIR:
-                                        TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
-                                        break;
-                                    case CAKE:
+                                    case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                                    case CAKE -> {
                                         BlockData handbrake = Material.LEVER.createBlockData();
                                         Switch lever = (Switch) handbrake;
                                         lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                                         lever.setFacing(BlockFace.SOUTH);
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
-                                        break;
-                                    case ORANGE_WOOL:
+                                    }
+                                    case ORANGE_WOOL -> {
                                         BlockData stem;
                                         if (wall_type.equals(Material.ORANGE_WOOL)) {
                                             stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
@@ -178,13 +177,9 @@ public class TARDISJunkBuilder implements Runnable {
                                             stem = wall_type.createBlockData();
                                         }
                                         TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
-                                        break;
-                                    case LIGHT_GRAY_WOOL:
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-                                        break;
-                                    default:
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
-                                        break;
+                                    }
+                                    case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+                                    default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                 }
                             }
                         }
@@ -222,7 +217,7 @@ public class TARDISJunkBuilder implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", bd.getTardisID());
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", loc.getWorld().getName());
+                set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
                 set.put("x", loc.getBlockX());
                 set.put("y", sy);
                 set.put("z", loc.getBlockZ());

@@ -85,6 +85,7 @@ public class TARDISSchematicListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         if (!im.hasDisplayName()) {
             return false;
         }

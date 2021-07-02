@@ -81,6 +81,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 return true;
             }
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             String name = im.getDisplayName();
             if (name == null || !name.equals("Artron Storage Cell")) {
                 TARDISMessage.send(player, "CELL_IN_HAND");
@@ -131,6 +132,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 return true;
             }
             List<String> lore = im.getLore();
+            assert lore != null;
             int level = TARDISNumberParsers.parseInt(lore.get(1));
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");

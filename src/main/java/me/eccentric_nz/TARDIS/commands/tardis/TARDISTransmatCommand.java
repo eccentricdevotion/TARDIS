@@ -32,6 +32,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 class TARDISTransmatCommand {
 
@@ -138,7 +139,7 @@ class TARDISTransmatCommand {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", id);
                     set.put("name", args[2]);
-                    set.put("world", location.getWorld().getName());
+                    set.put("world", Objects.requireNonNull(location.getWorld()).getName());
                     set.put("x", location.getX());
                     set.put("y", location.getY());
                     set.put("z", location.getZ());
@@ -152,7 +153,7 @@ class TARDISTransmatCommand {
                 ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
                 if (rsm.resultSet()) {
                     HashMap<String, Object> set = new HashMap<>();
-                    set.put("world", location.getWorld().getName());
+                    set.put("world", Objects.requireNonNull(location.getWorld()).getName());
                     set.put("x", location.getX());
                     set.put("y", location.getY());
                     set.put("z", location.getZ());

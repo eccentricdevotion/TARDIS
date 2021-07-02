@@ -42,7 +42,7 @@ public class ARSRoomCounts {
                     materials.removeAll(STONE);
                     for (String material : materials) {
                         // only count if not a console block
-                        if (!Consoles.getBY_MATERIALS().keySet().contains(material)) {
+                        if (!Consoles.getBY_MATERIALS().containsKey(material)) {
                             num += 1.0;
                             String room = TARDISARS.ARSFor(material).toString();
                             int count = (data.containsKey(room)) ? data.get(room) + 1 : 1;

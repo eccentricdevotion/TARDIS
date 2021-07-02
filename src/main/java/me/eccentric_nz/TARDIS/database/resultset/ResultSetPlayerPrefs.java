@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -109,7 +110,7 @@ public class ResultSetPlayerPrefs {
             if (rs.next()) {
                 pp_id = rs.getInt("pp_id");
                 uuid = UUID.fromString(rs.getString("uuid"));
-                key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
+                key = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 sfxOn = rs.getBoolean("sfx_on");
                 quotesOn = rs.getBoolean("quotes_on");
                 autoOn = rs.getBoolean("auto_on");

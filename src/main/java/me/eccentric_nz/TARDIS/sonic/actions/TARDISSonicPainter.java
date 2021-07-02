@@ -29,6 +29,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TARDISSonicPainter {
 
@@ -393,7 +394,7 @@ public class TARDISSonicPainter {
         int a = dye.getAmount();
         int a2 = a - 1;
         if (a2 > 0) {
-            inv.getItem(8).setAmount(a2);
+            Objects.requireNonNull(inv.getItem(8)).setAmount(a2);
         } else {
             inv.setItem(8, null);
         }

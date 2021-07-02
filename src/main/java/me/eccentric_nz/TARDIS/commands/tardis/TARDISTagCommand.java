@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,7 +41,7 @@ class TARDISTagCommand {
     boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
         player.sendMessage(plugin.getPluginName() + "Here are the stats:");
-        String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
+        String who = (!Objects.equals(plugin.getTagConfig().getString("it"), "")) ? plugin.getTagConfig().getString("it") : "No one";
         player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
         player.sendMessage("-----------");
         player.sendMessage(ChatColor.GOLD + "Top 5 OODs");

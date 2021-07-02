@@ -56,6 +56,7 @@ public class TARDISTelepathicListener implements Listener {
             return;
         }
         Block block = event.getClickedBlock();
+        assert block != null;
         if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
             return;
         }
@@ -112,6 +113,7 @@ public class TARDISTelepathicListener implements Listener {
         // drop a custom DAYLIGHT_DETECTOR
         ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands"));
         is.setItemMeta(im);
@@ -125,6 +127,7 @@ public class TARDISTelepathicListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Telepathic Circuit")) {
             UUID uuid = event.getPlayer().getUniqueId();
             String l = event.getBlock().getLocation().toString();

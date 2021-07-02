@@ -28,6 +28,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class CreativeGUIListener implements Listener {
 
     private final TARDIS plugin;
@@ -77,7 +79,7 @@ public class CreativeGUIListener implements Listener {
                         event.setCancelled(true);
                         // get clicked ItemStack
                         if (view.getItem(slot) != null) {
-                            ItemStack choice = view.getItem(slot).clone();
+                            ItemStack choice = Objects.requireNonNull(view.getItem(slot)).clone();
                             choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
                             // add ItemStack to inventory if there is room
                             p.getInventory().addItem(choice);

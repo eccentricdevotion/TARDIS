@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -89,6 +90,7 @@ class TARDISHandlesTakeoffCommand {
                             return true;
                         }
                         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                        assert location != null;
                         Block handbrake = location.getBlock();
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
                         boolean beac_on = true;
@@ -115,7 +117,7 @@ class TARDISHandlesTakeoffCommand {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Openable door = (Openable) TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock().getBlockData();
+            Openable door = (Openable) Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location())).getBlock().getBlockData();
             return door.isOpen();
         }
         return false;

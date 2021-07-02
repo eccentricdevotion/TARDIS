@@ -44,6 +44,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -84,7 +85,7 @@ class TARDISHandlesLandCommand {
                 if (l != null) {
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
-                    set_next.put("world", l.getWorld().getName());
+                    set_next.put("world", Objects.requireNonNull(l.getWorld()).getName());
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());
@@ -107,6 +108,7 @@ class TARDISHandlesLandCommand {
                         ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                         if (rsc.resultSet()) {
                             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                            assert location != null;
                             TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
                             // Changes the lever to on
                             TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);

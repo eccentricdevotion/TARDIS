@@ -30,6 +30,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -73,7 +74,7 @@ class TARDISJunkDelete {
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
-            World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
+            World cw = plugin.getServer().getWorld(Objects.requireNonNull(plugin.getConfig().getString("creation.default_world_name")));
             // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

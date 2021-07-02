@@ -43,10 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -65,6 +62,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             return;
         }
         Block block = event.getClickedBlock();
+        assert block != null;
         if (!block.getType().equals(Material.FLOWER_POT)) {
             return;
         }
@@ -116,6 +114,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
             String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : s.getSonicType() + "Sonic Screwdriver";
+            assert screw != null;
             screw.setDisplayName(dn);
             List<String> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
@@ -161,7 +160,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             sonic.setItemMeta(screw);
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);
-                Entity drop = location.getWorld().dropItem(loc, sonic);
+                Entity drop = Objects.requireNonNull(location.getWorld()).dropItem(loc, sonic);
                 drop.setVelocity(new Vector(0, 0, 0));
                 plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
                 // remove the Artron energy
@@ -207,6 +206,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 // drop a custom FLOWER_POT_ITEM
                 ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setDisplayName("Sonic Generator");
                 im.setCustomModelData(10000001);
                 is.setItemMeta(im);
@@ -222,6 +222,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Generator")) {
             Player p = event.getPlayer();
             String uuid = p.getUniqueId().toString();

@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The visual stabiliser circuit controlled the TARDIS' outward appearance. Its removal rendered the ship invisible.
@@ -65,6 +66,7 @@ class TARDISAreaDisks {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     im.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<>();
                     lore.add(name);
@@ -113,8 +115,9 @@ class TARDISAreaDisks {
                 for (ItemStack a : areas) {
                     if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
                         ItemMeta ima = a.getItemMeta();
+                        assert ima != null;
                         if (ima.hasLore()) {
-                            player_has.add(ima.getLore().get(0));
+                            player_has.add(Objects.requireNonNull(ima.getLore()).get(0));
                         }
                     }
                 }
@@ -123,8 +126,9 @@ class TARDISAreaDisks {
                 for (ItemStack c : console) {
                     if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
                         ItemMeta imc = c.getItemMeta();
+                        assert imc != null;
                         if (imc.hasLore()) {
-                            player_has.add(imc.getLore().get(0));
+                            player_has.add(Objects.requireNonNull(imc.getLore()).get(0));
                         }
                     }
                 }
@@ -133,8 +137,9 @@ class TARDISAreaDisks {
                 for (ItemStack y : player) {
                     if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
                         ItemMeta imy = y.getItemMeta();
+                        assert imy != null;
                         if (imy.hasLore()) {
-                            player_has.add(imy.getLore().get(0));
+                            player_has.add(Objects.requireNonNull(imy.getLore()).get(0));
                         }
                     }
                 }
@@ -152,6 +157,7 @@ class TARDISAreaDisks {
                             if (empty != -1) {
                                 ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                                 ItemMeta im = is.getItemMeta();
+                                assert im != null;
                                 im.setDisplayName("Area Storage Disk");
                                 List<String> lore = new ArrayList<>();
                                 lore.add(name);
@@ -186,7 +192,7 @@ class TARDISAreaDisks {
      */
     int getNextEmptySlot(Inventory inv) {
         for (int i = 27; i < 54; i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().isAir()) {
+            if (inv.getItem(i) == null || Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
                 return i;
             }
         }

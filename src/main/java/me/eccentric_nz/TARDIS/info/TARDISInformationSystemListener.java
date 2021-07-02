@@ -30,6 +30,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -1387,10 +1388,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         String usage;
         if (c.length > 1) {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".description");
-            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
+            usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage")).replace("<command>", c[0]);
         } else {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
-            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage").replace("<command>", c[0]);
+            usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage")).replace("<command>", c[0]);
         }
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");

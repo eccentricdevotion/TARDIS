@@ -102,7 +102,7 @@ public class TARDISChatPaginator {
                 lines.set(i, ChatColor.getByChar(color) + subLine);
             }
         }
-        return lines.toArray(new String[lines.size()]);
+        return lines.toArray(new String[0]);
     }
 
     public static void setGuaranteedNoWrapChatPageWidth(int guaranteedNoWrapChatPageWidth) {

@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -78,7 +79,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 }
             } else {
                 // space for a player / check plugin respect
-                int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getWorld(), x, z);
+                int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getWorld(), x, z);
                 Location chk = new Location(war.getWorld(), x, highest, z);
                 if (plugin.getPluginRespect().getRespect(chk, param)) {
                     return chk;
@@ -91,7 +92,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
     private boolean safeOverworld(World world, int wherex, int wherez, COMPASS d) {
         boolean safe = false;
         int count;
-        int highest = TARDISStaticLocationGetters.getHighestYin3x3(world, wherex, wherez);
+        int highest = TARDISStaticLocationGetters.getHighestYIn3x3(world, wherex, wherez);
         if (highest > 3) {
             Block currentBlock = world.getBlockAt(wherex, highest, wherez);
             if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
@@ -136,20 +137,19 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             int level, row, col, rowcount, colcount;
             int starty = loc.getBlockY();
             switch (d) {
-                case EAST:
-                case WEST:
+                case EAST, WEST -> {
                     rowcount = 3;
                     colcount = 4;
-                    break;
-                default:
+                }
+                default -> {
                     rowcount = 4;
                     colcount = 3;
-                    break;
+                }
             }
             for (level = starty; level < starty + 4; level++) {
                 for (row = s[0]; row < s[0] + rowcount; row++) {
                     for (col = s[2]; col < s[2] + colcount; col++) {
-                        Material mat = loc.getWorld().getBlockAt(row, level, col).getType();
+                        Material mat = Objects.requireNonNull(loc.getWorld()).getBlockAt(row, level, col).getType();
                         if (!TARDISConstants.GOOD_WATER.contains(mat)) {
                             count++;
                         }

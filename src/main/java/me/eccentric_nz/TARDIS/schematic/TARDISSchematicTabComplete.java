@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * TabCompleter for /tardisschematic
@@ -39,7 +40,7 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
 
     public TARDISSchematicTabComplete(File userDir) {
         if (userDir.exists()) {
-            for (String f : userDir.list()) {
+            for (String f : Objects.requireNonNull(userDir.list())) {
                 if (f.endsWith(".tschm")) {
                     FILE_SUBS.add(f.substring(0, f.length() - 6));
                 }

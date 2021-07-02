@@ -71,6 +71,7 @@ class TARDISCSVPaster {
                     if (!tmp.equals("-")) {
                         Material material = Material.valueOf(tmp);
                         BlockData id = material.createBlockData();
+                        assert world != null;
                         TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
                     }
                     startx += 1;

@@ -52,6 +52,7 @@ class TARDISItemComparator implements Comparator<ItemStack> {
             } else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
                 if (item1.getItemMeta() instanceof Damageable d1) {
                     Damageable d2 = (Damageable) item2.getItemMeta();
+                    assert d2 != null;
                     if (d1.getDamage() > d2.getDamage()) {
                         return 1;
                     } else if (d1.getDamage() < d2.getDamage()) {

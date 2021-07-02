@@ -38,7 +38,8 @@ public class TARDISBuilderInstanceKeeper {
     private static final Set<Integer> TIPS_SLOTS = new HashSet<>();
 
     static {
-        BLOCK_CONVERSION = Map.ofEntries(
+        //noinspection RedundantTypeArguments (explicit type arguments speedup compilation and analysis time)
+        BLOCK_CONVERSION = Map.<String, String>ofEntries(
                 Map.entry("ACACIA_LEAVES", "ACACIA_SAPLING"),
                 Map.entry("BIRCH_LEAVES", "BIRCH_SAPLING"),
                 Map.entry("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM"),

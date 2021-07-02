@@ -130,6 +130,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
             for (int i = 0; i < 7; i++) {
                 ItemStack is = view.getItem(i);
                 if (is != null) {
+                    assert w != null;
                     w.dropItemNaturally(l, is);
                 }
             }

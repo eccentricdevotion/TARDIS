@@ -86,6 +86,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
+            assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt() - 1;
             w = dimensions.get("width").getAsInt();
@@ -113,7 +114,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                 data = plugin.getServer().createBlockData(c.get("data").getAsString());
                 type = data.getMaterial();
                 switch (type) {
-                    case CHEST:
+                    case CHEST -> {
                         chest = world.getBlockAt(x, y, z);
                         // set chest contents
                         if (chest != null) {
@@ -130,17 +131,15 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                                 }
                             }
                         }
-                        break;
-                    case LADDER:
-                        postLadderBlocks.put(world.getBlockAt(x, y, z), data);
-                        break;
-                    case SPONGE:
+                    }
+                    case LADDER -> postLadderBlocks.put(world.getBlockAt(x, y, z), data);
+                    case SPONGE -> {
                         Block swap_block = world.getBlockAt(x, y, z);
                         if (!swap_block.getType().isOccluding()) {
                             TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                         }
-                        break;
-                    case SPAWNER:
+                    }
+                    case SPAWNER -> {
                         Block spawner = world.getBlockAt(x, y, z);
                         spawner.setBlockData(data);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -148,10 +147,8 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                             cs.setSpawnedType(EntityType.VILLAGER);
                             cs.update();
                         }, 2L);
-                        break;
-                    default:
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
-                        break;
+                    }
+                    default -> TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
                 if (col == d && row < w) {
                     row++;

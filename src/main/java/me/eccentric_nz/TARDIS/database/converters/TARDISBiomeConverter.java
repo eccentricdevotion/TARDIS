@@ -31,6 +31,7 @@ import org.bukkit.block.Biome;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISBiomeConverter {
@@ -126,11 +127,12 @@ public class TARDISBiomeConverter {
             chunks.add(chunk);
             // reset biome and it's not The End
             TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
-            if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
+            if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(l.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
                 for (int c = -3; c < 4; c++) {
                     for (int r = -3; r < 4; r++) {
                         try {
+                            assert w != null;
                             w.setBiome(sbx + c, sbz + r, biome);
                             Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
                             if (!chunks.contains(tmp_chunk)) {

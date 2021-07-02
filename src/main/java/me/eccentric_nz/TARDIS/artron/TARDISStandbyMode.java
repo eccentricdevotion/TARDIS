@@ -27,6 +27,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -68,7 +69,7 @@ public class TARDISStandbyMode implements Runnable {
                     setp.put("powered_on", 0);
                     OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
                     if (player.isOnline()) {
-                        TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
+                        TARDISSounds.playTARDISSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
                         TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
                     }
                     long delay = 0;

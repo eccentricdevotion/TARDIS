@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class TARDISRecordingTask implements Runnable {
 
@@ -82,7 +83,7 @@ public class TARDISRecordingTask implements Runnable {
                     where.put("location", a);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
                     if (rs.resultSet()) {
-                        String loco = TARDISStaticLocationGetters.getLocationFromBukkitString(a).add(0.0d, -1.0d, 0.0d).toString();
+                        String loco = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromBukkitString(a)).add(0.0d, -1.0d, 0.0d).toString();
                         s.setInt(1, rs.getReplacedBlock().getTardis_id());
                         s.setString(2, loco);
                         s.setString(3, "minecraft:dirt_path");

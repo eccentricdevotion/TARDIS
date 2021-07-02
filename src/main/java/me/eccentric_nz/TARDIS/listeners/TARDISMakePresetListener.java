@@ -91,6 +91,7 @@ public class TARDISMakePresetListener implements Listener {
                     sb_stain_data.append("[");
                     sb_glass_data.append("[");
                     for (int y = fy; y < (fy + 4); y++) {
+                        assert w != null;
                         Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                         Material material = b.getType();
                         BlockData data = b.getBlockData();

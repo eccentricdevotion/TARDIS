@@ -36,6 +36,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -76,7 +77,7 @@ class TARDISHomeCommand {
                 TARDISMessage.send(player, "CHAM_SET", which);
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-                String world = eyeLocation.getWorld().getName();
+                String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");

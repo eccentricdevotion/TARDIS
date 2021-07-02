@@ -21,10 +21,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -50,7 +47,7 @@ class TARDISConfigOptionsCommand {
         TARDISMessage.send(sender, "CONFIG");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-            Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);
+            Set<String> options = Objects.requireNonNull(plugin.getConfig().getConfigurationSection(section)).getKeys(false);
             options.forEach((o) -> {
                 if (o.equals("mysql")) {
                     sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
@@ -65,7 +62,7 @@ class TARDISConfigOptionsCommand {
         }
         if (section.equals("worlds")) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-            Set<String> worldNames = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+            Set<String> worldNames = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
             worldNames.forEach((wname) -> {
                 String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
                 sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
@@ -74,7 +71,7 @@ class TARDISConfigOptionsCommand {
         }
         if (section.equals("rechargers")) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-            Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+            Set<String> chargerNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
             chargerNames.forEach((charname) -> {
                 sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
                 sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
@@ -86,7 +83,7 @@ class TARDISConfigOptionsCommand {
         }
         if (section.equals("rooms")) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-            Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+            Set<String> roomNames = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
             roomNames.forEach((r) -> {
                 sender.sendMessage("    " + ChatColor.GREEN + r + ":");
                 sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));

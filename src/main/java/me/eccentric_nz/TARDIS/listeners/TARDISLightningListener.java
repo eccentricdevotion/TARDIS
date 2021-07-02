@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Artron energy is vital in the running of a TARDIS; it can run low and when down to 10% it means even backup power is
@@ -72,7 +73,7 @@ public class TARDISLightningListener implements Listener {
                     if (rsc.resultSet()) {
                         World w = rsc.getWorld();
                         // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
-                        if (strikeworld.equals(w) && !charging) {
+                        if (Objects.equals(strikeworld, w) && !charging) {
                             Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                             // only recharge if the TARDIS is within range
                             if (plugin.getUtils().compareLocations(loc, loc)) {

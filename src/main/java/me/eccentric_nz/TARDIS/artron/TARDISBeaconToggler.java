@@ -60,6 +60,7 @@ public class TARDISBeaconToggler {
                 String[] beaconData = beacon.split(":");
                 if (beaconData.length > 1) {
                     Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
+                    assert bl != null;
                     Block b = bl.getBlock();
                     while (!b.getChunk().isLoaded()) {
                         b.getChunk().load();

@@ -64,7 +64,7 @@ class SongPlayer {
                 if (duration < delayMillis) {
                     try {
                         Thread.sleep((long) delayMillis - duration);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }

@@ -76,10 +76,9 @@ public class ConstructsConverter {
                         String[][] bpGrid = new String[10][4];
                         String[][] stGrid = new String[10][4];
                         String[][] glGrid = new String[10][4];
-                        JsonParser parser = new JsonParser();
-                        JsonArray bpIDJson = parser.parse(bpID).getAsJsonArray();
-                        JsonArray bpDataJson = parser.parse(bpData).getAsJsonArray();
-                        JsonArray glIDJson = parser.parse(glID).getAsJsonArray();
+                        JsonArray bpIDJson = JsonParser.parseString(bpID).getAsJsonArray();
+                        JsonArray bpDataJson = JsonParser.parseString(bpData).getAsJsonArray();
+                        JsonArray glIDJson = JsonParser.parseString(glID).getAsJsonArray();
                         for (int y = 0; y < 10; y++) {
                             JsonArray bpIDX = bpIDJson.get(y).getAsJsonArray();
                             JsonArray bpDATAX = bpDataJson.get(y).getAsJsonArray();
@@ -163,9 +162,9 @@ public class ConstructsConverter {
                             }
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        JsonArray bpArr = parser.parse(gson.toJson(bpGrid)).getAsJsonArray();
-                        JsonArray stArr = parser.parse(gson.toJson(stGrid)).getAsJsonArray();
-                        JsonArray glArr = parser.parse(gson.toJson(glGrid)).getAsJsonArray();
+                        JsonArray bpArr = JsonParser.parseString(gson.toJson(bpGrid)).getAsJsonArray();
+                        JsonArray stArr = JsonParser.parseString(gson.toJson(stGrid)).getAsJsonArray();
+                        JsonArray glArr = JsonParser.parseString(gson.toJson(glGrid)).getAsJsonArray();
                         update.setString(1, bpArr.toString());
                         update.setString(2, stArr.toString());
                         update.setString(3, glArr.toString());

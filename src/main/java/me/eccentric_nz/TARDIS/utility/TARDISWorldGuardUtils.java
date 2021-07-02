@@ -78,6 +78,7 @@ public class TARDISWorldGuardUtils {
     public boolean canBuild(Player p, Location l) {
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+        assert rm != null;
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
     }
@@ -92,6 +93,7 @@ public class TARDISWorldGuardUtils {
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
         String f = plugin.getConfig().getString("preferences.respect_worldguard");
+        assert f != null;
         if (f.toLowerCase(Locale.ENGLISH).equals("none")) {
             return true;
         }
@@ -99,6 +101,7 @@ public class TARDISWorldGuardUtils {
         if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
             BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+            assert rm != null;
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
             return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
         }
@@ -110,6 +113,7 @@ public class TARDISWorldGuardUtils {
         // get the regions for this location
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+        assert rm != null;
         ApplicableRegionSet rs = rm.getApplicableRegions(vector);
         return rs.testState(null, flag);
     }
@@ -151,6 +155,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
@@ -196,6 +201,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         if (!junk) {
             // deny exit to all
@@ -236,6 +242,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         // deny exit to all
         // usage = "<id> <flag> [-w world] [-g group] [value]",
@@ -273,6 +280,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LAVA_FLOW, State.DENY);
         flags.put(Flags.LIGHTER, State.DENY);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
@@ -307,6 +315,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.LEAF_DECAY, State.DENY);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         try {
             rm.save();
@@ -323,7 +332,9 @@ public class TARDISWorldGuardUtils {
      */
     public void removeRegion(World world, String name) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        assert rm != null;
         Set<ProtectedRegion> regions = rm.removeRegion("TARDIS_" + name);
+        assert regions != null;
         if (regions.size() == 0 && TARDISFloodgate.isFloodgateEnabled()) {
             // try sanitised name
             rm.removeRegion("TARDIS_" + TARDISFloodgate.sanitisePlayerName(name));
@@ -343,6 +354,7 @@ public class TARDISWorldGuardUtils {
     public void removeRegion(Location l) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -376,6 +388,7 @@ public class TARDISWorldGuardUtils {
     public void removeRechargerRegion(String name) {
         World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+        assert rm != null;
         rm.removeRegion("tardis_recharger_" + name);
         try {
             rm.save();
@@ -394,6 +407,7 @@ public class TARDISWorldGuardUtils {
     public void removeRoomRegion(World world, String name, String room) {
         boolean save = false;
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        assert rm != null;
         if (rm.hasRegion(room + "_" + name)) {
             rm.removeRegion(room + "_" + name);
             save = true;
@@ -424,6 +438,7 @@ public class TARDISWorldGuardUtils {
         boolean save = false;
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         ProtectedRegion protectedRegion;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + a + " -w " + w.getName());
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -448,6 +463,7 @@ public class TARDISWorldGuardUtils {
     public void removeMemberFromRegion(World world, String owner, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion protectedRegion = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             protectedRegion = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -476,6 +492,7 @@ public class TARDISWorldGuardUtils {
     public void removeAllMembersFromRegion(World w, String owner, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         ProtectedRegion protectedRegion = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             protectedRegion = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -505,8 +522,10 @@ public class TARDISWorldGuardUtils {
     public void updateRegionForNameChange(World world, String owner, UUID uuid, String which) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         String region = which + "_" + owner;
+        assert rm != null;
         if (rm.hasRegion(region)) {
             ProtectedRegion pr = rm.getRegion(region);
+            assert pr != null;
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
             pr.setOwners(dd);
@@ -527,6 +546,7 @@ public class TARDISWorldGuardUtils {
     public void updateRegionForClaim(Location location, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(location.getWorld()));
         BlockVector3 vector = BlockVector3.at(location.getX(), location.getY(), location.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         if (ars.size() > 0) {
             LinkedList<String> parentNames = new LinkedList<>();
@@ -543,6 +563,7 @@ public class TARDISWorldGuardUtils {
             parentNames.forEach(regions::remove);
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
+            assert pr != null;
             pr.setFlag(Flags.ENTRY, State.DENY);
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
@@ -564,6 +585,7 @@ public class TARDISWorldGuardUtils {
     public void lockContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             region = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -592,6 +614,7 @@ public class TARDISWorldGuardUtils {
     public void unlockContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             region = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -621,6 +644,7 @@ public class TARDISWorldGuardUtils {
     public boolean queryContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         ProtectedRegion region = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + owner)) {
             region = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -676,6 +700,7 @@ public class TARDISWorldGuardUtils {
         }
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         ProtectedRegion protectedRegion = null;
+        assert rm != null;
         if (rm.hasRegion("TARDIS_" + name)) {
             protectedRegion = rm.getRegion("TARDIS_" + name);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
@@ -696,6 +721,7 @@ public class TARDISWorldGuardUtils {
     public List<String> getTARDISRegions(World world) {
         List<String> regions = new ArrayList<>();
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        assert rm != null;
         rm.getRegions().forEach((key, value) -> {
             if (key.contains("tardis")) {
                 regions.add(key);
@@ -713,6 +739,7 @@ public class TARDISWorldGuardUtils {
     public boolean mobsCanSpawnAtLocation(Location l) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
         BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
+        assert rm != null;
         ApplicableRegionSet ars = rm.getApplicableRegions(vector);
         return ars.testState(null, Flags.MOB_SPAWNING);
     }
@@ -729,6 +756,7 @@ public class TARDISWorldGuardUtils {
         ProtectedRegion region = null;
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+            assert rm != null;
             if (rm.hasRegion("TARDIS_" + owner)) {
                 region = rm.getRegion("TARDIS_" + owner);
             } else if (TARDISFloodgate.isFloodgateEnabled()) {

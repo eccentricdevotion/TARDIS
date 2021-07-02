@@ -185,8 +185,10 @@ public class TARDISTerminalListener implements Listener {
                             } else {
                                 // set lore
                                 ItemStack is = view.getItem(49);
+                                assert is != null;
                                 ItemMeta im = is.getItemMeta();
                                 List<String> lore = Collections.singletonList("No valid destination has been set!");
+                                assert im != null;
                                 im.setLore(lore);
                                 is.setItemMeta(im);
                             }
@@ -231,7 +233,9 @@ public class TARDISTerminalListener implements Listener {
             if (rsp.resultSet()) {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
+                assert is != null;
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 im.setLore(Collections.singletonList(sub));
                 is.setItemMeta(im);
             }
@@ -258,60 +262,30 @@ public class TARDISTerminalListener implements Listener {
     private List<String> getLoreValue(int max, int slot, boolean signed, UUID uuid) {
         int step = terminalStep.getOrDefault(uuid, 50);
         int val = max - slot;
-        String str;
-        switch (val) {
-            case 0:
-                str = (signed) ? "+" + (3 * step) : "x" + 7;
-                break;
-            case 1:
-                str = (signed) ? "+" + (2 * step) : "x" + 6;
-                break;
-            case 2:
-                str = (signed) ? "+" + step : "x" + 5;
-                break;
-            case 4:
-                str = (signed) ? "-" + step : "x" + 3;
-                break;
-            case 5:
-                str = (signed) ? "-" + (2 * step) : "x" + 2;
-                break;
-            case 6:
-                str = (signed) ? "-" + (3 * step) : "x" + 1;
-                break;
-            default:
-                str = (signed) ? "0" : "x" + 4;
-                break;
-        }
+        String str = switch (val) {
+            case 0 -> (signed) ? "+" + (3 * step) : "x" + 7;
+            case 1 -> (signed) ? "+" + (2 * step) : "x" + 6;
+            case 2 -> (signed) ? "+" + step : "x" + 5;
+            case 4 -> (signed) ? "-" + step : "x" + 3;
+            case 5 -> (signed) ? "-" + (2 * step) : "x" + 2;
+            case 6 -> (signed) ? "-" + (3 * step) : "x" + 1;
+            default -> (signed) ? "0" : "x" + 4;
+        };
         return Collections.singletonList(str);
     }
 
     private int getValue(int max, int slot, boolean signed, UUID uuid) {
         int step = terminalStep.getOrDefault(uuid, 50);
         int val = max - slot;
-        int intval;
-        switch (val) {
-            case 0:
-                intval = (signed) ? (3 * step) : 7;
-                break;
-            case 1:
-                intval = (signed) ? (2 * step) : 6;
-                break;
-            case 2:
-                intval = (signed) ? step : 5;
-                break;
-            case 4:
-                intval = (signed) ? -step : 3;
-                break;
-            case 5:
-                intval = (signed) ? -(2 * step) : 2;
-                break;
-            case 6:
-                intval = (signed) ? -(3 * step) : 1;
-                break;
-            default:
-                intval = (signed) ? 0 : 4;
-                break;
-        }
+        int intval = switch (val) {
+            case 0 -> (signed) ? (3 * step) : 7;
+            case 1 -> (signed) ? (2 * step) : 6;
+            case 2 -> (signed) ? step : 5;
+            case 4 -> (signed) ? -step : 3;
+            case 5 -> (signed) ? -(2 * step) : 2;
+            case 6 -> (signed) ? -(3 * step) : 1;
+            default -> (signed) ? 0 : 4;
+        };
         return intval;
     }
 
@@ -319,19 +293,13 @@ public class TARDISTerminalListener implements Listener {
         int affected_slot = getSlot(view, min, max);
         int new_slot = getNewSlot(affected_slot, min, max, pos);
         view.setItem(affected_slot, null);
-        ItemStack is;
-        switch (row) {
-            case "X":
-                is = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
-                break;
-            case "Z":
-                is = new ItemStack(Material.YELLOW_WOOL, 1);
-                break;
-            default:
-                is = new ItemStack(Material.PURPLE_WOOL, 1);
-                break;
-        }
+        ItemStack is = switch (row) {
+            case "X" -> new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+            case "Z" -> new ItemStack(Material.YELLOW_WOOL, 1);
+            default -> new ItemStack(Material.PURPLE_WOOL, 1);
+        };
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName(row);
         List<String> lore = getLoreValue(max, new_slot, signed, uuid);
         im.setLore(lore);
@@ -350,6 +318,7 @@ public class TARDISTerminalListener implements Listener {
         for (int i : slots) {
             List<String> lore = null;
             ItemStack is = view.getItem(i);
+            assert is != null;
             ItemMeta im = is.getItemMeta();
             if (i == slot) {
                 switch (slot) {
@@ -378,6 +347,7 @@ public class TARDISTerminalListener implements Listener {
                         break;
                 }
             }
+            assert im != null;
             im.setLore(lore);
             is.setItemMeta(im);
         }
@@ -388,7 +358,9 @@ public class TARDISTerminalListener implements Listener {
         if (rsp.resultSet()) {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = view.getItem(44);
+            assert is != null;
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setLore(Collections.singletonList(bool));
             is.setItemMeta(im);
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
@@ -403,7 +375,7 @@ public class TARDISTerminalListener implements Listener {
     private String getWorld(String e, String this_world, Player p) {
         List<String> allowedWorlds = new ArrayList<>();
         String world;
-        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+        Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         worldlist.forEach((o) -> {
             World ww = TARDISAliasResolver.getWorldFromAlias(o);
             if (ww != null) {
@@ -457,11 +429,12 @@ public class TARDISTerminalListener implements Listener {
         int[] slots = new int[]{36, 38, 40, 42};
         boolean found = false;
         for (int i : slots) {
-            if (view.getItem(i).getItemMeta().hasLore()) {
-                String world = view.getItem(i).getItemMeta().getLore().get(0);
+            if (Objects.requireNonNull(view.getItem(i).getItemMeta()).hasLore()) {
+                String world = Objects.requireNonNull(view.getItem(i).getItemMeta().getLore()).get(0);
                 if (!world.equals("No permission")) {
                     found = true;
                     World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : TARDISAliasResolver.getWorldFromAlias(world);
+                    assert w != null;
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
                         e = Environment.NETHER;
@@ -475,7 +448,7 @@ public class TARDISTerminalListener implements Listener {
                     String loc_str = world + ":" + slotx + ":" + slotz;
                     switch (e) {
                         case THE_END:
-                            int endy = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
+                            int endy = TARDISStaticLocationGetters.getHighestYIn3x3(w, slotx, slotz);
                             if (endy > 40 && Math.abs(slotx) > 9 && Math.abs(slotz) > 9) {
                                 Location loc = new Location(w, slotx, 0, slotz);
                                 int[] estart = TARDISTimeTravel.getStartLocation(loc, d);
@@ -514,16 +487,17 @@ public class TARDISTerminalListener implements Listener {
                         default:
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-                            int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
+                            int starty = TARDISStaticLocationGetters.getHighestYIn3x3(w, slotx, slotz);
                             // allow room for under door block
                             if (starty <= 0) {
                                 starty = 1;
                             }
                             int safe;
                             // check submarine
-                            ItemMeta subim = view.getItem(44).getItemMeta();
+                            ItemMeta subim = Objects.requireNonNull(view.getItem(44)).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(loc))) {
+                            assert subim != null;
+                            if (subim.hasLore() && Objects.requireNonNull(subim.getLore()).get(0).equals("true") && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(loc))) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;
@@ -559,7 +533,9 @@ public class TARDISTerminalListener implements Listener {
             lore.add("You need to select a world!");
         }
         ItemStack is = view.getItem(46);
+        assert is != null;
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setLore(lore);
         is.setItemMeta(im);
     }

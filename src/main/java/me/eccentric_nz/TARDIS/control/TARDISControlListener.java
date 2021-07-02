@@ -296,6 +296,7 @@ public class TARDISControlListener implements Listener {
                                             for (ItemStack is : stack) {
                                                 if (is != null && is.hasItemMeta()) {
                                                     ItemMeta im = is.getItemMeta();
+                                                    assert im != null;
                                                     if (im.hasDisplayName()) {
                                                         if (is.getType().equals(Material.FILLED_MAP)) {
                                                             GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
@@ -400,9 +401,10 @@ public class TARDISControlListener implements Listener {
                                         ItemStack disk = player.getInventory().getItemInMainHand();
                                         if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
                                             ItemMeta dim = disk.getItemMeta();
+                                            assert dim != null;
                                             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                                                 // get the program_id from the disk
-                                                int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+                                                int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
                                                 // query the database
                                                 ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
                                                 if (rsp.resultSet()) {

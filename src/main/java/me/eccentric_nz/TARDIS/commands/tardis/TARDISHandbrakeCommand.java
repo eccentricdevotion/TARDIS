@@ -60,6 +60,7 @@ public class TARDISHandbrakeCommand {
             set.put("handbrake_on", onoff);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            assert location != null;
             TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
             // Changes the lever to on
             TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);

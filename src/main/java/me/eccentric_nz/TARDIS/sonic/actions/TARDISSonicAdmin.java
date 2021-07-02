@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISSonicAdmin {
@@ -40,7 +41,7 @@ public class TARDISSonicAdmin {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             HashMap<String, Object> wheredoor = new HashMap<>();
             Location loc = block.getLocation();
-            String bw = loc.getWorld().getName();
+            String bw = Objects.requireNonNull(loc.getWorld()).getName();
             int bx = loc.getBlockX();
             int by = loc.getBlockY();
             int bz = loc.getBlockZ();

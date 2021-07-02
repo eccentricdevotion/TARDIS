@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author eccentric_nz
@@ -65,7 +66,7 @@ public final class TARDISChameleonArchEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 }

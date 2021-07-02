@@ -42,6 +42,7 @@ class TARDISChameleonConstructorGUI {
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta bk = back.getItemMeta();
+        assert bk != null;
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS"));
         bk.setCustomModelData(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.getCustomModelData());
         back.setItemMeta(bk);
@@ -49,6 +50,7 @@ class TARDISChameleonConstructorGUI {
         // help
         ItemStack help = new ItemStack(Material.BOWL, 1);
         ItemMeta hp = help.getItemMeta();
+        assert hp != null;
         hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
         hp.setCustomModelData(GUIChameleonConstructor.HELP.getCustomModelData());
         help.setItemMeta(hp);
@@ -56,6 +58,7 @@ class TARDISChameleonConstructorGUI {
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
+        assert io != null;
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
         io.setCustomModelData(GUIChameleonConstructor.INFO.getCustomModelData());
@@ -64,6 +67,7 @@ class TARDISChameleonConstructorGUI {
         // abort
         ItemStack abort = new ItemStack(Material.BOWL, 1);
         ItemMeta at = abort.getItemMeta();
+        assert at != null;
         at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
         at.setCustomModelData(GUIChameleonConstructor.ABORT.getCustomModelData());
         abort.setItemMeta(at);
@@ -71,6 +75,7 @@ class TARDISChameleonConstructorGUI {
         // load button
         ItemStack load = new ItemStack(Material.BOWL, 1);
         ItemMeta ld = load.getItemMeta();
+        assert ld != null;
         ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
         ld.setCustomModelData(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.getCustomModelData());
         load.setItemMeta(ld);
@@ -78,6 +83,7 @@ class TARDISChameleonConstructorGUI {
         // save button
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();
+        assert se != null;
         se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
         se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.getCustomModelData());
         save.setItemMeta(se);

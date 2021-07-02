@@ -31,7 +31,7 @@ public class TARDISUpdateChatGUI {
     public TARDISUpdateChatGUI(TARDIS plugin) {
         this.plugin = plugin;
     }
-    
+
     public static void sendTextComponent(String first, String value, String split, Player player) {
         TextComponent tcf = new TextComponent(first);
         tcf.setColor(net.md_5.bungee.api.ChatColor.GOLD);

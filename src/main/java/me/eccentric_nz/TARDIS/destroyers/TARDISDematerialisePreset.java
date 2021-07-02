@@ -38,6 +38,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -108,17 +109,23 @@ class TARDISDematerialisePreset implements Runnable {
         if (i < loops) {
             i++;
             // expand placed blocks to a police box
-            switch (i % 3) {
-                case 2: // stained
-                    data = stained_column.getBlockData();
-                    break;
-                case 1: // glass
-                    data = glass_column.getBlockData();
-                    break;
-                default: // preset
-                    data = column.getBlockData();
-                    break;
-            }
+            data = switch (i % 3) {
+                case 2 -> // stained
+                        {
+                            assert stained_column != null;
+                            yield stained_column.getBlockData();
+                        }
+                case 1 -> // glass
+                        {
+                            assert glass_column != null;
+                            yield glass_column.getBlockData();
+                        }
+                default -> // preset
+                        {
+                            assert column != null;
+                            yield column.getBlockData();
+                        }
+            };
             // first run - play sound
             if (i == 1) {
                 switch (preset) {
@@ -128,23 +135,24 @@ class TARDISDematerialisePreset implements Runnable {
                         int flowery = (dd.getLocation().getBlockY() + 1);
                         int flowerz;
                         switch (dd.getDirection()) {
-                            case NORTH:
+                            case NORTH -> {
                                 flowerx = dd.getLocation().getBlockX();
                                 flowerz = dd.getLocation().getBlockZ() + 1;
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 flowerx = dd.getLocation().getBlockX() + 1;
                                 flowerz = dd.getLocation().getBlockZ();
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 flowerx = dd.getLocation().getBlockX();
                                 flowerz = dd.getLocation().getBlockZ() - 1;
-                                break;
-                            default:
+                            }
+                            default -> {
                                 flowerx = dd.getLocation().getBlockX() - 1;
                                 flowerz = dd.getLocation().getBlockZ();
-                                break;
+                            }
                         }
+                        assert world != null;
                         TARDISBlockSetters.setBlock(world, flowerx, flowery, flowerz, Material.AIR);
                         break;
                     case CAKE:
@@ -169,31 +177,32 @@ class TARDISDematerialisePreset implements Runnable {
                         int deadz;
                         int bushz;
                         switch (dd.getDirection()) {
-                            case NORTH:
+                            case NORTH -> {
                                 deadx = dd.getLocation().getBlockX() + 1;
                                 deadz = dd.getLocation().getBlockZ() + 1;
                                 bushx = dd.getLocation().getBlockX() - 1;
                                 bushz = dd.getLocation().getBlockZ();
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 deadx = dd.getLocation().getBlockX() + 1;
                                 deadz = dd.getLocation().getBlockZ() - 1;
                                 bushx = dd.getLocation().getBlockX();
                                 bushz = dd.getLocation().getBlockZ() + 1;
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 deadx = dd.getLocation().getBlockX() - 1;
                                 deadz = dd.getLocation().getBlockZ() - 1;
                                 bushx = dd.getLocation().getBlockX() + 1;
                                 bushz = dd.getLocation().getBlockZ();
-                                break;
-                            default:
+                            }
+                            default -> {
                                 deadx = dd.getLocation().getBlockX() - 1;
                                 deadz = dd.getLocation().getBlockZ() + 1;
                                 bushx = dd.getLocation().getBlockX();
                                 bushz = dd.getLocation().getBlockZ() - 1;
-                                break;
+                            }
                         }
+                        assert world != null;
                         TARDISBlockSetters.setBlock(world, deadx, bushy, deadz, Material.AIR);
                         TARDISBlockSetters.setBlock(world, bushx, bushy, bushz, Material.AIR);
                         break;
@@ -214,19 +223,15 @@ class TARDISDematerialisePreset implements Runnable {
                         if (preset.equals(PRESET.JUNK_MODE)) {
                             sound = "junk_takeoff";
                         } else {
-                            switch (spaceTimeThrottle) {
-                                case WARP:
-                                case RAPID:
-                                case FASTER:
-                                    sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-                                    break;
-                                default: // NORMAL
-                                    sound = "tardis_takeoff";
-                                    break;
-                            }
+                            sound = switch (spaceTimeThrottle) {
+                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                                default -> // NORMAL
+                                        "tardis_takeoff";
+                            };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
+                        assert world != null;
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
                 }
@@ -245,42 +250,42 @@ class TARDISDematerialisePreset implements Runnable {
                 for (int n = 0; n < 9; n++) {
                     BlockData[] colData = data[n];
                     switch (n) {
-                        case 0:
+                        case 0 -> {
                             xx = minusx;
                             zz = minusz;
-                            break;
-                        case 1:
+                        }
+                        case 1 -> {
                             xx = x;
                             zz = minusz;
-                            break;
-                        case 2:
+                        }
+                        case 2 -> {
                             xx = plusx;
                             zz = minusz;
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             xx = plusx;
                             zz = z;
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             xx = plusx;
                             zz = plusz;
-                            break;
-                        case 5:
+                        }
+                        case 5 -> {
                             xx = x;
                             zz = plusz;
-                            break;
-                        case 6:
+                        }
+                        case 6 -> {
                             xx = minusx;
                             zz = plusz;
-                            break;
-                        case 7:
+                        }
+                        case 7 -> {
                             xx = minusx;
                             zz = z;
-                            break;
-                        default:
+                        }
+                        default -> {
                             xx = x;
                             zz = z;
-                            break;
+                        }
                     }
                     for (int yy = 0; yy < 4; yy++) {
                         boolean change = true;
@@ -289,11 +294,13 @@ class TARDISDematerialisePreset implements Runnable {
                             case GRASS_BLOCK:
                             case DIRT:
                                 BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
                             case WHITE_WOOL:
                             case LIME_WOOL:
                                 BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                                 break;
                             case ACACIA_SAPLING:
@@ -345,6 +352,7 @@ class TARDISDematerialisePreset implements Runnable {
                                 } else {
                                     light = colData[yy];
                                 }
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                                 break;
                             case ACACIA_DOOR: // wood, iron & trap doors
@@ -373,27 +381,33 @@ class TARDISDematerialisePreset implements Runnable {
                             case WARPED_TRAPDOOR:
                             case WARPED_WALL_SIGN:
                                 if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
+                                    assert world != null;
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
                                 break;
                             case WHITE_STAINED_GLASS:
                                 BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaf);
                                 break;
                             case LIME_STAINED_GLASS:
                                 BlockData chap = (preset.equals(PRESET.PARTY)) ? stain_colour : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chap);
                                 break;
                             case LIGHT_GRAY_STAINED_GLASS:
                                 BlockData cham = (preset.equals(PRESET.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
                                 break;
                             case LIGHT_GRAY_TERRACOTTA:
                                 BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colData[yy];
+                                assert world != null;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
                             default: // everything else
                                 if (change) {
+                                    assert world != null;
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                 }
                                 break;
@@ -432,7 +446,7 @@ class TARDISDematerialisePreset implements Runnable {
 
     private List<Entity> getJunkTravellers() {
         // spawn an entity
-        Entity orb = dd.getLocation().getWorld().spawnEntity(dd.getLocation(), EntityType.EXPERIENCE_ORB);
+        Entity orb = Objects.requireNonNull(dd.getLocation().getWorld()).spawnEntity(dd.getLocation(), EntityType.EXPERIENCE_ORB);
         List<Entity> ents = orb.getNearbyEntities(1.0, 1.0, 1.0);
         orb.remove();
         return ents;
@@ -445,7 +459,7 @@ class TARDISDematerialisePreset implements Runnable {
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
             try {
-                Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
+                Block b = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location())).getBlock();
                 if (p.equals(PRESET.FLOWER)) {
                     the_colour = b.getRelative(BlockFace.UP, 3).getBlockData();
                     String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");

@@ -25,6 +25,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Updates the configured language file with any new message strings. It will then be up to the server administrator to
@@ -43,7 +44,7 @@ public class TARDISLanguageUpdater {
     public void update() {
         // get currently configured language
         String lang = plugin.getConfig().getString("preferences.language");
-        if (lang.equals("en")) {
+        if (Objects.equals(lang, "en")) {
             return;
         }
         // get the English language config

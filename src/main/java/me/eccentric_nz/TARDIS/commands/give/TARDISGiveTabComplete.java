@@ -29,10 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * TabCompleter for /tardisgive
@@ -60,7 +57,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
                 GIVE_SUBS.add(recipeItem.toTabCompletionString());
             }
         }
-        Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
+        Set<String> kits = Objects.requireNonNull(plugin.getKitsConfig().getConfigurationSection("kits")).getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);
         for (BlueprintBase base : BlueprintBase.values()) {
             BLUEPRINT_SUBS.add("BLUEPRINT_BASE_" + base.toString());

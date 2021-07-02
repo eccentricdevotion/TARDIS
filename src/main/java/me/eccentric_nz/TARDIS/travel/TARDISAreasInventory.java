@@ -65,6 +65,7 @@ public class TARDISAreasInventory {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
+                    assert im != null;
                     im.setDisplayName(name);
                     List<String> lore = new ArrayList<>();
                     lore.add(a.getWorld());
@@ -87,6 +88,7 @@ public class TARDISAreasInventory {
         // add button to load TARDIS areas
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
+        assert switchto != null;
         switchto.setDisplayName("Load TARDIS saves");
         switchto.setCustomModelData(GUIArea.LOAD_TARDIS_SAVES.getCustomModelData());
         map.setItemMeta(switchto);

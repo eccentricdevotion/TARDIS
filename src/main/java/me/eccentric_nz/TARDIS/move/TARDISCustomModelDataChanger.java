@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 class TARDISCustomModelDataChanger {
@@ -61,7 +62,7 @@ class TARDISCustomModelDataChanger {
             outer.getChunk().load();
         }
         ItemFrame itemFrame = null;
-        for (Entity e : outer.getWorld().getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
+        for (Entity e : Objects.requireNonNull(outer.getWorld()).getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
             if (e instanceof ItemFrame) {
                 itemFrame = (ItemFrame) e;
                 break;
@@ -71,6 +72,7 @@ class TARDISCustomModelDataChanger {
             ItemStack is = itemFrame.getItem();
             if (TARDISConstants.DYES.contains(is.getType()) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 if (im.hasCustomModelData()) {
                     int cmd = im.getCustomModelData();
                     if (cmd == 1001 || cmd == 1002) {

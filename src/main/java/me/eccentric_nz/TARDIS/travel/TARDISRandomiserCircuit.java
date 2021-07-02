@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -46,7 +47,7 @@ public class TARDISRandomiserCircuit {
 
     public Location getRandomlocation(Player p, COMPASS d) {
         // get a random world
-        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+        Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         List<String> allowedWorlds = new ArrayList<>();
         worldlist.forEach((o) -> {
             World ww = TARDISAliasResolver.getWorldFromAlias(o);

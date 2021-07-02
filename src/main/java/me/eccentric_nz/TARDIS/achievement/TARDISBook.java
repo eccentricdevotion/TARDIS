@@ -75,6 +75,7 @@ public class TARDISBook {
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
         BookMeta meta = (BookMeta) book.getItemMeta();
         String[] title = title_reward.split(" - ");
+        assert meta != null;
         meta.setTitle(title[0]);
         meta.setAuthor(author);
         meta.setPages(pages);

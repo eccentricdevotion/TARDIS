@@ -50,6 +50,7 @@ public class TARDISCompanionInventory {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(UUID.fromString(c));
                 ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
                 SkullMeta skull = (SkullMeta) head.getItemMeta();
+                assert skull != null;
                 skull.setOwningPlayer(op);
                 skull.setDisplayName(op.getName());
                 ArrayList<String> lore = new ArrayList<>();
@@ -63,6 +64,7 @@ public class TARDISCompanionInventory {
         // add buttons
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
+        assert ii != null;
         ii.setDisplayName("Info");
         ArrayList<String> info_lore = new ArrayList<>();
         info_lore.add("To REMOVE a companion");
@@ -77,6 +79,7 @@ public class TARDISCompanionInventory {
         heads[45] = info;
         ItemStack add = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta aa = add.getItemMeta();
+        assert aa != null;
         aa.setDisplayName("Add");
         add.setItemMeta(aa);
         heads[48] = add;
@@ -88,6 +91,7 @@ public class TARDISCompanionInventory {
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
+        assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);

@@ -33,6 +33,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -57,6 +58,7 @@ public class TARDISFobWatchListener implements Listener {
                 return;
             }
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
                 return;
             }
@@ -79,7 +81,7 @@ public class TARDISFobWatchListener implements Listener {
                     TARDISArchDisguise.undisguise(player);
                 }
                 player.getWorld().strikeLightningEffect(player.getLocation());
-                double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                double mh = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
                 player.setHealth(mh / 10.0d);
                 if (inv) {
                     new TARDISArchInventory().switchInventories(player, 0);

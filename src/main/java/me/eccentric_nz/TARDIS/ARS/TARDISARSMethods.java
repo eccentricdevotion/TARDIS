@@ -70,7 +70,7 @@ public class TARDISARSMethods {
      */
     public static String[][][] getGridFromJSON(String js) {
         String[][][] grid = new String[3][9][9];
-        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(js).getAsJsonArray();
         for (int y = 0; y < 3; y++) {
             JsonArray jsonx = json.get(y).getAsJsonArray();
             for (int x = 0; x < 9; x++) {
@@ -95,7 +95,7 @@ public class TARDISARSMethods {
     private void saveAll(UUID playerUUID) {
         TARDISARSMapData md = map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
@@ -114,7 +114,7 @@ public class TARDISARSMethods {
     private void revert(UUID playerUUID) {
         TARDISARSSaveData sd = save_map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();
@@ -157,6 +157,7 @@ public class TARDISARSMethods {
     void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean update) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
             String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
@@ -260,7 +261,9 @@ public class TARDISARSMethods {
     void setLore(InventoryView view, int slot, String str) {
         List<String> lore = (str != null) ? Collections.singletonList(str) : null;
         ItemStack is = view.getItem(slot);
+        assert is != null;
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setLore(lore);
         is.setItemMeta(im);
     }
@@ -283,6 +286,7 @@ public class TARDISARSMethods {
             }
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName(levels[i - 27]);
             im.setCustomModelData(i - 26);
             is.setItemMeta(im);
@@ -376,7 +380,7 @@ public class TARDISARSMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     void loadMap(InventoryView view, UUID playerUUID) {
-        if (view.getItem(10).getItemMeta().hasLore()) {
+        if (Objects.requireNonNull(view.getItem(10).getItemMeta()).hasLore()) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
         }
@@ -437,22 +441,22 @@ public class TARDISARSMethods {
             TARDISARSMapData md = map_data.get(playerUUID);
             int ue, us;
             switch (slot) {
-                case 1:
+                case 1 -> {
                     ue = md.getE();
                     us = ((md.getS() + 1) < 5) ? md.getS() + 1 : md.getS();
-                    break;
-                case 9:
+                }
+                case 9 -> {
                     ue = ((md.getE() + 1) < 5) ? md.getE() + 1 : md.getE();
                     us = md.getS();
-                    break;
-                case 11:
+                }
+                case 11 -> {
                     ue = ((md.getE() - 1) >= 0) ? md.getE() - 1 : md.getE();
                     us = md.getS();
-                    break;
-                default:
+                }
+                default -> {
                     ue = md.getE();
                     us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
-                    break;
+                }
             }
             setMap(md.getY(), ue, us, playerUUID, view);
             setLore(view, slot, null);
@@ -541,7 +545,7 @@ public class TARDISARSMethods {
     }
 
     boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
-        Material m = view.getItem(slot).getType();
+        Material m = Objects.requireNonNull(view.getItem(slot)).getType();
         if (m.equals(Material.NETHER_BRICKS)) {
             // allow only if console is not MASTER
             HashMap<String, Object> where = new HashMap<>();
@@ -566,11 +570,7 @@ public class TARDISARSMethods {
     private boolean playerIsOwner(UUID uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        if (TARDISSudoTracker.SUDOERS.containsKey(uuid)) {
-            where.put("uuid", TARDISSudoTracker.SUDOERS.get(uuid).toString());
-        } else {
-            where.put("uuid", uuid.toString());
-        }
+        where.put("uuid", TARDISSudoTracker.SUDOERS.getOrDefault(uuid, uuid).toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         return rs.resultSet();
     }

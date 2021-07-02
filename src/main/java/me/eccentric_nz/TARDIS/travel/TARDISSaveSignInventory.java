@@ -69,6 +69,7 @@ public class TARDISSaveSignInventory {
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (rsh.resultSet()) {
+            assert him != null;
             him.setDisplayName("Home");
             hlore.add(rsh.getWorld().getName());
             hlore.add("" + rsh.getX());
@@ -82,6 +83,7 @@ public class TARDISSaveSignInventory {
         } else {
             hlore.add("Not found!");
         }
+        assert him != null;
         him.setLore(hlore);
         his.setItemMeta(him);
         ItemStack[] stack = new ItemStack[54];
@@ -122,6 +124,7 @@ public class TARDISSaveSignInventory {
                         }
                         ItemStack is = new ItemStack(material, 1);
                         ItemMeta im = is.getItemMeta();
+                        assert im != null;
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
                         String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
@@ -149,12 +152,14 @@ public class TARDISSaveSignInventory {
         // add button to allow rearranging saves
         ItemStack tool = new ItemStack(Material.ARROW, 1);
         ItemMeta rearrange = tool.getItemMeta();
+        assert rearrange != null;
         rearrange.setDisplayName("Rearrange saves");
         rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
         tool.setItemMeta(rearrange);
         // add button to allow deleting saves
         ItemStack bucket = new ItemStack(Material.BUCKET, 1);
         ItemMeta delete = bucket.getItemMeta();
+        assert delete != null;
         delete.setDisplayName("Delete save");
         delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
         bucket.setItemMeta(delete);
@@ -163,6 +168,7 @@ public class TARDISSaveSignInventory {
             // add button to go to next page
             next = new ItemStack(GUISaves.GO_TO_PAGE_2.getMaterial(), 1);
             ItemMeta page = next.getItemMeta();
+            assert page != null;
             page.setDisplayName(GUISaves.GO_TO_PAGE_2.getName());
             page.setCustomModelData(GUISaves.GO_TO_PAGE_2.getCustomModelData());
             next.setItemMeta(page);
@@ -175,6 +181,7 @@ public class TARDISSaveSignInventory {
             if (rstid.getTardis_id() != id) {
                 own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
                 ItemMeta saves = own.getItemMeta();
+                assert saves != null;
                 saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());
                 saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
                 own.setItemMeta(saves);
@@ -184,6 +191,7 @@ public class TARDISSaveSignInventory {
                 if (tid != id) {
                     own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
                     ItemMeta saves = own.getItemMeta();
+                    assert saves != null;
                     saves.setDisplayName(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName());
                     saves.setCustomModelData(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getCustomModelData());
                     own.setItemMeta(saves);
@@ -193,29 +201,18 @@ public class TARDISSaveSignInventory {
         // add button to load TARDIS areas
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
+        assert switchto != null;
         switchto.setDisplayName("Load TARDIS areas");
         switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             switch (m) {
-                case 45:
-                    stack[m] = tool;
-                    break;
-                case 47:
-                    stack[m] = bucket;
-                    break;
-                case 49:
-                    stack[m] = own;
-                    break;
-                case 51:
-                    stack[m] = next;
-                    break;
-                case 53:
-                    stack[m] = map;
-                    break;
-                default:
-                    stack[m] = null;
-                    break;
+                case 45 -> stack[m] = tool;
+                case 47 -> stack[m] = bucket;
+                case 49 -> stack[m] = own;
+                case 51 -> stack[m] = next;
+                case 53 -> stack[m] = map;
+                default -> stack[m] = null;
             }
         }
         return stack;

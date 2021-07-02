@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -49,7 +50,7 @@ public class TARDISTimeRotor {
 
     public static void setItemFrame(String schm, Location location, int id) {
         location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
-        ItemFrame itemFrame = (ItemFrame) location.getWorld().spawnEntity(location, EntityType.ITEM_FRAME);
+        ItemFrame itemFrame = (ItemFrame) Objects.requireNonNull(location.getWorld()).spawnEntity(location, EntityType.ITEM_FRAME);
         itemFrame.setFacingDirection(BlockFace.UP);
         setRotor(BY_NAME.get(schm), itemFrame, false);
         // save itemFrame UUID
@@ -70,6 +71,7 @@ public class TARDISTimeRotor {
         Material material = (animated) ? Material.LIGHT_BLUE_DYE : Material.LIGHT_GRAY_DYE;
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
+        assert im != null;
         im.setDisplayName("Time Rotor");
         im.setCustomModelData(which);
         is.setItemMeta(im);
@@ -91,6 +93,7 @@ public class TARDISTimeRotor {
         ItemStack is = itemFrame.getItem();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (im.hasCustomModelData()) {
                 return im.getCustomModelData();
             }

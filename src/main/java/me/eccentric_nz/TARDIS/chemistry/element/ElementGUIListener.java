@@ -30,10 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ElementGUIListener implements Listener {
 
@@ -115,7 +112,7 @@ public class ElementGUIListener implements Listener {
                     default -> {
                         event.setCancelled(true);
                         // get clicked ItemStack
-                        ItemStack choice = view.getItem(slot).clone();
+                        ItemStack choice = Objects.requireNonNull(view.getItem(slot)).clone();
                         choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
                         // add ItemStack to inventory if there is room
                         p.getInventory().addItem(choice);
