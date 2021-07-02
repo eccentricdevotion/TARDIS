@@ -104,15 +104,9 @@ class TARDISLazarusInventory {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();
             switch (m) {
-                case MOOSHROOM_SPAWN_EGG:
-                    me.setDisplayName("MUSHROOM_COW");
-                    break;
-                case ZOMBIFIED_PIGLIN_SPAWN_EGG:
-                    me.setDisplayName("PIG_ZOMBIE");
-                    break;
-                default:
-                    me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
-                    break;
+                case MOOSHROOM_SPAWN_EGG -> me.setDisplayName("MUSHROOM_COW");
+                case ZOMBIFIED_PIGLIN_SPAWN_EGG -> me.setDisplayName("PIG_ZOMBIE");
+                default -> me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
             }
             egg.setItemMeta(me);
             eggs[i] = egg;

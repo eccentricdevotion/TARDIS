@@ -258,60 +258,30 @@ public class TARDISTerminalListener implements Listener {
     private List<String> getLoreValue(int max, int slot, boolean signed, UUID uuid) {
         int step = terminalStep.getOrDefault(uuid, 50);
         int val = max - slot;
-        String str;
-        switch (val) {
-            case 0:
-                str = (signed) ? "+" + (3 * step) : "x" + 7;
-                break;
-            case 1:
-                str = (signed) ? "+" + (2 * step) : "x" + 6;
-                break;
-            case 2:
-                str = (signed) ? "+" + step : "x" + 5;
-                break;
-            case 4:
-                str = (signed) ? "-" + step : "x" + 3;
-                break;
-            case 5:
-                str = (signed) ? "-" + (2 * step) : "x" + 2;
-                break;
-            case 6:
-                str = (signed) ? "-" + (3 * step) : "x" + 1;
-                break;
-            default:
-                str = (signed) ? "0" : "x" + 4;
-                break;
-        }
+        String str = switch (val) {
+            case 0 -> (signed) ? "+" + (3 * step) : "x" + 7;
+            case 1 -> (signed) ? "+" + (2 * step) : "x" + 6;
+            case 2 -> (signed) ? "+" + step : "x" + 5;
+            case 4 -> (signed) ? "-" + step : "x" + 3;
+            case 5 -> (signed) ? "-" + (2 * step) : "x" + 2;
+            case 6 -> (signed) ? "-" + (3 * step) : "x" + 1;
+            default -> (signed) ? "0" : "x" + 4;
+        };
         return Collections.singletonList(str);
     }
 
     private int getValue(int max, int slot, boolean signed, UUID uuid) {
         int step = terminalStep.getOrDefault(uuid, 50);
         int val = max - slot;
-        int intval;
-        switch (val) {
-            case 0:
-                intval = (signed) ? (3 * step) : 7;
-                break;
-            case 1:
-                intval = (signed) ? (2 * step) : 6;
-                break;
-            case 2:
-                intval = (signed) ? step : 5;
-                break;
-            case 4:
-                intval = (signed) ? -step : 3;
-                break;
-            case 5:
-                intval = (signed) ? -(2 * step) : 2;
-                break;
-            case 6:
-                intval = (signed) ? -(3 * step) : 1;
-                break;
-            default:
-                intval = (signed) ? 0 : 4;
-                break;
-        }
+        int intval = switch (val) {
+            case 0 -> (signed) ? (3 * step) : 7;
+            case 1 -> (signed) ? (2 * step) : 6;
+            case 2 -> (signed) ? step : 5;
+            case 4 -> (signed) ? -step : 3;
+            case 5 -> (signed) ? -(2 * step) : 2;
+            case 6 -> (signed) ? -(3 * step) : 1;
+            default -> (signed) ? 0 : 4;
+        };
         return intval;
     }
 
@@ -319,18 +289,11 @@ public class TARDISTerminalListener implements Listener {
         int affected_slot = getSlot(view, min, max);
         int new_slot = getNewSlot(affected_slot, min, max, pos);
         view.setItem(affected_slot, null);
-        ItemStack is;
-        switch (row) {
-            case "X":
-                is = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
-                break;
-            case "Z":
-                is = new ItemStack(Material.YELLOW_WOOL, 1);
-                break;
-            default:
-                is = new ItemStack(Material.PURPLE_WOOL, 1);
-                break;
-        }
+        ItemStack is = switch (row) {
+            case "X" -> new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+            case "Z" -> new ItemStack(Material.YELLOW_WOOL, 1);
+            default -> new ItemStack(Material.PURPLE_WOOL, 1);
+        };
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(row);
         List<String> lore = getLoreValue(max, new_slot, signed, uuid);

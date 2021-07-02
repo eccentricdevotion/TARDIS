@@ -175,26 +175,26 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     long travel_time;
                     String landSFX;
                     switch (spaceTimeThrottle) {
-                        case WARP:
+                        case WARP -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
                             travel_time = (malfunction) ? 400L : 94L;
                             landSFX = "tardis_land_warp";
-                            break;
-                        case RAPID:
+                        }
+                        case RAPID -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
                             travel_time = (malfunction) ? 400L : 188L;
                             landSFX = "tardis_land_rapid";
-                            break;
-                        case FASTER:
+                        }
+                        case FASTER -> {
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
                             travel_time = (malfunction) ? 400L : 282L;
                             landSFX = "tardis_land_faster";
-                            break;
-                        default: // NORMAL
+                        }
+                        default -> { // NORMAL
                             flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
                             travel_time = (malfunction) ? 400L : 375L;
                             landSFX = "tardis_land";
-                            break;
+                        }
                     }
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);

@@ -340,30 +340,18 @@ public class TARDISChameleonPreset {
                         case ACACIA_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN -> {
                             Rotatable sign = (Rotatable) data[col][block];
                             switch (d) {
-                                case SOUTH:
-                                    sign.setRotation(BlockFace.NORTH);
-                                    break;
-                                case WEST:
-                                    sign.setRotation(BlockFace.EAST);
-                                    break;
-                                default:
-                                    sign.setRotation(BlockFace.SOUTH);
-                                    break;
+                                case SOUTH -> sign.setRotation(BlockFace.NORTH);
+                                case WEST -> sign.setRotation(BlockFace.EAST);
+                                default -> sign.setRotation(BlockFace.SOUTH);
                             }
                             data[col][block] = sign;
                         }
                         case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN -> {
                             Directional wall_sign = (Directional) data[col][block];
                             switch (d) {
-                                case SOUTH:
-                                    wall_sign.setFacing(BlockFace.NORTH);
-                                    break;
-                                case WEST:
-                                    wall_sign.setFacing(BlockFace.EAST);
-                                    break;
-                                default:
-                                    wall_sign.setFacing(BlockFace.SOUTH);
-                                    break;
+                                case SOUTH -> wall_sign.setFacing(BlockFace.NORTH);
+                                case WEST -> wall_sign.setFacing(BlockFace.EAST);
+                                default -> wall_sign.setFacing(BlockFace.SOUTH);
                             }
                             data[col][block] = wall_sign;
                         }
@@ -388,18 +376,10 @@ public class TARDISChameleonPreset {
                         case JACK_O_LANTERN, CARVED_PUMPKIN, OBSERVER, WHITE_GLAZED_TERRACOTTA, ORANGE_GLAZED_TERRACOTTA, MAGENTA_GLAZED_TERRACOTTA, LIGHT_BLUE_GLAZED_TERRACOTTA, YELLOW_GLAZED_TERRACOTTA, LIME_GLAZED_TERRACOTTA, PINK_GLAZED_TERRACOTTA, GRAY_GLAZED_TERRACOTTA, LIGHT_GRAY_GLAZED_TERRACOTTA, CYAN_GLAZED_TERRACOTTA, PURPLE_GLAZED_TERRACOTTA, BLUE_GLAZED_TERRACOTTA, BROWN_GLAZED_TERRACOTTA, GREEN_GLAZED_TERRACOTTA, RED_GLAZED_TERRACOTTA, BLACK_GLAZED_TERRACOTTA -> {
                             Directional jack = (Directional) data[col][block];
                             switch (d) {
-                                case EAST:
-                                    jack.setFacing(BlockFace.WEST);
-                                    break;
-                                case SOUTH:
-                                    jack.setFacing(BlockFace.NORTH);
-                                    break;
-                                case WEST:
-                                    jack.setFacing(BlockFace.EAST);
-                                    break;
-                                default:
-                                    jack.setFacing(BlockFace.SOUTH);
-                                    break;
+                                case EAST -> jack.setFacing(BlockFace.WEST);
+                                case SOUTH -> jack.setFacing(BlockFace.NORTH);
+                                case WEST -> jack.setFacing(BlockFace.EAST);
+                                default -> jack.setFacing(BlockFace.SOUTH);
                             }
                             data[col][block] = jack;
                         }
@@ -407,15 +387,9 @@ public class TARDISChameleonPreset {
                             MultipleFacing vine = (MultipleFacing) data[col][block];
                             vine.setFace(BlockFace.EAST, false);
                             switch (d) {
-                                case SOUTH:
-                                    vine.setFace(BlockFace.SOUTH, true);
-                                    break;
-                                case WEST:
-                                    vine.setFace(BlockFace.WEST, true);
-                                    break;
-                                default:
-                                    vine.setFace(BlockFace.NORTH, true);
-                                    break;
+                                case SOUTH -> vine.setFace(BlockFace.SOUTH, true);
+                                case WEST -> vine.setFace(BlockFace.WEST, true);
+                                default -> vine.setFace(BlockFace.NORTH, true);
                             }
                             data[col][block] = vine;
                         }

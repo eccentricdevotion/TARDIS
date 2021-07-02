@@ -476,23 +476,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         for (Map.Entry<String, String> map : items.entrySet()) {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
-                    case "bow-tie":
+                    case "bow-tie" -> {
                         List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                             kbm.addRecipe(nsk);
                         });
-                        break;
-                    case "jelly-baby":
+                    }
+                    case "jelly-baby" -> {
                         List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                             kbm.addRecipe(nsk);
                         });
-                        break;
-                    default:
+                    }
+                    default -> {
                         NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
                         kbm.addRecipe(nsk);
+                    }
                 }
             }
         }
@@ -509,25 +510,26 @@ public class TARDISGiveCommand implements CommandExecutor {
         KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
         String message = item_to_give;
         switch (item) {
-            case "bow-tie":
+            case "bow-tie" -> {
                 List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     kbm.addRecipe(nsk);
                 });
                 message = "Bow Ties";
-                break;
-            case "jelly-baby":
+            }
+            case "jelly-baby" -> {
                 List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     kbm.addRecipe(nsk);
                 });
                 message = "Jelly Babies";
-                break;
-            default:
+            }
+            default -> {
                 NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ENGLISH));
                 kbm.addRecipe(nsk);
+            }
         }
         book.setItemMeta(kbm);
         player.getInventory().addItem(book);
@@ -546,23 +548,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         for (Map.Entry<String, String> map : items.entrySet()) {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
-                    case "bow-tie":
+                    case "bow-tie" -> {
                         List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                             keys.add(nsk);
                         });
-                        break;
-                    case "jelly-baby":
+                    }
+                    case "jelly-baby" -> {
                         List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                             keys.add(nsk);
                         });
-                        break;
-                    default:
+                    }
+                    default -> {
                         NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
                         keys.add(nsk);
+                    }
                 }
             }
         }
@@ -583,23 +586,24 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         Set<NamespacedKey> keys = new HashSet<>();
         switch (item) {
-            case "bow-tie":
+            case "bow-tie" -> {
                 List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     keys.add(nsk);
                 });
-                break;
-            case "jelly-baby":
+            }
+            case "jelly-baby" -> {
                 List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     keys.add(nsk);
                 });
-                break;
-            default:
+            }
+            default -> {
                 NamespacedKey nsk = new NamespacedKey(plugin, items.get(item).replace(" ", "_").toLowerCase(Locale.ENGLISH));
                 keys.add(nsk);
+            }
         }
         player.discoverRecipes(keys);
         return true;

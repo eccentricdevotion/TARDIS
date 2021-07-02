@@ -56,8 +56,7 @@ class TARDISExcitationRunnable implements Runnable {
         if (i < 100) {
             TARDISParticles.sendSnowParticles(location, player);
             player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
-                if (e instanceof Player) {
-                    Player p = (Player) e;
+                if (e instanceof Player p) {
                     TARDISParticles.sendSnowParticles(location, p);
                 }
             });

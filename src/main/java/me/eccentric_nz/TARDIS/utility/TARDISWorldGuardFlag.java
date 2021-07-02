@@ -31,42 +31,42 @@ public class TARDISWorldGuardFlag {
     private static final Map<String, StateFlag> FLAG_LOOKUP;
 
     static {
-        Map<String, StateFlag> flag_lookup = new HashMap<>();
-        flag_lookup.put("build", Flags.BUILD);
-        flag_lookup.put("chest-access", Flags.CHEST_ACCESS);
-        flag_lookup.put("creeper-explosion", Flags.CREEPER_EXPLOSION);
-        flag_lookup.put("enderdragon-block-damage", Flags.ENDERDRAGON_BLOCK_DAMAGE);
-        flag_lookup.put("enderman-grief", Flags.ENDER_BUILD);
-        flag_lookup.put("enderpearl", Flags.ENDERPEARL);
-        flag_lookup.put("entity-item-frame-destroy", Flags.ENTITY_ITEM_FRAME_DESTROY);
-        flag_lookup.put("entity-painting-destroy", Flags.ENTITY_PAINTING_DESTROY);
-        flag_lookup.put("entry", Flags.ENTRY);
-        flag_lookup.put("exit", Flags.EXIT);
-        flag_lookup.put("fire-spread", Flags.FIRE_SPREAD);
-        flag_lookup.put("ghast-fireball", Flags.GHAST_FIREBALL);
-        flag_lookup.put("grass-growth", Flags.GRASS_SPREAD);
-        flag_lookup.put("ice-form", Flags.ICE_FORM);
-        flag_lookup.put("ice-melt", Flags.ICE_MELT);
-        flag_lookup.put("invincible", Flags.INVINCIBILITY);
-        flag_lookup.put("lava-fire", Flags.LAVA_FIRE);
-        flag_lookup.put("lava-flow", Flags.LAVA_FLOW);
-        flag_lookup.put("leaf-decay", Flags.LEAF_DECAY);
-        flag_lookup.put("lighter", Flags.LIGHTER);
-        flag_lookup.put("lightning", Flags.LIGHTNING);
-        flag_lookup.put("mob-damage", Flags.MOB_DAMAGE);
-        flag_lookup.put("mob-spawning", Flags.MOB_SPAWNING);
-        flag_lookup.put("passthrough", Flags.PASSTHROUGH);
-        flag_lookup.put("pistons", Flags.PISTONS);
-        flag_lookup.put("pvp", Flags.PVP);
-        flag_lookup.put("sleep", Flags.SLEEP);
-        flag_lookup.put("snow-fall", Flags.SNOW_FALL);
-        flag_lookup.put("snow-melt", Flags.SNOW_MELT);
-        flag_lookup.put("tnt", Flags.TNT);
-        flag_lookup.put("use", Flags.USE);
-        flag_lookup.put("vehicle-destroy", Flags.DESTROY_VEHICLE);
-        flag_lookup.put("vehicle-place", Flags.PLACE_VEHICLE);
-        flag_lookup.put("water-flow", Flags.WATER_FLOW);
-        FLAG_LOOKUP = Collections.unmodifiableMap(flag_lookup);
+        FLAG_LOOKUP = Map.ofEntries(
+            Map.entry("build", Flags.BUILD),
+            Map.entry("chest-access", Flags.CHEST_ACCESS),
+            Map.entry("creeper-explosion", Flags.CREEPER_EXPLOSION),
+            Map.entry("enderdragon-block-damage", Flags.ENDERDRAGON_BLOCK_DAMAGE), 
+            Map.entry("enderman-grief", Flags.ENDER_BUILD),
+            Map.entry("enderpearl", Flags.ENDERPEARL),
+            Map.entry("entity-item-frame-destroy", Flags.ENTITY_ITEM_FRAME_DESTROY),
+            Map.entry("entity-painting-destroy", Flags.ENTITY_PAINTING_DESTROY),
+            Map.entry("entry", Flags.ENTRY),
+            Map.entry("exit", Flags.EXIT),
+            Map.entry("fire-spread", Flags.FIRE_SPREAD),
+            Map.entry("ghast-fireball", Flags.GHAST_FIREBALL),
+            Map.entry("grass-growth", Flags.GRASS_SPREAD),
+            Map.entry("ice-form", Flags.ICE_FORM),
+            Map.entry("ice-melt", Flags.ICE_MELT),
+            Map.entry("invincible", Flags.INVINCIBILITY),
+            Map.entry("lava-fire", Flags.LAVA_FIRE),
+            Map.entry("lava-flow", Flags.LAVA_FLOW),
+            Map.entry("leaf-decay", Flags.LEAF_DECAY),
+            Map.entry("lighter", Flags.LIGHTER),
+            Map.entry("lightning", Flags.LIGHTNING),
+            Map.entry("mob-damage", Flags.MOB_DAMAGE),
+            Map.entry("mob-spawning", Flags.MOB_SPAWNING),
+            Map.entry("passthrough", Flags.PASSTHROUGH),
+            Map.entry("pistons", Flags.PISTONS),
+            Map.entry("pvp", Flags.PVP),
+            Map.entry("sleep", Flags.SLEEP),
+            Map.entry("snow-fall", Flags.SNOW_FALL),
+            Map.entry("snow-melt", Flags.SNOW_MELT),
+            Map.entry("tnt", Flags.TNT),
+            Map.entry("use", Flags.USE),
+            Map.entry("vehicle-destroy", Flags.DESTROY_VEHICLE),
+            Map.entry("vehicle-place", Flags.PLACE_VEHICLE),
+            Map.entry("water-flow", Flags.WATER_FLOW)
+        );
     }
 
     public static Map<String, StateFlag> getFLAG_LOOKUP() {

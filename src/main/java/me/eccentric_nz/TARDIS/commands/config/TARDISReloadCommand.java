@@ -52,36 +52,19 @@ class TARDISReloadCommand {
             Config config = Config.valueOf(args[1].toLowerCase());
             File file = new File(plugin.getDataFolder(), config + ".yml");
             switch (config) {
-                case achievements:
-                    plugin.getAchievementConfig().load(file);
-                    break;
-                case artron:
-                    plugin.getArtronConfig().load(file);
-                    break;
-                case blocks:
-                    plugin.getBlocksConfig().load(file);
-                    break;
-                case chameleon_guis:
-                    plugin.getChameleonGuis().load(file);
-                    break;
-                case condensables:
-                    plugin.getCondensablesConfig().load(file);
-                    break;
-                case handles:
-                    plugin.getHandlesConfig().load(file);
-                    break;
-                case kits:
-                    plugin.getKitsConfig().load(file);
-                    break;
-                case rooms:
-                    plugin.getRoomsConfig().load(file);
-                    break;
-                case signs:
-                    plugin.getSigns().load(file);
-                    break;
-                default:
+                case achievements -> plugin.getAchievementConfig().load(file);
+                case artron -> plugin.getArtronConfig().load(file);
+                case blocks -> plugin.getBlocksConfig().load(file);
+                case chameleon_guis -> plugin.getChameleonGuis().load(file);
+                case condensables -> plugin.getCondensablesConfig().load(file);
+                case handles -> plugin.getHandlesConfig().load(file);
+                case kits -> plugin.getKitsConfig().load(file);
+                case rooms -> plugin.getRoomsConfig().load(file);
+                case signs -> plugin.getSigns().load(file);
+                default -> {
                     TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
                     return true;
+                }
             }
             TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {

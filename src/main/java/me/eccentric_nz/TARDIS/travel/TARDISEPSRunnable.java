@@ -133,22 +133,22 @@ public class TARDISEPSRunnable implements Runnable {
                 double z;
                 Location location = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
                 switch (rsd.getDoor_direction()) {
-                    case NORTH:
+                    case NORTH -> {
                         x = 0.5;
                         z = -1.5;
-                        break;
-                    case EAST:
+                    }
+                    case EAST -> {
                         x = 1.5;
                         z = 0.5;
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         x = -1.5;
                         z = 0.5;
-                        break;
-                    default: // SOUTH
+                    }
+                    default -> { // SOUTH
                         x = 0.5;
                         z = 1.5;
-                        break;
+                    }
                 }
                 return location.add(x, 0, z);
             } else {

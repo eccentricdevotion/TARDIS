@@ -131,7 +131,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                         return true;
                     }
                     switch (remote) {
-                        case HIDE:
+                        case HIDE -> {
                             // if it's a non-admin player or command block running the command
                             // check the usual requirements (circuits/energy) - else just do it
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
@@ -139,7 +139,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             } else {
                                 return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, id);
                             }
-                        case REBUILD:
+                        }
+                        case REBUILD -> {
                             // if it's a non-admin player or command block running the command
                             // check the usual requirements (circuits/energy) - else just do it
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
@@ -147,7 +148,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             } else {
                                 return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
                             }
-                        case COMEHERE:
+                        }
+                        case COMEHERE -> {
                             // NOT non-admin players, command blocks or the console
                             if (sender instanceof Player player && sender.hasPermission("tardis.admin")) {
                                 return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere(player, uuid);
@@ -155,7 +157,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 TARDISMessage.send(sender, "NO_PERMS");
                                 return true;
                             }
-                        case BACK:
+                        }
+                        case BACK -> {
                             // NOT non-admin players or command blocks
                             if ((sender instanceof Player && sender.hasPermission("tardis.admin")) || sender instanceof ConsoleCommandSender) {
                                 if (!handbrake) {
@@ -167,7 +170,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 TARDISMessage.send(sender, "NO_PERMS");
                                 return true;
                             }
-                        default: // TRAVEL
+                        }
+                        default -> { // TRAVEL
                             if (args.length < 3) {
                                 TARDISMessage.send(sender, "ARG_REMOTE");
                                 return false;
@@ -188,7 +192,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             // home, area or coords?
                             HashMap<String, Object> set = new HashMap<>();
                             switch (args[2].toLowerCase(Locale.ENGLISH)) {
-                                case "home":
+                                case "home" -> {
                                     // get home location
                                     HashMap<String, Object> wherehl = new HashMap<>();
                                     wherehl.put("tardis_id", id);
@@ -213,8 +217,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         setp.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                     }
-                                    break;
-                                case "area":
+                                }
+                                case "area" -> {
                                     if (args.length < 4) {
                                         TARDISMessage.send(sender, "TOO_FEW_ARGS");
                                         return true;
@@ -269,8 +273,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     set.put("y", l.getBlockY());
                                     set.put("z", l.getBlockZ());
                                     set.put("submarine", 0);
-                                    break;
-                                default:
+                                }
+                                default -> {
                                     // coords
                                     if (args.length < 6) {
                                         TARDISMessage.send(sender, "ARG_COORDS");
@@ -335,7 +339,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         set.put("z", location.getBlockZ());
                                         set.put("submarine", 0);
                                     }
-                                    break;
+                                }
                             }
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
@@ -346,6 +350,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 TARDISMessage.send(sender, "REMOTE_SUCCESS", success);
                             }, 5L);
                             return true;
+                        }
                     }
                 } catch (IllegalArgumentException e) {
                     TARDISMessage.send(sender, "CMD_NOT_VALID");

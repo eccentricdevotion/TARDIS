@@ -98,22 +98,22 @@ class TARDISBuildSilurianStructure {
         int z = chunk.getZ();
         Vector vector;
         switch (compass) {
-            case WEST:
+            case WEST -> {
                 vector = new Vector(-16, 17, 0);
                 x -= 1;
-                break;
-            case NORTH:
+            }
+            case NORTH -> {
                 vector = new Vector(0, 17, -16);
                 z -= 1;
-                break;
-            case EAST:
+            }
+            case EAST -> {
                 vector = new Vector(16, 17, 0);
                 x += 1;
-                break;
-            default: //SOUTH
+            }
+            default -> { //SOUTH
                 vector = new Vector(0, 17, 16);
                 z += 1;
-                break;
+            }
         }
         // see if the chunk is loaded
         Chunk newChunk = chunk.getWorld().getChunkAt(x, z);

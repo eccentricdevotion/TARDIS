@@ -188,10 +188,9 @@ public final class TARDISBiome implements Keyed {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof TARDISBiome)) {
+        if (!(o instanceof TARDISBiome biome)) {
             return false;
         }
-        TARDISBiome biome = (TARDISBiome) o;
         return Objects.equals(key, biome.key);
     }
 

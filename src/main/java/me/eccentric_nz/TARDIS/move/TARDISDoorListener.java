@@ -98,13 +98,9 @@ public class TARDISDoorListener {
             doPlayerMove(player, location, exit, from, quotes);
         } else {
             // play the door sound 5 ticks (1/4s) later
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                playDoorSound(player, sound, location, minecart);
-            }, 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> playDoorSound(player, sound, location, minecart), 5L);
             // actually teleport the player 10 ticks (1/2s) later
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                doPlayerMove(player, location, exit, from, quotes);
-            }, 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> doPlayerMove(player, location, exit, from, quotes), 10L);
         }
     }
 
@@ -172,19 +168,15 @@ public class TARDISDoorListener {
     public boolean checkSurvival(World world) {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
-            case MULTIVERSE:
-                bool = plugin.getMVHelper().isWorldSurvival(world);
-                break;
-            case MULTIWORLD:
+            case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
+            case MULTIWORLD -> {
                 MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
                 MultiWorldWorldData mww = mw.getWorld(world.getName());
                 if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
                     bool = true;
                 }
-                break;
-            case NONE:
-                bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
-                break;
+            }
+            case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
         }
         return bool;
     }
@@ -207,22 +199,22 @@ public class TARDISDoorListener {
             pl.setZ(location.getZ() + 1);
         } else {
             switch (direction) {
-                case NORTH:
+                case NORTH -> {
                     pl.setX(location.getX() + 1);
                     pl.setZ(location.getZ() + 1);
-                    break;
-                case WEST:
+                }
+                case WEST -> {
                     pl.setX(location.getX() + 1);
                     pl.setZ(location.getZ() - 1);
-                    break;
-                case SOUTH:
+                }
+                case SOUTH -> {
                     pl.setX(location.getX() - 1);
                     pl.setZ(location.getZ() - 1);
-                    break;
-                default:
+                }
+                default -> {
                     pl.setX(location.getX() - 1);
                     pl.setZ(location.getZ() + 1);
-                    break;
+                }
             }
         }
         for (TARDISPet pet : pets) {
@@ -321,16 +313,12 @@ public class TARDISDoorListener {
      * @return the angle needed to correct the yaw
      */
     float adjustYaw(COMPASS d1, COMPASS d2) {
-        switch (d1) {
-            case EAST:
-                return adjustYaw[0][d2.ordinal()];
-            case SOUTH:
-                return adjustYaw[1][d2.ordinal()];
-            case WEST:
-                return adjustYaw[2][d2.ordinal()];
-            default:
-                return adjustYaw[3][d2.ordinal()];
-        }
+        return switch (d1) {
+            case EAST -> adjustYaw[0][d2.ordinal()];
+            case SOUTH -> adjustYaw[1][d2.ordinal()];
+            case WEST -> adjustYaw[2][d2.ordinal()];
+            default -> adjustYaw[3][d2.ordinal()];
+        };
     }
 
     /**
@@ -443,9 +431,7 @@ public class TARDISDoorListener {
                         plugin.getTrackerKeeper().getTemporallyLocated().add(player.getUniqueId());
                     }, 10L);
                 } else {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        player.setPlayerTime(18000, false);
-                    }, 10L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setPlayerTime(18000, false), 10L);
                 }
             } else {
                 player.resetPlayerTime();

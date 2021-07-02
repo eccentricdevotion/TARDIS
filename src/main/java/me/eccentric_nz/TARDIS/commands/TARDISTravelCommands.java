@@ -380,18 +380,18 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("z", village.getBlockZ());
                                 set.put("submarine", 0);
                                 switch (village.getWorld().getEnvironment()) {
-                                    case THE_END:
+                                    case THE_END -> {
                                         which = "End City";
                                         travelType = TravelType.VILLAGE_THE_END;
-                                        break;
-                                    case NETHER:
+                                    }
+                                    case NETHER -> {
                                         which = "Nether Fortress";
                                         travelType = TravelType.VILLAGE_NETHER;
-                                        break;
-                                    default:
+                                    }
+                                    default -> {
                                         which = "Village";
                                         travelType = TravelType.VILLAGE_OVERWORLD;
-                                        break;
+                                    }
                                 }
                             }
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);

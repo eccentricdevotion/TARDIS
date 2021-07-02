@@ -76,26 +76,26 @@ public class TARDISRenderRoomListener implements Listener {
                 int getx = tp_loc.getBlockX();
                 int getz = tp_loc.getBlockZ();
                 switch (d) {
-                    case NORTH:
+                    case NORTH -> {
                         // z -ve
                         tp_loc.setX(getx + 0.5);
                         tp_loc.setZ(getz - 0.5);
-                        break;
-                    case EAST:
+                    }
+                    case EAST -> {
                         // x +ve
                         tp_loc.setX(getx + 1.5);
                         tp_loc.setZ(getz + 0.5);
-                        break;
-                    case SOUTH:
+                    }
+                    case SOUTH -> {
                         // z +ve
                         tp_loc.setX(getx + 0.5);
                         tp_loc.setZ(getz + 1.5);
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         // x -ve
                         tp_loc.setX(getx - 0.5);
                         tp_loc.setZ(getz + 0.5);
-                        break;
+                    }
                 }
                 tp_loc.setPitch(p.getLocation().getPitch());
                 tp_loc.setYaw(p.getLocation().getYaw());

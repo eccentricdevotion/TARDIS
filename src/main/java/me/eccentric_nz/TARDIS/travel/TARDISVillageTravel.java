@@ -53,17 +53,14 @@ public class TARDISVillageTravel {
             Environment env = world.getEnvironment();
             Location loc;
             switch (env) {
-                case NETHER:
-                    loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
-                    break;
-                case THE_END:
+                case NETHER -> loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
+                case THE_END -> {
                     loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
                     int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
                     loc.setY(highesty);
-                    break;
-                default: // NORMAL
+                }
+                default -> // NORMAL
                     loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
-                    break;
             }
             if (loc == null) {
                 return null;

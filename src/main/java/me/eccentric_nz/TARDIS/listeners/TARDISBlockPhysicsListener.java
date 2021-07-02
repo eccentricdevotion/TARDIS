@@ -82,22 +82,12 @@ public class TARDISBlockPhysicsListener implements Listener {
     }
 
     private Block getBlockBehindAttachable(Block block, BlockFace face) {
-        Block ret;
-        switch (face) {
-            case NORTH:
-                ret = block.getRelative(BlockFace.SOUTH);
-                break;
-            case WEST:
-                ret = block.getRelative(BlockFace.EAST);
-                break;
-            case SOUTH:
-                ret = block.getRelative(BlockFace.NORTH);
-                break;
-            default:
-                ret = block.getRelative(BlockFace.WEST);
-                break;
-        }
-        return ret;
+        return switch (face) {
+            case NORTH -> block.getRelative(BlockFace.SOUTH);
+            case WEST -> block.getRelative(BlockFace.EAST);
+            case SOUTH -> block.getRelative(BlockFace.NORTH);
+            default -> block.getRelative(BlockFace.WEST);
+        };
     }
 
     private Block getBlockBelow(Block block) {

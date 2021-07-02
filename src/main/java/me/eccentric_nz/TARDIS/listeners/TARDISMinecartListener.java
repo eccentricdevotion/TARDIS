@@ -141,20 +141,12 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null && data.length > 3) {
-                    boolean shouldPrevent;
-                    switch (plugin.getInvManager()) {
-                        case MULTIVERSE:
-                            shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
-                            break;
-                        case MULTI:
-                            shouldPrevent = (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
-                            break;
-                        case PER_WORLD:
-                            shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
-                            break;
-                        default:
-                            shouldPrevent = false;
-                    }
+                    boolean shouldPrevent = switch (plugin.getInvManager()) {
+                        case MULTIVERSE -> (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                        case MULTI -> (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
+                        case PER_WORLD -> (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
+                        default -> false;
+                    };
                     if (shouldPrevent) {
                         if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
                             TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
@@ -212,18 +204,10 @@ public class TARDISMinecartListener implements Listener {
         smc.getInventory().setContents(inv);
         // calculate new velocity
         switch (d) {
-            case NORTH:
-                e.setVelocity(new Vector(0, 0, -speed));
-                break;
-            case SOUTH:
-                e.setVelocity(new Vector(0, 0, speed));
-                break;
-            case WEST:
-                e.setVelocity(new Vector(-speed, 0, 0));
-                break;
-            default:
-                e.setVelocity(new Vector(speed, 0, 0));
-                break;
+            case NORTH -> e.setVelocity(new Vector(0, 0, -speed));
+            case SOUTH -> e.setVelocity(new Vector(0, 0, speed));
+            case WEST -> e.setVelocity(new Vector(-speed, 0, 0));
+            default -> e.setVelocity(new Vector(speed, 0, 0));
         }
     }
 
@@ -256,15 +240,11 @@ public class TARDISMinecartListener implements Listener {
     }
 
     private COMPASS switchDirection(COMPASS d) {
-        switch (d) {
-            case NORTH:
-                return COMPASS.SOUTH;
-            case SOUTH:
-                return COMPASS.NORTH;
-            case WEST:
-                return COMPASS.EAST;
-            default:
-                return COMPASS.WEST;
-        }
+        return switch (d) {
+            case NORTH -> COMPASS.SOUTH;
+            case SOUTH -> COMPASS.NORTH;
+            case WEST -> COMPASS.EAST;
+            default -> COMPASS.WEST;
+        };
     }
 }

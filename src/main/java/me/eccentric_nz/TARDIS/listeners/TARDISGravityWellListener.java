@@ -222,24 +222,12 @@ public class TARDISGravityWellListener implements Listener {
                         whered.put("g_id", rsg.getGravity_id());
                         if (plugin.getQueryFactory().doSyncDelete("gravity_well", whered)) {
                             switch (rsg.getDirection()) {
-                                case 1:
-                                    plugin.getGeneralKeeper().getGravityUpList().remove(loc);
-                                    break;
-                                case 2:
-                                    plugin.getGeneralKeeper().getGravityNorthList().remove(loc);
-                                    break;
-                                case 3:
-                                    plugin.getGeneralKeeper().getGravityWestList().remove(loc);
-                                    break;
-                                case 4:
-                                    plugin.getGeneralKeeper().getGravitySouthList().remove(loc);
-                                    break;
-                                case 5:
-                                    plugin.getGeneralKeeper().getGravityEastList().remove(loc);
-                                    break;
-                                default:
-                                    plugin.getGeneralKeeper().getGravityDownList().remove(loc);
-                                    break;
+                                case 1 -> plugin.getGeneralKeeper().getGravityUpList().remove(loc);
+                                case 2 -> plugin.getGeneralKeeper().getGravityNorthList().remove(loc);
+                                case 3 -> plugin.getGeneralKeeper().getGravityWestList().remove(loc);
+                                case 4 -> plugin.getGeneralKeeper().getGravitySouthList().remove(loc);
+                                case 5 -> plugin.getGeneralKeeper().getGravityEastList().remove(loc);
+                                default -> plugin.getGeneralKeeper().getGravityDownList().remove(loc);
                             }
                             // set the floor block to the player's preferred floor block
                             Material floor = Material.LIGHT_GRAY_WOOL;
@@ -271,30 +259,30 @@ public class TARDISGravityWellListener implements Listener {
                     // add it to the block list
                     String dir;
                     switch (values[0].intValue()) {
-                        case 1:
+                        case 1 -> {
                             plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                             dir = "UP";
-                            break;
-                        case 2:
+                        }
+                        case 2 -> {
                             plugin.getGeneralKeeper().getGravityNorthList().put(loc, values);
                             dir = "NORTH";
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             plugin.getGeneralKeeper().getGravityWestList().put(loc, values);
                             dir = "WEST";
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             plugin.getGeneralKeeper().getGravitySouthList().put(loc, values);
                             dir = "SOUTH";
-                            break;
-                        case 5:
+                        }
+                        case 5 -> {
                             plugin.getGeneralKeeper().getGravityEastList().put(loc, values);
                             dir = "EAST";
-                            break;
-                        default:
+                        }
+                        default -> {
                             plugin.getGeneralKeeper().getGravityDownList().add(loc);
                             dir = "DOWN";
-                            break;
+                        }
                     }
                     TARDISMessage.send(player, "GRAVITY_SET", dir);
                 }

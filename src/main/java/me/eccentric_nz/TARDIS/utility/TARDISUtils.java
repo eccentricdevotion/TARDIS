@@ -264,37 +264,33 @@ public class TARDISUtils {
 
     public String actionBarFormat(Player player) {
         TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
-        switch (displayType) {
-            case BIOME:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
+        return switch (displayType) {
+            case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
+            );
+            case COORDS -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+            );
+            case DIRECTION -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                .replace("%FACING%", getFacing(player))
+                .replace("%FACING_XZ%", getFacingXZ(player))
+            );
+            case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+            default -> // ALL
+                ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
+                    .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                    .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                    .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                    .replace("%FACING%", getFacing(player))
+                    .replace("%FACING_XZ%", getFacingXZ(player))
+                    .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                    .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                    .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
+                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
                 );
-            case COORDS:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                );
-            case DIRECTION:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%FACING%", getFacing(player))
-                        .replace("%FACING_XZ%", getFacingXZ(player))
-                );
-            case TARGET_BLOCK:
-                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
-            default: // ALL
-                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                        .replace("%FACING%", getFacing(player))
-                        .replace("%FACING_XZ%", getFacingXZ(player))
-                        .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                        .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
-                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-                );
-        }
+        };
     }
 }

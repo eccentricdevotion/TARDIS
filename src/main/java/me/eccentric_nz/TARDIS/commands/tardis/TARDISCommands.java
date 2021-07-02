@@ -200,7 +200,7 @@ public class TARDISCommands implements CommandExecutor {
                 case abort:
                     return new TARDISAbortCommand(plugin).doAbort(player, args);
                 case exterminate: // delete the TARDIS
-                    boolean messagePlayer = (args.length == 2 && args[1].equals("6z@3=V!Q7*/O_OB^")) ? false : true;
+                    boolean messagePlayer = args.length != 2 || !args[1].equals("6z@3=V!Q7*/O_OB^");
                     return new TARDISExterminateCommand(plugin).doExterminate(player, messagePlayer);
                 case save:
                     ItemStack itemStack = player.getInventory().getItemInMainHand();

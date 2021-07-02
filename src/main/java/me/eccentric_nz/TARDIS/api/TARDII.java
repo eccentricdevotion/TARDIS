@@ -174,14 +174,11 @@ public class TARDII implements TardisAPI {
                 environment = Environment.NORMAL;
             }
         }
-        switch (environment) {
-            case NETHER:
-                return new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
-            case THE_END:
-                return new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
-            default:
-                return new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
-        }
+        return switch (environment) {
+            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
+            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
+            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
+        };
     }
 
     @Override
@@ -514,34 +511,34 @@ public class TARDII implements TardisAPI {
             String upper = item.toUpperCase().substring(sub);
             String perm;
             switch (type) {
-                case CONSOLE:
+                case CONSOLE -> {
                     BlueprintConsole console = BlueprintConsole.valueOf(upper);
                     perm = console.getPermission();
-                    break;
-                case FEATURE:
+                }
+                case FEATURE -> {
                     BlueprintFeature feature = BlueprintFeature.valueOf(upper);
                     perm = feature.getPermission();
-                    break;
-                case PRESET:
+                }
+                case PRESET -> {
                     BlueprintPreset preset = BlueprintPreset.valueOf(upper);
                     perm = preset.getPermission();
-                    break;
-                case ROOM:
+                }
+                case ROOM -> {
                     BlueprintRoom room = BlueprintRoom.valueOf(upper);
                     perm = room.getPermission();
-                    break;
-                case SONIC:
+                }
+                case SONIC -> {
                     BlueprintSonic sonic = BlueprintSonic.valueOf(upper);
                     perm = sonic.getPermission();
-                    break;
-                case TRAVEL:
+                }
+                case TRAVEL -> {
                     BlueprintTravel travel = BlueprintTravel.valueOf(upper);
                     perm = travel.getPermission();
-                    break;
-                default: // BASE
+                }
+                default -> { // BASE
                     BlueprintBase base = BlueprintBase.valueOf(upper);
                     perm = base.getPermission();
-                    break;
+                }
             }
             if (perm != null) {
                 ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);

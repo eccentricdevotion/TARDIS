@@ -46,12 +46,14 @@ public class TARDISHandlesEventListener implements Listener {
                     TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                     TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
                     switch (thb) {
-                        case ARTRON:
+                        case ARTRON -> {
                             processor.processArtronCommand(i + 1);
                             return;
-                        case DO:
+                        }
+                        case DO -> {
                             processor.processCommand(i + 1);
                             return;
+                        }
                     }
                 }
                 i++;

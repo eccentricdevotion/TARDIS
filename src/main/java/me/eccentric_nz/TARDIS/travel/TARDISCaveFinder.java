@@ -65,7 +65,7 @@ public class TARDISCaveFinder {
                     Collections.shuffle(Arrays.asList(directions));
                     for (int i = 0; i < 4; i++) {
                         switch (directions[i]) {
-                            case 0:
+                            case 0 -> {
                                 // east
                                 TARDISMessage.send(p, "LOOK_E");
                                 for (int east = startx; east < plusx; east += step) {
@@ -75,8 +75,8 @@ public class TARDISCaveFinder {
                                         return new Location(w, east, chk.getY(), startz);
                                     }
                                 }
-                                break;
-                            case 1:
+                            }
+                            case 1 -> {
                                 // south
                                 TARDISMessage.send(p, "LOOK_S");
                                 for (int south = startz; south < plusz; south += step) {
@@ -86,8 +86,8 @@ public class TARDISCaveFinder {
                                         return new Location(w, startx, chk.getY(), south);
                                     }
                                 }
-                                break;
-                            case 2:
+                            }
+                            case 2 -> {
                                 // west
                                 TARDISMessage.send(p, "LOOK_W");
                                 for (int west = startx; west > minusx; west -= step) {
@@ -97,8 +97,8 @@ public class TARDISCaveFinder {
                                         return new Location(w, west, chk.getY(), startz);
                                     }
                                 }
-                                break;
-                            case 3:
+                            }
+                            case 3 -> {
                                 // north
                                 TARDISMessage.send(p, "LOOK_N");
                                 for (int north = startz; north > minusz; north -= step) {
@@ -108,7 +108,7 @@ public class TARDISCaveFinder {
                                         return new Location(w, startx, chk.getY(), north);
                                     }
                                 }
-                                break;
+                            }
                         }
                     }
                 }

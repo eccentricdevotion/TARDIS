@@ -168,26 +168,26 @@ class TARDISArchiveCommand {
                                 String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
                                 console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
                                 switch (console_size) {
-                                    case MASSIVE:
+                                    case MASSIVE -> {
                                         h = 31;
                                         w = 47;
                                         c = 47;
-                                        break;
-                                    case TALL:
+                                    }
+                                    case TALL -> {
                                         h = 31;
                                         w = 31;
                                         c = 31;
-                                        break;
-                                    case MEDIUM:
+                                    }
+                                    case MEDIUM -> {
                                         h = 15;
                                         w = 31;
                                         c = 31;
-                                        break;
-                                    default:
+                                    }
+                                    default -> {
                                         h = 15;
                                         w = 15;
                                         c = 15;
-                                        break;
+                                    }
                                 }
                             } catch (IllegalArgumentException e) {
                                 TARDISMessage.send(player, "ARCHIVE_SIZE");

@@ -24,19 +24,10 @@ public enum Weather {
 
     public static Weather fromString(String s) {
         String lower = s.toLowerCase();
-        switch (lower) {
-            case "r":
-            case "rain":
-            case "w":
-            case "wet":
-                return RAIN;
-            case "t":
-            case "thunder":
-            case "l":
-            case "lightning":
-                return THUNDER;
-            default:
-                return CLEAR;
-        }
+        return switch (lower) {
+            case "r", "rain", "w", "wet" -> RAIN;
+            case "t", "thunder", "l", "lightning" -> THUNDER;
+            default -> CLEAR;
+        };
     }
 }

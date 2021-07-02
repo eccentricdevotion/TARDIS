@@ -62,7 +62,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 return true;
             }
             switch (args[0].toLowerCase(Locale.ENGLISH)) {
-                case "blocks": {
+                case "blocks" -> {
                     String name = args[1].toUpperCase(Locale.ENGLISH);
                     Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                     if (name.equals("SAVE")) {
@@ -126,7 +126,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                case "required": {
+                case "required" -> {
                     Player player = null;
                     if (sender instanceof Player) {
                         player = (Player) sender;
@@ -144,7 +144,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     RoomRequiredLister.listCondensables(plugin, name, player);
                     return true;
                 }
-                case "add": {
+                case "add" -> {
                     if (!sender.hasPermission("tardis.admin")) {
                         TARDISMessage.send(sender, "NO_PERMS");
                         return false;
@@ -186,7 +186,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "ROOM_ADDED");
                     return true;
                 }
-                default: {
+                default -> {
                     if (!sender.hasPermission("tardis.admin")) {
                         TARDISMessage.send(sender, "NO_PERMS");
                         return false;

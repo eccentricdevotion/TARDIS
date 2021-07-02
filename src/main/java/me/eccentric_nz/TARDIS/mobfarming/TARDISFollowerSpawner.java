@@ -45,18 +45,10 @@ public class TARDISFollowerSpawner {
             pl.setZ(location.getZ() + 1);
         } else {
             switch (direction) {
-                case NORTH:
-                    pl.add(1, 0, 1);
-                    break;
-                case WEST:
-                    pl.add(1, 0, -1);
-                    break;
-                case SOUTH:
-                    pl.add(-1, 0, -1);
-                    break;
-                default:
-                    pl.add(-1, 0, 1);
-                    break;
+                case NORTH -> pl.add(1, 0, 1);
+                case WEST -> pl.add(1, 0, -1);
+                case SOUTH -> pl.add(-1, 0, -1);
+                default -> pl.add(-1, 0, 1);
             }
         }
         TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
