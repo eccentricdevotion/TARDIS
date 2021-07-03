@@ -1,17 +1,16 @@
 authors: [ eccentric_nz ]
-description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
+description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
+version: ${project.version}
+api-version: 1.17
 load: POSTWORLD
 loadbefore: [ ItemSlotMachine ]
 depend: [ TARDISChunkGenerator ]
 softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
-dev-url: http://github.com/eccentricdevotion/TARDIS/
+dev-url: https://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: maven-version-number
-build-number: maven-build-number
-api-version: 1.17
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
