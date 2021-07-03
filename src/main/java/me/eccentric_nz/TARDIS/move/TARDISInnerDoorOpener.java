@@ -125,25 +125,25 @@ public class TARDISInnerDoorOpener {
                         // adjust for teleport
                         switch (indirection) {
                             case NORTH ->
-                                // z -ve
+                                    // z -ve
                                     {
                                         assert indoor != null;
                                         indoor.add(0.5d, 0.0d, -0.5d);
                                     }
                             case EAST ->
-                                // x +ve
+                                    // x +ve
                                     {
                                         assert indoor != null;
                                         indoor.add(1.5d, 0.0d, 0.5d);
                                     }
                             case SOUTH ->
-                                // z +ve
+                                    // z +ve
                                     {
                                         assert indoor != null;
                                         indoor.add(0.5d, 0.0d, 1.5d);
                                     }
                             case WEST ->
-                                // x -ve
+                                    // x -ve
                                     {
                                         assert indoor != null;
                                         indoor.add(-0.5d, 0.0d, 0.5d);

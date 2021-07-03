@@ -2,7 +2,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>me.eccentric_nz.tardis</groupId>
+    <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
     <version>4.7.3-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -218,7 +218,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>io.papermc.lib</pattern>
-                                    <shadedPattern>me.eccentric_nz.tardis.lib.paperlib</shadedPattern>
+                                    <shadedPattern>me.eccentric_nz.TARDIS.lib.paperlib</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -238,7 +238,7 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                         <manifestEntries>
-                            <Main-Class>me.eccentric_nz.tardis.database.tool.Main</Main-Class>
+                            <Main-Class>me.eccentric_nz.TARDIS.database.tool.Main</Main-Class>
                             <Implementation-Title>${project.name}</Implementation-Title>
                             <Implementation-Version>${project.version}</Implementation-Version>
                         </manifestEntries>

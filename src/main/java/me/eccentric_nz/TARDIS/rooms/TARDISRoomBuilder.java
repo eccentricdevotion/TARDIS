@@ -60,7 +60,6 @@ public class TARDISRoomBuilder {
      * <p>
      * This needs to be set up to use the actual dimensions from the schematic files, if user supplied room schematics
      * are allowed to be used.
-     *
      */
     public void build() {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);

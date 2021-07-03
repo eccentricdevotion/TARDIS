@@ -135,7 +135,7 @@ public class TARDISBiomeConverter {
                         for (int zz = -3; zz < 4; zz++) {
                             try {
                                 assert w != null;
-                                w.setBiome(sbx + xx, sby + yy,sbz + zz, biome);
+                                w.setBiome(sbx + xx, sby + yy, sbz + zz, biome);
                                 Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + xx, 64, sbz + zz));
                                 if (!chunks.contains(tmp_chunk)) {
                                     chunks.add(tmp_chunk);
