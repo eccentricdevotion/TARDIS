@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Bee;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -94,11 +93,6 @@ public class TARDISSpawnListener implements Listener {
             }
             if (plugin.isTardisSpawn()) {
                 plugin.setTardisSpawn(false);
-                return;
-            }
-            if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
-                int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
-                ((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
                 return;
             }
             // if not an allowable TARDIS spawn reason, cancel

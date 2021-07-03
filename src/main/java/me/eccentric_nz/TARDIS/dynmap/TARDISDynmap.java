@@ -10,7 +10,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
-import org.dynmap.markers.*;
+import org.dynmap.markers.GenericMarker;
+import org.dynmap.markers.Marker;
+import org.dynmap.markers.MarkerAPI;
+import org.dynmap.markers.MarkerIcon;
+import org.dynmap.markers.MarkerSet;
 
 import java.io.File;
 import java.util.HashMap;

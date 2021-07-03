@@ -144,14 +144,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                         if (material.equals(m)) {
                             COMPASS dd = rsd.getDoor_direction();
                             int end_doortype = switch (doortype) {
-                                case 0 -> // outside preset door
-                                        1;
-                                case 2 -> // outside backdoor
-                                        3;
-                                case 3 -> // inside backdoor
-                                        2;
-                                default -> // 1, 4 TARDIS inside door, secondary inside door
-                                        0;
+                                case 0 -> 1; // outside preset door
+                                case 2 -> 3; // outside backdoor
+                                case 3 -> 2; // inside backdoor
+                                default -> 0; // 1, 4 TARDIS inside door, secondary inside door
                             };
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (stack.hasItemMeta() && Objects.requireNonNull(stack.getItemMeta()).hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {

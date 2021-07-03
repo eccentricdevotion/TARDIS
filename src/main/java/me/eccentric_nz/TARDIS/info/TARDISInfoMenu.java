@@ -26,7 +26,7 @@ import java.util.TreeMap;
  */
 public enum TARDISInfoMenu {
 
-    TIS("TARDIS Information System", "TIS|Commands|TARDIS Commands|add", "TARDIS"),
+    TIS("TARDIS Information System", "", "TARDIS"),
     ITEMS("TIS|Items", "TIS", "I"),
     KEY("TIS|Items|TARDIS Key", "ITEMS", "K"),
     KEY_INFO("TIS|Items|TARDIS Key|Info", "KEY", "I"),
@@ -162,26 +162,26 @@ public enum TARDISInfoMenu {
     SAVE_DISK_INFO("TIS|TARDIS Disks|Save Storage Disk|Info", "SAVE_DISK", "I"),
     SAVE_DISK_RECIPE("TIS|TARDIS Disks|Save Storage Disk|Recipe", "SAVE_DISK", "R"),
     TYPES("TIS|TARDIS Types", "TIS", "T"),
-    BUDGET("TIS|TARDIS Types|Budget", "TYPES", "B"),
+    ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
     BIGGER("TIS|TARDIS Types|Bigger", "TYPES", "i"),
+    BUDGET("TIS|TARDIS Types|Budget", "TYPES", "B"),
+    CAVE("TIS|TARDIS Types|Cave", "TYPES", "v"),
+    COPPER_11TH("TIS|TARDIS Types|Copper 11th", "TYPES", "1"),
+    CORAL("TIS|TARDIS Types|Coral", "TYPES", "o"),
+    DELTA("TIS|TARDIS Types|Delta=", "TYPES", "="),
     DELUXE("TIS|TARDIS Types|Deluxe", "TYPES", "D"),
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
-    TWELFTH("TIS|TARDIS Types|Twelfth", "TYPES", "f"),
-    THIRTEENTH("TIS|TARDIS Types|Thirteenth", "TYPES", "n"),
+    ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
     FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),
+    MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
+    PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
+    PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "y"),
     REDSTONE("TIS|TARDIS Types|Redstone", "TYPES", "R"),
     STEAMPUNK("TIS|TARDIS Types|Steampunk", "TYPES", "S"),
-    PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
+    THIRTEENTH("TIS|TARDIS Types|Thirteenth", "TYPES", "n"),
     TOM("TIS|TARDIS Types|Tom", "TYPES", "T"),
-    ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
+    TWELFTH("TIS|TARDIS Types|Twelfth", "TYPES", "f"),
     WAR("TIS|TARDIS Types|War", "TYPES", "W"),
-    PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "y"),
-    MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
-    ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
-    CORAL("TIS|TARDIS Types|Coral", "TYPES", "o"),
-    COPPER_11TH("TIS|TARDIS Types|Copper", "TYPES", "1"),
-    DELTA("TIS|TARDIS Types|Delta=", "TYPES", "="),
-    CAVE("TIS|TARDIS Types|Cave", "TYPES", "v"),
     WEATHERED("TIS|TARDIS Types|Weathered", "TYPES", "h"),
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
@@ -290,61 +290,33 @@ public enum TARDISInfoMenu {
     CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
     CONSOLE_BLOCKS_2("TIS|Manual|Console Blocks 2", "MANUAL", "o"),
     CONSOLE_ARS("TIS|Manual|Console Blocks|ARS", "CONSOLE_BLOCKS", "A"),
-    //A
     ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "v"),
-    //v
     STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"),
-    //S
     ARTRON("TIS|Manual|Console Blocks|Artron Energy Capacitor", "CONSOLE_BLOCKS", "r"),
-    //r
     BACKDOOR("TIS|Manual|Console Blocks|Backdoor", "CONSOLE_BLOCKS", "B"),
-    //B
     BUTTON("TIS|Manual|Console Blocks|Button", "CONSOLE_BLOCKS", "u"),
-    //u
     CHAMELEON("TIS|Manual|Console Blocks|Chameleon", "CONSOLE_BLOCKS", "C"),
-    //C
     CONDENSER("TIS|Manual|Console Blocks|Condenser", "CONSOLE_BLOCKS", "o"),
-    //o
     CREEPER("TIS|Manual|Console Blocks|Creeper", "CONSOLE_BLOCKS", "p"),
-    //p
     DOOR("TIS|Manual|Console Blocks|Door", "CONSOLE_BLOCKS", "D"),
-    //D
     EPS("TIS|Manual|Console Blocks|EPS", "CONSOLE_BLOCKS", "P"),
-    //P
     CONSOLE_FARM("TIS|Manual|Console Blocks|Farm", "CONSOLE_BLOCKS", "m"),
-    //m
     HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "k"),
-    //k
     INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS_2", "I"),
-    //I
     KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS_2", "K"),
-    //K
     TOGGLE("TIS|Manual|Console Blocks 2|Wool toggle", "CONSOLE_BLOCKS_2", "o"),
-    //o
     LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"),
-    //L
     CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"),
-    //R
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"),
-    //S
     SCANNER("TIS|Manual|Console Blocks 2|Scanner", "CONSOLE_BLOCKS_2", "c"),
-    //c
     CONSOLE_STABLE("TIS|Manual|Console Blocks 2|Stable", "CONSOLE_BLOCKS_2", "b"),
-    //t
     CONSOLE_STALL("TIS|Manual|Console Blocks 2|Stall", "CONSOLE_BLOCKS_2", "a"),
-    //a
     TERMINAL("TIS|Manual|Console Blocks 2|Terminal", "CONSOLE_BLOCKS_2", "T"),
-    //T
     TEMPORAL("TIS|Manual|Console Blocks 2|Temporal Locator", "CONSOLE_BLOCKS_2", "m"),
-    //m
     WORLD_REPEATER("TIS|Manual|Console Blocks 2|World Repeater", "CONSOLE_BLOCKS_2", "W"),
-    //W
     X_REPEATER("TIS|Manual|Console Blocks 2|X Repeater", "CONSOLE_BLOCKS_2", "X"),
-    //X
     Y_REPEATER("TIS|Manual|Console Blocks 2|Y Repeater", "CONSOLE_BLOCKS_2", "Y"),
-    //Y
     Z_REPEATER("TIS|Manual|Console Blocks 2|Z Repeater", "CONSOLE_BLOCKS_2", "Z"),
-    //Z
     TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
     MALFUNCTIONS("TIS|Manual|TARDIS Controls|Malfunctions", "TARDIS_CONTROLS", "M"),
     ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),

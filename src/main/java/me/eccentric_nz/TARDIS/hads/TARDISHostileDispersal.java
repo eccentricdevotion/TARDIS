@@ -164,7 +164,7 @@ class TARDISHostileDispersal {
                         }
                     }
                     if (!b.getType().isAir()) {
-                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
+                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 + 0.5) + 1));
                         // get the appropriate carpet colour
                         String stainedGlass = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType()).toString();
                         String colour = stainedGlass.replace("STAINED_GLASS", "CARPET");
