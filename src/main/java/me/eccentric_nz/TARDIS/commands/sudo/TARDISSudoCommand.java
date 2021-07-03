@@ -169,7 +169,8 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             }
                             return true;
                         case "handbrake":
-                            return new SudoHandbrake(plugin).toggle(sender, args, uuid);
+                            new SudoHandbrake(plugin).toggle(sender, args, uuid);
+                            return true;
                         case "hide":
                             new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardis_id());
                             return true;
