@@ -418,18 +418,22 @@ public class TARDISWorldGuardUtils {
      *
      * @param w     the world the region is located in
      * @param owner the player whose region it is
-     * @param a     the player to add
+     * @param uuid  the UUID of the player to add
      */
-    public void addMemberToRegion(World w, String owner, String a) {
-        boolean save = false;
+    public void addMemberToRegion(World w, String owner, UUID uuid) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        ProtectedRegion protectedRegion;
+        ProtectedRegion protectedRegion = null;
         if (rm.hasRegion("TARDIS_" + owner)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + a + " -w " + w.getName());
+            protectedRegion = rm.getRegion("TARDIS_" + owner);
         } else if (TARDISFloodgate.isFloodgateEnabled()) {
-
+            String sanitised = TARDISFloodgate.sanitisePlayerName(owner);
+            if (rm.hasRegion("TARDIS_" + sanitised)) {
+                protectedRegion = rm.getRegion("TARDIS_" + sanitised);
+            }
         }
-        if (save) {
+        if (protectedRegion != null) {
+            DefaultDomain members = protectedRegion.getMembers();
+            members.addPlayer(uuid);
             try {
                 rm.save();
             } catch (StorageException e) {
@@ -574,7 +578,7 @@ public class TARDISWorldGuardUtils {
         }
         if (region != null) {
             region.setFlag(Flags.CHEST_ACCESS, State.DENY);
-            region.setFlag(Flags.CHEST_ACCESS.getRegionGroupFlag(), RegionGroup.MEMBERS);
+            region.setFlag(Flags.CHEST_ACCESS.getRegionGroupFlag(), RegionGroup.NON_MEMBERS);
             try {
                 rm.save();
             } catch (StorageException e) {
@@ -737,10 +741,8 @@ public class TARDISWorldGuardUtils {
                     region = rm.getRegion("TARDIS_" + sanitised);
                 }
             }
-
             // always allow region entry if open door policy is true
             State flag = (allow || plugin.getConfig().getBoolean("preferences.open_door_policy")) ? State.ALLOW : State.DENY;
-
             if (region != null) {
                 Map<Flag<?>, Object> flags = region.getFlags();
                 flags.put(Flags.ENTRY, flag);
