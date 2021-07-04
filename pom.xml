@@ -76,36 +76,10 @@
                 </property>
             </activation>
             <properties>
+                <maven.build.timestamp.format>dd.MM.yy-HH:mm</maven.build.timestamp.format>
                 <!-- Set the build number to the date and time of the build -->
-                <!--suppress UnresolvedMavenProperty -->
-                <project.build.number>${myBuildNumber}</project.build.number>
+                <project.build.number>${maven.build.timestamp}</project.build.number>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>buildnumber-maven-plugin</artifactId>
-                        <version>1.4</version>
-                        <configuration>
-                            <revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>create-timestamp-id</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>create-timestamp</goal>
-                                </goals>
-                                <configuration>
-                                    <timestampFormat>dd.MM.yy-HH:mm</timestampFormat>
-                                    <timestampPropertyName>myBuildNumber</timestampPropertyName>
-                                    <!-- formats the timestamp all together like 04.12.16-14:17 and puts it in the ${myBuildNumber} buildProperty -->
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>jenkins</id>
@@ -117,7 +91,6 @@
             <properties>
                 <!-- Get the build number from Jenkins -->
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
-                <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
             </properties>
             <repositories>
                 <repository>
@@ -128,6 +101,20 @@
         </profile>
     </profiles>
     <build>
+        <resources>
+            <resource>
+                <!-- Insert the build number into plugin.yml -->
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <defaultGoal>clean package</defaultGoal>
         <finalName>TARDIS</finalName>
         <plugins>
@@ -139,33 +126,6 @@
                     <source>16</source>
                     <target>16</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <!-- Insert the build number into plugin.yml -->
-            <plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>replacer</artifactId>
-                <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <file>target/classes/plugin.yml</file>
-                    <replacements>
-                        <replacement>
-                            <token>maven-version-number</token>
-                            <value>${project.version}-b${project.build.number}</value>
-                        </replacement>
-                        <replacement>
-                            <token>maven-build-number</token>
-                            <value>${project.build.number}</value>
-                        </replacement>
-                    </replacements>
                 </configuration>
             </plugin>
             <!-- Shade all Libs -->

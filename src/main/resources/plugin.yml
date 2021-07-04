@@ -9,8 +9,8 @@ softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,Grief
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: maven-version-number
-build-number: maven-build-number
+version: ${project.version}-b${project.build.number}
+build-number: ${project.build.number}
 api-version: 1.17
 permissions:
   tardis.admin:
