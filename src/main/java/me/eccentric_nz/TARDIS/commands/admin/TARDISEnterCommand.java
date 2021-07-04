@@ -112,7 +112,7 @@ class TARDISEnterCommand {
                 }
                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
+                    plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getUniqueId());
                 }
                 // enter TARDIS!
                 cw.getChunkAt(tardis_loc).load();

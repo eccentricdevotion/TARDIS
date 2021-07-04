@@ -34,7 +34,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -89,14 +88,15 @@ class TARDISAddCompanionCommand {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
+                OfflinePlayer companion = null;
                 if (addAll) {
                     tid.put("tardis_id", id);
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
-                    if (offlinePlayer != null) {
-                        UUID oluuid = offlinePlayer.getUniqueId();
+                    companion = TARDISStaticUtils.getOfflinePlayer(args[1]);
+                    if (companion != null) {
+                        UUID oluuid = companion.getUniqueId();
                         tid.put("tardis_id", id);
                         if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
                             // add to the list
@@ -126,8 +126,8 @@ class TARDISAddCompanionCommand {
                             // set entry and exit flags to allow
                             plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), true);
                         } else {
-                            plugin.getWorldGuardUtils().addMemberToRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
-                            // set entry and exit flags to allow
+                            plugin.getWorldGuardUtils().addMemberToRegion(w, owner, companion.getUniqueId());
+                            // set entry and exit flags to deny
                             plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
                         }
                     }

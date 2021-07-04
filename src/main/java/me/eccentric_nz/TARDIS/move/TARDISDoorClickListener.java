@@ -143,13 +143,13 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             COMPASS dd = rsd.getDoor_direction();
                             int end_doortype = switch (doortype) {
                                 case 0 -> // outside preset door
-                                    1;
+                                        1;
                                 case 2 -> // outside backdoor
-                                    3;
+                                        3;
                                 case 3 -> // inside backdoor
-                                    2;
+                                        2;
                                 default -> // 1, 4 TARDIS inside door, secondary inside door
-                                    0;
+                                        0;
                             };
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
@@ -398,7 +398,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
-                                                    plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
+                                                    plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getUniqueId());
                                                 }
                                                 // enter TARDIS!
                                                 cw.getChunkAt(tardis_loc).load();

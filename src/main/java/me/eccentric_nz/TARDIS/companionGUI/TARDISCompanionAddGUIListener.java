@@ -149,11 +149,14 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         plugin.getQueryFactory().doUpdate("tardis", set, tid);
     }
 
-    private void addToRegion(String world, String owner, String player) {
+    private void addToRegion(String world, String owner, String companion) {
         // if using WorldGuard, add them to the region membership
         World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
-            plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player);
+            Player player = plugin.getServer().getPlayer(companion);
+            if (player != null) {
+                plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player.getUniqueId());
+            }
         }
     }
 }

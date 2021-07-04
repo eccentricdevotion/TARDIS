@@ -137,7 +137,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     }
                                                     // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
-                                                        plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
+                                                        plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getUniqueId());
                                                     }
                                                     // enter TARDIS!
                                                     cw.getChunkAt(tardis_loc).load();

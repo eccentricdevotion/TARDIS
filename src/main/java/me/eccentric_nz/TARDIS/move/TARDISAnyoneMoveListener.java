@@ -50,9 +50,9 @@ public class TARDISAnyoneMoveListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
+        Player player = event.getPlayer();
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
-        Location loc = p.getLocation(); // Grab Location
+        Location loc = player.getLocation(); // Grab Location
 
         /*
          * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
@@ -60,7 +60,7 @@ public class TARDISAnyoneMoveListener implements Listener {
          * calculations... This is to prevent huge performance drops on high
          * player count servers.
          */
-        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(p);
+        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
         tms.setStaleLocation(loc);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
@@ -70,7 +70,7 @@ public class TARDISAnyoneMoveListener implements Listener {
         // check the block they're on
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
             TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
-            UUID uuid = p.getUniqueId();
+            UUID uuid = player.getUniqueId();
             int id = tpl.getTardisId();
             Location to = tpl.getLocation();
             boolean exit;
@@ -83,8 +83,8 @@ public class TARDISAnyoneMoveListener implements Listener {
                 exit = !(to.getWorld().getName().contains("TARDIS"));
             }
             // adjust player yaw for to
-            float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
-            COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
+            float yaw = (exit) ? player.getLocation().getYaw() + 180.0f : player.getLocation().getYaw();
+            COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
             if (!tpl.getDirection().equals(d)) {
                 yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
             }
@@ -96,10 +96,10 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean willFarm = (hasPrefs) && rsp.isFarmOn();
             // check for entities near the police box
             TARDISPetsAndFollowers petsAndFollowers = null;
-            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
+            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
             }
             // set travelling status
             plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
@@ -116,22 +116,22 @@ public class TARDISAnyoneMoveListener implements Listener {
                     whereo.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereo, "", false, 2);
                     if (rs.resultSet()) {
-                        plugin.getWorldGuardUtils().addMemberToRegion(to.getWorld(), rs.getTardis().getOwner(), p.getName());
+                        plugin.getWorldGuardUtils().addMemberToRegion(to.getWorld(), rs.getTardis().getOwner(), player.getUniqueId());
                     }
                 }
             }
             // tp player
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(player, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
             if (petsAndFollowers != null) {
                 if (petsAndFollowers.getPets().size() > 0) {
-                    plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), p, d, true);
+                    plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), player, d, true);
                 }
                 if (petsAndFollowers.getFollowers().size() > 0) {
-                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), p, d, true);
+                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
                 }
             }
             if (userQuotes) {
-                TARDISMessage.send(p, "DOOR_REMIND");
+                TARDISMessage.send(player, "DOOR_REMIND");
             }
             // if WorldGuard is on the server check for TARDIS region protection and remove player as member
             if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && isCompanion(uuid, id)) {
@@ -140,7 +140,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 whereo.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, whereo, "", false, 2);
                 if (rs.resultSet()) {
-                    plugin.getWorldGuardUtils().removeMemberFromRegion(l.getWorld(), rs.getTardis().getOwner(), p.getUniqueId());
+                    plugin.getWorldGuardUtils().removeMemberFromRegion(l.getWorld(), rs.getTardis().getOwner(), player.getUniqueId());
                 }
             }
         }
