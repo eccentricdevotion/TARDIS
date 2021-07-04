@@ -35,7 +35,7 @@ public class GlueListener implements Listener {
 
     @EventHandler
     public void onGlueUse(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && EquipmentSlot.HAND.equals(event.getHand())) {
             Player player = event.getPlayer();
             Block block = event.getClickedBlock();
             if (TARDISPermission.hasPermission(player, "tardis.chemistry.glue") && block != null && block.getType().equals(Material.PISTON)) {
