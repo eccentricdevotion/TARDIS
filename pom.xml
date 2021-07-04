@@ -16,7 +16,7 @@
             <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
         </repository>
         <repository>
-            <id>Spigot</id>
+            <id>spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
@@ -50,6 +50,22 @@
         <repository>
             <id>essentialsx</id>
             <url>https://repo.essentialsx.net/snapshots/</url>
+        </repository>
+        <repository>
+            <id>blocklocker</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>lwcx</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <id>coreprotect</id>
+            <url>https://maven.playpro.com</url>
+        </repository>
+        <repository>
+            <id>dynmap</id>
+            <url>https://repo.mikeprimm.com/</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -410,16 +426,26 @@
             <artifactId>blocklocker</artifactId>
             <version>1.10</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.griefcraft.lwc</groupId>
             <artifactId>LWCX</artifactId>
             <version>2.2.6</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/LWCX.jar</systemPath>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- only need ProtocolLib to support LibsDisguises -->
         <dependency>
@@ -484,18 +510,28 @@
         </dependency>
         <dependency>
             <groupId>net.coreprotect</groupId>
-            <artifactId>CoreProtect</artifactId>
+            <artifactId>coreprotect</artifactId>
             <version>19.5</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/CoreProtect.jar</systemPath>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.dynmap</groupId>
+            <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
             <version>3.2-beta-1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/dynmap-api.jar</systemPath>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.geysermc.floodgate</groupId>
