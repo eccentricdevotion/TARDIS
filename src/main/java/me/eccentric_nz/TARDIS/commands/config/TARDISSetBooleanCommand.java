@@ -71,7 +71,7 @@ class TARDISSetBooleanCommand {
                     return true;
                 }
                 plugin.getConfig().set("abandon.enabled", bool);
-            } else if (first.equals("archive") || first.equals("blueprints")) {
+            } else if (first.equals("archive") || first.equals("blueprints") || first.equals("dynmap")) {
                 plugin.getConfig().set(first + ".enabled", bool);
             } else {
                 plugin.getConfig().set(first, bool);

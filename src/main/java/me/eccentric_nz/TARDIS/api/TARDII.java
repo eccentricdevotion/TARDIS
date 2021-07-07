@@ -143,6 +143,7 @@ public class TARDII implements TardisAPI {
         ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
+            String owner = tardis.getOwner();
             Location current = getTARDISCurrentLocation(id);
             String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
             String chameleon = tardis.getPreset().toString();
@@ -159,7 +160,7 @@ public class TARDII implements TardisAPI {
             String siege = (tardis.isSiege_on()) ? "Yes" : "No";
             String abandoned = (tardis.isAbandoned()) ? "Yes" : "No";
             List<String> occupants = getPlayersInTARDIS(id);
-            data = new TARDISData(current, console, chameleon, door, powered, siege, abandoned, occupants);
+            data = new TARDISData(owner, current, console, chameleon, door, powered, siege, abandoned, occupants);
         }
         return data;
     }

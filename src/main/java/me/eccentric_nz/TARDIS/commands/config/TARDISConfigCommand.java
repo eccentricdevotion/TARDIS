@@ -98,7 +98,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
-        firstsBool.put("enable_dynmap", "preferences");
+        firstsBool.put("dynmap", "");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
@@ -180,6 +180,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("timeout_height", "travel");
         firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
+        firstsInt.put("update_period", "dynmap");
+        firstsInt.put("updates_per_tick", "dynmap");
         firstsInt.put("wall_data", "police_box");
         firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");

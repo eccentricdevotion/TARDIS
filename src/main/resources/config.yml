@@ -77,7 +77,6 @@ preferences:
   respect_factions: true
   respect_grief_prevention: true
   respect_red_protect: true
-  enable_dynmap: true
   sfx_volume: 10
   difficulty: easy
   strike_lightning: true
@@ -102,6 +101,11 @@ preferences:
   no_enchanted_condense: true
   vortex_fall: kill
   chat_width: 55
+# dynmap
+dynmap:
+  enabled: true
+  update_period: 10
+  updates_per_tick: 10
 # desktop theme
 desktop:
   check_blocks_before_upgrade: false

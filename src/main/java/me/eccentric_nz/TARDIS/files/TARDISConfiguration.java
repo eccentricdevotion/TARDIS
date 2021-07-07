@@ -98,12 +98,12 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
+        booleanOptions.put("dynmap.enabled", true);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("police_box.name_tardis", false);
-        booleanOptions.put("preferences.enable_dynmap", true);
         booleanOptions.put("preferences.nerf_pistons.enabled", false);
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         booleanOptions.put("preferences.no_coords", false);
@@ -154,6 +154,8 @@ public class TARDISConfiguration {
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
+        integerOptions.put("dynmap.update_period", 10);
+        integerOptions.put("dynmap.updates_per_tick", 10);
         integerOptions.put("growth.ars_limit", 1);
         integerOptions.put("growth.gravity_max_distance", 15);
         integerOptions.put("growth.gravity_max_velocity", 5);
@@ -281,6 +283,11 @@ public class TARDISConfiguration {
             plugin.getConfig().set("storage.mysql.database", database);
             plugin.getConfig().set("storage.mysql.url", null);
             i++;
+        }
+        // check / transfer dynmap setting
+        if (config.contains("preferences.enable_dynmap")) {
+            plugin.getConfig().set("dynmap.enabled", config.getBoolean("preferences.enable_dynmap"));
+            plugin.getConfig().set("preferences.enable_dynmap", null);
         }
         // remove handles
         if (config.contains("handles")) {
