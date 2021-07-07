@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.7.3</version>
+    <version>4.7.4</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -221,7 +221,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.7.3</version>
+            <version>4.7.4</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -524,7 +524,7 @@
         <dependency>
             <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>3.2-beta-1</version>
+            <version>3.2-SNAPSHOT</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
