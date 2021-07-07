@@ -43,7 +43,7 @@ public class TARDISDynmap {
     private MarkerAPI markerapi;
     private boolean reload = false;
     private boolean stop;
-    private Layer tardisLayer;
+    private TARDISLayer tardisLayer;
 
     public TARDISDynmap(TARDIS plugin) {
         this.plugin = plugin;
@@ -58,18 +58,12 @@ public class TARDISDynmap {
     }
 
     public void enable() {
-        /*
-         * Get dynmap
-         */
+        // get dynmap
         dynmap = plugin.getPM().getPlugin("dynmap");
-        /*
-         * Get API
-         */
+        // get API
         api = (DynmapAPI) dynmap;
         plugin.getPM().registerEvents(new TARDISServerListener(), plugin);
-        /*
-         * If enabled, activate
-         */
+        // if enabled, activate
         if (dynmap.isEnabled()) {
             activate();
             checkIcon();
@@ -77,17 +71,13 @@ public class TARDISDynmap {
     }
 
     private void activate() {
-        /*
-         * Now, get markers API
-         */
+        // get markers API
         markerapi = api.getMarkerAPI();
         if (markerapi == null) {
-            Bukkit.getLogger().log(Level.WARNING, "Error loading Dynmap marker API!");
+            plugin.debug("Error loading Dynmap marker API!");
             return;
         }
-        /*
-         * Load configuration
-         */
+        // load configuration
         if (reload) {
             if (tardisLayer != null) {
                 if (markerSet != null) {
@@ -99,14 +89,11 @@ public class TARDISDynmap {
         } else {
             reload = true;
         }
-        /*
-         * Now, add marker set for TardisAPI
-         */
+        // add TARDIS marker set
         tardisLayer = new TARDISLayer();
-        tardisLayer.updateMarkerSet(); // potentially laggy on first run...
-        /*
-         * Set up update job - based on period
-         */
+        // potentially laggy on first run...
+        tardisLayer.updateMarkerSet();
+        // set up update job - based on period
         stop = false;
         // this marker update is limited by `plugin.getConfig().getInt("dynmap.updates_per_tick")`
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), (plugin.getConfig().getLong("dynmap.update_period") * 20) / 3);
@@ -121,9 +108,9 @@ public class TARDISDynmap {
         }
     }
 
-    private String formatInfoWindow(String who, TARDISData data) {
+    private String formatInfoWindow(TARDISData data) {
         String window = INFO;
-        window = window.replace("%owner%", who);
+        window = window.replace("%owner%", data.getOwner());
         window = window.replace("%console%", data.getConsole());
         window = window.replace("%chameleon%", data.getChameleon());
         String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " + data.getLocation().getBlockZ();
@@ -143,12 +130,12 @@ public class TARDISDynmap {
         return window;
     }
 
-    private abstract class Layer {
+    private class TARDISLayer {
 
         MarkerIcon markerIcon;
         String labelFormat;
 
-        Layer() {
+        TARDISLayer() {
             markerSet = markerapi.getMarkerSet("tardis");
             if (markerSet == null) {
                 markerSet = markerapi.createMarkerSet("tardis", "TARDISes", null, false);
@@ -173,65 +160,43 @@ public class TARDISDynmap {
             markers.clear();
         }
 
+        /**
+         * Get current markers with relevant TARDIS data
+         * only on first run - markers are updated thereafter
+         */
         void updateMarkerSet() {
             Map<String, Marker> newMarkerMap = new HashMap<>();
-            /*
-             * Build new map
-             */
-            Map<String, TARDISData> marks = getMarkers();
-            marks.forEach((name, value) -> {
+            // build new map
+            new TARDISGetter(plugin).getList(null).forEach(value -> {
                 Location loc = value.getLocation();
                 String world = loc.getWorld().getName();
-                /*
-                 * Get location
-                 */
-                String id = world + "/" + name;
-                String label = labelFormat.replace("%name%", name);
-                /*
-                 * See if we already have marker
-                 */
-                Marker m = markers.remove(id);
-                if (m == null) {
-                    /*
-                     * Not found? Need new one
-                     */
-                    m = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
+                // get location
+                String id = world + "/" + value.getOwner();
+                String label = labelFormat.replace("%name%", value.getOwner());
+                // see if we already have marker
+                Marker marker = markers.remove(id);
+                if (marker == null) {
+                    // not found? make a new one
+                    marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
                 } else {
-                    /*
-                     * Else, update position if needed
-                     */
-                    m.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
-                    m.setLabel(label);
-                    m.setMarkerIcon(markerIcon);
+                    // else, update position
+                    marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
+                    marker.setLabel(label);
+                    marker.setMarkerIcon(markerIcon);
                 }
-                /*
-                 * Build popup
-                 */
-                String desc = formatInfoWindow(name, value);
-                /*
-                 * Set popup
-                 */
-                m.setDescription(desc);
-                /*
-                 * Add to new map
-                 */
-                newMarkerMap.put(id, m);
+                // build popup
+                String desc = formatInfoWindow(value);
+                // set popup
+                marker.setDescription(desc);
+                // add to new marker map
+                newMarkerMap.put(id, marker);
             });
-            /*
-             * Now, review old map - anything left is gone
-             */
+            // review old map - anything left is gone
             markers.values().forEach(GenericMarker::deleteMarker);
-            /*
-             * And replace with new map
-             */
+            // replace with new map
             markers.clear();
             markers = newMarkerMap;
         }
-
-        /*
-         * Get current markers, by ID with location
-         */
-        abstract Map<String, TARDISData> getMarkers();
     }
 
     private class TARDISServerListener implements Listener {
@@ -248,35 +213,10 @@ public class TARDISDynmap {
         }
     }
 
-    private class TARDISLayer extends Layer {
-
-        TARDISLayer() {
-            super();
-        }
-
-        /*
-         * Get current markers, by timelord with location
-         */
-        @Override
-        public Map<String, TARDISData> getMarkers() {
-            HashMap<String, TARDISData> map = new HashMap<>();
-            HashMap<String, Integer> tl = plugin.getTardisAPI().getTimelordMap();
-            tl.forEach((key, value) -> {
-                TARDISData data;
-                try {
-                    data = plugin.getTardisAPI().getTARDISMapData(value);
-                    if (data.getLocation() != null) {
-                        map.put(key, data);
-                    }
-                } catch (Exception ignored) {
-                }
-            });
-            return map;
-        }
-    }
-
     private class TARDISMarkerUpdate implements Runnable {
-        Map<String, Marker> newmap = new HashMap<>(); /* Build new map */
+
+        // build new map
+        Map<String, Marker> newmap = new HashMap<>();
         ArrayList<World> worldsToDo = null;
         List<TARDISData> toDo = null;
         int tardisIndex = 0;
@@ -287,85 +227,68 @@ public class TARDISDynmap {
             if (stop || markerSet == null) {
                 return;
             }
-            // If needed, prime world list
+            // prime world list
             if (worldsToDo == null) {
                 worldsToDo = new ArrayList<>(plugin.getServer().getWorlds());
             }
             while (toDo == null) {
                 if (worldsToDo.isEmpty()) {
-                    // Now, review old map - anything left is gone
+                    // review old map - anything left is gone
                     for (Marker oldm : markers.values()) {
                         oldm.deleteMarker();
                     }
-                    // And replace with new map
+                    // replace with new map
                     markers = newmap;
                     // Schedule next run
                     long delay = plugin.getConfig().getLong("dynmap.update_period", 200);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), delay);
                     return;
                 } else {
-                    curWorld = worldsToDo.remove(0); // Get next world
-                    toDo = getTARDISes(curWorld); // Get TARDISes
+                    // get next world
+                    curWorld = worldsToDo.remove(0);
+                    // get TARDISes
+                    toDo = new TARDISGetter(plugin).getList(curWorld);
                     tardisIndex = 0;
                     if (toDo != null && toDo.isEmpty()) {
                         toDo = null;
                     }
                 }
             }
-            // Process up to limit per tick
+            // process up to limit per tick
             int limit = plugin.getConfig().getInt("dynmap.updates_per_tick", 10);
             for (int cnt = 0; cnt < limit; cnt++) {
                 if (tardisIndex >= toDo.size()) {
                     toDo = null;
                     break;
                 }
-                // Get next TARDIS
-                TARDISData t = toDo.get(tardisIndex);
+                // get next TARDIS
+                TARDISData data = toDo.get(tardisIndex);
                 tardisIndex++;
-
-                Location loc = t.getLocation();
+                Location loc = data.getLocation();
                 String world = loc.getWorld().getName();
-                /*
-                 * Get location
-                 */
-                String id = world + "/" + t.getOwner();
-                String label = String.format("%s (TARDIS)", t.getOwner());
+                // get marker id
+                String id = world + "/" + data.getOwner();
+                String label = String.format("%s (TARDIS)", data.getOwner());
                 MarkerIcon markerIcon = markerapi.getMarkerIcon("tardis");
-                /*
-                 * See if we already have a marker
-                 */
-                Marker m = markers.remove(id);
-                if (m == null) {
-                    /*
-                     * Not found? Need new one
-                     */
-                    m = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
+                // see if we already have a marker
+                Marker marker = markers.remove(id);
+                if (marker == null) {
+                    // not found? make new one
+                    marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
                 } else {
-                    /*
-                     * Else, update position if needed
-                     */
-                    m.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
-                    m.setLabel(label);
-                    m.setMarkerIcon(markerIcon);
+                    // update position if needed
+                    marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
+                    marker.setLabel(label);
+                    marker.setMarkerIcon(markerIcon);
                 }
-                /*
-                 * Build popup
-                 */
-                String desc = formatInfoWindow(t.getOwner(), t);
-                /*
-                 * Set popup
-                 */
-                m.setDescription(desc);
-                /*
-                 * Add to new map
-                 */
-                newmap.put(id, m);
+                // build popup
+                String desc = formatInfoWindow(data);
+                // set popup
+                marker.setDescription(desc);
+                // add to new marker map
+                newmap.put(id, marker);
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, this, 1);
         }
-    }
-
-    private List<TARDISData> getTARDISes(World world) {
-        return new TARDISGetByWorld(plugin).getList(world);
     }
 }

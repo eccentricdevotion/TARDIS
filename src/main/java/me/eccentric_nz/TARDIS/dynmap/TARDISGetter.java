@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class TARDISGetByWorld {
+class TARDISGetter {
 
     private final TARDIS plugin;
     private final String prefix;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
 
-    TARDISGetByWorld(TARDIS plugin) {
+    TARDISGetter(TARDIS plugin) {
         this.plugin = plugin;
         prefix = plugin.getPrefix();
     }
@@ -43,8 +43,10 @@ class TARDISGetByWorld {
                 + prefix + "current.y, "
                 + prefix + "current.z"
                 + " FROM " + prefix + "tardis, " + prefix + "current WHERE "
-                + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id AND "
-                + prefix + "current.world = '" + world.getName() + "'";
+                + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id";
+        if (world != null) {
+            query += " AND " + prefix + "current.world = '" + world.getName() + "'";
+        }
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
