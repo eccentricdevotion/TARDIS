@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class TARDISData {
 
+    private final String owner;
     private final Location location;
     private final String console;
     private final String chameleon;
@@ -34,7 +35,8 @@ public class TARDISData {
     private final String abandoned;
     private final List<String> occupants;
 
-    TARDISData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
+    public TARDISData(String owner, Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
+        this.owner = owner;
         this.location = location;
         this.console = console;
         this.chameleon = chameleon;
@@ -43,6 +45,15 @@ public class TARDISData {
         this.siege = siege;
         this.abandoned = abandoned;
         this.occupants = occupants;
+    }
+
+    /**
+     * Gets the TARDIS' Owner
+     *
+     * @return the owner's name
+     */
+    public String getOwner() {
+        return owner;
     }
 
     /**
