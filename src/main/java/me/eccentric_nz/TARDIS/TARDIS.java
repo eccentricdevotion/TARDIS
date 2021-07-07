@@ -308,7 +308,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.17");
+        Version minversion = new Version("1.17.1");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
@@ -1040,7 +1040,7 @@ public class TARDIS extends JavaPlugin {
         if (!getConfig().getBoolean("creation.default_world")) {
             return;
         }
-        String defWorld = getConfig().getString("creation.default_world_name");
+        String defWorld = getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
         if (getServer().getWorld(defWorld) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(defWorld);
