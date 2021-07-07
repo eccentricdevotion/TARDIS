@@ -2,13 +2,11 @@ package me.eccentric_nz.TARDIS.bStats;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -35,7 +33,7 @@ public class Metrics {
      * @param serviceId The id of the service. It can be found at <a
      *                  href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(JavaPlugin plugin, int serviceId) {
+    Metrics(JavaPlugin plugin, int serviceId) {
         this.plugin = plugin;
         // Get the config file
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");
@@ -50,12 +48,12 @@ public class Metrics {
             // Inform the server owners about bStats
             config.options()
                     .header(
-                        """
-                            bStats (https://bStats.org) collects some basic information for plugin authors, like how
-                            many people use their plugin and their total player count. It's recommended to keep bStats
-                            enabled, but if you're not comfortable with this, you can turn this setting off. There is no
-                            performance penalty associated with having metrics enabled, and data sent to bStats is fully
-                            anonymous.""")
+                            """
+                                    bStats (https://bStats.org) collects some basic information for plugin authors, like how
+                                    many people use their plugin and their total player count. It's recommended to keep bStats
+                                    enabled, but if you're not comfortable with this, you can turn this setting off. There is no
+                                    performance penalty associated with having metrics enabled, and data sent to bStats is fully
+                                    anonymous.""")
                     .copyDefaults(true);
             try {
                 config.save(configFile);
@@ -89,7 +87,7 @@ public class Metrics {
      *
      * @param chart The chart to add.
      */
-    public void addCustomChart(CustomChart chart) {
+    void addCustomChart(CustomChart chart) {
         metricsBase.addCustomChart(chart);
     }
 
@@ -110,18 +108,7 @@ public class Metrics {
     }
 
     private int getPlayerAmount() {
-        try {
-            // Around MC 1.8 the return type was changed from an array to a collection,
-            // This fixes java.lang.NoSuchMethodError:
-            // org.bukkit.Bukkit.getOnlinePlayers()Ljava/util/Collection;
-            Method onlinePlayersMethod = Class.forName("org.bukkit.Server").getMethod("getOnlinePlayers");
-            return onlinePlayersMethod.getReturnType().equals(Collection.class)
-                    ? ((Collection<?>) onlinePlayersMethod.invoke(Bukkit.getServer())).size()
-                    : ((Player[]) onlinePlayersMethod.invoke(Bukkit.getServer())).length;
-        } catch (Exception e) {
-            // Just use the new method if the reflection failed
-            return Bukkit.getOnlinePlayers().size();
-        }
+        return Bukkit.getOnlinePlayers().size();
     }
 
     static class MetricsBase {
@@ -236,18 +223,14 @@ public class Metrics {
                             submitData();
                         }
                     };
-            // Many servers tend to restart at a fixed time at xx:00 which causes an uneven distribution
-            // of requests on the
-            // bStats backend. To circumvent this problem, we introduce some randomness into the initial
-            // and second delay.
-            // WARNING: You must not modify any part of this Metrics class, including the submit delay or
-            // frequency!
+            // Many servers tend to restart at a fixed time at xx:00 which causes an uneven distribution of requests on the
+            // bStats backend. To circumvent this problem, we introduce some randomness into the initial and second delay.
+            // WARNING: You must not modify any part of this Metrics class, including the submit delay or frequency!
             // WARNING: Modifying this code will get your plugin banned on bStats. Just don't do it!
             long initialDelay = (long) (1000 * 60 * (3 + Math.random() * 3));
             long secondDelay = (long) (1000 * 60 * (Math.random() * 30));
             scheduler.schedule(submitTask, initialDelay, TimeUnit.MILLISECONDS);
-            scheduler.scheduleAtFixedRate(
-                    submitTask, initialDelay + secondDelay, 1000 * 60 * 30, TimeUnit.MILLISECONDS);
+            scheduler.scheduleAtFixedRate(submitTask, initialDelay + secondDelay, 1000 * 60 * 30, TimeUnit.MILLISECONDS);
         }
 
         private void submitData() {
@@ -255,11 +238,10 @@ public class Metrics {
             appendPlatformDataConsumer.accept(baseJsonBuilder);
             JsonObjectBuilder serviceJsonBuilder = new JsonObjectBuilder();
             appendServiceDataConsumer.accept(serviceJsonBuilder);
-            JsonObjectBuilder.JsonObject[] chartData =
-                    customCharts.stream()
-                            .map(customChart -> customChart.getRequestJsonObject(errorLogger, logErrors))
-                            .filter(Objects::nonNull)
-                            .toArray(JsonObjectBuilder.JsonObject[]::new);
+            JsonObjectBuilder.JsonObject[] chartData = customCharts.stream()
+                    .map(customChart -> customChart.getRequestJsonObject(errorLogger, logErrors))
+                    .filter(Objects::nonNull)
+                    .toArray(JsonObjectBuilder.JsonObject[]::new);
             serviceJsonBuilder.appendField("id", serviceId);
             serviceJsonBuilder.appendField("customCharts", chartData);
             baseJsonBuilder.appendField("service", serviceJsonBuilder.build());
@@ -319,16 +301,13 @@ public class Metrics {
             // You can use the property to disable the check in your test environment
             if (System.getProperty("bstats.relocatecheck") == null
                     || !System.getProperty("bstats.relocatecheck").equals("false")) {
-                // Maven's Relocate is clever and changes strings, too. So we have to use this little
-                // "trick" ... :D
+                // Maven's Relocate is clever and changes strings, too. So we have to use this little "trick" ... :D
                 String defaultPackage =
                         new String(new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's'});
                 String examplePackage =
                         new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
-                // We want to make sure no one just copy & pastes the example and uses the wrong package
-                // names
-                if (MetricsBase.class.getPackage().getName().startsWith(defaultPackage)
-                        || MetricsBase.class.getPackage().getName().startsWith(examplePackage)) {
+                // We want to make sure no one just copy & pastes the example and uses the wrong package names
+                if (MetricsBase.class.getPackage().getName().startsWith(defaultPackage) || MetricsBase.class.getPackage().getName().startsWith(examplePackage)) {
                     throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
                 }
             }
@@ -472,7 +451,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public AdvancedPie(String chartId, Callable<Map<String, Integer>> callable) {
+        AdvancedPie(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -546,7 +525,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SingleLineChart(String chartId, Callable<Integer> callable) {
+        SingleLineChart(String chartId, Callable<Integer> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -572,7 +551,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SimplePie(String chartId, Callable<String> callable) {
+        SimplePie(String chartId, Callable<String> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -608,7 +587,7 @@ public class Metrics {
             JsonObjectBuilder valuesBuilder = new JsonObjectBuilder();
             Map<String, Map<String, Integer>> map = callable.call();
             if (map == null || map.isEmpty()) {
-                // Null = skip the chart
+                // null = skip the chart
                 return null;
             }
             boolean reallyAllSkipped = true;
