@@ -169,27 +169,30 @@ public class TARDISDynmap {
             // build new map
             new TARDISGetter(plugin).getList(null).forEach(value -> {
                 Location loc = value.getLocation();
-                String world = loc.getWorld().getName();
-                // get location
-                String id = world + "/" + value.getOwner();
-                String label = labelFormat.replace("%name%", value.getOwner());
-                // see if we already have marker
-                Marker marker = markers.remove(id);
-                if (marker == null) {
-                    // not found? make a new one
-                    marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
-                } else {
-                    // else, update position
-                    marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
-                    marker.setLabel(label);
-                    marker.setMarkerIcon(markerIcon);
+                World w = loc.getWorld();
+                if (w != null) {
+                    String world = w.getName();
+                    // get location
+                    String id = world + "/" + value.getOwner();
+                    String label = labelFormat.replace("%name%", value.getOwner());
+                    // see if we already have marker
+                    Marker marker = markers.remove(id);
+                    if (marker == null) {
+                        // not found? make a new one
+                        marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
+                    } else {
+                        // else, update position
+                        marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
+                        marker.setLabel(label);
+                        marker.setMarkerIcon(markerIcon);
+                    }
+                    // build popup
+                    String desc = formatInfoWindow(value);
+                    // set popup
+                    marker.setDescription(desc);
+                    // add to new marker map
+                    newMarkerMap.put(id, marker);
                 }
-                // build popup
-                String desc = formatInfoWindow(value);
-                // set popup
-                marker.setDescription(desc);
-                // add to new marker map
-                newMarkerMap.put(id, marker);
             });
             // review old map - anything left is gone
             markers.values().forEach(GenericMarker::deleteMarker);
@@ -229,6 +232,7 @@ public class TARDISDynmap {
             }
             // prime world list
             if (worldsToDo == null) {
+                // should we only get worlds that are enabled in dynmap?
                 worldsToDo = new ArrayList<>(plugin.getServer().getWorlds());
             }
             while (toDo == null) {
