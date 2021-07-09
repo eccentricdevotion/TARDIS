@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.sql.Connection;
@@ -118,9 +117,8 @@ public class TARDISRoomPersister {
                     // get the player who's tardis this is
                     ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
                     if (rst.fromID(id)) {
-                        Player player = plugin.getServer().getPlayer(rst.getUuid());
                         // resume the room growing
-                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, player);
+                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid());
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                         runnable.setTask(taskID);
                         // resume tracking progress
