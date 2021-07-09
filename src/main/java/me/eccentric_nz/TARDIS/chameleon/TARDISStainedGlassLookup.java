@@ -808,6 +808,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.GRAY_CANDLE, Material.GRAY_STAINED_GLASS);
         stain.put(Material.GREEN_CANDLE, Material.GREEN_STAINED_GLASS);
         stain.put(Material.HANGING_ROOTS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.LAVA_CAULDRON, Material.GRAY_STAINED_GLASS);
         stain.put(Material.LIGHTNING_ROD, Material.ORANGE_STAINED_GLASS);
         stain.put(Material.LIGHT_BLUE_CANDLE, Material.LIGHT_BLUE_STAINED_GLASS);
         stain.put(Material.LIGHT_GRAY_CANDLE, Material.LIGHT_GRAY_STAINED_GLASS);
@@ -826,6 +827,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.POLISHED_DEEPSLATE_SLAB, Material.BLACK_STAINED_GLASS);
         stain.put(Material.POLISHED_DEEPSLATE_STAIRS, Material.BLACK_STAINED_GLASS);
         stain.put(Material.POLISHED_DEEPSLATE_WALL, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.POWDER_SNOW_CAULDRON, Material.GRAY_STAINED_GLASS);
         stain.put(Material.PURPLE_CANDLE, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.RAW_COPPER, Material.ORANGE_STAINED_GLASS);
         stain.put(Material.RAW_GOLD, Material.YELLOW_STAINED_GLASS);
@@ -837,6 +839,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.SPORE_BLOSSOM, Material.PINK_STAINED_GLASS);
         stain.put(Material.TINTED_GLASS, Material.BLACK_STAINED_GLASS);
         stain.put(Material.TUFF, Material.GRAY_STAINED_GLASS);
+        stain.put(Material.WATER_CAULDRON, Material.GRAY_STAINED_GLASS);
         stain.put(Material.WAXED_COPPER_BLOCK, Material.ORANGE_STAINED_GLASS);
         stain.put(Material.WAXED_CUT_COPPER, Material.ORANGE_STAINED_GLASS);
         stain.put(Material.WAXED_CUT_COPPER_SLAB, Material.ORANGE_STAINED_GLASS);

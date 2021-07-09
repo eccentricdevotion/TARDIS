@@ -485,7 +485,12 @@ public class TARDISRoomRunnable implements Runnable {
                 TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block
                 JsonObject v = arr.get(level).getAsJsonArray().get(row).getAsJsonArray().get(col).getAsJsonObject();
-                BlockData data = plugin.getServer().createBlockData(v.get("data").getAsString());
+                String jData = v.get("data").getAsString();
+                // check for pre-1.17 levelled cauldrons
+                if (jData.contains("minecraft:cauldron[level=")) {
+                    jData = jData.replace("cauldron[level=0]", "cauldron").replace("cauldron[level=3]", "water_cauldron[level=3]");
+                }
+                BlockData data = plugin.getServer().createBlockData(jData);
                 Material type = data.getMaterial();
                 // determine 'use_clay' material
                 UseClay use_clay;
