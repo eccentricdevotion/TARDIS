@@ -58,7 +58,6 @@ class TARDISGetter {
             }
             query += " AND " + prefix + "current.world IN (" + sb.substring(0, sb.length() - 1) + ")";
         }
-        plugin.debug("Dynmap query: " + query);
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
