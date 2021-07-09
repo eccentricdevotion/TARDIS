@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.dynmap;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -46,7 +47,18 @@ class TARDISGetter {
                 + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id";
         if (world != null) {
             query += " AND " + prefix + "current.world = '" + world.getName() + "'";
+        } else {
+            // build world list
+            StringBuilder sb = new StringBuilder();
+            // only get worlds that are enabled for time travel, and only regular worlds as dynmap doesn't support custom dimensions yet
+            for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
+                if (!TARDISConstants.isDatapackWorld(planet) && plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
+                    sb.append("'" + planet + "',");
+                }
+            }
+            query += " AND " + prefix + "current.world IN (" + sb.substring(0, sb.length() - 1) + ")";
         }
+        plugin.debug("Dynmap query: " + query);
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

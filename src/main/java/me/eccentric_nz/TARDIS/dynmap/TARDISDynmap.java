@@ -253,7 +253,7 @@ public class TARDISDynmap {
                     // replace with new map
                     markers = newmap;
                     // Schedule next run
-                    long delay = plugin.getConfig().getLong("dynmap.update_period", 200);
+                    long delay = plugin.getConfig().getLong("dynmap.update_period", 30) * 20L;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), delay);
                     return;
                 } else {

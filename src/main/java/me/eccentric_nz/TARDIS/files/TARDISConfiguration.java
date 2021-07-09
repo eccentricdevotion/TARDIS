@@ -154,7 +154,7 @@ public class TARDISConfiguration {
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
-        integerOptions.put("dynmap.update_period", 10);
+        integerOptions.put("dynmap.update_period", 30);
         integerOptions.put("dynmap.updates_per_tick", 10);
         integerOptions.put("growth.ars_limit", 1);
         integerOptions.put("growth.gravity_max_distance", 15);
@@ -284,10 +284,13 @@ public class TARDISConfiguration {
             plugin.getConfig().set("storage.mysql.url", null);
             i++;
         }
-        // check / transfer dynmap setting
+        // check / transfer dynmap settings
         if (config.contains("preferences.enable_dynmap")) {
             plugin.getConfig().set("dynmap.enabled", config.getBoolean("preferences.enable_dynmap"));
             plugin.getConfig().set("preferences.enable_dynmap", null);
+        }
+        if (config.contains("dynmap.update_period") && config.getInt("dynmap.update_period") == 10) {
+            plugin.getConfig().set("dynmap.update_period", 30);
         }
         // remove handles
         if (config.contains("handles")) {

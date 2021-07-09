@@ -104,7 +104,7 @@ preferences:
 # dynmap
 dynmap:
   enabled: true
-  update_period: 10
+  update_period: 30
   updates_per_tick: 10
 # desktop theme
 desktop:
