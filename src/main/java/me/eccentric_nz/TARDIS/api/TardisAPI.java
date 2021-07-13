@@ -505,4 +505,20 @@ public interface TardisAPI {
      * @throws TARDISException if the wall or floor type is not valid
      */
     String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException;
+
+    /**
+     * Add a recipe to TARDIS' shaped recipe list
+     *
+     * @param key    the name of the recipe result
+     * @param recipe the recipe to add
+     */
+    void addShapedRecipe(String key, ShapedRecipe recipe);
+
+    /**
+     * Add a recipe to TARDIS' shapeless recipe list
+     *
+     * @param key    the name of the recipe result
+     * @param recipe the recipe to add
+     */
+    void addShapelessRecipe(String key, ShapelessRecipe recipe);
 }

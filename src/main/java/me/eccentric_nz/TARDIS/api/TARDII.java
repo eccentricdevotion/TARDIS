@@ -798,4 +798,14 @@ public class TARDII implements TardisAPI {
             return "";
         }
     }
+
+    @Override
+    public void addShapedRecipe(String key, ShapedRecipe recipe) {
+        TARDIS.plugin.getFigura().getShapedRecipes().put(key, recipe);
+    }
+
+    @Override
+    public void addShapelessRecipe(String key, ShapelessRecipe recipe) {
+        TARDIS.plugin.getIncomposita().getShapelessRecipes().put(key, recipe);
+    }
 }
