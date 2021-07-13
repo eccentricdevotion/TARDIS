@@ -242,6 +242,9 @@ public class TARDISGiveCommand implements CommandExecutor {
             ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
         }
+        if (item.equals("vortex-manipulator")) {
+            TARDISMessage.send(sender, "GIVE_VORTEX", player.getName());
+        }
         if (item.equals("invisible")) {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
