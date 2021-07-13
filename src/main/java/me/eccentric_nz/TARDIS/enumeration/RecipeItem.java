@@ -87,6 +87,7 @@ public enum RecipeItem {
     RED_BOW_TIE(10000037, RecipeCategory.ACCESSORIES),
     BLACK_BOW_TIE(10000038),
     THREE_D_GLASSES(10000039, RecipeCategory.ACCESSORIES),
+    VORTEX_MANIPULATOR(10000002, RecipeCategory.ACCESSORIES),
     // unshaped recipes start here
     BIOME_STORAGE_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BOWL_OF_CUSTARD(10000001, RecipeCategory.FOOD),
