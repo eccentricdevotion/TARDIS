@@ -55,27 +55,29 @@ public class TARDISTeleportListener implements Listener {
         if (causes.contains(cause)) {
             String world_from = event.getFrom().getWorld().getName();
             String world_to = event.getTo().getWorld().getName();
-            Player p = event.getPlayer();
-            String uuid = p.getUniqueId().toString();
+            Player player = event.getPlayer();
+            String uuid = player.getUniqueId().toString();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 plugin.getQueryFactory().doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    TARDISMessage.send(p, "OCCUPY_AUTO");
+                    TARDISMessage.send(player, "OCCUPY_AUTO");
                 }
                 // stop tracking telepaths
-                plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
+                plugin.getTrackerKeeper().getTelepaths().remove(player.getUniqueId());
+                // reset player time
+                player.resetPlayerTime();
             } else if (world_to.contains("TARDIS") && !cause.equals(TeleportCause.PLUGIN)) {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world")) {
-                    if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
+                    if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                         if (!rsid.fromUUID(uuid)) {
                             return;
                         }
                     } else {
-                        int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
+                        int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
                         if (!rsid.fromTIPSSlot(slot)) {
                             return;
                         }

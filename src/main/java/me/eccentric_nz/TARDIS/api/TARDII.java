@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -596,7 +597,7 @@ public class TARDII implements TardisAPI {
                 if (rst.resultSet()) {
                     Player player = Bukkit.getServer().getPlayer(rst.getTardis().getUuid());
                     // travel
-                    TARDIS.plugin.getTrackerKeeper().getHasDestination().put(id, TARDIS.plugin.getArtronConfig().getInt("random"));
+                    TARDIS.plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(TARDIS.plugin.getArtronConfig().getInt("random"), TravelType.RANDOM));
                     new TARDISTakeoff(TARDIS.plugin).run(id, player, rst.getTardis().getBeacon());
                     return true;
                 } else {

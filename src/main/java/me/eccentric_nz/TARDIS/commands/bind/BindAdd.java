@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
@@ -32,15 +33,15 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class BindAdd {
+class BindAdd {
 
     private final TARDIS plugin;
 
-    public BindAdd(TARDIS plugin) {
+    BindAdd(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setClick(Bind bind, Player player, int id, String[] args) {
+    boolean setClick(Bind bind, Player player, int id, String[] args) {
         String which = (args.length > 2) ? args[2] : "";
         int bind_id = 0;
         HashMap<String, Object> set = new HashMap<>();
@@ -74,7 +75,7 @@ public class BindAdd {
                 // get player online or offline
                 Player p = plugin.getServer().getPlayer(which);
                 if (p == null) {
-                    OfflinePlayer offp = plugin.getServer().getOfflinePlayer(which);
+                    OfflinePlayer offp = TARDISStaticUtils.getOfflinePlayer(which);
                     if (offp == null) {
                         TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
                         return true;

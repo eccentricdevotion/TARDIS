@@ -5,7 +5,7 @@ name: TARDIS
 load: POSTWORLD
 loadbefore: [ ItemSlotMachine ]
 depend: [ TARDISChunkGenerator ]
-softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
+softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -835,7 +835,7 @@ commands:
   tardisdev:
     aliases: tdev
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
-    usage: /<command> [add_regions|advancements|tree|list] [preset_perms|perms|recipes|blueprints]
+    usage: /<command> [add_regions|advancements|tree|list|stats] [preset_perms|perms|recipes|blueprints]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgive:

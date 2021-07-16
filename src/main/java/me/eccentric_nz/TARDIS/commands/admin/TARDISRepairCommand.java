@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -42,7 +43,7 @@ class TARDISRepairCommand {
             return true;
         }
         // Look up this player's UUID
-        OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
+        OfflinePlayer op = TARDISStaticUtils.getOfflinePlayer(args[1]);
         if (op == null) {
             TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
             return true;

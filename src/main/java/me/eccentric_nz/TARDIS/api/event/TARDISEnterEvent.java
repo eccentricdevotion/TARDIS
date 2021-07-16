@@ -30,6 +30,12 @@ public final class TARDISEnterEvent extends Event {
     private final Player player;
     private final World from;
 
+    /**
+     * A TARDIS Entry event.
+     *
+     * @param player the player who is entering the TARDIS.
+     * @param from   the world the player is entering from
+     */
     public TARDISEnterEvent(Player player, World from) {
         this.player = player;
         this.from = from;
@@ -39,10 +45,20 @@ public final class TARDISEnterEvent extends Event {
         return HANDLERS;
     }
 
+    /**
+     * Gets the player involved in the event
+     *
+     * @return the player who is entering the TARDIS
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets the world involved in the event
+     *
+     * @return the world the player is entering from
+     */
     public World getFrom() {
         return from;
     }

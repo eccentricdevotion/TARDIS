@@ -30,6 +30,13 @@ public class TARDISArtronEvent extends Event {
     private final int tardis_id;
     private int level = 0;
 
+    /**
+     * A TARDIS Artron energy event.
+     *
+     * @param player    the player who is using the TARDIS
+     * @param amount    the amount of artron energy
+     * @param tardis_id the id of the TARDIS
+     */
     public TARDISArtronEvent(Player player, int amount, int tardis_id) {
         this.player = player;
         this.amount = amount;

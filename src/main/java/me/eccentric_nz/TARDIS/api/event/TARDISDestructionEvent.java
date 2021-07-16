@@ -48,6 +48,11 @@ public final class TARDISDestructionEvent extends Event {
         return HANDLERS;
     }
 
+    /**
+     * Gets the player involved in the event
+     *
+     * @return the player who is destroying the TARDIS
+     */
     public Player getPlayer() {
         return player;
     }

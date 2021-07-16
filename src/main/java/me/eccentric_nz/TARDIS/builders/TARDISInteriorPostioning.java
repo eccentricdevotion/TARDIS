@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -31,27 +31,17 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISInteriorPostioning {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String prefix;
 
     public TARDISInteriorPostioning(TARDIS plugin) {
         this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -91,10 +81,9 @@ public class TARDISInteriorPostioning {
      */
     int getFreeSlot() {
         int limit = plugin.getConfig().getInt("creation.tips_limit");
-        List<Integer> usedSlots = makeUsedSlotList();
         int slot = -1;
         for (int i = 0; i < limit; i++) {
-            if (!usedSlots.contains(i)) {
+            if (!TARDISBuilderInstanceKeeper.getTipsSlots().contains(i)) {
                 slot = i;
                 break;
             }
@@ -157,42 +146,6 @@ public class TARDISInteriorPostioning {
         return data;
     }
 
-    /**
-     * Make a list of the currently used TIPS slots.
-     *
-     * @return a list of slot numbers
-     */
-    private List<Integer> makeUsedSlotList() {
-        List<Integer> usedSlots = new ArrayList<>();
-        Statement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT tips FROM " + prefix + "tardis";
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int s = rs.getInt("tips");
-                    usedSlots.add(s);
-                }
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
-            }
-        }
-        return usedSlots;
-    }
-
     // won't remove manually grown rooms...
     public void reclaimChunks(World w, int id) {
         // get ARS data
@@ -232,7 +185,7 @@ public class TARDISInteriorPostioning {
                             }
                             // remove dropped items
                             for (Entity e : tipsChunk.getEntities()) {
-                                e.remove();
+                                //e.remove();
                             }
                         }
                     }

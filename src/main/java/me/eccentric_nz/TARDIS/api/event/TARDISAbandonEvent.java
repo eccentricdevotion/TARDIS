@@ -24,6 +24,13 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISAbandonEvent extends TARDISLocationEvent {
 
+    /**
+     * A TARDIS abandon event.
+     *
+     * @param player    the player who is abandoningg their TARDIS.
+     * @param tardis_id the id of the abandoned TARDIS
+     * @param location  the location of the abandoned TARDIS
+     */
     public TARDISAbandonEvent(Player player, int tardis_id, Location location) {
         super(player, tardis_id, location);
     }

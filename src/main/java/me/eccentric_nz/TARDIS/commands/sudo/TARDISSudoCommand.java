@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -75,7 +76,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                     return true;
                 }
                 // must be a player name
-                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[0]);
+                OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[0]);
                 if (offlinePlayer == null) {
                     TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                     return true;

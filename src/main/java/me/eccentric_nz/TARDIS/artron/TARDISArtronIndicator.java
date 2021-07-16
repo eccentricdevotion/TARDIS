@@ -78,7 +78,7 @@ public class TARDISArtronIndicator {
                     amount_used.setScore(used);
                 } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                     Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
-                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
+                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id).getCost());
                 }
                 current.setScore(current_level);
                 percentage.setScore(percent);

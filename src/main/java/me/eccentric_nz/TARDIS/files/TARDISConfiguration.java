@@ -108,6 +108,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         booleanOptions.put("preferences.no_coords", false);
         booleanOptions.put("preferences.no_creative_condense", false);
+        booleanOptions.put("preferences.no_enchanted_condense", true);
         booleanOptions.put("preferences.notify_update", true);
         booleanOptions.put("preferences.open_door_policy", false);
         booleanOptions.put("preferences.render_entities", false);
@@ -119,7 +120,6 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.strike_lightning", true);
         booleanOptions.put("preferences.use_default_condensables", true);
         booleanOptions.put("preferences.use_worldguard", true);
-        booleanOptions.put("preferences.wake_bees", true);
         booleanOptions.put("preferences.walk_in_tardis", true);
         booleanOptions.put("siege.butcher", false);
         booleanOptions.put("siege.creeper", false);
@@ -225,6 +225,9 @@ public class TARDISConfiguration {
         if (!config.contains("rechargers")) {
             plugin.getConfig().createSection("rechargers");
             i++;
+        }
+        if (config.contains("preferences.wake_bees")) {
+            plugin.getConfig().set("preferences.wake_bees", null);
         }
         if (config.contains("preferences.wand")) {
             plugin.getConfig().set("preferences.wand", null);

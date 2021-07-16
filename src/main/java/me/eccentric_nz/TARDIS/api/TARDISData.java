@@ -45,34 +45,74 @@ public class TARDISData {
         this.occupants = occupants;
     }
 
+    /**
+     * Gets the TARDIS' current location
+     *
+     * @return the location
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Gets the TARDIS console type
+     *
+     * @return the name of the console
+     */
     public String getConsole() {
         return console;
     }
 
+    /**
+     * Gets the TARDIS chamemelon circuit setting
+     *
+     * @return the name of the Chameleon preset
+     */
     public String getChameleon() {
         return chameleon;
     }
 
+    /**
+     * Gets the state of the TARDIS door
+     *
+     * @return "Open" or "Closed"
+     */
     public String getDoor() {
         return door;
     }
 
+    /**
+     * Gets whether the TARDIS is powered on
+     *
+     * @return "Yes" or "No"
+     */
     public String getPowered() {
         return powered;
     }
 
+    /**
+     * Gets whether the TARDIS is in Siege mode
+     *
+     * @return "Yes" or "No"
+     */
     public String getSiege() {
         return siege;
     }
 
+    /**
+     * Gets whether the TARDIS is abandoned
+     *
+     * @return "Yes" or "No"
+     */
     public String getAbandoned() {
         return abandoned;
     }
 
+    /**
+     * Gets a list of the players in the TARDIS
+     *
+     * @return a list of playuer names
+     */
     public List<String> getOccupants() {
         return occupants;
     }

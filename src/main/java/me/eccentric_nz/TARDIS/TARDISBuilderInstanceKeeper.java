@@ -38,6 +38,7 @@ public class TARDISBuilderInstanceKeeper {
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
     private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
     private static final Set<Material> PRECIOUS = new HashSet<>();
+    private static final Set<Integer> TIPS_SLOTS = new HashSet<>();
 
     static {
         BLOCK_CONVERSION.put("ACACIA_LEAVES", "ACACIA_SAPLING");
@@ -123,6 +124,15 @@ public class TARDISBuilderInstanceKeeper {
      */
     public static Set<Material> getPrecious() {
         return PRECIOUS;
+    }
+
+    /**
+     * Gets a list of used TIPS slots
+     *
+     * @return a list of slots
+     */
+    public static Set<Integer> getTipsSlots() {
+        return TIPS_SLOTS;
     }
 
     /**

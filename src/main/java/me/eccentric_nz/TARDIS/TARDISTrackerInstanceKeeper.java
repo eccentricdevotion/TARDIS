@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -51,7 +52,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> damage = new HashMap<>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
-    private final HashMap<Integer, Integer> hasDestination = new HashMap<>();
+    private final HashMap<Integer, TravelCostAndType> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
     private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
@@ -61,7 +62,6 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
-    private final HashMap<UUID, Block> exterminate = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
@@ -174,7 +174,12 @@ public class TARDISTrackerInstanceKeeper {
         return destinationVortex;
     }
 
-    public HashMap<Integer, Integer> getHasDestination() {
+    /**
+     * Track whether a TARDIS has a travel destination
+     *
+     * @return a Map of TARDIS ids and the Artron cost of the travel
+     */
+    public HashMap<Integer, TravelCostAndType> getHasDestination() {
         return hasDestination;
     }
 
@@ -214,10 +219,11 @@ public class TARDISTrackerInstanceKeeper {
         return bindRemoval;
     }
 
-    public HashMap<UUID, Block> getExterminate() {
-        return exterminate;
-    }
-
+    /**
+     * Tracks players whose TARDIS is invisible and the config option <code>allow.3d_doors</code> is true
+     *
+     * @return a Map of player UUIDs and the door block of their TARDIS
+     */
     public HashMap<UUID, Block> getInvisibleDoors() {
         return invisibleDoors;
     }

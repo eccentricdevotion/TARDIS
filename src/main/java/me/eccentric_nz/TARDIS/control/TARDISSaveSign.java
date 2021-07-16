@@ -19,8 +19,10 @@ package me.eccentric_nz.TARDIS.control;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -71,7 +73,7 @@ class TARDISSaveSign {
                     HashMap<String, Object> where_next = new HashMap<>();
                     where_next.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.SAVE));
                 }
             } else {
                 TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);

@@ -140,7 +140,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 whereo.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, whereo, "", false, 2);
                 if (rs.resultSet()) {
-                    plugin.getWorldGuardUtils().removeMemberFromRegion(l.getWorld(), rs.getTardis().getOwner(), p.getName());
+                    plugin.getWorldGuardUtils().removeMemberFromRegion(l.getWorld(), rs.getTardis().getOwner(), p.getUniqueId());
                 }
             }
         }
