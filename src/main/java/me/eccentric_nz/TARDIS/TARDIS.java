@@ -180,7 +180,6 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
-//        versions.put("dynmap", "3.0.1");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.14");
         versions.put("MultiWorld", "5.2");
