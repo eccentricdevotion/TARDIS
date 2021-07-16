@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
+import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
@@ -37,6 +38,7 @@ import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.converters.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
@@ -52,7 +54,6 @@ import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISBeeWaker;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
@@ -393,6 +394,7 @@ public class TARDIS extends JavaPlugin {
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setSeeds(getSeeds());
+            new ResultSetTIPS(this).fillUsedSlotList();
             new TARDISConsoleLoader(this).addSchematics();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
@@ -419,14 +421,7 @@ public class TARDIS extends JavaPlugin {
             loadWorldGuard();
             loadPluginRespect();
             startZeroHealing();
-            startBeeTicks();
             startSiegeTicks();
-            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-                TARDISSpace alwaysNight = new TARDISSpace(this);
-                if (getConfig().getBoolean("creation.keep_night")) {
-                    alwaysNight.keepNight();
-                }
-            }
             if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("preferences.enable_dynmap")) {
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
@@ -547,6 +542,8 @@ public class TARDIS extends JavaPlugin {
             if (conversions > 0) {
                 saveConfig();
             }
+            // start bStats metrics
+            new TARDISStats(this).startMetrics();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -761,15 +758,6 @@ public class TARDIS extends JavaPlugin {
     private void startZeroHealing() {
         if (getConfig().getBoolean("allow.zero_room")) {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
-        }
-    }
-
-    /**
-     * Starts a repeating task that wakes bees in the Apiary room.
-     */
-    private void startBeeTicks() {
-        if (getConfig().getBoolean("preferences.wake_bees")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISBeeWaker(this), 40, 500);
         }
     }
 

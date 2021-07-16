@@ -282,12 +282,11 @@ public class QueryFactory {
     /**
      * Updates data in an SQLite database table. This method executes the SQL in a separate thread.
      *
-     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to update.
-     * @param biome the biome value to update
-     * @param id    the tardis_id
+     * @param data a HashMap&lt;String, Object&gt; of table fields and values to update.
+     * @param id   the tardis_id
      */
-    public void updateLocations(HashMap<String, Object> data, String biome, int id) {
-        TARDISSQLUpdateLocations locate = new TARDISSQLUpdateLocations(plugin, data, biome, id);
+    public void updateLocations(HashMap<String, Object> data, int id) {
+        TARDISSQLUpdateLocations locate = new TARDISSQLUpdateLocations(plugin, data, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 

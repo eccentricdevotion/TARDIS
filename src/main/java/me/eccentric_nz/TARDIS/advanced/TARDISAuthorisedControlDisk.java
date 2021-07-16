@@ -25,12 +25,14 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -80,6 +82,7 @@ public class TARDISAuthorisedControlDisk {
         Location location = null;
         COMPASS direction = COMPASS.EAST;
         boolean isPlayerLocation = false;
+        TravelType travelType = TravelType.SAVE;
         if (lore.size() > 3) {
             // has a stored save
             String save = lore.get(3);
@@ -91,6 +94,7 @@ public class TARDISAuthorisedControlDisk {
                 if (rsh.resultSet()) {
                     location = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                     direction = rsh.getDirection();
+                    travelType = TravelType.HOME;
                 } else {
                     return "Could not find the TARDIS's home location.";
                 }
@@ -111,6 +115,7 @@ public class TARDISAuthorisedControlDisk {
             // get player location
             location = timelord.getLocation();
             isPlayerLocation = true;
+            travelType = TravelType.PLAYER;
         }
         if (location != null) {
             if (isPlayerLocation) {
@@ -132,7 +137,7 @@ public class TARDISAuthorisedControlDisk {
             setn.put("direction", direction.toString());
             setn.put("submarine", 0);
             plugin.getQueryFactory().doUpdate("next", setn, wheren);
-            plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+            plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("type", 0);

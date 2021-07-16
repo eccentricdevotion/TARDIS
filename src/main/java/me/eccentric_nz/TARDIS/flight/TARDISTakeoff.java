@@ -18,9 +18,11 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -67,10 +69,12 @@ public class TARDISTakeoff {
         // dematerialise
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).getTravelType(), id));
             // materialise
             new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         } else {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.VORTEX, id));
         }
         if (bar) {
             new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);

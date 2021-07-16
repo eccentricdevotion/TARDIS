@@ -23,7 +23,14 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public final class TARDISCreationEvent extends TARDISLocationEvent {
-
+    
+    /**
+     * A TARDIS creation event.
+     *
+     * @param player    the player who created the TARDIS
+     * @param tardis_id the id of the TARDIS
+     * @param location  the location the TARDIS was created
+     */
     public TARDISCreationEvent(Player player, int tardis_id, Location location) {
         super(player, tardis_id, location);
     }

@@ -17,9 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -75,6 +77,7 @@ class TARDISRescueCommand {
                         if (rd.success()) {
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                                 new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
+                                plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.RESCUE, rd.getTardis_id()));
                             } else {
                                 TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
                             }

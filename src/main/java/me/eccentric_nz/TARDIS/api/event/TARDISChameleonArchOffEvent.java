@@ -28,6 +28,11 @@ public final class TARDISChameleonArchOffEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
 
+    /**
+     * A TARDIS Chameleon Arch event.
+     *
+     * @param player the player who is using the Chameleon Arch
+     */
     public TARDISChameleonArchOffEvent(Player player) {
         this.player = player;
     }

@@ -22,11 +22,12 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -73,8 +74,9 @@ class TARDISRemoveCompanionCommand {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
-                    UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                    if (oluuid != null) {
+                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
+                    if (offlinePlayer != null) {
+                        UUID oluuid = offlinePlayer.getUniqueId();
                         String[] split = comps.split(":");
                         StringBuilder sb = new StringBuilder();
                         if (split.length > 1) {
@@ -91,34 +93,36 @@ class TARDISRemoveCompanionCommand {
                             }
                         }
                         message = "COMPANIONS_REMOVE_ONE";
+                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            World w = TARDISStaticLocationGetters.getWorld(data);
+                            if (w != null) {
+                                plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, oluuid);
+                            }
+                        }
+                        TARDISMessage.send(player, message, args[1]);
                     } else {
                         TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                }
-                // if using WorldGuard, remove them from the region membership
-                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = TARDISStaticLocationGetters.getWorld(data);
-                    if (w != null) {
-                        if (args[1].equals("all")) {
-                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner);
-                            // set entry and exit flags to deny
-                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
-                        } else {
-                            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
+                } else {
+                    // if using WorldGuard, remove them from the region membership
+                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                        World w = TARDISStaticLocationGetters.getWorld(data);
+                        if (w != null) {
+                            if (args[1].equals("all")) {
+                                plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner, player.getUniqueId());
+                                // set entry and exit flags to deny
+                                plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
+                            }
                         }
                     }
+                    TARDISMessage.send(player, message);
                 }
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
                 tid.put("tardis_id", id);
                 set.put("companions", newList);
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                if (!args[1].equals("all")) {
-                    TARDISMessage.send(player, message, args[1]);
-                } else {
-                    TARDISMessage.send(player, message);
-                }
             }
             return true;
         } else {

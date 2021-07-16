@@ -25,7 +25,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -92,8 +94,9 @@ class TARDISAddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                    if (oluuid != null) {
+                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
+                    if (offlinePlayer != null) {
+                        UUID oluuid = offlinePlayer.getUniqueId();
                         tid.put("tardis_id", id);
                         if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
                             // add to the list
@@ -119,7 +122,7 @@ class TARDISAddCompanionCommand {
                     if (w != null) {
                         if (addAll) {
                             // remove all members
-                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName());
+                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName(), player.getUniqueId());
                             // set entry and exit flags to allow
                             plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), true);
                         } else {

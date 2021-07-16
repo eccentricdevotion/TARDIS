@@ -260,6 +260,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("transmat_id"), rs.getInt("tardis_id"), rs.getString("name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw")) + end;
                                         sb.append(str);
                                         break;
+                                    case travel_stats:
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("travel_stats_id"), rs.getString("travel_type"), rs.getInt("tardis_id"), rs.getString("uuid")) + end;
+                                        sb.append(str);
+                                        break;
                                     case traveled_to:
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("environment")) + end;
                                         sb.append(str);
