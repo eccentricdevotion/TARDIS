@@ -11,10 +11,10 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
-        <repository>
-            <id>Bromley Massive</id>
-            <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
-        </repository>
+        <!--        <repository>-->
+        <!--            <id>Bromley Massive</id>-->
+        <!--            <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>-->
+        <!--        </repository>-->
         <repository>
             <id>Spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
