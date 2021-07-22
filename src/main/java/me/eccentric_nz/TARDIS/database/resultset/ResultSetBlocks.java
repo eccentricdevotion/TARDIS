@@ -100,6 +100,10 @@ public class ResultSetBlocks {
                     if (rs.wasNull() || bd.equals("0")) {
                         bd = "minecraft:air";
                     }
+                    // deal with pre-1.17 grass_path database records
+                    if (bd.contains("grass_path")) {
+                        bd = "minecraft:dirt_path";
+                    }
                     replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), TARDISStaticLocationGetters.getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
                     if (multiple) {
                         data.add(replacedBlock);
