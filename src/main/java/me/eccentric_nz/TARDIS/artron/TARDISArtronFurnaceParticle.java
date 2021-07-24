@@ -20,9 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Furnace;
-import org.bukkit.inventory.Inventory;
 
 public class TARDISArtronFurnaceParticle {
 
@@ -36,36 +35,24 @@ public class TARDISArtronFurnaceParticle {
 
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getServer().getOnlinePlayers().forEach((player) -> {
             Location loc = player.getLocation();
-            loc.subtract(10.0d, 10.0d, 10.0d);
-            for (double y = 0.0d; y < 20.0d; y += 1.0d) {
-                for (double x = 0.0d; x < 20.0d; x += 1.0d) {
-                    for (double z = 0.0d; z < 20.0d; z += 1.0d) {
-                        loc.add(x, y, z);
-                        if (isArtronFurnace(loc.getBlock())) {
-                            player.spawnParticle(Particle.WATER_SPLASH, loc.getBlock().getLocation().add(0.5d, 1.0d, 0.5d), 10);
+            int sx = loc.getBlockX() - 8;
+            int sy = loc.getBlockY() - 4;
+            int sz = loc.getBlockZ() - 8;
+            World world = loc.getWorld();
+            for (int y = 0; y < 8; y++) {
+                for (int x = 0; x < 16; x++) {
+                    for (int z = 0; z < 16; z++) {
+                        Block block = world.getBlockAt(sx + x, sy + y, sz + z);
+                        if (isArtronFurnace(block)) {
+                            player.spawnParticle(Particle.WATER_SPLASH, block.getLocation().add(0.5d, 1.0d, 0.5d), 10);
                         }
-                        loc.subtract(x, y, z);
                     }
                 }
             }
-        }), 60L, 10L);
+        }), 60L, 30L);
     }
 
     private boolean isArtronFurnace(Block b) {
-        try {
-            if (b == null || !b.getType().equals(Material.FURNACE)) {
-                return false;
-            }
-            Furnace furnace = (Furnace) b.getState();
-            if (furnace != null) {
-                Inventory inv = furnace.getInventory();
-                if (inv != null) {
-                    return (plugin.getTardisHelper().isArtronFurnace(b));
-                }
-            }
-        } catch (NullPointerException e) {
-            return false;
-        }
-        return false;
+        return b != null && b.getType().equals(Material.FURNACE) && plugin.getTardisHelper().isArtronFurnace(b);
     }
 }
