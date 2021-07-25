@@ -77,58 +77,60 @@ public class SuperFertisliserListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onSuperFertilise(BlockFertilizeEvent event) {
         Player player = event.getPlayer();
-        ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Super Fertiliser") && is.getItemMeta().hasCustomModelData()) {
-            event.setCancelled(true);
-            Block block = event.getBlock();
-            boolean removeItem = false;
-            if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters(player, Flag.getNoMessageFlags()))) {
-                switch (block.getType()) {
-                    case PUMPKIN_STEM:
-                    case MELON_STEM:
-                    case CARROTS:
-                    case WHEAT:
-                    case POTATOES:
-                    case BEETROOTS:
-                    case SWEET_BERRY_BUSH:
-                        Ageable ageable = (Ageable) block.getBlockData();
-                        ageable.setAge(ageable.getMaximumAge());
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(ageable), 3L);
-                        removeItem = true;
-                        break;
-                    case BAMBOO_SAPLING:
-                        Bamboo bamboo = (Bamboo) Material.BAMBOO.createBlockData();
-                        bamboo.setAge(1);
-                        bamboo.setStage(1);
-                        block.setBlockData(bamboo);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Block last = block;
-                            for (int i = 1; i < 8; i++) {
-                                Block b = block.getRelative(BlockFace.UP, i);
-                                last = b;
-                                if (b.getType().isAir()) {
-                                    b.setBlockData(bamboo);
-                                } else {
-                                    break;
+        if (player != null) {
+            ItemStack is = player.getInventory().getItemInMainHand();
+            if (is != null && is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Super Fertiliser") && is.getItemMeta().hasCustomModelData()) {
+                event.setCancelled(true);
+                Block block = event.getBlock();
+                boolean removeItem = false;
+                if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters(player, Flag.getNoMessageFlags()))) {
+                    switch (block.getType()) {
+                        case PUMPKIN_STEM:
+                        case MELON_STEM:
+                        case CARROTS:
+                        case WHEAT:
+                        case POTATOES:
+                        case BEETROOTS:
+                        case SWEET_BERRY_BUSH:
+                            Ageable ageable = (Ageable) block.getBlockData();
+                            ageable.setAge(ageable.getMaximumAge());
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(ageable), 3L);
+                            removeItem = true;
+                            break;
+                        case BAMBOO_SAPLING:
+                            Bamboo bamboo = (Bamboo) Material.BAMBOO.createBlockData();
+                            bamboo.setAge(1);
+                            bamboo.setStage(1);
+                            block.setBlockData(bamboo);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                Block last = block;
+                                for (int i = 1; i < 8; i++) {
+                                    Block b = block.getRelative(BlockFace.UP, i);
+                                    last = b;
+                                    if (b.getType().isAir()) {
+                                        b.setBlockData(bamboo);
+                                    } else {
+                                        break;
+                                    }
                                 }
-                            }
-                            bamboo.setLeaves(Bamboo.Leaves.LARGE);
-                            last.setBlockData(bamboo);
-                        }, 3L);
-                        removeItem = true;
-                        break;
-                    default:
-                        break;
+                                bamboo.setLeaves(Bamboo.Leaves.LARGE);
+                                last.setBlockData(bamboo);
+                            }, 3L);
+                            removeItem = true;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            if (removeItem && !player.getGameMode().equals(GameMode.CREATIVE)) {
-                int amount = is.getAmount() - 1;
-                if (amount > 0) {
-                    player.getInventory().getItemInMainHand().setAmount(amount);
-                } else {
-                    player.getInventory().setItemInMainHand(null);
+                if (removeItem && !player.getGameMode().equals(GameMode.CREATIVE)) {
+                    int amount = is.getAmount() - 1;
+                    if (amount > 0) {
+                        player.getInventory().getItemInMainHand().setAmount(amount);
+                    } else {
+                        player.getInventory().setItemInMainHand(null);
+                    }
+                    player.updateInventory();
                 }
-                player.updateInventory();
             }
         }
     }
