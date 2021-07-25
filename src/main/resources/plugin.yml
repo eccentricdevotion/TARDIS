@@ -124,6 +124,7 @@ permissions:
       tardis.preset.police_box_green: true
       tardis.preset.police_box_red: true
       tardis.preset.police_box_black: true
+      tardis.preset.weeping_angel: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -191,6 +192,12 @@ permissions:
   tardis.bigger:
     description: Allow players to build the 'bigger' TARDIS.
     default: op
+  tardis.cave:
+    description: Allow players to build the Lush Cave TARDIS.
+    default: op
+  tardis.copper:
+    description: Allow players to build the Eleventh Doctor's copper TARDIS.
+    default: op
   tardis.coral:
     description: Allow players to build the Tenth Doctor's coral TARDIS.
     default: op
@@ -238,6 +245,9 @@ permissions:
     default: op
   tardis.war:
     description: Allow players to build the 'War Doctor's' TARDIS.
+    default: op
+  tardis.weathered:
+    description: Allow players to build the 'Weathered Copper' TARDIS.
     default: op
   tardis.custom:
     description: Allow players to build the server's 'custom' TARDIS.
@@ -293,6 +303,7 @@ permissions:
       tardis.room.empty: true
       tardis.room.farm: true
       tardis.room.gravity: true
+      tardis.room.geode: true
       tardis.room.greenhouse: true
       tardis.room.harmony: true
       tardis.room.hutch: true
@@ -300,7 +311,9 @@ permissions:
       tardis.room.kitchen: true
       tardis.room.lazarus: true
       tardis.room.library: true
+      tardis.room.maze: true
       tardis.room.mushroom: true
+      tardis.room.nether: true
       tardis.room.passage: true
       tardis.room.pool: true
       tardis.room.rail: true

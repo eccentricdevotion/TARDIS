@@ -20,11 +20,15 @@ public enum BlueprintConsole {
 
     ARS("tardis.ars"),
     BIGGER("tardis.bigger"),
+    CAVE("tardis.cave"),
+    COPPER("tardis.copper"),
     CORAL("tardis.coral"),
     CUSTOM("tardis.custom"),
+    DELTA("tardis.delta"),
     DELUXE("tardis.deluxe"),
     ELEVENTH("tardis.eleventh"),
     ENDER("tardis.ender"),
+    FACTORY("tardis.factory"),
     LEGACY_BIGGER("tardis.legacy_bigger"),
     LEGACY_BUDGET("tardis.legacy_budget"),
     LEGACY_DELUXE("tardis.legacy_deluxe"),
@@ -36,9 +40,11 @@ public enum BlueprintConsole {
     REDSTONE("tardis.redstone"),
     ROTOR("tardis.rotor"),
     STEAMPUNK("tardis.steampunk"),
+    THIRTEENTH("tardis.twelfth"),
     TOM("tardis.tom"),
     TWELFTH("tardis.twelfth"),
-    WAR("tardis.war");
+    WAR("tardis.war"),
+    WEATHERED("tardis.weathered");
 
     private final String permission;
 

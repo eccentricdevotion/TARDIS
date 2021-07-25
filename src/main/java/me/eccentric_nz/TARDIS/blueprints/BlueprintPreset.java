@@ -78,13 +78,10 @@ public enum BlueprintPreset {
     TOPSYTURVEY("tardis.preset.topsyturvey"),
     TORCH("tardis.preset.torch"),
     VILLAGE("tardis.preset.village"),
+    WEEPING_ANGEL("tardis.preset.weeping_angel"),
     WELL("tardis.preset.well"),
     WINDMILL("tardis.preset.windmill"),
-    YELLOW("tardis.preset.yellow")
-
-//    REBUILD("tardis.rebuild"),
-
-    ;
+    YELLOW("tardis.preset.yellow");
 
     private final String permission;
 
