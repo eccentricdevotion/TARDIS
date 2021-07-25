@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 import java.sql.Connection;
@@ -42,8 +42,6 @@ public class ResultSetDoorBlocks {
     private final String prefix;
     private Block innerBlock;
     private Block outerBlock;
-    private COMPASS innerDirection;
-    private COMPASS outerDirection;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -75,12 +73,11 @@ public class ResultSetDoorBlocks {
                 while (rs.next()) {
                     // get block
                     String door = rs.getString("door_location");
+                    Location doorLocation = TARDISStaticLocationGetters.getLocationFromDB(door);
                     if (rs.getInt("door_type") == 0) {
-                        outerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
-                        outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        outerBlock = (doorLocation == null) ? null : doorLocation.getBlock();
                     } else {
-                        innerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
-                        innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        innerBlock = (doorLocation == null) ? null : doorLocation.getBlock();
                     }
                 }
             } else {
@@ -109,13 +106,5 @@ public class ResultSetDoorBlocks {
 
     public Block getOuterBlock() {
         return outerBlock;
-    }
-
-    public COMPASS getInnerDirection() {
-        return innerDirection;
-    }
-
-    public COMPASS getOuterDirection() {
-        return outerDirection;
     }
 }
