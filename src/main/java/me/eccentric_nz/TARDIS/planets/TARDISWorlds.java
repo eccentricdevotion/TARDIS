@@ -43,6 +43,9 @@ public class TARDISWorlds {
             String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
+                if (g.equals("TARDISChunkGenerator")) {
+                    worldCreator.biomeProvider(TARDIS.plugin.getTardisHelper().getBiomeProvider());
+                }
             }
             boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
             if (hardcore) {
