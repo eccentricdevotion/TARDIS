@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>4.7.5</version>
+    <version>4.7.6</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -221,7 +221,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>4.7.5</version>
+            <version>4.7.6</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -511,7 +511,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>20.0</version>
+            <version>20.1</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
