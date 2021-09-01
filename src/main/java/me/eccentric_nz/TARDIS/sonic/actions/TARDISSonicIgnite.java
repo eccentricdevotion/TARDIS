@@ -30,8 +30,7 @@ public class TARDISSonicIgnite {
 
     public static void ignite(TARDIS plugin, Block b, Player p) {
         if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
-            if (b.getType().equals(Material.CAMPFIRE)) {
-                Lightable lightable = (Lightable) b.getBlockData();
+            if (b.getBlockData() instanceof Lightable lightable) {
                 if (!lightable.isLit()) {
                     lightable.setLit(true);
                     b.setBlockData(lightable);
