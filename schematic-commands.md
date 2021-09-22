@@ -13,7 +13,7 @@ As of version 3.0-beta-1, TARDIS now uses its own JSON schematic format. To crea
 
 #### Saving
 
-In order to use the `save` argument, you must first define the schematic region start and end points with the TARDIS schematic wand (`/tardisgive [player] wand 1`).
+In order to use the `save` argument, you must first define the schematic region start and end points with the TARDIS schematic wand (`/tardisgive [player] schematic_wand 1`).
 
     /tardisschematic save custom
 
@@ -29,5 +29,7 @@ Once loaded the schematic can be pasted back into the world with the `paste` arg
 
     /tardisschematic paste
 
-**Note:** While it is posiible to paste schematics, it is still recommended to use a plugin such as WorldEdit to do this sort of work.
+Pasting should be relatively lag free, as the number of blocks being placed per tick is restricted. A progress bar will appear to give you an indication of how long the schematic will take to process.
+
+**Note:** While it is possible to paste schematics, it is still recommended to use a plugin such as WorldEdit to do this sort of work.
 
