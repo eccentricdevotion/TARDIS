@@ -225,203 +225,147 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         // undisguise first
                         twaOff(player);
                         if (twaMonsters.contains(disguise)) {
-                            if (disguise.equals("WEEPING ANGEL")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("CYBERMAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise CYBERMAN on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("DALEK")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise DALEK on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("EMPTY CHILD")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise EMPTY_CHILD on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("ICE WARRIOR")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ICE_WARRIOR on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("JUDOON")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise JUDOON on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("K9")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise K9 on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("OOD")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise OOD on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("SILENT")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILENT on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("SILURIAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILURIAN on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("SONTARAN")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SONTARAN on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("STRAX")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise STRAX on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("TOCLAFANE")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise TOCLAFANE on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("VASHTA NERADA")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise VASHTA on " + player.getUniqueId());
-                            }
-                            if (disguise.equals("ZYGON")) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ZYGON on " + player.getUniqueId());
-                            }
+                            plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise " + disguise + " on " + player.getUniqueId());
                         } else {
                             EntityType dt = EntityType.valueOf(disguise);
                             Object[] options = null;
                             switch (dt) {
-                                case AXOLOTL:
+                                case AXOLOTL -> {
                                     if (!plugin.isDisguisesOnServer()) {
                                         options = new Object[]{getAxolotlVariant(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case CAT:
+                                }
+                                case CAT -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getCatType(view), getBoolean(view), getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getCatType(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case PANDA:
+                                }
+                                case PANDA -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getGene(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{GENE.getFromPandaGene(getGene(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case DONKEY:
-                                case MULE:
-                                case PIG:
+                                }
+                                case DONKEY, MULE, PIG -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
                                     } else {
                                         options = new Object[]{getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
                                     }
-                                    break;
-                                case PILLAGER:
-                                case BAT:
-                                case CREEPER:
-                                case ENDERMAN:
-                                case BLAZE:
+                                }
+                                case PILLAGER, BAT, CREEPER, ENDERMAN, BLAZE -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, getBoolean(view), false).createDisguise();
                                     } else {
                                         options = new Object[]{getBoolean(view)};
                                     }
-                                    break;
-                                case SHEEP:
-                                case WOLF:
+                                }
+                                case SHEEP, WOLF -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getColor(view), getBoolean(view), getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getColor(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case HORSE:
+                                }
+                                case HORSE -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getHorseColor(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getHorseColor(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case LLAMA:
+                                }
+                                case LLAMA -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getLlamaColor(view), getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
                                     } else {
                                         options = new Object[]{getLlamaColor(view), getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
                                     }
-                                    break;
-                                case OCELOT:
+                                }
+                                case OCELOT -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, getBoolean(view), getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case PARROT:
+                                }
+                                case PARROT -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getParrotVariant(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getParrotVariant(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case RABBIT:
+                                }
+                                case RABBIT -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getRabbitType(view), getBoolean(view), getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{getRabbitType(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case VILLAGER:
-                                case ZOMBIE_VILLAGER:
+                                }
+                                case VILLAGER, ZOMBIE_VILLAGER -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getProfession(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{PROFESSION.getFromVillagerProfession(getProfession(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case SLIME:
-                                case MAGMA_CUBE:
+                                }
+                                case SLIME, MAGMA_CUBE -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getSlimeSize(view), false, false).createDisguise();
                                     } else {
                                         options = new Object[]{getSlimeSize(view)};
                                     }
-                                    break;
-                                case COW:
-                                case TURTLE:
-                                case ZOMBIE:
-                                case BEE:
+                                }
+                                case COW, TURTLE, ZOMBIE, BEE -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case SNOWMAN:
+                                }
+                                case SNOWMAN -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, snowmen.get(uuid), false, false).createDisguise();
                                     } else {
                                         options = new Object[]{snowmen.get(uuid)};
                                     }
-                                    break;
-                                case PUFFERFISH:
+                                }
+                                case PUFFERFISH -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, puffers.get(uuid), false, false).createDisguise();
                                     } else {
                                         options = new Object[]{puffers.get(uuid)};
                                     }
-                                    break;
-                                case TROPICAL_FISH:
+                                }
+                                case TROPICAL_FISH -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, TropicalFish.Pattern.values()[tropics.get(uuid)], false, false).createDisguise();
                                     } else {
                                         options = new Object[]{TropicalFish.Pattern.values()[tropics.get(uuid)]};
                                     }
-                                    break;
-                                case MUSHROOM_COW:
+                                }
+                                case MUSHROOM_COW -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(getCowVariant(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                case FOX:
+                                }
+                                case FOX -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getFoxType(view), false, getBaby(view)).createDisguise();
                                     } else {
                                         options = new Object[]{FOX.getFromFoxType(getFoxType(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
-                                    break;
-                                default:
+                                }
+                                default -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, null, false, false).createDisguise();
                                     }
-                                    break;
+                                }
                             }
                             if (!plugin.isDisguisesOnServer()) {
                                 new TARDISLazarusDisguise(plugin, player, dt, options).createDisguise();
@@ -482,7 +426,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         String t = null;
         int o;
         switch (d) {
-            case "AXOLOTL":
+            case "AXOLOTL" -> {
                 if (axolotls.containsKey(uuid)) {
                     o = (axolotls.get(uuid) + 1 < 5) ? axolotls.get(uuid) + 1 : 0;
                 } else {
@@ -490,8 +434,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Axolotl.Variant.values()[o].toString();
                 axolotls.put(uuid, o);
-                break;
-            case "SNOWMAN":
+            }
+            case "SNOWMAN" -> {
                 boolean derp;
                 if (snowmen.containsKey(uuid)) {
                     derp = !snowmen.get(uuid);
@@ -500,9 +444,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 snowmen.put(uuid, derp);
                 t = (derp) ? "Pumpkin head" : "Derp face";
-                break;
-            case "SHEEP":
-            case "WOLF":
+            }
+            case "SHEEP", "WOLF" -> {
                 if (sheep.containsKey(uuid)) {
                     o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
                 } else {
@@ -510,8 +453,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = DyeColor.values()[o].toString();
                 sheep.put(uuid, o);
-                break;
-            case "HORSE":
+            }
+            case "HORSE" -> {
                 if (horses.containsKey(uuid)) {
                     o = (horses.get(uuid) + 1 < 7) ? horses.get(uuid) + 1 : 0;
                 } else {
@@ -519,8 +462,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Horse.Color.values()[o].toString();
                 horses.put(uuid, o);
-                break;
-            case "LLAMA":
+            }
+            case "LLAMA" -> {
                 if (llamas.containsKey(uuid)) {
                     o = (llamas.get(uuid) + 1 < 4) ? llamas.get(uuid) + 1 : 0;
                 } else {
@@ -528,8 +471,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Llama.Color.values()[o].toString();
                 llamas.put(uuid, o);
-                break;
-            case "CAT":
+            }
+            case "CAT" -> {
                 if (cats.containsKey(uuid)) {
                     o = (cats.get(uuid) + 1 < 11) ? cats.get(uuid) + 1 : 0;
                 } else {
@@ -537,8 +480,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Type.values()[o].toString();
                 cats.put(uuid, o);
-                break;
-            case "FOX":
+            }
+            case "FOX" -> {
                 if (foxes.containsKey(uuid)) {
                     o = (foxes.get(uuid) + 1 < 2) ? foxes.get(uuid) + 1 : 0;
                 } else {
@@ -546,8 +489,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Fox.Type.values()[o].toString();
                 foxes.put(uuid, o);
-                break;
-            case "RABBIT":
+            }
+            case "RABBIT" -> {
                 if (rabbits.containsKey(uuid)) {
                     o = (rabbits.get(uuid) + 1 < 7) ? rabbits.get(uuid) + 1 : 0;
                 } else {
@@ -555,8 +498,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Rabbit.Type.values()[o].toString();
                 rabbits.put(uuid, o);
-                break;
-            case "PARROT":
+            }
+            case "PARROT" -> {
                 if (parrots.containsKey(uuid)) {
                     o = (parrots.get(uuid) + 1 < 5) ? parrots.get(uuid) + 1 : 0;
                 } else {
@@ -564,9 +507,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Parrot.Variant.values()[o].toString();
                 parrots.put(uuid, o);
-                break;
-            case "VILLAGER":
-            case "ZOMBIE_VILLAGER":
+            }
+            case "VILLAGER", "ZOMBIE_VILLAGER" -> {
                 if (professions.containsKey(uuid)) {
                     o = (professions.get(uuid) + 1 < 6) ? professions.get(uuid) + 1 : 1;
                 } else {
@@ -574,9 +516,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Profession.values()[o].toString();
                 professions.put(uuid, o);
-                break;
-            case "SLIME":
-            case "MAGMA_CUBE":
+            }
+            case "SLIME", "MAGMA_CUBE" -> {
                 if (slimes.containsKey(uuid)) {
                     o = (slimes.get(uuid) + 1 < 3) ? slimes.get(uuid) + 1 : 0;
                 } else {
@@ -584,8 +525,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = slimeSizes.get(o).toString();
                 slimes.put(uuid, o);
-                break;
-            case "MUSHROOM_COW":
+            }
+            case "MUSHROOM_COW" -> {
                 if (moos.containsKey(uuid)) {
                     o = (moos.get(uuid) + 1 < 2) ? moos.get(uuid) + 1 : 0;
                 } else {
@@ -593,8 +534,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = MushroomCow.Variant.values()[o].toString();
                 moos.put(uuid, o);
-                break;
-            case "PUFFERFISH":
+            }
+            case "PUFFERFISH" -> {
                 if (puffers.containsKey(uuid)) {
                     o = (puffers.get(uuid) + 1 < 3) ? puffers.get(uuid) + 1 : 0;
                 } else {
@@ -602,8 +543,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = pufferStates.get(o).toString();
                 puffers.put(uuid, o);
-                break;
-            case "TROPICAL_FISH":
+            }
+            case "TROPICAL_FISH" -> {
                 if (tropics.containsKey(uuid)) {
                     o = (tropics.get(uuid) + 1 < 12) ? tropics.get(uuid) + 1 : 0;
                 } else {
@@ -611,8 +552,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = TropicalFish.Pattern.values()[o].toString();
                 tropics.put(uuid, o);
-                break;
-            case "PANDA":
+            }
+            case "PANDA" -> {
                 if (genes.containsKey(uuid)) {
                     o = (genes.get(uuid) + 1 < 7) ? genes.get(uuid) + 1 : 0;
                 } else {
@@ -620,9 +561,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 t = Panda.Gene.values()[o].toString();
                 genes.put(uuid, o);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         if (t != null) {
             ItemStack is = i.getItem(48);
