@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -130,7 +129,7 @@ public class TARDISCommands implements CommandExecutor {
                 case door:
                     return new TARDISDoorCommand(plugin).toggleDoors(player, args);
                 case egg: // play tardis theme on noteblocks
-                    return new TARDISPlayThemeCommand(plugin).playTheme(player);
+//                    return new TARDISPlayThemeCommand(plugin).playTheme(player);
                 case eject:
                     return new TARDISEjectCommand(plugin).eject(player);
                 case excite:

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.noteblock;
+package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
@@ -32,10 +32,10 @@ public class TARDISPlayThemeCommand {
             return true;
         }
         plugin.getTrackerKeeper().getEggs().add(p.getUniqueId());
-        Song s = NBSDecoder.parse(plugin.getResource("theme.nbs"));
-        SongPlayer sp = new SongPlayer(s);
-        sp.addPlayer(p);
-        sp.setPlaying(true);
+//        Song s = NBSDecoder.parse(plugin.getResource("theme.nbs"));
+//        SongPlayer sp = new SongPlayer(s);
+//        sp.addPlayer(p);
+//        sp.setPlaying(true);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), 2200L);
         return true;
     }
