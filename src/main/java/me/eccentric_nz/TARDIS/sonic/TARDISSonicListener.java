@@ -191,6 +191,7 @@ public class TARDISSonicListener implements Listener {
                         if ((block.getType().isBurnable() || ignite.contains(block.getType())) && TARDISPermission.hasPermission(player, "tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
                             TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short");
                             // ignite block
+                            event.setCancelled(true);
                             TARDISSonicIgnite.ignite(plugin, block, player);
                         }
                         if (diamond.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
