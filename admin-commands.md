@@ -1,6 +1,6 @@
 ---
 layout: default
-title: API
+title: Admin commands
 ---
 # Admin commands
 ### `/tardisadmin`
