@@ -128,8 +128,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISDirectionCommand(plugin).changeDirection(player, args);
                 case door:
                     return new TARDISDoorCommand(plugin).toggleDoors(player, args);
-                case egg: // play tardis theme on noteblocks
-//                    return new TARDISPlayThemeCommand(plugin).playTheme(player);
+                case egg: // play tardis theme from resource pack
+                    return new TARDISPlayThemeCommand(plugin).playTheme(player, args);
                 case eject:
                     return new TARDISEjectCommand(plugin).eject(player);
                 case excite:

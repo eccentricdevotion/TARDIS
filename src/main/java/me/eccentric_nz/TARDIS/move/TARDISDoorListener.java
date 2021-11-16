@@ -33,6 +33,11 @@ import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -160,17 +165,17 @@ public class TARDISDoorListener {
             player.setAllowFlight(true);
         }
         if (quotes) {
-//            if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-//                TextComponent tcg = new TextComponent("[TARDIS] ");
-//                tcg.setColor(ChatColor.GOLD);
-//                TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
-//                tcl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-//                tcl.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis egg"));
-//                tcg.addExtra(tcl);
-//                player.spigot().sendMessage(tcg);
-//            } else {
-            player.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
-//            }
+            if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                TextComponent tcg = new TextComponent("[TARDIS] ");
+                tcg.setColor(ChatColor.GOLD);
+                TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
+                tcl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+                tcl.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis egg"));
+                tcg.addExtra(tcl);
+                player.spigot().sendMessage(tcg);
+            } else {
+                player.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+            }
         }
         if (exit) {
             plugin.getPM().callEvent(new TARDISExitEvent(player, to));

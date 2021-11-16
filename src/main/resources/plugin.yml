@@ -519,6 +519,11 @@ commands:
       usage: /<command> bell [on|off]
       permission: tardis.use
       permission-message: You don't have the permission <permission> to use this command
+    egg:
+      description: Play the Doctor Who Theme (requires TARDIS Resource Pack).
+      usage: /<command> egg [SIXTY_THREE|ZERO_FIVE|TWENTY_TWENTY|RANDOM]
+      permission: tardis.use
+      permission-message: You don't have the permission <permission> to use this command
     list:
       description: List saved time travel locations, companions, areas and rechargers.
       usage: /<command> list [saves|companions|areas|rechargers]

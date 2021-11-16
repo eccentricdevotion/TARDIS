@@ -17,26 +17,37 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Theme;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
-public class TARDISPlayThemeCommand {
+import java.util.Locale;
+
+class TARDISPlayThemeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISPlayThemeCommand(TARDIS plugin) {
+    TARDISPlayThemeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean playTheme(Player p) {
+    boolean playTheme(Player p, String[] args) {
         if (plugin.getTrackerKeeper().getEggs().contains(p.getUniqueId())) {
+            TARDISMessage.send(p, "THEME_PLAYING");
             return true;
         }
+        Theme theme = Theme.RANDOM;
+        if (args.length == 2) {
+            try {
+                theme = Theme.valueOf(args[1].toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(p, "ARG_THEME");
+                return false;
+            }
+        }
         plugin.getTrackerKeeper().getEggs().add(p.getUniqueId());
-//        Song s = NBSDecoder.parse(plugin.getResource("theme.nbs"));
-//        SongPlayer sp = new SongPlayer(s);
-//        sp.addPlayer(p);
-//        sp.setPlaying(true);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), 2200L);
+        p.playSound(p.getLocation(), theme.getFilename(), 1.0f, 1.0f);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), theme.getLength());
         return true;
     }
 }

@@ -48,6 +48,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> EXTRA_SUBS = ImmutableList.of("blocks", "unlock");
     private final List<String> Y_SUBS = ImmutableList.of("64", "65");
     private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL", "MASSIVE");
+    private final List<String> THEME_SUBS = ImmutableList.of("SIXTY_THREE", "ZERO_FIVE", "TWENTY_TWENTY", "RANDOM");
     private final List<String> TRANSMAT_SUBS = ImmutableList.of("tp", "add", "remove", "update", "list");
     private final List<String> UPD_SUBS = new ArrayList<>();
     private final List<String> SEC_SUBS = new ArrayList<>();
@@ -96,6 +97,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     return partial(lastArg, DIR_SUBS);
                 case "door":
                     return partial(lastArg, DOOR_SUBS);
+                case "egg":
+                    return partial(lastArg, THEME_SUBS);
                 case "home":
                     return partial(lastArg, Collections.singletonList("set"));
                 case "item":
