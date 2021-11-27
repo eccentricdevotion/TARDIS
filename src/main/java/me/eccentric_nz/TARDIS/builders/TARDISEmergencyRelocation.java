@@ -53,6 +53,7 @@ public class TARDISEmergencyRelocation {
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, 4, 4, 4, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
                 BuildData bd = new BuildData(p.getUniqueId().toString());
+                bd.setPlayer(p);
                 bd.setLocation(emergency);
                 bd.setTardisID(id);
                 bd.setDirection(COMPASS.EAST);
