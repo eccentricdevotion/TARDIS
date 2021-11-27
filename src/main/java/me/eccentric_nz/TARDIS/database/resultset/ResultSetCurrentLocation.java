@@ -110,7 +110,7 @@ public class ResultSetCurrentLocation {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for current table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -121,7 +121,7 @@ public class ResultSetCurrentLocation {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing current table! " + e.getMessage());
             }
         }
         return world != null;

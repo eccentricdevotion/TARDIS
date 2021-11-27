@@ -1,72 +1,499 @@
 {
-    "type": "tardis:skaro",
-    "generator": {
-        "type": "minecraft:noise",
-        "seed": -274503980,
-        "biome_source": {
-            "type": "minecraft:multi_noise",
-            "seed": -274503980,
-            "altitude_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "temperature_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "humidity_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "weirdness_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "biomes": [
-                {
-                    "biome": "tardis:skaro_desert",
-                    "parameters": {
-                        "altitude": 0.15,
-                        "temperature": 0.8,
-                        "humidity": -0.5,
-                        "weirdness": 0.3,
-                        "offset": 0
-                    }
-                },
-                {
-                    "biome": "tardis:skaro_hills",
-                    "parameters": {
-                        "altitude": 0.5,
-                        "temperature": 0.7,
-                        "humidity": -0.6,
-                        "weirdness": 0.2,
-                        "offset": 0.1
-                    }
-                },
-                {
-                    "biome": "tardis:skaro_lakes",
-                    "parameters": {
-                        "altitude": 0.1,
-                        "temperature": 0.6,
-                        "humidity": -0.1,
-                        "weirdness": 0.5,
-                        "offset": 0.1
-                    }
-                }
+  "type": "tardis:skaro",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": -274503980,
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "parameters": {
+            "erosion": [
+              -0.375,
+              -0.2225
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
             ]
+          },
+          "biome": "minecraft:desert"
         },
-        "settings": "minecraft:overworld"
+        {
+          "parameters": {
+            "erosion": [
+              -0.375,
+              -0.2225
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              -0.2225,
+              0.05
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              -0.2225,
+              0.05
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.05,
+              0.45
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.05,
+              0.45
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.05,
+              0.45
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              1.0
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.05,
+              0.45
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              1.0
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              0.03,
+              1.0
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.45,
+              0.55
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              0.03,
+              1.0
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.55,
+              1.0
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              0.55,
+              1.0
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              -0.35
+            ],
+            "continentalness": [
+              -0.19,
+              -0.11
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              -0.375,
+              -0.2225
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -0.35,
+              -0.1
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        },
+        {
+          "parameters": {
+            "erosion": [
+              -0.375,
+              -0.2225
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              -0.9333
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.55,
+              1.0
+            ],
+            "humidity": [
+              -0.35,
+              -0.1
+            ],
+            "continentalness": [
+              -0.11,
+              0.03
+            ]
+          },
+          "biome": "minecraft:desert"
+        }
+      ]
     }
+  }
 }

@@ -1,6 +1,6 @@
 {
     "pack": {
         "description": "Data pack for the TARDIS plugin",
-        "pack_format": 6
+        "pack_format": 8
     }
 }

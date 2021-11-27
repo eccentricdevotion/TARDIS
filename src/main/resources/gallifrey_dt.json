@@ -7,10 +7,10 @@
   "has_raids": false,
   "has_skylight": true,
   "has_ceiling": false,
-  "coordinate_scale": 1,
-  "ambient_light": 0,
-  "logical_height": 256,
+  "coordinate_scale": 1.0,
+  "ambient_light": 0.0,
+  "logical_height": 384,
   "infiniburn": "minecraft:infiniburn_overworld",
-  "min_y": 0,
-  "height": 256
+  "min_y": -64,
+  "height": 384
 }

@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -37,7 +36,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Command /tardisadmin [arguments].
@@ -50,7 +48,7 @@ import java.util.UUID;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "set_biome", "stats", "tree");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "stats", "tree");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -94,24 +92,6 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
-                }
-                if (first.equals("set_biome")) {
-                    if (sender instanceof Player p) {
-                        if (args[1].equalsIgnoreCase("by_walking")) {
-                            UUID uuid = p.getUniqueId();
-                            if (plugin.getTrackerKeeper().getBiomeSetters().contains(uuid)) {
-                                plugin.getTrackerKeeper().getBiomeSetters().remove(p.getUniqueId());
-                                TARDISMessage.message(p, "by_walking OFF");
-                            } else {
-                                plugin.getTrackerKeeper().getBiomeSetters().add(p.getUniqueId());
-                                TARDISMessage.message(p, "by_walking ON");
-                            }
-                        } else {
-                            Chunk chunk = p.getLocation().getChunk();
-                            plugin.getTardisHelper().setCustomBiome(args[1], chunk);
-                        }
-                        return true;
-                    }
                 }
                 if (first.equals("tree")) {
                     if (sender instanceof Player player) {

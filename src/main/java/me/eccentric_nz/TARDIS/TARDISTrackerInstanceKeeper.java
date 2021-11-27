@@ -122,7 +122,6 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<Integer> submarine = new HashSet<>();
     private final Set<UUID> arrangers = new HashSet<>();
     private final Set<UUID> beaconColouring = new HashSet<>();
-    private final Set<UUID> biomeSetters = new HashSet<>();
     private final Set<UUID> constructors = new HashSet<>();
     private final Set<UUID> eggs = new HashSet<>();
     private final Set<UUID> excitation = new HashSet<>();
@@ -830,15 +829,6 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getBeaconColouring() {
         return beaconColouring;
-    }
-
-    /**
-     * Tracks players that are setting TARDIS biomes by walking around
-     *
-     * @return a list of player UUIDs
-     */
-    public Set<UUID> getBiomeSetters() {
-        return biomeSetters;
     }
 
     /**

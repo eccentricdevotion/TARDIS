@@ -206,4 +206,5 @@ conversions:
   bind: true
   icons: true
   datapacks: true
+  datapacks_1_18: true
   restore_biomes: true

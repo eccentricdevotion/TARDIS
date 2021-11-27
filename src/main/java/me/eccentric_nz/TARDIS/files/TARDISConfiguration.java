@@ -86,6 +86,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.controls", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("conversions.datapacks", false);
+        booleanOptions.put("conversions.datapacks_1_18", false);
         booleanOptions.put("conversions.icons", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.restore_biomes", false);
@@ -243,9 +244,9 @@ public class TARDISConfiguration {
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);
         }
-        if (config.contains("conversions.datapacks")) {
-            plugin.getConfig().set("conversions.datapacks", false);
-        }
+//        if (config.contains("conversions.datapacks")) {
+//            plugin.getConfig().set("conversions.datapacks", false);
+//        }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {

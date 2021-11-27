@@ -21,6 +21,11 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
 import java.io.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * @author eccentric_nz
@@ -43,22 +48,14 @@ public class TARDISChecker {
         File dimensionDir = new File(dimensionRoot + "dimension");
         File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
         File worldGenDir = new File(dimensionRoot + "worldgen");
-        File biomeDir = new File(dimensionRoot + "worldgen" + File.separator + "biome");
-        File featureDir = new File(dimensionRoot + "worldgen" + File.separator + "configured_feature");
         if (!dimensionDir.exists()) {
             dimensionDir.mkdirs();
         }
         if (!dimensionTypeDir.exists()) {
             dimensionTypeDir.mkdirs();
         }
-        if (!worldGenDir.exists()) {
-            worldGenDir.mkdirs();
-        }
-        if (!biomeDir.exists()) {
-            biomeDir.mkdirs();
-        }
-        if (!featureDir.exists()) {
-            featureDir.mkdirs();
+        if (worldGenDir.exists()) {
+            deleteDirectoryAndContents(worldGenDir.toPath());
         }
         // copy files to directory
         File dimFile = new File(dimensionDir, dimension + ".json");
@@ -70,39 +67,6 @@ public class TARDISChecker {
         if (!dimTypeFile.exists()) {
             exists = false;
             TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
-        }
-        switch (dimension) {
-            case "skaro":
-                File tree = new File(featureDir, "skaro_tree.json");
-                File desert = new File(biomeDir, "skaro_desert.json");
-                File hills = new File(biomeDir, "skaro_hills.json");
-                File lakes = new File(biomeDir, "skaro_lakes.json");
-                if (!tree.exists()) {
-                    exists = false;
-                    TARDISChecker.copy("skaro_tree.json", tree);
-                    TARDISChecker.copy("skaro_desert.json", desert);
-                    TARDISChecker.copy("skaro_hills.json", hills);
-                    TARDISChecker.copy("skaro_lakes.json", lakes);
-                }
-                break;
-            case "gallifrey":
-                File plant = new File(featureDir, "gallifrey_tree.json");
-                File grass = new File(featureDir, "gallifrey_grass.json");
-                File badlands = new File(biomeDir, "gallifrey_badlands.json");
-                File plateau = new File(biomeDir, "gallifrey_plateau.json");
-                File eroded = new File(biomeDir, "gallifrey_eroded.json");
-                if (!plant.exists()) {
-                    exists = false;
-                    TARDISChecker.copy("gallifrey_tree.json", plant);
-                    TARDISChecker.copy("gallifrey_grass.json", grass);
-                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
-                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
-                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
-                }
-                break;
-            default:
-                // nothing to do
-                break;
         }
         String dataPacksMeta = dataPacksRoot + dimension;
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
@@ -120,10 +84,12 @@ public class TARDISChecker {
         // check if directories exist
         String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
         File dimensionDir = new File(dimensionRoot + "dimension");
+        File worldGenDir = new File(dimensionRoot + "worldgen");
+        if (worldGenDir.exists()) {
+            deleteDirectoryAndContents(worldGenDir.toPath());
+        }
         if (dimensionDir.exists()) {
             File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
-            File biomeDir = new File(dimensionRoot + "worldgen" + File.separator + "biome");
-            File featureDir = new File(dimensionRoot + "worldgen" + File.separator + "configured_feature");
             // overwrite files
             File dimFile = new File(dimensionDir, dimension + ".json");
             TARDISChecker.copy(dimension + "_d.json", dimFile);
@@ -131,33 +97,6 @@ public class TARDISChecker {
             TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
             File metaFile = new File(dataPacksRoot + dimension, "pack.mcmeta");
             TARDISChecker.copy("pack_" + dimension + ".mcmeta", metaFile);
-            switch (dimension) {
-                case "skaro":
-                    File tree = new File(featureDir, "skaro_tree.json");
-                    File desert = new File(biomeDir, "skaro_desert.json");
-                    File hills = new File(biomeDir, "skaro_hills.json");
-                    File lakes = new File(biomeDir, "skaro_lakes.json");
-                    TARDISChecker.copy("skaro_tree.json", tree);
-                    TARDISChecker.copy("skaro_desert.json", desert);
-                    TARDISChecker.copy("skaro_hills.json", hills);
-                    TARDISChecker.copy("skaro_lakes.json", lakes);
-                    break;
-                case "gallifrey":
-                    File plant = new File(featureDir, "gallifrey_tree.json");
-                    File grass = new File(featureDir, "gallifrey_grass.json");
-                    File badlands = new File(biomeDir, "gallifrey_badlands.json");
-                    File plateau = new File(biomeDir, "gallifrey_plateau.json");
-                    File eroded = new File(biomeDir, "gallifrey_eroded.json");
-                    TARDISChecker.copy("gallifrey_tree.json", plant);
-                    TARDISChecker.copy("gallifrey_grass.json", grass);
-                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
-                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
-                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
-                    break;
-                default:
-                    // nothing to do
-                    break;
-            }
         }
     }
 
@@ -191,6 +130,26 @@ public class TARDISChecker {
                     System.err.println("[TARDIS] Checker: Could not close the input stream.");
                 }
             }
+        }
+    }
+
+    private static void deleteDirectoryAndContents(Path path) {
+        try {
+            Files.walkFileTree(path, new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            TARDIS.plugin.debug("Could not delete datapack worldgen directory! " + e.getMessage());
         }
     }
 
