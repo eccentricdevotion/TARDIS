@@ -155,7 +155,7 @@ public class TARDISBlocksUpdater {
             under.add("SOUL_TORCH");
             under.add("SPRUCE_BUTTON");
             under.add("TWISTING_VINES");
-            under.add("WALL_SOUL_TORCH");
+            under.add("SOUL_WALL_TORCH");
             under.add("WALL_TORCH");
             under.add("WARPED_BUTTON");
             under.add("WARPED_DOOR");
@@ -294,7 +294,14 @@ public class TARDISBlocksUpdater {
             blocks_config.set("version", 10);
             i += 3;
         }
-
+        // fix SOUL_WALL_TORCH in under door blocks
+        List<String> soul_under = blocks_config.getStringList("under_door_blocks");
+        if (soul_under.contains("WALL_SOUL_TORCH")) {
+            soul_under.remove("WALL_SOUL_TORCH");
+            soul_under.add("SOUL_WALL_TORCH");
+            blocks_config.set("under_door_blocks", soul_under);
+            i++;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
