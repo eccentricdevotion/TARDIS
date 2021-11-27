@@ -356,6 +356,10 @@ public class TARDISCondensablesUpdater {
             list.put("WEATHERED_CUT_COPPER_STAIRS", 120);
             list.put("WHITE_CANDLE", 35);
             list.put("YELLOW_CANDLE", 35);
+            // 1.18
+            list.put("MUSIC_DISC_FAR", 100);
+            list.put("MUSIC_DISC_OTHERSIDE", 100);
+
 
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());

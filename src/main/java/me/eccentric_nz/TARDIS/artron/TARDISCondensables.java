@@ -547,7 +547,9 @@ public class TARDISCondensables {
             condensables.put("MUSHROOM_STEW", 33);
             condensables.put("MUSIC_DISC_13", 100);
             condensables.put("MUSIC_DISC_CAT", 100);
+            condensables.put("MUSIC_DISC_FAR", 100);
             condensables.put("MUSIC_DISC_MELLOHI", 100);
+            condensables.put("MUSIC_DISC_OTHERSIDE", 100);
             condensables.put("MUSIC_DISC_PIGSTEP", 100);
             condensables.put("MUTTON", 3);
             condensables.put("MYCELIUM", 1);
