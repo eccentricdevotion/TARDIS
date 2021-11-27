@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.*;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -114,7 +113,7 @@ public class TARDISMonsterRunnable implements Runnable {
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 TARDISMonster tm = new TARDISMonster();
-                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
+                String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
                 if (monsters.contains(type)) {
                     found = true;
                     switch (type) {
@@ -215,11 +214,11 @@ public class TARDISMonsterRunnable implements Runnable {
                         // choose a random monster
                         EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
                         rtm.setType(type);
-                        String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
+                        String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
                             Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
                             rtm.setProfession(prof);
-                            dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
+                            dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.toString().toLowerCase(Locale.ENGLISH));
                         }
                         rtm.setDisplayName(dn);
                         moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));

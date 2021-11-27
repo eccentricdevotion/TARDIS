@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.achievement;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 
 import java.lang.ref.WeakReference;
@@ -58,7 +57,9 @@ class TARDISXPRewarder {
      * @throws IllegalArgumentException if the player is null
      */
     TARDISXPRewarder(Player player) {
-        Validate.notNull(player, "Player cannot be null");
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null");
+        }
         this.player = new WeakReference<>(player);
         playerName = player.getName();
     }
@@ -176,7 +177,9 @@ class TARDISXPRewarder {
         if (exp > xpTotalToReachLevel[xpTotalToReachLevel.length - 1]) {
             // need to extend the lookup tables
             int newMax = calculateLevelForExp(exp) * 2;
-            Validate.isTrue(newMax <= hardMaxLevel, "Level for exp " + exp + " > hard max level " + hardMaxLevel);
+            if (newMax > hardMaxLevel) {
+                throw new IllegalArgumentException("Level for exp " + exp + " > hard max level " + hardMaxLevel);
+            }
             initLookupTables(newMax);
         }
         int pos = Arrays.binarySearch(xpTotalToReachLevel, exp);
@@ -191,7 +194,9 @@ class TARDISXPRewarder {
      * @throws IllegalArgumentException if the level is less than 0
      */
     private int getXpNeededToLevelUp(int level) {
-        Validate.isTrue(level >= 0, "Level may not be negative.");
+        if (level < 0) {
+            throw new IllegalArgumentException("Level may not be negative.");
+        }
         return level > 30 ? 62 + (level - 30) * 7 : level >= 16 ? 17 + (level - 15) * 3 : 17;
     }
 
@@ -203,7 +208,9 @@ class TARDISXPRewarder {
      * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
      */
     private int getXpForLevel(int level) {
-        Validate.isTrue(level >= 0 && level <= hardMaxLevel, "Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
+        if (level < 0 || level > hardMaxLevel) {
+            throw new IllegalArgumentException("Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
+        }
         if (level >= xpTotalToReachLevel.length) {
             initLookupTables(level * 2);
         }

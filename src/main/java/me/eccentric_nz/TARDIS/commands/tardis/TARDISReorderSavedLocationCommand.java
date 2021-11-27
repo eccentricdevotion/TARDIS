@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -62,7 +61,7 @@ class TARDISReorderSavedLocationCommand {
                 TARDISMessage.send(player, "SAVE_REORDER");
                 return false;
             }
-            if (!NumberUtils.isNumber(args[2])) {
+            if (!TARDISNumberParsers.isNumber(args[2])) {
                 TARDISMessage.send(player, "ARG_LAST_NUMBER");
                 return false;
             }

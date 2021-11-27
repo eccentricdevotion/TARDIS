@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.apache.commons.lang.StringUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,7 +67,7 @@ public class TARDISWallConverter {
         // "minecraft:cobblestone_wall[east=true,north=false,south=false,up=true,waterlogged=false,west=false]"
         // changes to ==>
         // "minecraft:cobblestone_wall[east=low,north=none,south=none,up=true,waterlogged=false,west=none]"
-        return StringUtils.replaceEach(text, find, repl);
+        return TARDISStringUtils.replaceEach(text, find, repl);
     }
 
     public void processArchives() {
