@@ -53,8 +53,6 @@ public class TARDISSpace {
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
             tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
-            // set the time to night
-            tardisWorld.setTime(14000L);
             // add world to config, but time travel disabled by default
             plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
             plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
@@ -99,6 +97,8 @@ public class TARDISSpace {
         }
         tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        // set the time to night
+        tardisWorld.setTime(14000L);
         return tardisWorld;
     }
 
