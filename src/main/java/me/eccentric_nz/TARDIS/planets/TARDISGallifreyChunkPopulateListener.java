@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -74,6 +75,11 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
                 }
             }
         }
+        // haven't returned add random tree in random position in chunk
+        int treeX = chunk.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+        int treeZ = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
+        int treeY = chunk.getWorld().getHighestBlockYAt(treeX, treeZ) + 1;
+        plugin.getTardisHelper().growTree("gallifrey", new Location(chunk.getWorld(), treeX, treeY, treeZ));
     }
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
