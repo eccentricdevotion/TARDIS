@@ -189,7 +189,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.7.6");
+        versions.put("TARDISChunkGenerator", "4.8.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.5");
@@ -308,7 +308,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.17.1");
+        Version minversion = new Version("1.18");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
@@ -372,11 +372,11 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.icons", true);
                 conversions++;
             }
-            if (!getConfig().getBoolean("conversions.datapacks")) {
+            if (!getConfig().getBoolean("conversions.datapacks_1_18")) {
                 TARDISChecker.updateDimension("gallifrey");
                 TARDISChecker.updateDimension("siluria");
                 TARDISChecker.updateDimension("skaro");
-                getConfig().set("conversions.datapacks", true);
+                getConfig().set("conversions.datapacks_1_18", true);
                 conversions++;
             }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
