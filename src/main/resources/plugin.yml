@@ -11,7 +11,7 @@ dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
 version: ${project.version}-b${project.build.number}
 build-number: ${project.build.number}
-api-version: 1.17
+api-version: 1.18
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
