@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -89,15 +90,40 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (first.equals("list")) {
                     return new TARDISDevListCommand(plugin).listStuff(sender, args);
                 }
-                if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                    return false;
-                }
                 if (first.equals("tree")) {
                     if (sender instanceof Player player) {
-                        Block l = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
-                        int which = TARDISNumberParsers.parseInt(args[1]);
-                        FractalFence.grow(l, which);
+                        Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
+                        Block up = targetBlock.getRelative(BlockFace.UP);
+                        if (args.length == 1) {
+                            if (!targetBlock.getType().equals(Material.GRASS_BLOCK)) {
+                                TARDISMessage.message(sender, plugin.getPluginName() + "You must be targeting a grass block!");
+                                return true;
+                            }
+                            plugin.getTardisHelper().growTree("random", up.getLocation());
+                            return true;
+                        }
+                        if (args.length == 4) {
+                            try {
+                                Material stem = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
+                                Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+                                Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
+                                if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() ||
+                                        !plugin.getTardisHelper().getTreeMatrials().contains(stem) ||
+                                        !plugin.getTardisHelper().getTreeMatrials().contains(hat) ||
+                                        !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
+                                    TARDISMessage.send(sender, "ARG_NOT_BLOCK");
+                                    return true;
+                                }
+                                plugin.getTardisHelper().growTree(up.getLocation(), targetBlock.getType(), stem, hat, decor);
+                                return true;
+                            } catch (IllegalArgumentException e) {
+                                TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
+                                return true;
+                            }
+                        } else {
+                            int which = TARDISNumberParsers.parseInt(args[1]);
+                            FractalFence.grow(up, which);
+                        }
                     }
                 }
                 return true;
