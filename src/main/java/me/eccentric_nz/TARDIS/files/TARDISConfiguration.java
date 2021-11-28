@@ -229,6 +229,15 @@ public class TARDISConfiguration {
             plugin.getConfig().createSection("rechargers");
             i++;
         }
+        if (config.contains("travel.chameleon")) {
+            plugin.getConfig().set("travel.chameleon", null);
+        }
+        if (config.contains("conversions.lowercase_world_names")) {
+            plugin.getConfig().set("conversions.lowercase_world_names", null);
+        }
+        if (config.contains("switch_resource_packs")) {
+            plugin.getConfig().set("switch_resource_packs", null);
+        }
         if (config.contains("preferences.wake_bees")) {
             plugin.getConfig().set("preferences.wake_bees", null);
         }
