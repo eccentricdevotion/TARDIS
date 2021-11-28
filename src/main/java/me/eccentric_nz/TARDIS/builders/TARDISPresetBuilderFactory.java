@@ -28,11 +28,10 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -87,16 +86,16 @@ public class TARDISPresetBuilderFactory {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET preset = tardis.getPreset();
-            TARDISBiome biome;
+            Biome biome;
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = bd.getLocation().getChunk();
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
             if (bd.isRebuild()) {
-                biome = TARDISStaticUtils.getBiomeAt(bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
+                biome = bd.getLocation().getBlock().getRelative(getOppositeFace(bd.getDirection()), 2).getBiome();
             } else {
-                biome = TARDISStaticUtils.getBiomeAt(bd.getLocation());
+                biome = bd.getLocation().getBlock().getBiome();
                 // disable force field
                 if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
@@ -192,29 +191,29 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    private PRESET adapt(TARDISBiome biome, Adaption adaption) {
+    private PRESET adapt(Biome biome, Adaption adaption) {
         if (adaption.equals(Adaption.BLOCK)) {
             return PRESET.ADAPTIVE;
         } else {
-            return switch (biome.name()) {
-                case "BEACH", "FROZEN_RIVER", "RIVER", "SNOWY_BEACH" -> PRESET.BOAT;
-                case "COLD_OCEAN", "DEEP_COLD_OCEAN", "DEEP_LUKEWARM_OCEAN", "DEEP_OCEAN", "DEEP_WARM_OCEAN", "FROZEN_OCEAN", "LUKEWARM_OCEAN", "OCEAN", "WARM_OCEAN" -> PRESET.YELLOW;
-                case "DESERT", "DESERT_HILLS", "DESERT_LAKES" -> PRESET.DESERT;
-                case "GRAVELLY_MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS", "MOUNTAINS", "SNOWY_MOUNTAINS", "WOODED_MOUNTAINS" -> PRESET.EXTREME_HILLS;
-                case "BIRCH_FOREST", "BIRCH_FOREST_HILLS", "FOREST", "TALL_BIRCH_FOREST", "TALL_BIRCH_HILLS" -> PRESET.FOREST;
-                case "NETHER_WASTES", "SOUL_SAND_VALLEY", "CRIMSON_FOREST", "WARPED_FOREST", "BASALT_DELTAS" -> PRESET.NETHER;
-                case "SNOWY_TUNDRA", "DEEP_FROZEN_OCEAN" -> PRESET.ICE_FLATS;
-                case "ICE_SPIKES" -> PRESET.ICE_SPIKES;
-                case "JUNGLE", "JUNGLE_EDGE", "JUNGLE_HILLS", "MODIFIED_JUNGLE", "MODIFIED_JUNGLE_EDGE" -> PRESET.JUNGLE;
-                case "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> PRESET.MESA;
-                case "MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE" -> PRESET.SHROOM;
-                case "PLAINS", "SUNFLOWER_PLAINS" -> PRESET.PLAINS;
-                case "DARK_FOREST", "DARK_FOREST_HILLS" -> PRESET.ROOFED_FOREST;
-                case "SAVANNA", "SHATTERED_SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA_PLATEAU" -> PRESET.SAVANNA;
-                case "SWAMP", "SWAMP_HILLS" -> PRESET.SWAMP;
-                case "END_BARRENS", "END_HIGHLANDS", "END_MIDLANDS", "SMALL_END_ISLANDS", "THE_END" -> PRESET.THEEND;
-                case "GIANT_SPRUCE_TAIGA", "GIANT_SPRUCE_TAIGA_HILLS", "GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS", "TAIGA", "TAIGA_HILLS", "TAIGA_MOUNTAINS" -> PRESET.TAIGA;
-                case "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> PRESET.COLD_TAIGA;
+            return switch (biome) {
+                case BEACH, FROZEN_RIVER, RIVER, SNOWY_BEACH, STONY_SHORE -> PRESET.BOAT;
+                case COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, OCEAN, WARM_OCEAN -> PRESET.YELLOW;
+                case DESERT -> PRESET.DESERT;
+                case WINDSWEPT_GRAVELLY_HILLS, WINDSWEPT_HILLS, WINDSWEPT_FOREST -> PRESET.EXTREME_HILLS;
+                case BIRCH_FOREST, FOREST, OLD_GROWTH_BIRCH_FOREST -> PRESET.FOREST;
+                case NETHER_WASTES, SOUL_SAND_VALLEY, CRIMSON_FOREST, WARPED_FOREST, BASALT_DELTAS -> PRESET.NETHER;
+                case SNOWY_PLAINS, DEEP_FROZEN_OCEAN -> PRESET.ICE_FLATS;
+                case ICE_SPIKES -> PRESET.ICE_SPIKES;
+                case JUNGLE, SPARSE_JUNGLE, BAMBOO_JUNGLE -> PRESET.JUNGLE;
+                case BADLANDS, WOODED_BADLANDS, ERODED_BADLANDS -> PRESET.MESA;
+                case MUSHROOM_FIELDS -> PRESET.SHROOM;
+                case PLAINS, SUNFLOWER_PLAINS, MEADOW -> PRESET.PLAINS;
+                case DARK_FOREST, FLOWER_FOREST -> PRESET.ROOFED_FOREST;
+                case SAVANNA, WINDSWEPT_SAVANNA, SAVANNA_PLATEAU -> PRESET.SAVANNA;
+                case SWAMP -> PRESET.SWAMP;
+                case END_BARRENS, END_HIGHLANDS, END_MIDLANDS, SMALL_END_ISLANDS, THE_END -> PRESET.THEEND;
+                case OLD_GROWTH_SPRUCE_TAIGA, TAIGA, OLD_GROWTH_PINE_TAIGA -> PRESET.TAIGA;
+                case SNOWY_TAIGA, SNOWY_SLOPES, GROVE -> PRESET.COLD_TAIGA;
                 default -> PRESET.FACTORY;
             };
         }

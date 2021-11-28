@@ -42,7 +42,6 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -357,7 +356,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                                     continue;
                                                 }
-                                                if (TARDISStaticUtils.getBiomeAt(current).name().equals(first)) {
+                                                if (current.getBlock().getBiome().toString().equals(first)) {
                                                     continue;
                                                 }
                                                 Biome biome;

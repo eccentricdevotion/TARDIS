@@ -24,10 +24,13 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
@@ -230,8 +233,8 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private boolean canSpawn(Location l, int r) {
         // get biome
-        TARDISBiome biome = TARDISStaticUtils.getBiomeAt(l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 6).getLocation());
-        if (biome.equals(TARDISBiome.MUSHROOM_FIELDS)) {
+        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 6).getBiome();
+        if (biome.equals(Biome.MUSHROOM_FIELDS)) {
             return false;
         }
         // worldguard

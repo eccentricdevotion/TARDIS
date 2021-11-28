@@ -20,11 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
@@ -71,11 +68,10 @@ public class TARDISBiomeConverter {
                         World world = plugin.getServer().getWorld(rsr.getString("world"));
                         if (world != null) {
                             Location location = new Location(world, rsr.getInt("x"), rsr.getInt("y"), rsr.getInt("z"));
-                            NamespacedKey nsk = NamespacedKey.fromString(rsr.getString("biome"));
-                            TARDISBiome biome = TARDISBiome.get(nsk);
-                            if (biome.equals(TARDISBiome.DEEP_OCEAN)) {
+                            Biome biome = location.getBlock().getBiome();
+                            if (biome.equals(Biome.DEEP_OCEAN)) {
                                 // find the closet biome
-                                biome = TARDISStaticUtils.getBiomeAt(location.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(TARDISConstants.RANDOM.nextInt(4)), 6).getLocation());
+                                biome = location.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(TARDISConstants.RANDOM.nextInt(4)), 6).getBiome();
                             }
                             restoreBiome(location, biome);
                             new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(plugin.getConsole(), id, plugin.getServer().getOfflinePlayer(UUID.fromString(rs.getString("uuid"))), true);
@@ -108,15 +104,7 @@ public class TARDISBiomeConverter {
         }
     }
 
-    private void restoreBiome(Location l, TARDISBiome tardisBiome) {
-        Biome biome = null;
-        if (tardisBiome != null && tardisBiome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
-            try {
-                biome = Biome.valueOf(tardisBiome.name());
-            } catch (IllegalArgumentException e) {
-                // ignore
-            }
-        }
+    private void restoreBiome(Location l, Biome biome) {
         if (l != null && biome != null) {
             int sbx = l.getBlockX();
             int sbz = l.getBlockZ();
@@ -125,8 +113,8 @@ public class TARDISBiomeConverter {
             Chunk chunk = l.getChunk();
             chunks.add(chunk);
             // reset biome and it's not The End
-            TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
-            if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
+            Biome blockBiome = l.getBlock().getBiome();
+            if (blockBiome.equals(Biome.DEEP_OCEAN) || blockBiome.equals(Biome.THE_VOID) || (blockBiome.equals(Biome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
                 for (int c = -3; c < 4; c++) {
                     for (int r = -3; r < 4; r++) {

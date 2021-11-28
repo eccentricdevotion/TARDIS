@@ -19,10 +19,9 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -132,15 +131,15 @@ public class TARDISSpawnListener implements Listener {
          */
         for (int col = -3; col < 4; col++) {
             for (int row = -3; row < 4; row++) {
-                TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
-                if (b.equals(TARDISBiome.DEEP_OCEAN)) {
+                Biome b = w.getBlockAt(x + col, 64, z + row).getBiome();
+                if (b.equals(Biome.DEEP_OCEAN)) {
                     found++;
                 }
-                if (found < 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                if (found < 3 && !b.equals(Biome.DEEP_OCEAN)) {
                     // reset count - not three in a row
                     found = 0;
                 }
-                if (found == 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                if (found == 3 && !b.equals(Biome.DEEP_OCEAN)) {
                     // found 3 consecutive blocks in a row, increment 3x3 row count
                     three_by_three++;
                     // reset count

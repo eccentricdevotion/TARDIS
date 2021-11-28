@@ -84,7 +84,6 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisartron").setTabCompleter(new TARDISArtronTabComplete());
         plugin.getCommand("tardisbind").setExecutor(new TARDISBindCommands(plugin));
         plugin.getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
-        plugin.getCommand("tardisbiome").setExecutor(new TARDISBiomeCommand(plugin));
         plugin.getCommand("tardisbook").setExecutor(new TARDISBookCommands(plugin));
         TARDISDisplayCommand tardisDisplayCommand = new TARDISDisplayCommand(plugin);
         plugin.getCommand("tardisdisplay").setExecutor(tardisDisplayCommand);

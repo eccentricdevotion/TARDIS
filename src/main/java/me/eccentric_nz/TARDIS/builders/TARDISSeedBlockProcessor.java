@@ -206,7 +206,7 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("y", l.getBlockY());
                 setlocs.put("z", l.getBlockZ());
                 setlocs.put("direction", d);
-                plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
+                plugin.getQueryFactory().insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 BuildData bd = new BuildData(player.getUniqueId().toString());
                 bd.setDirection(COMPASS.valueOf(d));

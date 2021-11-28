@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -237,8 +236,7 @@ public class TARDISScanner {
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
-        TARDISBiome tmb = TARDISStaticUtils.getBiomeAt(scan_loc);
-        String biome = tmb.name();
+        String biome = scan_loc.getBlock().getBiome().toString();
         data.setScannedBiome(biome);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", dayNight + " / " + time), 60L);

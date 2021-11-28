@@ -270,12 +270,10 @@ public class QueryFactory {
     /**
      * Inserts data into an SQLite database table. This method executes the SQL in a separate thread.
      *
-     * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
-     * @param biome the biome of the Police Box location
-     * @param id    the tardis_id
+     * @param data a HashMap&lt;String, Object&gt; of table fields and values to insert.
      */
-    public void insertLocations(HashMap<String, Object> data, String biome, int id) {
-        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data, biome, id);
+    public void insertLocations(HashMap<String, Object> data) {
+        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 

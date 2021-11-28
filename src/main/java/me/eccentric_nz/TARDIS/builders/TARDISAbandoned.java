@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -72,7 +71,7 @@ public class TARDISAbandoned {
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", d.toString());
-        plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
+        plugin.getQueryFactory().insertLocations(setlocs);
         // turn the block stack into a TARDIS
         BuildData bd = new BuildData(null);
         bd.setDirection(d);

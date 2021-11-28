@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.placeholders;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -269,8 +268,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             if (rscl.resultSet()) {
                                 // get from current location
                                 Location location = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                result = TARDISStaticUtils.getBiomeAt(location).name();
-                                ;
+                                result = location.getBlock().getBiome().toString();
                             } else {
                                 result = "";
                             }
