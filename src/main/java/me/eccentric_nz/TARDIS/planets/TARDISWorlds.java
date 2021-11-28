@@ -40,12 +40,15 @@ public class TARDISWorlds {
             String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
             World.Environment environment = World.Environment.valueOf(e);
             WorldCreator worldCreator = WorldCreator.name(world).environment(environment);
+            try {
+                WorldType worldType = WorldType.valueOf(TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type"));
+                worldCreator.type(worldType);
+            } catch (IllegalArgumentException iae) {
+                TARDIS.plugin.debug(ChatColor.RED + "Invalid World Type specified for '" + world + "'! " + iae.getMessage());
+            }
             String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
-                if (g.equals("TARDISChunkGenerator")) {
-                    worldCreator.biomeProvider(TARDIS.plugin.getTardisHelper().getBiomeProvider());
-                }
             }
             boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
             if (hardcore) {
