@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -88,16 +90,17 @@ public class TARDISBlockPlaceListener implements Listener {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                     } else {
                         multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
-                        light = (which > 10000000 && which < 10000005);
+                        light = (which > 0 && which < 5);
                         if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
                             // remember heat block location
                             plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
                         }
                     }
-                    event.getBlockPlaced().setBlockData(multipleFacing, light);
                     if (light) {
-                        plugin.getTardisHelper().createLight(event.getBlockPlaced().getLocation());
+                        multipleFacing = TARDISMushroomBlock.getChemistryStemOn(multipleFacing);
+                        LampToggler.createLight(event.getBlockPlaced());
                     }
+                    event.getBlockPlaced().setBlockData(multipleFacing);
                     return;
                 }
             } else {
