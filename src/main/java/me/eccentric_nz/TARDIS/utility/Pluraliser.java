@@ -47,13 +47,13 @@ public class Pluraliser {
     private static final List<String> endsWithExceptions = Arrays.asList(
             "air", "andesite", "armor", "bamboo", "bars", "basalt", "beans", "berries", "bedrock", "boots", "bricks",
             "cactus", "calcite", "carrots", "crystals", "coal", "concrete", "copper", "debris", "deepslate", "diorite",
-            "dirt", "dust", "fire", "fish", "foot", "fungus", "glass", "gold", "granite", "grass", "gravel", "hyphae",
-            " ice", "iron", "leaves", "leggings", "lichen", "meal", "mutton", "nylium", "obsidian", "ore", "planks",
-            "podzol", "potatoes", "powder", "prismarine", "quartz", "roots", "salmon", "sand", "seeds", "snow", "soil",
-            "sprouts", "stairs", "stone", "terracotta", "tiles", "tuff", "vines", "water", "wood", "wool"
+            "dirt", "dust", "fire", "fish", "flesh", "foot", "fungus", "glass", "gold", "granite", "grass", "gravel",
+            "hyphae", " ice", "iron", "leaves", "leggings", "lichen", "meal", "mutton", "nylium", "obsidian", "ore",
+            "planks", "podzol", "potatoes", "powder", "prismarine", "quartz", "roots", "salmon", "sand", "seeds", "snow",
+            "soil", "sprouts", "stairs", "stone", "terracotta", "tiles", "tuff", "vines", "water", "wood", "wool"
     );
     private static final List<String> endsWithExceptionsAddS = Arrays.asList(
-            "azalea", "button", "cauldron", "grindstone", "piston", "potion"
+            "allium", "azalea", "button", "cauldron", "grindstone", "piston", "potion"
     );
     private static final HashMap<String, String> fExceptions = new HashMap<>() {
         {
