@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -66,10 +67,10 @@ public class TARDISPortalPersister {
                 }
             }
             if (count > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " portals.");
+                plugin.getLogger().log(Level.INFO, "Saved " + count + " portals.");
             }
             if (counta > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + counta + " abandoned portals.");
+                plugin.getLogger().log(Level.INFO, "Saved " + counta + " abandoned portals.");
             }
             // save the players
             ps = connection.prepareStatement("INSERT INTO " + prefix + "movers (uuid) VALUES (?)");
@@ -121,10 +122,10 @@ public class TARDISPortalPersister {
                 }
             }
             if (count > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
+                plugin.getLogger().log(Level.INFO, "Loaded " + count + " portals.");
             }
             if (counta > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + counta + " abandoned portals.");
+                plugin.getLogger().log(Level.INFO, "Loaded " + counta + " abandoned portals.");
             }
             // clear the portals table so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "portals");

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -305,7 +306,7 @@ public class TARDISBlocksUpdater {
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
+                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save blocks.yml, " + io.getMessage());

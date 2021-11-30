@@ -144,7 +144,7 @@ public class TARDISDynmap {
                 markerSet.setMarkerSetLabel("TARDISes");
             }
             if (markerSet == null) {
-                Bukkit.getLogger().log(Level.WARNING, "Error creating tardis marker set");
+                plugin.getLogger().log(Level.WARNING, "Error creating tardis marker set");
                 return;
             }
             markerSet.setLayerPriority(0);

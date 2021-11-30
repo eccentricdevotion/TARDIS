@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
+
+import java.util.logging.Level;
 
 /**
  * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
@@ -43,7 +44,7 @@ public class TARDISSkaro {
         if (!TARDISChecker.hasDimension("skaro")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.time_travel")) {

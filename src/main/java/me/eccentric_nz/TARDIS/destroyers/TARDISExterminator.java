@@ -35,6 +35,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * The Daleks were a warlike race who waged war across whole civilisations and races all over the universe. Advance and
@@ -120,7 +121,7 @@ public class TARDISExterminator {
                 return true;
             }
         } catch (Exception e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "TARDIS exterminate by id error: " + e);
+            plugin.getLogger().log(Level.INFO, "TARDIS exterminate by id error: " + e);
             return false;
         }
         return true;

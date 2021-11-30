@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS has no real constraints on the amount of
@@ -37,7 +39,7 @@ public class TARDISWalls {
             try {
                 BLOCKS.add(Material.valueOf(m));
             } catch (IllegalArgumentException e) {
-                TARDIS.plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
+                Bukkit.getLogger().log(Level.WARNING, "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
             }
         }
     }

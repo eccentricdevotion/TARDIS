@@ -28,6 +28,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -68,7 +69,7 @@ public class TARDISVaultChecker implements Runnable {
                 }
             }
             if (i > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + i + " unused vault room drop chests!");
+                plugin.getLogger().log(Level.INFO, "Removed " + i + " unused vault room drop chests!");
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for vaults table! " + e.getMessage());

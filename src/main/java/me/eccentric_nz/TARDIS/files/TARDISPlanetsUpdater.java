@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -138,7 +139,7 @@ public class TARDISPlanetsUpdater {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 planets_config.save(new File(planetsPath));
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
+                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }

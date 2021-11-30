@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.logging.Level;
 
 /**
  * The Unified Intelligence Taskforce — formerly known as the United Nations Intelligence Taskforce, and more usually
@@ -58,7 +59,7 @@ public class TARDISRoomMap {
                 if (sch.exists()) {
                     makeRoomMap(basepath + lower, r);
                 } else {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
+                    plugin.getLogger().log(Level.INFO, ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                     try {
                         plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -80,13 +81,13 @@ public class TARDISRoomMap {
         HashMap<String, Integer> blockTypes = new HashMap<>();
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find a schematic with that name!");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + "Could not find a schematic with that name!");
             return false;
         }
         // get JSON
         JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
         if (obj == null) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
@@ -104,7 +105,7 @@ public class TARDISRoomMap {
                     for (int col = 0; col < l; col++) {
                         JsonObject c = r.get(col).getAsJsonObject();
                         if (!(c.get("data").getAsString().contains("minecraft"))) {
-                            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+                            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
                             plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
                             try {
                                 plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));

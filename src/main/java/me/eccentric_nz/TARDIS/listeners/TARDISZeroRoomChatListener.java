@@ -28,6 +28,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
@@ -77,7 +78,7 @@ public class TARDISZeroRoomChatListener implements Listener {
                 Player timelord = plugin.getServer().getPlayer(owner);
                 if (timelord != null && timelord.isOnline()) {
                     // message console so it is logged
-                    TARDISMessage.message(plugin.getConsole(), "[TARDIS] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
+                    plugin.getLogger().log(Level.INFO, " Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
                     if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
                         // track the timelord
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);

@@ -19,9 +19,11 @@ package me.eccentric_nz.TARDIS.files;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.util.Locale;
+import java.util.logging.Level;
 
 /**
  * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly in design, with different factions
@@ -57,22 +59,22 @@ public class TARDISFileCopier {
                         out.write(buf, 0, len);
                     }
                 } catch (IOException io) {
-                    System.err.println("[TARDIS] Copier: Could not save the file (" + file + ").");
+                    Bukkit.getLogger().log(Level.WARNING, "Copier: Could not save the file (" + file + ").");
                 } finally {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        System.err.println("[TARDIS] Copier: Could not close the output stream.");
+                        Bukkit.getLogger().log(Level.WARNING, "Copier: Could not close the output stream.");
                     }
                 }
             } catch (FileNotFoundException e) {
-                System.err.println("[TARDIS] Copier: File not found: " + filepath);
+                Bukkit.getLogger().log(Level.WARNING, "Copier: File not found: " + filepath);
             } finally {
                 if (in != null) {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        System.err.println("[TARDIS] Copier: Could not close the input stream.");
+                        Bukkit.getLogger().log(Level.WARNING, "Copier: Could not close the input stream.");
                     }
                 }
             }
@@ -91,7 +93,7 @@ public class TARDISFileCopier {
             if (result) {
                 schematicDir.setWritable(true);
                 schematicDir.setExecutable(true);
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Created schematics directory.");
+                Bukkit.getLogger().log(Level.INFO, "Created schematics directory.");
             }
         }
         File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
@@ -100,7 +102,7 @@ public class TARDISFileCopier {
             if (useResult) {
                 userDir.setWritable(true);
                 userDir.setExecutable(true);
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Created user_schematics directory.");
+                Bukkit.getLogger().log(Level.INFO, "Created user_schematics directory.");
             }
         }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net

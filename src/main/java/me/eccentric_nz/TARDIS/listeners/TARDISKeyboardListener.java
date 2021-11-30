@@ -39,6 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.logging.Level;
 
 /**
  * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
@@ -110,7 +111,7 @@ public class TARDISKeyboardListener implements Listener {
             if (plugin.getServer().getPlayer(event.getLine(0)) != null) {
                 // set location player
                 p.performCommand("tardistravel " + event.getLine(0));
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel " + event.getLine(0));
                 return;
             }
             // location?
@@ -118,7 +119,7 @@ public class TARDISKeyboardListener implements Listener {
                 // set location to coords
                 String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
                 p.performCommand("tardistravel " + command);
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + command);
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel " + command);
                 return;
             }
             // home?
@@ -134,7 +135,7 @@ public class TARDISKeyboardListener implements Listener {
                     if (rsc.resultSet()) {
                         if (currentIsNotHome(rsh, rsc)) {
                             p.performCommand("tardistravel home");
-                            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel home");
+                            plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel home");
                         } else {
                             TARDISMessage.send(p, "HOME_ALREADY");
                         }
@@ -148,12 +149,12 @@ public class TARDISKeyboardListener implements Listener {
             }
             if (event.getLine(0).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
                 p.performCommand("tardistravel cave");
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel cave");
                 return;
             }
             if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
                 p.performCommand("tardistravel village");
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel village");
                 return;
             }
             // biome ?
@@ -162,7 +163,7 @@ public class TARDISKeyboardListener implements Listener {
                 Biome.valueOf(upper);
                 if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                     p.performCommand("tardistravel biome " + upper);
-                    plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
+                    plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel biome " + upper);
                     return;
                 }
             } catch (IllegalArgumentException iae) {
@@ -174,7 +175,7 @@ public class TARDISKeyboardListener implements Listener {
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (rsd.resultSet()) {
                 p.performCommand("tardistravel dest " + event.getLine(0));
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
                 return;
             }
             // area?
@@ -183,7 +184,7 @@ public class TARDISKeyboardListener implements Listener {
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
             if (rsa.resultSet()) {
                 p.performCommand("tardistravel area " + event.getLine(0));
-                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
+                plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
                 return;
             }
             plugin.getTardisHelper().finishSignEditing(p);

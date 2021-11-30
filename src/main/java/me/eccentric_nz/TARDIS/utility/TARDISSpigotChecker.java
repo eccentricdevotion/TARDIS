@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
 
 public class TARDISSpigotChecker implements Runnable {
 
@@ -61,7 +62,7 @@ public class TARDISSpigotChecker implements Runnable {
                         // if new build number is same
                         return;
                     }
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
+                    plugin.getLogger().log(Level.INFO, ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
                 }
             }
         }

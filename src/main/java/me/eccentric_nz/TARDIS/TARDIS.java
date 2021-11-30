@@ -511,7 +511,7 @@ public class TARDIS extends JavaPlugin {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200, 200);
             getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                 if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-                    getConsole().sendMessage(getPluginName() + getLanguage().getString("ADVANCEMENT_RELOAD"));
+                    getLogger().log(Level.INFO, getLanguage().getString("ADVANCEMENT_RELOAD"));
                     getServer().reloadData();
                 }
             }, 199);

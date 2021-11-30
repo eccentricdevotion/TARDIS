@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -142,7 +143,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Pickup Arrows Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Pickup Arrows Circuit");
             recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=TARDIS Chameleon Circuit");
             recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit");
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "All TARDIS and sonic screwdriver circuit recipes have changed!");
+            plugin.getLogger().log(Level.INFO, "All TARDIS and sonic screwdriver circuit recipes have changed!");
             i++;
         }
         // update for 1.13
@@ -270,7 +271,7 @@ public class TARDISRecipesUpdater {
             }
             recipes_config.set("furnace.Nuclear Wool.recipe", "WHITE_WOOL");
             recipes_config.set("furnace.Nuclear Wool.result", "BLACK_WOOL");
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated recipes for Minecraft 1.13+");
+            plugin.getLogger().log(Level.INFO, "Updated recipes for Minecraft 1.13+");
             i++;
         }
         if (recipes_config.getString("shapeless.Lemon Jelly Baby.recipe").contains("DANDELION_YELLOW")) {
@@ -897,15 +898,15 @@ public class TARDISRecipesUpdater {
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
             if (i > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
+                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
             }
             String key = recipes_config.getString("shaped.TARDIS Key.result");
             if (!key.equals(plugin.getConfig().getString("preferences.key"))) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+                plugin.getLogger().log(Level.INFO, "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
             }
             String r_key_5 = recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.K");
             if (r_key_5 != null && !key.equals(r_key_5)) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
+                plugin.getLogger().log(Level.INFO, "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
             }
         } catch (IOException io) {
             plugin.debug("Could not save recipes.yml, " + io);

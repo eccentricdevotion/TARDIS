@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class TARDISWorlds {
 
@@ -89,7 +90,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.getEnvironment().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".keep_spawn_in_memory", false);
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
+                plugin.getLogger().log(Level.INFO, "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
             }
         });
         // now load TARDIS worlds / remove worlds that may have been deleted
@@ -97,13 +98,13 @@ public class TARDISWorlds {
         cWorlds.forEach((cw) -> {
             if (!TARDISConstants.isDatapackWorld(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {
                 if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
+                    plugin.getLogger().log(Level.INFO, "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }
             } else {
                 if (!TARDISConstants.isDatapackWorld(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
+                    plugin.getLogger().log(Level.INFO, "Removed '" + cw + "' from planets.yml");
                     // remove records from database that may contain the removed world
                     plugin.getCleanUpWorlds().add(cw);
                 }

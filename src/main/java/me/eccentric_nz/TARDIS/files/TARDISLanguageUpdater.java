@@ -25,6 +25,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Updates the configured language file with any new message strings. It will then be up to the server administrator to
@@ -82,7 +83,7 @@ public class TARDISLanguageUpdater {
             plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
             // sort language file alphabetically if additions were made
             try {
                 List<String> lineList;
@@ -104,7 +105,7 @@ public class TARDISLanguageUpdater {
             }
         }
         if (j > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
+            plugin.getLogger().log(Level.INFO, "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
         }
     }
 }

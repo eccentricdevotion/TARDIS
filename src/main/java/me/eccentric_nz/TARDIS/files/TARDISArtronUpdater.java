@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -157,7 +158,7 @@ public class TARDISArtronUpdater {
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
             if (i > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
+                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io.getMessage());

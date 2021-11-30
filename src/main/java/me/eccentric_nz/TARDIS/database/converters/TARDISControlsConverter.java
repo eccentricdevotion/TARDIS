@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 
 import java.sql.*;
+import java.util.logging.Level;
 
 public class TARDISControlsConverter {
 
@@ -93,7 +94,7 @@ public class TARDISControlsConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old TARDIS control records");
+                    plugin.getLogger().log(Level.INFO, "Converted " + i + " old TARDIS control records");
                 }
                 connection.setAutoCommit(true);
             }

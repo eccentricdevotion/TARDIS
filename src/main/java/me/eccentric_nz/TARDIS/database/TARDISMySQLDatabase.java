@@ -18,10 +18,12 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.tool.SQL;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 /**
  * MySQL database creator and updater.
@@ -60,14 +62,14 @@ public class TARDISMySQLDatabase {
             TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
             dbu.updateTables();
         } catch (SQLException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
+            plugin.getLogger().log(Level.INFO, "MySQL create table error: " + e);
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL close statement error: " + e);
+                plugin.getLogger().log(Level.INFO, "MySQL close statement error: " + e);
             }
         }
     }

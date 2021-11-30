@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -43,7 +44,7 @@ public class TARDISGallifrey {
         if (!TARDISChecker.hasDimension("gallifrey")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.time_travel")) {

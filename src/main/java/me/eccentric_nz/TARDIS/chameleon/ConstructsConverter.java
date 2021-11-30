@@ -23,6 +23,7 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -33,6 +34,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,7 +180,7 @@ public class ConstructsConverter {
             if (i > 0) {
                 update.executeBatch();
                 connection.commit();
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " Chameleon Construct records");
+                plugin.getLogger().log(Level.INFO, "Converted " + i + " Chameleon Construct records");
             }
             plugin.getConfig().set("conversions.constructs", true);
             plugin.saveConfig();

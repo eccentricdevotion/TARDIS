@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public class TARDISWallSignConverter {
 
@@ -57,7 +58,7 @@ public class TARDISWallSignConverter {
                     if (i > 0) {
                         ps.executeBatch();
                         connection.commit();
-                        plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " legacy wall signs to oak wall signs");
+                        plugin.getLogger().log(Level.INFO, "Converted " + i + " legacy wall signs to oak wall signs");
                     }
                 }
             }

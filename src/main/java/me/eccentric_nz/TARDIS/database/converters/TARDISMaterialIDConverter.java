@@ -25,6 +25,7 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -792,7 +793,7 @@ public class TARDISMaterialIDConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+                    plugin.getLogger().log(Level.INFO, "Converted " + i + " condenser IDs to material names");
                 }
             }
             plugin.getConfig().set("conversions.condenser_materials", true);
@@ -894,7 +895,7 @@ public class TARDISMaterialIDConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
+                    plugin.getLogger().log(Level.INFO, "Converted " + i + " player_prefs IDs to material names");
                 }
             }
             plugin.getConfig().set("conversions.player_prefs_materials", true);
@@ -968,7 +969,7 @@ public class TARDISMaterialIDConverter {
                     if (i > 0) {
                         ps.executeBatch();
                         connection.commit();
-                        plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
+                        plugin.getLogger().log(Level.INFO, "Converted " + i + " blocks IDs to material names");
                     }
                 }
             }

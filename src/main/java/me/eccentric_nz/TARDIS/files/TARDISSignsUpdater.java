@@ -23,6 +23,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -59,7 +60,7 @@ public class TARDISSignsUpdater {
             String signPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "signs.yml";
             signs_config.save(new File(signPath));
             if (i > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to signs.yml");
+                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to signs.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save signs.yml, " + io.getMessage());

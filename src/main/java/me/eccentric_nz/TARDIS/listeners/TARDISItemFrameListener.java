@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -179,7 +180,7 @@ public class TARDISItemFrameListener implements Listener {
                             default -> "WEST";
                         };
                         player.performCommand("tardis direction " + direction);
-                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis direction " + direction);
+                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis direction " + direction);
                     } else {
                         Rotation r;
                         // set the rotation

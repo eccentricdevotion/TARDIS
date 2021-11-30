@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.io.*;
@@ -26,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -112,22 +114,22 @@ public class TARDISChecker {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                System.err.println("[TARDIS] Checker: Could not save the file (" + file + ").");
+                Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not save the file (" + file + ").");
             } finally {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    System.err.println("[TARDIS] Checker: Could not close the output stream.");
+                    Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not close the output stream.");
                 }
             }
         } catch (FileNotFoundException e) {
-            System.err.println("[TARDIS] Checker: File not found: " + filename);
+            Bukkit.getLogger().log(Level.SEVERE, "Checker: File not found: " + filename);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    System.err.println("[TARDIS] Checker: Could not close the input stream.");
+                    Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not close the input stream.");
                 }
             }
         }
@@ -162,23 +164,23 @@ public class TARDISChecker {
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
         File tardisDir = new File(dataPacksRoot);
         if (!tardisDir.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
+            Bukkit.getLogger().log(Level.INFO, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
             tardisDir.mkdirs();
         }
         for (Advancement advancement : Advancement.values()) {
             String json = advancement.getConfigName() + ".json";
             File jfile = new File(dataPacksRoot, json);
             if (!jfile.exists()) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
-                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
+                Bukkit.getLogger().log(Level.INFO, ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
+                Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
                 copy(json, jfile);
             }
         }
         String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
         if (!mcmeta.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
-            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
+            Bukkit.getLogger().log(Level.INFO, ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
+            Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
         }
     }

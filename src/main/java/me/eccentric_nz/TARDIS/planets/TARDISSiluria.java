@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -39,7 +40,7 @@ public class TARDISSiluria {
         if (!TARDISChecker.hasDimension("siluria")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {

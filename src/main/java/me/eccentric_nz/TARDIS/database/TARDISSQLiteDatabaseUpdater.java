@@ -25,6 +25,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four dimensional world. They have Curiosity Circuits
@@ -398,7 +399,7 @@ class TARDISSQLiteDatabaseUpdater {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
+            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
         }
     }
 }

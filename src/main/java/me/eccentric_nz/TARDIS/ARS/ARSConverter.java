@@ -23,11 +23,13 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -93,7 +95,7 @@ public class ARSConverter {
             if (i > 0) {
                 update.executeBatch();
                 connection.commit();
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ARS records");
+                plugin.getLogger().log(Level.INFO, "Converted " + i + " ARS records");
             }
             plugin.getConfig().set("conversions.ars_materials", true);
             plugin.saveConfig();

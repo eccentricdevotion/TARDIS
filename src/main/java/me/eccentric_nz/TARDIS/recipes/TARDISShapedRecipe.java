@@ -36,6 +36,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -209,7 +210,7 @@ public class TARDISShapedRecipe {
                 }
             });
         } catch (IllegalArgumentException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
+            plugin.getLogger().log(Level.INFO, ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
         }
         if (s.contains("Bow Tie")) {
             r.setGroup("Bow Ties");

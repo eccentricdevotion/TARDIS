@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 import java.sql.*;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -65,7 +66,7 @@ public class TARDISSaveIconUpdate {
             if (i > 0) {
                 ps.executeBatch();
                 connection.commit();
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + i + " saved destination icons");
+                plugin.getLogger().log(Level.INFO, "Added " + i + " saved destination icons");
             }
         } catch (SQLException e) {
             plugin.debug("Update error for lowercase world name update! " + e.getMessage());
