@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * Command /tardisadmin [arguments].
@@ -49,7 +51,7 @@ import java.util.Set;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "stats", "tree");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "stats", "tree", "plurals");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -124,6 +126,12 @@ public class TARDISDevCommand implements CommandExecutor {
                             int which = TARDISNumberParsers.parseInt(args[1]);
                             FractalFence.grow(up, which);
                         }
+                    }
+                }
+                if (first.equals("plurals")) {
+                    for (Material m : Material.values()) {
+                        String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
+                        plugin.getLogger().log(Level.INFO, str + " --> " + Pluraliser.pluralise(str));
                     }
                 }
                 return true;

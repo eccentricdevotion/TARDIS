@@ -1,5 +1,5 @@
 Welcome, Timelord @p
-It seems that you are without transport. This world contains the resources that will let you to recreate your lost TARDIS.
+It seems that you are without transport. This world contains the resources that will let you recreate your lost TARDIS.
 
 Here is a list of items you will need to collect or mine:
 1 Log
