@@ -35,6 +35,7 @@ public class Pluraliser {
             put("axis", "axes");
             put("barrier", "barrier blocks");
             put("carrot on a stick", "carrots on a stick");
+            put("heart of the sea", "hearts of the sea");
             put("jigsaw", "jigsaw blocks");
             put("light", "light blocks");
             put("lily of the valley", "lilies of the valley");
@@ -169,13 +170,12 @@ public class Pluraliser {
         }
     };
     private static final List<String> unchanging = Arrays.asList(
-            "advice", "aircraft", "bamboo", "bison", "bread", "carrots", "clay", "cobweb", "cocoa", "cod",
-            "corn", "debris", "deer", "elytra", "equipment", "evidence", "farmland", "fish", "flint",
-            "glowstone", "gold", "gunpowder", "heart of the sea", "ice", "information", "jewelry", "kin", "lava",
-            "leather", "legislation", "luck", "luggage", "moose", "music", "mutton", "mycelium", "netherrack",
-            "obsidian", "offspring", "paper", "potatoes", "quartz", "salmon", "scaffolding", "shears", "sheep",
-            "silver", "snow", "string", "sugar", "swine", "trousers", "tnt", "trout", "wheat", "blaze powder",
-            "magma cream"
+            "advice", "aircraft", "bamboo", "bison", "bread", "carrots", "clay", "cobweb", "cocoa", "cod", "corn",
+            "debris", "deer", "elytra", "equipment", "evidence", "farmland", "fish", "flint", "glowstone", "gold",
+            "gunpowder", "ice", "information", "jewelry", "kin", "lava", "leather", "legislation", "luck", "luggage",
+            "moose", "music", "mutton", "mycelium", "netherrack", "obsidian", "offspring", "paper", "potatoes",
+            "quartz", "salmon", "scaffolding", "shears", "sheep", "silver", "snow", "string", "sugar", "swine",
+            "trousers", "tnt", "trout", "wheat", "blaze powder", "magma cream"
     );
     private static final List<String> onlyPlurals = Arrays.asList(
             "barracks", "bellows", "cattle", "congratulations", "deer", "dregs", "eyeglasses", "gallows", "headquarters",
@@ -188,6 +188,12 @@ public class Pluraliser {
         for (String u : unchanging) {
             if (str.equals(u)) {
                 return str;
+            }
+        }
+        // look for exceptions in xExceptions
+        for (Map.Entry<String, String> map : xExceptions.entrySet()) {
+            if (str.equals(map.getKey())) {
+                return map.getValue();
             }
         }
         // music disc special case
@@ -215,12 +221,6 @@ public class Pluraliser {
         }
         // word ends in s, x, ch, z, or sh
         if (str.endsWith("s") || str.endsWith("x") || str.endsWith("ch") || str.endsWith("sh") || str.endsWith("z")) {
-            // look for exceptions first xExceptions
-            for (Map.Entry<String, String> map : xExceptions.entrySet()) {
-                if (str.equals(map.getKey())) {
-                    return map.getValue();
-                }
-            }
             // look for usExceptions
             for (Map.Entry<String, String> map : usExceptions.entrySet()) {
                 if (str.equals(map.getKey())) {
@@ -354,17 +354,6 @@ public class Pluraliser {
             str = removeEnd(str, 2) + "ices";
             return str;
         } else {
-            // check unchanging
-            for (String s : unchanging) {
-                if (str.equals(s)) {
-                    return str;
-                }
-            }
-            for (Map.Entry<String, String> map : xExceptions.entrySet()) {
-                if (str.equals(map.getKey())) {
-                    return map.getValue();
-                }
-            }
             // check onlyPlurals
             for (String p : onlyPlurals) {
                 if (str.equals(p)) {
