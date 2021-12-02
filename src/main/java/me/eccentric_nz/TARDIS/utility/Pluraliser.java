@@ -213,7 +213,7 @@ public class Pluraliser {
                 if (str.endsWith(" foot")) {
                     return removeEnd(str, 4) + "feet";
                 }
-                if (str.endsWith("fungus")) {
+                if (str.endsWith("cactus") || str.endsWith("fungus")) {
                     return removeEnd(str, 2) + "i";
                 }
                 return str;
