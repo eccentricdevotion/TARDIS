@@ -124,7 +124,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                         } else {
                             int which = TARDISNumberParsers.parseInt(args[1]);
-                            FractalFence.grow(up, which);
+                            FractalFence.grow(targetBlock, which);
                         }
                     }
                 }
