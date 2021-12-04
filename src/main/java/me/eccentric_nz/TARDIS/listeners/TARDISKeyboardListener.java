@@ -88,7 +88,7 @@ public class TARDISKeyboardListener implements Listener {
                 }
                 Sign sign = (Sign) b.getState();
                 plugin.getTrackerKeeper().getSign().put(loc, sign);
-                plugin.getTardisHelper().openSignGUI(player, sign);
+                player.openSign(sign);
             }
         }
     }
@@ -187,12 +187,10 @@ public class TARDISKeyboardListener implements Listener {
                 plugin.getLogger().log(Level.INFO, p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
                 return;
             }
-            plugin.getTardisHelper().finishSignEditing(p);
         } else {
             plugin.debug("Player is not in a TARDIS!");
         }
         TARDISMessage.send(p, "KEYBOARD_ERROR");
-        plugin.getTardisHelper().finishSignEditing(p);
     }
 
     private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentLocation rsc) {
