@@ -43,14 +43,14 @@ public class TARDISSpigotChecker implements Runnable {
         // latest is always the recommended build - for new releases we should check the current server version
         String spigotVersion = plugin.getServer().getVersion();
         if (spigotVersion.contains("Spigot")) {
-            JsonObject spigotBuild = fetch1dot17SpigotBuild();
+            JsonObject spigotBuild = fetch1dot18SpigotBuild();
             if (spigotBuild == null || !spigotBuild.has("refs")) {
                 // couldn't get Spigot info
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 3121 is the latest 1.17 build (as of 12-06-2021)
-            String[] split = spigotVersion.split("-"); // something like '3118-Spigot-66f9d3c-27835bd (MC: 1.17)'
+            // 3353 is the latest 1.18 build (as of 05-12-2021)
+            String[] split = spigotVersion.split("-"); // something like '3353-Spigot-dbf4938-f49e9d1 (MC: 1.18)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
@@ -88,10 +88,10 @@ public class TARDISSpigotChecker implements Runnable {
     /**
      * Fetches the latest build information from hub.spigotmc.org
      */
-    private JsonObject fetch1dot17SpigotBuild() {
+    private JsonObject fetch1dot18SpigotBuild() {
         //
         try {
-            URL url = new URL("https://hub.spigotmc.org/versions/1.17.json");
+            URL url = new URL("https://hub.spigotmc.org/versions/1.18.json");
             URLConnection request = url.openConnection();
             request.connect();
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
