@@ -77,7 +77,7 @@ public class CureBrewingListener implements Listener {
             Location location = item.getLocation();
             Block cauldron = location.getBlock();
             if (item.isOnGround()) {
-                if (cauldron.getType() == Material.CAULDRON) {
+                if (cauldron.getType() == Material.WATER_CAULDRON) {
                     if (TARDISPermission.hasPermission(player, "tardis.chemistry.brew")) {
                         // cauldron must have water in it
                         Levelled levelled = (Levelled) cauldron.getBlockData();
