@@ -1,5 +1,5 @@
 # version - do not change
-version: 10
+version: 11
 # TARDIS wall interior blocks
 tardis_blocks:
   - ACACIA_LOG
@@ -7,6 +7,8 @@ tardis_blocks:
   - AMETHYST_BLOCK
   - ANDESITE
   - BASALT
+  - BIG_DRIPLEAF
+  - BIG_DRIPLEAF_STEM
   - BIRCH_LOG
   - BIRCH_PLANKS
   - BLACKSTONE
@@ -141,6 +143,7 @@ tardis_blocks:
   - RED_WOOL
   - ROOTED_DIRT
   - SANDSTONE
+  - SMALL_DRIPLEAF
   - SMOOTH_BASALT
   - SMOOTH_QUARTZ
   - SMOOTH_RED_SANDSTONE
@@ -603,6 +606,7 @@ under_door_blocks:
   - LANTERN
   - LARGE_FERN
   - LAVA
+  - LAVA_CAULDRON
   - LEVER
   - LIGHTNING_ROD
   - LIGHT_BLUE_BANNER
@@ -686,6 +690,8 @@ under_door_blocks:
   - POLISHED_DEEPSLATE_STAIRS
   - POLISHED_DEEPSLATE_WALL
   - POPPY
+  - POWDER_SNOW
+  - POWDER_SNOW_CAULDRON
   - POWERED_RAIL
   - PRISMARINE_WALL
   - PUMPKIN_STEM
@@ -766,6 +772,7 @@ under_door_blocks:
   - WARPED_TRAPDOOR
   - WARPED_WALL_SIGN
   - WATER
+  - WATER_CAULDRON
   - WAXED_CUT_COPPER_SLAB
   - WAXED_CUT_COPPER_STAIRS
   - WAXED_EXPOSED_CUT_COPPER_SLAB
