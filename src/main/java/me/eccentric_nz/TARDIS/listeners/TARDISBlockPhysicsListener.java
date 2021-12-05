@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -57,7 +56,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                     if (state instanceof TrapDoor) {
                         Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
                         if (blockBehind != null) {
-                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
+                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || Tag.IMPERMEABLE.isTagged(blockBehind.getType())) {
                                 event.setCancelled(true);
                             }
                         }
@@ -65,7 +64,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                     if (state instanceof Door) {
                         Block blockBelow = getBlockBelow(block);
                         if (blockBelow != null) {
-                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || Tag.IMPERMEABLE.isTagged(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                                 event.setCancelled(true);
                             }
                         }

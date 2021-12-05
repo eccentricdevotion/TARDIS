@@ -76,9 +76,10 @@ public class TARDISStattenheimListener implements Listener {
         this.plugin = plugin;
         // add useless blocks
         useless.add(Material.SNOW);
-        useless.addAll(TARDISMaterials.carpet);
+        useless.add(Material.POWDER_SNOW);
+        useless.addAll(Tag.CARPETS.getValues());
         useless.addAll(TARDISMaterials.plants);
-        useless.addAll(TARDISMaterials.saplings);
+        useless.addAll(Tag.SAPLINGS.getValues());
         remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 

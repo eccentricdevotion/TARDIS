@@ -201,13 +201,13 @@ public class Pluraliser {
             String[] split = str.split(" ");
             return "music discs " + split[2];
         }
-        // ends with exceptions which should just have a 's' plural
+        // ends with exceptions which should just have an 's' plural
         for (String e : endsWithExceptionsAddS) {
             if (str.endsWith(e)) {
                 return str + "s";
             }
         }
-        // ends with exceptions which should be unchanged
+        // ends with exceptions which should be (largely) unchanged
         for (String e : endsWithExceptions) {
             if (str.endsWith(e)) {
                 if (str.endsWith(" foot")) {

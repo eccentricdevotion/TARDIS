@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -116,6 +117,7 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.SQUID_SPAWN_EGG);
         no_place.add(Material.STRAY_SPAWN_EGG);
         no_place.add(Material.TNT_MINECART);
+        no_place.addAll(Tag.ITEMS_BOATS.getValues());
         no_place.add(Material.TRADER_LLAMA_SPAWN_EGG);
         no_place.add(Material.TROPICAL_FISH_SPAWN_EGG);
         no_place.add(Material.TURTLE_SPAWN_EGG);
@@ -135,32 +137,16 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.STRIDER_SPAWN_EGG);
         no_place.add(Material.ZOMBIE_SPAWN_EGG);
         no_place.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
-        allow_interact.add(Material.ACACIA_BUTTON);
-        allow_interact.add(Material.ACACIA_DOOR);
-        allow_interact.add(Material.ACACIA_PRESSURE_PLATE);
-        allow_interact.add(Material.BIRCH_BUTTON);
-        allow_interact.add(Material.BIRCH_DOOR);
-        allow_interact.add(Material.BIRCH_PRESSURE_PLATE);
         allow_interact.add(Material.COMPARATOR);
-        allow_interact.add(Material.DARK_OAK_BUTTON);
-        allow_interact.add(Material.DARK_OAK_DOOR);
-        allow_interact.add(Material.DARK_OAK_PRESSURE_PLATE);
-        allow_interact.add(Material.IRON_DOOR);
-        allow_interact.add(Material.JUNGLE_BUTTON);
-        allow_interact.add(Material.JUNGLE_DOOR);
-        allow_interact.add(Material.JUNGLE_PRESSURE_PLATE);
         allow_interact.add(Material.LEVER);
-        allow_interact.add(Material.OAK_BUTTON);
-        allow_interact.add(Material.OAK_DOOR);
-        allow_interact.add(Material.OAK_PRESSURE_PLATE);
         allow_interact.add(Material.REPEATER);
-        allow_interact.add(Material.SPRUCE_BUTTON);
-        allow_interact.add(Material.SPRUCE_DOOR);
-        allow_interact.add(Material.SPRUCE_PRESSURE_PLATE);
-        allow_interact.add(Material.STONE_BUTTON);
-        allow_interact.add(Material.STONE_PRESSURE_PLATE);
+        allow_interact.addAll(Tag.BUTTONS.getValues());
+        allow_interact.addAll(Tag.DOORS.getValues());
+        allow_interact.addAll(Tag.FENCE_GATES.getValues());
+        allow_interact.addAll(Tag.PRESSURE_PLATES.getValues());
+        allow_interact.addAll(Tag.TRAPDOORS.getValues());
         no_flower_pot.addAll(TARDISMaterials.plants);
-        no_flower_pot.addAll(TARDISMaterials.saplings);
+        no_flower_pot.addAll(Tag.SAPLINGS.getValues());
     }
 
     @EventHandler(ignoreCancelled = true)
