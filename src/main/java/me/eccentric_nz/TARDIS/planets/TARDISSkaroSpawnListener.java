@@ -68,8 +68,11 @@ public class TARDISSkaroSpawnListener implements Listener {
                 EntityEquipment ee = le.getEquipment();
                 ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
                 // teleport them straight up
-                le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));
-                plugin.getTardisHelper().setFallFlyingTag(le);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));
+                    le.setGliding(true);
+                    plugin.getTardisHelper().setFallFlyingTag(le);
+                }, 2L);
             }
         }
     }
