@@ -1,6 +1,7 @@
 switch_resource_packs: false
 set_pack_on_join: true
 default_resource_pack: 'https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1'
+colour_skies: true
 planets:
   TARDIS_TimeVortex:
     enabled: true

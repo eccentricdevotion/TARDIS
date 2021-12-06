@@ -64,6 +64,10 @@ public class TARDISPlanetsUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
+            if (planets_config.contains("colour_skies")) {
+                planets_config.set("colour_skies", true);
+                save++;
+            }
             if (planets_config.contains("planets.TARDIS_Zero_Room")) {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
