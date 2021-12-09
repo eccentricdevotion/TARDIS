@@ -122,7 +122,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                         empty[1][4][5] = controlBlock;
                                         empty[1][5][4] = controlBlock;
                                         empty[1][5][5] = controlBlock;
-                                    } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
+                                    } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("division") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
                                         empty[1][4][5] = controlBlock;
                                         empty[1][5][4] = controlBlock;
                                         empty[1][5][5] = controlBlock;

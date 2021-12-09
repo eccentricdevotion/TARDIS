@@ -170,6 +170,7 @@ public enum TARDISInfoMenu {
     CORAL("TIS|TARDIS Types|Coral", "TYPES", "o"),
     DELTA("TIS|TARDIS Types|Delta=", "TYPES", "="),
     DELUXE("TIS|TARDIS Types|Deluxe", "TYPES", "D"),
+    DIVISION("TIS|TARDIS Types|Division/", "TYPES", "/"),
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
     ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
     FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),

@@ -207,6 +207,9 @@ permissions:
   tardis.deluxe:
     description: Allow players to build the 'deluxe' TARDIS.
     default: op
+  tardis.division:
+    description: Allow players to build the 'division' Spaceship.
+    default: op
   tardis.eleventh:
     description: Allow players to build the 'eleventh' TARDIS.
     default: op

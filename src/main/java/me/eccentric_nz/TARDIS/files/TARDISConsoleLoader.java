@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -52,6 +52,7 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("CORAL", new Schematic("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", ConsoleSize.TALL, true, false, false));
         Consoles.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, false, false));
         Consoles.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, false, false));
+        Consoles.getBY_NAMES().put("DIVISION", new Schematic("PINK_GLAZED_TERRACOTTA", "division", "The Division Interuniverse Console", ConsoleSize.MEDIUM, false, false, false));
         Consoles.getBY_NAMES().put("ELEVENTH", new Schematic("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, true, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, true, false));

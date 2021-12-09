@@ -110,6 +110,7 @@ public enum TARDISDescription {
     COPPER_11TH("The 11th Doctor's Copper TARDIS - console design by vistaero."),
     CORAL("The 10th Doctor's TARDIS - console design by vistaero."),
     DELTA("A Nether Delta TARDIS."),
+    DIVISION("The Division Interuniverse Spaceship."),
     CAVE("A dripstone cave TARDIS."),
     WEATHERED("A weathered copper TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
