@@ -19,15 +19,19 @@ package me.eccentric_nz.TARDIS.mobfarming;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TARDISFollowerSpawner {
 
@@ -67,5 +71,23 @@ public class TARDISFollowerSpawner {
             }
         }
         followers.clear();
+    }
+
+    public void spawnDivisionOod(Location location) {
+        TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
+        plugin.setTardisSpawn(true);
+        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        twa.setOodEquipment(null, stand, false);
+    }
+
+    public void removeDivisionOod(Location location) {
+        for (Entity a : location.getWorld().getNearbyEntities(location, 32, 8, 32, (e) -> e.getType() == EntityType.ARMOR_STAND)) {
+            if (a.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && a.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                UUID fetched = a.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                if (fetched.equals(TARDISWeepingAngels.UNCLAIMED)) {
+                    a.remove();
+                }
+            }
+        }
     }
 }

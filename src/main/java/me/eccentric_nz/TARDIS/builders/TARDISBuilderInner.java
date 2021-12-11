@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -89,6 +90,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
     private Block postBedrock = null;
+    private Location postOod = null;
     private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
     private JsonArray arr;
     private JsonObject obj;
@@ -265,6 +267,11 @@ public class TARDISBuilderInner implements Runnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
+            if (postOod != null) {
+                // spawn Ood
+                TARDISFollowerSpawner spawner = new TARDISFollowerSpawner(plugin);
+                spawner.spawnDivisionOod(postOod);
+            }
             lampBlocks.forEach((lamp) -> {
                 BlockData lantern;
                 if (schm.hasLanterns()) {
@@ -433,6 +440,14 @@ public class TARDISBuilderInner implements Runnable {
             }
             if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
                 fractalBlocks.add(world.getBlockAt(x, y, z));
+            }
+            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && schm.getPermission().equals("division")) {
+                // replace with gray concrete
+                data = Material.GRAY_CONCRETE.createBlockData();
+                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                    // remember the block to spawn an Ood on
+                    postOod = new Location(world, x, y + 1, z);
+                }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                 data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));

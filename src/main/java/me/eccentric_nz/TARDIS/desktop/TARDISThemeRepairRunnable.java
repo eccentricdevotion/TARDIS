@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
@@ -95,6 +96,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private World world;
     private List<Chunk> chunks;
     private Block postBedrock;
+    private Location postOod;
     private JsonArray arr;
     private Material wall_type;
     private Material floor_type;
@@ -188,8 +190,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
-                // remove the charged creeper
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                if (tud.getPrevious().getPermission().equals("division")) {
+                    // remove ood
+                    new TARDISFollowerSpawner(plugin).removeDivisionOod(creeper);
+                }
+                // remove the charged creeper
                 Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
                 ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
                     if (e instanceof Creeper) {
@@ -300,6 +306,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.GLASS);
             }
+            if (postOod != null) {
+                // spawn Ood
+                new TARDISFollowerSpawner(plugin).spawnDivisionOod(postOod);
+            }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
@@ -397,6 +407,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(world.getBlockAt(x, y, z));
+                }
+                if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
+                    // replace with gray concrete
+                    data = Material.GRAY_CONCRETE.createBlockData();
+                    if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                        // remember the block to spawn an Ood on
+                        postOod = new Location(world, x, y + 1, z);
+                    }
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
