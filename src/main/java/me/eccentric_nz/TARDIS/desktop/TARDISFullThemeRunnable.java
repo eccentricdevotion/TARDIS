@@ -71,6 +71,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
+    private final List<Block> postLightBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -373,6 +374,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
+            postLightBlocks.forEach((block) -> {
+                if (block.getType().isAir()) {
+                    block.setBlockData(TARDISConstants.LIGHT_DIV);
+                }
+            });
             if (tud.getSchematic().getPermission().equals("cave")) {
                 iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                 iceBlocks.clear();
@@ -513,6 +519,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         // remember the block to spawn an Ood on
                         postOod = new Location(world, x, y + 1, z);
                     }
+                }
+                if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && tud.getSchematic().getPermission().equals("division")) {
+                    postLightBlocks.add(world.getBlockAt(x, y - 1, z));
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
                     data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));

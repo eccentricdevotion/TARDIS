@@ -133,9 +133,13 @@ public class TARDISConstants {
      */
     public static final BlockData ICE = Material.ICE.createBlockData();
     /**
-     * BlockData for LIGHT
+     * BlockData for police box LIGHT
      */
-    public static final Levelled LIGHT = setLight();
+    public static final Levelled LIGHT = setLight(7);
+    /**
+     * BlockData for Division LIGHT
+     */
+    public static final Levelled LIGHT_DIV = setLight(15);
     /**
      * A list of loot tables to populate TARDIS planet chests
      */
@@ -176,9 +180,9 @@ public class TARDISConstants {
     /**
      * BlockData setter for LIGHT
      */
-    private static Levelled setLight() {
+    private static Levelled setLight(int level) {
         Levelled levelled = (Levelled) Material.LIGHT.createBlockData();
-        levelled.setLevel(7);
+        levelled.setLevel(level);
         return levelled;
     }
 

@@ -86,6 +86,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
+    private final List<Block> postLightBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
@@ -283,6 +284,11 @@ public class TARDISBuilderInner implements Runnable {
                 lamp.setBlockData(lantern);
             });
             lampBlocks.clear();
+            postLightBlocks.forEach((block) -> {
+                if (block.getType().isAir()) {
+                    block.setBlockData(TARDISConstants.LIGHT_DIV);
+                }
+            });
             if (schm.getPermission().equals("cave")) {
                 iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
                 iceBlocks.clear();
@@ -440,6 +446,9 @@ public class TARDISBuilderInner implements Runnable {
             }
             if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
                 fractalBlocks.add(world.getBlockAt(x, y, z));
+            }
+            if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && schm.getPermission().equals("division")) {
+                postLightBlocks.add(world.getBlockAt(x, y - 1, z));
             }
             if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && schm.getPermission().equals("division")) {
                 // replace with gray concrete
