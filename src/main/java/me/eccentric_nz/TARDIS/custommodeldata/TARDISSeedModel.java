@@ -91,6 +91,7 @@ public class TARDISSeedModel {
 
     public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
         {
+            put("DIVISION", 13);
             put("ARS", 14);
             put("BIGGER", 15);
             put("BUDGET", 16);
