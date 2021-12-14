@@ -17,13 +17,19 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIArs;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
@@ -38,7 +44,12 @@ public class TARDISARSInventory {
 
     public TARDISARSInventory(TARDIS plugin) {
         this.plugin = plugin;
-        ars = getItemStack();
+        ars = getItemStack(null);
+    }
+
+    public TARDISARSInventory(TARDIS plugin, Player p) {
+        this.plugin = plugin;
+        ars = getItemStack(p);
     }
 
     /**
@@ -46,7 +57,7 @@ public class TARDISARSInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
-    private ItemStack[] getItemStack() {
+    private ItemStack[] getItemStack(Player player) {
 
         ItemStack[] is = new ItemStack[54];
         // direction pad up
@@ -159,7 +170,12 @@ public class TARDISARSInventory {
                 ItemStack room = new ItemStack(Material.getMaterial(a.getMaterial()), 1);
                 ItemMeta im = room.getItemMeta();
                 im.setDisplayName(a.getDescriptiveName());
-                List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost"));
+                List<String> lore = new ArrayList<>();
+                lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost"));
+                String roomName = TARDISARS.ARSFor(room.getType().toString()).getConfigPath();
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ENGLISH))) {
+                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                }
                 im.setLore(lore);
                 im.setCustomModelData(1);
                 room.setItemMeta(im);
