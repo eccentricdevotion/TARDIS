@@ -1,18 +1,17 @@
 # TODO
 
-## Current version `4.7.4`
+## Current version `4.8.1`
 
-## Next version `4.8.0`
+## Next version `4.9.0`
 
 1. Update documentation...
 2. Use the Vortex Manipulator to teleport past force fields
 3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
 5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-6. TCG API - use Police Box location instead of player location? _can't remember what this is about..._
-7. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-8. Cache TARDIS data to speed lookups and reduce database queries 
-9. All the things...
+6. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+7. Cache TARDIS data to speed lookups and reduce database queries
+8. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 
