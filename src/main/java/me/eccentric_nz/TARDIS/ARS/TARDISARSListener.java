@@ -79,7 +79,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 9:
                     case 11:
                     case 19:
-                        // up
+                        // up, left, right, down
                         moveMap(playerUUID, view, slot);
                         break;
                     case 4:
@@ -172,7 +172,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(playerUUID, startl);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), playerUUID, false);
+                            setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), playerUUID, false, true);
                         }
                         break;
                     case 38:
@@ -189,7 +189,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(playerUUID, startr);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), playerUUID, false);
+                            setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), playerUUID, false, true);
                         }
                         break;
                     case 39:
@@ -242,7 +242,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
                                 setSlot(view, selected_slot.get(playerUUID), ris, playerUUID, true);
-                                setSlot(view, slot, ris.getType(), displayName, playerUUID, false);
+                                setSlot(view, slot, ris.getType(), displayName, playerUUID, false, false);
                             }
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));

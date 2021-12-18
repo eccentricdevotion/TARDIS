@@ -23,6 +23,7 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -145,7 +147,7 @@ public class TARDISARSMethods {
     }
 
     /**
-     * Sets an ItemStack to the specified inventory slot updating the display name and removing any lore.
+     * Sets an ItemStack to the specified inventory slot updating the display name and setting lore if necessary.
      *
      * @param view       the inventory to update
      * @param slot       the slot number to update
@@ -154,13 +156,21 @@ public class TARDISARSMethods {
      * @param playerUUID the player using the GUI
      * @param update     whether to update the grid display
      */
-    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean update) {
+    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean update, boolean showPerms) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
             String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
-            List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+            List<String> lore = new ArrayList<>();
+            lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+            if (showPerms) {
+                String roomName = TARDISARS.ARSFor(material.toString()).getConfigPath();
+                Player player = plugin.getServer().getPlayer(playerUUID);
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ENGLISH))) {
+                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                }
+            }
             im.setLore(lore);
         } else {
             im.setLore(null);
@@ -417,7 +427,7 @@ public class TARDISARSMethods {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
                 String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
-                setSlot(view, slot, material, name, playerUUID, false);
+                setSlot(view, slot, material, name, playerUUID, false, false);
                 indexz++;
             }
             indexz = 0;
