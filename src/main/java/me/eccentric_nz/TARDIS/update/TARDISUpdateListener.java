@@ -149,6 +149,7 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             }
             if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
+                plugin.debug(player.getName() + " tried to update a " + updateable + "... the type of block clicked was " + blockType);
                 TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
                 return;
             }
