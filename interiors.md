@@ -124,7 +124,7 @@ Factory TARDIS - The 1st Doctor’s Factory TARDIS (thanks to vistaero)
 
 ## ROTOR
 
-'Rotor' TARDIS
+'Rotor' TARDIS - An animated time rotor TARDIS
 
 ![Rotor TARDIS](images/consoles/rotor.jpg)
 

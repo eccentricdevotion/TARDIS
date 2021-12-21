@@ -58,7 +58,7 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 | [PLANK](interiors#plank)           | Bookshelf              | A "wood plank" TARDIS interior                          |
 | [PYRAMID](interiors#pyramid)       | Sandstone Stairs       | A sandstone pyramid TARDIS interior (by airomis)        |
 | [REDSTONE](interiors#redstone)     | Redstone Block         | A “redstone” TARDIS                                     |
-| [ROTOR](interiors#rotor)           | Honeycomb Block        | The “rotor” TARDIS console                              |
+| [ROTOR](interiors#rotor)           | Honeycomb Block        | An animated time rotor TARDIS console                   |
 | [STEAMPUNK](interiors#steampunk)   | Coal Block             | A “steampunk” TARDIS (designed by ToppanaFIN)           |
 | [THIRTEENTH](interiors#thirteenth) | Orange Concrete        | The 13th Doctor's TARDIS interior (designed by Razihel) |
 | [TOM](interiors#tom)               | Lapis Block            | The “Tom Baker” TARDIS interior                         |
