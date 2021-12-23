@@ -178,9 +178,9 @@ public class TARDISCaveFinder {
     private boolean worldCheck(World w) {
         Location spawn = w.getSpawnLocation();
         int y = w.getHighestBlockYAt(spawn);
-        if (y < 15) {
+        if (y < -49) {
             return false;
-        } else if (w.getBlockAt(spawn.getBlockX(), 0, spawn.getBlockZ()).getType().isAir()) {
+        } else if (w.getBlockAt(spawn.getBlockX(), -64, spawn.getBlockZ()).getType().isAir()) {
             return false;
         } else {
             // move 20 blocks north
