@@ -176,11 +176,17 @@ public class TARDISCaveFinder {
     }
 
     private boolean worldCheck(World w) {
+        if (!w.getGenerator().shouldGenerateCaves()) {
+            // caves not generated
+            return false;
+        }
         Location spawn = w.getSpawnLocation();
         int y = w.getHighestBlockYAt(spawn);
-        if (y < 15) {
+        if (y < w.getMinHeight() + 15) {
+            // possibly a flat world
             return false;
-        } else if (w.getBlockAt(spawn.getBlockX(), 0, spawn.getBlockZ()).getType().isAir()) {
+        } else if (w.getBlockAt(spawn.getBlockX(), w.getMinHeight(), spawn.getBlockZ()).getType().isAir()) {
+            // possibly a void world
             return false;
         } else {
             // move 20 blocks north
@@ -190,6 +196,7 @@ public class TARDISCaveFinder {
             int ey = w.getHighestBlockYAt(spawn);
             spawn.setZ(spawn.getBlockZ() + 100);
             int sy = w.getHighestBlockYAt(spawn);
+            // possibly a flat world too
             return (y != ny || y != ey || y != sy);
         }
     }
