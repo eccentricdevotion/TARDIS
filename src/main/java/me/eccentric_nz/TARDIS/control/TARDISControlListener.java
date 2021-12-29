@@ -75,6 +75,7 @@ public class TARDISControlListener implements Listener {
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
     private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43);
+    private final Set<UUID> cooldown = new HashSet<>();
 
     public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -167,6 +168,14 @@ public class TARDISControlListener implements Listener {
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             switch (type) {
                                 case 1: // random location button
+                                    if (cooldown.contains(player.getUniqueId())) {
+                                        TARDISMessage.send(player, "SPAM_WAIT");
+                                        return;
+                                    }
+                                    cooldown.add(player.getUniqueId());
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        cooldown.remove(player.getUniqueId());
+                                    }, 60L);
                                     if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                         TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                         return;
