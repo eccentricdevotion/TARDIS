@@ -38,7 +38,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: "/tardis version" output
+      label: "'/tardis version' output"
       description: |
         Run `/tardis version` on your server and **paste** the full, unmodified output here.
         "latest" is *not* a version; we require the output of `/tardis version` so we can adequately track down the issue.
