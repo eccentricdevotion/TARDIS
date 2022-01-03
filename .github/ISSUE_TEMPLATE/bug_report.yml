@@ -48,7 +48,7 @@ body:
         <summary>Example</summary>
         
         ```
-        > tardis
+        > tardis version
         [TARDIS] Server version: git-Paper-109 (MC: 1.18.1)
         [TARDIS] TARDIS version: 4.8.1-b2377
         [TARDIS] TARDISChunkGenerator version: 4.8.1
