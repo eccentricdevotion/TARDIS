@@ -513,6 +513,9 @@ permissions:
   tardis.display:
     description: Allow a player to toggle the HUD display on and off.
     default: op
+  tardis.mushroom:
+    description: Allow a player to use the /tardismushroom command.
+    default: op
 commands:
   tardis:
     aliases: tt
@@ -1332,4 +1335,10 @@ commands:
     description: Toggle coordinates on and off.
     usage: /<command> [ALL|BIOME|COORDS|DIRECTION|TARGET_BLOCK]
     permission: tardis.display
+    permission-message: You don't have the permission <permission> to use this command
+  tardismushroom:
+    aliases: tmushroom
+    description: Fix broken mushroom block textures.
+    usage: /<command> [red|brown|stem] [radius]
+    permission: tardis.mushroom
     permission-message: You don't have the permission <permission> to use this command
