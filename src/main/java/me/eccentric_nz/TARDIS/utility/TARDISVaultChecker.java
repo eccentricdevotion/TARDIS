@@ -59,7 +59,7 @@ public class TARDISVaultChecker implements Runnable {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                    if (l != null && !chests.contains(l.getBlock().getType())) {
+                    if (l != null && l.getChunk().isLoaded() && !chests.contains(l.getBlock().getType())) {
                         int id = rs.getInt("v_id");
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("v_id", id);

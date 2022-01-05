@@ -55,11 +55,11 @@ public class TARDISControlRunnable implements Runnable {
                             sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
                             sign.setLine(2, "");
                         } else {
-                            String worldname = (rsc.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
-                            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
-                                worldname = plugin.getMVHelper().getAlias(worldname);
+                            String worldName = (rsc.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
+                            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
+                                worldName = plugin.getMVHelper().getAlias(worldName);
                             }
-                            sign.setLine(0, ChatColor.DARK_PURPLE + worldname);
+                            sign.setLine(0, ChatColor.DARK_PURPLE + worldName);
                             sign.setLine(1, ChatColor.BLACK + rsc.getLocation());
                             sign.setLine(2, ChatColor.BLACK + rsc.getBiome());
                         }
@@ -67,7 +67,7 @@ public class TARDISControlRunnable implements Runnable {
                         sign.update();
                     }
                 }
-            } else {// get the artron data
+            } else { // get the artron data
                 if (rsc.artronData()) {
                     int fc = plugin.getArtronConfig().getInt("full_charge");
                     int current_level = rsc.getArtronLevel();

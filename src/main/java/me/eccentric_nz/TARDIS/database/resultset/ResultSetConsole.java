@@ -78,7 +78,8 @@ public class ResultSetConsole {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                if (l == null) {
+                if (l == null || !l.getChunk().isLoaded()) {
+                    plugin.debug("Control sign chunk was not loaded...");
                     return false;
                 }
                 sign = l.getBlock();
@@ -131,7 +132,7 @@ public class ResultSetConsole {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                if (l == null) {
+                if (l == null || !l.getChunk().isLoaded()) {
                     return false;
                 }
                 sign = l.getBlock();
@@ -140,7 +141,7 @@ public class ResultSetConsole {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
+            plugin.debug("ResultSet error for controls table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -151,7 +152,7 @@ public class ResultSetConsole {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing blocks table! " + e.getMessage());
+                plugin.debug("Error closing controls table! " + e.getMessage());
             }
         }
         return true;
