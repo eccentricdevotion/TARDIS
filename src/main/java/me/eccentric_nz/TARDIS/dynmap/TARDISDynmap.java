@@ -4,7 +4,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -23,9 +22,6 @@ import java.util.logging.Level;
 
 public class TARDISDynmap {
 
-    private final TARDIS plugin;
-    private MarkerSet markerSet;
-    private Map<String, Marker> markers = new HashMap<>();
     private static final String INFO = """
             <div class=\"regioninfo\">
                 <div class=\"infowindow\">
@@ -39,6 +35,9 @@ public class TARDISDynmap {
                     <span style=\"font-weight:bold;\">Occupants:</span> %occupants%
                 </div>
             </div>""";
+    private final TARDIS plugin;
+    private MarkerSet markerSet;
+    private Map<String, Marker> markers = new HashMap<>();
     private Plugin dynmap;
     private DynmapAPI api;
     private MarkerAPI markerapi;
@@ -294,12 +293,14 @@ public class TARDISDynmap {
                     marker.setLabel(label);
                     marker.setMarkerIcon(markerIcon);
                 }
-                // build popup
-                String desc = formatInfoWindow(data);
-                // set popup
-                marker.setDescription(desc);
-                // add to new marker map
-                newmap.put(id, marker);
+                if (marker != null) { // should never be null when getting here as there is already a null check...
+                    // build popup
+                    String desc = formatInfoWindow(data);
+                    // set popup
+                    marker.setDescription(desc); // ... but apparently this line can throw a NPE - java.lang.NullPointerException: Cannot invoke "org.dynmap.markers.Marker.setDescription(String)" because "marker" is null
+                    // add to new marker map
+                    newmap.put(id, marker);
+                }
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, this, 1);
         }
