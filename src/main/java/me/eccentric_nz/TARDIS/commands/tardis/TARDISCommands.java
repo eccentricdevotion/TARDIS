@@ -113,7 +113,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
                 case colourise:
                 case colorize:
-                    new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
+                    return new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
                 case comehere:
                     return new TARDISComehereCommand(plugin).doComeHere(player);
                 case construct:
