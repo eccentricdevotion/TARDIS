@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Need Help? Ask on the Discussions Forum
+    url: https://github.com/eccentricdevotion/TARDIS/discussions
+    about: If you need some quick help, let us know!
+  - name: Join the Community Discord
+    url: https://discord.gg/jEJRvhQ
+    about: Join our Discord server to get help and discuss TARDIS!

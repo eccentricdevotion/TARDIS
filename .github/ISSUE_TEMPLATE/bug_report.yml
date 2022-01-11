@@ -1,0 +1,64 @@
+name: Bug report
+description: Report a TARDIS error
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: "Steps to reproduce the behaviour."
+      placeholder: |
+        1. Install '...'
+        2. Start '...'
+        3. Type '...'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: "If applicable, add screenshots to help explain your problem."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Log files
+      description: "Paste your server log (_showing the whole server startup to when the error occurs_) on a website like paste.gg, and post a link here. Even if there are no errors in the log, it still contains useful information for troubleshooting."
+      value: |
+        ```
+        Paste configs or paste.gg link here!
+        ```
+      placeholder: Please don't remove the backticks; it makes your issue a lot harder to read!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "'/tardis version' output"
+      description: |
+        Run `/tardis version` on your server and **paste** the full, unmodified output here.
+        "latest" is *not* a version; we require the output of `/tardis version` so we can adequately track down the issue.
+        Additionally, do NOT provide a screenshot, you MUST paste the entire output.
+        
+        <details>
+        <summary>Example</summary>
+        
+        ```
+        > tardis version
+        [TARDIS] Server version: git-Paper-109 (MC: 1.18.1)
+        [TARDIS] TARDIS version: 4.8.1-b2377
+        [TARDIS] TARDISChunkGenerator version: 4.8.1
+        [TARDIS] CoreProtect version: 20.3
+        [TARDIS] Essentials version: 2.19.3-dev+1-05ce11f
+        [TARDIS] floodgate version: 2.1.0-SNAPSHOT
+        [TARDIS] Checking for new TARDIS builds...
+        [TARDIS] You are 5 builds behind! Type /tadmin update_plugins to update!
+        ```
+        
+        </details>
+    validations:
+      required: true
