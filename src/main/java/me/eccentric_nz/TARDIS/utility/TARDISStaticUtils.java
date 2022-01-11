@@ -214,8 +214,8 @@ public class TARDISStaticUtils {
     }
 
     public static String getNick(UUID uuid) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
-            Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        if (essentials != null) {
             User user = essentials.getUser(uuid);
             String prefix = essentials.getSettings().getNicknamePrefix();
             return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
@@ -230,8 +230,8 @@ public class TARDISStaticUtils {
     }
 
     public static String getNick(Player player) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
-            Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        if (essentials != null) {
             User user = essentials.getUser(player.getUniqueId());
             String prefix = essentials.getSettings().getNicknamePrefix();
             return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
@@ -291,7 +291,7 @@ public class TARDISStaticUtils {
      */
     public static OfflinePlayer getOfflinePlayer(String name) {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (player.getName().equals(name)) {
+            if (name.equals(player.getName())) {
                 return player;
             }
         }
@@ -305,11 +305,10 @@ public class TARDISStaticUtils {
      */
     public static OfflinePlayer getOfflinePlayer(UUID uuid) {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (player.getUniqueId().equals(uuid)) {
+            if (uuid.equals(player.getUniqueId())) {
                 return player;
             }
         }
         return null;
     }
-
 }
