@@ -291,7 +291,7 @@ public class TARDISStaticUtils {
      */
     public static OfflinePlayer getOfflinePlayer(String name) {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (player.getName() != null && player.getName().equals(name)) {
+            if (name.equals(player.getName())) {
                 return player;
             }
         }
@@ -311,5 +311,4 @@ public class TARDISStaticUtils {
         }
         return null;
     }
-
 }
