@@ -23,6 +23,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -47,6 +48,10 @@ public class TARDISForceField implements Runnable {
 
     public static Vector getTrajectory2d(Location from, Entity to) {
         return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
+    }
+
+    public static Vector getTrajectory3d(Location from, Entity to) {
+        return to.getLocation().toVector().subtract(from.toVector()).normalize();
     }
 
     public static void velocity(Entity ent, Vector vec, double strength) {
@@ -101,7 +106,8 @@ public class TARDISForceField implements Runnable {
                 while (other.getVehicle() != null) {
                     other = other.getVehicle();
                 }
-                velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
+//                velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
+                velocity(other, getTrajectory3d(map.getValue(), other), (other instanceof Phantom) ? 1.5d : 0.5d);
                 other.getWorld().playSound(other.getLocation(), "tardis_force_field", 0.5f, 1.0f);
             }
             dust++;
