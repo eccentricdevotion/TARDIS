@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Set;
 
-public class TARDISUpdateChecker {
+public class TARDISUpdateableChecker {
 
     private final TARDIS plugin;
     private final Updateable updateable;
@@ -35,7 +35,7 @@ public class TARDISUpdateChecker {
             Updateable.VILLAGE
     );
 
-    public TARDISUpdateChecker(TARDIS plugin, Updateable updateable, Player player, Tardis tardis, String tardis_block) {
+    public TARDISUpdateableChecker(TARDIS plugin, Updateable updateable, Player player, Tardis tardis, String tardis_block) {
         this.plugin = plugin;
         this.updateable = updateable;
         this.player = player;

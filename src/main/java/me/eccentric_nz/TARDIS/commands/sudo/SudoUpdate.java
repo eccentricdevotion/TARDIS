@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
-import me.eccentric_nz.TARDIS.update.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -104,7 +104,7 @@ class SudoUpdate {
                     block.setBlockData(mushroom, true);
                 }
             }
-            if (new TARDISUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
+            if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
                 if (updateable.equals(Updateable.ROTOR) && args.length == 4 && args[3].equalsIgnoreCase("unlock")) {
                     // get Time Rotor frame location
                     ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
