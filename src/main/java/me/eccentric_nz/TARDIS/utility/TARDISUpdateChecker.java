@@ -51,17 +51,41 @@ public class TARDISUpdateChecker implements Runnable {
         String build = plugin.getGeneralKeeper().getPluginYAML().getString("build-number");
         if (build.contains(":")) {
             // local build, not a Jenkins build
+            if (sender == null) {
+                plugin.getLogger().log(Level.INFO, "Server is running a custom or dev version!");
+            } else {
+                sender.sendMessage(plugin.getPluginName() + "You are running a custom or dev version!");
+            }
             return;
         }
         int buildNumber = Integer.parseInt(build);
         JsonObject lastBuild = fetchLatestJenkinsBuild();
         if (lastBuild == null || !lastBuild.has("id")) {
             // couldn't get Jenkins info
+            if (sender == null) {
+                plugin.getLogger().log(Level.WARNING, "Couldn't retrieve Jenkins info!");
+            } else {
+                sender.sendMessage(plugin.getPluginName() + "Couldn't retrieve Jenkins info!");
+            }
             return;
         }
         int newBuildNumber = lastBuild.get("id").getAsInt();
-        if (newBuildNumber <= buildNumber) {
-            // if new build number is same or older
+        if (newBuildNumber < buildNumber) {
+            // if new build number is older
+            if (sender == null) {
+                plugin.getLogger().log(Level.INFO, "Server is running a newer TARDIS version!");
+            } else {
+                sender.sendMessage(plugin.getPluginName() + "You are running a newer TARDIS version!");
+            }
+            return;
+        }
+        if (buildNumber == newBuildNumber) {
+            // if new build number is same
+            if (sender == null) {
+                plugin.getLogger().log(Level.INFO, "Server is running the latest version!");
+            } else {
+                sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
+            }
             return;
         }
         plugin.setUpdateFound(true);
@@ -71,11 +95,7 @@ public class TARDISUpdateChecker implements Runnable {
             plugin.getLogger().log(Level.INFO, String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
             plugin.getLogger().log(Level.INFO, TARDISMessage.UPDATE_COMMAND);
         } else {
-            if (buildNumber == newBuildNumber) {
-                sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
-            } else {
-                sender.sendMessage(plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
-            }
+            sender.sendMessage(plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
         }
     }
 
