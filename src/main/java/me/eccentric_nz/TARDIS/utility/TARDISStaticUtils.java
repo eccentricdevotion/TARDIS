@@ -305,7 +305,7 @@ public class TARDISStaticUtils {
      */
     public static OfflinePlayer getOfflinePlayer(UUID uuid) {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (player.getUniqueId().equals(uuid)) {
+            if (uuid.equals(player.getUniqueId())) {
                 return player;
             }
         }
