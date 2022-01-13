@@ -609,8 +609,8 @@ commands:
       description: View TARDIS help pages.
       usage: /<command> help [command]
     comehere:
-      description: Make the TARDIS come to the block you are looking at.
-      usage: /<command> comehere
+      description: Make the TARDIS come to the block you are looking at. If a player argument is included, a travel request will be sent to the specified player.
+      usage: /<command> comehere [player]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     direction:

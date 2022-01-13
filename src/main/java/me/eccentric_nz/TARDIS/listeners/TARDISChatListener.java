@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.ComehereAction;
+import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue.RescueData;
 import org.bukkit.ChatColor;
@@ -66,28 +68,28 @@ public class TARDISChatListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
-        UUID saved = event.getPlayer().getUniqueId();
+        UUID chatter = event.getPlayer().getUniqueId();
         String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
         if (chat != null) {
             if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
                 event.setCancelled(true);
                 boolean request = (chat.equals("tardis request accept"));
-                if (plugin.getTrackerKeeper().getChatRescue().containsKey(saved)) {
-                    Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChatRescue().get(saved));
+                if (plugin.getTrackerKeeper().getChatRescue().containsKey(chatter)) {
+                    Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChatRescue().get(chatter));
                     TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChatRescue().remove(saved);
+                    plugin.getTrackerKeeper().getChatRescue().remove(chatter);
                     // delay it so the chat appears before the message
                     String player = event.getPlayer().getName();
                     String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        RescueData rd = res.tryRescue(rescuer, saved, request);
+                        RescueData rd = res.tryRescue(rescuer, chatter, request);
                         if (rd.success()) {
-                            if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
-                                Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
+                            if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(chatter)) {
+                                Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(chatter));
                                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                                     TARDISMessage.send(who, message, player);
                                 }
-                                plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
+                                plugin.getTrackerKeeper().getTelepathicRescue().remove(chatter);
                             } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                                 TARDISMessage.send(rescuer, message, player);
                             }
@@ -101,10 +103,19 @@ public class TARDISChatListener implements Listener {
                     String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
                     TARDISMessage.send(event.getPlayer(), message);
                 }
+            } else if (chat.equals("tardis comehere accept")) {
+                // process comehere request
+                event.setCancelled(true);
+                if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
+                    ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
+                    new ComehereAction(plugin).doTravel(request);
+                } else {
+                    TARDISMessage.send(event.getPlayer(), "REQUEST_TIMEOUT");
+                }
             } else if (handlesPattern.matcher(chat).lookingAt()) {
                 event.setCancelled(true);
                 // process handles request
-                new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
+                new TARDISHandlesRequest(plugin).process(chatter, event.getMessage());
             } else {
                 handleChat(event.getPlayer(), event.getMessage());
             }

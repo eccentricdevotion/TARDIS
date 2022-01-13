@@ -85,6 +85,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             String sub = args[0].toLowerCase();
             switch (sub) {
                 case "add":
+                case "comehere":
                 case "remove":
                 case "rescue":
                 case "save_player":

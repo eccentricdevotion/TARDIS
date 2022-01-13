@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
+import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
@@ -65,6 +66,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
+    private final HashMap<UUID, ComehereRequest> comehereRequests = new HashMap<>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<>();
     private final HashMap<UUID, Integer> binder = new HashMap<>();
     private final HashMap<UUID, Integer> count = new HashMap<>();
@@ -325,6 +327,13 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, BuildData> getFlightData() {
         return flightData;
+    }
+
+    /**
+     * Tracks players using the <code>/tardis comehere [player]</code> command
+     */
+    public HashMap<UUID, ComehereRequest> getComehereRequests() {
+        return comehereRequests;
     }
 
     /**
