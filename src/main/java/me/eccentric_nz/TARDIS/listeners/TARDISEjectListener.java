@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -65,7 +66,7 @@ public class TARDISEjectListener implements Listener {
             return;
         }
         // get the exit location
-        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
         Location l = dl.getL();
         // set the entity's direction as you would for a player when exiting
         switch (dl.getD()) {
@@ -369,6 +370,7 @@ public class TARDISEjectListener implements Listener {
                 villager.setVillagerType(v.getVillagerType());
                 villager.setVillagerExperience(v.getVillagerExperience());
                 villager.setVillagerLevel(v.getVillagerLevel());
+                plugin.getTardisHelper().setReputation(villager, uuid, plugin.getTardisHelper().getReputation(v, uuid));
                 String vilname = ent.getCustomName();
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
