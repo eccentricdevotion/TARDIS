@@ -122,11 +122,14 @@ public class TARDISSiegeMode {
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
                     List<TARDISSiegeArea> growth = new ArrayList<>();
-                    plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[0]).forEach((growth_area) -> {
-                        if (growth_area.getId() != id) {
-                            growth.add(growth_area);
-                        }
-                    });
+                    List<TARDISSiegeArea> siegeAreas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[0]);
+                    if (siegeAreas != null) {
+                        siegeAreas.forEach((growth_area) -> {
+                            if (growth_area.getId() != id) {
+                                growth.add(growth_area);
+                            }
+                        });
+                    }
                     if (growth.size() > 0) {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().put(chu[0], growth);
                     } else {
