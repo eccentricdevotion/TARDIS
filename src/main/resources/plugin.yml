@@ -609,8 +609,8 @@ commands:
       description: View TARDIS help pages.
       usage: /<command> help [command]
     comehere:
-      description: Make the TARDIS come to the block you are looking at. If a player argument is included, a travel request will be sent to the specified player.
-      usage: /<command> comehere [player]
+      description: Make the TARDIS come to the block you are looking at.
+      usage: /<command> comehere
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     direction:
@@ -1341,4 +1341,10 @@ commands:
     description: Fix broken mushroom block textures.
     usage: /<command> [red|brown|stem] [radius]
     permission: tardis.mushroom
+    permission-message: You don't have the permission <permission> to use this command
+  tardiscall:
+    aliases: tcall
+    description: Request a player to bring their TARDIS to your targeted location.
+    usage: /<command> [player]
+    permission: tardis.use
     permission-message: You don't have the permission <permission> to use this command

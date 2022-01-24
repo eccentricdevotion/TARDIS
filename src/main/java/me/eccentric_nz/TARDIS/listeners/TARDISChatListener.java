@@ -109,6 +109,7 @@ public class TARDISChatListener implements Listener {
                 if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
                     ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
                     new ComehereAction(plugin).doTravel(request);
+                    plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
                 } else {
                     TARDISMessage.send(event.getPlayer(), "REQUEST_TIMEOUT");
                 }

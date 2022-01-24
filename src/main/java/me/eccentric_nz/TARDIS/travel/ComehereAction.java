@@ -1,10 +1,9 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -73,46 +72,47 @@ public class ComehereAction {
             ttid.put("tardis_id", request.getId());
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
         }
-        plugin.getQueryFactory().doUpdate("current", set, tid);
-        TARDISMessage.send(requester, "TARDIS_COMING");
-        long delay = 1L;
-        plugin.getTrackerKeeper().getInVortex().add(request.getId());
-        boolean hid = request.isHidden();
-        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(request.getId())) {
-            DestroyData dd = new DestroyData();
-            dd.setDirection(request.getCurrentDirection());
-            dd.setLocation(oldSave);
-            dd.setPlayer(acceptor);
-            dd.setHide(false);
-            dd.setOutside(true);
-            dd.setSubmarine(request.isSubmarine());
-            dd.setTardisID(request.getId());
-            dd.setThrottle(spaceTimeThrottle);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if (!hid) {
-                    plugin.getTrackerKeeper().getDematerialising().add(request.getId());
-                    plugin.getPresetDestroyer().destroyPreset(dd);
-                } else {
-                    plugin.getPresetDestroyer().removeBlockProtection(request.getId());
-                }
-            }, delay);
-        }
-        BuildData bd = new BuildData(request.getAccepter().toString());
-        bd.setDirection(request.getDestinationDirection());
-        bd.setLocation(request.getDestination());
-        bd.setMalfunction(false);
-        bd.setOutside(true);
-        bd.setPlayer(acceptor);
-        bd.setRebuild(false);
-        bd.setSubmarine(request.isSubmarine());
-        bd.setTardisID(request.getId());
-        bd.setThrottle(spaceTimeThrottle);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
-        // remove energy from TARDIS
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("tardis_id", request.getId());
-        plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, acceptor);
-        plugin.getTrackerKeeper().getHasDestination().remove(request.getId());
-        plugin.getTrackerKeeper().getRescue().remove(request.getId());
+        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
+        plugin.getTrackerKeeper().getHasDestination().put(request.getId(), new TravelCostAndType(plugin.getArtronConfig().getInt("comehere"), TravelType.COMEHERE));
+        TARDISMessage.send(acceptor, "HANDBRAKE_RELEASE");
+//        long delay = 1L;
+//        plugin.getTrackerKeeper().getInVortex().add(request.getId());
+//        boolean hid = request.isHidden();
+//        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(request.getId())) {
+//            DestroyData dd = new DestroyData();
+//            dd.setDirection(request.getCurrentDirection());
+//            dd.setLocation(oldSave);
+//            dd.setPlayer(acceptor);
+//            dd.setHide(false);
+//            dd.setOutside(true);
+//            dd.setSubmarine(request.isSubmarine());
+//            dd.setTardisID(request.getId());
+//            dd.setThrottle(spaceTimeThrottle);
+//            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+//                if (!hid) {
+//                    plugin.getTrackerKeeper().getDematerialising().add(request.getId());
+//                    plugin.getPresetDestroyer().destroyPreset(dd);
+//                } else {
+//                    plugin.getPresetDestroyer().removeBlockProtection(request.getId());
+//                }
+//            }, delay);
+//        }
+//        BuildData bd = new BuildData(request.getAccepter().toString());
+//        bd.setDirection(request.getDestinationDirection());
+//        bd.setLocation(request.getDestination());
+//        bd.setMalfunction(false);
+//        bd.setOutside(true);
+//        bd.setPlayer(acceptor);
+//        bd.setRebuild(false);
+//        bd.setSubmarine(request.isSubmarine());
+//        bd.setTardisID(request.getId());
+//        bd.setThrottle(spaceTimeThrottle);
+//        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
+//        // remove energy from TARDIS
+//        HashMap<String, Object> wheret = new HashMap<>();
+//        wheret.put("tardis_id", request.getId());
+//        plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, acceptor);
+//        plugin.getTrackerKeeper().getHasDestination().remove(request.getId());
+//        plugin.getTrackerKeeper().getRescue().remove(request.getId());
     }
 }
