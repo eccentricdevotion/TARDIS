@@ -21,10 +21,13 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.ComehereAction;
+import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -35,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Command /tardis [arguments].
@@ -67,11 +71,27 @@ public class TARDISCommands implements CommandExecutor {
             }
             // the command list - first argument MUST appear here!
             TardisCommand tc;
+            String first = args[0].toLowerCase(Locale.ENGLISH);
             try {
-                tc = TardisCommand.valueOf(args[0].toLowerCase(Locale.ENGLISH));
+                tc = TardisCommand.valueOf(first);
             } catch (IllegalArgumentException e) {
-                sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
-                return false;
+                // is it a tpa or call request?
+                if (first.equals("call")) {
+                    UUID chatter = player.getUniqueId();
+                    if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
+                        ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
+                        new ComehereAction(plugin).doTravel(request);
+                        plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
+                    } else {
+                        TARDISMessage.send(player, "REQUEST_TIMEOUT");
+                    }
+                } else if (first.equals("request")) {
+                    new TARDISAcceptor(plugin).doRequest(player, true);
+                } else {
+                    sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
+                    return false;
+                }
+                return true;
             }
             if (args[0].equalsIgnoreCase("version")) {
                 return new TARDISVersionCommand(plugin).displayVersion(sender);

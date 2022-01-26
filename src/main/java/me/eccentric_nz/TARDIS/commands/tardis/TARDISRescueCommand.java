@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -44,6 +45,10 @@ class TARDISRescueCommand {
     boolean startRescue(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
+            return true;
+        }
+        if (args[1].equalsIgnoreCase("accept")) {
+            new TARDISAcceptor(plugin).doRequest(player, false);
             return true;
         }
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.commands;
 
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
@@ -48,11 +48,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISComehereRequestCommand {
+public class TARDISCallRequestCommand {
 
     private final TARDIS plugin;
 
-    public TARDISComehereRequestCommand(TARDIS plugin) {
+    public TARDISCallRequestCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -195,7 +195,7 @@ public class TARDISComehereRequestCommand {
         request.setSubmarine(sub);
         request.setHidden(hidden);
         plugin.getTrackerKeeper().getComehereRequests().put(uuid, request);
-        TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName(), ChatColor.AQUA + "tardis comehere accept" + ChatColor.RESET);
+        TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName(), ChatColor.AQUA + "tardis call accept" + ChatColor.RESET);
         // remove request after 60 seconds
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (plugin.getTrackerKeeper().getComehereRequests().containsKey(playerUuid)) {

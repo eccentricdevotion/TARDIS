@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISComehereRequestCommand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,7 +37,7 @@ public class TARDISCallCommand implements CommandExecutor, TabCompleter {
                 TARDISMessage.send(player, "PLAYER_NOT_FOUND");
                 return true;
             }
-            return new TARDISComehereRequestCommand(plugin).requestComeHere(player, requested);
+            return new TARDISCallRequestCommand(plugin).requestComeHere(player, requested);
         }
         return false;
     }
