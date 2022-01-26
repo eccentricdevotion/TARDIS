@@ -340,7 +340,7 @@ public class TARDISARSMethods {
                                 del += 5L;
                             }
                         }
-                        // one every 40 seconds at default room_speed
+                        // one every 40 seconds at fastest room_speed
                         long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                         long delay = 20L;
                         for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
