@@ -162,6 +162,7 @@ public class TARDISConfiguration {
         integerOptions.put("growth.gravity_max_distance", 15);
         integerOptions.put("growth.gravity_max_velocity", 5);
         integerOptions.put("growth.room_speed", 4);
+        integerOptions.put("growth.delay_factor", 1);
         integerOptions.put("growth.rooms_condenser_percent", 100);
         integerOptions.put("junk.return", -1);
         integerOptions.put("police_box.confirm_timeout", 15);

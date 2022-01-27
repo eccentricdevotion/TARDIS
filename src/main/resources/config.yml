@@ -159,6 +159,7 @@ growth:
   rooms_require_blocks: false
   rooms_condenser_percent: 100
   room_speed: 4
+  delay_factor: 1
   ars_limit: 1
 # chameleon arch
 arch:
