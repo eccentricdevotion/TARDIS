@@ -4,6 +4,7 @@
 
 ## Next version `4.9.0`
 
+0. Use new configuration comments api
 1. Update documentation...
 2. Use the Vortex Manipulator to teleport past force fields
 3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
