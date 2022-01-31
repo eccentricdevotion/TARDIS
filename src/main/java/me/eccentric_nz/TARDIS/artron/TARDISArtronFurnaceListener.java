@@ -133,7 +133,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        if (plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTARDISWorld(player)) {
             event.setCancelled(true);
             // only in TARDIS
             TARDISMessage.send(player, "NOT_IN_TARDIS");
