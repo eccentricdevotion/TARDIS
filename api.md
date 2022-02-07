@@ -8,6 +8,7 @@ title: API
 The TARDIS plugin now includes a publically accessible API for plugin developers to use.
 
 As of TARDIS v3.2-beta-1 the API can be accessed in your plugin like so:
+
 ```java
 public class ExamplePlugin extends JavaPlugin {
     private TardisAPI tardisAPI;
@@ -33,8 +34,9 @@ public class ExamplePlugin extends JavaPlugin {
     }
 }
 ```
-You can auto-generate a plugin that hooks into the TARDIS API at the [Bukkit plugin starter](http://www.thenosefairy.co.nz/plugin_starter.php) page. Make sure to select the _TARDIS API_ checkbox.
 
-The Java Doc for the API is available here: [TARDIS API docs](http://thenosefairy.co.nz/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html)
+You can auto-generate a plugin that hooks into the TARDIS API at the [Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) page. Make sure to select the _TARDIS API_ checkbox.
+
+The Java Doc for the API is available here: [TARDIS API docs](http://thenosefairy.duckdns.org/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html)
 
 An extensive working example plugin can be found here: [TARDISVortexManipulator source code](https://github.com/eccentricdevotion/TARDISVortexManipulator)

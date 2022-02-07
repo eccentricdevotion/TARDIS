@@ -1,347 +1,392 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<title>TARDIS: Preference configuration options</title>
-	<link rel="stylesheet" href="stylesheets/styles.css">
-	<link rel="stylesheet" href="stylesheets/pygment_trac.css">
-	<meta name="description" content="Minecraft data values lookup tables with filtering and other neat features."/>
-	<script src="javascripts/jquery.js"></script>
-	<script src="javascripts/index.js"></script>
-	<script src="javascripts/scale.fix.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<script>
+    <meta charset="utf-8">
+    <meta content="chrome=1" http-equiv="X-UA-Compatible">
+    <title>TARDIS: Preference configuration options</title>
+    <link href="stylesheets/styles.css" rel="stylesheet">
+    <link href="stylesheets/pygment_trac.css" rel="stylesheet">
+    <meta content="Minecraft data values lookup tables with filtering and other neat features." name="description"/>
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/index.js"></script>
+    <script src="javascripts/scale.fix.js"></script>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-53340539-1', 'auto');
   ga('send', 'pageview');
+
     </script>
 </head>
 <body>
 <div class="wrapper">
-	<header>
-		<h1>TARDIS</h1>
-		<p>A Spigot / Paper plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the
-			inside!</p>
-		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a>
-		</p>
-		<ul>
-			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-			<li><a href="site-map.html"><strong>Index</strong> File</a></li>
-		</ul>
-	</header>
-	<section>
-		<h1>Preference configuration options</h1>
-		<p>These are the TARDIS preferences configuration options.</p>
-		<style type="text/css">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Spigot / Paper plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the
+            inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a>
+        </p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Preference configuration options</h1>
+        <p>These are the TARDIS preferences configuration options.</p>
+        <style type="text/css">
 			table, table code { font-size:85%; }
 			td { vertical-align:top; }
 			td.noborder { border-bottom: none; }
 			tr.coption { background-color: #eee; }
-		</style>
-		<table>
-			<tr>
-				<th>Option</th>
-				<th>Type</th>
-				<th>Default Value</th>
-			</tr>
-			<tr>
-				<th colspan="3">preferences:</th>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>language</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>en</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the language used for TARDIS message localisation. The plugin will look for a file named with this setting and the file extension <em>.yml</em>. Should be set to an <a href="http://www.thenosefairy.co.nz/TARDIS_java_docs/me/eccentric_nz/TARDIS/enumeration/LANGUAGE.html" target="_blank">international language code</a>.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>key</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>GOLD_NUGGET</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html" target="_blank">https://hub.spigotmc.org/javadocs/spigot/org/bukkit/<br>
-Material.html</a></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>walk_in_tardis</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players can walk into the Police Box to enter the TARDIS. If set to <code>false</code>, clicking the door with the TARDIS key teleports you to the interior.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>open_door_policy</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>false</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether anyone can enter the TARDIS. If set to <code>false</code> (the default) only the Time Lord and their compnions can enter the TRADIS.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_worldguard</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether the TARDIS interior becomes a protected WorldGuard region belonging to the player who created the TARDIS.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldguard</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>build</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are <code>none</code> &mdash; no checking is performed, and any <a href="http://wiki.sk89q.com/wiki/WorldGuard/Regions/Flags#Flag_List" target="_blank">WorldGuard state flag</a>, generally this will probably be <code>build</code> or <code>entry</code>.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_grief_prevention</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether time travelling respects protected GriefPrevention claims.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>nation</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether time travelling respects protected Towny regions. Valid values are <code>none</code> &mdash; no checking is performed, <code>wilderness</code> &mdash; players can only land in wilderness,  <code>town</code> &mdash; players can also land in a town they are a resident of, <code>nation</code> &mdash; players can land in any town that is in the same nation as their own town.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldborder</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_factions</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether time travelling respects protected regions (if players do not have rights to build in an area, they will be denied access).</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sfx_volume</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>10</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the default volume of the TARDIS Resource Pack sounds. Using <code>10</code> is the same volume as the default sounds, lower values make the sounds quieter.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>difficulty</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>hard</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets how hard it is for players to use the plugin. This usually affects the TARDIS crafting recipes, whether they can use certain commands and whether TARDIS functions are controlled by circuits being installed. Valid values are <code>easy</code>, <code>medium</code> and <code>hard</code></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>strike_lightning</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether a TARDIS recharge point will strike lightning when recharging a TARDIS.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>freeze_cooldown</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>60</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the cool down period (in seconds) between uses of the Sonic Screwdriver&rsquo;s player freeze function.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_damage</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>10</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the number of hits the Police Box will take before engaging HADS.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_distance</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>10</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the distnace in blocks the Police Box will travel when HADS is engaged.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>3</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the percentage chance the TARDIS will malfunction when travelling.</td>
+
+        </style>
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default Value</th>
             </tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_nether</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>3</code></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_end</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>3</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the percentage chance a malfunction will deposit the TARDIS in the The End or the Nether.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_default_condensables</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_creative_condense</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>false</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players can condense items in CREATIVE game mode.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>heal_speed</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>200</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the heal speed in the Zero room. The default value of <code>200</code> means the player will gain half a heart every 200 ticks (10 seconds)</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_key</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>eleventh</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the default key texture.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_sonic</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>eleventh</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the default sonic screwdriver texture.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>wand</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>BONE</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the item to use as the TARDIS schematic wand.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>render_entities</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether mobs will be shown in the Rendering room.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>nerf_pistons.enabled</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>false</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether the plugin will attempt to prevent protected TARDIS blocks from being moved by pistons.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>nerf_pistions.only_tardis_worlds</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether all worlds are checked for pistons moving TARDIS blocks, or only TARDIS worlds.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_random_monsters</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether monsters will randomly spawn in the TARDIS if door is left open.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_limit</code></td>
-				<td class="noborder">integer</td>
-				<td class="noborder"><code>10</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the maximum number of monsters that can randomly spawn inside a TARDIS</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>vortex_fall</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>kill</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players who fall into the void in the TARDIS_TimeVortex world are killed or teleported back into the TARDIS. Options: <code>[kill|teleport]</code></td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_coords</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>false</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players will see the coordinates message when choosing a random destination.</td>
-			</tr>
-		</table>
-		<p><a href="configuration.html">Back to main configuration page</a></p>
-</section>
+            <tr>
+                <th colspan="3">preferences:</th>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>language</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>en</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the language used for TARDIS message localisation. The plugin will look for a file
+                    named with this setting and the file extension <em>.yml</em>. Should be set to an <a
+                            href="http://thenosefairy.duckdns.org/TARDIS_java_docs/me/eccentric_nz/TARDIS/enumeration/LANGUAGE.html"
+                            target="_blank">international language code</a>.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>key</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>GOLD_NUGGET</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be
+                    found here: <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html"
+                                   target="_blank">https://hub.spigotmc.org/javadocs/spigot/org/bukkit/<br>
+                        Material.html</a></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>walk_in_tardis</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether players can walk into the Police Box to enter the TARDIS. If set to <code>false</code>,
+                    clicking the door with the TARDIS key teleports you to the interior.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>open_door_policy</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>false</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether anyone can enter the TARDIS. If set to <code>false</code> (the default)
+                    only the Time Lord and their compnions can enter the TRADIS.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_worldguard</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether the TARDIS interior becomes a protected WorldGuard region belonging to the
+                    player who created the TARDIS.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldguard</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>build</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are
+                    <code>none</code> &mdash; no checking is performed, and any <a
+                            href="http://wiki.sk89q.com/wiki/WorldGuard/Regions/Flags#Flag_List" target="_blank">WorldGuard
+                        state flag</a>, generally this will probably be <code>build</code> or <code>entry</code>.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_grief_prevention</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether time travelling respects protected GriefPrevention claims.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>nation</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether time travelling respects protected Towny regions. Valid values are <code>none</code>
+                    &mdash; no checking is performed, <code>wilderness</code> &mdash; players can only land in
+                    wilderness, <code>town</code> &mdash; players can also land in a town they are a resident of, <code>nation</code>
+                    &mdash; players can land in any town that is in the same nation as their own town.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldborder</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_factions</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether time travelling respects protected regions (if players do not have rights
+                    to build in an area, they will be denied access).
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sfx_volume</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>10</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the default volume of the TARDIS Resource Pack sounds. Using <code>10</code> is the
+                    same volume as the default sounds, lower values make the sounds quieter.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>difficulty</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>hard</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets how hard it is for players to use the plugin. This usually affects the TARDIS
+                    crafting recipes, whether they can use certain commands and whether TARDIS functions are controlled
+                    by circuits being installed. Valid values are <code>easy</code>, <code>medium</code> and
+                    <code>hard</code></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>strike_lightning</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether a TARDIS recharge point will strike lightning when recharging a TARDIS.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>freeze_cooldown</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>60</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the cool down period (in seconds) between uses of the Sonic Screwdriver&rsquo;s
+                    player freeze function.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_damage</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>10</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the number of hits the Police Box will take before engaging HADS.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_distance</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>10</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the distnace in blocks the Police Box will travel when HADS is engaged.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>3</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the percentage chance the TARDIS will malfunction when travelling.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_nether</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>3</code></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_end</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>3</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the percentage chance a malfunction will deposit the TARDIS in the The End or the
+                    Nether.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_default_condensables</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your
+                    own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_creative_condense</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>false</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether players can condense items in CREATIVE game mode.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>heal_speed</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>200</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the heal speed in the Zero room. The default value of <code>200</code> means the
+                    player will gain half a heart every 200 ticks (10 seconds)
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_key</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>eleventh</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the default key texture.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_sonic</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>eleventh</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the default sonic screwdriver texture.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>wand</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>BONE</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the item to use as the TARDIS schematic wand.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>render_entities</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether mobs will be shown in the Rendering room.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>nerf_pistons.enabled</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>false</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether the plugin will attempt to prevent protected TARDIS blocks from being moved
+                    by pistons.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>nerf_pistions.only_tardis_worlds</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether all worlds are checked for pistons moving TARDIS blocks, or only TARDIS
+                    worlds.
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_random_monsters</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether monsters will randomly spawn in the TARDIS if door is left open.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_limit</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>10</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the maximum number of monsters that can randomly spawn inside a TARDIS</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>vortex_fall</code></td>
+                <td class="noborder">string</td>
+                <td class="noborder"><code>kill</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether players who fall into the void in the TARDIS_TimeVortex world are killed or
+                    teleported back into the TARDIS. Options: <code>[kill|teleport]</code></td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_coords</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>false</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether players will see the coordinates message when choosing a random
+                    destination.
+                </td>
+            </tr>
+        </table>
+        <p><a href="configuration.html">Back to main configuration page</a></p>
+    </section>
 </div>
 <footer>
-	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-	<p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
-<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
 </body>
 </html>

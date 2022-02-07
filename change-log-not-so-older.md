@@ -14,10 +14,10 @@ title: Change log
 #### Additions
 
 - Grass path blocks are restored when the TARDIS leaves the affected location
-- Added new sound effects 
-  - a faster materialisation sound effect when the TARDIS rebuilds
-  - a faster dematerialisation sound effect when the TARDIS hides
-  - requires an update to the [TARDIS-SoundResourcePack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
+- Added new sound effects
+    - a faster materialisation sound effect when the TARDIS rebuilds
+    - a faster dematerialisation sound effect when the TARDIS hides
+    - requires an update to the [TARDIS-SoundResourcePack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
 - Added cooldown logic to the TARDIS remote key rebuild & hide feature
 - Added an under door block to the INVISIBLE preset if the block under is AIR
 
@@ -57,7 +57,7 @@ title: Change log
 
 - Fixed the wrong chunk loading when the TARDIS materialises
 - Fixed a bug with using TARDIS items when the off hand contains a usable item (like a shield)
-- Fixed a nasty bug with HADS — DISPERSAL was running when the HADS type was set to DISPLACEMENT and a safe location wasn ’t found on the first try — this left the plugin thinking that the TARDIS was permanently in dispersed mode. See how to fix this below...
+- Fixed a nasty bug with HADS — DISPERSAL was running when the HADS type was set to DISPLACEMENT and a safe location wasn’t found on the first try — this left the plugin thinking that the TARDIS was permanently in dispersed mode. See how to fix this below...
 
 #### Additions
 
@@ -70,19 +70,19 @@ title: Change log
 - Added new 1.9 additions to condensable items
 - Added support for MultiInv and PerWorldInventory plugins
 - You can now use telepathic `/tardistravel` commands
-- Made the maximum travel distance configurable 
-  - plugin will use the maximum travel distance or the world border distance whichever is smaller
-  - `travel.max_distance: [distance in blocks]`
-  - default is `29999983`
-  - the usual world border checks will still be run when checking the TARDIS’ destination
+- Made the maximum travel distance configurable
+    - plugin will use the maximum travel distance or the world border distance whichever is smaller
+    - `travel.max_distance: [distance in blocks]`
+    - default is `29999983`
+    - the usual world border checks will still be run when checking the TARDIS’ destination
 - Added new / missing Chameleon blocks to `blocks.yml`
 - Added the `make_her_blue` command to the `/tardisbind cmd [command]` command
-- Add a handbrake switch to the Sonic Prefs menu 
-  - Useful for engaging the handbrake after a Time lord has died and may have respawned outside the TARDIS 
-  - You can only _engage_ the handbrake, not disengage it
-  - You cannot engage the handbrake if the TARDIS is travelling
-- Added the Twelfth Doctor’s Sonic Screwdriver 
-  - [TARDIS-MCP Resource Pack](https://github.com/eccentricdevotion/TARDIS-MCP) update required
+- Add a handbrake switch to the Sonic Prefs menu
+    - Useful for engaging the handbrake after a Time lord has died and may have respawned outside the TARDIS
+    - You can only _engage_ the handbrake, not disengage it
+    - You cannot engage the handbrake if the TARDIS is travelling
+- Added the Twelfth Doctor’s Sonic Screwdriver
+    - [TARDIS-MCP Resource Pack](https://github.com/eccentricdevotion/TARDIS-MCP) update required
 
 #### Changes
 
@@ -116,40 +116,35 @@ title: Change log
 
 #### Additions
 
-- 
-
 Updated for CraftBukkit / Spigot 1.9
 
-  - Added new blocks
-  - Added new Purpur chameleon preset
-  - Used new Villager API additions
-  - Used new Particle API
-  - Used new BossBar API
-  - Updated biomes and sounds
-- 
+- Added new blocks
+- Added new Purpur chameleon preset
+- Used new Villager API additions
+- Used new Particle API
+- Used new BossBar API
+- Updated biomes and sounds
 
 Added world name tab completion to `/tardisadmin` and `/tardistravel` commands
 
 - Added a Companion GUI for the `/tardis list companions` and `/tardis add` commands
 - Added a `/tardisprefs policebox_textures [on|off]` command — setting this to `off` stops the plugin changing the biome (for MCPatcher texture support) when the Police Box materialises
-- 
 
 Implemented the Hostile Action Dispersal System
 
-  - toggle it with the `/tardisprefs hads_type [DISPLACEMENT|DISPERSAL]` command (or use the sonic preferences menu)
-  - to rebuild you must stand in the centre of the dispersed TARDIS (carpet) and right-click-air with the sonic screwdriver
-- 
+- toggle it with the `/tardisprefs hads_type [DISPLACEMENT|DISPERSAL]` command (or use the sonic preferences menu)
+- to rebuild you must stand in the centre of the dispersed TARDIS (carpet) and right-click-air with the sonic screwdriver
 
 Added the TARDIS Telepathic Circuit
 
-  - `/tardisrecipe telepathic`
-  - `/tardisprefs telepathy [on|off]` (or use the sonic preferences menu)
-  - `/tardis update telepathic`
-  - Allows a companion to run any `/tardis` command for the TARDIS that they are in
+- `/tardisrecipe telepathic`
+- `/tardisprefs telepathy [on|off]` (or use the sonic preferences menu)
+- `/tardis update telepathic`
+- Allows a companion to run any `/tardis` command for the TARDIS that they are in
 - Added all door types to standard sonic function
-- Added Junk mode to regular TARDISes 
-  - `/tardisprefs junk [on|off]` (or use the sonic preferences menu)
-  - You can only travel to saved locations while in Junk mode
+- Added Junk mode to regular TARDISes
+    - `/tardisprefs junk [on|off]` (or use the sonic preferences menu)
+    - You can only travel to saved locations while in Junk mode
 
 #### Changes
 
@@ -158,8 +153,8 @@ Added the TARDIS Telepathic Circuit
 - The plugin now uses the new BossBar API instead of the BarAPI plugin for the TARDIS travel bar
 - The plugin now uses the new Particle API for Artron Furnace and Junk TARDIS particle effects instead of the EffectLib plugin
 - The plugin now checks that Multiverse-Inventories is the correct build (as well as version)
-- You can now set a limit for the number of mobs that can randomly enter the TARDIS 
-  - `preferences.spawn_limit: [max number of monsters]`
+- You can now set a limit for the number of mobs that can randomly enter the TARDIS
+    - `preferences.spawn_limit: [max number of monsters]`
 - The TARDIS will now throw a malfunction if no destination is found or the player is denied travel
 - The plugin now checks a player is in their own TARDIS when using the `/tardis upgrade` command
 - Protection is now removed from inner TARDIS blocks broken in CREATIVE gamemode
@@ -189,8 +184,8 @@ Added the TARDIS Telepathic Circuit
 #### Additions
 
 - Added a config option `preferences.vortex_fall: [teleport|kill]` so that players that fall into the time vortex are not kicked for flying. This setting really only applies if the TARDIS WorldGuard region flag is set to `exit: deny`
-  - `teleport` will send the players back into the TARDIS they were in
-  - `kill` will set the players’ health to `0`, resulting in death
+    - `teleport` will send the players back into the TARDIS they were in
+    - `kill` will set the players’ health to `0`, resulting in death
 - Added a `/tardistravel cancel` command — cancels the last set destination
 - Added `/ttravel costs` command — shows the Artron Energy costs for TARDIS travel
 
@@ -228,21 +223,23 @@ Added the TARDIS Telepathic Circuit
 #### Additions
 
 - Added a bunch of missing TARDIS Information System entries (Remote Key, Artron Furnace, foods and accessories)
-- Added a new MEDIUM difficulty mode — uses easy crafting recipes, automatically writes Save Storage Disks, has a new Biome Reader tool — see [http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/)
-- Added the TARDIS Biome Reader 
-  - use the `/tardisrecipe reader` command to see how to craft it
-  - clicking the Biome Reader on a block will detect the biome at the player’s current location and automatically write a Biome Storage Disk to the Disk Storage Container if there is sufficient room and the biome disk is not there already
-  - cannot be used in the Nether or The End
-- Added a config option to prevent condensing blocks and the use of the ‘full charge’ item if the TARDIS world is set to gamemode CREATIVE 
-  - `preferences.no_creative_condense: [true|false]`
-- Added an admin command for setting the `artron_furnace.particles` config option — `/tardisadmin particles [true|false]`
-- Added commands to allow the Junk TARDIS wall and floor blocks to be set 
-  - `/tardisjunk <wall|floor> [material]`
-  - the `[material]` options are the same as when setting the wall or floor for TARDIS rooms — use tab completion!
+- Added a new MEDIUM difficulty mode — uses easy crafting recipes, automatically writes Save Storage Disks, has a new Biome Reader tool —
+  see [http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/)
+- Added the TARDIS Biome Reader
+    - use the `/tardisrecipe reader` command to see how to craft it
+    - clicking the Biome Reader on a block will detect the biome at the player’s current location and automatically write a Biome Storage Disk to the Disk Storage Container if there is sufficient room and the biome disk is not there already
+    - cannot be used in the Nether or The End
+- Added a config option to prevent condensing blocks and the use of the ‘full charge’ item if the TARDIS world is set to gamemode CREATIVE
+    - `preferences.no_creative_condense: [true|false]`
+- Added an admin command for setting the `artron_furnace.particles` config option
+  — `/tardisadmin particles [true|false]`
+- Added commands to allow the Junk TARDIS wall and floor blocks to be set
+    - `/tardisjunk <wall|floor> [material]`
+    - the `[material]` options are the same as when setting the wall or floor for TARDIS rooms — use tab completion!
 - Added a new button to the Chameleon Construct GUI to load the last saved construct
-- Added a config option to implement a TARDIS ‘open door policy’ 
-  - config: `preferences.open_door_policy: [true|false]` — false by default — requires restart if enabled
-  - command: `/tardisadmin region-flag [entry|exit]` — used to update all TARDIS regions in the default TARDIS world to add the specified flag (and remove its opposite). **You will need to change existing TARDIS regions** to use the `exit` flag if `open_door_policy` is `true`, but you only need to do this once
+- Added a config option to implement a TARDIS ‘open door policy’
+    - config: `preferences.open_door_policy: [true|false]` — false by default — requires restart if enabled
+    - command: `/tardisadmin region-flag [entry|exit]` — used to update all TARDIS regions in the default TARDIS world to add the specified flag (and remove its opposite). **You will need to change existing TARDIS regions** to use the `exit` flag if `open_door_policy` is `true`, but you only need to do this once
 
 #### Changes
 
@@ -251,7 +248,8 @@ Added the TARDIS Telepathic Circuit
 - The plugin now gets and sets Villager career levels when farming Villagers — requires TARDISChunkGenerator v2.0
 - Updated the Junk TARDIS to use red stained clay under the console and cobblestone above it
 - You can no longer build door and lamp only Chameleon constructs
-- When building a Chameleon construct, if there is no block under the lamp, and the lamp is a torch or redstone torch, then there will be no lamp in the resulting construct
+- When building a Chameleon construct, if there is no block under the lamp, and the lamp is a torch or redstone torch,
+  then there will be no lamp in the resulting construct
 - The DESERT Chameleon preset now uses orange stained clay instead of wool to reflect the change made to desert temples in Minecraft
 - The TARDIS ‘umbrella’ now uses invisible BARRIER blocks instead of glass
 - New TARDISes now have their region set to `exit: deny` instead of `entry:deny` by default
@@ -313,65 +311,64 @@ Added the TARDIS Telepathic Circuit
 
 #### Additions
 
-- Added a Junk TARDIS 
-  - The Junk TARDIS is a public use TARDIS that any player with the correct permission can use on the server. It only travels in overworlds (no Nether or The End) and doesn’t require the player to have an Artron Energy supply
-  - Video here: [https://vimeo.com/139185257](https://vimeo.com/139185257)
-  - **permissions:** `tardis.admin` to create, delete and return the Junk TARDIS — `tardis.junk` to fly and find the Junk TARDIS
-  - **commands:** `/tardisjunk create` — target the centre block of a flat 6 x 6 area — this becomes the Junk TARDIS ‘home’ location
-  - `/tardisjunk delete` — self explanatory
-  - `/tardisjunk return` — returns the Junk TARDIS to its ‘home’ location (bringing along any players who may be onboard)
-  - `/tardisjunk find` — find the current location of the Junk TARDIS
-  - **config options:** `junk.enabled: [true|false]` — whether the Junk TARDIS is available on the server — **NOTE:** The Junk TARDIS will be disabled if `creation.default_world` is `false`
-  - `junk.particles: [true|false]` — whether the Junk TARDIS displays a particle effect when travelling — requires [EffectLib 3.4](http://dev.bukkit.org/bukkit-plugins/effectlib/) or higher
-  - `junk.return: [time in seconds]` — if `[time in seconds]` is greater than `0` and the Junk TARDIS has not been used for longer than the specified period, it will automatically return to its ‘home’ location
-  - **controls:** sign — shows the travel destination, handbrake — starts the TARDIS travelling, tripwire hook — selects the world to travel to, stone button — sets the x coordinate, wood button — sets the z coordinate, repeater — determines the amount added or subtracted from the x and z coordinates when the buttons are clicked, comparator — sets whether the buttons add or subtract
-  - players moving off the Junk TARDIS while it is travelling are killed instantly
-  - update the TARDIS-Sounds resource pack for the new sfx
-- You can now give a full Artron Storage Cell with:  
-`/tardisgive [player] cell [amount] full`
-- Added The Master’s TARDIS 
-  - designed by shadowhawk14269
-  - seed block is nether brick
-  - permission is `tardis.master`
-- Added a Pyramid TARDIS console 
-  - many thanks to Airomis for the design
-  - seed block is sandstone stairs
-  - permission is `tardis.pyramid`
+- Added a Junk TARDIS
+    - The Junk TARDIS is a public use TARDIS that any player with the correct permission can use on the server. It only travels in overworlds (no Nether or The End) and doesn’t require the player to have an Artron Energy supply
+    - Video here: [https://vimeo.com/139185257](https://vimeo.com/139185257)
+    - **permissions:** `tardis.admin` to create, delete and return the Junk TARDIS — `tardis.junk` to fly and find the Junk TARDIS
+    - **commands:** `/tardisjunk create` — target the centre block of a flat 6 x 6 area — this becomes the Junk TARDIS ‘home’ location
+    - `/tardisjunk delete` — self explanatory
+    - `/tardisjunk return` — returns the Junk TARDIS to its ‘home’ location (bringing along any players who may be onboard)
+    - `/tardisjunk find` — find the current location of the Junk TARDIS
+    - **config options:** `junk.enabled: [true|false]` — whether the Junk TARDIS is available on the server — **NOTE:** The Junk TARDIS will be disabled if `creation.default_world` is `false`
+    - `junk.particles: [true|false]` — whether the Junk TARDIS displays a particle effect when travelling — requires [EffectLib 3.4](http://dev.bukkit.org/bukkit-plugins/effectlib/) or higher
+    - `junk.return: [time in seconds]` — if `[time in seconds]` is greater than `0` and the Junk TARDIS has not been used for longer than the specified period, it will automatically return to its ‘home’ location
+    - **controls:** sign — shows the travel destination, handbrake — starts the TARDIS travelling, tripwire hook — selects the world to travel to, stone button — sets the x coordinate, wood button — sets the z coordinate, repeater — determines the amount added or subtracted from the x and z coordinates when the buttons are clicked, comparator — sets whether the buttons add or subtract
+    - players moving off the Junk TARDIS while it is travelling are killed instantly
+    - update the TARDIS-Sounds resource pack for the new sfx
+- You can now give a full Artron Storage Cell with: `/tardisgive [player] cell [amount] full` 
+- Added The Master’s TARDIS
+    - designed by shadowhawk14269
+    - seed block is nether brick
+    - permission is `tardis.master`
+- Added a Pyramid TARDIS console
+    - many thanks to Airomis for the design
+    - seed block is sandstone stairs
+    - permission is `tardis.pyramid`
 - Added a particle effect to Artron Furnaces — requires [EffectLib 3.4](http://dev.bukkit.org/bukkit-plugins/effectlib/) or higher
-- Added an Ignite Circuit to the Sonic Screwdriver 
-  - view the recipe with `/tardisrecipe ignite-circuit`
-  - permission: `tardis.sonic.ignite`
-  - don’t forget to move the new map file into its correct location!
-  - flammable blocks need to be clicked on the side
-  - a flint & steel is actually more useful / powerful in-game
-- Added a Chameleon preset construction GUI 
-  - update the TARDIS-MCP resource pack for the new textures
-  - accessed via the third page of the Chameleon presets GUI
-  - help & information on use is built into the GUI
-  - all text can be translated using the _plugins/TARDIS/language/chameleon\_guis.yml_ file
-  - if `allow.all_blocks` is `false`, precious blocks cannot be used in the GUI
+- Added an Ignite Circuit to the Sonic Screwdriver
+    - view the recipe with `/tardisrecipe ignite-circuit`
+    - permission: `tardis.sonic.ignite`
+    - don’t forget to move the new map file into its correct location!
+    - flammable blocks need to be clicked on the side
+    - a flint & steel is actually more useful / powerful in-game
+- Added a Chameleon preset construction GUI
+    - update the TARDIS-MCP resource pack for the new textures
+    - accessed via the third page of the Chameleon presets GUI
+    - help & information on use is built into the GUI
+    - all text can be translated using the _plugins/TARDIS/language/chameleon\_guis.yml_ file
+    - if `allow.all_blocks` is `false`, precious blocks cannot be used in the GUI
 - Added a few more interactable blocks for the environment sonic to ignore
 - Added a `/tardis update beacon` command
 - Added a config option to disable random spawning in TARDIS if door is open — `preferences.spawn_random_monsters: [true|false]` — or use the admin command `/tardisadmin spawn_random_monsters [true|false]`
 - Added more checks and warnings for missing custom console upgrade entries
 - Added a `getOverWorlds()` method to TARDIS API
 - Added a player configurable choice of (2) blocks that are changed during siege mode engagement (only applies if `siege.textures` is `true` in the config)
-- Added config options to limit desktop upgrades by counting the percentage of blocks that have changed from the original schematic 
-  - must be enabled in the config — `desktop.check_blocks_before_upgrade: [true|false]` and `desktop.block_change_percent: [max percent changed blocks allowed]`
-  - Defaults are `false` and `25`
+- Added config options to limit desktop upgrades by counting the percentage of blocks that have changed from the original schematic
+    - must be enabled in the config — `desktop.check_blocks_before_upgrade: [true|false]` and `desktop.block_change_percent: [max percent changed blocks allowed]`
+    - Defaults are `false` and `25`
 
 #### Changes
 
 - The plugin no longer lists items if the add-on plugin isn’t enabled
 - Added a check for malformed plugin versions when checking plugin dependencies
-- The allowable lamps list (`lamp_blocks` in blocks.yml) now requires Bukkit Material names rather than IDs 
-  - existing IDs will be automatically updated
+- The allowable lamps list (`lamp_blocks` in blocks.yml) now requires Bukkit Material names rather than IDs
+    - existing IDs will be automatically updated
 - The plugin now allows all door types for minecart entry
-- The beacon toggler block (used when powering up & down) is now a redstone block 
-  - adds the ability to trigger redstone contraptions when the TARDIS is powered down
-- The space between TARDISes parked in TARDIS areas is now configurable 
-  - default distance can be set in the config — `creation.parking_distance: [distance]` — or use the admin command `/tardisadmin parking_distance [distance in blocks between TARDII]`
-  - each TARDIS area can be set to different distances — `/tardisarea parking [area name] [distance]`
+- The beacon toggler block (used when powering up & down) is now a redstone block
+    - adds the ability to trigger redstone contraptions when the TARDIS is powered down
+- The space between TARDISes parked in TARDIS areas is now configurable
+    - default distance can be set in the config — `creation.parking_distance: [distance]` — or use the admin command `/tardisadmin parking_distance [distance in blocks between TARDII]`
+    - each TARDIS area can be set to different distances — `/tardisarea parking [area name] [distance]`
 - The `tardis.ars` permission is now solely used for the ARS console — permission to use the Architectural Reconfiguration System to grow rooms now requires `tardis.architectural` — update your permissions!
 - If you’re changing the desktop theme using the same console type you now only have to have 1/2 the upgrade cost in stored Artron Energy
 
@@ -385,7 +382,8 @@ Added the TARDIS Telepathic Circuit
 - The plugin now prevents double-clicking items to the cursor in all TARDIS GUIs
 - Fixed the beacon not turning off when powering down
 - Malfunctions now respect a player’s lamps / lanterns preference
-- Fixed a bug where some language files were not copied when doing a fresh install because the _plugins/TARDIS/language/_ directory hadn’t been created yet
+- Fixed a bug where some language files were not copied when doing a fresh install because the _
+  plugins/TARDIS/language/_ directory hadn’t been created yet
 
 ### TARDIS v3.3
 
@@ -448,15 +446,15 @@ If running any of these plugins with TARDIS they must be equal to or _greater th
 #### Additions
 
 - Added upcoming TARDIS Sonic Blaster recipes to `/tardisrecipe` command
-- Added `/tardistravel village` command 
-  - Config: `allow.village_travel: [true|false]`
-  - Permission: `tardis.timetravel.village`
+- Added `/tardistravel village` command
+    - Config: `allow.village_travel: [true|false]`
+    - Permission: `tardis.timetravel.village`
 - Added a room cost message to the `/tardisroom required` command
 - Added a `/tardisadmin arch [player] force` command to allow an admin to toggle a player’s ‘arched’ status
-- Added a player preference for whether consoles use lamps or lanterns for console lights 
-  - `/tardisprefs lanterns [on|off]`
-  - The player preference is `off` by default, but will be automatically set to `true` when creating or upgrading to an ELEVENTH or TWELFTH console
-  - It is best left **OFF** for _existing consoles_ as the levers that power lamps cannot be placed on lanterns — therefore breaking the lights if they are then switched back to lamps — to get around this, up-, down- or cross-grade your console first — this version contains new schematics to rectify the problem
+- Added a player preference for whether consoles use lamps or lanterns for console lights
+    - `/tardisprefs lanterns [on|off]`
+    - The player preference is `off` by default, but will be automatically set to `true` when creating or upgrading to an ELEVENTH or TWELFTH console
+    - It is best left **OFF** for _existing consoles_ as the levers that power lamps cannot be placed on lanterns — therefore breaking the lights if they are then switched back to lamps — to get around this, up-, down- or cross-grade your console first — this version contains new schematics to rectify the problem
 
 #### Changes
 
@@ -465,12 +463,12 @@ If running any of these plugins with TARDIS they must be equal to or _greater th
 - The plugin now checks that any dependent plugins that are on the server are the correct version for _this version of TARDIS_ — if not, TARDIS is disabled until they are updated
 - TARDIS WorldGuard regions are updated if the player name has changed
 - The plugin now uses new `player.getTargetBlock()` and `itemMeta.addItemFlags()` methods — requires an updated CraftBukkit / Spigot build
-- Enchantment text is now hidden on Sonic Screwdrivers, Artron Storage Cells and the arrows in the Chameleon GUI 
-  - Requires the latest CraftBukkit / Spigot build
-  - Not compatible with Multiverse-Inventories (they need to update) — change will not be applied if Multiverse-Inventories is enabled
-- Updated the ELEVENTH and TWELFTH console schematics to use sea lanterns 
-  - Existing consoles can also use lanterns if you set the player preference for lanterns (see above)
-- Custom consoles now have a `has_lanterns: [true|false]` config option\* 
+- Enchantment text is now hidden on Sonic Screwdrivers, Artron Storage Cells and the arrows in the Chameleon GUI
+    - Requires the latest CraftBukkit / Spigot build
+    - Not compatible with Multiverse-Inventories (they need to update) — change will not be applied if Multiverse-Inventories is enabled
+- Updated the ELEVENTH and TWELFTH console schematics to use sea lanterns
+    - Existing consoles can also use lanterns if you set the player preference for lanterns (see above)
+- Custom consoles now have a `has_lanterns: [true|false]` config option\*
 - Sea lantern can now be used as the Police Box lamp
 - The plugin now sets the `CookTimeTotal` furnace entity tag in Artron Furnaces (for better burn animations) — **requires TARDISHelper v1.4**
 
@@ -479,9 +477,9 @@ If running any of these plugins with TARDIS they must be equal to or _greater th
 - Fixed a TARDIS Remote Key message
 - Fixed a misspelled ZERO room message
 - Removed an extra word ‘command’ in the `/tardisarea` command message
-- Fix anti/gravity room growing 
-  - Anti-Gravity / Gravity rooms now properly grow outside of the ARS grid
-  - Gravity rooms will now grow under rooms in the level above 
+- Fix anti/gravity room growing
+    - Anti-Gravity / Gravity rooms now properly grow outside of the ARS grid
+    - Gravity rooms will now grow under rooms in the level above
 - The plugin now makes sure the furnace is powered by Artron Energy before altering the cook time
 - Fixed the ARS GUI showing a different rooms after the room scroll buttons were clicked
 
@@ -517,17 +515,17 @@ If running any of these plugins with TARDIS they must be equal to or _greater th
 
 - Added a console warning if Remote Key ingredient does not = TARDIS Key result
 - Added Siege Cube protection when dropping the cube from the player’s inventory (as well as the existing case of when it is mined)
-- 
+-
 
 Added a config option to allow Guardians to be pulled into the TARDIS if the door is left open — it’s `false` by default:
 
     allow:
         guardians: [true|false]       
 
-  - regardless of the setting, guardians will not be spawned in the TARDIS if there is _no POOL room_
-  - if set to `true` — any guardians within a 16 blocks radius of the open TARDIS door will be sucked into the pool
-  - if set to `false` — there is still a 25% chance that a random monster will spawn in the TARDIS, and a 1 in 12 chance that it will be a guardian
-  - toggle the setting with `/tardisadmin guardians [true|false]`
+- regardless of the setting, guardians will not be spawned in the TARDIS if there is _no POOL room_
+- if set to `true` — any guardians within a 16 blocks radius of the open TARDIS door will be sucked into the pool
+- if set to `false` — there is still a 25% chance that a random monster will spawn in the TARDIS, and a 1 in 12 chance that it will be a guardian
+- toggle the setting with `/tardisadmin guardians [true|false]`
 
 ### Changes
 
@@ -547,10 +545,10 @@ Added a config option to allow Guardians to be pulled into the TARDIS if the doo
 
 ### Additions
 
-- Added a `/tardisadmin desiege [player]` command 
-  - Stop tracking the siege cube
-  - Set siege mode to OFF
-  - Rebuild the TARDIS at the home location
+- Added a `/tardisadmin desiege [player]` command
+    - Stop tracking the siege cube
+    - Set siege mode to OFF
+    - Rebuild the TARDIS at the home location
 - Added a `/tardis cube` command to see which player is carrying the Siege Cube
 - Added a `/tardisadmin list portals` command (primarily for debugging)
 - Added a check / warning if GOLD\_NUGGET ingredient in the Remote Key recipe is different from the result of crafting the TARDIS Key — _if you have changed the recipe result of the TARDIS Key to something other than a GOLD\_NUGGET, then you will also need to change the matching ingredient in the Remote Key recipe!_
@@ -577,28 +575,27 @@ Added a config option to allow Guardians to be pulled into the TARDIS if the doo
 
 #### Additions
 
-- 
-
 Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP file)
 
-  - `/tardisrecipe furnace`
-  - permission to place a furnace: `tardis.furnace`
-  - Custom texture — update the [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP) resource pack
-  - Custom sound when burning starts — update the [TARDISSound](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack) resource pack
-  - set config options in **artron.yml** :
+- `/tardisrecipe furnace`
+- permission to place a furnace: `tardis.furnace`
+- Custom texture — update the [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP) resource pack
+- Custom sound when burning starts — update
+  the [TARDISSound](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack) resource pack
+- set config options in **artron.yml** :
 
-        artron_furnace:
-            burn_limit: 100000
-            burn_time: 0.5
-            cook_time: 0.5
-            set_biome: true
+      artron_furnace:
+          burn_limit: 100000
+          burn_time: 0.5
+          cook_time: 0.5
+          set_biome: true
 
-  - `set_biome [true|false]` — whether to set the biome so that custom textures work on the furnace block
-  - `cook_time: [time ratio]` — sets the cook time for items smelted with Artron Storage Cells — `0.5` is half the normal time, `2.0` would be twice normal speed (longer), 1 = normal cook time (same as coal)
-  - `burn_time: [time ratio]` — sets the length of time an Artron Storage Cell will burn for — as above fractions (`0.5`) will give shorter life to the cells, \> 1 will extend the burn time, 1 = normal burn time (same as coal)
-  - `burn_limit: [amount]` — the maximum amount of burn time a fully charged Artron Storage Cell can have.
-  - The actual maximum amount given is `burn_limit * burn_time * (cell_charge_level / full_charge)`
-  - default settings mean that the Artron Furnace cooks quickly but doesn’t burn as long.
+- `set_biome [true|false]` — whether to set the biome so that custom textures work on the furnace block
+- `cook_time: [time ratio]` — sets the cook time for items smelted with Artron Storage Cells — `0.5` is half the normal time, `2.0` would be twice normal speed (longer), 1 = normal cook time (same as coal)
+- `burn_time: [time ratio]` — sets the length of time an Artron Storage Cell will burn for — as above fractions (`0.5`) will give shorter life to the cells, \> 1 will extend the burn time, 1 = normal burn time (same as coal)
+- `burn_limit: [amount]` — the maximum amount of burn time a fully charged Artron Storage Cell can have.
+- The actual maximum amount given is `burn_limit * burn_time * (cell_charge_level / full_charge)`
+- default settings mean that the Artron Furnace cooks quickly but doesn’t burn as long.
 - Added support for banner colours and patterns in TARDIS schematics
 
 #### Bug fixes
@@ -614,21 +611,21 @@ Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP fi
 [View requirements for this version](#reqs)
 
 - Fixed spamming chat with plugin.yml defaults when the player rescue method returns false
-- Added the ability to render entities in the Render Room 
-  - `preferences.render_entities: [true|false]`
-  - `/tardisadmin render_entities [true|false]`
-  - Requires Citizens 2.0.14
+- Added the ability to render entities in the Render Room
+    - `preferences.render_entities: [true|false]`
+    - `/tardisadmin render_entities [true|false]`
+    - Requires Citizens 2.0.14
 - Fixed a long standing bug where rooms could be grown manually in the ARS grid for bigger sized and custom consoles
-- Fixed a bug when using the `/tardis room [room]` command to check the blocks required to grow the room, and then using ARS, resulted in the plugin thinking you wanted to manually grow the room 
-  - Players should use the command `/tardisroom required [room]` instead
+- Fixed a bug when using the `/tardis room [room]` command to check the blocks required to grow the room, and then using ARS, resulted in the plugin thinking you wanted to manually grow the room
+    - Players should use the command `/tardisroom required [room]` instead
 - Added tab completion to the `/tardisroom` command
-- Added a player preference for whether TARDIS will automatically enter siege mode if there is insufficient energy to travel home 
-  - `/tardisprefs auto_siege [on|off]` or use the sonic prefs menu
-- Added a **“how to”** GUI 
-  - if a player asks in chat _“How do I build/create/make/get a TARDIS?”_, a GUI opens showing them the seed blocks they have access to
-  - if they click a seed block, it shows them the recipe
-  - if they click the interior wall or floor blocks, it will show them the blocks they can use
-  - if they click the police box wall block, it will show them the chameleon blocks they can use
+- Added a player preference for whether TARDIS will automatically enter siege mode if there is insufficient energy to travel home
+    - `/tardisprefs auto_siege [on|off]` or use the sonic prefs menu
+- Added a **“how to”** GUI
+    - if a player asks in chat _“How do I build/create/make/get a TARDIS?”_, a GUI opens showing them the seed blocks they have access to
+    - if they click a seed block, it shows them the recipe
+    - if they click the interior wall or floor blocks, it will show them the blocks they can use
+    - if they click the police box wall block, it will show them the chameleon blocks they can use
 - Added rabbits, guardians and endermites to the genetic manipulator
 - Fixed more item duplication exploits when crafting seed blocks
 
@@ -665,17 +662,17 @@ Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP fi
 
 [View requirements for this version](#reqs)
 
-- Fixes for desktop theme up/downgrading: 
-  - downgrading to TWELFTH console  no longer jettisons 3/4 of the console
-  - the REDSTONE console now builds at the correct level
-  - better dropped item removal
-  - setting torch blocks correctly
-  - always teleport player to safe location
-  - add control centre sign if in schematic
+- Fixes for desktop theme up/downgrading:
+    - downgrading to TWELFTH console no longer jettisons 3/4 of the console
+    - the REDSTONE console now builds at the correct level
+    - better dropped item removal
+    - setting torch blocks correctly
+    - always teleport player to safe location
+    - add control centre sign if in schematic
 - Added ability to allow a `~` shortcut for current world in the `/tardistravel [world] [x] [y] [z]` command
-- Changes to autonomous homing feature: 
-  - don’t autonomous home if the TARDIS is in siege mode
-  - if insufficient energy to go home, enter siege mode instead
+- Changes to autonomous homing feature:
+    - don’t autonomous home if the TARDIS is in siege mode
+    - if insufficient energy to go home, enter siege mode instead
 
 ### v3.2.2
 
@@ -702,7 +699,6 @@ Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP fi
 - Added COARSE\_DIRT and PODZOL to wall / floor blocks
 - Added basic seed blocks to the `/tardisgive` command — `/tardisgive [player] seed [type]`
 - Added an upgrade warning when changing TARDIS console types (chests and items will be deleted!)
-- 
 
 You can now redefine the End and Nether buttons in the Destination Terminal to specific worlds when travel to those environments is disabled
 
@@ -761,12 +757,12 @@ TARDISHorseSpeed is now obsolete, you need to use TARDISHelper v1.2 instead (inc
 #### Additions
 
 - Added a config option to set the default preset on TARDIS creation — `/tardisadmin default_preset [preset]`
-- Added a Randomiser Circuit: 
-  - to see the recipe use the command `/tardisrecipe random-circuit`
-  - to give the circuit use the command `/tardisgive [player] random-circuit [amount]`
-  - put it in the Advanced Console, a random location will be chosen when the GUI is closed
-  - the scanner is disabled until the random destination has been travelled to
-  - the Artron cost is configurable in _artron.yml_ — `random_circuit: 150`
+- Added a Randomiser Circuit:
+    - to see the recipe use the command `/tardisrecipe random-circuit`
+    - to give the circuit use the command `/tardisgive [player] random-circuit [amount]`
+    - put it in the Advanced Console, a random location will be chosen when the GUI is closed
+    - the scanner is disabled until the random destination has been travelled to
+    - the Artron cost is configurable in _artron.yml_ — `random_circuit: 150`
 - Added an SQLite to MySQL conversion tool. Double-clicking the TARDIS JAR file opens the GUI.
 - Added Siege Mode — see the [Siege Mode](siege-mode.html) page for more info
 - Added PACKED\_ICE and new 1.8 blocks to artron condensables
@@ -774,16 +770,17 @@ TARDISHorseSpeed is now obsolete, you need to use TARDISHelper v1.2 instead (inc
 - Added tab completion to `/tardisbook` command
 - Added a cooldown to the `/tardis hide` command
 - Added the ability to add multiple custom TARDIS consoles — see the [Custom consoles](custom-consoles.html) page
-- Added a TARDIS API for other plugin developers to hook into — for example [TARDISVortexManipulator](http://dev.bukkit.org/bukkit-plugins/tardisvortexmanipulator/) — see the [Java Doc](http://thenosefairy.co.nz/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html) and [API](api.html) pages for more info
-- Added the Vortex Manipulator to `/tardisrecipe` and `/tardisgive` commands — `/tardisrecipe vortex` and `/tardisgive [player] vortex [amount]`
+- Added a TARDIS API for other plugin developers to hook into — for example [TARDISVortexManipulator](http://dev.bukkit.org/bukkit-plugins/tardisvortexmanipulator/) — see the [Java Doc](http://thenosefairy.duckdns.org/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html)and [API](api.html) pages for more info
+- Added the Vortex Manipulator to `/tardisrecipe` and `/tardisgive` commands — `/tardisrecipe vortex`and `/tardisgive [player] vortex [amount]`
 - Added Vortex Manipulator tachyon energy to the give command — `/tardisgive [player] tachyon [amount]`
 - Added 4 new presets: PRISMARINE, ANDESITE, DIORITE and GRANITE
-- Added an invisibility circuit to enable invisible landing — see the [Invisibility](invisibility.html) page for more info 
-  - to see the recipe use the command `/tardisrecipe invisible`
-  - to give the circuit use the command `/tardisgive [player] invisible [amount]`
-  - put it in the Advanced Console to enable the INVISIBLE chameleon preset
-  - choose the preset to land invisibly on the next time travel
-  - the circuit can be damaged after each use — set the number of uses in the config — see the [Circuit use and repair](circuit-use.html) page for more info
+- Added an invisibility circuit to enable invisible landing — see the [Invisibility](invisibility.html) page for more info
+    - to see the recipe use the command `/tardisrecipe invisible`
+    - to give the circuit use the command `/tardisgive [player] invisible [amount]`
+    - put it in the Advanced Console to enable the INVISIBLE chameleon preset
+    - choose the preset to land invisibly on the next time travel
+    - the circuit can be damaged after each use — set the number of uses in the config — see
+      the [Circuit use and repair](circuit-use.html) page for more info
 - Added a `/tardis make_her_blue` command to disengage invisibility
 - Added a control panel GUI — lots of buttons in one place — use the `/tardis update control` command to add it to your console
 - Added the new 1.8 doors to Sonic interactable blocks
@@ -826,10 +823,12 @@ There are some breaking changes — please read _everything_ carefully!
 
 - Added the ability to prevent piston harvesting of TARDIS Police Box and other precious blocks
 
-    preferences:
-                nerf_pistons:
-                enabled: [true|false]
-                only_tardis_worlds: [true|false]
+```
+  preferences:
+     nerf_pistons:
+        enabled: [true|false]
+        only_tardis_worlds: [true|false]
+```
 
 - Added a cooldown to the `/tardis rebuild` command
 
@@ -857,14 +856,13 @@ Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.
 - Added `/tardis eject` command to eject farmed mobs, villagers and companions — see: [Mob farming](farming.html)
 - Added time rotor glass colouring, use the `/tardis colourise` or `/tardis colorize` command, then click the bottom glass block in the time rotor with a dye
 - Added a clickable chat interface for the `/tardis update` command (just do a /tardis update with no further arguments) — requires ProtocolLib — the command remains essentially the same otherwise
-- Updated the VAULT room to automatically sort items into the chests: 
-  - see: [Vault room](vault.html)
-  - one chest is set as the drop chest
-  - all other chests in the 16x16x16 chunk are set as storage chests
-  - place at least 1 block/item into the storage chests
-  - blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
-  - add a sorter chest to existing VAULT rooms with the `/tardis update
-                        vault` command
+- Updated the VAULT room to automatically sort items into the chests:
+    - see: [Vault room](vault.html)
+    - one chest is set as the drop chest
+    - all other chests in the 16x16x16 chunk are set as storage chests
+    - place at least 1 block/item into the storage chests
+    - blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
+    - add a sorter chest to existing VAULT rooms with the `/tardis update vault` command
 
 #### Changes
 
@@ -946,7 +944,8 @@ Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.
 - Added a `/tardisschematic` command (`/ts` for short) — use it to create the new TARDIS schematics (see Changes below) and [http://eccentricdevotion.github.io/TARDIS/schematic-commands.html](http://eccentricdevotion.github.io/TARDIS/schematic-commands.html)
 - Added craftable bow ties and 3D-glasses (requires MCPatcher and the TARDIS-MCP Resource Pack). See [http://eccentricdevotion.github.io/TARDIS/accessories.html](http://eccentricdevotion.github.io/TARDIS/accessories.html) for recipes and functionality.
 - Added a config option to restrict the number of rooms that can be reconfigured at one time with ARS. See [http://eccentricdevotion.github.io/TARDIS/configuration-growth.html](http://eccentricdevotion.github.io/TARDIS/configuration-growth.html#alimit)
-- Added a craftable Fob Watch with a Chameleon Arch ability — [http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html](http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html)
+- Added a craftable Fob Watch with a Chameleon Arch ability
+  — [http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html](http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html)
 - Added a TARDIS creation area config option, see: [http://eccentricdevotion.github.io/TARDIS/configuration-creation.html](http://eccentricdevotion.github.io/TARDIS/configuration-creation.html#carea) and [http://eccentricdevotion.github.io/TARDIS/tardis-areas.html](http://eccentricdevotion.github.io/TARDIS/tardis-areas.html#forcec)
 - Added a `/tardisarea yard [area name] [material] [material]` command to visually set up parking spots in the specified TARDIS area, see: [http://eccentricdevotion.github.io/TARDIS/area-commands.html](http://eccentricdevotion.github.io/TARDIS/area-commands.html#yard)
 - Added a `/tardistravel player ?` command to request travel to a player’s protected region/claim. Can also use `/tardistravel player tpa`.
@@ -958,7 +957,7 @@ Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.
 #### Changes
 
 - The plugin no longer uses MCEdit/WorldEdit schematics, instead, a new TARDIS JSON format is used. All the default plugin schematics will be updated automatically, but custom consoles and rooms will need to be remade. See [http://eccentricdevotion.github.io/TARDIS/schematics.html](http://eccentricdevotion.github.io/TARDIS/schematics.html)
-  - As the plugin now has a bit more control over the schematics, the CUSTOM console can now be used with ARS
+    - As the plugin now has a bit more control over the schematics, the CUSTOM console can now be used with ARS
 - Project Rassilon plugin support was removed, as it was reported to not work anyway
 - The Diamond Disruptor Sonic upgrade can now break snow
 - Only allow `/tardis update` command in player’s own TARDIS
@@ -975,4 +974,3 @@ Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.
 - Fixed the condenser not returning items with no Artron value
 
 [Even older releases](change-log-older.html)
-

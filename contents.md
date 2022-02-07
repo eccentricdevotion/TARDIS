@@ -137,7 +137,7 @@ To get started choose a page:
 
 [Change log](change-log.html) — A list of all the stuff that has been added and fixed since release.
 
-[TARDIS Java Docs](http://thenosefairy.co.nz/TARDIS_java_docs/index.html) — Get the low down on the code
+[TARDIS Java Docs](http://thenosefairy.duckdns.org/TARDIS_java_docs/index.html) — Get the low down on the code
 
 [Player submitted schematics](http://tardis.thatsnotacreeper.com/) — Browse and upload room and TARDIS schematics contributed by the community.
 
@@ -145,4 +145,4 @@ To get started choose a page:
 
 [Minecraft name generator](name-generator.html) — Currently a work in progress, but give a whirl anyway!
 
-[Bukkit plugin starter](http://www.thenosefairy.co.nz/plugin_starter.php) — Generate the required files to start writing a Bukkit plugin in NetBeans.
+[Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) — Generate the required files to start writing a Bukkit plugin in NetBeans.
