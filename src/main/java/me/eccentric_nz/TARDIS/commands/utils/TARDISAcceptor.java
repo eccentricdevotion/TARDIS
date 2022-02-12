@@ -37,7 +37,7 @@ public class TARDISAcceptor {
                     plugin.getTrackerKeeper().getTelepathicRescue().remove(uuid);
                 } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                     TARDISMessage.send(rescuer, message, name);
-                    TARDISMessage.send(player, "REQUEST_ACCEPTED", rescuer.getName(), "rescue");
+                    TARDISMessage.send(player, "REQUEST_ACCEPTED", rescuer.getName(), request ? "travel" : "rescue");
                 }
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                     new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
