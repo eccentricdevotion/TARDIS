@@ -195,7 +195,10 @@ public class TARDISCallRequestCommand {
         request.setSubmarine(sub);
         request.setHidden(hidden);
         plugin.getTrackerKeeper().getComehereRequests().put(uuid, request);
+        // send message with chat instructions
         TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName(), ChatColor.AQUA + "tardis call accept" + ChatColor.RESET);
+        // message asking player too
+        TARDISMessage.send(player, "REQUEST_SENT", requested.getName());
         // remove request after 60 seconds
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (plugin.getTrackerKeeper().getComehereRequests().containsKey(playerUuid)) {
