@@ -4,14 +4,13 @@
 
 ## Next version `4.9.0`
 
-0. Use new configuration comments api
-1. Update documentation...
-2. Use the Vortex Manipulator to teleport past force fields
-3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-6. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-7. Cache TARDIS data to speed lookups and reduce database queries
+1. Use new configuration comments api
+2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+3. Cache TARDIS data to speed lookups and reduce database queries1. Update documentation...
+4. Use the Vortex Manipulator to teleport past force fields
+5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 8. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
