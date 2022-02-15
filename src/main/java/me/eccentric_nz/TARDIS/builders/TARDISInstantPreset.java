@@ -30,12 +30,14 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
@@ -112,7 +114,7 @@ public class TARDISInstantPreset {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
             Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
+                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, bd.getTardisID());
                 Location l = idl.getL();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                 // put player into travellers table
@@ -300,8 +302,13 @@ public class TARDISInstantPreset {
                         if (door) {
                             // remember the door location
                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                            String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                            Block doorBlock = world.getBlockAt(xx, y + yy, zz);
+                            String doorStr = doorBlock.getLocation().toString();
                             plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+                            // also remember the underdoor block
+                            String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                            // save the door location in the database
                             processDoor(doorloc);
                             // place block under door if block is in list of blocks an iron door cannot go on
                             if (yy == 0) {

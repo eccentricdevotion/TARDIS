@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
@@ -35,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
@@ -145,11 +147,11 @@ class TARDISMaterialisePreset implements Runnable {
                     // determine preset to use
                     datas = switch (i % 3) {
                         case 2 -> // stained
-                            stained_column.getBlockData();
+                                stained_column.getBlockData();
                         case 1 -> // glass
-                            glass_column.getBlockData();
+                                glass_column.getBlockData();
                         default -> // preset
-                            column.getBlockData();
+                                column.getBlockData();
                     };
                 }
                 // rescue player?
@@ -157,7 +159,7 @@ class TARDISMaterialisePreset implements Runnable {
                     UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
                     Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
-                        TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
+                        TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, bd.getTardisID());
                         Location l = idl.getL();
                         plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                         TARDISSounds.playTARDISSound(saved, "tardis_land_fast", 5L);
@@ -339,11 +341,15 @@ class TARDISMaterialisePreset implements Runnable {
                                     if (Tag.TRAPDOORS.isTagged(mat)) {
                                         door = true;
                                     }
+                                    Block doorBlock = world.getBlockAt(xx, y + yy, zz);
                                     if (door) {
                                         // remember the door location
                                         saveDoorLocation(world, xx, y, yy, zz);
+                                        // add under door block as well
+                                        String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
                                     } else {
-                                        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                                        String doorStr = doorBlock.getLocation().toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                                     }
                                     if (yy == 0) {
