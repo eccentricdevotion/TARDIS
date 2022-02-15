@@ -348,6 +348,7 @@ class TARDISMaterialisePreset implements Runnable {
                                         // add under door block as well
                                         String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                                        TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
                                     } else {
                                         String doorStr = doorBlock.getLocation().toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());

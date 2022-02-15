@@ -308,6 +308,7 @@ public class TARDISInstantPreset {
                             // also remember the underdoor block
                             String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
                             plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                            TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
                             // save the door location in the database
                             processDoor(doorloc);
                             // place block under door if block is in list of blocks an iron door cannot go on

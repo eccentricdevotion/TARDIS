@@ -145,6 +145,28 @@ public class TARDISBlockSetters {
     }
 
     /**
+     * Remembers a block's location and block data.
+     *
+     * @param w  the world the block is in.
+     * @param x  the x co-ordinate of the block.
+     * @param y  the y co-ordinate of the block.
+     * @param z  the z co-ordinate of the block.
+     * @param id the TARDIS this block belongs to.
+     */
+    public static void rememberBlock(World w, int x, int y, int z, int id) {
+        Block b = w.getBlockAt(x, y, z);
+        // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
+        String l = b.getLocation().toString();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("tardis_id", id);
+        set.put("location", l);
+        set.put("data", b.getBlockData().getAsString());
+        set.put("police_box", 1);
+        TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
+        TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+    }
+
+    /**
      * Sets a block to the specified type and data and remembers its location and block data.
      *
      * @param w    the world the block is in.
