@@ -58,6 +58,19 @@ public class TARDISPermission {
         }
     }
 
+    /**
+     * Checks to see if a player has this permission node SET to FALSE.
+     * If the player simply does not have this permission (unset), this will return FALSE.
+     * This will only return true if the player has the node, and it's negated.
+     *
+     * @param player the player to check
+     * @param node  the node to check
+     * @return true if the player has the node, and it's negated
+     */
+    public static boolean isNegated(Player player, String node) {
+        return player.isPermissionSet(node) && !player.hasPermission(node);
+    }
+
     private static boolean hasBlueprintPermission(String uuid, String node) {
         return new ResultSetBlueprint(TARDIS.plugin).getPerm(uuid, node);
     }
