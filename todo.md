@@ -4,9 +4,9 @@
 
 ## Next version `4.9.0`
 
-1. Use new configuration comments api
-2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-3. Cache TARDIS data to speed lookups and reduce database queries1. Update documentation...
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+2. Cache TARDIS data to speed lookups and reduce database queries
+3. Update documentation...
 4. Use the Vortex Manipulator to teleport past force fields
 5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)

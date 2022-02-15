@@ -1,6 +1,7 @@
 # config file
 debug: false
 # how the plugin persists data
+# https://eccentricdevotion.github.io/TARDIS/configuration-storage.html
 storage:
   database: sqlite
   mysql:
@@ -12,6 +13,7 @@ storage:
     prefix: ""
     useSSL: false
 # inner TARDIS
+# https://eccentricdevotion.github.io/TARDIS/configuration-creation.html
 creation:
   create_worlds: false
   create_worlds_with_perms: false
@@ -29,6 +31,7 @@ creation:
   count: 0
   area: none
 # outer TARDIS
+# https://eccentricdevotion.github.io/TARDIS/configuration-preset.html
 police_box:
   default_preset: FACTORY
   name_tardis: false
@@ -37,6 +40,7 @@ police_box:
   sign_colour: WHITE
   rebuild_cooldown: 10000
 # travel settings
+# https://eccentricdevotion.github.io/TARDIS/configuration-travel.html
 travel:
   include_default_world: false
   tp_radius: 500
@@ -64,6 +68,7 @@ travel:
     z: 5000
   no_destination_malfunctions: true
 # general preferences
+# https://eccentricdevotion.github.io/TARDIS/configuration-prefs.html
 preferences:
   notify_update: true
   language: en
@@ -102,15 +107,18 @@ preferences:
   vortex_fall: kill
   chat_width: 55
 # dynmap
+# https://eccentricdevotion.github.io/TARDIS/dynmap-tardis.html#configuration-options
 dynmap:
   enabled: true
   update_period: 30
   updates_per_tick: 10
 # desktop theme
+# https://eccentricdevotion.github.io/TARDIS/desktop-theme.html#config-options
 desktop:
   check_blocks_before_upgrade: false
   block_change_percent: 25
 # circuits
+# https://eccentricdevotion.github.io/TARDIS/circuit-use.html#configuration-options
 circuits:
   damage: false
   malfunction_damage: 50
@@ -125,6 +133,7 @@ circuits:
     scanner: 20
     temporal: 20
 # restrictions
+# https://eccentricdevotion.github.io/TARDIS/configuration-allow.html
 allow:
   mob_farming: true
   spawn_eggs: true
@@ -152,6 +161,7 @@ allow:
   force_field: 8
   admin_bypass: false
 # room related
+# https://eccentricdevotion.github.io/TARDIS/configuration-growth.html
 growth:
   gravity_max_distance: 15
   gravity_max_velocity: 5
@@ -162,12 +172,14 @@ growth:
   delay_factor: 1
   ars_limit: 1
 # chameleon arch
+# https://eccentricdevotion.github.io/TARDIS/chameleon-arch.html#chameleon-arch-configuration
 arch:
   enabled: true
   min_time: 20
   switch_inventory: true
   clear_inv_on_death: false
 # siege mode
+# https://eccentricdevotion.github.io/TARDIS/siege-mode.html#configuration
 siege:
   enabled: true
   breeding: 0
@@ -177,20 +189,28 @@ siege:
   healing: false
   texture: false
 # junk TARDIS
+# https://eccentricdevotion.github.io/TARDIS/junk-tardis.html#configuration-option
 junk:
   enabled: true
   return: -1
   particles: true
-# abandonment
+# abandoned TARDISes
+# https://eccentricdevotion.github.io/TARDIS/abandon.html#config-options
 abandon:
   enabled: true
   reduce_count: true
+# console archives
+# https://eccentricdevotion.github.io/TARDIS/archive.html#config-options
 archive:
   enabled: true
   limit: 3
+# blueprints
+# https://eccentricdevotion.github.io/TARDIS/blueprints.html
 blueprints:
   enabled: false
+# recharger list
 rechargers: { }
+# HUD display
 display:
   all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
 # don't touch
