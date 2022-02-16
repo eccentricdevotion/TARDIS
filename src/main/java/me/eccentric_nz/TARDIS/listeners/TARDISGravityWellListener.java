@@ -149,7 +149,7 @@ public class TARDISGravityWellListener implements Listener {
 
     /**
      * Listens for a player falling onto a Gravity Well location. If the block the player lands on is contained in the
-     * gravityDownList then the player receives no fall damage.
+     * gravityDownList (or gravityUpList if they fell back down the up well) then the player receives no fall damage.
      *
      * @param e an entity taking damage
      */
@@ -166,7 +166,7 @@ public class TARDISGravityWellListener implements Listener {
                     l.setPitch(0.0F);
                     l.setYaw(0.0F);
                     String loc = l.toString();
-                    if (plugin.getGeneralKeeper().getGravityDownList().contains(loc)) {
+                    if (plugin.getGeneralKeeper().getGravityDownList().contains(loc) || plugin.getGeneralKeeper().getGravityUpList().containsKey(loc)) {
                         e.setCancelled(true);
                     }
                     break;
