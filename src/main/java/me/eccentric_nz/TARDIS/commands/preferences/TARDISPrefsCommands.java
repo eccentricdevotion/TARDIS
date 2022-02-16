@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -33,7 +34,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,48 +50,28 @@ import java.util.Locale;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<>();
+    private static final ImmutableList<String> firstArgs = ImmutableList.of(
+        "auto", "auto_powerup", "auto_rescue", "auto_siege",
+        "beacon", "build",
+        "close_gui",
+        "difficulty", "dnd",
+        "eps", "eps_message",
+        "farm", "flight", "floor", "forcefield",
+        "hads", "hads_type", "hum",
+        "isomorphic",
+        "key", "key_menu",
+        "junk",
+        "language", "lanterns", "lock_containers",
+        "minecart",
+        "quotes",
+        "renderer",
+        "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
+        "telepathy", "travelbar",
+        "wall", "wool_lights"
+    );
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
-        firstArgs.add("auto");
-        firstArgs.add("auto_powerup");
-        firstArgs.add("auto_rescue");
-        firstArgs.add("auto_siege");
-        firstArgs.add("beacon");
-        firstArgs.add("build");
-        firstArgs.add("close_gui");
-        firstArgs.add("difficulty");
-        firstArgs.add("dnd");
-        firstArgs.add("eps");
-        firstArgs.add("eps_message");
-        firstArgs.add("farm");
-        firstArgs.add("flight");
-        firstArgs.add("floor");
-        firstArgs.add("forcefield");
-        firstArgs.add("hads");
-        firstArgs.add("hads_type");
-        firstArgs.add("hum");
-        firstArgs.add("isomorphic");
-        firstArgs.add("key");
-        firstArgs.add("key_menu");
-        firstArgs.add("junk");
-        firstArgs.add("language");
-        firstArgs.add("lanterns");
-        firstArgs.add("lock_containers");
-        firstArgs.add("minecart");
-        firstArgs.add("quotes");
-        firstArgs.add("renderer");
-        firstArgs.add("sfx");
-        firstArgs.add("siege_floor");
-        firstArgs.add("siege_wall");
-        firstArgs.add("sign");
-        firstArgs.add("sonic");
-        firstArgs.add("submarine");
-        firstArgs.add("telepathy");
-        firstArgs.add("travelbar");
-        firstArgs.add("wall");
-        firstArgs.add("wool_lights");
     }
 
     @Override
@@ -114,6 +94,10 @@ public class TARDISPrefsCommands implements CommandExecutor {
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+                    if (TARDISPermission.isNegated(player, "tardis.prefs." + pref)) {
+                        TARDISMessage.send(player, "NO_PERMS");
+                        return true;
+                    }
                     if (pref.equals("sonic")) {
                         // open sonic prefs menu
                         ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
@@ -204,5 +188,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns all the root arguments for the command.
+     *
+     * @return a list of root arguments
+     */
+    public static ImmutableList<String> getRootArgs() {
+        return firstArgs;
     }
 }
