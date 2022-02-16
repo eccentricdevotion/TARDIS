@@ -159,6 +159,47 @@ permissions:
   tardis.timetravel.village:
     description: Allow players to travel to villages.
     default: op
+  tardis.prefs.*:
+    description: Allow players to use /tardisprefs commands.
+    children:
+      tardis.prefs.auto: true
+      tardis.prefs.auto_powerup: true
+      tardis.prefs.auto_rescue: true
+      tardis.prefs.auto_siege: true
+      tardis.prefs.beacon: true
+      tardis.prefs.build: true
+      tardis.prefs.close_gui: true
+      tardis.prefs.difficulty: true
+      tardis.prefs.dnd: true
+      tardis.prefs.eps: true
+      tardis.prefs.eps_message: true
+      tardis.prefs.farm: true
+      tardis.prefs.flight: true
+      tardis.prefs.floor: true
+      tardis.prefs.forcefield: true
+      tardis.prefs.hads: true
+      tardis.prefs.hads_type: true
+      tardis.prefs.hum: true
+      tardis.prefs.isomorphic: true
+      tardis.prefs.key: true
+      tardis.prefs.key_menu: true
+      tardis.prefs.junk: true
+      tardis.prefs.language: true
+      tardis.prefs.lanterns: true
+      tardis.prefs.lock_containers: true
+      tardis.prefs.minecart: true
+      tardis.prefs.quotes: true
+      tardis.prefs.renderer: true
+      tardis.prefs.sfx: true
+      tardis.prefs.siege_floor: true
+      tardis.prefs.siege_wall: true
+      tardis.prefs.sign: true
+      tardis.prefs.sonic: true
+      tardis.prefs.submarine: true
+      tardis.prefs.telepathy: true
+      tardis.prefs.travelbar: true
+      tardis.prefs.wall: true
+      tardis.prefs.wool_lights: true
   tardis.list:
     description: Allow players to list saved time travel destinations.
     default: op
