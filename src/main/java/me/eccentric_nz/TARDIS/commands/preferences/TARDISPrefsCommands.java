@@ -35,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -49,29 +48,38 @@ import java.util.Locale;
  */
 public class TARDISPrefsCommands implements CommandExecutor {
 
-    private final TARDIS plugin;
     private static final ImmutableList<String> firstArgs = ImmutableList.of(
-        "auto", "auto_powerup", "auto_rescue", "auto_siege",
-        "beacon", "build",
-        "close_gui",
-        "difficulty", "dnd",
-        "eps", "eps_message",
-        "farm", "flight", "floor", "forcefield",
-        "hads", "hads_type", "hum",
-        "isomorphic",
-        "key", "key_menu",
-        "junk",
-        "language", "lanterns", "lock_containers",
-        "minecart",
-        "quotes",
-        "renderer",
-        "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
-        "telepathy", "travelbar",
-        "wall", "wool_lights"
+            "auto", "auto_powerup", "auto_rescue", "auto_siege",
+            "beacon", "build",
+            "close_gui",
+            "difficulty", "dnd",
+            "eps", "eps_message",
+            "farm", "flight", "floor", "forcefield",
+            "hads", "hads_type", "hum",
+            "isomorphic",
+            "key", "key_menu",
+            "junk",
+            "language", "lanterns", "lock_containers",
+            "minecart",
+            "quotes",
+            "renderer",
+            "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
+            "telepathy", "travelbar",
+            "wall", "wool_lights"
     );
+    private final TARDIS plugin;
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    /**
+     * Returns all the root arguments for the command.
+     *
+     * @return a list of root arguments
+     */
+    public static ImmutableList<String> getRootArgs() {
+        return firstArgs;
     }
 
     @Override
@@ -188,14 +196,5 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    /**
-     * Returns all the root arguments for the command.
-     *
-     * @return a list of root arguments
-     */
-    public static ImmutableList<String> getRootArgs() {
-        return firstArgs;
     }
 }

@@ -64,7 +64,7 @@ public class TARDISPermission {
      * This will only return true if the player has the node, and it's negated.
      *
      * @param player the player to check
-     * @param node  the node to check
+     * @param node   the node to check
      * @return true if the player has the node, and it's negated
      */
     public static boolean isNegated(Player player, String node) {

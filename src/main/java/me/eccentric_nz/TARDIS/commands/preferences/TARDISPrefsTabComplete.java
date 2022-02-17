@@ -69,8 +69,8 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             String sub = args[0];
             return switch (sub) {
                 case "add", "remove" ->
-                    // return null to default to online player name matching
-                    null;
+                        // return null to default to online player name matching
+                        null;
                 case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
                 case "key" -> partial(lastArg, KEY_SUBS);
                 case "language" -> partial(lastArg, LANGUAGE_SUBS);
