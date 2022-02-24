@@ -47,13 +47,12 @@ public class Metrics {
             config.addDefault("logResponseStatusText", false);
             // Inform the server owners about bStats
             config.options()
-                    .header(
-                            """
-                                    bStats (https://bStats.org) collects some basic information for plugin authors, like how
-                                    many people use their plugin and their total player count. It's recommended to keep bStats
-                                    enabled, but if you're not comfortable with this, you can turn this setting off. There is no
-                                    performance penalty associated with having metrics enabled, and data sent to bStats is fully
-                                    anonymous.""")
+                    .header("""
+                            bStats (https://bStats.org) collects some basic information for plugin authors, like how
+                            many people use their plugin and their total player count. It's recommended to keep bStats
+                            enabled, but if you're not comfortable with this, you can turn this setting off. There is no
+                            performance penalty associated with having metrics enabled, and data sent to bStats is fully
+                            anonymous.""")
                     .copyDefaults(true);
             try {
                 config.save(configFile);
@@ -66,8 +65,7 @@ public class Metrics {
         boolean logErrors = config.getBoolean("logFailedRequests", false);
         boolean logSentData = config.getBoolean("logSentData", false);
         boolean logResponseStatusText = config.getBoolean("logResponseStatusText", false);
-        metricsBase = new MetricsBase(
-                "bukkit",
+        metricsBase = new MetricsBase("bukkit",
                 serverUUID,
                 serviceId,
                 enabled,
@@ -172,20 +170,19 @@ public class Metrics {
          * @param logSentData                 Whether or not the sent data should be logged.
          * @param logResponseStatusText       Whether or not the response status text should be logged.
          */
-        MetricsBase(
-                String platform,
-                String serverUuid,
-                int serviceId,
-                boolean enabled,
-                Consumer<JsonObjectBuilder> appendPlatformDataConsumer,
-                Consumer<JsonObjectBuilder> appendServiceDataConsumer,
-                Consumer<Runnable> submitTaskConsumer,
-                Supplier<Boolean> checkServiceEnabledSupplier,
-                BiConsumer<String, Throwable> errorLogger,
-                Consumer<String> infoLogger,
-                boolean logErrors,
-                boolean logSentData,
-                boolean logResponseStatusText) {
+        MetricsBase(String platform,
+                    String serverUuid,
+                    int serviceId,
+                    boolean enabled,
+                    Consumer<JsonObjectBuilder> appendPlatformDataConsumer,
+                    Consumer<JsonObjectBuilder> appendServiceDataConsumer,
+                    Consumer<Runnable> submitTaskConsumer,
+                    Supplier<Boolean> checkServiceEnabledSupplier,
+                    BiConsumer<String, Throwable> errorLogger,
+                    Consumer<String> infoLogger,
+                    boolean logErrors,
+                    boolean logSentData,
+                    boolean logResponseStatusText) {
             this.platform = platform;
             this.serverUuid = serverUuid;
             this.serviceId = serviceId;
@@ -203,6 +200,23 @@ public class Metrics {
             if (enabled) {
                 startSubmitting();
             }
+        }
+
+        /**
+         * Gzips the given string.
+         *
+         * @param str The string to gzip.
+         * @return The gzipped string.
+         */
+        private static byte[] compress(String str) throws IOException {
+            if (str == null) {
+                return null;
+            }
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
+                gzip.write(str.getBytes(StandardCharsets.UTF_8));
+            }
+            return outputStream.toByteArray();
         }
 
         void addCustomChart(CustomChart chart) {
@@ -248,18 +262,17 @@ public class Metrics {
             baseJsonBuilder.appendField("serverUUID", serverUuid);
             baseJsonBuilder.appendField("metricsVersion", METRICS_VERSION);
             JsonObjectBuilder.JsonObject data = baseJsonBuilder.build();
-            scheduler.execute(
-                    () -> {
-                        try {
-                            // Send the data
-                            sendData(data);
-                        } catch (Exception e) {
-                            // Something went wrong! :(
-                            if (logErrors) {
-                                errorLogger.accept("Could not submit bStats metrics data", e);
-                            }
-                        }
-                    });
+            scheduler.execute(() -> {
+                try {
+                    // Send the data
+                    sendData(data);
+                } catch (Exception e) {
+                    // Something went wrong! :(
+                    if (logErrors) {
+                        errorLogger.accept("Could not submit bStats metrics data", e);
+                    }
+                }
+            });
         }
 
         private void sendData(JsonObjectBuilder.JsonObject data) throws Exception {
@@ -311,23 +324,6 @@ public class Metrics {
                     throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
                 }
             }
-        }
-
-        /**
-         * Gzips the given string.
-         *
-         * @param str The string to gzip.
-         * @return The gzipped string.
-         */
-        private static byte[] compress(String str) throws IOException {
-            if (str == null) {
-                return null;
-            }
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
-                gzip.write(str.getBytes(StandardCharsets.UTF_8));
-            }
-            return outputStream.toByteArray();
         }
     }
 
@@ -492,8 +488,7 @@ public class Metrics {
             this.chartId = chartId;
         }
 
-        JsonObjectBuilder.JsonObject getRequestJsonObject(
-                BiConsumer<String, Throwable> errorLogger, boolean logErrors) {
+        JsonObjectBuilder.JsonObject getRequestJsonObject(BiConsumer<String, Throwable> errorLogger, boolean logErrors) {
             JsonObjectBuilder builder = new JsonObjectBuilder();
             builder.appendField("chartId", chartId);
             try {
@@ -625,6 +620,34 @@ public class Metrics {
 
         JsonObjectBuilder() {
             builder.append("{");
+        }
+
+        /**
+         * Escapes the given string like stated in https://www.ietf.org/rfc/rfc4627.txt.
+         *
+         * <p>This method escapes only the necessary characters '"', '\'. and '\u0000' - '\u001F'.
+         * Compact escapes are not used (e.g., '\n' is escaped as "\u000a" and not as "\n").
+         *
+         * @param value The value to escape.
+         * @return The escaped value.
+         */
+        private static String escape(String value) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (c == '"') {
+                    builder.append("\\\"");
+                } else if (c == '\\') {
+                    builder.append("\\\\");
+                } else if (c <= '\u000F') {
+                    builder.append("\\u000").append(Integer.toHexString(c));
+                } else if (c <= '\u001F') {
+                    builder.append("\\u00").append(Integer.toHexString(c));
+                } else {
+                    builder.append(c);
+                }
+            }
+            return builder.toString();
         }
 
         /**
@@ -765,34 +788,6 @@ public class Metrics {
             JsonObject object = new JsonObject(builder.append("}").toString());
             builder = null;
             return object;
-        }
-
-        /**
-         * Escapes the given string like stated in https://www.ietf.org/rfc/rfc4627.txt.
-         *
-         * <p>This method escapes only the necessary characters '"', '\'. and '\u0000' - '\u001F'.
-         * Compact escapes are not used (e.g., '\n' is escaped as "\u000a" and not as "\n").
-         *
-         * @param value The value to escape.
-         * @return The escaped value.
-         */
-        private static String escape(String value) {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < value.length(); i++) {
-                char c = value.charAt(i);
-                if (c == '"') {
-                    builder.append("\\\"");
-                } else if (c == '\\') {
-                    builder.append("\\\\");
-                } else if (c <= '\u000F') {
-                    builder.append("\\u000").append(Integer.toHexString(c));
-                } else if (c <= '\u001F') {
-                    builder.append("\\u00").append(Integer.toHexString(c));
-                } else {
-                    builder.append(c);
-                }
-            }
-            return builder.toString();
         }
 
         /**
