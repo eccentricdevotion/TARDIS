@@ -33,30 +33,39 @@ import java.util.*;
 public class TARDISBuilderInstanceKeeper {
 
     private static final Map<String, String> BLOCK_CONVERSION;
-    private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER", "JUKEBOX", "NOTE_BLOCK");
+    private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_DEEPSLATE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER", "JUKEBOX", "NOTE_BLOCK");
     private static final Set<Material> PRECIOUS = new HashSet<>();
     private static final Set<Integer> TIPS_SLOTS = new HashSet<>();
 
     static {
         BLOCK_CONVERSION = Map.ofEntries(
                 Map.entry("ACACIA_LEAVES", "ACACIA_SAPLING"),
+                Map.entry("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF"),
                 Map.entry("BIRCH_LEAVES", "BIRCH_SAPLING"),
                 Map.entry("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM"),
+                Map.entry("SMALL_AMETHYST_BUD", "AMETHYST_SHARD"),
+                Map.entry("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD"),
+                Map.entry("LARGE_AMETHYST_BUD", "AMETHYST_SHARD"),
+                Map.entry("AMETHYST_CLUSTER", "AMETHYST_SHARD"),
                 Map.entry("CAKE", "LEVER"),
                 Map.entry("CARROTS", "CARROT"),
                 Map.entry("CAVE_VINES", "GLOW_BERRIES"),
+                Map.entry("CAVE_VINES_PLANT", "GLOW_BERRIES"),
                 Map.entry("COBWEB", "STRING"),
                 Map.entry("COCOA", "COCOA_BEANS"),
                 Map.entry("DARK_OAK_LEAVES", "DARK_OAK_SAPLING"),
+                Map.entry("DIRT_PATH", "DIRT"),
                 Map.entry("FARMLAND", "DIRT"),
                 Map.entry("GRASS_BLOCK", "DIRT"),
                 Map.entry("GRASS", "WHEAT_SEEDS"),
                 Map.entry("IRON_DOOR", "IRON_DOOR"),
                 Map.entry("JUNGLE_LEAVES", "JUNGLE_SAPLING"),
+                Map.entry("LIGHT", "TORCH"),
                 Map.entry("MELON_STEM", "MELON_SEEDS"),
                 Map.entry("MYCELIUM", "DIRT"),
                 Map.entry("OAK_LEAVES", "OAK_SAPLING"),
                 Map.entry("POTATOES", "POTATO"),
+                Map.entry("POWDER_SNOW", "SNOW_BLOCK"),
                 Map.entry("PUMPKIN_STEM", "PUMPKIN_SEEDS"),
                 Map.entry("REDSTONE_WALL_TORCH", "REDSTONE_TORCH"),
                 Map.entry("REDSTONE_WIRE", "REDSTONE"),
@@ -65,6 +74,7 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("SPRUCE_LEAVES", "SPRUCE_SAPLING"),
                 Map.entry("STONE", "COBBLESTONE"),
                 Map.entry("TALL_GRASS", "WHEAT_SEEDS"),
+                Map.entry("TWISTING_VINES_PLANT", "TWISTING_VINES"),
                 Map.entry("OAK_WALL_SIGN", "OAK_SIGN"),
                 Map.entry("DARK_OAK_WALL_SIGN", "DARK_OAK_SIGN"),
                 Map.entry("SPRUCE_WALL_SIGN", "SPRUCE_SIGN"),
@@ -74,10 +84,12 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("CRIMSON_WALL_SIGN", "CRIMSON_SIGN"),
                 Map.entry("WALL_TORCH", "TORCH"),
                 Map.entry("WARPED_WALL_SIGN", "WARPED_SIGN"),
+                Map.entry("WEEPING_VINES_PLANT", "WEEPING_VINES"),
                 Map.entry("WHEAT", "WHEAT_SEEDS"),
                 // potted plants
                 Map.entry("POTTED_ACACIA_SAPLING", "ACACIA_SAPLING"),
                 Map.entry("POTTED_ALLIUM", "ALLIUM"),
+                Map.entry("POTTED_AZALEA_BUSH", "AZALEA"),
                 Map.entry("POTTED_AZURE_BLUET", "AZURE_BLUET"),
                 Map.entry("POTTED_BAMBOO", "BAMBOO"),
                 Map.entry("POTTED_BIRCH_SAPLING", "BIRCH_SAPLING"),
@@ -85,10 +97,13 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("POTTED_BROWN_MUSHROOM", "BROWN_MUSHROOM"),
                 Map.entry("POTTED_CACTUS", "CACTUS"),
                 Map.entry("POTTED_CORNFLOWER", "CORNFLOWER"),
+                Map.entry("POTTED_CRIMSON_FUNGUS", "CRIMSON_FUNGUS"),
+                Map.entry("POTTED_CRIMSON_ROOTS", "CRIMSON_ROOTS"),
                 Map.entry("POTTED_DANDELION", "DANDELION"),
                 Map.entry("POTTED_DARK_OAK_SAPLING", "DARK_OAK_SAPLING"),
                 Map.entry("POTTED_DEAD_BUSH", "DEAD_BUSH"),
                 Map.entry("POTTED_FERN", "FERN"),
+                Map.entry("POTTED_FLOWERING_AZALEA_BUSH", "FLOWERING_AZALEA"),
                 Map.entry("POTTED_JUNGLE_SAPLING", "JUNGLE_SAPLING"),
                 Map.entry("POTTED_LILY_OF_THE_VALLEY", "LILY_OF_THE_VALLEY"),
                 Map.entry("POTTED_OAK_SAPLING", "OAK_SAPLING"),
@@ -99,6 +114,8 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("POTTED_RED_MUSHROOM", "RED_MUSHROOM"),
                 Map.entry("POTTED_RED_TULIP", "RED_TULIP"),
                 Map.entry("POTTED_SPRUCE_SAPLING", "SPRUCE_SAPLING"),
+                Map.entry("POTTED_WARPED_FUNGUS", "WARPED_FUNGUS"),
+                Map.entry("POTTED_WARPED_ROOTS", "WARPED_ROOTS"),
                 Map.entry("POTTED_WHITE_TULIP", "WHITE_TULIP"),
                 Map.entry("POTTED_WITHER_ROSE", "WITHER_ROSE")
         );
