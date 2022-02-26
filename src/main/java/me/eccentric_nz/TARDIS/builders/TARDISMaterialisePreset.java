@@ -827,14 +827,16 @@ class TARDISMaterialisePreset implements Runnable {
                     whereb.put("tardis_id", bd.getTardisID());
                     whereb.put("police_box", 2);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
-                    if (rs.resultSet()) {
-                        ReplacedBlock rb = rs.getReplacedBlock();
-                        TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
-                        HashMap<String, Object> whered = new HashMap<>();
-                        whered.put("tardis_id", bd.getTardisID());
-                        whered.put("police_box", 2);
-                        plugin.getQueryFactory().doDelete("blocks", whered);
-                    }
+                    rs.resultSetAsync((hasResult, resultSetBlocks) -> {
+                        if (hasResult) {
+                            ReplacedBlock rb = resultSetBlocks.getReplacedBlock();
+                            TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
+                            HashMap<String, Object> whered = new HashMap<>();
+                            whered.put("tardis_id", bd.getTardisID());
+                            whered.put("police_box", 2);
+                            plugin.getQueryFactory().doDelete("blocks", whered);
+                        }
+                    });
                     // tardis has moved so remove HADS damage count
                     plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
                     // update demat field in database

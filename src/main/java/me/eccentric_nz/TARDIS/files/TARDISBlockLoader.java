@@ -53,9 +53,11 @@ public class TARDISBlockLoader {
      */
     public void loadProtectedBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
-        if (rsb.resultSet()) {
-            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardis_id()));
-        }
+        rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
+            if (hasResult) {
+                resultSetBlocks.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardis_id()));
+            }
+        });
     }
 
     /**
@@ -67,9 +69,11 @@ public class TARDISBlockLoader {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, true);
-        if (rsb.resultSet()) {
-            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rb.getStrLocation()));
-        }
+        rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
+            if (hasResult) {
+                resultSetBlocks.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rb.getStrLocation()));
+            }
+        });
     }
 
     /**
@@ -87,23 +91,23 @@ public class TARDISBlockLoader {
                 values[2] = Double.valueOf(map.get("velocity"));
                 switch (i) {
                     case 1 ->
-                        // going up
-                        plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
+                            // going up
+                            plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
                     case 2 ->
-                        // going north
-                        plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
+                            // going north
+                            plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
                     case 3 ->
-                        // going west
-                        plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
+                            // going west
+                            plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
                     case 4 ->
-                        // going south
-                        plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
+                            // going south
+                            plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
                     case 5 ->
-                        // going east
-                        plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
+                            // going east
+                            plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
                     default ->
-                        // going down
-                        plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
+                            // going down
+                            plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
                 }
             }
         }

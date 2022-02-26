@@ -113,14 +113,16 @@ public class TARDISJunkDestroyer implements Runnable {
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", pdd.getTardisID());
                 ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
-                if (rsb.resultSet()) {
-                    rsb.getData().forEach((rp) -> {
-                        int rx = rp.getLocation().getBlockX();
-                        int ry = rp.getLocation().getBlockY();
-                        int rz = rp.getLocation().getBlockZ();
-                        TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlockData());
-                    });
-                }
+                rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
+                    if (hasResult) {
+                        resultSetBlocks.getData().forEach((rp) -> {
+                            int rx = rp.getLocation().getBlockX();
+                            int ry = rp.getLocation().getBlockY();
+                            int rz = rp.getLocation().getBlockZ();
+                            TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlockData());
+                        });
+                    }
+                });
                 // remove block protection
                 plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID());
                 plugin.getServer().getScheduler().cancelTask(fryTask);

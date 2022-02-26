@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,6 +60,17 @@ public class ResultSetBlocks {
         this.where = where;
         this.multiple = multiple;
         prefix = this.plugin.getPrefix();
+    }
+
+    public void resultSetAsync(final ResultSetBlocksCallback callback) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            boolean hasResult = resultSet();
+            // go back to the tick loop
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                // call the callback with the result
+                callback.onDone(hasResult, this);
+            });
+        });
     }
 
     /**
@@ -136,5 +148,9 @@ public class ResultSetBlocks {
 
     public List<ReplacedBlock> getData() {
         return data;
+    }
+
+    public interface ResultSetBlocksCallback {
+        void onDone(boolean hasResult, ResultSetBlocks resultSetBlocks);
     }
 }

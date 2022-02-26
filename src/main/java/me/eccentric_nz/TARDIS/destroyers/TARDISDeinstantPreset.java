@@ -170,13 +170,14 @@ public class TARDISDeinstantPreset {
                 where.put("tardis_id", id);
                 where.put("data", "minecraft:sponge");
                 ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-                Block b;
-                if (rs.resultSet()) {
-                    if (rs.getReplacedBlock().getLocation() != null) {
-                        b = rs.getReplacedBlock().getLocation().getBlock();
-                        plugin.getWorldGuardUtils().sponge(b, false);
+                rs.resultSetAsync((hasResult, resultSetBlocks) -> {
+                    if (hasResult) {
+                        if (rs.getReplacedBlock().getLocation() != null) {
+                            Block b = rs.getReplacedBlock().getLocation().getBlock();
+                            plugin.getWorldGuardUtils().sponge(b, false);
+                        }
                     }
-                }
+                });
             }
         }
         // check protected blocks if has block id and data stored then put the block back!
@@ -184,9 +185,11 @@ public class TARDISDeinstantPreset {
         tid.put("tardis_id", id);
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
-        if (rsb.resultSet()) {
-            rsb.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
-        }
+        rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
+            if (hasResult) {
+                resultSetBlocks.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
+            }
+        });
         // if just hiding don't remove block protection
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id);
