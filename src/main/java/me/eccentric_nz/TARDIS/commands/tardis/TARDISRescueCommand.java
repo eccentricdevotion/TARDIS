@@ -26,7 +26,11 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -89,7 +93,12 @@ class TARDISRescueCommand {
                         }
                     }, 2L);
                 } else {
-                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
+                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who);
+                    TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
+                    textComponent.setColor(ChatColor.AQUA);
+                    textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+                    textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "tardis rescue accept"));
+                    destPlayer.spigot().sendMessage(textComponent);
                     plugin.getTrackerKeeper().getChatRescue().put(savedUUID, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {

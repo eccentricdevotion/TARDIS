@@ -55,8 +55,8 @@ public class TARDISChatListener implements Listener {
     }
 
     /**
-     * Listens for player typing "tardis rescue accept". If the player types it within 60 seconds of a Time Lord sending
-     * a rescue request, a player rescue attempt is made.
+     * Listens for player typing "tardis [rescue|request|call] accept". If the player types it within 60 seconds of a Time Lord sending
+     * a rescue|request|call, a player rescue|request|call attempt is made.
      * <p>
      * Also processes questions pertaining to "How to make a TARDIS?" and variations thereof.
      *

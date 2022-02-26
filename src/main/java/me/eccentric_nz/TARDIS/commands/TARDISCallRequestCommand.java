@@ -33,6 +33,10 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -195,8 +199,13 @@ public class TARDISCallRequestCommand {
         request.setSubmarine(sub);
         request.setHidden(hidden);
         plugin.getTrackerKeeper().getComehereRequests().put(uuid, request);
-        // send message with chat instructions
-        TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName(), ChatColor.AQUA + "tardis call accept" + ChatColor.RESET);
+        // send message with click event
+        TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName());
+        TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
+        textComponent.setColor(net.md_5.bungee.api.ChatColor.AQUA);
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis call accept"));
+        requested.spigot().sendMessage(textComponent);
         // message asking player too
         TARDISMessage.send(player, "REQUEST_SENT", requested.getName());
         // remove request after 60 seconds
