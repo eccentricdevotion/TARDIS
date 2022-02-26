@@ -23,16 +23,16 @@ import java.util.logging.Level;
 public class TARDISDynmap {
 
     private static final String INFO = """
-            <div class=\"regioninfo\">
-                <div class=\"infowindow\">
-                    <span style=\"font-weight:bold;\">Time Lord:</span> %owner%<br/>
-                    <span style=\"font-weight:bold;\">Console type:</span> %console%<br/>
-                    <span style=\"font-weight:bold;\">Chameleon circuit:</span> %chameleon%<br/>
-                    <span style=\"font-weight:bold;\">Location:</span> %location%<br/>
-                    <span style=\"font-weight:bold;\">Door:</span> %door%<br/>
-                    <span style=\"font-weight:bold;\">Powered on:</span> %powered%<br/>
-                    <span style=\"font-weight:bold;\">Siege mode:</span> %siege%<br/>
-                    <span style=\"font-weight:bold;\">Occupants:</span> %occupants%
+            <div class="regioninfo">
+                <div class="infowindow">
+                    <span style="font-weight:bold;">Time Lord:</span> %owner%<br/>
+                    <span style="font-weight:bold;">Console type:</span> %console%<br/>
+                    <span style="font-weight:bold;">Chameleon circuit:</span> %chameleon%<br/>
+                    <span style="font-weight:bold;">Location:</span> %location%<br/>
+                    <span style="font-weight:bold;">Door:</span> %door%<br/>
+                    <span style="font-weight:bold;">Powered on:</span> %powered%<br/>
+                    <span style="font-weight:bold;">Siege mode:</span> %siege%<br/>
+                    <span style="font-weight:bold;">Occupants:</span> %occupants%
                 </div>
             </div>""";
     private final TARDIS plugin;
@@ -167,7 +167,8 @@ public class TARDISDynmap {
         void updateMarkerSet() {
             Map<String, Marker> newMarkerMap = new HashMap<>();
             // build new map
-            new TARDISGetter(plugin).getList(null).forEach(value -> {
+            TARDISGetter getter = new TARDISGetter(plugin, null);
+            getter.resultSetAsync(results -> results.forEach(value -> {
                 Location loc = value.getLocation();
                 World w = loc.getWorld();
                 if (w != null) {
@@ -193,7 +194,7 @@ public class TARDISDynmap {
                     // add to new marker map
                     newMarkerMap.put(id, marker);
                 }
-            });
+            }));
             // review old map - anything left is gone
             markers.values().forEach(GenericMarker::deleteMarker);
             // replace with new map
@@ -259,7 +260,8 @@ public class TARDISDynmap {
                     // get next world
                     curWorld = worldsToDo.remove(0);
                     // get TARDISes
-                    toDo = new TARDISGetter(plugin).getList(curWorld);
+                    TARDISGetter getter = new TARDISGetter(plugin, curWorld);
+                    getter.resultSetAsync(results -> toDo = results);
                     tardisIndex = 0;
                     if (toDo != null && toDo.isEmpty()) {
                         toDo = null;

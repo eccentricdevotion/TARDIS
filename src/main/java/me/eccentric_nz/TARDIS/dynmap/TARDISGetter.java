@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -19,13 +20,26 @@ import java.util.Map;
 class TARDISGetter {
 
     private final TARDIS plugin;
+    private final World world;
     private final String prefix;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
 
-    TARDISGetter(TARDIS plugin) {
+    TARDISGetter(TARDIS plugin, World world) {
         this.plugin = plugin;
+        this.world = world;
         prefix = plugin.getPrefix();
+    }
+
+    public void resultSetAsync(final GetterCallback callback) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            List<TARDISData> results = getList(world);
+            // go back to the tick loop
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                // call the callback with the result
+                callback.onDone(results);
+            });
+        });
     }
 
     List<TARDISData> getList(World world) {
@@ -102,5 +116,9 @@ class TARDISGetter {
             }
         }
         return dataList;
+    }
+
+    public interface GetterCallback {
+        void onDone(List<TARDISData> results);
     }
 }
