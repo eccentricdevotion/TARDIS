@@ -31,6 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class TARDISRecipeInventory {
 
@@ -84,10 +85,20 @@ public class TARDISRecipeInventory {
                     ItemStack result;
                     if (isShapeless(str)) {
                         ShapelessRecipe shapeless = plugin.getIncomposita().getShapelessRecipes().get(str);
-                        result = shapeless.getResult();
+                        if (shapeless == null) {
+                            plugin.getLogger().log(Level.WARNING, "Could not get shapeless recipe item: " + item);
+                            continue;
+                        } else {
+                            result = shapeless.getResult();
+                        }
                     } else {
                         ShapedRecipe shaped = plugin.getFigura().getShapedRecipes().get(str);
-                        result = shaped.getResult();
+                        if (shaped == null) {
+                            plugin.getLogger().log(Level.WARNING, "Could not get shaped recipe item: " + item);
+                            continue;
+                        } else {
+                            result = shaped.getResult();
+                        }
                     }
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(str);
