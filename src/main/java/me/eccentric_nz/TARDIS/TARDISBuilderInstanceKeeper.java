@@ -72,6 +72,7 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("JUNGLE_WALL_SIGN", "JUNGLE_SIGN"),
                 Map.entry("ACACIA_WALL_SIGN", "ACACIA_SIGN"),
                 Map.entry("CRIMSON_WALL_SIGN", "CRIMSON_SIGN"),
+                Map.entry("WALL_TORCH", "TORCH"),
                 Map.entry("WARPED_WALL_SIGN", "WARPED_SIGN"),
                 Map.entry("WHEAT", "WHEAT_SEEDS"),
                 // potted plants
