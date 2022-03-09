@@ -69,7 +69,7 @@ class TARDISBuildSkaroStructure implements Runnable {
         if (!running) {
             // get default server world
             String s_world = plugin.getServer().getWorlds().get(0).getName();
-            world = plugin.getServer().getWorld(s_world + "_tardis_skaro");
+            world = plugin.getServer().getWorld("skaro");
             String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
             path += (TARDISConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
             File file = new File(path);

@@ -66,7 +66,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
             }
             // get default server world
             String s_world = plugin.getServer().getWorlds().get(0).getName();
-            world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
+            world = plugin.getServer().getWorld("siluria");
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();

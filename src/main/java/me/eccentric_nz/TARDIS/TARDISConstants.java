@@ -27,10 +27,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a dimension different from the exterior. The main
@@ -168,13 +165,25 @@ public class TARDISConstants {
     public static final HashMap<Material, Material> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
 
     /**
-     * Checks whether a world name is a TARDIS datapack planet
+     * Checks whether a world name is a TARDIS planet
      *
      * @param world the world name to check
      * @return true if the world is a TARDIS planet
      */
-    public static boolean isDatapackWorld(String world) {
-        return world.endsWith("gallifrey") || world.endsWith("siluria") || world.endsWith("skaro");
+    public static boolean isTARDISPlanet(String world) {
+        String w = world.toLowerCase(Locale.ROOT);
+        return w.endsWith("gallifrey") || w.endsWith("siluria") || w.endsWith("skaro");
+    }
+
+    /**
+     * Checks whether a world name is a TARDIS planet
+     *
+     * @param world the world name to check
+     * @return true if the world is a TARDIS planet
+     */
+    public static boolean isTARDISPlanetExact(String world) {
+        String w = world.toLowerCase(Locale.ROOT);
+        return w.equals("gallifrey") || w.equals("siluria") || w.equals("skaro");
     }
 
     /**

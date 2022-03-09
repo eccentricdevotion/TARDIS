@@ -44,6 +44,7 @@ public class TARDISWorlds {
             try {
                 WorldType worldType = WorldType.valueOf(TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type"));
                 worldCreator.type(worldType);
+                worldCreator.seed(TARDISConstants.RANDOM.nextLong());
             } catch (IllegalArgumentException iae) {
                 TARDIS.plugin.debug(ChatColor.RED + "Invalid World Type specified for '" + world + "'! " + iae.getMessage());
             }
@@ -83,7 +84,7 @@ public class TARDISWorlds {
             if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
                 TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
-                plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !isTARDISDataPackWorld(worldName));
+                plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !TARDISConstants.isTARDISPlanet(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.getWorldType().toString());
@@ -96,13 +97,13 @@ public class TARDISWorlds {
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
-            if (!TARDISConstants.isDatapackWorld(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {
-                if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+            if (TARDISAliasResolver.getWorldFromAlias(cw) == null) {
+                if (plugin.getWorldManager().equals(WorldManager.NONE) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getLogger().log(Level.INFO, "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }
             } else {
-                if (!TARDISConstants.isDatapackWorld(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
+                if (!TARDISConstants.isTARDISPlanet(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
                     plugin.getLogger().log(Level.INFO, "Removed '" + cw + "' from planets.yml");
                     // remove records from database that may contain the removed world
@@ -135,9 +136,5 @@ public class TARDISWorlds {
             }
         }
         return false;
-    }
-
-    private boolean isTARDISDataPackWorld(String planet) {
-        return (planet.endsWith("tardis_gallifrey") || planet.endsWith("tardis_siluria") || planet.endsWith("tardis_skaro"));
     }
 }

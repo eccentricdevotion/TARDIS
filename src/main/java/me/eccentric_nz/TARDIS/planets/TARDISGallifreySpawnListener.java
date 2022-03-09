@@ -47,7 +47,7 @@ public final class TARDISGallifreySpawnListener implements Listener {
         // get default server world
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // if configured prevent spawns (unless from spawners and plugins)
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets.gallifrey.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
             event.setCancelled(true);
             return;
         }

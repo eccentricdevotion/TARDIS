@@ -64,7 +64,7 @@ class TARDISBuildSilurianStructure {
         COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
         // get default server world
         String s_world = plugin.getServer().getWorlds().get(0).getName();
-        World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
+        World world = plugin.getServer().getWorld("siluria");
         // see if the chunk is loaded
         Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
         if (v1 != null) {

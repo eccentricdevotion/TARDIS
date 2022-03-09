@@ -524,7 +524,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     String planet = args[2].toLowerCase(Locale.ROOT);
-                                    if (TARDISConstants.isDatapackWorld(planet)) {
+                                    if (TARDISConstants.isTARDISPlanet(planet)) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
                                         return true;
                                     }
@@ -535,8 +535,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 } else {
-                                    String planet = rsc.getWorld().getName().toLowerCase(Locale.ROOT);
-                                    if (TARDISConstants.isDatapackWorld(planet)) {
+                                    String planet = rsc.getWorld().getName();
+                                    if (TARDISConstants.isTARDISPlanet(planet)) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                                         return true;
                                     }

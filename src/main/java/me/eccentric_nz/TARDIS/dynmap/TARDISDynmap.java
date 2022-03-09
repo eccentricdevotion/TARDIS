@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.dynmap;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.Location;
@@ -236,7 +235,7 @@ public class TARDISDynmap {
                 worldsToDo = new ArrayList<>();
                 // only get worlds that are enabled for time travel, and only regular worlds as dynmap doesn't support custom dimensions yet
                 for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
-                    if (!TARDISConstants.isDatapackWorld(planet) && plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
                         World world = plugin.getServer().getWorld(planet);
                         if (world != null) {
                             worldsToDo.add(world);
