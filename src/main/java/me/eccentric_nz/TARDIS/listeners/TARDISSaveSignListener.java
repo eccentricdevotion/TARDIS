@@ -70,6 +70,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     public void onSaveTerminalClick(InventoryClickEvent event) {
         if (event.getClickedInventory() == null) {
             // player clicked outside inventory
+            event.setCancelled(plugin.getTrackerKeeper().getArrangers().contains(event.getWhoClicked().getUniqueId()));
             return;
         }
         InventoryView view = event.getView();
