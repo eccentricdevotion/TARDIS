@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.*;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -29,26 +29,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.*;
 
 /**
- * Teleport to the spawn point of worlds on the server
+ * Load and unload worlds on the server
  *
  * @author eccentric_nz
  */
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "gm", "rename");
+    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
@@ -85,6 +80,28 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             }
             World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
             if (world != null) {
+                if (args[0].equalsIgnoreCase("disable")) {
+                    // is the world in the config?
+                    if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
+                        TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                        return true;
+                    }
+                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
+                    plugin.savePlanetsConfig();
+                    TARDISMessage.send(sender, "WORLD_DISABLED", args[1]);
+                    if (TARDISConstants.isTARDISPlanetExact(args[1])) {
+                        TARDISMessage.send(sender, "WORLD_DISABLED_RESTART");
+                    }
+                    // remove players from world
+                    Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+                    for (Player player : world.getPlayers()) {
+                        TARDISMessage.send(player, "WORLD_DISABLED_TELEPORT");
+                        player.teleport(spawn);
+                    }
+                    // unload the world
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().unloadWorld(world, true), 5);
+                    return true;
+                }
                 if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
@@ -143,6 +160,47 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
                 }
             } else {
+                if (args[0].equalsIgnoreCase("enable")) {
+                    // is the world in the config?
+                    if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
+                        TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                        return true;
+                    }
+                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", true);
+                    plugin.savePlanetsConfig();
+                    TARDISMessage.send(sender, "WORLD_ENABLED", args[1]);
+                    if (TARDISConstants.isTARDISPlanetExact(args[1])) {
+                        switch (args[1]) {
+                            case "gallifrey" -> {
+                                plugin.debug("Gallifrey enabled, registering planet event listeners");
+                                plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
+                                plugin.getPM().registerEvents(new TARDISGallifreyChunkPopulateListener(plugin), plugin);
+                                plugin.getTardisHelper().addCustomBiome("gallifrey");
+                            }
+                            case "siluria" -> {
+                                plugin.debug("Siluria enabled, registering planet event listeners");
+                                plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
+                                if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                                    plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
+                                }
+                            }
+                            default -> {
+                                // skaro
+                                plugin.debug("Skaro enabled, registering planet event listeners");
+                                plugin.getPM().registerEvents(new TARDISSkaroChunkPopulateListener(plugin), plugin);
+                                if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
+                                    plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
+                                }
+                                if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                                    plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
+                                }
+                                plugin.getTardisHelper().addCustomBiome("skaro");
+                            }
+                        }
+                    }
+                    TARDISWorlds.loadWorld(args[1]);
+                    return true;
+                }
                 if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
@@ -160,73 +218,50 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     WorldType worldType = WorldType.NORMAL;
                     World.Environment environment = World.Environment.NORMAL;
                     String name = args[1].toLowerCase(Locale.ROOT);
-                    if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
-                        switch (name) {
-                            case "gallifrey" -> new TARDISGallifrey(plugin).loadTimeLordWorld();
-                            case "siluria" -> new TARDISSiluria(plugin).loadSilurianUnderworld();
-                            default -> new TARDISSkaro(plugin).loadDalekWorld();
-                        }
-                        Reader reader = new InputStreamReader(plugin.getResource("planets_template.yml"));
-                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(reader);
-                        ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
-                        ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
-                        String s_world = plugin.getServer().getWorlds().get(0).getName();
-                        name = s_world + "_tardis_" + name;
-                        plugin.getPlanetsConfig().createSection("planets." + name, section.getValues(true));
-                        plugin.getPlanetsConfig().set("planets." + name + "gamerules", null);
-                        plugin.getPlanetsConfig().createSection("planets." + name + ".gamerules", rules.getValues(true));
-                        plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
-                        if (name.equals(s_world + "_tardis_skaro")) {
-                            plugin.getPlanetsConfig().set("planets." + name + ".acid_potions", Arrays.asList("WEAKNESS", "POISON"));
-                        }
+                    // try to load the world
+                    WorldCreator creator = new WorldCreator(name);
+                    if (args.length > 2) {
                         try {
-                            reader.close();
-                        } catch (IOException e) {
-                            plugin.debug("Could not close input stream reader!");
-                        }
-                    } else {
-                        // try to load the world
-                        WorldCreator creator = new WorldCreator(name);
-                        if (args.length > 2) {
-                            try {
-                                worldType = WorldType.valueOf(args[2].toUpperCase(Locale.ENGLISH));
-                            } catch (IllegalArgumentException e) {
-                                TARDISMessage.send(sender, "WORLD_TYPE", args[2]);
-                                return true;
-                            }
-                        }
-                        creator.type(worldType);
-                        if (args.length > 3) {
-                            try {
-                                environment = World.Environment.valueOf(args[3].toUpperCase(Locale.ENGLISH));
-                            } catch (IllegalArgumentException e) {
-                                TARDISMessage.send(sender, "WORLD_ENV", args[3]);
-                                return true;
-                            }
-                        }
-                        creator.environment(environment);
-                        if (args.length > 4) {
-                            // Check generator exists
-                            String[] split = args[4].split(":", 2);
-                            Plugin gen = plugin.getPM().getPlugin(split[0]);
-                            if (gen == null) {
-                                TARDISMessage.send(sender, "WORLD_GEN", args[4]);
-                                return true;
-                            }
-                            creator.generator(args[4]);
-                        }
-                        if (creator.createWorld() == null) {
-                            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                            worldType = WorldType.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(sender, "WORLD_TYPE", args[2]);
                             return true;
                         }
-                        plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
-                        plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
                     }
+                    creator.type(worldType);
+                    if (args.length > 3) {
+                        try {
+                            environment = World.Environment.valueOf(args[3].toUpperCase(Locale.ENGLISH));
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(sender, "WORLD_ENV", args[3]);
+                            return true;
+                        }
+                    }
+                    creator.environment(environment);
+                    if (args.length > 4) {
+                        // Check generator exists
+                        String[] split = args[4].split(":", 2);
+                        Plugin gen = plugin.getPM().getPlugin(split[0]);
+                        if (gen == null) {
+                            TARDISMessage.send(sender, "WORLD_GEN", args[4]);
+                            return true;
+                        }
+                        creator.generator(args[4]);
+                    }
+                    if (creator.createWorld() == null) {
+                        TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                        return true;
+                    }
+                    plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+                    plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
                     plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
                     plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
                     plugin.getPlanetsConfig().set("planets." + name + ".world_type", worldType.toString());
                     plugin.getPlanetsConfig().set("planets." + name + ".environment", environment.toString());
-                    plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
+                    // don't set siluria/gallifrey/skaro generator
+                    if (!TARDISConstants.isTARDISPlanetExact(name)) {
+                        plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
+                    }
                     plugin.savePlanetsConfig();
                 } else {
                     TARDISMessage.send(sender, "WORLD_UNLOADED", args[1]);
