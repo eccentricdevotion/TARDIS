@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -281,16 +281,16 @@ public class TARDISUtils {
                     .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
             default -> // ALL
                     ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                    .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                    .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                    .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                    .replace("%FACING%", getFacing(player))
-                    .replace("%FACING_XZ%", getFacingXZ(player))
-                    .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                    .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-            );
+                            .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                            .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                            .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                            .replace("%FACING%", getFacing(player))
+                            .replace("%FACING_XZ%", getFacingXZ(player))
+                            .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                            .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                            .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                            .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+                    );
         };
     }
 }
