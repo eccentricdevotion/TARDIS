@@ -11,7 +11,7 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
-    generator: TARDISChunkGenerator
+    generator: TARDISChunkGenerator:void
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
@@ -26,7 +26,7 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
-    generator: TARDISChunkGenerator
+    generator: TARDISChunkGenerator:void
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
@@ -34,3 +34,55 @@ planets:
     keep_spawn_in_memory: false
     allow_portals: false
     alias: ZeroRoom
+  skaro:
+    enabled: false
+    resource_pack: default
+    acid: true
+    acid_damage: 5
+    acid_potions:
+      - WEAKNESS
+      - POISON
+    rust: true
+    flying_daleks: true
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: NORMAL
+    environment: NORMAL
+    generator: TARDISChunkGenerator:skaro
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Skaro
+  siluria:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: NORMAL
+    environment: NORMAL
+    generator: TARDISChunkGenerator:siluria
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Siluria
+  gallifrey:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: NORMAL
+    environment: NORMAL
+    generator: TARDISChunkGenerator:gallifrey
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Gallifrey
