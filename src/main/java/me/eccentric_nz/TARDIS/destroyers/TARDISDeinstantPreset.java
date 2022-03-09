@@ -185,11 +185,9 @@ public class TARDISDeinstantPreset {
         tid.put("tardis_id", id);
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
-        rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
-            if (hasResult) {
-                resultSetBlocks.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
-            }
-        });
+        if (rsb.resultSet()) {
+            rsb.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
+        }
         // if just hiding don't remove block protection
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id);
