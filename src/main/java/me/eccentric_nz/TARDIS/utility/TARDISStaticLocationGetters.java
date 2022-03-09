@@ -160,7 +160,7 @@ public class TARDISStaticLocationGetters {
                 // need to +1 due to Spigot change
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
-                if (world.getName().equals("Siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
+                if (world.getName().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
                     y--;
                     while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO)) {
                         y--;

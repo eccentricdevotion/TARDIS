@@ -113,7 +113,7 @@ public class TARDISTimeTravel {
                                 count++;
                                 break;
                             }
-                        } else if (w.getName().equals("Siluria") && mat.equals(Material.BAMBOO)) {
+                        } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
                             count++;
