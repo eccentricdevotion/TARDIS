@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -52,7 +51,7 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-            tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
+            tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator:void").generateStructures(false).createWorld();
             // add world to config, but time travel disabled by default
             plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
             plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
@@ -61,7 +60,7 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
             plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
             plugin.getPlanetsConfig().set("planets." + name + ".void", true);
-            plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+            plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator:void");
             plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
             plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
             plugin.savePlanetsConfig();
@@ -103,7 +102,7 @@ public class TARDISSpace {
     }
 
     public void createDefaultWorld(String name) {
-        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator").generateStructures(false).createWorld();
+        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator:void").generateStructures(false).createWorld();
         // add world to config, but disabled by default
         plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
@@ -112,7 +111,7 @@ public class TARDISSpace {
         plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
         plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
         plugin.getPlanetsConfig().set("planets." + name + ".void", true);
-        plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+        plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator:void");
         plugin.savePlanetsConfig();
     }
 }

@@ -91,7 +91,7 @@ public class ResultSetConsole {
                 rs.next();
                 Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                 if (l == null || !l.getChunk().isLoaded()) {
-                    plugin.debug("Control sign chunk was not loaded...");
+//                    plugin.debug("Control sign chunk was not loaded...");
                     return false;
                 }
                 sign = l.getBlock();
