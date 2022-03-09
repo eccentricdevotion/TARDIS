@@ -4,6 +4,7 @@
 
 ## Next version `4.9.0`
 
+0. Deal with removal of datapack worlds that may have TARDISes in them
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 2. Cache TARDIS data to speed lookups and reduce database queries
 3. Update documentation...
