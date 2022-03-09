@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -45,14 +44,14 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 
     public TARDISGallifreyChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
-        timeCheck = System.currentTimeMillis() + 3000;
+        timeCheck = System.currentTimeMillis() + 6000;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void gallifreyOnChunkPopulate(ChunkPopulateEvent event) {
         Chunk chunk = event.getChunk();
         // check world
-        if (!chunk.getWorld().getName().endsWith("gallifrey")) {
+        if (!chunk.getWorld().getName().equalsIgnoreCase("gallifrey")) {
             return;
         }
         ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
@@ -75,15 +74,10 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
                 }
             }
         }
-        // haven't returned add random tree in random position in chunk
-        int treeX = chunk.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
-        int treeZ = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
-        int treeY = chunk.getWorld().getHighestBlockYAt(treeX, treeZ) + 1;
-        plugin.getTardisHelper().growTree("gallifrey", new Location(chunk.getWorld(), treeX, treeY, treeZ));
     }
 
     private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
-        timeCheck = System.currentTimeMillis() + 4500;
+        timeCheck = System.currentTimeMillis() + 6000;
         chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // create structure

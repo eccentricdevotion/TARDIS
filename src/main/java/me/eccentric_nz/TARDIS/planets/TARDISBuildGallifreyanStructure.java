@@ -82,7 +82,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
             }
             // get default server world
             String s_world = plugin.getServer().getWorlds().get(0).getName();
-            world = plugin.getServer().getWorld(s_world + "_tardis_gallifrey");
+            world = plugin.getServer().getWorld("gallifrey");
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
@@ -133,10 +133,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                     }
                     case LADDER -> postLadderBlocks.put(world.getBlockAt(x, y, z), data);
                     case SPONGE -> {
-                        Block swap_block = world.getBlockAt(x, y, z);
-                        if (!swap_block.getType().isOccluding()) {
-                            TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
-                        }
+                        // don't set a block, let the default generated blocks stay as they are
                     }
                     case SPAWNER -> {
                         Block spawner = world.getBlockAt(x, y, z);
