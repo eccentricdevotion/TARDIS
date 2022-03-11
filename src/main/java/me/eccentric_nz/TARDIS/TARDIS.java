@@ -307,9 +307,9 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.18");
+        Version minVersion = new Version("1.18.2");
         // check server version
-        if (serverVersion.compareTo(minversion) >= 0) {
+        if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
                 console.sendMessage(pluginName + ChatColor.RED + "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
                 hasVersion = false;
@@ -541,7 +541,7 @@ public class TARDIS extends JavaPlugin {
             // start bStats metrics
             new TARDISStats(this).startMetrics();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
