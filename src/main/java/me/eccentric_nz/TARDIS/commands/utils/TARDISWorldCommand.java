@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.database.converters.TARDISWorldNameConverter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
@@ -43,11 +44,12 @@ import java.util.*;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename");
+    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
     private final List<String> GM_SUBS = new ArrayList<>();
+    private final List<String> PLANET_SUBS = Arrays.asList("gallifrey", "siluria", "skaro");
 
     public TARDISWorldCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,6 +79,15 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             if (!ROOT_SUBS.contains(args[0])) {
                 TARDISMessage.send(sender, "ARG_LOAD_UNLOAD");
                 return false;
+            }
+            if (args[0].equalsIgnoreCase("update")) {
+                String world = args[1].toLowerCase(Locale.ROOT);
+                if (!PLANET_SUBS.contains(world)) {
+                    TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                    return true;
+                }
+                new TARDISWorldNameConverter(plugin, world).update();
+                return true;
             }
             World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
             if (world != null) {
@@ -281,7 +292,11 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             List<String> part = partial(args[0], ROOT_SUBS);
             return (part.size() > 0) ? part : null;
         } else if (args.length == 2) {
-            return partial(lastArg, WORLD_SUBS);
+            if (args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable") || args[0].equalsIgnoreCase("update")) {
+                return partial(lastArg, PLANET_SUBS);
+            } else {
+                return partial(lastArg, WORLD_SUBS);
+            }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("gm")) {
                 return partial(lastArg, GM_SUBS);

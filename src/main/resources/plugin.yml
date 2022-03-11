@@ -1298,7 +1298,7 @@ commands:
   tardisworld:
     aliases: tworld
     description: Load or unload TARDIS worlds
-    usage: /<command> [load|unload|gm] [world] <WorldType> <Environment> <generator>
+    usage: /<command> [load|unload|gm|enable|disable|update ] [world] <WorldType> <Environment> <generator>
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgamemode:
