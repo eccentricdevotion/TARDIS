@@ -78,7 +78,6 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            String chameleon = "";
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
@@ -105,7 +104,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         updateChameleonSign(rsf.getData(), "CUSTOM", player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CUSTOM, rsf.getLocation());
+                                        new TARDISChameleonFrame().updateChameleonFrame(PRESET.CUSTOM, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                     break;
@@ -139,7 +138,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         updateChameleonSign(rsf.getData(), selected.toString(), player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
+                                        new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                     break;

@@ -80,8 +80,6 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                 task = -1;
                 return;
             }
-            // get default server world
-            String s_world = plugin.getServer().getWorlds().get(0).getName();
             world = plugin.getServer().getWorld("gallifrey");
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);

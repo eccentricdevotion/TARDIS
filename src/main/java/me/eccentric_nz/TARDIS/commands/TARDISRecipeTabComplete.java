@@ -34,8 +34,6 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
 
     public static final Set<String> ROOT_SUBS = new HashSet<>();
     public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "division", "eleventh", "ender", "master", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
-    private final boolean jelly = false;
-    private final boolean bowtie = false;
 
     public TARDISRecipeTabComplete() {
         ROOT_SUBS.add("seed");

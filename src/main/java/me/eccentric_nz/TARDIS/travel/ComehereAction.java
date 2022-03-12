@@ -5,7 +5,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -33,12 +32,10 @@ public class ComehereAction {
             return;
         }
         World w = request.getCurrent().getWorld();
-        Location oldSave = null;
         HashMap<String, Object> bid = new HashMap<>();
         bid.put("tardis_id", request.getId());
         HashMap<String, Object> bset = new HashMap<>();
         if (w != null) {
-            oldSave = new Location(w, request.getCurrent().getX(), request.getCurrent().getY(), request.getCurrent().getZ());
             // set fast return location
             bset.put("world", request.getCurrent().getWorld().getName());
             bset.put("x", request.getCurrent().getX());

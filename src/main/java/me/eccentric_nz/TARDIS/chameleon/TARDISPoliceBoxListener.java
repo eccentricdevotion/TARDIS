@@ -37,7 +37,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -45,7 +44,6 @@ import java.util.UUID;
 public class TARDISPoliceBoxListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, String> current = new HashMap<>();
 
     public TARDISPoliceBoxListener(TARDIS plugin) {
         super(plugin);
@@ -101,7 +99,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                         updateChameleonSign(rsc.getData(), selected.toString(), player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
+                                        new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                 }

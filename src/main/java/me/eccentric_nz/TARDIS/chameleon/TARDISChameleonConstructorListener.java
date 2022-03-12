@@ -335,7 +335,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         where.put("type", Control.FRAME.getId());
         ResultSetControls rsf = new ResultSetControls(plugin, where, false);
         if (rsf.resultSet()) {
-            new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT, rsf.getLocation());
+            new TARDISChameleonFrame().updateChameleonFrame(PRESET.CONSTRUCT, rsf.getLocation());
         }
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild

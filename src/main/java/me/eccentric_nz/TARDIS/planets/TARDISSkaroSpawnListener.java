@@ -49,8 +49,6 @@ public class TARDISSkaroSpawnListener implements Listener {
             return;
         }
         SpawnReason spawnReason = event.getSpawnReason();
-        // get default server world
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // if configured prevent spawns (unless from spawners and plugins)
         if (!plugin.getPlanetsConfig().getBoolean("planets.skaro.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
             event.setCancelled(true);

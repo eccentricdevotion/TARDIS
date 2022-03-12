@@ -45,8 +45,6 @@ public final class TARDISSiluriaSpawnListener implements Listener {
             return;
         }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
-        // get default server world
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // if configured prevent spawns (unless from spawners and plugins)
         if (!plugin.getPlanetsConfig().getBoolean("planets.siluria.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
             event.setCancelled(true);
