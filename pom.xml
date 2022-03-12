@@ -511,7 +511,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>20.3</version>
+            <version>21.1</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
