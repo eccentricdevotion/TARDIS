@@ -315,6 +315,14 @@ public class TARDISBlocksUpdater {
             blocks_config.set("under_door_blocks", underDoorBlocks);
             i++;
         }
+        List<String> dripLeafBlocks = blocks_config.getStringList("tardis_blocks");
+        if (dripLeafBlocks.contains("BIG_DRIPLEAF")) {
+            dripLeafBlocks.remove("BIG_DRIPLEAF");
+            dripLeafBlocks.remove("BIG_DRIPLEAF_STEM");
+            dripLeafBlocks.remove("SMALL_DRIPLEAF");
+            blocks_config.set("tardis_blocks", dripLeafBlocks);
+            i++;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
