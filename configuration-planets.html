@@ -2,15 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta content="chrome=1" http-equiv="X-UA-Compatible">
     <title>TARDIS: Planet configuration options</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="description" content="Minecraft data values lookup tables with filtering and other neat features."/>
+    <link href="stylesheets/styles.css" rel="stylesheet">
+    <link href="stylesheets/pygment_trac.css" rel="stylesheet">
+    <meta content="Minecraft data values lookup tables with filtering and other neat features." name="description"/>
     <script src="javascripts/jquery.js"></script>
     <script src="javascripts/index.js"></script>
     <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script>
@@ -20,6 +20,9 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-53340539-1', 'auto');
   ga('send', 'pageview');
+
+
+
     </script>
 </head>
 <body>
@@ -38,14 +41,19 @@
     <section>
         <h1>Planet configuration options</h1>
         <p>These are the plugin planet configuration options (found in <em>planets.yml</em>).</p>
-        <p>Worlds are added and removed automatically when the plugin is enabled &mdash; it will find newly added worlds, and remove worlds that no longer exist.</p>
-        <p>You should rarely need to edit this section, as worlds can be included or excluded using the <code>/tardisadmin include [world]</code> and <code>/tardisadmin exclude [world]</code> commands.</p>
+        <p>Worlds are added and removed automatically when the plugin is enabled &mdash; it will find newly added
+            worlds, and remove worlds that no longer exist.</p>
+        <p>You should rarely need to edit this section, as worlds can be included or excluded using the <code>/tardisadmin
+            include [world]</code> and <code>/tardisadmin exclude [world]</code> commands.</p>
         <style type="text/css">
 			table, table code { font-size:85%; }
 			td { vertical-align:top; }
 			td.noborder { border-bottom: none; }
 			tr.coption { background-color: #eee; }
-		</style>
+
+
+
+        </style>
         <table>
             <tr>
                 <th>Option</th>
@@ -59,7 +67,12 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">To make the Whovian worlds look a little different than a regular world, TARDIS can set a small (~80KB) resource pack when you switch worlds (you must enable server resource packs in the Minecraft client). The resource pack changes the colour of the sky, clouds, water, lava and fog &mdash; you will need to install <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953">Optifine</a></td>
+                <td colspan="2">To make the Whovian worlds look a little different than a regular world, TARDIS can set
+                    a small (~80KB) resource pack when you switch worlds (you must enable server resource packs in the
+                    Minecraft client). The resource pack changes the colour of the sky, clouds, water, lava and fog
+                    &mdash; you will need to install <a
+                            href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953">Optifine</a>
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder"><code>set_pack_on_join</code></td>
@@ -68,23 +81,43 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">If players join the server in a world managed by TARDIS, setting this to <code>true</code> will switch the resource pack for them</td>
+                <td colspan="2">If players join the server in a world managed by TARDIS, setting this to
+                    <code>true</code> will switch the resource pack for them
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder"><code>default_resource_pack</code></td>
                 <td class="noborder">string</td>
-                <td class="noborder"><code><a href="https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1">https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1</a></code></td>
+                <td class="noborder"><code><a href="https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1">https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1</a></code>
+                </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">This is just an empty resource pack (954 bytes). It is needed to revert back to the default (or other installed) resource pack colours. You can either host your own, or use the one provided. Worlds not listed in the <code>planets</code> section will use this</td>
+                <td colspan="2">This is just an empty resource pack (954 bytes). It is needed to revert back to the
+                    default (or other installed) resource pack colours. You can either host your own, or use the one
+                    provided. Worlds not listed in the <code>planets</code> section will use this
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder"><code>colour_skies</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Whether to send biome change packets for the Gallifrey and Skaro worlds so that the sky,
+                    water, fog, and foliage colours are different than regular worlds.
+                </td>
             </tr>
             <tr class="coption">
                 <td colspan="3"><code>planets:</code></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">This is a list of worlds on your server. If you want to use the world resource pack switching feature for other server worlds, you can add them here. Use the <code>TARDIS_TimeVortex</code> entry as an example.</td>
+                <td colspan="2">This is a list of worlds on your server. If you want to use the world resource pack
+                    switching feature for other server worlds, you can add them here. Use the
+                    <code>TARDIS_TimeVortex</code> entry as an example.
+                </td>
             </tr>
             <tr>
                 <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;<code>[planet name]:</code></td>
@@ -114,7 +147,9 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">This is where you specify the URL to the resource pack you want to switch to when entering the world. Host your own, or use the one provided</td>
+                <td colspan="2">This is where you specify the URL to the resource pack you want to switch to when
+                    entering the world. Host your own, or use the one provided
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>gamemode</code></td>
@@ -123,7 +158,9 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">The game mode that this world should use. It should be uppercase and one of: SURVIVAL, CREATIVE, ADVENTURE, SPECTATOR</td>
+                <td colspan="2">The game mode that this world should use. It should be uppercase and one of: SURVIVAL,
+                    CREATIVE, ADVENTURE, SPECTATOR
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>world_type</code></td>
@@ -132,7 +169,9 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">The type of world that is generated. Should be uppercase, and one of: NORMAL, BUFFET, FLAT</td>
+                <td colspan="2">The type of world that is generated. Should be uppercase, and one of: NORMAL, BUFFET,
+                    FLAT
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>environment</code></td>
@@ -141,7 +180,9 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">The environment of the world that is generated. Should be uppercase, and one of: NORMAL, THE_END, NETHER</td>
+                <td colspan="2">The environment of the world that is generated. Should be uppercase, and one of: NORMAL,
+                    THE_END, NETHER
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>generator</code></td>
@@ -150,7 +191,9 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">The name of the generator for the world. Should be the name of the plugin that is used or DEFAULT</td>
+                <td colspan="2">The name of the generator for the world. Should be the name of the plugin that is used
+                    or DEFAULT
+                </td>
             </tr>
             <tr class="coption">
                 <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>game_rules</code></td>
@@ -159,18 +202,22 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td colspan="2">A list of game rules that should be applied to the world &mdash; such as: doWeatherCycle, doDaylightCycle &mdash; values must be true or false. See <a href="https://minecraft.gamepedia.com/Commands/gamerule" target="_blank">https://minecraft.gamepedia.com/Commands/gamerule</a></td>
+                <td colspan="2">A list of game rules that should be applied to the world &mdash; such as:
+                    doWeatherCycle, doDaylightCycle &mdash; values must be true or false. See <a
+                            href="https://minecraft.gamepedia.com/Commands/gamerule" target="_blank">https://minecraft.gamepedia.com/Commands/gamerule</a>
+                </td>
             </tr>
         </table>
-        <p>Each world on your server has their own section in planets.yml, however there are TARDIS specific worlds as well:</p>
+        <p>Each world on your server has their own section in planets.yml, however there are TARDIS specific worlds as
+            well:</p>
         <ul>
-          <li><a href="planets#planet-skaro">Skaro</a></li>
-          <li><a href="planets#planet-siluria">Siluria</a></li>
-          <li><a href="planets#planet-gallifrey">Gallifrey</a></li>
+            <li><a href="planets#planet-skaro">Skaro</a></li>
+            <li><a href="planets#planet-siluria">Siluria</a></li>
+            <li><a href="planets#planet-gallifrey">Gallifrey</a></li>
         </ul>
 
         <p><a href="configuration.html">Back to main configuration page</a></p>
-</section>
+    </section>
 </div>
 <footer>
     <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>

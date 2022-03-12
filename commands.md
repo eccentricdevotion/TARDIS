@@ -1,6 +1,5 @@
 ---
-layout: default
-title: Commands
+layout: default title: Commands
 ---
 
 # Commands
@@ -9,7 +8,9 @@ All commands are _case-insensitive_.
 
 Only the admin commands are available via the console.
 
-You can view descriptions, usage and permissions for all commands in-game using the TARDIS help system. Type `/tardis help` to list all the commands, then use `/tardis? [command]` to view all the relevant subcommands. Use `/tardis? [command] [subcommand]` when necessary to view the command information.
+You can view descriptions, usage and permissions for all commands in-game using the TARDIS help system.
+Type `/tardis help` to list all the commands, then use `/tardis? [command]` to view all the relevant subcommands.
+Use `/tardis? [command] [subcommand]` when necessary to view the command information.
 
 ### There are lots of commands:
 
@@ -55,24 +56,26 @@ There are multiple command arguments for each command.
 
 ### Command aliases
 
-| Command | Aliases |
-| --- | --- |
-| `/tardis` | `/tt`<br>`/ttardis`<br>`//tardis`<br>`/timelord` |
-| `/tardistravel` | `/ttravel` |
-| `/tardisadmin` | `/tadmin` |
-| `/tardisroom` | `/troom` |
-| `/tardisprefs` | `/tprefs` |
-| `/tardisarea` | `/tarea` |
-| `/tardisbind` | `/tbind` |
-| `/tardisgravity` | `/tgravity` |
-| `/tardisbook` | `/tbook` |
-| `/tardistexture` | `/tardisresource`<br>`/tresource`<br>`/ttexture`<br>`/trp`<br>`/ttp` |
-| `/tardisremote` | `/tremote`<br>`/trem` |
-| `/tardisschematic` | `/tschematic`<br>`/ts` |
+| Command            | Aliases                                                              |
+|--------------------|----------------------------------------------------------------------|
+| `/tardis`          | `/tt`<br>`/ttardis`<br>`//tardis`<br>`/timelord`                     |
+| `/tardistravel`    | `/ttravel`                                                           |
+| `/tardisadmin`     | `/tadmin`                                                            |
+| `/tardisconfig`    | `/tconfig`                                                           |
+| `/tardisroom`      | `/troom`                                                             |
+| `/tardisprefs`     | `/tprefs`                                                            |
+| `/tardisarea`      | `/tarea`                                                             |
+| `/tardisbind`      | `/tbind`                                                             |
+| `/tardisgravity`   | `/tgravity`                                                          |
+| `/tardisbook`      | `/tbook`                                                             |
+| `/tardistexture`   | `/tardisresource`<br>`/tresource`<br>`/ttexture`<br>`/trp`<br>`/ttp` |
+| `/tardisremote`    | `/tremote`<br>`/trem`                                                |
+| `/tardisschematic` | `/tschematic`<br>`/ts`                                               |
 
 ## Basic travel commands:
 
-**Note:** Some of these commands do not work in `hard` difficulty mode. See the [Advanced Console](advanced-console.html) page for more information.
+**Note:** Some of these commands do not work in `hard` difficulty mode. See
+the [Advanced Console](advanced-console.html) page for more information.
 
 ### Returning home
 
