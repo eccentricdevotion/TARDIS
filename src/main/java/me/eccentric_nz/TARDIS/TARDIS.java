@@ -541,7 +541,7 @@ public class TARDIS extends JavaPlugin {
             // start bStats metrics
             new TARDISStats(this).startMetrics();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() + " or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Spigot/Paper " + minVersion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
