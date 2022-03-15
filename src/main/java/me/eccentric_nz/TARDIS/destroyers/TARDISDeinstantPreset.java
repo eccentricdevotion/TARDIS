@@ -60,6 +60,7 @@ public class TARDISDeinstantPreset {
      * @param preset the preset to destroy
      */
     public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
+
         Location l = dd.getLocation();
         COMPASS d = dd.getDirection();
         int id = dd.getTardisID();
@@ -98,7 +99,7 @@ public class TARDISDeinstantPreset {
             int sbz = l.getBlockZ() - 1;
             // remove problem blocks first
             switch (preset) {
-                case GRAVESTONE:
+                case GRAVESTONE -> {
                     // remove flower
                     int flowerx;
                     int flowery = (l.getBlockY() + 1);
@@ -122,29 +123,21 @@ public class TARDISDeinstantPreset {
                         }
                     }
                     TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
-                    break;
-                case DUCK:
-                    plugin.getPresetDestroyer().destroyDuckEyes(l, d);
-                    break;
-                case MINESHAFT:
-                    plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
-                    break;
-                case LAMP:
-                    plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
-                    break;
-                case JUNK_MODE:
-                    plugin.getPresetDestroyer().destroyHandbrake(l, d);
-                    break;
-                case SWAMP:
+                }
+                case DUCK -> plugin.getPresetDestroyer().destroyDuckEyes(l, d);
+                case MINESHAFT -> plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
+                case LAMP -> plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
+                case JUNK_MODE -> plugin.getPresetDestroyer().destroyHandbrake(l, d);
+                case SWAMP -> {
                     int swampYTop = (dd.getLocation().getBlockY() + 2);
                     int swampYBottom = (dd.getLocation().getBlockY() + 1);
                     int swampYUnder = (dd.getLocation().getBlockY());
                     TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
                     TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
                     TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
             // remove door
             plugin.getPresetDestroyer().destroyDoor(id);

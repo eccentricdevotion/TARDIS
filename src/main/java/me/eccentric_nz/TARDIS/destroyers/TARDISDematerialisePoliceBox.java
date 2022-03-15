@@ -103,7 +103,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                         String sound = switch (spaceTimeThrottle) {
                             case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
                             default -> // NORMAL
-                                "tardis_takeoff";
+                                    "tardis_takeoff";
                         };
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
@@ -123,7 +123,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             light.setBlockData(TARDISConstants.AIR);
-            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
+            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), preset);
         }
     }
 
