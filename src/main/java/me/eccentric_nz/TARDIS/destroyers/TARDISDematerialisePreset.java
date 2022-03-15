@@ -110,11 +110,11 @@ class TARDISDematerialisePreset implements Runnable {
             // expand placed blocks to a police box
             data = switch (i % 3) {
                 case 2 -> // stained
-                    stained_column.getBlockData();
+                        stained_column.getBlockData();
                 case 1 -> // glass
-                    glass_column.getBlockData();
+                        glass_column.getBlockData();
                 default -> // preset
-                    column.getBlockData();
+                        column.getBlockData();
             };
             // first run - play sound
             if (i == 1) {
@@ -214,7 +214,7 @@ class TARDISDematerialisePreset implements Runnable {
                             sound = switch (spaceTimeThrottle) {
                                 case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
                                 default -> // NORMAL
-                                    "tardis_takeoff";
+                                        "tardis_takeoff";
                             };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
@@ -396,7 +396,7 @@ class TARDISDematerialisePreset implements Runnable {
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
+            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), preset);
             if (preset.equals(PRESET.JUNK_MODE)) {
                 // teleport player(s) to exit (tmd.getFromToLocation())
                 getJunkTravellers().forEach((e) -> {
