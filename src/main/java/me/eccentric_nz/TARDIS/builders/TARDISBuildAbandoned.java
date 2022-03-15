@@ -268,7 +268,7 @@ class TARDISBuildAbandoned implements Runnable {
             }
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
-                    case ORANGE_WOOL:
+                    case ORANGE_WOOL -> {
                         if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
                             switch (use_clay) {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
@@ -278,8 +278,8 @@ class TARDISBuildAbandoned implements Runnable {
                         } else {
                             data = wall_type.createBlockData();
                         }
-                        break;
-                    case LIGHT_GRAY_WOOL:
+                    }
+                    case LIGHT_GRAY_WOOL -> {
                         if (!schm.getPermission().equals("eleventh")) {
                             if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
                                 switch (use_clay) {
@@ -300,15 +300,15 @@ class TARDISBuildAbandoned implements Runnable {
                             }
                             data = Material.getMaterial(m).createBlockData();
                         }
-                        break;
-                    case BLUE_WOOL:
+                    }
+                    case BLUE_WOOL -> {
                         switch (use_clay) {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
                             default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                         }
-                        break;
-                    default:
+                    }
+                    default -> {
                         String[] split = type.toString().split("_");
                         String m;
                         if (split.length > 2) {
@@ -317,6 +317,7 @@ class TARDISBuildAbandoned implements Runnable {
                             m = split[0] + "_" + use_clay.toString();
                         }
                         data = Material.getMaterial(m).createBlockData();
+                    }
                 }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
@@ -382,7 +383,7 @@ class TARDISBuildAbandoned implements Runnable {
                 String control = schm.getSeedMaterial().toString();
                 empty[1][4][4] = control;
                 switch (schm.getConsoleSize()) {
-                    case MASSIVE:
+                    case MASSIVE -> {
                         // the 8 slots on the same level &
                         empty[1][4][5] = control;
                         empty[1][4][6] = control;
@@ -402,8 +403,8 @@ class TARDISBuildAbandoned implements Runnable {
                         empty[2][6][4] = control;
                         empty[2][6][5] = control;
                         empty[2][6][6] = control;
-                        break;
-                    case TALL:
+                    }
+                    case TALL -> {
                         // the 3 slots on the same level &
                         empty[1][4][5] = control;
                         empty[1][5][4] = control;
@@ -413,16 +414,16 @@ class TARDISBuildAbandoned implements Runnable {
                         empty[2][4][5] = control;
                         empty[2][5][4] = control;
                         empty[2][5][5] = control;
-                        break;
-                    case MEDIUM:
+                    }
+                    case MEDIUM -> {
                         // the 3 slots on the same level
                         empty[1][4][5] = control;
                         empty[1][5][4] = control;
                         empty[1][5][5] = control;
-                        break;
-                    default:
+                    }
+                    default -> {
                         // SMALL size do nothing
-                        break;
+                    }
                 }
                 Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                 JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();

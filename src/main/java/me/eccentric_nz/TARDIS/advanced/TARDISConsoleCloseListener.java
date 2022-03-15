@@ -132,7 +132,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                 if (!first.equals("Blank")) {
                                     TravelType travelType = TravelType.SAVE;
                                     switch (mat) {
-                                        case MUSIC_DISC_BLOCKS: // area
+                                        case MUSIC_DISC_BLOCKS -> { // area
                                             // check the current location is not in this area already
                                             if (!plugin.getTardisArea().areaCheckInExile(first, current)) {
                                                 continue;
@@ -168,8 +168,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                             TARDISMessage.send(p, "TRAVEL_APPROVED", first);
                                             travelType = TravelType.AREA;
                                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
-                                            break;
-                                        case MUSIC_DISC_CAT: // biome
+                                        }
+                                        case MUSIC_DISC_CAT -> { // biome
                                             // find a biome location
                                             if (!TARDISPermission.hasPermission(p, "tardis.timetravel.biome")) {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_BIOME");
@@ -222,8 +222,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                                 travelType = TravelType.BIOME;
                                             }
-                                            break;
-                                        case MUSIC_DISC_WAIT: // player
+                                        }
+                                        case MUSIC_DISC_WAIT -> { // player
                                             // get the player's location
                                             if (TARDISPermission.hasPermission(p, "tardis.timetravel.player")) {
                                                 if (p.getName().equalsIgnoreCase(first)) {
@@ -250,14 +250,14 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "NO_PERM_PLAYER");
                                                 continue;
                                             }
-                                            break;
-                                        case MUSIC_DISC_MALL: // preset
+                                        }
+                                        case MUSIC_DISC_MALL -> { // preset
                                             if (!ignore) {
                                                 // apply the preset
                                                 set_tardis.put("chameleon_preset", first);
                                             }
-                                            break;
-                                        case MUSIC_DISC_CHIRP: // save
+                                        }
+                                        case MUSIC_DISC_CHIRP -> { // save
                                             if (TARDISPermission.hasPermission(p, "tardis.save")) {
                                                 String world = lore.get(1);
                                                 int x = TARDISNumberParsers.parseInt(lore.get(2));
@@ -288,9 +288,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_SAVE");
                                                 continue;
                                             }
-                                            break;
-                                        default:
-                                            break;
+                                        }
+                                        default -> {
+                                        }
                                     }
                                     if (set_next.size() > 0) {
                                         // update next

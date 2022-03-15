@@ -82,20 +82,9 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case ARTRON:
-                    case DEATH:
-                    case DEMATERIALISE:
-                    case ENTER:
-                    case EXIT:
-                    case HADS:
-                    case LOG_OUT:
-                    case MATERIALISE:
-                    case SIEGE_OFF:
-                    case SIEGE_ON:
-                        event = thb.toString();
-                        break;
-                    default:
-                        break;
+                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> event = thb.toString();
+                    default -> {
+                    }
                 }
             }
         }
@@ -129,7 +118,7 @@ public class TARDISHandlesProcessor {
                         Tardis tardis = rs.getTardis();
                         int id = tardis.getTardis_id();
                         switch (thb) {
-                            case DOOR:
+                            case DOOR -> {
                                 switch (next) {
                                     case CLOSE -> new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                     case OPEN -> new TARDISDoorOpener(plugin, uuid, id).openDoors();
@@ -153,33 +142,31 @@ public class TARDISHandlesProcessor {
                                         }
                                     }
                                 }
-                                break;
-                            case LIGHTS:
+                            }
+                            case LIGHTS -> {
                                 boolean onoff = next.equals(TARDISHandlesBlock.ON);
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
                                     new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().hasLanterns());
                                 }
-                                break;
-                            case POWER:
+                            }
+                            case POWER -> {
                                 switch (next) {
-                                    case ON:
+                                    case ON -> {
                                         if (!tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
                                                 new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
                                             }
                                         }
-                                        break;
-                                    case OFF:
+                                    }
+                                    case OFF -> {
                                         if (tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
                                                 new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
                                             }
                                         }
-                                        break;
-                                    case SHOW:
-                                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
-                                        break;
-                                    case REDSTONE:
+                                    }
+                                    case SHOW -> new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                    case REDSTONE -> {
                                         // press the Handles button
                                         HashMap<String, Object> whereh = new HashMap<>();
                                         whereh.put("tardis_id", id);
@@ -194,15 +181,15 @@ public class TARDISHandlesProcessor {
                                             }
                                             block.setBlockData(button, true);
                                         }
-                                        break;
+                                    }
                                 }
-                                break;
-                            case SIEGE:
+                            }
+                            case SIEGE -> {
                                 if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiege_on()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiege_on())) {
                                     new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
                                 }
-                                break;
-                            case TRAVEL:
+                            }
+                            case TRAVEL -> {
                                 // get tardis artron level
                                 ResultSetTardisArtron rsArtron = new ResultSetTardisArtron(plugin);
                                 if (!rsArtron.fromID(id)) {
@@ -233,7 +220,7 @@ public class TARDISHandlesProcessor {
                                         boolean sub = false;
                                         TravelType travelType = TravelType.SAVE;
                                         switch (next) {
-                                            case RANDOM:
+                                            case RANDOM -> {
                                                 Location random = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, direction);
                                                 if (random != null) {
                                                     plugin.getTrackerKeeper().getHasRandomised().add(id);
@@ -242,8 +229,8 @@ public class TARDISHandlesProcessor {
                                                     sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                                                 }
                                                 travelType = TravelType.RANDOM;
-                                                break;
-                                            case X:
+                                            }
+                                            case X -> {
                                                 // if X comes after travel then we'll look for Y and Z
                                                 ItemStack coordX = program.getInventory()[i + 2];
                                                 TARDISHandlesBlock coordBlockX = TARDISHandlesBlock.valueOf(coordX.getItemMeta().getDisplayName());
@@ -264,8 +251,8 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
                                                 travelType = TravelType.COORDINATES;
-                                                break;
-                                            case Y:
+                                            }
+                                            case Y -> {
                                                 // if Y comes after travel then X use current coords, and we'll look for Z
                                                 ItemStack coordY = program.getInventory()[i + 2];
                                                 TARDISHandlesBlock coordBlockY = TARDISHandlesBlock.valueOf(coordY.getItemMeta().getDisplayName());
@@ -279,16 +266,16 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
-                                                break;
-                                            case Z:
+                                            }
+                                            case Z -> {
                                                 // if Z comes after travel then X and Y will use current coords
                                                 ItemStack coordZ = program.getInventory()[i + 2];
                                                 TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
                                                 z = getNumber(coordBlockZ, i + 2);
                                                 goto_loc = new Location(rsc.getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
-                                                break;
-                                            case HOME:
+                                            }
+                                            case HOME -> {
                                                 // get home location
                                                 HashMap<String, Object> wherehl = new HashMap<>();
                                                 wherehl.put("tardis_id", id);
@@ -312,8 +299,8 @@ public class TARDISHandlesProcessor {
                                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                                 }
                                                 travelType = TravelType.HOME;
-                                                break;
-                                            case RECHARGER:
+                                            }
+                                            case RECHARGER -> {
                                                 Location recharger = getRecharger(rsc.getWorld(), player);
                                                 if (recharger != null) {
                                                     TARDISMessage.handlesSend(player, "RECHARGER_FOUND");
@@ -323,8 +310,8 @@ public class TARDISHandlesProcessor {
                                                     continue;
                                                 }
                                                 travelType = TravelType.RECHARGER;
-                                                break;
-                                            case AREA_DISK:
+                                            }
+                                            case AREA_DISK -> {
                                                 // check the current location is not in this area already
                                                 if (!plugin.getTardisArea().areaCheckInExile(first, current)) {
                                                     continue;
@@ -349,8 +336,8 @@ public class TARDISHandlesProcessor {
                                                 TARDISMessage.handlesSend(player, "TRAVEL_APPROVED", first);
                                                 goto_loc = l;
                                                 travelType = TravelType.AREA;
-                                                break;
-                                            case BIOME_DISK:
+                                            }
+                                            case BIOME_DISK -> {
                                                 // find a biome location
                                                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
@@ -398,8 +385,8 @@ public class TARDISHandlesProcessor {
                                                     goto_loc = nsob;
                                                 }
                                                 travelType = TravelType.BIOME;
-                                                break;
-                                            case PLAYER_DISK:
+                                            }
+                                            case PLAYER_DISK -> {
                                                 // get the player's location
                                                 if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                                                     if (player.getName().equalsIgnoreCase(first)) {
@@ -444,8 +431,8 @@ public class TARDISHandlesProcessor {
                                                     continue;
                                                 }
                                                 travelType = TravelType.PLAYER;
-                                                break;
-                                            case SAVE_DISK:
+                                            }
+                                            case SAVE_DISK -> {
                                                 if (TARDISPermission.hasPermission(player, "tardis.save")) {
                                                     int sx = TARDISNumberParsers.parseInt(lore.get(2));
                                                     int sy = TARDISNumberParsers.parseInt(lore.get(3));
@@ -461,7 +448,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_SAVE");
                                                     continue;
                                                 }
-                                                break;
+                                            }
                                         }
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
@@ -554,27 +541,18 @@ public class TARDISHandlesProcessor {
                                         }
                                     }
                                 }
-                            case HIDE:
-                                player.performCommand("tardis hide");
-                                break;
-                            case REBUILD:
-                                player.performCommand("tardis rebuild");
-                                break;
-                            case SCAN:
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
-                                break;
-                            case COMEHERE:
-                                new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
-                                break;
-                            case TAKE_OFF:
+                            }
+                            case HIDE -> player.performCommand("tardis hide");
+                            case REBUILD -> player.performCommand("tardis rebuild");
+                            case SCAN -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
+                            case COMEHERE -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
+                            case TAKE_OFF -> {
                                 // player must be in TARDIS
                                 if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
                                 }
-                                break;
-                            case LAND:
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
-                                break;
+                            }
+                            case LAND -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
                         }
                     }
                 }

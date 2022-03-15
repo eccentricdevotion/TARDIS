@@ -129,78 +129,78 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                 saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
             }
             switch (slot) {
-                case 0:
+                case 0 -> {
                     if (!store.equals(Storage.SAVE_1)) {
                         // switch to saves
                         loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     if (!store.equals(Storage.AREA)) {
                         // switch to areas
                         loadInventory(rs.getAreas(), player, Storage.AREA);
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     if (!store.equals(Storage.PLAYER)) {
                         // switch to players
                         loadInventory(rs.getPlayers(), player, Storage.PLAYER);
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     if (!store.equals(Storage.BIOME_1)) {
                         // switch to biomes
                         loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                     }
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     if (!store.equals(Storage.PRESET_1)) {
                         // switch to presets
                         loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                     }
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     if (!store.equals(Storage.CIRCUIT)) {
                         // switch to circuits
                         loadInventory(rs.getCircuits(), player, Storage.CIRCUIT);
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
             switch (store) {
-                case BIOME_1:
+                case BIOME_1 -> {
                     if (slot == 26) {// switch to biome 2
                         loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
                     }
-                    break;
-                case BIOME_2:
+                }
+                case BIOME_2 -> {
                     if (slot == 18) {// switch to biome 1
                         loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                     }
-                    break;
-                case PRESET_1:
+                }
+                case PRESET_1 -> {
                     if (slot == 26) {// switch to preset 2
                         loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
                     }
-                    break;
-                case PRESET_2:
+                }
+                case PRESET_2 -> {
                     if (slot == 18) {// switch to preset 1
                         loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                     }
-                    break;
-                case SAVE_1:
+                }
+                case SAVE_1 -> {
                     if (slot == 26) {// switch to save 2
                         loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
                     }
-                    break;
-                case SAVE_2:
+                }
+                case SAVE_2 -> {
                     if (slot == 18) {// switch to save 1
                         loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                     }
-                    break;
-                default: // no extra pages
-                    break;
+                }
+                default -> { // no extra pages
+                }
             }
         }
     }

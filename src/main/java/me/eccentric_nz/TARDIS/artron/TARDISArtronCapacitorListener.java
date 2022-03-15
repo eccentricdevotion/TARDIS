@@ -150,25 +150,25 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 if (item.equals(full)) {
                                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                                         switch (plugin.getWorldManager()) {
-                                            case MULTIVERSE:
+                                            case MULTIVERSE -> {
                                                 if (!plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
-                                                break;
-                                            case MULTIWORLD:
+                                            }
+                                            case MULTIWORLD -> {
                                                 MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
                                                 if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
-                                                break;
-                                            case NONE:
+                                            }
+                                            case NONE -> {
                                                 if (plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }
-                                                break;
+                                            }
                                         }
                                     }
                                     // remove the NETHER_STAR! (if appropriate)

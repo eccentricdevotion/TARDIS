@@ -86,25 +86,25 @@ public class TARDISCondenserListener implements Listener {
                 if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
                     if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                         switch (plugin.getWorldManager()) {
-                            case MULTIVERSE:
+                            case MULTIVERSE -> {
                                 if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
-                                break;
-                            case MULTIWORLD:
+                            }
+                            case MULTIWORLD -> {
                                 MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
                                 if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
-                                break;
-                            case NONE:
+                            }
+                            case NONE -> {
                                 if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
-                                break;
+                            }
                         }
                     }
                     where.put("type", 34);

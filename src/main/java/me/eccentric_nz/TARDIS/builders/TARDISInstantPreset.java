@@ -217,45 +217,27 @@ public class TARDISInstantPreset {
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
                 switch (mat) {
-                    case GRASS_BLOCK:
-                    case DIRT:
+                    case GRASS_BLOCK, DIRT -> {
                         BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
-                        break;
-                    case BEDROCK:
+                    }
+                    case BEDROCK -> {
                         if (preset.equals(PRESET.THEEND)) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         } else {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
-                        break;
-                    case WHITE_WOOL:
-                    case ORANGE_WOOL:
-                    case MAGENTA_WOOL:
-                    case LIGHT_BLUE_WOOL:
-                    case YELLOW_WOOL:
-                    case LIME_WOOL:
-                    case PINK_WOOL:
-                    case GRAY_WOOL:
-                    case LIGHT_GRAY_WOOL:
-                    case CYAN_WOOL:
-                    case PURPLE_WOOL:
-                    case BLUE_WOOL:
-                    case BROWN_WOOL:
-                    case GREEN_WOOL:
-                    case RED_WOOL:
-                    case BLACK_WOOL:
+                    }
+                    case WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL, PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL -> {
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
                         if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
                         }
-                        break;
-                    case TORCH: // lamps, glowstone and torches
-                    case GLOWSTONE:
-                    case REDSTONE_LAMP:
+					}  
+                    case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches
                         BlockData light;
                         if (bd.isSubmarine() && mat.equals(Material.TORCH)) {
                             light = Material.GLOWSTONE.createBlockData();
@@ -272,25 +254,8 @@ public class TARDISInstantPreset {
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
                             }
                         }
-                        break;
-                    case IRON_DOOR: // wood, iron & trap doors, rails
-                    case RAIL:
-                    case ACACIA_DOOR:
-                    case ACACIA_TRAPDOOR:
-                    case BIRCH_DOOR:
-                    case BIRCH_TRAPDOOR:
-                    case CRIMSON_DOOR:
-                    case CRIMSON_TRAPDOOR:
-                    case DARK_OAK_DOOR:
-                    case DARK_OAK_TRAPDOOR:
-                    case JUNGLE_DOOR:
-                    case JUNGLE_TRAPDOOR:
-                    case OAK_DOOR:
-                    case OAK_TRAPDOOR:
-                    case SPRUCE_DOOR:
-                    case SPRUCE_TRAPDOOR:
-                    case WARPED_DOOR:
-                    case WARPED_TRAPDOOR:
+					}
+                    case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
                         boolean door = false;
                         if (Tag.DOORS.isTagged(mat)) {
                             Bisected bisected = (Bisected) colData[yy];
@@ -331,23 +296,13 @@ public class TARDISInstantPreset {
                         } else {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
-                        break;
-                    case ACACIA_SIGN:
-                    case BIRCH_SIGN:
-                    case DARK_OAK_SIGN:
-                    case JUNGLE_SIGN:
-                    case OAK_SIGN:
-                    case SPRUCE_SIGN:
+					}
+                    case ACACIA_SIGN, BIRCH_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN -> {
                         if (preset.equals(PRESET.APPERTURE)) {
                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                         }
-                        break;
-                    case ACACIA_WALL_SIGN:
-                    case BIRCH_WALL_SIGN:
-                    case DARK_OAK_WALL_SIGN:
-                    case JUNGLE_WALL_SIGN:
-                    case OAK_WALL_SIGN:
-                    case SPRUCE_WALL_SIGN:
+                    }
+                    case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN -> {
                         // sign - if there is one
                         if (bd.shouldAddSign()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
@@ -436,18 +391,18 @@ public class TARDISInstantPreset {
                                 s.update();
                             }
                         }
-                        break;
-                    case NETHERRACK:
+                    }
+                    case NETHERRACK -> {
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         if (preset.equals(PRESET.TORCH)) {
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         }
-                        break;
-                    case NETHER_PORTAL:
+                    }
+                    case NETHER_PORTAL -> {
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                        break;
-                    case SKELETON_SKULL:
+                    }
+                    case SKELETON_SKULL -> {
                         if (bd.isSubmarine()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                         } else {
@@ -455,27 +410,12 @@ public class TARDISInstantPreset {
                             rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                         }
-                        break;
-                    case WHITE_TERRACOTTA:
-                    case ORANGE_TERRACOTTA:
-                    case MAGENTA_TERRACOTTA:
-                    case LIGHT_BLUE_TERRACOTTA:
-                    case YELLOW_TERRACOTTA:
-                    case LIME_TERRACOTTA:
-                    case PINK_TERRACOTTA:
-                    case GRAY_TERRACOTTA:
-                    case LIGHT_GRAY_TERRACOTTA:
-                    case CYAN_TERRACOTTA:
-                    case PURPLE_TERRACOTTA:
-                    case BLUE_TERRACOTTA:
-                    case BROWN_TERRACOTTA:
-                    case GREEN_TERRACOTTA:
-                    case RED_TERRACOTTA:
-                    case BLACK_TERRACOTTA:
+                     }
+                    case WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA, YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA -> {
                         BlockData chai = (preset.equals(PRESET.FACTORY)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
-                        break;
-                    default: // everything else
+                    }
+                    default -> { // everything else
                         if (change) {
                             if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
                                 do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
@@ -483,7 +423,7 @@ public class TARDISInstantPreset {
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                             }
                         }
-                        break;
+                    }
                 }
             }
         }

@@ -51,41 +51,19 @@ public class Parameters {
         this.player = player;
         for (Flag f : flags) {
             switch (f) {
-                case MESSAGE_PLAYER:
-                    messagePlayer = true;
-                    break;
-                case PERMS_AREA:
-                    permsArea = true;
-                    break;
-                case PERMS_NETHER:
-                    permsNether = true;
-                    break;
-                case PERMS_THEEND:
-                    permsTheEnd = true;
-                    break;
-                case RESPECT_FACTIONS:
-                    respectFactions = true;
-                    break;
-                case RESPECT_GRIEFPREVENTION:
-                    respectGreifPrevention = true;
-                    break;
-                case RESPECT_REDPROTECT:
-                    respectRedProtect = true;
-                    break;
-                case RESPECT_TOWNY:
-                    respectTowny = true;
-                    break;
-                case RESPECT_WORLDBORDER:
-                    repectWorldBorder = true;
-                    break;
-                case RESPECT_WORLDGUARD:
-                    respectWorldguard = true;
-                    break;
-                case SPACE_TARDIS:
-                    spaceTardis = true;
-                    break;
-                default:
-                    break;
+                case MESSAGE_PLAYER -> messagePlayer = true;
+                case PERMS_AREA -> permsArea = true;
+                case PERMS_NETHER -> permsNether = true;
+                case PERMS_THEEND -> permsTheEnd = true;
+                case RESPECT_FACTIONS -> respectFactions = true;
+                case RESPECT_GRIEFPREVENTION -> respectGreifPrevention = true;
+                case RESPECT_REDPROTECT -> respectRedProtect = true;
+                case RESPECT_TOWNY -> respectTowny = true;
+                case RESPECT_WORLDBORDER -> repectWorldBorder = true;
+                case RESPECT_WORLDGUARD -> respectWorldguard = true;
+                case SPACE_TARDIS -> spaceTardis = true;
+                default -> {
+                }
             }
         }
     }
