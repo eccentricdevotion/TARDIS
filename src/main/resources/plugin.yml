@@ -858,9 +858,6 @@ commands:
     purge:
       description: Remove all database entries for the named player.
       usage: /<command> purge [player]
-    desiege:
-      description: Force a player's TARDIS out of Siege Mode.
-      usage: /<command> desiege [player]
     arch:
       description: View an 'arched' player's real name, or with the 'force' argument, toggle arch status.
       usage: /<command> arch [player] (force)
