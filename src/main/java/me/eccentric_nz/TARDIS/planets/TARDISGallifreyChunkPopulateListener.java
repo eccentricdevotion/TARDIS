@@ -83,7 +83,7 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
             // create structure
             if (TARDISConstants.RANDOM.nextBoolean()) {
                 TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
-                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 3L);
                 tbgs.setTask(task);
             }
         }, 1L);

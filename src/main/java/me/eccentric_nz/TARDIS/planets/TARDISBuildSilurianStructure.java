@@ -58,7 +58,7 @@ class TARDISBuildSilurianStructure {
             return false;
         }
         TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 3L);
         tssr.setTask(task);
         // choose a random direction
         COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
@@ -84,7 +84,7 @@ class TARDISBuildSilurianStructure {
                 }
             }
             TARDISSilurianStructureRunnable secondary = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, path);
-            int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
+            int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 3L);
             secondary.setTask(secondaryTask);
         }
         return false;
