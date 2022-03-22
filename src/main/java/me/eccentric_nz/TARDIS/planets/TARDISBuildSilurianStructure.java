@@ -114,7 +114,6 @@ class TARDISBuildSilurianStructure {
             }
         }
         // see if the chunk is loaded
-        Chunk newChunk = chunk.getWorld().getChunkAt(x, z);
-        return newChunk.isLoaded() ? vector : null;
+        return chunk.getWorld().isChunkLoaded(x, z) ? vector : null;
     }
 }
