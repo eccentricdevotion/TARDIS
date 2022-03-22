@@ -360,6 +360,46 @@ public class TARDISCondensablesUpdater {
             // 1.18
             list.put("MUSIC_DISC_FAR", 100);
             list.put("MUSIC_DISC_OTHERSIDE", 100);
+            // 1.19 - Wild Update
+            /*
+            list.put("MANGROVE_BOAT", 3);
+            list.put("MANGROVE_BUTTON", 1);
+            list.put("MANGROVE_DOOR", 3);
+            list.put("MANGROVE_FENCE", 1);
+            list.put("MANGROVE_FENCE_GATE", 5);
+            list.put("MANGROVE_LEAVES", 1);
+            list.put("MANGROVE_LOG", 2);
+            list.put("MANGROVE_PLANKS", 2);
+            list.put("MANGROVE_PRESSURE_PLATE", 1);
+            list.put("MANGROVE_PROPAGULE", 2);
+            list.put("MANGROVE_ROOTS", 2);
+            list.put("MANGROVE_SIGN", 2);
+            list.put("MANGROVE_SLAB", 2);
+            list.put("MANGROVE_STAIRS", 1);
+            list.put("MANGROVE_TRAPDOOR", 6);
+            list.put("MANGROVE_WALL_SIGN", 2);
+            list.put("MANGROVE_WOOD", 2);
+            list.put("MUDDY_MANGROVE_ROOTS", 2);
+            ---
+            list.put("MUD", 2);
+            list.put("MUD_BRICKS", 16);
+            list.put("MUD_BRICK_SLAB", 8);
+            list.put("MUD_BRICK_STAIRS", 24);
+            list.put("MUD_BRICK_WALL", 16);
+            list.put("PACKED_MUD", 4);
+            ---
+            list.put("OCHRE_FROGLIGHT", 150);
+            list.put("PEARLESCENT_FROGLIGHT", 150);
+            list.put("VERDANT_FROGLIGHT", 150);
+            ---
+            list.put("REINFORCED_DEEPSLATE", 100);
+            ---
+            ??? only available in creative, don't drop when broken in survival...
+            list.put("SKULK", 2);
+            list.put("SKULK_CATALYST", 2);
+            list.put("SKULK_SENSOR", 2);
+            list.put("SKULK_SHRIEKER", 2);
+             */
 
 
             for (Map.Entry<String, Object> entry : list.entrySet()) {

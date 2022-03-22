@@ -531,6 +531,47 @@ public class TARDISCondensables {
             condensables.put("MAGENTA_WOOL", 20);
             condensables.put("MAGMA_BLOCK", 600);
             condensables.put("MAGMA_CREAM", 150);
+            /*
+            // 1.19 - Wild Update
+            condensables.put("MANGROVE_BOAT", 3);
+            condensables.put("MANGROVE_BUTTON", 1);
+            condensables.put("MANGROVE_DOOR", 3);
+            condensables.put("MANGROVE_FENCE", 1);
+            condensables.put("MANGROVE_FENCE_GATE", 5);
+            condensables.put("MANGROVE_LEAVES", 1);
+            condensables.put("MANGROVE_LOG", 2);
+            condensables.put("MANGROVE_PLANKS", 2);
+            condensables.put("MANGROVE_PRESSURE_PLATE", 1);
+            condensables.put("MANGROVE_PROPAGULE", 2);
+            condensables.put("MANGROVE_ROOTS", 2);
+            condensables.put("MANGROVE_SIGN", 2);
+            condensables.put("MANGROVE_SLAB", 2);
+            condensables.put("MANGROVE_STAIRS", 1);
+            condensables.put("MANGROVE_TRAPDOOR", 6);
+            condensables.put("MANGROVE_WALL_SIGN", 2);
+            condensables.put("MANGROVE_WOOD", 2);
+            condensables.put("MUDDY_MANGROVE_ROOTS", 2);
+            ---
+            condensables.put("MUD", 2);
+            condensables.put("MUD_BRICKS", 16);
+            condensables.put("MUD_BRICK_SLAB", 8);
+            condensables.put("MUD_BRICK_STAIRS", 24);
+            condensables.put("MUD_BRICK_WALL", 16);
+            condensables.put("PACKED_MUD", 4);
+            ---
+            condensables.put("OCHRE_FROGLIGHT", 150);
+            condensables.put("PEARLESCENT_FROGLIGHT", 150);
+            condensables.put("VERDANT_FROGLIGHT", 150);
+            ---
+            condensables.put("REINFORCED_DEEPSLATE", 100);
+            ---
+            ??? only available in creative, don't drop when broken in survival...
+            condensables.put("SKULK", 2);
+            condensables.put("SKULK_CATALYST", 2);
+            condensables.put("SKULK_SENSOR", 2);
+            condensables.put("SKULK_SHRIEKER", 2);
+            ???
+             */
             condensables.put("MELON", 10);
             condensables.put("MELON_BLOCK", 90);
             condensables.put("MELON_SEEDS", 2);
