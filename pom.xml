@@ -463,8 +463,8 @@
         </dependency>
         <dependency>
             <groupId>LibsDisguises</groupId>
-            <artifactId>plugin</artifactId>
-            <version>10.0.27</version>
+            <artifactId>LibsDisguises</artifactId>
+            <version>10.0.28</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -511,7 +511,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>21.1</version>
+            <version>21.2</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
