@@ -281,7 +281,7 @@ class TARDISListenerRegisterer {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.debug("Skaro enabled, registering planet event listeners");
-            plugin.getPM().registerEvents(new TARDISSkaroChunkPopulateListener(plugin), plugin);
+//            plugin.getPM().registerEvents(new TARDISSkaroChunkPopulateListener(plugin), plugin);
             if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
                 plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
             }

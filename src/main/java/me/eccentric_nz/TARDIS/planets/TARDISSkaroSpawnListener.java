@@ -40,7 +40,7 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     public TARDISSkaroSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
-        twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
+        twaAPI = TARDISAngelsAPI.getAPI(plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
