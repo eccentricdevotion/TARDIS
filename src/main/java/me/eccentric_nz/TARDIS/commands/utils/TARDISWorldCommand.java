@@ -185,7 +185,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             case "gallifrey" -> {
                                 plugin.debug("Gallifrey enabled, registering planet event listeners");
                                 plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
-                                plugin.getPM().registerEvents(new TARDISGallifreyChunkPopulateListener(plugin), plugin);
                                 plugin.getTardisHelper().addCustomBiome("gallifrey");
                             }
                             case "siluria" -> {
@@ -198,7 +197,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             default -> {
                                 // skaro
                                 plugin.debug("Skaro enabled, registering planet event listeners");
-                                plugin.getPM().registerEvents(new TARDISSkaroChunkPopulateListener(plugin), plugin);
                                 if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
                                     plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
                                 }
