@@ -51,7 +51,7 @@ import java.util.logging.Level;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "stats", "tree", "plurals");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "stats", "tree", "plurals", "chunky");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -133,6 +133,18 @@ public class TARDISDevCommand implements CommandExecutor {
                         String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
                         plugin.getLogger().log(Level.INFO, str + " --> " + Pluraliser.pluralise(str));
                     }
+                }
+                if (first.equals("chunky")) {
+                    if (!plugin.getPM().isPluginEnabled("Chunky")) {
+                        plugin.getLogger().log(Level.WARNING, "Chunky plugin is not enabled!");
+                        return true;
+                    }
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky world " + args[1]);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky radius 250");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky spawn");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
+                    return true;
                 }
                 return true;
             } else {
