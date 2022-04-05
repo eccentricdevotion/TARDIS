@@ -189,7 +189,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             }
                             case "siluria" -> {
                                 plugin.debug("Siluria enabled, registering planet event listeners");
-                                plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
                                 if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
                                     plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
                                 }

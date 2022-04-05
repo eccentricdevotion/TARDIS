@@ -133,20 +133,6 @@ public class TARDISFileCopier {
         copy(junknstr, plugin.getResource("junk.tschm"), true);
         String tmpnstr = userbasepath + "template.tschm";
         copy(tmpnstr, plugin.getResource("template.tschm"), true);
-        String gallifreynstr = basepath + "gallifrey.tschm";
-        copy(gallifreynstr, plugin.getResource("gallifrey.tschm"), true);
-        String skaronstr = basepath + "dalek_large.tschm";
-        copy(skaronstr, plugin.getResource("dalek_large.tschm"), true);
-        String daleknstr = basepath + "dalek_small.tschm";
-        copy(daleknstr, plugin.getResource("dalek_small.tschm"), true);
-        String sillnstr = basepath + "siluria_large.tschm";
-        copy(sillnstr, plugin.getResource("siluria_large.tschm"), true);
-        String silcnstr = basepath + "siluria_cross.tschm";
-        copy(silcnstr, plugin.getResource("siluria_cross.tschm"), true);
-        String silnsnstr = basepath + "siluria_north_south.tschm";
-        copy(silnsnstr, plugin.getResource("siluria_north_south.tschm"), true);
-        String silewnstr = basepath + "siluria_east_west.tschm";
-        copy(silewnstr, plugin.getResource("siluria_east_west.tschm"), true);
     }
 
     /**

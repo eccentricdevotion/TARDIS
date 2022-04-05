@@ -288,12 +288,9 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
             }
         }
-        if (plugin.getPlanetsConfig().getBoolean("planets.siluria.enabled")) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.siluria.enabled") && plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
             plugin.debug("Siluria enabled, registering planet event listeners");
-            plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
-            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
-                plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
-            }
+            plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
             plugin.debug("Gallifrey enabled, registering planet event listeners");
