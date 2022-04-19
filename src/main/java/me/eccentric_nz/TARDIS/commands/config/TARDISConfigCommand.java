@@ -91,6 +91,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("blueprints", "");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
+        firstsBool.put("check_for_home", "creation");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
         firstsBool.put("custom_schematic", "creation");
@@ -328,7 +329,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                TARDISMessage.send(sender, "CONFIG_UPDATED");
+                TARDISMessage.send(sender, "CONFIG_UPDATED", first);
                 return true;
             } else {
                 TARDISMessage.send(sender, "CMD_ADMIN");

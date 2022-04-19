@@ -90,6 +90,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.restore_biomes", false);
         booleanOptions.put("creation.add_perms", true);
+        booleanOptions.put("creation.check_for_home", true);
         booleanOptions.put("creation.create_worlds", false);
         booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.custom_schematic", false);

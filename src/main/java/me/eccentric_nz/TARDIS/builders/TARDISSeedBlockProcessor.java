@@ -85,16 +85,18 @@ public class TARDISSeedBlockProcessor {
             // check to see if they already have a TARDIS
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                // check it is not another Time Lords home location
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("world", l.getWorld().getName());
-                where.put("x", l.getBlockX());
-                where.put("y", l.getBlockY());
-                where.put("z", l.getBlockZ());
-                ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
-                if (rsh.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_HOME");
-                    return false;
+                if (plugin.getConfig().getBoolean("creation.check_for_home")) {
+                    // check it is not another Time Lords home location
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("world", l.getWorld().getName());
+                    where.put("x", l.getBlockX());
+                    where.put("y", l.getBlockY());
+                    where.put("z", l.getBlockZ());
+                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
+                    if (rsh.resultSet()) {
+                        TARDISMessage.send(player, "TARDIS_NO_HOME");
+                        return false;
+                    }
                 }
                 Schematic schm = seed.getSchematic();
                 // check perms
