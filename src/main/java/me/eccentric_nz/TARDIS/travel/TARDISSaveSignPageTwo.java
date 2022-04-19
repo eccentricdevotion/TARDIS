@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -63,12 +64,18 @@ public class TARDISSaveSignPageTwo {
         did.put("tardis_id", id);
         ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
         int i = 1;
+        int count = 0;
         ItemStack[] stack = new ItemStack[54];
         if (rsd.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsd.getData();
             // cycle through saves
             for (HashMap<String, String> map : data) {
                 if (map.get("type").equals("0")) {
+                    count++;
+                    if (count > 90) {
+                        TARDISMessage.send(player, "TOO_MANY_SAVES");
+                        break;
+                    }
                     int slot;
                     if (!map.get("slot").equals("-1")) {
                         slot = TARDISNumberParsers.parseInt(map.get("slot"));

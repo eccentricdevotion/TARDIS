@@ -96,9 +96,14 @@ public class TARDISSaveSignInventory {
         ArrayList<HashMap<String, String>> data;
         if (rsd.resultSet()) {
             data = rsd.getData();
+            int count = 0;
             // cycle through saves
             for (HashMap<String, String> map : data) {
                 if (map.get("type").equals("0")) {
+                    count++;
+                    if (count > 90) {
+                        break;
+                    }
                     int slot;
                     if (!map.get("slot").equals("-1")) {
                         slot = TARDISNumberParsers.parseInt(map.get("slot"));

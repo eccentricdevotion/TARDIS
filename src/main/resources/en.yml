@@ -959,6 +959,7 @@ TIS_EXIT: "You are still logged in to the TARDIS Information System, type an 'e'
 TIS_INFO: "Type a white letter in chat, or click an info entry to proceed."
 TOO_FAR: "That distance is too far!"
 TOO_FEW_ARGS: "Too few command arguments!"
+TOO_MANY_SAVES: "The maximum number of saves this GUI can display is 90. Use the /tardis list saves command to see a full list, then click a destination to load it."
 TOWNY: "That location is protected by Towny!"
 TRANSMAT: "Stand by for transmat..."
 TRANSMAT_EXISTS: "You already have a transmat location with that name!"
