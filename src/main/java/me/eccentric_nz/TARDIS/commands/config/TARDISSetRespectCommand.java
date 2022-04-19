@@ -45,7 +45,7 @@ class TARDISSetRespectCommand {
         }
         plugin.getConfig().set("preferences.respect_towny", region);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "respect_towny");
         return true;
     }
 
@@ -57,7 +57,7 @@ class TARDISSetRespectCommand {
         }
         plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "respect_worldguard");
         return true;
     }
 }

@@ -69,7 +69,7 @@ class TARDISSetIntegerCommand {
         }
         plugin.getConfig().set(first, val);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         return true;
     }
 
@@ -90,7 +90,7 @@ class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         return true;
     }
 
@@ -112,7 +112,7 @@ class TARDISSetIntegerCommand {
         }
         plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         return true;
     }
 }

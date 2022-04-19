@@ -42,7 +42,7 @@ class TARDISDechargeCommand {
         }
         plugin.getConfig().set("rechargers." + args[1], null);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "recharger");
         return true;
     }
 }

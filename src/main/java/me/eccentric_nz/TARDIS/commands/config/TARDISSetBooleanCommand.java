@@ -78,7 +78,7 @@ class TARDISSetBooleanCommand {
             }
             plugin.saveConfig();
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         if (require_restart.contains(tolower)) {
             TARDISMessage.send(sender, "RESTART");
         }

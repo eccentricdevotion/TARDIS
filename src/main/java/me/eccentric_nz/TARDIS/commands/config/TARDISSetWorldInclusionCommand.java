@@ -49,7 +49,7 @@ class TARDISSetWorldInclusionCommand {
             plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "time_travel");
         return true;
     }
 }

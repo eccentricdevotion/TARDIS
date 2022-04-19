@@ -56,7 +56,7 @@ class TARDISCondenserCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "condenser");
         return true;
     }
 }

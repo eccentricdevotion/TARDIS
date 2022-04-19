@@ -45,7 +45,7 @@ class TARDISSetMaterialCommand {
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
-            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            TARDISMessage.send(sender, "CONFIG_UPDATED", first);
             return true;
         }
     }
@@ -63,7 +63,7 @@ class TARDISSetMaterialCommand {
             } catch (IOException io) {
                 plugin.debug("Could not save artron.yml, " + io);
             }
-            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            TARDISMessage.send(sender, "CONFIG_UPDATED", first);
             return true;
         }
     }

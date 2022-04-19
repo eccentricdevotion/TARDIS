@@ -38,8 +38,9 @@ class TARDISSiegeCommand {
     }
 
     boolean setOption(CommandSender sender, String[] args) {
-        if (args.length == 2 && args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
-            plugin.getConfig().set("siege.enabled", Boolean.valueOf(args[1].toLowerCase(Locale.ENGLISH)));
+        String first = args[1].toLowerCase(Locale.ENGLISH);
+        if (args.length == 2 && first.equalsIgnoreCase("true") || first.equalsIgnoreCase("false")) {
+            plugin.getConfig().set("siege.enabled", Boolean.valueOf(first));
             plugin.saveConfig();
             return true;
         }
@@ -47,19 +48,19 @@ class TARDISSiegeCommand {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
-        if (!siegeArgs.contains(args[1].toLowerCase(Locale.ENGLISH))) {
+        if (!siegeArgs.contains(first)) {
             TARDISMessage.send(sender, "ARG_NOT_VALID");
             return true;
         }
-        if (siegeBool.contains(args[1].toLowerCase(Locale.ENGLISH))) {
+        if (siegeBool.contains(first)) {
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
                 TARDISMessage.send(sender, "TRUE_FALSE");
                 return true;
             }
-            plugin.getConfig().set("siege." + args[1].toLowerCase(Locale.ENGLISH), Boolean.valueOf(tf));
+            plugin.getConfig().set("siege." + first, Boolean.valueOf(tf));
         }
-        if (!siegeBool.contains(args[1].toLowerCase(Locale.ENGLISH))) {
+        if (!siegeBool.contains(first)) {
             int val;
             try {
                 val = Integer.parseInt(args[2]);
@@ -68,9 +69,9 @@ class TARDISSiegeCommand {
                 TARDISMessage.send(sender, "ARG_LAST_NUMBER");
                 return false;
             }
-            plugin.getConfig().set("siege." + args[1].toLowerCase(Locale.ENGLISH), val);
+            plugin.getConfig().set("siege." + first, val);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         plugin.saveConfig();
         return true;
     }

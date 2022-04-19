@@ -44,7 +44,7 @@ class TARDISSignColourCommand {
         }
         plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "sign_colour");
         return true;
     }
 }

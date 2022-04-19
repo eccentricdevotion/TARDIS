@@ -78,7 +78,7 @@ class TARDISRechargerCommand {
             plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "recharger");
         return true;
     }
 }

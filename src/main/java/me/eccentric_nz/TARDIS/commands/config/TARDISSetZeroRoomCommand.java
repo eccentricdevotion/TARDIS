@@ -43,7 +43,7 @@ class TARDISSetZeroRoomCommand {
         }
         plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "CONFIG_UPDATED", "zero_room");
         if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
             TARDISMessage.send(sender, "ZERO_CREATE");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
