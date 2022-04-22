@@ -173,7 +173,7 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
-                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
+                String preset = plugin.getConfig().getString("police_box.default_preset", "FACTORY").toUpperCase(Locale.ENGLISH);
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
                 // determine wall block material from HashMap
@@ -185,7 +185,7 @@ public class TARDISSeedBlockProcessor {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (!rsp.resultSet()) {
                     setpp.put("uuid", player.getUniqueId().toString());
-                    String key = (plugin.getConfig().getString("storage.database").equals("mysql")) ? "key_item" : "key";
+                    String key = (plugin.getConfig().getString("storage.database", "sqlite").equals("mysql")) ? "key_item" : "key";
                     String default_key = plugin.getConfig().getString("preferences.key");
                     setpp.put(key, default_key);
                     plugin.getQueryFactory().doSyncInsert("player_prefs", setpp);
