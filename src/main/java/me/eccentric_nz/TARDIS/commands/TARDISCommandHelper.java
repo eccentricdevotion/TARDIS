@@ -127,8 +127,8 @@ public class TARDISCommandHelper {
         tardisteleport("Not yet available"),
         tardisworld("Not yet available"),
         tardisgamemode("Not yet available"),
-        tardischemistry("Not yet available"),
-        tardissudo("Not yet available"),
+        tardischemistry("https://eccentricdevotion.github.io/TARDIS/chemistry-lab"),
+        tardissudo("https://eccentricdevotion.github.io/TARDIS/sudo-commands.html"),
         tardistime("Not yet available"),
         tardisweather("Not yet available");
 

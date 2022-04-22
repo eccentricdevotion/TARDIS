@@ -55,6 +55,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         this.plugin = plugin;
         // add first arguments
         firstsStr.put("area", "creation");
+        firstsStr.put("autonomous_area", "");
         firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
         firstsStr.put("default_key", "preferences");
@@ -228,6 +229,9 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
+                }
+                if (first.equals("autonomous_area")) {
+                    return new TARDISAutonomousAreaCommand(plugin).processArea(sender, args);
                 }
                 if (first.equals("options")) {
                     return new TARDISConfigOptionsCommand(plugin).showConfigOptions(sender, args);
