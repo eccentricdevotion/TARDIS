@@ -95,6 +95,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             // do they have the autonomous circuit on?
                             if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                boolean isHomeDefault = rsp.getAutoDefault() == Autonomous.Default.HOME;
                                 // close doors
                                 new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
@@ -139,35 +140,67 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     boolean sub = rsh.isSubmarine();
                                     Location goto_loc;
                                     boolean going_home = false;
-                                    // if home world is NOT the death world
-                                    if (!hw.getName().equals(death_world)) {
-                                        // look for a recharge location
-                                        goto_loc = getRecharger(death_world, player);
-                                        if (goto_loc == null) {
-                                            // no parking spots - default to TARDIS home location
-                                            goto_loc = home_loc;
+                                    // determine where to go
+                                    Autonomous autonomous = rsp.getAutoType();
+                                    switch (autonomous) {
+                                        case HOME -> {
                                             going_home = true;
+                                            goto_loc = home_loc;
                                         }
-                                    } else {
-                                        // died in home world get closest location
-                                        Location recharger = getRecharger(death_world, player);
-                                        if (recharger != null) {
-                                            // which is closer?
-                                            boolean closer = death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger);
-                                            goto_loc = (closer) ? recharger : home_loc;
-                                            if (!closer) {
-                                                going_home = true;
+                                        case AREAS -> {
+                                            // look for a recharge location
+                                            goto_loc = getRecharger(death_world, player);
+                                            if (goto_loc == null) {
+                                                // no parking spots or no rechargers in the death world - use player's default
+                                                if (isHomeDefault) {
+                                                    goto_loc = home_loc;
+                                                    going_home = true;
+                                                }
                                             }
-                                        } else {
-                                            // no parking spots - set to TARDIS home location
-                                            goto_loc = home_loc;
-                                            going_home = true;
+                                        }
+                                        case CONFIGURED_AREAS -> {
+                                            // look for a recharge location
+                                            goto_loc = getConfiguredRecharger(player);
+                                            if (goto_loc == null) {
+                                                // no parking spots - use player's default
+                                                if (isHomeDefault) {
+                                                    goto_loc = home_loc;
+                                                    going_home = true;
+                                                }
+                                            }
+                                        }
+                                        default -> { // CLOSEST
+                                            // if home world is NOT the death world
+                                            if (!hw.getName().equals(death_world)) {
+                                                // look for a recharge location
+                                                goto_loc = getRecharger(death_world, player);
+                                                if (goto_loc == null) {
+                                                    // no parking spots - default to TARDIS home location
+                                                    goto_loc = home_loc;
+                                                    going_home = true;
+                                                }
+                                            } else {
+                                                // died in home world get closest location
+                                                Location recharger = getRecharger(death_world, player);
+                                                if (recharger != null) {
+                                                    // which is closer?
+                                                    boolean closer = death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger);
+                                                    goto_loc = (closer) ? recharger : home_loc;
+                                                    if (!closer) {
+                                                        going_home = true;
+                                                    }
+                                                } else {
+                                                    // no parking spots - set to TARDIS home location
+                                                    goto_loc = home_loc;
+                                                    going_home = true;
+                                                }
+                                            }
                                         }
                                     }
                                     // if the TARDIS is already at the home location, do nothing
-                                    if (!compareCurrentToHome(rsc, rsh)) {
+                                    if (goto_loc != null && !compareCurrentToHome(rsc, rsh)) {
                                         // check for creation area
-                                        if (!plugin.getConfig().getString("creation.area").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
+                                        if (!plugin.getConfig().getString("creation.area", "none").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
@@ -385,6 +418,27 @@ public class TARDISTimeLordDeathListener implements Listener {
             l = plugin.getTardisArea().getNextSpot(area);
         }
         return l;
+    }
+
+    private Location getConfiguredRecharger(Player player) {
+        // get configured area names
+        List<String> areas = plugin.getConfig().getStringList("autonomous_areas");
+        // will always return the first area in the list if there is room to park
+        for (String area : areas) {
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("area_name", area);
+            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+            if (rsa.resultSet()) {
+                if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
+                    return null;
+                }
+                Location location = plugin.getTardisArea().getNextSpot(area);
+                if (location != null) {
+                    return location;
+                }
+            }
+        }
+        return null;
     }
 
     private boolean compareCurrentToHome(ResultSetCurrentLocation c, ResultSetHomeLocation h) {

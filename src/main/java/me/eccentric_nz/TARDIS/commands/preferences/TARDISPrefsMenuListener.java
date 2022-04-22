@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
@@ -233,6 +234,18 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         } else {
                             TARDISMessage.send(p, "NOT_IN_TARDIS");
                         }
+                        return;
+                    }
+                    if (slot == GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot() && im.getDisplayName().equals("Autonomous Preferences")) {
+                        // close this gui and load the TARDIS Autonomous Menu
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory auto_inv = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "TARDIS Autonomous Menu");
+                            // close inventory
+                            p.closeInventory();
+                            // open new inventory
+                            auto_inv.setContents(new TARDISAutonomousInventory(plugin, uuid).getGui());
+                            p.openInventory(auto_inv);
+                        }, 1L);
                         return;
                     }
                     if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && im.getDisplayName().equals("Sonic Configurator")) {

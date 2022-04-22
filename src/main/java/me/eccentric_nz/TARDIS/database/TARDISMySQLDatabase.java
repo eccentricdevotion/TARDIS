@@ -37,7 +37,6 @@ public class TARDISMySQLDatabase {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private Statement statement = null;
 
     public TARDISMySQLDatabase(TARDIS plugin) {
         this.plugin = plugin;
@@ -48,10 +47,8 @@ public class TARDISMySQLDatabase {
      */
     public void createTables() {
         service.setIsMySQL(true);
-        try {
-            service.testConnection(connection);
-            statement = connection.createStatement();
-
+        service.testConnection(connection);
+        try (Statement statement = connection.createStatement()) {
             for (String query : SQL.CREATES) {
                 String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
                 statement.executeUpdate(subbed);
@@ -62,14 +59,6 @@ public class TARDISMySQLDatabase {
             dbu.updateTables();
         } catch (SQLException e) {
             plugin.getLogger().log(Level.INFO, "MySQL create table error: " + e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.getLogger().log(Level.INFO, "MySQL close statement error: " + e);
-            }
         }
     }
 }

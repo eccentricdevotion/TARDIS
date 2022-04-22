@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.arch.*;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
+import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousGUIListener;
 import me.eccentric_nz.TARDIS.chameleon.*;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockListener;
 import me.eccentric_nz.TARDIS.chemistry.compound.CompoundGUIListener;
@@ -128,6 +129,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(buttonListener, plugin);
         plugin.getPM().registerEvents(new TARDISARSListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISARSMapListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.autonomous")) {
+            plugin.getPM().registerEvents(new TARDISAutonomousGUIListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAnvilListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);

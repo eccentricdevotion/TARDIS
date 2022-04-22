@@ -53,6 +53,7 @@ public enum GUIPlayerPreferences {
     INTERIOR_HUM_SOUND(58, 28, Material.BOWL),
     HANDBRAKE(1, 29, Material.LEVER),
     TARDIS_MAP(3, 30, Material.MAP),
+    AUTONOMOUS_PREFERENCES(145, 31, Material.BOWL),
     SONIC_CONFIGURATOR(135, 32, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 

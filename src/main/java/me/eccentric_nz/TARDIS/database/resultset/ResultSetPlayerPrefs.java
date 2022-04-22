@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.Autonomous;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 
 import java.sql.Connection;
@@ -42,6 +43,8 @@ public class ResultSetPlayerPrefs {
     private int pp_id;
     private UUID uuid;
     private boolean autoOn;
+    private Autonomous autoType;
+    private Autonomous.Default autoDefault;
     private boolean autoPowerUp;
     private boolean autoRescueOn;
     private boolean autoSiegeOn;
@@ -98,83 +101,80 @@ public class ResultSetPlayerPrefs {
      * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "player_prefs WHERE uuid = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
+        service.testConnection(connection);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, where);
-            rs = statement.executeQuery();
-            if (rs.next()) {
-                pp_id = rs.getInt("pp_id");
-                uuid = UUID.fromString(rs.getString("uuid"));
-                key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
-                sfxOn = rs.getBoolean("sfx_on");
-                quotesOn = rs.getBoolean("quotes_on");
-                autoOn = rs.getBoolean("auto_on");
-                autoRescueOn = rs.getBoolean("auto_rescue_on");
-                autoSiegeOn = rs.getBoolean("auto_siege_on");
-                beaconOn = rs.getBoolean("beacon_on");
-                hadsOn = rs.getBoolean("hads_on");
-                String ht = rs.getString("hads_type");
-                if (rs.wasNull()) {
-                    hadsType = HADS.DISPLACEMENT;
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    pp_id = rs.getInt("pp_id");
+                    uuid = UUID.fromString(rs.getString("uuid"));
+                    key = (plugin.getConfig().getString("storage.database", "sqlite").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
+                    sfxOn = rs.getBoolean("sfx_on");
+                    quotesOn = rs.getBoolean("quotes_on");
+                    autoOn = rs.getBoolean("auto_on");
+                    try {
+                        autoType = Autonomous.valueOf(rs.getString("auto_type"));
+                    } catch (IllegalArgumentException e) {
+                        autoType = Autonomous.CLOSEST;
+                    }
+                    try {
+                        autoDefault = Autonomous.Default.valueOf(rs.getString("auto_default"));
+                    } catch (IllegalArgumentException e) {
+                        autoDefault = Autonomous.Default.HOME;
+                    }
+                    autoRescueOn = rs.getBoolean("auto_rescue_on");
+                    autoSiegeOn = rs.getBoolean("auto_siege_on");
+                    beaconOn = rs.getBoolean("beacon_on");
+                    hadsOn = rs.getBoolean("hads_on");
+                    String ht = rs.getString("hads_type");
+                    if (rs.wasNull()) {
+                        hadsType = HADS.DISPLACEMENT;
+                    } else {
+                        hadsType = HADS.valueOf(ht);
+                    }
+                    submarineOn = rs.getBoolean("submarine_on");
+                    artronLevel = rs.getInt("artron_level");
+                    language = rs.getString("language");
+                    wall = rs.getString("wall");
+                    floor = rs.getString("floor");
+                    siegeWall = rs.getString("siege_wall");
+                    siegeFloor = rs.getString("siege_floor");
+                    buildOn = rs.getBoolean("build_on");
+                    closeGUIOn = rs.getBoolean("close_gui_on");
+                    epsOn = rs.getBoolean("eps_on");
+                    // if empty use default
+                    String message = rs.getString("eps_message");
+                    if (rs.wasNull() || message.isEmpty()) {
+                        epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
+                    } else {
+                        epsMessage = rs.getString("eps_message");
+                    }
+                    textureOn = rs.getBoolean("texture_on");
+                    textureIn = rs.getString("texture_in");
+                    String tp_out = rs.getString("texture_out");
+                    textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
+                    DND = rs.getBoolean("dnd_on");
+                    minecartOn = rs.getBoolean("minecart_on");
+                    rendererOn = rs.getBoolean("renderer_on");
+                    woolLightsOn = rs.getBoolean("wool_lights_on");
+                    signOn = rs.getBoolean("sign_on");
+                    telepathyOn = rs.getBoolean("telepathy_on");
+                    travelbarOn = rs.getBoolean("travelbar_on");
+                    farmOn = rs.getBoolean("farm_on");
+                    lanternsOn = rs.getBoolean("lanterns_on");
+                    flightMode = rs.getInt("flying_mode");
+                    throttle = rs.getInt("throttle");
+                    easyDifficulty = rs.getBoolean("difficulty");
+                    autoPowerUp = rs.getBoolean("auto_powerup_on");
+                    hum = rs.getString("hum");
                 } else {
-                    hadsType = HADS.valueOf(ht);
+                    return false;
                 }
-                submarineOn = rs.getBoolean("submarine_on");
-                artronLevel = rs.getInt("artron_level");
-                language = rs.getString("language");
-                wall = rs.getString("wall");
-                floor = rs.getString("floor");
-                siegeWall = rs.getString("siege_wall");
-                siegeFloor = rs.getString("siege_floor");
-                buildOn = rs.getBoolean("build_on");
-                closeGUIOn = rs.getBoolean("close_gui_on");
-                epsOn = rs.getBoolean("eps_on");
-                // if empty use default
-                String message = rs.getString("eps_message");
-                if (rs.wasNull() || message.isEmpty()) {
-                    epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
-                } else {
-                    epsMessage = rs.getString("eps_message");
-                }
-                textureOn = rs.getBoolean("texture_on");
-                textureIn = rs.getString("texture_in");
-                String tp_out = rs.getString("texture_out");
-                textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
-                DND = rs.getBoolean("dnd_on");
-                minecartOn = rs.getBoolean("minecart_on");
-                rendererOn = rs.getBoolean("renderer_on");
-                woolLightsOn = rs.getBoolean("wool_lights_on");
-                signOn = rs.getBoolean("sign_on");
-                telepathyOn = rs.getBoolean("telepathy_on");
-                travelbarOn = rs.getBoolean("travelbar_on");
-                farmOn = rs.getBoolean("farm_on");
-                lanternsOn = rs.getBoolean("lanterns_on");
-                flightMode = rs.getInt("flying_mode");
-                throttle = rs.getInt("throttle");
-                easyDifficulty = rs.getBoolean("difficulty");
-                autoPowerUp = rs.getBoolean("auto_powerup_on");
-                hum = rs.getString("hum");
-            } else {
-                return false;
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for player_prefs table! " + e.getMessage());
             return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing player_prefs table! " + e.getMessage());
-            }
         }
         return true;
     }
@@ -201,6 +201,14 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAutoOn() {
         return autoOn;
+    }
+
+    public Autonomous getAutoType() {
+        return autoType;
+    }
+
+    public Autonomous.Default getAutoDefault() {
+        return autoDefault;
     }
 
     public boolean isAutoSiegeOn() {

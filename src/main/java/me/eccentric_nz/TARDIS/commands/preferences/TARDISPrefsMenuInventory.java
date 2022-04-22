@@ -172,7 +172,14 @@ public class TARDISPrefsMenuInventory {
         map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
         tt.setItemMeta(map);
         stack[GUIPlayerPreferences.TARDIS_MAP.getSlot()] = tt;
-        // map
+        // autonomous prefs
+        ItemStack auto = new ItemStack(Material.BOWL, 1);
+        ItemMeta prefs = auto.getItemMeta();
+        prefs.setDisplayName("Autonomous Preferences");
+        prefs.setCustomModelData(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getCustomModelData());
+        auto.setItemMeta(prefs);
+        stack[GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot()] = auto;
+        // sonic configurator
         ItemStack sonic = new ItemStack(Material.BOWL, 1);
         ItemMeta config = sonic.getItemMeta();
         config.setDisplayName("Sonic Configurator");

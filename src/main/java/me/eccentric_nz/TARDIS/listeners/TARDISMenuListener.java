@@ -107,6 +107,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Sonic Generator", 54);
         map.put(ChatColor.DARK_RED + "Sonic Prefs Menu", 27);
         map.put(ChatColor.DARK_RED + "TARDIS Archive", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Autonomous Menu", 36);
         map.put(ChatColor.DARK_RED + "TARDIS Console", 9);
         map.put(ChatColor.DARK_RED + "TARDIS Control Menu", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Floor Menu", 54);
