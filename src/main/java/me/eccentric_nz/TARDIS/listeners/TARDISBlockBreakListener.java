@@ -67,14 +67,11 @@ public class TARDISBlockBreakListener implements Listener {
             where.put("location", l);
             where.put("police_box", 1);
             ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
-            rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
-                        if (hasResult) {
-                            TARDISMessage.send(player, "TARDIS_BREAK");
-                            event.setCancelled(true);
-                            return;
-                        }
-                    }
-            );
+            if (rsb.resultSet()) {
+                TARDISMessage.send(player, "TARDIS_BREAK");
+                event.setCancelled(true);
+                return;
+            }
         }
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
