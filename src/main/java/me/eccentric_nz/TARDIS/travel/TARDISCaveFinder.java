@@ -169,14 +169,14 @@ public class TARDISCaveFinder {
 
     private int getLowestAirBlock(World w, int x, int y, int z) {
         int yy = y;
-        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > 7) {
+        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > w.getMinHeight() + 7) {
             yy--;
         }
         return yy;
     }
 
     private boolean worldCheck(World w) {
-        if (!w.getGenerator().shouldGenerateCaves()) {
+        if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
             // caves not generated
             return false;
         }
