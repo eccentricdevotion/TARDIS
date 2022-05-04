@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.portal;
 
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 
 public class MatrixUtils {
 
@@ -19,8 +21,22 @@ public class MatrixUtils {
             BlockData data[][] = new BlockData[size][size];
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
-                    // TODO process problem blocks
-                    data[size - 1 - c][r] = capture[l][r][c];
+                    // process problem blocks
+                    BlockData blockData = capture[l][r][c];
+                    if (blockData instanceof Directional directional) {
+                        BlockFace face;
+                        switch (directional.getFacing()) {
+                            case EAST -> face = BlockFace.SOUTH;
+                            case SOUTH -> face = BlockFace.WEST;
+                            case WEST -> face = BlockFace.NORTH;
+                            // north
+                            default -> face = BlockFace.EAST;
+                        }
+                        directional.setFacing(face);
+                        data[size - 1 - c][r] = directional;
+                    } else {
+                        data[size - 1 - c][r] = blockData;
+                    }
                 }
             }
             rotated[l] = data;
@@ -43,8 +59,22 @@ public class MatrixUtils {
             BlockData[][] data = new BlockData[size][size];
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
-                    // TODO process problem blocks
-                    data[c][size - 1 - r] = capture[l][r][c];
+                    // process problem blocks
+                    BlockData blockData = capture[l][r][c];
+                    if (blockData instanceof Directional directional) {
+                        BlockFace face;
+                        switch (directional.getFacing()) {
+                            case EAST -> face = BlockFace.NORTH;
+                            case SOUTH -> face = BlockFace.EAST;
+                            case WEST -> face = BlockFace.SOUTH;
+                            // north
+                            default -> face = BlockFace.WEST;
+                        }
+                        directional.setFacing(face);
+                        data[c][size - 1 - r] = directional;
+                    } else {
+                        data[c][size - 1 - r] = blockData;
+                    }
                 }
             }
             rotated[l] = data;
@@ -67,8 +97,23 @@ public class MatrixUtils {
             BlockData[][] data = new BlockData[size][size];
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
-                    // TODO process problem blocks
-                    data[r][size - 1 - c] = capture[l][size - 1 - r][c];
+                    // process problem blocks
+                    BlockData blockData = capture[l][size - 1 - r][c];
+                    if (blockData instanceof Directional directional) {
+                        BlockFace face;
+                        switch (directional.getFacing()) {
+                            case EAST -> face = BlockFace.WEST;
+                            case SOUTH -> face = BlockFace.NORTH;
+                            case WEST -> face = BlockFace.EAST;
+                            // north
+                            default -> face = BlockFace.SOUTH;
+                        }
+                        directional.setFacing(face);
+                        data[r][size - 1 - c] = directional;
+                    } else {
+
+                        data[r][size - 1 - c] = blockData;
+                    }
                 }
             }
             rotated[l] = data;
