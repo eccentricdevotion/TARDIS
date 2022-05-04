@@ -1,8 +1,11 @@
 # TODO
 
-## Current version `4.8.3`
+## Current version `4.10.1`
 
-## Next version `4.9.0`
+1. Add time rotor item frames to interior view
+2. Add walls to interior view - use TARDIS's wall preference
+
+## Next version `4.11.0`
 
 0. Deal with removal of datapack worlds that may have TARDISes in them
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS

@@ -113,7 +113,6 @@ public class TARDISMoveListener implements Listener {
                 if (angle >= 360) {
                     angle -= 360;
                 }
-                plugin.debug("angle " + angle);
                 Cast cast = new Cast(plugin);
                 if (distance <= 9 && angle < 25 && angle > -25) {
                     BlockData[][][] capture = new Capture().captureInterior(interior, distance);
