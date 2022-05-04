@@ -24,12 +24,16 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.portal.Capture;
+import me.eccentric_nz.TARDIS.portal.Cast;
+import me.eccentric_nz.TARDIS.portal.CastData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
@@ -199,6 +203,15 @@ public class TARDISDoorOpener {
                         }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
+                    if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection));
+                        // get distance from door
+                        Location location = plugin.getServer().getPlayer(uuid).getLocation();
+                        int distance = (location.getWorld() == exportal.getWorld()) ? (int) location.distanceSquared(exportal) : 1; // or exdoor?
+                        // start casting
+                        BlockData[][][] capture = new Capture().captureInterior(inportal, distance);
+                        new Cast(plugin).castInterior(exportal, uuid, capture);
+                    }
                 }
             }
         }

@@ -114,6 +114,16 @@ public class TARDISDoorCloser {
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);
+            if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+                plugin.getTrackerKeeper().getCasters().remove(uuid);
+                // remove fake blocks
+                if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
+                    for (Block b : plugin.getTrackerKeeper().getCastRestore().get(uuid)) {
+                        b.getState().update();
+                    }
+                    plugin.getTrackerKeeper().getCastRestore().remove(uuid);
+                }
+            }
         }
     }
 }

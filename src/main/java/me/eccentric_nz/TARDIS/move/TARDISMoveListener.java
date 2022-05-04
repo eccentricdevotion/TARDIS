@@ -29,9 +29,14 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.portal.Capture;
+import me.eccentric_nz.TARDIS.portal.Cast;
+import me.eccentric_nz.TARDIS.portal.CastData;
+import me.eccentric_nz.TARDIS.portal.MatrixUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
 import org.bukkit.Location;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -56,7 +61,8 @@ public class TARDISMoveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
+        UUID uuid = p.getUniqueId();
+        if (!plugin.getTrackerKeeper().getMover().contains(uuid)) {
             return;
         }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
@@ -75,17 +81,58 @@ public class TARDISMoveListener implements Listener {
         if (tms.isStaleLocation()) {
             return;
         }
+        // are they casting?
+        if (plugin.getConfig().getBoolean("police_box.view_interior") && plugin.getTrackerKeeper().getCasters().containsKey(uuid)) {
+            Location exterior = plugin.getTrackerKeeper().getCasters().get(uuid).getExterior();
+            if (exterior.getWorld() == loc.getWorld()) {
+                CastData data = plugin.getTrackerKeeper().getCasters().get(uuid);
+                Location interior = data.getInterior();
+                // get distance from exterior
+                // only in the direction of the door!
+                int distance = (int) l.distanceSquared(exterior);
+                double vx, vz;
+                switch (data.getDirection()) {
+                    case EAST -> {
+                        vx = exterior.getX() - 3;
+                        vz = exterior.getZ();
+                    }
+                    case WEST -> {
+                        vx = exterior.getX() + 3;
+                        vz = exterior.getZ();
+                    }
+                    case NORTH -> {
+                        vx = exterior.getX();
+                        vz = exterior.getZ() + 3;
+                    }
+                    default -> { // SOUTH
+                        vx = exterior.getX();
+                        vz = exterior.getZ() - 3;
+                    }
+                }
+                double angle = MatrixUtils.getPlayerAngle(l.getX(), l.getZ(), vx, vz, exterior.getX(), exterior.getZ());
+                if (angle >= 360) {
+                    angle -= 360;
+                }
+                plugin.debug("angle " + angle);
+                Cast cast = new Cast(plugin);
+                if (distance <= 9 && angle < 25 && angle > -25) {
+                    BlockData[][][] capture = new Capture().captureInterior(interior, distance);
+                    cast.castInterior(exterior, uuid, capture);
+                } else if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
+                    cast.restoreExterior(uuid);
+                }
+            }
+        }
         // check the block they're on
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
             TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
-            UUID uuid = p.getUniqueId();
             int id = tpl.getTardisId();
             // are they a companion of this TARDIS?
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (tpl.isAbandoned() || companions.contains(uuid)) {
                 Location to = tpl.getLocation();
                 boolean exit;
-                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(plugin.getServer().getPlayer(uuid), "tardis.create_world")) {
+                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(p, "tardis.create_world")) {
                     exit = !(to.getWorld().getName().contains("TARDIS"));
                 } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                     // check default world name
@@ -94,7 +141,7 @@ public class TARDISMoveListener implements Listener {
                     exit = !(to.getWorld().getName().contains("TARDIS"));
                 }
                 // adjust player yaw for to
-                float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
+                float yaw = (exit) ? loc.getYaw() + 180.0f : loc.getYaw();
                 COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
                 if (!tpl.getDirection().equals(d)) {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
@@ -147,7 +194,7 @@ public class TARDISMoveListener implements Listener {
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             if (!tardis.isPowered_on()) {
-                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
                             }
                         }
                     }, 20L);

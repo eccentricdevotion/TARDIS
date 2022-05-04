@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.portal.CastData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
@@ -49,6 +50,8 @@ import java.util.*;
  */
 public class TARDISTrackerInstanceKeeper {
 
+    private final HashMap<UUID, CastData> casters = new HashMap<>();
+    private final HashMap<UUID, Set<Block>> castRestore = new HashMap<>();
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
@@ -155,6 +158,24 @@ public class TARDISTrackerInstanceKeeper {
         TARDISMoveSession session = new TARDISMoveSession(p);
         moveSessions.put(p.getUniqueId(), session);
         return session;
+    }
+
+    /**
+     * Gets a map of uuids with open door portal locations.
+     *
+     * @return a map of uuids with locations
+     */
+    public HashMap<UUID, CastData> getCasters() {
+        return casters;
+    }
+
+    /**
+     * Gets a map of uuids with Blocks to restore for the open door portal interior projection.
+     *
+     * @return a map of uuids with Blocks to restore
+     */
+    public HashMap<UUID, Set<Block>> getCastRestore() {
+        return castRestore;
     }
 
     /**
