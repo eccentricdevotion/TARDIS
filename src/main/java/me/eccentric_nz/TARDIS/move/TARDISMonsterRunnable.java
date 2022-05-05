@@ -120,19 +120,19 @@ public class TARDISMonsterRunnable implements Runnable {
                 if (monsters.contains(type)) {
                     found = true;
                     switch (type) {
-                        case CREEPER:
+                        case CREEPER -> {
                             Creeper creeper = (Creeper) e;
                             tm.setCharged(creeper.isPowered());
                             dn = (creeper.isPowered()) ? "Charged Creeper" : "Creeper";
-                            break;
-                        case ENDERMAN:
+                        }
+                        case ENDERMAN -> {
                             Enderman enderman = (Enderman) e;
                             tm.setCarried(enderman.getCarriedBlock());
                             if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                                 dn = "Silent";
                             }
-                            break;
-                        case ZOMBIFIED_PIGLIN:
+                        }
+                        case ZOMBIFIED_PIGLIN -> {
                             PigZombie pigzombie = (PigZombie) e;
                             tm.setAggressive(pigzombie.isAngry());
                             tm.setAnger(pigzombie.getAnger());
@@ -145,11 +145,9 @@ public class TARDISMonsterRunnable implements Runnable {
                             } else {
                                 dn = "Zombified Piglin";
                             }
-                            break;
-                        case SKELETON:
-                        case STRAY:
-                        case WITHER_SKELETON:
-                            Skeleton skeleton = (Skeleton) e;
+                        }
+                        case SKELETON, STRAY, WITHER_SKELETON -> {
+                            AbstractSkeleton skeleton = (AbstractSkeleton) e;
                             tm.setEquipment(skeleton.getEquipment());
                             if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
                                 String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
@@ -160,14 +158,12 @@ public class TARDISMonsterRunnable implements Runnable {
                             if (type.equals(EntityType.WITHER_SKELETON)) {
                                 dn = "Wither Skeleton";
                             }
-                            break;
-                        case SLIME:
+                        }
+                        case SLIME -> {
                             Slime slime = (Slime) e;
                             tm.setSize(slime.getSize());
-                            break;
-                        case HUSK:
-                        case ZOMBIE:
-                        case ZOMBIE_VILLAGER:
+                        }
+                        case HUSK, ZOMBIE, ZOMBIE_VILLAGER -> {
                             Zombie zombie = (Zombie) e;
                             tm.setBaby(!zombie.isAdult());
                             tm.setEquipment(zombie.getEquipment());
@@ -183,16 +179,14 @@ public class TARDISMonsterRunnable implements Runnable {
                                 tm.setProfession(prof);
                                 dn = "Zombie Villager";
                             }
-                            break;
-                        case PILLAGER:
-                        case PIGLIN:
-                        case VINDICATOR:
+                        }
+                        case PILLAGER, PIGLIN, VINDICATOR -> {
                             Monster monster = (Monster) e;
                             tm.setEquipment(monster.getEquipment());
                             dn = TARDISStringUtils.uppercaseFirst(type.toString());
-                            break;
-                        default:
-                            break;
+                        }
+                        default -> {
+                        }
                     }
                     tm.setDisplayName(dn);
                     tm.setType(type);
@@ -334,17 +328,17 @@ public class TARDISMonsterRunnable implements Runnable {
             plugin.setTardisSpawn(true);
             Entity ent = loc.getWorld().spawnEntity(loc, m.getType());
             switch (m.getType()) {
-                case CREEPER:
+                case CREEPER -> {
                     Creeper creeper = (Creeper) ent;
                     creeper.setPowered(m.isCharged());
-                    break;
-                case ENDERMAN:
+                }
+                case ENDERMAN -> {
                     Enderman enderman = (Enderman) ent;
                     if (m.getCarried() != null) {
                         enderman.setCarriedBlock(m.getCarried());
                     }
-                    break;
-                case ZOMBIFIED_PIGLIN:
+                }
+                case ZOMBIFIED_PIGLIN -> {
                     PigZombie pigzombie = (PigZombie) ent;
                     pigzombie.setAngry(m.isAggressive());
                     pigzombie.setAnger(m.getAnger());
@@ -353,38 +347,35 @@ public class TARDISMonsterRunnable implements Runnable {
                         ep.setArmorContents(m.getEquipment().getArmorContents());
                         ep.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
-                    break;
-                case SKELETON:
-                case STRAY:
-                case WITHER_SKELETON:
-                    Skeleton skeleton = (Skeleton) ent;
+                }
+                case SKELETON, STRAY, WITHER_SKELETON -> {
+                    AbstractSkeleton skeleton = (AbstractSkeleton) ent;
                     EntityEquipment es = skeleton.getEquipment();
                     if (m.getEquipment() != null) {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
-                        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                            if (TARDISAngelsAPI.isDalek(skeleton)) {
-                                TARDISDalekDisguiser.dalekanium(skeleton);
+                        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && skeleton instanceof Skeleton skelly) {
+                            if (TARDISAngelsAPI.isDalek(skelly)) {
+                                TARDISDalekDisguiser.dalekanium(skelly);
                             }
                         }
                     }
-                    break;
-                case SLIME:
+                }
+                case SLIME -> {
                     Slime slime = (Slime) ent;
                     if (m.getSize() > 0) {
                         slime.setSize(m.getSize());
                     }
-                    break;
-                case VINDICATOR:
+                }
+                case VINDICATOR -> {
                     Vindicator vindicator = (Vindicator) ent;
                     EntityEquipment ev = vindicator.getEquipment();
                     if (m.getEquipment() != null) {
                         ev.setArmorContents(m.getEquipment().getArmorContents());
                         ev.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
-                    break;
-                case HUSK:
-                case ZOMBIE:
+                }
+                case HUSK, ZOMBIE -> {
                     Zombie zombie = (Zombie) ent;
                     if (!m.isBaby()) {
                         zombie.setAdult();
@@ -394,8 +385,8 @@ public class TARDISMonsterRunnable implements Runnable {
                         ez.setArmorContents(m.getEquipment().getArmorContents());
                         ez.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
-                    break;
-                case ZOMBIE_VILLAGER:
+                }
+                case ZOMBIE_VILLAGER -> {
                     ZombieVillager zombie_villager = (ZombieVillager) ent;
                     if (!m.isBaby()) {
                         zombie_villager.setAdult();
@@ -408,17 +399,17 @@ public class TARDISMonsterRunnable implements Runnable {
                         zv.setArmorContents(m.getEquipment().getArmorContents());
                         zv.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
-                    break;
-                case PILLAGER:
+                }
+                case PILLAGER -> {
                     Pillager pillager = (Pillager) ent;
                     EntityEquipment p = pillager.getEquipment();
                     if (m.getEquipment() != null) {
                         p.setArmorContents(m.getEquipment().getArmorContents());
                         p.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
             if (m.getAge() > 0) {
                 ent.setTicksLived(m.getAge());
