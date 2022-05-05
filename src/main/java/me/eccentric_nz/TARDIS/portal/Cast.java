@@ -21,6 +21,14 @@ public class Cast {
         this.plugin = plugin;
     }
 
+    /**
+     * Cast a 3D array of BlockData, rotating it depending on the direction the player is facing, and then sending the
+     * player a bunch of fake block changes
+     *
+     * @param location The location of the exterior portal
+     * @param uuid     The UUID of the player who is casting
+     * @param capture  The 3D array of blocks that will be cast
+     */
     public void castInterior(Location location, UUID uuid, BlockData[][][] capture) {
         Player player = plugin.getServer().getPlayer(uuid);
         if (player == null) {
@@ -108,6 +116,11 @@ public class Cast {
         plugin.getTrackerKeeper().getCastRestore().put(uuid, restore);
     }
 
+    /**
+     * It restores the blocks that were changed by the casting
+     *
+     * @param uuid The UUID of the player who is casting
+     */
     public void restoreExterior(UUID uuid) {
         Set<Block> restore = plugin.getTrackerKeeper().getCastRestore().get(uuid);
         if (restore != null) {

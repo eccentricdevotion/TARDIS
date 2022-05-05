@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author eccentric_nz
+ * Listen for a player moving, if they move over a TARDIS portal, teleport them to the TARDIS interior or exterior.
  */
 public class TARDISMoveListener implements Listener {
 

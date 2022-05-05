@@ -8,6 +8,7 @@ public class CastData {
     final Location interior;
     final Location exterior;
     final COMPASS direction;
+    // TODO Time Rotor?
 
     public CastData(Location interior, Location exterior, COMPASS direction) {
         this.interior = interior;

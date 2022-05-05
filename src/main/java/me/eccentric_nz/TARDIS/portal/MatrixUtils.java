@@ -100,15 +100,7 @@ public class MatrixUtils {
                     // process problem blocks
                     BlockData blockData = capture[l][size - 1 - r][c];
                     if (blockData instanceof Directional directional) {
-                        BlockFace face;
-                        switch (directional.getFacing()) {
-                            case EAST -> face = BlockFace.WEST;
-                            case SOUTH -> face = BlockFace.NORTH;
-                            case WEST -> face = BlockFace.EAST;
-                            // north
-                            default -> face = BlockFace.SOUTH;
-                        }
-                        directional.setFacing(face);
+                        directional.setFacing(directional.getFacing().getOppositeFace());
                         data[r][size - 1 - c] = directional;
                     } else {
 
@@ -121,9 +113,24 @@ public class MatrixUtils {
         return rotated;
     }
 
-    public static double getPlayerAngle(double point1X, double point1Y, double point2X, double point2Y, double fixedX, double fixedY) {
-        double angle1 = Math.atan2(point1Y - fixedY, point1X - fixedX);
-        double angle2 = Math.atan2(point2Y - fixedY, point2X - fixedX);
+    /**
+     * Get the angle between two points, with a fixed point as the center.
+     * <p>
+     * The first two parameters are the coordinates of a point directly in front of the TARDIS door,
+     * the second two parameters are the coordinates of the player, and the last two parameters are
+     * the coordinates of the TARDIS door.
+     *
+     * @param vx The X coordinate of the point directly in front of the TARDIS door
+     * @param vz The Z coordinate of the point directly in front of the TARDIS door
+     * @param px The x coordinate of the player
+     * @param pz The Z coordinate of the player
+     * @param dx The x coordinate of the TARDIS door
+     * @param dz The Z coordinate of the TARDIS door
+     * @return The angle between the two points
+     */
+    public static double getPlayerAngle(double vx, double vz, double px, double pz, double dx, double dz) {
+        double angle1 = Math.atan2(vz - dz, vx - dx);
+        double angle2 = Math.atan2(pz - dz, px - dx);
         return Math.toDegrees(angle1 - angle2);
     }
 }

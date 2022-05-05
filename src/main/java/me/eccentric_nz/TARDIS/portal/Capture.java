@@ -6,6 +6,13 @@ import org.bukkit.block.data.BlockData;
 
 public class Capture {
 
+    /**
+     * This function captures the interior of a TARDIS, and returns a 3D array of BlockData objects
+     *
+     * @param location The location of the door
+     * @param distance The distance from the door
+     * @return A 3D array of BlockData objects
+     */
     public BlockData[][][] captureInterior(Location location, int distance) {
         int iy, ix, iz;
         if (distance > 6) {
@@ -46,4 +53,6 @@ public class Capture {
         // TODO add a box / view limiter
         return capture;
     }
+
+    // TODO capture item frame time rotor
 }
