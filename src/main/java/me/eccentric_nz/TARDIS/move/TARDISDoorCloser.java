@@ -122,6 +122,12 @@ public class TARDISDoorCloser {
                         b.getState().update();
                     }
                     plugin.getTrackerKeeper().getCastRestore().remove(uuid);
+                    // remove fake item frame if necessary
+                    if (plugin.getTrackerKeeper().getRotorRestore().containsKey(uuid)) {
+                        int rotorId = plugin.getTrackerKeeper().getRotorRestore().get(uuid);
+                        plugin.getTardisHelper().removeFakeItemFrame(rotorId, Bukkit.getPlayer(uuid));
+                        plugin.getTrackerKeeper().getRotorRestore().remove(uuid);
+                    }
                 }
             }
         }

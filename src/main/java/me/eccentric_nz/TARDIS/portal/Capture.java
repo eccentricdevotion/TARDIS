@@ -3,8 +3,16 @@ package me.eccentric_nz.TARDIS.portal;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 public class Capture {
+
+    private ItemFrame rotorFrame;
+    private Vector offset;
 
     /**
      * This function captures the interior of a TARDIS, and returns a 3D array of BlockData objects
@@ -13,7 +21,7 @@ public class Capture {
      * @param distance The distance from the door
      * @return A 3D array of BlockData objects
      */
-    public BlockData[][][] captureInterior(Location location, int distance) {
+    public BlockData[][][] captureInterior(Location location, int distance, UUID rotor) {
         int iy, ix, iz;
         if (distance > 6) {
             iy = 3;
@@ -51,8 +59,23 @@ public class Capture {
             }
         }
         // TODO add a box / view limiter
+        // capture time rotor item frame
+        if (rotor != null) {
+            for (Entity e : world.getEntities()) {
+                if (e.getUniqueId().equals(rotor)) {
+                    rotorFrame = (ItemFrame) e;
+                    if (rotorFrame != null) {
+                        // get offset
+                        Location f = rotorFrame.getLocation();
+                        offset = new Vector(f.getBlockX() - location.getBlockX(), f.getBlockY() - location.getBlockY(), f.getBlockZ() - location.getBlockZ());
+                    }
+                }
+            }
+        }
         return capture;
     }
 
-    // TODO capture item frame time rotor
+    public CastRotorData getRotorData() {
+        return new CastRotorData(rotorFrame, offset);
+    }
 }

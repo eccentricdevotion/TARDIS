@@ -204,13 +204,22 @@ public class TARDISDoorOpener {
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                     if (plugin.getConfig().getBoolean("police_box.view_interior")) {
-                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection));
+                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor()));
                         // get distance from door
-                        Location location = plugin.getServer().getPlayer(uuid).getLocation();
+                        Player player = plugin.getServer().getPlayer(uuid);
+                        Location location = player.getLocation();
                         int distance = (location.getWorld() == exportal.getWorld()) ? (int) location.distanceSquared(exportal) : 1; // or exdoor?
-                        // start casting
-                        BlockData[][][] capture = new Capture().captureInterior(inportal, distance);
-                        new Cast(plugin).castInterior(exportal, uuid, capture);
+                        if (distance <= 9) {
+                            // start casting
+                            Capture capture = new Capture();
+                            BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor());
+                            Cast cast = new Cast(plugin, exportal);
+                            cast.castInterior(uuid, data);
+                            if (capture.getRotorData().getFrame() != null) {
+                                // get vector of rotor
+                                cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), rsc.getDirection());
+                            }
+                        }
                     }
                 }
             }

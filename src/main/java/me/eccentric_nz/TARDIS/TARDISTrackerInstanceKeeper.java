@@ -52,6 +52,7 @@ public class TARDISTrackerInstanceKeeper {
 
     private final HashMap<UUID, CastData> casters = new HashMap<>();
     private final HashMap<UUID, Set<Block>> castRestore = new HashMap<>();
+    private final HashMap<UUID, Integer> rotorRestore = new HashMap<>();
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
@@ -176,6 +177,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, Set<Block>> getCastRestore() {
         return castRestore;
+    }
+
+    /**
+     * Gets a map of player uuids with item frame ids to remove from the open door portal interior projection.
+     *
+     * @return a map of uuids with ids
+     */
+    public HashMap<UUID, Integer> getRotorRestore() {
+        return rotorRestore;
     }
 
     /**

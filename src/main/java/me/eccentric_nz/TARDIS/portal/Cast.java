@@ -7,7 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,20 +18,21 @@ import java.util.UUID;
 public class Cast {
 
     private final TARDIS plugin;
+    private final Location location;
 
-    public Cast(TARDIS plugin) {
+    public Cast(TARDIS plugin, Location location) {
         this.plugin = plugin;
+        this.location = location;
     }
 
     /**
      * Cast a 3D array of BlockData, rotating it depending on the direction the player is facing, and then sending the
      * player a bunch of fake block changes
      *
-     * @param location The location of the exterior portal
-     * @param uuid     The UUID of the player who is casting
-     * @param capture  The 3D array of blocks that will be cast
+     * @param uuid    The UUID of the player who is casting
+     * @param capture The 3D array of blocks that will be cast
      */
-    public void castInterior(Location location, UUID uuid, BlockData[][][] capture) {
+    public void castInterior(UUID uuid, BlockData[][][] capture) {
         Player player = plugin.getServer().getPlayer(uuid);
         if (player == null) {
             return;
@@ -128,5 +131,36 @@ public class Cast {
                 b.getState().update();
             }
         }
+    }
+
+    public void castRotor(ItemFrame rotor, Player player, Vector offset, COMPASS direction) {
+        // adjust offset for exterior direction
+        double tx = offset.getX();
+        double tz = offset.getZ();
+        switch (direction) {
+            case EAST -> {
+                // tz, -tx
+                offset.setX(tz);
+                offset.setZ(-tx);
+            }
+            case WEST -> {
+                // -tz, tx
+                offset.setX(-tz);
+                offset.setZ(tx);
+            }
+            case NORTH -> {
+                // -tx, -tz
+                offset.setX(-tx);
+                offset.setZ(-tz);
+            }
+            default -> { // SOUTH
+                // no change
+            }
+        }
+        Location frame = location.clone().add(offset);
+        // show fake item frame
+        int rotorId = plugin.getTardisHelper().castFakeItemFrame(rotor, player, new Vector(frame.getBlockX(), frame.getBlockY(), frame.getBlockZ()));
+        // remember id for removal
+        plugin.getTrackerKeeper().getRotorRestore().put(player.getUniqueId(), rotorId);
     }
 }

@@ -60,13 +60,13 @@ public class TARDISMoveListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
-        UUID uuid = p.getUniqueId();
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getMover().contains(uuid)) {
             return;
         }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
-        Location loc = p.getLocation(); // Grab Location
+        Location loc = player.getLocation(); // Grab Location
 
         /*
          * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
@@ -74,7 +74,7 @@ public class TARDISMoveListener implements Listener {
          * calculations... This is to prevent huge performance drops on high
          * player count servers.
          */
-        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(p);
+        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
         tms.setStaleLocation(loc);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
@@ -83,9 +83,9 @@ public class TARDISMoveListener implements Listener {
         }
         // are they casting?
         if (plugin.getConfig().getBoolean("police_box.view_interior") && plugin.getTrackerKeeper().getCasters().containsKey(uuid)) {
-            Location exterior = plugin.getTrackerKeeper().getCasters().get(uuid).getExterior();
+            CastData data = plugin.getTrackerKeeper().getCasters().get(uuid);
+            Location exterior = data.getExterior();
             if (exterior.getWorld() == loc.getWorld()) {
-                CastData data = plugin.getTrackerKeeper().getCasters().get(uuid);
                 Location interior = data.getInterior();
                 // get distance from exterior
                 // only in the direction of the door!
@@ -113,12 +113,24 @@ public class TARDISMoveListener implements Listener {
                 if (angle >= 360) {
                     angle -= 360;
                 }
-                Cast cast = new Cast(plugin);
-                if (distance <= 9 && angle < 25 && angle > -25) {
-                    BlockData[][][] capture = new Capture().captureInterior(interior, distance);
-                    cast.castInterior(exterior, uuid, capture);
+                Cast cast = new Cast(plugin, exterior);
+                if (distance <= 9 && angle < 26 && angle > -26) {
+                    Capture capture = new Capture();
+                    BlockData[][][] dataArr = capture.captureInterior(interior, distance, data.getRotor());
+                    cast.castInterior(uuid, dataArr);
+                    if (capture.getRotorData().getFrame() != null) {
+                        // get vector of rotor
+                        cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), data.getDirection());
+                    }
                 } else if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
                     cast.restoreExterior(uuid);
+                    plugin.getTrackerKeeper().getCastRestore().remove(uuid);
+                    // remove fake item frame if necessary
+                    if (plugin.getTrackerKeeper().getRotorRestore().containsKey(uuid)) {
+                        int rotorId = plugin.getTrackerKeeper().getRotorRestore().get(uuid);
+                        plugin.getTardisHelper().removeFakeItemFrame(rotorId, player);
+                        plugin.getTrackerKeeper().getRotorRestore().remove(uuid);
+                    }
                 }
             }
         }
@@ -131,7 +143,7 @@ public class TARDISMoveListener implements Listener {
             if (tpl.isAbandoned() || companions.contains(uuid)) {
                 Location to = tpl.getLocation();
                 boolean exit;
-                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(p, "tardis.create_world")) {
+                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
                     exit = !(to.getWorld().getName().contains("TARDIS"));
                 } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                     // check default world name
@@ -141,7 +153,7 @@ public class TARDISMoveListener implements Listener {
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? loc.getYaw() + 180.0f : loc.getYaw();
-                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
+                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!tpl.getDirection().equals(d)) {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
                 }
@@ -154,10 +166,10 @@ public class TARDISMoveListener implements Listener {
                 boolean canPowerUp = (hasPrefs) && (rsp.isAutoPowerUp() && !tpl.isAbandoned());
                 // check for entities near the police box
                 TARDISPetsAndFollowers petsAndFollowers = null;
-                if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                    petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                    petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
                 }
                 // set travelling status
                 plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
@@ -175,13 +187,13 @@ public class TARDISMoveListener implements Listener {
                     }
                 }
                 // tp player
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
                 if (petsAndFollowers != null) {
                     if (petsAndFollowers.getPets().size() > 0) {
-                        plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), p, d, true);
+                        plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), player, d, true);
                     }
                     if (petsAndFollowers.getFollowers().size() > 0) {
-                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), p, d, true);
+                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
                     }
                 }
                 if (canPowerUp && !exit) {
@@ -193,13 +205,13 @@ public class TARDISMoveListener implements Listener {
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             if (!tardis.isPowered_on()) {
-                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
                             }
                         }
                     }, 20L);
                 }
                 if (userQuotes) {
-                    TARDISMessage.send(p, "DOOR_REMIND");
+                    TARDISMessage.send(player, "DOOR_REMIND");
                 }
             }
         }
