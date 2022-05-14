@@ -3,7 +3,6 @@ package me.eccentric_nz.TARDIS.portal;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -91,7 +90,6 @@ public class Cast {
         int restoreX = location.getBlockX() + sx;
         int restoreY = location.getBlockY() - 1;
         int restoreZ = location.getBlockZ() + sz;
-        world.setBlockData(startX, 80, startZ, Material.AMETHYST_BLOCK.createBlockData());
         // remember blocks
         Set<Block> restore = new HashSet<>();
         for (int y = 0; y < 6; y++) {
