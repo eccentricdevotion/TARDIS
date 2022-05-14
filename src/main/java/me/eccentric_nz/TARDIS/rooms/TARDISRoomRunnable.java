@@ -92,13 +92,15 @@ public class TARDISRoomRunnable implements Runnable {
     private int maze_count = 0;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private boolean running;
+    private final boolean isLastTask;
     private World world;
     private JsonArray arr;
     private Location aqua_spawn;
 
-    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, UUID uuid) {
+    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, UUID uuid, boolean isLastTask) {
         this.plugin = plugin;
         this.uuid = uuid;
+        this.isLastTask = isLastTask;
         player = plugin.getServer().getPlayer(uuid);
         l = roomData.getLocation();
         s = roomData.getSchematic();
@@ -483,6 +485,7 @@ public class TARDISRoomRunnable implements Runnable {
                     TARDISMessage.send(player, "ROOM_FINISHED", rname);
                 }
                 plugin.getBuildKeeper().getRoomProgress().remove(uuid);
+                plugin.getTrackerKeeper().getIsGrowingRooms().remove(tardis_id);
             } else {
                 TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block

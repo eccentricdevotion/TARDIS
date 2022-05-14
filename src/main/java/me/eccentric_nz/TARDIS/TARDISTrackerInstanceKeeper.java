@@ -126,6 +126,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<Integer> materialising = new HashSet<>();
     private final Set<Integer> minecart = new HashSet<>();
     private final Set<Integer> submarine = new HashSet<>();
+    private final Set<Integer> isGrowingRooms = new HashSet<>();
     private final Set<UUID> arrangers = new HashSet<>();
     private final Set<UUID> beaconColouring = new HashSet<>();
     private final Set<UUID> constructors = new HashSet<>();
@@ -851,6 +852,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<Integer> getSubmarine() {
         return submarine;
+    }
+
+    /**
+     * Tracks TARDISes that are growing rooms
+     *
+     * @return a list of TARDIS ids
+     */
+    public Set<Integer> getIsGrowingRooms() {
+        return isGrowingRooms;
     }
 
     /**

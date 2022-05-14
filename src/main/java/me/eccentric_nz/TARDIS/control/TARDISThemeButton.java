@@ -53,6 +53,11 @@ public class TARDISThemeButton {
             TARDISMessage.send(player, "UPGRADE_OWN");
             return;
         }
+        // check they are not growing rooms
+        if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(id)) {
+            TARDISMessage.send(player, "NO_UPGRADE_WHILE_GROWING");
+            return;
+        }
         // get player's current console
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);

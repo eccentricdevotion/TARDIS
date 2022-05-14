@@ -119,7 +119,7 @@ public class TARDISRoomPersister {
                     ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
                     if (rst.fromID(id)) {
                         // resume the room growing
-                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid());
+                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid(), true);
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                         runnable.setTask(taskID);
                         // resume tracking progress

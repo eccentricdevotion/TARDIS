@@ -64,6 +64,11 @@ class TARDISUpgradeCommand {
             TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
             return true;
         }
+        // check they are not growing rooms
+        if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(tardis.getTardis_id())) {
+            TARDISMessage.send(player, "NO_UPGRADE_WHILE_GROWING");
+            return true;
+        }
         // it must be their own TARDIS
         boolean own;
         Location pl = player.getLocation();

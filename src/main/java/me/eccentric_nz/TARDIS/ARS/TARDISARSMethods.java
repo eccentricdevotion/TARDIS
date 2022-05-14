@@ -343,8 +343,10 @@ public class TARDISARSMethods {
                         // one every 120 seconds at fastest room_speed - reduced by the delay factor
                         long period = (2400L / plugin.getConfig().getLong("growth.delay_factor")) * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                         long delay = 20L;
+                        int tasksRemaining = tap.getChanged().size();
                         for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
-                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID));
+                            tasksRemaining--;
+                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID), tasksRemaining == 0);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                             delay += period;
                         }
