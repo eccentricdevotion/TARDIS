@@ -387,11 +387,16 @@ public class TARDISControlListener implements Listener {
                                 case 25:
                                     // shell room button
                                     if (plugin.getConfig().getBoolean("police_box.load_shells") && player.isSneaking()) {
+                                        if (!TARDISPermission.hasPermission(player, "tardis.load_shells")) {
+                                            TARDISMessage.send(player, "NO_PERMS");
+                                            return;
+                                        }
                                         // Chameleon load GUI
                                         ItemStack[] shells = new TARDISShellInventory(plugin, player, id).getShells();
                                         Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
                                         sgui.setContents(shells);
                                         player.openInventory(sgui);
+
                                     } else {
                                         new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
                                     }

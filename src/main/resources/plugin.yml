@@ -497,6 +497,9 @@ permissions:
   tardis.paper_bag:
     description: Allows a player to store and dispense Jelly Babies from a paper bag.
     default: op
+  tardis.load_shells:
+    description: Allows a player to load Chameleon presets into the Shell room.
+    default: op
   tardis.gamemode.bypass:
     description: Allows a player to bypass gamemode switching when changing worlds.
     default: false
