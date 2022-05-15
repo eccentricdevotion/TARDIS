@@ -86,7 +86,7 @@ public class TARDISInstantPreset {
         }
         TARDISChameleonColumn column;
         if (preset.equals(PRESET.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
             if (column == null) {
                 TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
                 return;
@@ -236,7 +236,7 @@ public class TARDISInstantPreset {
                         if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
                         }
-					}  
+                    }
                     case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches
                         BlockData light;
                         if (bd.isSubmarine() && mat.equals(Material.TORCH)) {
@@ -254,7 +254,7 @@ public class TARDISInstantPreset {
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
                             }
                         }
-					}
+                    }
                     case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
                         boolean door = false;
                         if (Tag.DOORS.isTagged(mat)) {
@@ -296,7 +296,7 @@ public class TARDISInstantPreset {
                         } else {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                         }
-					}
+                    }
                     case ACACIA_SIGN, BIRCH_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN -> {
                         if (preset.equals(PRESET.APPERTURE)) {
                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
@@ -410,7 +410,7 @@ public class TARDISInstantPreset {
                             rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                         }
-                     }
+                    }
                     case WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA, YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA -> {
                         BlockData chai = (preset.equals(PRESET.FACTORY)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
