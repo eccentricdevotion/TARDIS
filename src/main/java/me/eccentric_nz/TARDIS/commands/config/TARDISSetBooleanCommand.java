@@ -17,9 +17,15 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.RegisteredListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +39,8 @@ import java.util.Locale;
 class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
-    private final List<String> require_restart = Arrays.asList("use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs", "handles");
+    private final List<String> require_restart = Arrays.asList("use_worldguard", "walk_in_tardis", "open_door_policy", "handles");
+    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,6 +88,43 @@ class TARDISSetBooleanCommand {
         TARDISMessage.send(sender, "CONFIG_UPDATED", first);
         if (require_restart.contains(tolower)) {
             TARDISMessage.send(sender, "RESTART");
+        }
+        if (register.contains(tolower)) {
+            for (RegisteredListener rls : HandlerList.getRegisteredListeners(plugin)) {
+                switch (tolower) {
+                    case "wg_flag_set" -> {
+                        if (rls.getListener() instanceof TARDISAntiBuildListener anti) {
+                            HandlerList.unregisterAll(anti);
+                        } else {
+                            plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
+                        }
+                    }
+                    case "zero_room" -> {
+                        if (rls.getListener() instanceof TARDISZeroRoomChatListener zero) {
+                            HandlerList.unregisterAll(zero);
+                        } else {
+                            plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
+                        }
+                    }
+                    case "switch_resource_packs" -> {
+                        if (rls.getListener() instanceof TARDISResourcePackSwitcher pack) {
+                            HandlerList.unregisterAll(pack);
+                        } else {
+                            plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
+                        }
+                    }
+                    case "load_shells" -> {
+                        if (rls.getListener() instanceof TARDISShellLoaderListener loader) {
+                            HandlerList.unregisterAll(loader);
+                        } else {
+                            plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
+                        }
+                    }
+                    default -> {
+                        // do nothing
+                    }
+                }
+            }
         }
         return true;
     }

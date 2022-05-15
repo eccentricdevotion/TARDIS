@@ -41,6 +41,7 @@ police_box:
   confirm_timeout: 15
   sign_colour: WHITE
   rebuild_cooldown: 10000
+  load_shells: false
 # travel settings
 # https://eccentricdevotion.github.io/TARDIS/configuration-travel.html
 travel:

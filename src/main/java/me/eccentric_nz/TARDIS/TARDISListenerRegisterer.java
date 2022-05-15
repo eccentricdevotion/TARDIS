@@ -327,6 +327,9 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_nether_after_visit")) {
             plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
         }
+        if (plugin.getConfig().getBoolean("police_box.load_shells")) {
+            plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);
         return info;
     }

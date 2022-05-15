@@ -111,6 +111,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("invisibility", "allow");
         firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
+        firstsBool.put("load_shells", "police_box");
         firstsBool.put("materialise", "police_box");
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");

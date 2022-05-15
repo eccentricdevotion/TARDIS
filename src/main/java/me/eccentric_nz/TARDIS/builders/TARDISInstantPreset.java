@@ -482,7 +482,7 @@ public class TARDISInstantPreset {
         }
     }
 
-    private static class ProblemBlock {
+    public static class ProblemBlock {
 
         final Location l;
         final BlockData data;
