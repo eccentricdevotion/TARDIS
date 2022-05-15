@@ -129,7 +129,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                     }
                                     empty[1][4][4] = controlBlock;
                                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                                    JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
+                                    JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
                                     HashMap<String, Object> seta = new HashMap<>();
                                     seta.put("tardis_id", rs.getTardis_id());
                                     seta.put("uuid", uuid);

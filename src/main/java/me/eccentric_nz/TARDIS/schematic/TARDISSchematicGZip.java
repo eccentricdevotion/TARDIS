@@ -76,6 +76,6 @@ public class TARDISSchematicGZip {
                 TARDIS.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
             }
         }
-        return (s.startsWith("{")) ? new JsonParser().parse(s).getAsJsonObject() : null;
+        return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;
     }
 }

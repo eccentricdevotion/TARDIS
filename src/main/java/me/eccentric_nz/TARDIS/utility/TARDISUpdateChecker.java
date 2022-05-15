@@ -33,12 +33,10 @@ import java.util.logging.Level;
 public class TARDISUpdateChecker implements Runnable {
 
     private final TARDIS plugin;
-    private final JsonParser jp;
     private final CommandSender sender;
 
     public TARDISUpdateChecker(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
-        jp = new JsonParser();
         this.sender = sender;
     }
 
@@ -111,7 +109,7 @@ public class TARDISUpdateChecker implements Runnable {
             request.setRequestProperty("User-Agent", "TARDISPlugin");
             request.connect();
             // Convert to a JSON object
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");

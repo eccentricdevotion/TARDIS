@@ -72,7 +72,7 @@ public class TARDISARSMethods {
      */
     public static String[][][] getGridFromJSON(String js) {
         String[][][] grid = new String[3][9][9];
-        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(js).getAsJsonArray();
         for (int y = 0; y < 3; y++) {
             JsonArray jsonx = json.get(y).getAsJsonArray();
             for (int x = 0; x < 9; x++) {
@@ -97,7 +97,7 @@ public class TARDISARSMethods {
     private void saveAll(UUID playerUUID) {
         TARDISARSMapData md = map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("ars_x_east", md.getE());
         set.put("ars_z_south", md.getS());
@@ -116,7 +116,7 @@ public class TARDISARSMethods {
     private void revert(UUID playerUUID) {
         TARDISARSSaveData sd = save_map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
         set.put("json", json.toString());
         HashMap<String, Object> wherea = new HashMap<>();

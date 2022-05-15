@@ -99,7 +99,7 @@ public abstract class YandexTranslatorAPI {
      */
     protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
-        JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject jsonObj = JsonParser.parseString(response).getAsJsonObject();
         return jsonObj.get(jsonValProperty).toString();
     }
 
@@ -118,7 +118,7 @@ public abstract class YandexTranslatorAPI {
 
     // Helper method to parse a JsonObject containing an array of Strings with the label "text".
     private static String jsonObjValToStringArr(String inputString) {
-        JsonObject jsonObj = new JsonParser().parse(inputString).getAsJsonObject();
+        JsonObject jsonObj = JsonParser.parseString(inputString).getAsJsonObject();
         JsonArray jsonArr = jsonObj.get("text").getAsJsonArray();
         return jsonArr.getAsString();
     }

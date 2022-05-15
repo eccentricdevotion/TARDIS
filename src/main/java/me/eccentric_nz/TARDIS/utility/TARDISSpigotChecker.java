@@ -31,11 +31,9 @@ import java.util.logging.Level;
 public class TARDISSpigotChecker implements Runnable {
 
     private final TARDIS plugin;
-    private final JsonParser jp;
 
     public TARDISSpigotChecker(TARDIS plugin) {
         this.plugin = plugin;
-        jp = new JsonParser();
     }
 
     @Override
@@ -43,14 +41,14 @@ public class TARDISSpigotChecker implements Runnable {
         // latest is always the recommended build - for new releases we should check the current server version
         String spigotVersion = plugin.getServer().getVersion();
         if (spigotVersion.contains("Spigot")) {
-            JsonObject spigotBuild = fetch1dot18SpigotBuild();
+            JsonObject spigotBuild = fetchLatestSpigotBuild();
             if (spigotBuild == null || !spigotBuild.has("refs")) {
                 // couldn't get Spigot info
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 3353 is the latest 1.18 build (as of 05-12-2021)
-            String[] split = spigotVersion.split("-"); // something like '3353-Spigot-dbf4938-f49e9d1 (MC: 1.18)'
+            // 3486 is the latest 1.18.2 build (as of 15-05-2022)
+            String[] split = spigotVersion.split("-"); // something like '3486-Spigot-b6d12d1-f3c7a6a (MC: 1.18.2)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
@@ -77,7 +75,7 @@ public class TARDISSpigotChecker implements Runnable {
             URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
             URLConnection request = url.openConnection();
             request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");
@@ -94,7 +92,7 @@ public class TARDISSpigotChecker implements Runnable {
             URL url = new URL("https://hub.spigotmc.org/versions/1.18.json");
             URLConnection request = url.openConnection();
             request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");

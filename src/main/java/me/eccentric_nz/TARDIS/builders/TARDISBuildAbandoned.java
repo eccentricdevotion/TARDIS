@@ -273,7 +273,8 @@ class TARDISBuildAbandoned implements Runnable {
                             switch (use_clay) {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
-                                default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                default ->
+                                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                             }
                         } else {
                             data = wall_type.createBlockData();
@@ -305,7 +306,8 @@ class TARDISBuildAbandoned implements Runnable {
                         switch (use_clay) {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
-                            default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                            default ->
+                                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                         }
                     }
                     default -> {
@@ -426,7 +428,7 @@ class TARDISBuildAbandoned implements Runnable {
                     }
                 }
                 Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
+                JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
                 HashMap<String, Object> seta = new HashMap<>();
                 seta.put("tardis_id", dbID);
                 seta.put("json", json.toString());

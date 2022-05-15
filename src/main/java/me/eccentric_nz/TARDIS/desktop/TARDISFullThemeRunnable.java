@@ -679,7 +679,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 break;
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        JsonArray json = new JsonParser().parse(gson.toJson(existing)).getAsJsonArray();
+                        JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
                         HashMap<String, Object> seta = new HashMap<>();
                         seta.put("json", json.toString());
                         HashMap<String, Object> wheres = new HashMap<>();

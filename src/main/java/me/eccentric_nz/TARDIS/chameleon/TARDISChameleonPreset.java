@@ -219,7 +219,7 @@ public class TARDISChameleonPreset {
      */
     private static BlockData[][] getStringArrayFromJSON(String js) {
         BlockData[][] preset = new BlockData[10][4];
-        JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(js).getAsJsonArray();
         for (int col = 0; col < 10; col++) {
             JsonArray jsoncol = json.get(col).getAsJsonArray();
             for (int block = 0; block < 4; block++) {
@@ -298,8 +298,10 @@ public class TARDISChameleonPreset {
                 Material mat = data[col][block].getMaterial();
                 if (PROBLEM_BLOCKS.contains(mat)) {
                     switch (mat) {
-                        case BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED, ORANGE_BED, PINK_BED, PURPLE_BED, RED_BED, WHITE_BED, YELLOW_BED -> data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
-                        case WALL_TORCH, REDSTONE_WALL_TORCH, SOUL_WALL_TORCH -> data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
+                        case BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED, ORANGE_BED, PINK_BED, PURPLE_BED, RED_BED, WHITE_BED, YELLOW_BED ->
+                                data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
+                        case WALL_TORCH, REDSTONE_WALL_TORCH, SOUL_WALL_TORCH ->
+                                data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
                         case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                             Directional door = (Directional) data[col][block];
                             switch (d) {
@@ -355,10 +357,14 @@ public class TARDISChameleonPreset {
                             }
                             data[col][block] = wall_sign;
                         }
-                        case ACACIA_STAIRS, ANDESITE_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, CRIMSON_STAIRS, DARK_OAK_STAIRS, DARK_PRISMARINE_STAIRS, DIORITE_STAIRS, END_STONE_BRICK_STAIRS, GRANITE_STAIRS, JUNGLE_STAIRS, MOSSY_COBBLESTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, NETHER_BRICK_STAIRS, OAK_STAIRS, POLISHED_ANDESITE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, POLISHED_DIORITE_STAIRS, POLISHED_GRANITE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_NETHER_BRICK_STAIRS, RED_SANDSTONE_STAIRS, SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SPRUCE_STAIRS, STONE_BRICK_STAIRS, STONE_STAIRS, WARPED_STAIRS -> data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
-                        case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON -> data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_FENCE, BIRCH_FENCE, CRIMSON_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, NETHER_BRICK_FENCE, OAK_FENCE, SPRUCE_FENCE, WARPED_FENCE -> data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR, IRON_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, WARPED_TRAPDOOR -> data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_STAIRS, ANDESITE_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, CRIMSON_STAIRS, DARK_OAK_STAIRS, DARK_PRISMARINE_STAIRS, DIORITE_STAIRS, END_STONE_BRICK_STAIRS, GRANITE_STAIRS, JUNGLE_STAIRS, MOSSY_COBBLESTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, NETHER_BRICK_STAIRS, OAK_STAIRS, POLISHED_ANDESITE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, POLISHED_DIORITE_STAIRS, POLISHED_GRANITE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_NETHER_BRICK_STAIRS, RED_SANDSTONE_STAIRS, SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SPRUCE_STAIRS, STONE_BRICK_STAIRS, STONE_STAIRS, WARPED_STAIRS ->
+                                data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
+                        case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON ->
+                                data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_FENCE, BIRCH_FENCE, CRIMSON_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, NETHER_BRICK_FENCE, OAK_FENCE, SPRUCE_FENCE, WARPED_FENCE ->
+                                data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR, IRON_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, WARPED_TRAPDOOR ->
+                                data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
                         case BROWN_MUSHROOM_BLOCK -> // mushroom
                                 data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
                         case ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL -> {

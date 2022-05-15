@@ -83,7 +83,7 @@ public class ResultSetArchive {
                             rs.getBoolean("lanterns"),
                             rs.getInt("use"),
                             rs.getInt("y"),
-                            new JsonParser().parse(rs.getString("data")).getAsJsonObject(),
+                            JsonParser.parseString(rs.getString("data")).getAsJsonObject(),
                             rs.getString("description")
                     );
                 }
