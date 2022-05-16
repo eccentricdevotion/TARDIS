@@ -47,14 +47,14 @@ public class ArchiveReset {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND use = 2";
+        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` = 2";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, uuid);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                String update = "UPDATE " + prefix + "archive SET use = ? WHERE archive_id = ?";
+                String update = "UPDATE " + prefix + "archive SET `use` = ? WHERE archive_id = ?";
                 ps = connection.prepareStatement(update);
                 while (rs.next()) {
                     ps.setInt(1, use);
