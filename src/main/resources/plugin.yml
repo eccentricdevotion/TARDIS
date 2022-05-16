@@ -227,6 +227,38 @@ permissions:
   tardis.rebuild:
     description: Allow players to rebuild the TARDIS.
     default: true
+  tardis.console.*:
+    description: Allow players to build all TARDIS types.
+    children:
+      tardis.ars: true
+      tardis.bigger: true
+      tardis.cave: true
+      tardis.copper: true
+      tardis.coral: true
+      tardis.custom: true
+      tardis.delta: true
+      tardis.deluxe: true
+      tardis.division: true
+      tardis.eleventh: true
+      tardis.ender: true
+      tardis.factory: true
+      tardis.legacy_bigger: true
+      tardis.legacy_budget: true
+      tardis.legacy_deluxe: true
+      tardis.legacy_eleventh: true
+      tardis.legacy_redstone: true
+      tardis.master: true
+      tardis.plank: true
+      tardis.pyramid: true
+      tardis.redstone: true
+      tardis.rotor: true
+      tardis.steampunk: true
+      tardis.thirteenth: true
+      tardis.tom: true
+      tardis.twelfth: true
+      tardis.war: true
+      tardis.weathered: true
+    default: op
   tardis.ars:
     description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
     default: op
