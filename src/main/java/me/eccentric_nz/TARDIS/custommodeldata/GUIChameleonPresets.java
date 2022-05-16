@@ -23,6 +23,7 @@ public enum GUIChameleonPresets {
 
     // Chameleon Presets
     GO_TO_PAGE_2(12, 52, Material.ARROW),
+    CURRENT(17, 50, Material.BOWL),
     SAVED(18, 51, Material.BOWL),
     BACK(8, 51, Material.BOWL),
     CLOSE(1, 53, Material.BOWL);

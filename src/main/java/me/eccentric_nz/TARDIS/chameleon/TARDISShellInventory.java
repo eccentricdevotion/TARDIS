@@ -72,6 +72,13 @@ public class TARDISShellInventory {
                 }
             }
         }
+        // load current preset
+        ItemStack current = new ItemStack(Material.BOWL, 1);
+        ItemMeta pre = current.getItemMeta();
+        pre.setDisplayName("Current Chameleon preset");
+        pre.setCustomModelData(GUIChameleonPresets.CURRENT.getCustomModelData());
+        current.setItemMeta(pre);
+        stacks[50] = current;
         // saved construct
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);

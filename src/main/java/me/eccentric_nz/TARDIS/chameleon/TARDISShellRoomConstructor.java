@@ -45,15 +45,13 @@ import java.util.HashMap;
 public class TARDISShellRoomConstructor {
 
     private final TARDIS plugin;
-    private final int[] orderx;
-    private final int[] orderz;
+    public static final int[] orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
+    public static final int[] orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
     private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
     private Block sign;
 
     public TARDISShellRoomConstructor(TARDIS plugin) {
         this.plugin = plugin;
-        orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
-        orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
     }
 
     public void createShell(Player player, int id, Block block) {
@@ -218,7 +216,7 @@ public class TARDISShellRoomConstructor {
         }
     }
 
-    private String addQuotes(String s) {
+    public static String addQuotes(String s) {
         return "\"" + s + "\"";
     }
 }

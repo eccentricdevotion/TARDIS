@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -48,15 +49,11 @@ import java.util.List;
 public class TARDISShellLoaderListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final int[] orderx;
-    private final int[] orderz;
     private final List<Material> problemBlocks = new ArrayList<>();
 
     public TARDISShellLoaderListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
-        orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
         problemBlocks.add(Material.LEVER);
         problemBlocks.add(Material.REDSTONE_TORCH);
         problemBlocks.add(Material.REDSTONE_WALL_TORCH);
@@ -102,8 +99,17 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                             } else {
                                 TARDISChameleonColumn chameleonColumn = null;
                                 PRESET preset;
-                                // load shell
-                                if (slot == 51) {
+                                if (slot == 50) {
+                                    // load current preset
+                                    preset = rs.getTardis().getPreset();
+                                    if (!rs.getTardis().getAdaption().equals(Adaption.OFF)) {
+                                        // get the actual preset blocks being used
+                                        chameleonColumn = TARDISShellScanner.scan(plugin, id, preset);
+                                    } else {
+                                        chameleonColumn = plugin.getPresets().getColumn(preset, COMPASS.EAST);
+                                    }
+                                } else if (slot == 51) {
+                                    // load shell
                                     preset = PRESET.CONSTRUCT;
                                     // load saved construct
                                     HashMap<String, Object> wherec = new HashMap<>();
@@ -147,7 +153,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                         // do problem blocks first
                                         for (int c = 0; c < 10; c++) {
                                             for (int y = fy; y < fy + 4; y++) {
-                                                Block block = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
+                                                Block block = w.getBlockAt(fx + TARDISShellRoomConstructor.orderx[c], y, fz + TARDISShellRoomConstructor.orderz[c]);
                                                 if (problemBlocks.contains(block.getType())) {
                                                     block.setBlockData(TARDISConstants.AIR);
                                                 }
@@ -156,7 +162,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                         // set to AIR
                                         for (int c = 0; c < 10; c++) {
                                             for (int y = fy; y < fy + 4; y++) {
-                                                w.getBlockAt(fx + orderx[c], y, fz + orderz[c]).setBlockData(TARDISConstants.AIR);
+                                                w.getBlockAt(fx + TARDISShellRoomConstructor.orderx[c], y, fz + TARDISShellRoomConstructor.orderz[c]).setBlockData(TARDISConstants.AIR);
                                             }
                                         }
                                         // build shell in the shell room
