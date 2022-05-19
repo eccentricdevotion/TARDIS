@@ -9,7 +9,7 @@ The Zero Room is one of the most peaceful locations in existence. It is a place 
 
 ## Creation
 
-The Zero room is not a room within the TARDIS interior, as most rooms are. Before any players can grow and use it, a server administrator must first enable `zero_room` in the TARDIS config, preferably using the command `/tardisadmin zero_room true`. TARDIS will then create the TARDIS\_Zero\_Room world, if it does not already exist. The server must then be restarted to enable its more advanced features.
+The Zero room is not a room within the TARDIS interior, as most rooms are. Before any players can grow and use it, a server administrator must first enable `zero_room` in the TARDIS config, preferably using the command `/tardisconfig zero_room true`. TARDIS will then create the TARDIS\_Zero\_Room world, if it does not already exist. The server must then be restarted to enable its more advanced features.
 
 Once the room is enabled, growing the Zero Room is a simple matter of following these steps:
 
