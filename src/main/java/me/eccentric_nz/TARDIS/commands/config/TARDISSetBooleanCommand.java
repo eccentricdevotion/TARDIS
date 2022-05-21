@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -40,7 +41,7 @@ class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
     private final List<String> require_restart = Arrays.asList("use_worldguard", "walk_in_tardis", "open_door_policy", "handles");
-    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells");
+    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "dynmap");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -118,6 +119,16 @@ class TARDISSetBooleanCommand {
                             HandlerList.unregisterAll(loader);
                         } else {
                             plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
+                        }
+                    }
+                    case "dynmap" -> {
+                        if (plugin.getTardisDynmap() == null) {
+                            TARDISDynmap tardisDynmap = new TARDISDynmap(plugin);
+                            tardisDynmap.enable();
+                            plugin.setTardisDynmap(tardisDynmap);
+                        } else {
+                            plugin.getTardisDynmap().disable();
+                            plugin.setTardisDynmap(null);
                         }
                     }
                     default -> {

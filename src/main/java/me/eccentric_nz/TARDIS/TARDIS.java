@@ -423,7 +423,6 @@ public class TARDIS extends JavaPlugin {
             if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("dynmap.enabled")) {
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
-                debug("Creating markers for Dynmap.");
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
@@ -1680,5 +1679,13 @@ public class TARDIS extends JavaPlugin {
         } catch (IOException io) {
             plugin.debug("Could not save planets.yml, " + io.getMessage());
         }
+    }
+
+    public TARDISDynmap getTardisDynmap() {
+        return tardisDynmap;
+    }
+
+    public void setTardisDynmap(TARDISDynmap tardisDynmap) {
+        this.tardisDynmap = tardisDynmap;
     }
 }
