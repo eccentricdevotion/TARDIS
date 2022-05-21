@@ -68,7 +68,13 @@ public class TARDISItemFrameListener implements Listener {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction|frame|rotor|map` command?
             if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(uuid)) {
-                Control control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
+                Control control;
+                try {
+                    control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    TARDISMessage.send(player, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
+                    return;
+                }
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
