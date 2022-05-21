@@ -115,31 +115,28 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                             PRESET preset = tardis.getPreset();
                             Adaption adapt = tardis.getAdaption();
                             switch (slot) {
-                                case 0:
+                                case 0 ->
                                     // back
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
-                                        ItemStack[] items = tci.getMenu();
-                                        Inventory chaminv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                        chaminv.setContents(items);
-                                        player.openInventory(chaminv);
-                                    }, 2L);
-                                    break;
-                                case 2:
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
+                                            ItemStack[] items = tci.getMenu();
+                                            Inventory chaminv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                                            chaminv.setContents(items);
+                                            player.openInventory(chaminv);
+                                        }, 2L);
+                                case 2 ->
                                     // help
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
-                                        ItemStack[] items = tci.getHelp();
-                                        Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
-                                        chaminv.setContents(items);
-                                        player.openInventory(chaminv);
-                                    }, 2L);
-                                    break;
-                                case 5:
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
+                                            ItemStack[] items = tci.getHelp();
+                                            Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
+                                            chaminv.setContents(items);
+                                            player.openInventory(chaminv);
+                                        }, 2L);
+                                case 5 ->
                                     // abort
-                                    close(player);
-                                    break;
-                                case 7:
+                                        close(player);
+                                case 7 -> {
                                     HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
@@ -148,8 +145,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         return;
                                     }
                                     buildConstruct(tardis.getPreset().toString(), id, player);
-                                    break;
-                                case 8:
+                                }
+                                case 8 -> {
                                     String air = TARDISConstants.AIR.getAsString();
                                     // process
                                     String[][] blue = new String[10][4];
@@ -258,24 +255,23 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         plugin.getQueryFactory().doInsert("chameleon", set);
                                     }
                                     buildConstruct(tardis.getPreset().toString(), id, player);
-                                    break;
-                                case 26:
+                                }
+                                case 26 -> {
                                     // set lamp
                                     if (!currentLamp.containsKey(uuid)) {
                                         currentLamp.put(uuid, 0);
                                     }
                                     nextLamp(uuid, view);
-                                    break;
-                                case 43:
-                                case 52:
+                                }
+                                case 43, 52 -> {
                                     // switch door
                                     if (!currentDoor.containsKey(uuid)) {
                                         currentDoor.put(uuid, 0);
                                     }
                                     nextDoor(uuid, view);
-                                    break;
-                                default:
-                                    break;
+                                }
+                                default -> {
+                                }
                             }
                         }
                     }
