@@ -524,7 +524,7 @@
         <dependency>
             <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>3.3</version>
+            <version>3.4-beta-3</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

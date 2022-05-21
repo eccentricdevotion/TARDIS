@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.dynmap;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -66,7 +65,7 @@ class TARDISGetter {
             StringBuilder sb = new StringBuilder();
             // only get worlds that are enabled for time travel, and only regular worlds as dynmap doesn't support custom dimensions yet
             for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
-                if (!TARDISConstants.isTARDISPlanet(planet) && plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
+                if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
                     sb.append("'" + planet + "',");
                 }
             }

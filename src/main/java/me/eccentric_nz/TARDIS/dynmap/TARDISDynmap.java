@@ -217,7 +217,6 @@ public class TARDISDynmap {
     }
 
     private class TARDISMarkerUpdate implements Runnable {
-
         // build new map
         Map<String, Marker> newmap = new HashMap<>();
         ArrayList<World> worldsToDo = null;
@@ -233,7 +232,7 @@ public class TARDISDynmap {
             // prime world list
             if (worldsToDo == null) {
                 worldsToDo = new ArrayList<>();
-                // only get worlds that are enabled for time travel, and only regular worlds as dynmap doesn't support custom dimensions yet
+                // only get worlds that are enabled for time travel
                 for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
                         World world = plugin.getServer().getWorld(planet);
@@ -254,56 +253,58 @@ public class TARDISDynmap {
                     // Schedule next run
                     long delay = plugin.getConfig().getLong("dynmap.update_period", 30) * 20L;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), delay);
-                    return;
+                    break;
                 } else {
                     // get next world
                     curWorld = worldsToDo.remove(0);
                     // get TARDISes
                     TARDISGetter getter = new TARDISGetter(plugin, curWorld);
-                    getter.resultSetAsync(results -> toDo = results);
-                    tardisIndex = 0;
-                    if (toDo != null && toDo.isEmpty()) {
-                        toDo = null;
-                    }
+                    getter.resultSetAsync(results -> {
+                        toDo = results;
+                        tardisIndex = 0;
+                        if (toDo != null && toDo.isEmpty()) {
+                            toDo = null;
+                        } else {
+                            // process up to limit per tick
+                            int limit = plugin.getConfig().getInt("dynmap.updates_per_tick", 10);
+                            for (int cnt = 0; cnt < limit; cnt++) {
+                                if (tardisIndex >= toDo.size()) {
+                                    toDo = null;
+                                    break;
+                                }
+                                // get next TARDIS
+                                TARDISData data = toDo.get(tardisIndex);
+                                tardisIndex++;
+                                Location loc = data.getLocation();
+                                String world = loc.getWorld().getName();
+                                // get marker id
+                                String id = world + "/" + data.getOwner();
+                                String label = String.format("%s (TARDIS)", data.getOwner());
+                                MarkerIcon markerIcon = markerapi.getMarkerIcon("tardis");
+                                // see if we already have a marker
+                                Marker marker = markers.remove(id);
+                                if (marker == null) {
+                                    // not found? make new one
+                                    marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
+                                } else {
+                                    // update position if needed
+                                    marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
+                                    marker.setLabel(label);
+                                    marker.setMarkerIcon(markerIcon);
+                                }
+                                if (marker != null) { // should never be null when getting here as there is already a null check...
+                                    // build popup
+                                    String desc = formatInfoWindow(data);
+                                    // set popup
+                                    marker.setDescription(desc); // ... but apparently this line can throw a NPE - java.lang.NullPointerException: Cannot invoke "org.dynmap.markers.Marker.setDescription(String)" because "marker" is null
+                                    // add to new marker map
+                                    newmap.put(id, marker);
+                                }
+                            }
+                        }
+                    });
                 }
             }
-            // process up to limit per tick
-            int limit = plugin.getConfig().getInt("dynmap.updates_per_tick", 10);
-            for (int cnt = 0; cnt < limit; cnt++) {
-                if (tardisIndex >= toDo.size()) {
-                    toDo = null;
-                    break;
-                }
-                // get next TARDIS
-                TARDISData data = toDo.get(tardisIndex);
-                tardisIndex++;
-                Location loc = data.getLocation();
-                String world = loc.getWorld().getName();
-                // get marker id
-                String id = world + "/" + data.getOwner();
-                String label = String.format("%s (TARDIS)", data.getOwner());
-                MarkerIcon markerIcon = markerapi.getMarkerIcon("tardis");
-                // see if we already have a marker
-                Marker marker = markers.remove(id);
-                if (marker == null) {
-                    // not found? make new one
-                    marker = markerSet.createMarker(id, label, world, loc.getX(), loc.getY(), loc.getZ(), markerIcon, false);
-                } else {
-                    // update position if needed
-                    marker.setLocation(world, loc.getX(), loc.getY(), loc.getZ());
-                    marker.setLabel(label);
-                    marker.setMarkerIcon(markerIcon);
-                }
-                if (marker != null) { // should never be null when getting here as there is already a null check...
-                    // build popup
-                    String desc = formatInfoWindow(data);
-                    // set popup
-                    marker.setDescription(desc); // ... but apparently this line can throw a NPE - java.lang.NullPointerException: Cannot invoke "org.dynmap.markers.Marker.setDescription(String)" because "marker" is null
-                    // add to new marker map
-                    newmap.put(id, marker);
-                }
-            }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, this, 1);
         }
     }
 }
