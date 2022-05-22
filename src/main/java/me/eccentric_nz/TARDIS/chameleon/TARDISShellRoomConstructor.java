@@ -183,6 +183,7 @@ public class TARDISShellRoomConstructor {
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
         sett.put("chameleon_demat", preset);
+        sett.put("adapti_on", 0);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);

@@ -2,7 +2,7 @@
 
 ## Current version `4.10.2`
 
-1. Fix Chamemelon Adaption staying set when switching to a Chameleon Construct
+1. Fix `/tweather command`
 2. Add walls to interior view - use TARDIS's wall preference
 
 ## Next version `4.11.0`
