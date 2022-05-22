@@ -213,8 +213,7 @@ class TARDISDematerialisePreset implements Runnable {
                         } else {
                             sound = switch (spaceTimeThrottle) {
                                 case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-                                default -> // NORMAL
-                                        "tardis_takeoff";
+                                default -> "tardis_takeoff"; // NORMAL
                             };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
@@ -274,7 +273,7 @@ class TARDISDematerialisePreset implements Runnable {
                             zz = z;
                         }
                     }
-                    for (int yy = 0; yy < 4; yy++) {
+                    for (int yy = 3; yy >= 0; yy--) {
                         boolean change = true;
                         Material mat = colData[yy].getMaterial();
                         switch (mat) {

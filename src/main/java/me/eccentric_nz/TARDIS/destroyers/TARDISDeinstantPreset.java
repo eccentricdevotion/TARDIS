@@ -146,7 +146,7 @@ public class TARDISDeinstantPreset {
             // remove sign
             plugin.getPresetDestroyer().destroySign(l, d, preset);
             // remove blue wool and door
-            for (int yy = 0; yy < 4; yy++) {
+            for (int yy = 3; yy >= 0; yy--) {
                 for (int xx = 0; xx < 3; xx++) {
                     for (int zz = 0; zz < 3; zz++) {
                         Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
