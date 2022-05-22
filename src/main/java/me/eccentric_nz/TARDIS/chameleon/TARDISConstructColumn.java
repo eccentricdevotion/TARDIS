@@ -62,7 +62,7 @@ public class TARDISConstructColumn {
                         strings[i][j] = block;
                     }
                 }
-                return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
+                return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"));
             }
         }
         return null;

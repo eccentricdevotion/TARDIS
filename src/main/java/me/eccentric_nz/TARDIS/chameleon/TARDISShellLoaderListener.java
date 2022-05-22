@@ -128,7 +128,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                                     strings[i][j] = block;
                                                 }
                                             }
-                                            chameleonColumn = TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, strings, rsc.getData().get("asymmetric").equals("1"), false);
+                                            chameleonColumn = TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, strings, rsc.getData().get("asymmetric").equals("1"));
                                         }
                                     }
                                 } else {

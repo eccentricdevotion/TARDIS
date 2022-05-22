@@ -183,7 +183,8 @@ class TARDISMaterialisePreset implements Runnable {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    case WARP, RAPID, FASTER ->
+                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
                                     default -> "tardis_land";
                                 };
                             }
@@ -284,6 +285,9 @@ class TARDISMaterialisePreset implements Runnable {
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                                 TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
+                            }
+                            if (preset.equals(PRESET.DUCK) && yy == 2 && n == 9) {
+                                swampDoorBottom = world.getBlockAt(xx, (y + yy), zz);
                             }
                             Material mat = colData[yy].getMaterial();
                             switch (mat) {
@@ -682,6 +686,9 @@ class TARDISMaterialisePreset implements Runnable {
                     }
                 }
             } else {
+                if (preset.equals(PRESET.DUCK) && swampDoorBottom != null) {
+                    swampDoorBottom.setBlockData(column.getBlockData()[9][2]);
+                }
                 if ((hasDodgyDoor) && swampDoorBottom != null) {
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisID());
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisID());
