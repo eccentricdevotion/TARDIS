@@ -20,14 +20,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.recalculators.*;
+import me.eccentric_nz.TARDIS.utility.recalculators.TARDISDirectionalRecalculator;
+import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMultipleFacingRecalculator;
+import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRailRecalculator;
+import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRotatableRecalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
@@ -38,7 +37,6 @@ import java.util.List;
  */
 public class TARDISChameleonPreset {
 
-    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.ACACIA_DOOR, Material.ACACIA_FENCE, Material.ACACIA_SIGN, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ACACIA_WALL_SIGN, Material.ANDESITE_STAIRS, Material.ANVIL, Material.BIRCH_DOOR, Material.BIRCH_FENCE, Material.BIRCH_SIGN, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BIRCH_WALL_SIGN, Material.BLACK_BED, Material.BLACK_GLAZED_TERRACOTTA, Material.BLACKSTONE_STAIRS, Material.BLUE_BED, Material.BLUE_GLAZED_TERRACOTTA, Material.BRICK_STAIRS, Material.BROWN_BED, Material.BROWN_GLAZED_TERRACOTTA, Material.BROWN_MUSHROOM_BLOCK, Material.CARVED_PUMPKIN, Material.CHIPPED_ANVIL, Material.COBBLESTONE_STAIRS, Material.CRIMSON_BUTTON, Material.CRIMSON_DOOR, Material.CRIMSON_FENCE, Material.CRIMSON_SIGN, Material.CRIMSON_STAIRS, Material.CRIMSON_TRAPDOOR, Material.CRIMSON_WALL_SIGN, Material.CYAN_BED, Material.CYAN_GLAZED_TERRACOTTA, Material.DAMAGED_ANVIL, Material.DARK_OAK_DOOR, Material.DARK_OAK_FENCE, Material.DARK_OAK_SIGN, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.DARK_OAK_WALL_SIGN, Material.DARK_PRISMARINE_STAIRS, Material.DIORITE_STAIRS, Material.END_STONE_BRICK_STAIRS, Material.GRANITE_STAIRS, Material.GRAY_BED, Material.GRAY_GLAZED_TERRACOTTA, Material.GREEN_BED, Material.GREEN_GLAZED_TERRACOTTA, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.JACK_O_LANTERN, Material.JUNGLE_DOOR, Material.JUNGLE_FENCE, Material.JUNGLE_SIGN, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.JUNGLE_WALL_SIGN, Material.LEVER, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_BED, Material.LIGHT_GRAY_GLAZED_TERRACOTTA, Material.LIME_BED, Material.LIME_GLAZED_TERRACOTTA, Material.MAGENTA_BED, Material.MAGENTA_GLAZED_TERRACOTTA, Material.MOSSY_COBBLESTONE_STAIRS, Material.MOSSY_STONE_BRICK_STAIRS, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_BUTTON, Material.OAK_DOOR, Material.OAK_FENCE, Material.OAK_SIGN, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.OAK_WALL_SIGN, Material.OBSERVER, Material.ORANGE_BED, Material.ORANGE_GLAZED_TERRACOTTA, Material.PINK_BED, Material.PINK_GLAZED_TERRACOTTA, Material.POLISHED_ANDESITE_STAIRS, Material.POLISHED_BLACKSTONE_BUTTON, Material.POLISHED_BLACKSTONE_BRICK_STAIRS, Material.POLISHED_BLACKSTONE_STAIRS, Material.POLISHED_DIORITE_STAIRS, Material.POLISHED_GRANITE_STAIRS, Material.PRISMARINE_BRICK_STAIRS, Material.PRISMARINE_STAIRS, Material.PURPLE_BED, Material.PURPLE_GLAZED_TERRACOTTA, Material.PURPUR_STAIRS, Material.QUARTZ_STAIRS, Material.RAIL, Material.RED_BED, Material.RED_GLAZED_TERRACOTTA, Material.RED_NETHER_BRICK_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.SANDSTONE_STAIRS, Material.SMOOTH_QUARTZ_STAIRS, Material.SMOOTH_RED_SANDSTONE_STAIRS, Material.SMOOTH_SANDSTONE_STAIRS, Material.SPRUCE_DOOR, Material.SPRUCE_FENCE, Material.SPRUCE_SIGN, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.SPRUCE_WALL_SIGN, Material.STONE_BRICK_STAIRS, Material.STONE_BUTTON, Material.STONE_STAIRS, Material.VINE, Material.WALL_TORCH, Material.REDSTONE_WALL_TORCH, Material.SOUL_WALL_TORCH, Material.WARPED_BUTTON, Material.WARPED_DOOR, Material.WARPED_FENCE, Material.WARPED_SIGN, Material.WARPED_STAIRS, Material.WARPED_TRAPDOOR, Material.WARPED_WALL_SIGN, Material.WHITE_BED, Material.WHITE_GLAZED_TERRACOTTA, Material.YELLOW_BED, Material.YELLOW_GLAZED_TERRACOTTA);
     public final TARDISCustomPreset custom;
     private final TARDISAndesitePreset andesite;
     private final TARDISAngelDownPreset angeld;
@@ -173,24 +171,24 @@ public class TARDISChameleonPreset {
         boat = new TARDISBoatPreset();
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
+    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
         if (d.equals(COMPASS.EAST)) {
             tcc = new TARDISChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d));
         }
         return tcc;
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
+    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
             tcc = new TARDISChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d));
         }
         return tcc;
     }
@@ -292,114 +290,18 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private static BlockData[][] convertData(BlockData[][] data, COMPASS d, boolean duck) {
+    private static BlockData[][] convertData(BlockData[][] data, COMPASS d) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 Material mat = data[col][block].getMaterial();
-                if (PROBLEM_BLOCKS.contains(mat)) {
-                    switch (mat) {
-                        case BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED, ORANGE_BED, PINK_BED, PURPLE_BED, RED_BED, WHITE_BED, YELLOW_BED ->
-                                data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
-                        case WALL_TORCH, REDSTONE_WALL_TORCH, SOUL_WALL_TORCH ->
-                                data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
-                            Directional door = (Directional) data[col][block];
-                            switch (d) {
-                                case SOUTH:
-                                    if (door.getFacing().equals(BlockFace.EAST)) {
-                                        door.setFacing(BlockFace.SOUTH);
-                                    } else {
-                                        door.setFacing(BlockFace.NORTH);
-                                    }
-                                    break;
-                                case WEST:
-                                    if (door.getFacing().equals(BlockFace.EAST)) {
-                                        door.setFacing(BlockFace.WEST);
-                                    } else {
-                                        door.setFacing(BlockFace.EAST);
-                                    }
-                                    break;
-                                default:
-                                    if (door.getFacing().equals(BlockFace.EAST)) {
-                                        door.setFacing(BlockFace.NORTH);
-                                    } else {
-                                        door.setFacing(BlockFace.SOUTH);
-                                    }
-                                    break;
-                            }
-                            data[col][block] = door;
-                        }
-                        case RAIL -> {
-                            Rail rail = (Rail) data[col][block];
-                            if (d == COMPASS.WEST) {
-                                rail.setShape(Rail.Shape.EAST_WEST);
-                            } else {
-                                rail.setShape(Rail.Shape.NORTH_SOUTH);
-                            }
-                            data[col][block] = rail;
-                        }
-                        case LEVER -> data[col][block] = new TARDISLeverRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN -> {
-                            Rotatable sign = (Rotatable) data[col][block];
-                            switch (d) {
-                                case SOUTH -> sign.setRotation(BlockFace.NORTH);
-                                case WEST -> sign.setRotation(BlockFace.EAST);
-                                default -> sign.setRotation(BlockFace.SOUTH);
-                            }
-                            data[col][block] = sign;
-                        }
-                        case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN -> {
-                            Directional wall_sign = (Directional) data[col][block];
-                            switch (d) {
-                                case SOUTH -> wall_sign.setFacing(BlockFace.NORTH);
-                                case WEST -> wall_sign.setFacing(BlockFace.EAST);
-                                default -> wall_sign.setFacing(BlockFace.SOUTH);
-                            }
-                            data[col][block] = wall_sign;
-                        }
-                        case ACACIA_STAIRS, ANDESITE_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, CRIMSON_STAIRS, DARK_OAK_STAIRS, DARK_PRISMARINE_STAIRS, DIORITE_STAIRS, END_STONE_BRICK_STAIRS, GRANITE_STAIRS, JUNGLE_STAIRS, MOSSY_COBBLESTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, NETHER_BRICK_STAIRS, OAK_STAIRS, POLISHED_ANDESITE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, POLISHED_DIORITE_STAIRS, POLISHED_GRANITE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_NETHER_BRICK_STAIRS, RED_SANDSTONE_STAIRS, SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SPRUCE_STAIRS, STONE_BRICK_STAIRS, STONE_STAIRS, WARPED_STAIRS ->
-                                data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
-                        case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON ->
-                                data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_FENCE, BIRCH_FENCE, CRIMSON_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, NETHER_BRICK_FENCE, OAK_FENCE, SPRUCE_FENCE, WARPED_FENCE ->
-                                data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR, IRON_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, WARPED_TRAPDOOR ->
-                                data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
-                        case BROWN_MUSHROOM_BLOCK -> // mushroom
-                                data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
-                        case ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL -> {
-                            Directional anvil = (Directional) data[col][block];
-                            if (d == COMPASS.WEST) {
-                            } else {
-                                if (anvil.getFacing() == BlockFace.SOUTH) {
-                                    anvil.setFacing(BlockFace.WEST);
-                                } else {
-                                    anvil.setFacing(BlockFace.EAST);
-                                }
-                            }
-                            data[col][block] = anvil;
-                        }
-                        case JACK_O_LANTERN, CARVED_PUMPKIN, OBSERVER, WHITE_GLAZED_TERRACOTTA, ORANGE_GLAZED_TERRACOTTA, MAGENTA_GLAZED_TERRACOTTA, LIGHT_BLUE_GLAZED_TERRACOTTA, YELLOW_GLAZED_TERRACOTTA, LIME_GLAZED_TERRACOTTA, PINK_GLAZED_TERRACOTTA, GRAY_GLAZED_TERRACOTTA, LIGHT_GRAY_GLAZED_TERRACOTTA, CYAN_GLAZED_TERRACOTTA, PURPLE_GLAZED_TERRACOTTA, BLUE_GLAZED_TERRACOTTA, BROWN_GLAZED_TERRACOTTA, GREEN_GLAZED_TERRACOTTA, RED_GLAZED_TERRACOTTA, BLACK_GLAZED_TERRACOTTA -> {
-                            Directional jack = (Directional) data[col][block];
-                            switch (d) {
-                                case EAST -> jack.setFacing(BlockFace.WEST);
-                                case SOUTH -> jack.setFacing(BlockFace.NORTH);
-                                case WEST -> jack.setFacing(BlockFace.EAST);
-                                default -> jack.setFacing(BlockFace.SOUTH);
-                            }
-                            data[col][block] = jack;
-                        }
-                        default -> { // vine
-                            MultipleFacing vine = (MultipleFacing) data[col][block];
-                            vine.setFace(BlockFace.EAST, false);
-                            switch (d) {
-                                case SOUTH -> vine.setFace(BlockFace.SOUTH, true);
-                                case WEST -> vine.setFace(BlockFace.WEST, true);
-                                default -> vine.setFace(BlockFace.NORTH, true);
-                            }
-                            data[col][block] = vine;
-                        }
-                    }
+                if (data[col][block] instanceof Directional) {
+                    data[col][block] = new TARDISDirectionalRecalculator().recalculate(data[col][block], d);
+                } else if (data[col][block] instanceof Rail) {
+                    data[col][block] = new TARDISRailRecalculator().recalculate(data[col][block], d);
+                } else if (data[col][block] instanceof Rotatable) {
+                    data[col][block] = new TARDISRotatableRecalculator().recalculate(data[col][block], d);
+                } else if (data[col][block] instanceof MultipleFacing) {
+                    data[col][block] = new TARDISMultipleFacingRecalculator().recalculate(data[col][block], d);
                 }
             }
         }
@@ -407,70 +309,70 @@ public class TARDISChameleonPreset {
     }
 
     public void makePresets() {
-        andesite.makePresets(false, false);
-        angeld.makePresets(true, false);
-        angelu.makePresets(true, false);
-        apperture.makePresets(false, false);
-        cake.makePresets(false, false);
-        candy.makePresets(true, false);
-        chalice.makePresets(false, false);
-        chorus.makePresets(false, false);
-        column.makePresets(false, false);
-        creepy.makePresets(false, false);
-        desert.makePresets(false, false);
-        diorite.makePresets(false, false);
-        duck.makePresets(true, true);
-        factory.makePresets(false, false);
-        fence.makePresets(true, false);
-        flower.makePresets(false, false);
-        gazebo.makePresets(false, false);
-        granite.makePresets(false, false);
-        gravestone.makePresets(true, false);
-        helix.makePresets(false, false);
-        invisible.makePresets(true, true);
-        jail.makePresets(false, false);
-        jungle.makePresets(false, false);
-        junk.makePresets(true, false);
-        lamp.makePresets(true, false);
-        library.makePresets(false, false);
-        lighthouse.makePresets(false, false);
-        mine.makePresets(false, false);
-        nether.makePresets(false, false);
-        pandorica.makePresets(false, false);
-        party.makePresets(false, false);
-        peanut.makePresets(false, false);
-        pine.makePresets(false, false);
-        portal.makePresets(false, false);
-        prismarine.makePresets(false, false);
-        punked.makePresets(false, false);
-        robot.makePresets(true, false);
-        shroom.makePresets(false, false);
-        snowman.makePresets(true, false);
-        submerged.makePresets(true, false);
-        swamp.makePresets(false, false);
-        telephone.makePresets(false, false);
-        theend.makePresets(false, false);
-        toilet.makePresets(true, false);
-        topsyturvey.makePresets(false, false);
-        torch.makePresets(true, false);
-        village.makePresets(false, false);
-        well.makePresets(false, false);
-        windmill.makePresets(true, false);
-        yellow.makePresets(false, false);
+        andesite.makePresets(false);
+        angeld.makePresets(true);
+        angelu.makePresets(true);
+        apperture.makePresets(false);
+        cake.makePresets(false);
+        candy.makePresets(true);
+        chalice.makePresets(false);
+        chorus.makePresets(false);
+        column.makePresets(false);
+        creepy.makePresets(false);
+        desert.makePresets(false);
+        diorite.makePresets(false);
+        duck.makePresets(true);
+        factory.makePresets(false);
+        fence.makePresets(true);
+        flower.makePresets(false);
+        gazebo.makePresets(false);
+        granite.makePresets(false);
+        gravestone.makePresets(true);
+        helix.makePresets(false);
+        invisible.makePresets(true);
+        jail.makePresets(false);
+        jungle.makePresets(false);
+        junk.makePresets(true);
+        lamp.makePresets(true);
+        library.makePresets(false);
+        lighthouse.makePresets(false);
+        mine.makePresets(false);
+        nether.makePresets(false);
+        pandorica.makePresets(false);
+        party.makePresets(false);
+        peanut.makePresets(false);
+        pine.makePresets(false);
+        portal.makePresets(false);
+        prismarine.makePresets(false);
+        punked.makePresets(false);
+        robot.makePresets(true);
+        shroom.makePresets(false);
+        snowman.makePresets(true);
+        submerged.makePresets(true);
+        swamp.makePresets(false);
+        telephone.makePresets(false);
+        theend.makePresets(false);
+        toilet.makePresets(true);
+        topsyturvey.makePresets(false);
+        torch.makePresets(true);
+        village.makePresets(false);
+        well.makePresets(false);
+        windmill.makePresets(true);
+        yellow.makePresets(false);
         custom.makePresets();
-        adaptive.makePresets(false, false);
-        render.makePresets(false, false);
-        extreme.makePresets(false, false);
-        forest.makePresets(true, false);
-        flats.makePresets(true, false);
-        spikes.makePresets(false, false);
-        mesa.makePresets(true, false);
-        plains.makePresets(false, false);
-        roofed.makePresets(false, false);
-        savanna.makePresets(true, false);
-        taiga.makePresets(false, false);
-        cold.makePresets(false, false);
-        boat.makePresets(true, false);
+        adaptive.makePresets(false);
+        render.makePresets(false);
+        extreme.makePresets(false);
+        forest.makePresets(true);
+        flats.makePresets(true);
+        spikes.makePresets(false);
+        mesa.makePresets(true);
+        plains.makePresets(false);
+        roofed.makePresets(false);
+        savanna.makePresets(true);
+        taiga.makePresets(false);
+        cold.makePresets(false);
+        boat.makePresets(true);
     }
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {

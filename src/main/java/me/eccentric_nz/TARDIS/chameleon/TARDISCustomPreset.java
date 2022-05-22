@@ -86,9 +86,9 @@ public class TARDISCustomPreset {
             asymmetric = true;
         }
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric, false));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric, false));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
+            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric));
+            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric));
+            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric));
         }
         if (custom_data[3] != null && !custom_data[3].isEmpty()) {
             firstLine = custom_data[3];

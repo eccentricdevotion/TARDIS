@@ -1,8 +1,8 @@
 # TODO
 
-## Current version `4.10.1`
+## Current version `4.10.2`
 
-1. Add time rotor item frames to interior view
+1. Fix Chamemelon Adaption staying set when switching to a Chameleon Construct
 2. Add walls to interior view - use TARDIS's wall preference
 
 ## Next version `4.11.0`

@@ -28,10 +28,10 @@ class TARDISRubberDuckPreset extends TARDISPreset {
     TARDISRubberDuckPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
-        blueprintData[0][0] = "minecraft:acacia_stairs[half=bottom,facing=east,shape=straight]";
+        blueprintData[0][0] = "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]";
         blueprintData[0][1] = "minecraft:yellow_wool";
         blueprintData[0][2] = "minecraft:air";
-        blueprintData[0][3] = "minecraft:oak_button[facing=north]";
+        blueprintData[0][3] = "minecraft:oak_button[face=wall,facing=north,powered=false]";
         blueprintData[1][0] = "minecraft:air";
         blueprintData[1][1] = "minecraft:air";
         blueprintData[1][2] = "minecraft:yellow_wool";
@@ -52,11 +52,11 @@ class TARDISRubberDuckPreset extends TARDISPreset {
         blueprintData[5][1] = "minecraft:air";
         blueprintData[5][2] = "minecraft:yellow_wool";
         blueprintData[5][3] = "minecraft:air";
-        blueprintData[6][0] = "minecraft:acacia_stairs[half=bottom,facing=east,shape=straight]";
+        blueprintData[6][0] = "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]";
         blueprintData[6][1] = "minecraft:yellow_wool";
         blueprintData[6][2] = "minecraft:air";
-        blueprintData[6][3] = "minecraft:oak_button[facing=south]";
-        blueprintData[7][0] = "minecraft:oak_trapdoor[half=bottom,facing=north,open=false]";
+        blueprintData[6][3] = "minecraft:oak_button[face=wall,facing=south,powered=false]";
+        blueprintData[7][0] = "minecraft:oak_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]";
         blueprintData[7][1] = "minecraft:yellow_wool";
         blueprintData[7][2] = "minecraft:yellow_wool";
         blueprintData[7][3] = "minecraft:yellow_wool";
@@ -66,7 +66,7 @@ class TARDISRubberDuckPreset extends TARDISPreset {
         blueprintData[8][3] = "minecraft:air";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
-        blueprintData[9][2] = "minecraft:acacia_slab[type=top]";
+        blueprintData[9][2] = "minecraft:acacia_slab[type=top,waterlogged=false]";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
         // set stained data strings
