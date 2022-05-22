@@ -41,7 +41,6 @@ public class ResultSetConstructSign {
     private String line2;
     private String line3;
     private String line4;
-    private boolean asymmetric;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.
@@ -75,7 +74,6 @@ public class ResultSetConstructSign {
                     line2 = rs.getString("line2");
                     line3 = rs.getString("line3");
                     line4 = rs.getString("line4");
-                    asymmetric = rs.getBoolean("asymmetric");
                 }
             } else {
                 return false;
@@ -112,9 +110,5 @@ public class ResultSetConstructSign {
 
     public String getLine4() {
         return line4;
-    }
-
-    public boolean isAsymmetric() {
-        return asymmetric;
     }
 }

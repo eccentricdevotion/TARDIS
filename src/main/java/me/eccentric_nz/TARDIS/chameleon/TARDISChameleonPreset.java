@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMultipleFacingRecalcul
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRailRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRotatableRecalculator;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.data.*;
 
 /**
@@ -41,7 +40,7 @@ public class TARDISChameleonPreset {
     private final TARDISAndesitePreset andesite;
     private final TARDISAngelDownPreset angeld;
     private final TARDISAngelUpPreset angelu;
-    private final TARDISAppertureSciencePreset apperture;
+    private final TARDISApertureSciencePreset aperture;
     private final TARDISCakePreset cake;
     private final TARDISCandyCanePreset candy;
     private final TARDISChalicePreset chalice;
@@ -108,7 +107,7 @@ public class TARDISChameleonPreset {
         andesite = new TARDISAndesitePreset();
         angeld = new TARDISAngelDownPreset();
         angelu = new TARDISAngelUpPreset();
-        apperture = new TARDISAppertureSciencePreset();
+        aperture = new TARDISApertureSciencePreset();
         cake = new TARDISCakePreset();
         candy = new TARDISCandyCanePreset();
         chalice = new TARDISChalicePreset();
@@ -171,24 +170,24 @@ public class TARDISChameleonPreset {
         boat = new TARDISBoatPreset();
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric) {
+    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
         if (d.equals(COMPASS.EAST)) {
             tcc = new TARDISChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d));
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
         }
         return tcc;
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric) {
+    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
             tcc = new TARDISChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d));
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
         }
         return tcc;
     }
@@ -227,64 +226,48 @@ public class TARDISChameleonPreset {
         return preset;
     }
 
-    private static BlockData[][] rotate2DArray(BlockData[][] arr, COMPASS d, boolean assymetric) {
+    private static BlockData[][] rotate2DArray(BlockData[][] arr, COMPASS d) {
+        BlockData[] zero = arr[0];
+        BlockData[] one = arr[1];
+        BlockData[] two = arr[2];
+        BlockData[] three = arr[3];
+        BlockData[] four = arr[4];
+        BlockData[] five = arr[5];
+        BlockData[] six = arr[6];
+        BlockData[] seven = arr[7];
         switch (d) {
             case NORTH -> {
-                BlockData[] zero_s = arr[0];
-                BlockData[] one_s = arr[1];
-                BlockData[] two_s = arr[2];
-                BlockData[] three_s = arr[3];
-                BlockData[] four_s = arr[4];
-                BlockData[] five_s = arr[5];
-                BlockData[] six_s = arr[6];
-                BlockData[] seven_s = arr[7];
-                arr[0] = two_s;
-                arr[1] = three_s;
-                arr[2] = four_s;
-                arr[3] = five_s;
-                arr[4] = six_s;
-                arr[5] = seven_s;
-                arr[6] = zero_s;
-                arr[7] = one_s;
+                arr[0] = two;
+                arr[1] = three;
+                arr[2] = four;
+                arr[3] = five;
+                arr[4] = six;
+                arr[5] = seven;
+                arr[6] = zero;
+                arr[7] = one;
                 return arr;
             }
             case WEST -> {
-                if (assymetric) {
-                    BlockData[] zero_w = arr[0];
-                    BlockData[] one_w = arr[1];
-                    BlockData[] two_w = arr[2];
-                    BlockData[] four_w = arr[4];
-                    BlockData[] five_w = arr[5];
-                    BlockData[] six_w = arr[6];
-                    arr[0] = four_w;
-                    arr[1] = five_w;
-                    arr[2] = six_w;
-                    arr[4] = zero_w;
-                    arr[5] = one_w;
-                    arr[6] = two_w;
-                }
-                BlockData[] three_w = arr[3];
-                arr[3] = arr[7];
-                arr[7] = three_w;
+                arr[0] = four;
+                arr[1] = five;
+                arr[2] = six;
+                arr[3] = seven;
+                arr[4] = zero;
+                arr[5] = one;
+                arr[6] = two;
+                arr[7] = three;
                 return arr;
             }
+            // SOUTH
             default -> {
-                BlockData[] zero_n = arr[0];
-                BlockData[] one_n = arr[1];
-                BlockData[] two_n = arr[2];
-                BlockData[] three_n = arr[3];
-                BlockData[] four_n = arr[4];
-                BlockData[] five_n = arr[5];
-                BlockData[] six_n = arr[6];
-                BlockData[] seven_n = arr[7];
-                arr[0] = six_n;
-                arr[1] = seven_n;
-                arr[2] = zero_n;
-                arr[3] = one_n;
-                arr[4] = two_n;
-                arr[5] = three_n;
-                arr[6] = four_n;
-                arr[7] = five_n;
+                arr[0] = six;
+                arr[1] = seven;
+                arr[2] = zero;
+                arr[3] = one;
+                arr[4] = two;
+                arr[5] = three;
+                arr[6] = four;
+                arr[7] = five;
                 return arr;
             }
         }
@@ -293,7 +276,6 @@ public class TARDISChameleonPreset {
     private static BlockData[][] convertData(BlockData[][] data, COMPASS d) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
-                Material mat = data[col][block].getMaterial();
                 if (data[col][block] instanceof Directional) {
                     data[col][block] = new TARDISDirectionalRecalculator().recalculate(data[col][block], d);
                 } else if (data[col][block] instanceof Rail) {
@@ -309,70 +291,70 @@ public class TARDISChameleonPreset {
     }
 
     public void makePresets() {
-        andesite.makePresets(false);
-        angeld.makePresets(true);
-        angelu.makePresets(true);
-        apperture.makePresets(false);
-        cake.makePresets(false);
-        candy.makePresets(true);
-        chalice.makePresets(false);
-        chorus.makePresets(false);
-        column.makePresets(false);
-        creepy.makePresets(false);
-        desert.makePresets(false);
-        diorite.makePresets(false);
-        duck.makePresets(true);
-        factory.makePresets(false);
-        fence.makePresets(true);
-        flower.makePresets(false);
-        gazebo.makePresets(false);
-        granite.makePresets(false);
-        gravestone.makePresets(true);
-        helix.makePresets(false);
-        invisible.makePresets(true);
-        jail.makePresets(false);
-        jungle.makePresets(false);
-        junk.makePresets(true);
-        lamp.makePresets(true);
-        library.makePresets(false);
-        lighthouse.makePresets(false);
-        mine.makePresets(false);
-        nether.makePresets(false);
-        pandorica.makePresets(false);
-        party.makePresets(false);
-        peanut.makePresets(false);
-        pine.makePresets(false);
-        portal.makePresets(false);
-        prismarine.makePresets(false);
-        punked.makePresets(false);
-        robot.makePresets(true);
-        shroom.makePresets(false);
-        snowman.makePresets(true);
-        submerged.makePresets(true);
-        swamp.makePresets(false);
-        telephone.makePresets(false);
-        theend.makePresets(false);
-        toilet.makePresets(true);
-        topsyturvey.makePresets(false);
-        torch.makePresets(true);
-        village.makePresets(false);
-        well.makePresets(false);
-        windmill.makePresets(true);
-        yellow.makePresets(false);
+        andesite.makePresets();
+        angeld.makePresets();
+        angelu.makePresets();
+        aperture.makePresets();
+        cake.makePresets();
+        candy.makePresets();
+        chalice.makePresets();
+        chorus.makePresets();
+        column.makePresets();
+        creepy.makePresets();
+        desert.makePresets();
+        diorite.makePresets();
+        duck.makePresets();
+        factory.makePresets();
+        fence.makePresets();
+        flower.makePresets();
+        gazebo.makePresets();
+        granite.makePresets();
+        gravestone.makePresets();
+        helix.makePresets();
+        invisible.makePresets();
+        jail.makePresets();
+        jungle.makePresets();
+        junk.makePresets();
+        lamp.makePresets();
+        library.makePresets();
+        lighthouse.makePresets();
+        mine.makePresets();
+        nether.makePresets();
+        pandorica.makePresets();
+        party.makePresets();
+        peanut.makePresets();
+        pine.makePresets();
+        portal.makePresets();
+        prismarine.makePresets();
+        punked.makePresets();
+        robot.makePresets();
+        shroom.makePresets();
+        snowman.makePresets();
+        submerged.makePresets();
+        swamp.makePresets();
+        telephone.makePresets();
+        theend.makePresets();
+        toilet.makePresets();
+        topsyturvey.makePresets();
+        torch.makePresets();
+        village.makePresets();
+        well.makePresets();
+        windmill.makePresets();
+        yellow.makePresets();
         custom.makePresets();
-        adaptive.makePresets(false);
-        render.makePresets(false);
-        extreme.makePresets(false);
-        forest.makePresets(true);
-        flats.makePresets(true);
-        spikes.makePresets(false);
-        mesa.makePresets(true);
-        plains.makePresets(false);
-        roofed.makePresets(false);
-        savanna.makePresets(true);
-        taiga.makePresets(false);
-        cold.makePresets(false);
-        boat.makePresets(true);
+        adaptive.makePresets();
+        render.makePresets();
+        extreme.makePresets();
+        forest.makePresets();
+        flats.makePresets();
+        spikes.makePresets();
+        mesa.makePresets();
+        plains.makePresets();
+        roofed.makePresets();
+        savanna.makePresets();
+        taiga.makePresets();
+        cold.makePresets();
+        boat.makePresets();
     }
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
@@ -386,7 +368,7 @@ public class TARDISChameleonPreset {
                     return angeld.getBlueprint().get(d);
                 }
             case APPERTURE:
-                return apperture.getBlueprint().get(d);
+                return aperture.getBlueprint().get(d);
             case CAKE:
                 return cake.getBlueprint().get(d);
             case CANDY:
@@ -521,7 +503,7 @@ public class TARDISChameleonPreset {
                     return angeld.getGlass().get(d);
                 }
             case APPERTURE:
-                return apperture.getGlass().get(d);
+                return aperture.getGlass().get(d);
             case CAKE:
                 return cake.getGlass().get(d);
             case CANDY:
@@ -656,7 +638,7 @@ public class TARDISChameleonPreset {
                     return angeld.getStained().get(d);
                 }
             case APPERTURE:
-                return apperture.getStained().get(d);
+                return aperture.getStained().get(d);
             case CAKE:
                 return cake.getStained().get(d);
             case CANDY:

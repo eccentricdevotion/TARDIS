@@ -9,5 +9,3 @@
 ALL THE
 #third line
 ESSENTIALS
-#is the preset asymmetrical? for example are some of the corners different to others
-true

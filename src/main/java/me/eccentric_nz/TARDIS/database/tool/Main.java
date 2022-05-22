@@ -171,7 +171,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case chameleon -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4"), rs.getInt("asymmetric")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
                                         bw.write(str);
                                     }
                                     case chunks -> {

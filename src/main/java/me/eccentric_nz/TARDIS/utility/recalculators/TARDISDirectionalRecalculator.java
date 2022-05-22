@@ -50,6 +50,8 @@ public class TARDISDirectionalRecalculator {
                 switch (directional.getFacing()) {
                     case EAST -> directional.setFacing(BlockFace.WEST);
                     case WEST -> directional.setFacing(BlockFace.EAST);
+                    case SOUTH -> directional.setFacing(BlockFace.NORTH);
+                    case NORTH -> directional.setFacing(BlockFace.SOUTH);
                     default -> {
                     }
                 }

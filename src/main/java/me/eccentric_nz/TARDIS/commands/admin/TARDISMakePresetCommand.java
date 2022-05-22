@@ -22,8 +22,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
-
 /**
  * @author eccentric_nz
  */
@@ -50,21 +48,8 @@ class TARDISMakePresetCommand {
             TARDISMessage.send(player, "PRESET_DIRECTION");
             return true;
         }
-        String bool;
-        if (args.length == 3) {
-            // check they typed true of false
-            String tf = args[2].toLowerCase(Locale.ENGLISH);
-            if (!tf.equals("true") && !tf.equals("false")) {
-                TARDISMessage.send(player, "TRUE_FALSE");
-                return false;
-            }
-            bool = tf;
-        } else {
-            // presume it is assymetric if not set
-            bool = "true";
-        }
         TARDISMessage.send(player, "PRESET_INFO");
-        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1] + ":" + bool);
+        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1]);
         return true;
     }
 }

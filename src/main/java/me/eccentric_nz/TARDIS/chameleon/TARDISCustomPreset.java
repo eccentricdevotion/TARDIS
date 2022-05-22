@@ -78,17 +78,10 @@ public class TARDISCustomPreset {
                 }
             }
         }
-        boolean asymmetric;
-        if (custom_data[5] != null && !custom_data[5].isEmpty()) {
-            asymmetric = Boolean.parseBoolean(custom_data[5]);
-        } else {
-            // assume true if not set
-            asymmetric = true;
-        }
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric));
+            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0]));
+            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1]));
+            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2]));
         }
         if (custom_data[3] != null && !custom_data[3].isEmpty()) {
             firstLine = custom_data[3];

@@ -289,16 +289,16 @@ public class TARDISJunkPreset extends TARDISPreset {
     }
 
     @Override
-    public void makePresets(boolean assymetric) {
+    public void makePresets() {
         for (COMPASS d : COMPASS.values()) {
             if (d.equals(COMPASS.WEST)) {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, blueprintWest, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, stainedWest, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, glassWest, false));
+                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, blueprintWest));
+                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, stainedWest));
+                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, glassWest));
             } else {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, false));
+                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData));
+                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData));
+                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData));
             }
         }
     }

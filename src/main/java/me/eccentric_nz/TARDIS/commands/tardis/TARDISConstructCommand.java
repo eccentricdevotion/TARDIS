@@ -34,7 +34,7 @@ import java.util.List;
 class TARDISConstructCommand {
 
     private final TARDIS plugin;
-    private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4", "asymmetric");
+    private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4");
 
     TARDISConstructCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -57,11 +57,6 @@ class TARDISConstructCommand {
             TARDISMessage.send(player, "NO_CONSTRUCT");
             return true;
         }
-        boolean isAsymmetric = args[1].equalsIgnoreCase("asymmetric");
-        if (!isAsymmetric && args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
-        }
         // check line number
         if (!lineNumbers.contains(args[1])) {
             TARDISMessage.send(player, "CONSTRUCT_LINE_NUM");
@@ -70,22 +65,17 @@ class TARDISConstructCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        if (isAsymmetric) {
-            set.put("asymmetric", rscs.isAsymmetric() ? 0 : 1);
-        } else {
-            int l = TARDISNumberParsers.parseInt(args[1]);
-            String raw = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
-            // strip color codes and check length
-            if (ChatColor.stripColor(raw).length() > 16) {
-                TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
-                return true;
-            }
-            set.put("line" + l, raw);
+        int l = TARDISNumberParsers.parseInt(args[1]);
+        String raw = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
+        // strip color codes and check length
+        if (ChatColor.stripColor(raw).length() > 16) {
+            TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
+            return true;
         }
+        set.put("line" + l, raw);
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
-        String message = (isAsymmetric) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
-        TARDISMessage.send(player, message);
+        TARDISMessage.send(player, "CONSTRUCT_LINE_SAVED");
         return true;
     }
 }

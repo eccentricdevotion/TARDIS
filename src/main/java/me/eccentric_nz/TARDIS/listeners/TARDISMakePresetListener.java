@@ -74,9 +74,7 @@ public class TARDISMakePresetListener implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             if (plugin.getTrackerKeeper().getPreset().containsKey(uuid)) {
-                String[] split = plugin.getTrackerKeeper().getPreset().get(uuid).split(":");
-                String name = split[0];
-                String bool = split[1];
+                String name = plugin.getTrackerKeeper().getPreset().get(uuid);
                 Location block_loc = block.getLocation();
                 World w = block_loc.getWorld();
                 int fx = block_loc.getBlockX();
@@ -158,10 +156,6 @@ public class TARDISMakePresetListener implements Listener {
                     bw.write("#third line");
                     bw.newLine();
                     bw.write("PRESET");
-                    bw.newLine();
-                    bw.write("#is the preset asymmetrical? for example are some of the corners different to others");
-                    bw.newLine();
-                    bw.write(bool);
                     bw.close();
                 } catch (IOException e) {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());

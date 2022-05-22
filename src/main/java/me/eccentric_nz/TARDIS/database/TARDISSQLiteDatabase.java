@@ -90,7 +90,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryBlueprint);
 
             // Table structure for table 'chameleon'
-            String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintData TEXT, stainData TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '', asymmetric INTEGER DEFAULT 0)";
+            String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintData TEXT, stainData TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '')";
             statement.executeUpdate(queryChameleon);
 
             // Table structure for table 'chunks'
