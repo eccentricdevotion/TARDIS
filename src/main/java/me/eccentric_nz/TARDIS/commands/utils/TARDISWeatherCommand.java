@@ -30,7 +30,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,15 +44,15 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisweather")) {
             if (args.length < 1) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 return true;
             }
             if (sender instanceof Player player) {
-                if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                if (!plugin.getConfig().getBoolean("allow.weather_set")) {
+                    TARDISMessage.send(player, "WEATHER_DISABLED");
                     return true;
                 }
                 Location location = player.getLocation();
@@ -81,6 +80,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                 }
                 TARDISWeather.setWeather(world, weather);
                 TARDISMessage.send(player, "WEATHER_SET", perm);
+                return true;
             } else {
                 TARDISMessage.send(sender, "CMD_PLAYER");
             }
@@ -90,8 +90,8 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (args.length == 1) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         }
         return ImmutableList.of();

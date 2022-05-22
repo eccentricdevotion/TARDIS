@@ -52,6 +52,10 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
+            if (!plugin.getConfig().getBoolean("allow.weather_set")) {
+                TARDISMessage.send(player, "WEATHER_DISABLED");
+                return;
+            }
             if (slot >= 0 && slot < 9) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
@@ -88,7 +92,7 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                 close(player);
                             }
                             switch (slot) {
-                                case 0:
+                                case 0 -> {
                                     // clear / sun
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.clear")) {
                                         TARDISWeather.setClear(rsc.getWorld());
@@ -97,8 +101,8 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                         TARDISMessage.send(player, "NO_PERMS");
                                     }
                                     close(player);
-                                    break;
-                                case 1:
+                                }
+                                case 1 -> {
                                     // rain
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.rain")) {
                                         TARDISWeather.setRain(rsc.getWorld());
@@ -107,8 +111,8 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                         TARDISMessage.send(player, "NO_PERMS");
                                     }
                                     close(player);
-                                    break;
-                                case 2:
+                                }
+                                case 2 -> {
                                     // thunderstorm
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
                                         TARDISWeather.setThunder(rsc.getWorld());
@@ -117,8 +121,8 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                         TARDISMessage.send(player, "NO_PERMS");
                                     }
                                     close(player);
-                                    break;
-                                case 5:
+                                }
+                                case 5 -> {
                                     // atmospheric excitation
                                     if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
                                         TARDISMessage.send(player, "CMD_EXCITE");
@@ -127,13 +131,12 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                     new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
                                     plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
                                     close(player);
-                                    break;
-                                case 8:
+                                }
+                                case 8 ->
                                     // close
-                                    close(player);
-                                    break;
-                                default:
-                                    break;
+                                        close(player);
+                                default -> {
+                                }
                             }
                         }
                     }
