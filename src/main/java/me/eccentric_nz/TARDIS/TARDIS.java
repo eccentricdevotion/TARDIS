@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("TARDISChunkGenerator", "4.10.2");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
-        versions.put("WorldGuard", "7.0.5");
+        versions.put("WorldGuard", "7.0.7");
     }
 
     private Version getServerVersion(String s) {
@@ -207,7 +207,7 @@ public class TARDIS extends JavaPlugin {
                 v = split[1];
             }
         } else {
-            v = "1.7.10";
+            v = "1.13";
         }
         return new Version(v);
     }
@@ -215,25 +215,29 @@ public class TARDIS extends JavaPlugin {
     private boolean checkPluginVersion(String plg, String min) {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
-            Version minver = new Version(min);
+            Version minVersion = new Version(min);
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version ver;
+                Version version;
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
-                    ver = new Version("1");
+                    version = new Version("1");
                 } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
-                    ver = new Version(semi[0]);
+                    version = new Version(semi[0]);
+                } else if (plg.equals("WorldGuard") && preSplit.contains("+")) {
+                    // eg  7.0.7+216b061
+                    String[] plus = split[0].split("\\+");
+                    version = new Version(plus[0]);
                 } else if (plg.equals("Towny") && preSplit.contains(" ")) {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
-                    ver = new Version(space[0]);
+                    version = new Version(space[0]);
                 } else {
-                    ver = new Version(split[0]);
+                    version = new Version(split[0]);
                 }
-                return (ver.compareTo(minver) >= 0);
+                return (version.compareTo(minVersion) >= 0);
             } catch (IllegalArgumentException e) {
                 getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
                 getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
