@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class TARDISSpiral {
     static final List<Point> SPIRAL;
 
     static {
-        
+
         SPIRAL = new ArrayList<>() {
 
             private static final long serialVersionUID = 3109256773218160485L;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,8 +59,8 @@ public class TARDISVillageTravel {
                     int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
                     loc.setY(highesty);
                 }
-                default -> // NORMAL
-                    loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
+                // NORMAL
+                default -> loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
             }
             if (loc == null) {
                 return null;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,9 +68,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
         } else if (args.length == 2) {
             String sub = args[0];
             return switch (sub) {
-                case "add", "remove" ->
-                        // return null to default to online player name matching
-                        null;
+                case "add", "remove" -> null; // return null to default to online player name matching
                 case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
                 case "key" -> partial(lastArg, KEY_SUBS);
                 case "language" -> partial(lastArg, LANGUAGE_SUBS);

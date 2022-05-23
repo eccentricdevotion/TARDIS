@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,18 +124,10 @@ public class TARDISInnerDoorOpener {
                         indirection = tmp_direction;
                         // adjust for teleport
                         switch (indirection) {
-                            case NORTH ->
-                                // z -ve
-                                indoor.add(0.5d, 0.0d, -0.5d);
-                            case EAST ->
-                                // x +ve
-                                indoor.add(1.5d, 0.0d, 0.5d);
-                            case SOUTH ->
-                                // z +ve
-                                indoor.add(0.5d, 0.0d, 1.5d);
-                            case WEST ->
-                                // x -ve
-                                indoor.add(-0.5d, 0.0d, 0.5d);
+                            case NORTH -> indoor.add(0.5d, 0.0d, -0.5d); // z -ve
+                            case EAST -> indoor.add(1.5d, 0.0d, 0.5d); // x +ve
+                            case SOUTH -> indoor.add(0.5d, 0.0d, 1.5d); // z +ve
+                            case WEST -> indoor.add(-0.5d, 0.0d, 0.5d);  // x -ve
                         }
                     } else {
                         // outer door
@@ -145,8 +137,8 @@ public class TARDISInnerDoorOpener {
                             case NORTH -> exdoor.add(0.5d, 0.0d, 1.75d);
                             case WEST -> exdoor.add(1.75d, 0.0d, 0.5d);
                             case SOUTH -> exdoor.add(0.5d, 0.0d, -1.75d);
-                            default -> // EAST
-                                exdoor.add(-1.75d, 0.0d, 0.5d);
+                            // EAST
+                            default -> exdoor.add(-1.75d, 0.0d, 0.5d);
                         }
                     }
                 }

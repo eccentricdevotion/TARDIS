@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public final class TARDISCreationEvent extends TARDISLocationEvent {
-    
+
     /**
      * A TARDIS creation event.
      *

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ public class TARDISUpdateChatGUI {
     public TARDISUpdateChatGUI(TARDIS plugin) {
         this.plugin = plugin;
     }
-    
+
     public static void sendTextComponent(String first, String value, String split, Player player) {
         TextComponent tcf = new TextComponent(first);
         tcf.setColor(net.md_5.bungee.api.ChatColor.GOLD);

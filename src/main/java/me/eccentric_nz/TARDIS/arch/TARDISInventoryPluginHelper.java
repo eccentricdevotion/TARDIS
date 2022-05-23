@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,8 @@ public class TARDISInventoryPluginHelper implements Listener {
             case MULTI -> !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-            default ->
-                // GAMEMODE
-                (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+            // GAMEMODE
+            default -> (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
         };
         if (shouldSwitch) {
             // switch to non-fobbed inventory before inventory manager
@@ -76,9 +75,8 @@ public class TARDISInventoryPluginHelper implements Listener {
             case MULTI -> !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-            default ->
-                // GAMEMODE
-                (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+            // GAMEMODE
+            default -> (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
         };
         if (shouldSwitch) {
             // switch to back to fobbed inventory after MVI and MI

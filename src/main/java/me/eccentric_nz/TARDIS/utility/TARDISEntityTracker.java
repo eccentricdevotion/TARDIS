@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,8 +82,7 @@ public class TARDISEntityTracker {
                     case TROPICAL_FISH -> options = new Object[]{((TropicalFish) e).getPattern()};
                     case MUSHROOM_COW -> options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(((MushroomCow) e).getVariant()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case FOX -> options = new Object[]{FOX.getFromFoxType(((Fox) e).getFoxType()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    default -> {
-                    }
+                    default -> { }
                 }
                 plugin.getTardisHelper().disguiseArmourStand(stand, e.getType(), options);
             }

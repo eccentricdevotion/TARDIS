@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,8 +109,8 @@ public class TARDISConsoleSwitchListener implements Listener {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
                                         }
-                                        default -> // scanner circuit
-                                            TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
+                                        // scanner circuit
+                                        default -> TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
                                     }
                                     // close inventory
                                     p.closeInventory();

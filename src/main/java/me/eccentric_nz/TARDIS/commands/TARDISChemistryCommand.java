@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,24 +74,31 @@ public class TARDISChemistryCommand implements CommandExecutor {
                     return true;
                 }
                 switch (args[1].toLowerCase()) {
-                    case "creative":
+                    case "creative" -> {
                         if (args.length < 3) {
                             TARDISMessage.send(player, "TOO_FEW_ARGS");
                             return true;
                         }
                         return new CreativeCommand(plugin).open(player, args);
-                    case "construct":
+                    }
+                    case "construct" -> {
                         return new ConstructCommand(plugin).build(player);
-                    case "compound":
+                    }
+                    case "compound" -> {
                         return new CompoundCommand(plugin).create(player);
-                    case "reduce":
+                    }
+                    case "reduce" -> {
                         return new ReduceCommand(plugin).use(player);
-                    case "product":
+                    }
+                    case "product" -> {
                         return new ProductCommand(plugin).craft(player);
-                    case "lab":
+                    }
+                    case "lab" -> {
                         return new LabCommand(plugin).combine(player);
-                    default:
+                    }
+                    default -> {
                         return true;
+                    }
                 }
             } else if (args[0].equalsIgnoreCase("recipe")) {
                 if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
@@ -120,8 +127,8 @@ public class TARDISChemistryCommand implements CommandExecutor {
             case "compound" -> Material.REDSTONE;
             case "reduce" -> Material.GOLD_NUGGET;
             case "product" -> Material.IRON_NUGGET;
-            default -> // lab
-                Material.COAL;
+            // lab
+            default -> Material.COAL;
         };
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
         ItemStack ingredient = new ItemStack(surround, 1);

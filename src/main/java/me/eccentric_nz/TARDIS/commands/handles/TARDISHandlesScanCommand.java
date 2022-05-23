@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,38 +111,17 @@ class TARDISHandlesScanCommand {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case SLIME_BALL: // dalek
-                                    et = EntityType.LLAMA_SPIT;
-                                    break;
-                                case IRON_INGOT: // Cyberman
-                                    et = EntityType.AREA_EFFECT_CLOUD;
-                                    break;
-                                case SUGAR: // Empty Child
-                                    et = EntityType.FALLING_BLOCK;
-                                    break;
-                                case SNOWBALL: // Ice Warrior
-                                    et = EntityType.ARROW;
-                                    break;
-                                case FEATHER: // Silurian
-                                    et = EntityType.BOAT;
-                                    break;
-                                case POTATO: // Sontaran
-                                    et = EntityType.FIREWORK;
-                                    break;
-                                case BAKED_POTATO: // Strax
-                                    et = EntityType.EGG;
-                                    break;
-                                case BOOK: // Vashta Nerada
-                                    et = EntityType.ENDER_CRYSTAL;
-                                    break;
-                                case PAINTING: // Zygon
-                                    et = EntityType.FISHING_HOOK;
-                                    break;
-                                case STONE_BUTTON: // weeping angel
-                                    et = EntityType.DRAGON_FIREBALL;
-                                    break;
-                                default:
-                                    break;
+                                case SLIME_BALL -> et = EntityType.LLAMA_SPIT; // dalek
+                                case IRON_INGOT -> et = EntityType.AREA_EFFECT_CLOUD; // Cyberman
+                                case SUGAR -> et = EntityType.FALLING_BLOCK; // Empty Child
+                                case SNOWBALL -> et = EntityType.ARROW; // Ice Warrior
+                                case FEATHER -> et = EntityType.BOAT; // Silurian
+                                case POTATO -> et = EntityType.FIREWORK; // Sontaran
+                                case BAKED_POTATO -> et = EntityType.EGG; // Strax
+                                case BOOK -> et = EntityType.ENDER_CRYSTAL; // Vashta Nerada
+                                case PAINTING -> et = EntityType.FISHING_HOOK; // Zygon
+                                case STONE_BUTTON -> et = EntityType.DRAGON_FIREBALL; // weeping angel
+                                default -> { }
                             }
                         }
                     }
@@ -154,20 +133,11 @@ class TARDISHandlesScanCommand {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case YELLOW_DYE: // Judoon
-                                    et = EntityType.SHULKER_BULLET;
-                                    break;
-                                case BONE: // K9
-                                    et = EntityType.EVOKER_FANGS;
-                                    break;
-                                case ROTTEN_FLESH: // Ood
-                                    et = EntityType.ITEM_FRAME;
-                                    break;
-                                case GUNPOWDER: // Toclafane
-                                    et = EntityType.DROPPED_ITEM;
-                                    break;
-                                default:
-                                    break;
+                                case YELLOW_DYE -> et = EntityType.SHULKER_BULLET; // Judoon
+                                case BONE -> et = EntityType.EVOKER_FANGS; // K9
+                                case ROTTEN_FLESH -> et = EntityType.ITEM_FRAME; // Ood
+                                case GUNPOWDER -> et = EntityType.DROPPED_ITEM; // Toclafane
+                                default -> { }
                             }
                         }
                     }

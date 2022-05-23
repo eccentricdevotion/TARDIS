@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -232,9 +232,9 @@ public enum PRESET {
     public boolean usesItemFrame() {
         return switch (this) {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA,
-                POLICE_BOX_LIGHT_BLUE, POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK,
-                POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, POLICE_BOX_CYAN, POLICE_BOX_PURPLE,
-                POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK, WEEPING_ANGEL -> true;
+                 POLICE_BOX_LIGHT_BLUE, POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK,
+                 POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, POLICE_BOX_CYAN, POLICE_BOX_PURPLE,
+                 POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK, WEEPING_ANGEL -> true;
             default -> false;
         };
     }

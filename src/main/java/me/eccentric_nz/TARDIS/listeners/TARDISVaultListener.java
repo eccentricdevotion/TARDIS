@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,16 +86,16 @@ public class TARDISVaultListener implements Listener {
                                         case WEST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
                                         case SOUTH -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
                                         case EAST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                        default -> // NORTH
-                                            chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+                                        // NORTH
+                                        default -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
                                     }
                                 } else if (chestType.equals(Chest.Type.RIGHT)) {
                                     switch (chestdata.getFacing()) {
                                         case WEST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
                                         case SOUTH -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
                                         case EAST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                        default -> // NORTH
-                                            chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+                                        // NORTH
+                                        default -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
                                     }
                                 }
                                 chestLocations.add(blocation);

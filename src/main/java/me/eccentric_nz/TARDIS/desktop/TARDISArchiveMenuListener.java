@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,12 +92,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             iss.setItemMeta(ims);
                         }
                     }
-                    case 19 ->
-                        // scan
-                        scan(p, view);
-                    case 20 ->
-                        // archive
-                        archive(p, view);
+                    case 19 -> scan(p, view); // scan
+                    case 20 -> archive(p, view); // archive
                     case 22, 23, 24 -> {
                         ItemStack template = view.getItem(slot);
                         if (template != null) {
@@ -120,9 +116,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             }
                         }
                     }
-                    case 26 ->
-                        // close
-                        close(p);
+                    case 26 -> close(p); // close
                     default -> {
                         // get Display name of selected archive
                         ItemStack choice = view.getItem(slot);

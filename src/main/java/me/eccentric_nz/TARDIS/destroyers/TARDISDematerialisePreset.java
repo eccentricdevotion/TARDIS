@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,12 +109,9 @@ class TARDISDematerialisePreset implements Runnable {
             i++;
             // expand placed blocks to a police box
             data = switch (i % 3) {
-                case 2 -> // stained
-                        stained_column.getBlockData();
-                case 1 -> // glass
-                        glass_column.getBlockData();
-                default -> // preset
-                        column.getBlockData();
+                case 2 -> stained_column.getBlockData(); // stained
+                case 1 -> glass_column.getBlockData(); // glass
+                default -> column.getBlockData(); // preset
             };
             // first run - play sound
             if (i == 1) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,8 +116,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             } else {
                                 sound = switch (bd.getThrottle()) {
                                     case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                    default -> // NORMAL
-                                            "tardis_land";
+                                    default -> "tardis_land"; // NORMAL
                                 };
                             }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);

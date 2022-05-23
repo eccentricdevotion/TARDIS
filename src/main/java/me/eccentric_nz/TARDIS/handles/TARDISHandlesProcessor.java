@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,8 +83,7 @@ public class TARDISHandlesProcessor {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
                     case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> event = thb.toString();
-                    default -> {
-                    }
+                    default -> { }
                 }
             }
         }

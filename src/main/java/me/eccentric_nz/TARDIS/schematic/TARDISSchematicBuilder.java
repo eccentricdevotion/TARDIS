@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 eccentric_nz
+ * Copyright (C) 2022 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,12 +82,8 @@ public class TARDISSchematicBuilder {
                     // world repeater
                     // x repeater
                     // z repeater
-                    case 2, 3, 4, 5 ->
-                        // distance multiplier
-                        map.put(c, location);
-                    default ->
-                        // handbrake
-                        h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                    case 2, 3, 4, 5 -> map.put(c, location); // distance multiplier
+                    default -> h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()); // handbrake
                 }
             }
         }
