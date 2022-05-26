@@ -872,6 +872,9 @@ commands:
     usage: /<command> [sub command] [...]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
+    create:
+      description: Create a TARDIS for a player at a targeted location.
+      usage: /<command> create [player] [schematic] <wall> <floor>
     list:
       description: List TARDISs and their locations (or save them to file), plus list open portals / abandoned TARDISes.
       usage: /<command> list [page no.|save|portals|abandoned]

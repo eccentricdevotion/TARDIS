@@ -59,6 +59,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("assemble");
         firstsStr.add("condenser");
         firstsStr.add("convert_database");
+        firstsStr.add("create");
         firstsStr.add("decharge");
         firstsStr.add("delete");
         firstsStr.add("disguise");
@@ -127,6 +128,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         return true;
                     }
+                }
+                if (first.equals("create")) {
+                    return new TARDISCreateCommand(plugin).buildTARDIS(sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISListCommand(plugin).listStuff(sender, args);

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -37,7 +38,7 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "decharge", "delete", "disguise", "dispersed", "enter", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "create", "decharge", "delete", "disguise", "dispersed", "enter", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
     private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> ENTITY_SUBS;
@@ -46,6 +47,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
     private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
+    private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         List<String> tmpPresets = new ArrayList<>();
@@ -66,6 +68,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         for (Permission b : plugin.getDescription().getPermissions()) {
             BLUEPRINT_SUBS.add(b.getName());
         }
+        TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
 
     @Override
@@ -84,7 +87,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("list")) {
                 return partial(lastArg, LIST_SUBS);
             }
-            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
+            if (sub.equals("arch") || sub.equals("create")  || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             }
@@ -92,7 +95,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (args[0].equalsIgnoreCase("spawn_abandoned")) {
                 return partial(lastArg, PRESETS);
             }
-            if (args[0].equalsIgnoreCase("set_size")) {
+            if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("set_size")) {
                 return partial(lastArg, SEED_SUBS);
             }
             if (args[0].equalsIgnoreCase("disguise")) {
@@ -102,9 +105,17 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, BLUEPRINT_SUBS);
             }
         } else if (args.length == 4) {
-            return partial(lastArg, COMPASS_SUBS);
+            if (args[0].equalsIgnoreCase("create")) {
+                return partial(lastArg, MAT_SUBS);
+            } else {
+                return partial(lastArg, COMPASS_SUBS);
+            }
         } else if (args.length == 5) {
-            return partial(lastArg, WORLD_SUBS);
+            if (args[0].equalsIgnoreCase("create")) {
+                return partial(lastArg, MAT_SUBS);
+            } else {
+                return partial(lastArg, WORLD_SUBS);
+            }
         }
         return ImmutableList.of();
     }

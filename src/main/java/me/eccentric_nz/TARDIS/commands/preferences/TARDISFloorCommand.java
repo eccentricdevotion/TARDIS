@@ -31,7 +31,6 @@ import java.util.Locale;
  * @author eccentric_nz
  */
 class TARDISFloorCommand {
-
     boolean setFloorOrWallBlock(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
@@ -43,6 +42,7 @@ class TARDISFloorCommand {
             String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             wall_mat = t.toUpperCase(Locale.ENGLISH);
         } else {
+
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {

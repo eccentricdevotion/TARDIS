@@ -86,7 +86,6 @@ class TARDISAbandonedCommand {
             if (args.length < 8) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 TARDISMessage.send(sender, "ABANDONED_ARGS");
-
                 return true;
             }
             World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
