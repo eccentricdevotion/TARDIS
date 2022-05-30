@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -122,7 +123,11 @@ public class TARDISEPSRunnable implements Runnable {
             return TARDISStaticLocationGetters.getLocationFromDB(eps);
         } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // get world spawn location
-            return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
+            if (TARDISFloodgate.shouldReplacePrefix(tl.getName())) {
+                return plugin.getServer().getWorld(TARDISFloodgate.getPlayerWorldName(tl.getName())).getSpawnLocation();
+            } else {
+                return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
+            }
         } else {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);

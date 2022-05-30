@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.perms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISFloodgate;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -71,7 +72,11 @@ public class TARDISbPermissionsHandler {
                 }
             }
         }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
+        if (TARDISFloodgate.shouldReplacePrefix(player)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "world " + TARDISFloodgate.getPlayerWorldName(player));
+        } else {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
+        }
         int i = 0;
         for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
             String grpstr = entry.getKey();
