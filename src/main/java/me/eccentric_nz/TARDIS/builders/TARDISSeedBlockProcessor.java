@@ -62,12 +62,12 @@ public class TARDISSeedBlockProcessor {
     /**
      * Turns a seed block, that has been right-clicked by a player into a TARDIS.
      *
-     * @param seed   the build data for this seed block
-     * @param l      the location of the placed seed block
-     * @param player the player who placed the seed block
+     * @param seed     the build data for this seed block
+     * @param location the location of the placed seed block
+     * @param player   the player who placed the seed block
      * @return true or false
      */
-    public boolean processBlock(TARDISBuildData seed, Location l, Player player) {
+    public boolean processBlock(TARDISBuildData seed, Location location, Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.create")) {
             int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
@@ -92,10 +92,10 @@ public class TARDISSeedBlockProcessor {
                 if (plugin.getConfig().getBoolean("creation.check_for_home")) {
                     // check it is not another Time Lords home location
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("world", l.getWorld().getName());
-                    where.put("x", l.getBlockX());
-                    where.put("y", l.getBlockY());
-                    where.put("z", l.getBlockZ());
+                    where.put("world", location.getWorld().getName());
+                    where.put("x", location.getBlockX());
+                    where.put("y", location.getBlockY());
+                    where.put("z", location.getBlockZ());
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
                     if (rsh.resultSet()) {
                         TARDISMessage.send(player, "TARDIS_NO_HOME");
@@ -137,7 +137,7 @@ public class TARDISSeedBlockProcessor {
                     cx = 0;
                     cz = 0;
                 } else {
-                    Chunk chunk = l.getChunk();
+                    Chunk chunk = location.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
                     if (plugin.getConfig().getBoolean("creation.default_world")) {
                         cw = plugin.getConfig().getString("creation.default_world_name");
@@ -215,33 +215,33 @@ public class TARDISSeedBlockProcessor {
                 // populate home, current, next and back tables
                 HashMap<String, Object> setlocs = new HashMap<>();
                 setlocs.put("tardis_id", lastInsertId);
-                setlocs.put("world", l.getWorld().getName());
-                setlocs.put("x", l.getBlockX());
-                setlocs.put("y", l.getBlockY());
-                setlocs.put("z", l.getBlockZ());
+                setlocs.put("world", location.getWorld().getName());
+                setlocs.put("x", location.getBlockX());
+                setlocs.put("y", location.getBlockY());
+                setlocs.put("z", location.getBlockZ());
                 setlocs.put("direction", d);
                 plugin.getQueryFactory().insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 BuildData bd = new BuildData(uuid);
                 bd.setDirection(COMPASS.valueOf(d));
-                bd.setLocation(l);
+                bd.setLocation(location);
                 bd.setMalfunction(false);
                 bd.setOutside(true);
                 bd.setPlayer(player);
                 bd.setRebuild(false);
-                bd.setSubmarine(isSub(l));
+                bd.setSubmarine(isSub(location));
                 bd.setTardisID(lastInsertId);
                 bd.setThrottle(SpaceTimeThrottle.NORMAL);
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
-                    plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
+                    plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, location));
                     TARDISBuilderInner builder = new TARDISBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                     builder.setTask(task);
                     // delay building exterior
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getPresetBuilder().buildPreset(bd);
-                        l.getBlock().setBlockData(TARDISConstants.AIR);
+                        location.getBlock().setBlockData(TARDISConstants.AIR);
                     }, schm.getConsoleSize().getDelay());
                     // set achievement completed
                     if (TARDISPermission.hasPermission(player, "tardis.book")) {
