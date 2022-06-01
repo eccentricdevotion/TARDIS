@@ -25,7 +25,7 @@ public class TARDISCreateCommand {
     }
 
     public boolean buildTARDIS(CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
+        if (sender instanceof Player admin) {
             // tadmin create eccentric_nz budget ORANGE_WOOL LIGHT_GRAY_WOOL
             if (args.length < 3) {
                 return false;
@@ -71,7 +71,7 @@ public class TARDISCreateCommand {
                     }
                 }
                 // get target location
-                Location target = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
+                Location target = admin.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
                 TARDISBuildData data = new TARDISBuildData();
                 data.setSchematic(schematic);
                 data.setWallType(wallMaterial);
