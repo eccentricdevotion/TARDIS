@@ -26,7 +26,7 @@ Vistaero (a helpful TARDIS plugin user) has written a useful tool for editing la
 
 ### Set the language
 
-The config option to change is: `preferences.language: [language code]` — you can set the language with the command: `/tardisadmin language [code]` — use tab completion to see a list of valid language codes.
+The config option to change is: `preferences.language: [language code]` — you can set the language with the command: `/tardisconfig language [code]` — use tab completion to see a list of valid language codes.
 
 ### Updates
 
