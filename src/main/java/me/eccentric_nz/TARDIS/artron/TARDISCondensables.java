@@ -17,8 +17,10 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -531,7 +533,6 @@ public class TARDISCondensables {
             condensables.put("MAGENTA_WOOL", 20);
             condensables.put("MAGMA_BLOCK", 600);
             condensables.put("MAGMA_CREAM", 150);
-            /*
             // 1.19 - Wild Update
             condensables.put("MANGROVE_BOAT", 3);
             condensables.put("MANGROVE_BUTTON", 1);
@@ -551,27 +552,47 @@ public class TARDISCondensables {
             condensables.put("MANGROVE_WALL_SIGN", 2);
             condensables.put("MANGROVE_WOOD", 2);
             condensables.put("MUDDY_MANGROVE_ROOTS", 2);
-            ---
+            // ---
             condensables.put("MUD", 2);
             condensables.put("MUD_BRICKS", 16);
             condensables.put("MUD_BRICK_SLAB", 8);
             condensables.put("MUD_BRICK_STAIRS", 24);
             condensables.put("MUD_BRICK_WALL", 16);
             condensables.put("PACKED_MUD", 4);
-            ---
+            // ---
             condensables.put("OCHRE_FROGLIGHT", 150);
             condensables.put("PEARLESCENT_FROGLIGHT", 150);
             condensables.put("VERDANT_FROGLIGHT", 150);
-            ---
+            // ---
             condensables.put("REINFORCED_DEEPSLATE", 100);
-            ---
-            ??? only available in creative, don't drop when broken in survival...
-            condensables.put("SKULK", 2);
-            condensables.put("SKULK_CATALYST", 2);
-            condensables.put("SKULK_SENSOR", 2);
-            condensables.put("SKULK_SHRIEKER", 2);
-            ???
-             */
+            // ---
+			condensables.put("OAK_CHEST_BOAT", 8);
+			condensables.put("SPRUCE_CHEST_BOAT", 8);
+			condensables.put("BIRCH_CHEST_BOAT", 8);
+			condensables.put("JUNGLE_CHEST_BOAT", 8);
+			condensables.put("ACACIA_CHEST_BOAT", 8);
+			condensables.put("DARK_OAK_CHEST_BOAT", 8);
+			condensables.put("MANGROVE_CHEST_BOAT", 8);
+			// --
+			condensables.put("Material.TADPOLE_BUCKET", 40);
+			condensables.put("Material.POWDER_SNOW_BUCKET", 40);
+			condensables.put("Material.PUFFERFISH_BUCKET", 40);
+			condensables.put("Material.SALMON_BUCKET", 40);
+			condensables.put("Material.COD_BUCKET", 40);
+			condensables.put("Material.TROPICAL_FISH_BUCKET", 40);
+			condensables.put("Material.AXOLOTL_BUCKET", 40);
+			condensables.put("Material.RECOVERY_COMPASS", 182);
+			condensables.put("Material.MUSIC_DISC_5", 180);
+			condensables.put("Material.DISC_FRAGMENT_5", 20);
+			condensables.put("Material.GOAT_HORN", 20);
+			condensables.put("Material.ECHO_SHARD", 20);
+            // --
+            condensables.put("SCULK", 2);
+            condensables.put("SCULK_CATALYST", 2);
+            condensables.put("SCULK_SENSOR", 2);
+            condensables.put("SCULK_SHRIEKER", 2);
+            condensables.put("SCULK_VEIN", 2);
+            // --
             condensables.put("MELON", 10);
             condensables.put("MELON_BLOCK", 90);
             condensables.put("MELON_SEEDS", 2);

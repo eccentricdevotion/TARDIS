@@ -361,7 +361,6 @@ public class TARDISCondensablesUpdater {
             list.put("MUSIC_DISC_FAR", 100);
             list.put("MUSIC_DISC_OTHERSIDE", 100);
             // 1.19 - Wild Update
-            /*
             list.put("MANGROVE_BOAT", 3);
             list.put("MANGROVE_BUTTON", 1);
             list.put("MANGROVE_DOOR", 3);
@@ -380,27 +379,46 @@ public class TARDISCondensablesUpdater {
             list.put("MANGROVE_WALL_SIGN", 2);
             list.put("MANGROVE_WOOD", 2);
             list.put("MUDDY_MANGROVE_ROOTS", 2);
-            ---
+            // ---
             list.put("MUD", 2);
             list.put("MUD_BRICKS", 16);
             list.put("MUD_BRICK_SLAB", 8);
             list.put("MUD_BRICK_STAIRS", 24);
             list.put("MUD_BRICK_WALL", 16);
             list.put("PACKED_MUD", 4);
-            ---
+            // ---
             list.put("OCHRE_FROGLIGHT", 150);
             list.put("PEARLESCENT_FROGLIGHT", 150);
             list.put("VERDANT_FROGLIGHT", 150);
-            ---
+            // ---
             list.put("REINFORCED_DEEPSLATE", 100);
-            ---
-            ??? only available in creative, don't drop when broken in survival...
-            list.put("SKULK", 2);
-            list.put("SKULK_CATALYST", 2);
-            list.put("SKULK_SENSOR", 2);
-            list.put("SKULK_SHRIEKER", 2);
-             */
-
+            // ---
+            list.put("OAK_CHEST_BOAT", 8);
+            list.put("SPRUCE_CHEST_BOAT", 8);
+            list.put("BIRCH_CHEST_BOAT", 8);
+            list.put("JUNGLE_CHEST_BOAT", 8);
+            list.put("ACACIA_CHEST_BOAT", 8);
+            list.put("DARK_OAK_CHEST_BOAT", 8);
+            list.put("MANGROVE_CHEST_BOAT", 8);
+            // --
+            list.put("Material.TADPOLE_BUCKET", 40);
+            list.put("Material.POWDER_SNOW_BUCKET", 40);
+            list.put("Material.PUFFERFISH_BUCKET", 40);
+            list.put("Material.SALMON_BUCKET", 40);
+            list.put("Material.COD_BUCKET", 40);
+            list.put("Material.TROPICAL_FISH_BUCKET", 40);
+            list.put("Material.AXOLOTL_BUCKET", 40);
+            list.put("Material.RECOVERY_COMPASS", 182);
+            list.put("Material.MUSIC_DISC_5", 180);
+            list.put("Material.DISC_FRAGMENT_5", 20);
+            list.put("Material.GOAT_HORN", 20);
+            list.put("Material.ECHO_SHARD", 20);
+            // --
+            list.put("SCULK", 2);
+            list.put("SCULK_CATALYST", 2);
+            list.put("SCULK_SENSOR", 2);
+            list.put("SCULK_SHRIEKER", 2);
+            list.put("SCULK_VEIN", 2);
 
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
