@@ -53,6 +53,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, Integer> axolotls = new HashMap<>();
     private final HashMap<UUID, Integer> cats = new HashMap<>();
     private final HashMap<UUID, Integer> foxes = new HashMap<>();
+    private final HashMap<UUID, Integer> frogs = new HashMap<>();
     private final HashMap<UUID, Integer> genes = new HashMap<>();
     private final HashMap<UUID, Integer> horses = new HashMap<>();
     private final HashMap<UUID, Integer> llamas = new HashMap<>();
@@ -233,6 +234,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 case AXOLOTL -> {
                                     if (!plugin.isDisguisesOnServer()) {
                                         options = new Object[]{getAxolotlVariant(view), AGE.getFromBoolean(getBaby(view))};
+                                    }
+                                }
+                                case FROG -> {
+                                    if (!plugin.isDisguisesOnServer()) {
+                                        options = new Object[]{getFrogVariant(view), AGE.getFromBoolean(getBaby(view))};
                                     }
                                 }
                                 case CAT -> {
@@ -426,6 +432,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         String t = null;
         int o;
         switch (d) {
+            case "FROG" -> {
+                if (frogs.containsKey(uuid)) {
+                    o = (frogs.get(uuid) + 1 < 3) ? frogs.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = Frog.Variant.values()[o].toString();
+                frogs.put(uuid, o);
+            }
             case "AXOLOTL" -> {
                 if (axolotls.containsKey(uuid)) {
                     o = (axolotls.get(uuid) + 1 < 5) ? axolotls.get(uuid) + 1 : 0;
@@ -626,6 +641,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Axolotl.Variant.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Axolotl.Variant.WILD;
+        }
+    }
+
+    private Frog.Variant getFrogVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return Frog.Variant.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Frog.Variant.TEMPERATE;
         }
     }
 
