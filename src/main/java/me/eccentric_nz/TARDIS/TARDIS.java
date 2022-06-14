@@ -606,6 +606,8 @@ public class TARDIS extends JavaPlugin {
         }
         // always copy English default
         TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+        // only copy ru.yml if it doesn't exist
+        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "ru.yml", getResource("ru.yml"), false);
         // get configured language
         String lang = getConfig().getString("preferences.language");
         // check file exists
