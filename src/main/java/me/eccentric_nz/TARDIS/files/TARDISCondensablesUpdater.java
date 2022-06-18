@@ -90,7 +90,6 @@ public class TARDISCondensablesUpdater {
             list.put("TROPICAL_FISH", 5);
             // 1.14
             list.put("ACACIA_SIGN", 2);
-            list.put("ACACIA_WALL_SIGN", 2);
             list.put("ANDESITE_SLAB", 2);
             list.put("ANDESITE_STAIRS", 2);
             list.put("ANDESITE_WALL", 2);
@@ -98,7 +97,6 @@ public class TARDISCondensablesUpdater {
             list.put("BARREL", 16);
             list.put("BELL", 100);
             list.put("BIRCH_SIGN", 2);
-            list.put("BIRCH_WALL_SIGN", 2);
             list.put("BLACK_DYE", 10);
             list.put("BLAST_FURNACE", 110);
             list.put("BLUE_DYE", 10);
@@ -111,7 +109,6 @@ public class TARDISCondensablesUpdater {
             list.put("CUT_RED_SANDSTONE_SLAB", 3);
             list.put("CUT_SANDSTONE_SLAB", 3);
             list.put("DARK_OAK_SIGN", 2);
-            list.put("DARK_OAK_WALL_SIGN", 2);
             list.put("DIORITE_SLAB", 2);
             list.put("DIORITE_STAIRS", 2);
             list.put("DIORITE_WALL", 2);
@@ -124,7 +121,6 @@ public class TARDISCondensablesUpdater {
             list.put("GRINDSTONE", 30);
             list.put("HONEYCOMB_BLOCK", 80);
             list.put("JUNGLE_SIGN", 2);
-            list.put("JUNGLE_WALL_SIGN", 2);
             list.put("LANTERN", 28);
             list.put("LEATHER_HORSE_ARMOR", 100);
             list.put("LECTERN", 148);
@@ -138,7 +134,6 @@ public class TARDISCondensablesUpdater {
             list.put("MUSIC_DISC_CAT", 100);
             list.put("NETHER_BRICK_WALL", 2);
             list.put("OAK_SIGN", 2);
-            list.put("OAK_WALL_SIGN", 2);
             list.put("POLISHED_ANDESITE_SLAB", 1);
             list.put("POLISHED_ANDESITE_STAIRS", 1);
             list.put("POLISHED_DIORITE_SLAB", 1);
@@ -163,7 +158,6 @@ public class TARDISCondensablesUpdater {
             list.put("SMOOTH_SANDSTONE_STAIRS", 4);
             list.put("SMOOTH_STONE_SLAB", 4);
             list.put("SPRUCE_SIGN", 2);
-            list.put("SPRUCE_WALL_SIGN", 2);
             list.put("STONE_BRICK_WALL", 2);
             list.put("STONE_STAIRS", 23);
             list.put("STONECUTTER", 112);
@@ -376,8 +370,9 @@ public class TARDISCondensablesUpdater {
             list.put("MANGROVE_SLAB", 2);
             list.put("MANGROVE_STAIRS", 1);
             list.put("MANGROVE_TRAPDOOR", 6);
-            list.put("MANGROVE_WALL_SIGN", 2);
             list.put("MANGROVE_WOOD", 2);
+            list.put("STRIPPED_MANGROVE_LOG", 2);
+            list.put("STRIPPED_MMANGROVE_WOOD", 2);
             list.put("MUDDY_MANGROVE_ROOTS", 2);
             // ---
             list.put("MUD", 2);

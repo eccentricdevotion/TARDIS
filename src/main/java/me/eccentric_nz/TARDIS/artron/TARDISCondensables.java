@@ -17,10 +17,8 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -55,7 +53,6 @@ public class TARDISCondensables {
             condensables.put("ACACIA_SLAB", 2);
             condensables.put("ACACIA_STAIRS", 1);
             condensables.put("ACACIA_TRAPDOOR", 6);
-            condensables.put("ACACIA_WALL_SIGN", 2);
             condensables.put("ACACIA_WOOD", 2);
             condensables.put("ACTIVATOR_RAIL", 650);
             condensables.put("ALLIUM", 2);
@@ -94,7 +91,6 @@ public class TARDISCondensables {
             condensables.put("BIRCH_SLAB", 2);
             condensables.put("BIRCH_STAIRS", 1);
             condensables.put("BIRCH_TRAPDOOR", 6);
-            condensables.put("BIRCH_WALL_SIGN", 2);
             condensables.put("BIRCH_WOOD", 2);
             condensables.put("BLACK_BANNER", 120);
             condensables.put("BLACK_BED", 68);
@@ -270,7 +266,6 @@ public class TARDISCondensables {
             condensables.put("DARK_OAK_SLAB", 2);
             condensables.put("DARK_OAK_STAIRS", 1);
             condensables.put("DARK_OAK_TRAPDOOR", 6);
-            condensables.put("DARK_OAK_WALL_SIGN", 2);
             condensables.put("DARK_OAK_WOOD", 2);
             condensables.put("DARK_PRISMARINE", 32);
             condensables.put("DAYLIGHT_DETECTOR", 130);
@@ -453,7 +448,6 @@ public class TARDISCondensables {
             condensables.put("JUNGLE_SLAB", 2);
             condensables.put("JUNGLE_STAIRS", 1);
             condensables.put("JUNGLE_TRAPDOOR", 6);
-            condensables.put("JUNGLE_WALL_SIGN", 2);
             condensables.put("JUNGLE_WOOD", 2);
             condensables.put("KELP", 2);
             condensables.put("LADDER", 1);
@@ -549,7 +543,6 @@ public class TARDISCondensables {
             condensables.put("MANGROVE_SLAB", 2);
             condensables.put("MANGROVE_STAIRS", 1);
             condensables.put("MANGROVE_TRAPDOOR", 6);
-            condensables.put("MANGROVE_WALL_SIGN", 2);
             condensables.put("MANGROVE_WOOD", 2);
             condensables.put("MUDDY_MANGROVE_ROOTS", 2);
             // ---
@@ -656,7 +649,6 @@ public class TARDISCondensables {
             condensables.put("OAK_SLAB", 2);
             condensables.put("OAK_STAIRS", 1);
             condensables.put("OAK_TRAPDOOR", 6);
-            condensables.put("OAK_WALL_SIGN", 2);
             condensables.put("OAK_WOOD", 2);
             condensables.put("OBSERVER", 75);
             condensables.put("OBSIDIAN", 130);
@@ -855,7 +847,6 @@ public class TARDISCondensables {
             condensables.put("SPRUCE_SLAB", 2);
             condensables.put("SPRUCE_STAIRS", 1);
             condensables.put("SPRUCE_TRAPDOOR", 6);
-            condensables.put("SPRUCE_WALL_SIGN", 2);
             condensables.put("STICK", 1);
             condensables.put("STICKY_PISTON", 110);
             condensables.put("STONE", 30);
@@ -884,6 +875,8 @@ public class TARDISCondensables {
             condensables.put("STRIPPED_DARK_OAK_WOOD", 2);
             condensables.put("STRIPPED_JUNGLE_LOG", 2);
             condensables.put("STRIPPED_JUNGLE_WOOD", 2);
+            condensables.put("STRIPPED_MANGROVE_LOG", 2);
+            condensables.put("STRIPPED_MANGROVE_WOOD", 2);
             condensables.put("STRIPPED_OAK_LOG", 2);
             condensables.put("STRIPPED_OAK_WOOD", 2);
             condensables.put("STRIPPED_SPRUCE_LOG", 2);
