@@ -1,12 +1,11 @@
 # TODO
 
-## Current version `4.10.2`
+## Current version `4.11.0`
 
 1. Add walls to interior view - use TARDIS's wall preference
 
-## Next version `4.11.0`
+## Next version `4.11.1`
 
-0. Update to Minecraft 1.19
 1. Deal with removal of datapack worlds that may have TARDISes in them
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 3. Cache TARDIS data to speed lookups and reduce database queries

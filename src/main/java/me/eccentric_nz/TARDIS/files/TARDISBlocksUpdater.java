@@ -288,12 +288,66 @@ public class TARDISBlocksUpdater {
             under.add("WEATHERED_CUT_COPPER_STAIRS");
             under.add("WHITE_CANDLE");
             under.add("YELLOW_CANDLE");
-            // replace with DIRT_PATH
+            // replaced with DIRT_PATH
             under.remove("GRASS_PATH");
             under.sort(Comparator.naturalOrder());
             blocks_config.set("under_door_blocks", under);
             blocks_config.set("version", 10);
             i += 3;
+        }
+        if (!tbs.contains("MANGROVE_LOG")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("MANGROVE_LOG");
+            blocks.add("MANGROVE_PLANKS");
+            blocks.add("MANGROVE_ROOTS");
+            blocks.add("MANGROVE_WOOD");
+            blocks.add("MUD");
+            blocks.add("MUDDY_MANGROVE_ROOTS");
+            blocks.add("MUD_BRICKS");
+            blocks.add("PACKED_MUD");
+            blocks.add("REINFORCED_DEEPSLAT");
+            blocks.add("SCULK");
+            blocks.add("STRIPPED_MANGROVE_LOG");
+            blocks.add("STRIPPED_MANGROVE_WOOD");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            // chameleon blocks
+            List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
+            chameleon.addAll(blocks);
+            chameleon.sort(Comparator.naturalOrder());
+            blocks_config.set("chameleon_blocks", chameleon);
+            // lamp blocks
+            List<String> lamps = blocks_config.getStringList("lamp_blocks");
+            lamps.add("OCHRE_FROGLIGHT");
+            lamps.add("PEARLESCENT_FROGLIGHT");
+            lamps.add("VERDANT_FROGLIGHT");
+            blocks_config.set("lamp_blocks", lamps);
+            // under door blocks
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("MANGROVE_BUTTON");
+            under.add("MANGROVE_DOOR");
+            under.add("MANGROVE_FENCE");
+            under.add("MANGROVE_FENCE_GATE");
+            under.add("MANGROVE_LEAVES");
+            under.add("MANGROVE_PRESSURE_PLATE");
+            under.add("MANGROVE_SIGN");
+            under.add("MANGROVE_SLAB");
+            under.add("MANGROVE_STAIRS");
+            under.add("MANGROVE_TRAPDOOR");
+            under.add("MANGROVE_WALL_SIGN");
+            under.add("MANGROVE_PROPAGULE");
+            under.add("MANGROVE_ROOTS");
+            under.add("MUD_BRICK_SLAB");
+            under.add("MUD_BRICK_STAIRS");
+            under.add("MUD_BRICK_WALL");
+            under.add("SCULK_SENSOR");
+            under.add("SCULK_SHRIEKER");
+            under.add("SCULK_VEIN");
+            blocks_config.set("under_door_blocks", under);
+            blocks_config.set("version", 11);
+            i += 4;
         }
         List<String> underDoorBlocks = blocks_config.getStringList("under_door_blocks");
         if (!underDoorBlocks.contains("WATER_CAULDRON")) {

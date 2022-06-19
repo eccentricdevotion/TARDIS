@@ -862,6 +862,39 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.WEATHERED_CUT_COPPER_STAIRS, Material.GREEN_STAINED_GLASS);
         stain.put(Material.WHITE_CANDLE, Material.WHITE_STAINED_GLASS);
         stain.put(Material.YELLOW_CANDLE, Material.YELLOW_STAINED_GLASS);
+        // 1.19
+        stain.put(Material.MANGROVE_BUTTON, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_FENCE, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_FENCE_GATE, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_LEAVES, Material.GREEN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_LOG, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_PLANKS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_PRESSURE_PLATE, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_PROPAGULE, Material.GREEN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_ROOTS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_SLAB, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_STAIRS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_WALL_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_WOOD, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUD, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUDDY_MANGROVE_ROOTS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUD_BRICKS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUD_BRICK_SLAB, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUD_BRICK_STAIRS, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MUD_BRICK_WALL, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.OCHRE_FROGLIGHT, Material.ORANGE_STAINED_GLASS);
+        stain.put(Material.PACKED_MUD, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.PEARLESCENT_FROGLIGHT, Material.PURPLE_STAINED_GLASS);
+        stain.put(Material.REINFORCED_DEEPSLATE, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.SCULK, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.SCULK_CATALYST, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.SCULK_SENSOR, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.SCULK_SHRIEKER, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.SCULK_VEIN, Material.BLACK_STAINED_GLASS);
+        stain.put(Material.STRIPPED_MANGROVE_LOG, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.STRIPPED_MANGROVE_WOOD, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.VERDANT_FROGLIGHT, Material.LIME_STAINED_GLASS);
     }
 
     public HashMap<Material, Material> getStain() {

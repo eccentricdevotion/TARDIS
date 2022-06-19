@@ -47,8 +47,8 @@ public class TARDISSpigotChecker implements Runnable {
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 3486 is the latest 1.18.2 build (as of 15-05-2022)
-            String[] split = spigotVersion.split("-"); // something like '3486-Spigot-b6d12d1-f3c7a6a (MC: 1.18.2)'
+            // 3534 is the latest 1.19 build (as of 19-06-2022)
+            String[] split = spigotVersion.split("-"); // something like '3534-Spigot-56be6a8-6c61b73 (MC: 1.19)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
