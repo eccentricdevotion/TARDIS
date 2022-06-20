@@ -297,6 +297,7 @@ public class TARDISBlocksUpdater {
         }
         if (tbs.contains("REINFORCED_DEEPSLAT")) {
             tbs.remove("REINFORCED_DEEPSLAT");
+            blocks_config.set("tardis_blocks", tbs);
         }
         if (!tbs.contains("MANGROVE_LOG")) {
             List<String> blocks = new ArrayList<>();
