@@ -23,10 +23,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -143,8 +141,6 @@ public class TARDISMinecartListener implements Listener {
                 if (data != null && data.length > 3) {
                     boolean shouldPrevent = switch (plugin.getInvManager()) {
                         case MULTIVERSE -> (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
-                        case MULTI -> (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
-                        case PER_WORLD -> (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
                         default -> false;
                     };
                     if (shouldPrevent) {

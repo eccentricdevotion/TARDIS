@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
-import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -45,7 +44,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -153,16 +151,6 @@ class TARDISComehereCommand {
                     count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
                 }
                 Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
-                if (plugin.getPM().isPluginEnabled("Lockette")) {
-                    if (Lockette.isProtected(eyeLocation.getBlock()) || Lockette.isProtected(under)) {
-                        count = 1;
-                    }
-                }
-                if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                    if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
-                        count = 1;
-                    }
-                }
                 if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                     if (BlockLockerAPIv2.isProtected(eyeLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
                         count = 1;

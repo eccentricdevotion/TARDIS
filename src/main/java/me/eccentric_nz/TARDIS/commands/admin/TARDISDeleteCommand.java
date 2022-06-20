@@ -144,12 +144,6 @@ public class TARDISDeleteCommand {
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                     }
-                    if (plugin.getWorldManager().equals(WorldManager.MULTIWORLD)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + wname);
-                    }
-                    if (plugin.getWorldManager().equals(WorldManager.MYWORLDS)) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + wname);
-                    }
                     if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                         // wb <world> clear
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + wname + " clear");

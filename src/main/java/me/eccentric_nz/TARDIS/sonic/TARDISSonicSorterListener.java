@@ -24,7 +24,6 @@ package me.eccentric_nz.TARDIS.sonic;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
-import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -44,7 +43,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -157,17 +155,6 @@ public class TARDISSonicSorterListener implements Listener {
                     Block block = event.getClickedBlock();
                     if (block != null && sortables.contains(block.getType())) {
                         boolean allow = true;
-                        // is Lockette on the server?
-                        if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            if (Lockette.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                            if (LocketteProAPI.isProtected(block)) {
-                                allow = false;
-                            }
-                        }
                         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                             if (BlockLockerAPIv2.isProtected(block)) {
                                 allow = false;

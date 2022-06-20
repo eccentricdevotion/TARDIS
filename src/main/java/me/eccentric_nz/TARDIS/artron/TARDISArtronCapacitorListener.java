@@ -32,8 +32,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -152,13 +150,6 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         switch (plugin.getWorldManager()) {
                                             case MULTIVERSE -> {
                                                 if (!plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
-                                                    TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
-                                                    return;
-                                                }
-                                            }
-                                            case MULTIWORLD -> {
-                                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                                                if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
                                                     TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
                                                     return;
                                                 }

@@ -25,8 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,13 +86,6 @@ public class TARDISCondenserListener implements Listener {
                         switch (plugin.getWorldManager()) {
                             case MULTIVERSE -> {
                                 if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
-                                    return;
-                                }
-                            }
-                            case MULTIWORLD -> {
-                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                                if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }

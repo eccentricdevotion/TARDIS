@@ -23,7 +23,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -481,8 +483,6 @@ public class TARDISFarmer {
                 if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0) {
                     boolean canfarm = switch (plugin.getInvManager()) {
                         case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
-                        case MULTI -> TARDISMultiInvChecker.checkWorldsCanShare(from, to);
-                        case PER_WORLD -> TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
                         default -> true;
                     };
                     if (!canfarm) {

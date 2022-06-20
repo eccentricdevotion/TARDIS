@@ -259,9 +259,6 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISWallFloorMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSeedMenuListener(plugin), plugin);
-        if (plugin.getPM().isPluginEnabled("Multiverse-Adventure")) {
-            plugin.getPM().registerEvents(new TARDISWorldResetListener(plugin), plugin);
-        }
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
             plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
         }

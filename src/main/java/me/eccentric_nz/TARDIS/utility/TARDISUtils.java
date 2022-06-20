@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
@@ -36,7 +35,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -205,16 +203,6 @@ public class TARDISUtils {
         List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
         orb.remove();
         return ents;
-    }
-
-    public boolean checkSurrounding(Block under) {
-        List<BlockFace> faces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
-        for (BlockFace f : faces) {
-            if (LocketteProAPI.isProtected(under.getRelative(f))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private String getFacingXZ(Player player) {

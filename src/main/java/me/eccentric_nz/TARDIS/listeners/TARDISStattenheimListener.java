@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
-import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -53,7 +52,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -201,16 +199,6 @@ public class TARDISStattenheimListener implements Listener {
                             count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                         }
                         Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
-                        if (plugin.getPM().isPluginEnabled("Lockette")) {
-                            if (Lockette.isProtected(remoteLocation.getBlock()) || Lockette.isProtected(under)) {
-                                count = 1;
-                            }
-                        }
-                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                            if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
-                                count = 1;
-                            }
-                        }
                         if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                             if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
                                 count = 1;

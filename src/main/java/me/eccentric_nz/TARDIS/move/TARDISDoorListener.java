@@ -29,10 +29,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
-import multiworld.api.MultiWorldWorldData;
-import multiworld.api.flag.FlagName;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -219,13 +215,6 @@ public class TARDISDoorListener {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
             case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
-            case MULTIWORLD -> {
-                MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                MultiWorldWorldData mww = mw.getWorld(world.getName());
-                if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
-                    bool = true;
-                }
-            }
             case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
         }
         return bool;

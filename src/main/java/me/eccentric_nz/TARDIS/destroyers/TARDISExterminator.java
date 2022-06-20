@@ -257,13 +257,6 @@ public class TARDISExterminator {
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
-            if (plugin.getWorldManager().equals(WorldManager.MULTIWORLD)) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw delete " + name);
-            }
-            if (plugin.getWorldManager().equals(WorldManager.MYWORLDS)) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
-            }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // wb <world> clear
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");

@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
-import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
@@ -28,7 +27,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 public class TARDISSonicRespect {
 
@@ -62,10 +60,6 @@ public class TARDISSonicRespect {
             if (plugin.getPM().isPluginEnabled("RedProtect")) {
                 return TARDISRedProtectChecker.canSonic(player, block);
             }
-            // LockettePro
-            if (plugin.getPM().isPluginEnabled("LockettePro")) {
-                return !LocketteProAPI.isProtected(block);
-            }
             // LWCX
             if (plugin.getPM().isPluginEnabled("LWC")) {
                 ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
@@ -79,10 +73,6 @@ public class TARDISSonicRespect {
             // BlockLocker
             if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                 return !BlockLockerAPIv2.isProtected(block);
-            }
-            // Lockette
-            if (plugin.getPM().isPluginEnabled("Lockette")) {
-                return !Lockette.isProtected(block);
             }
         }
         return true;
