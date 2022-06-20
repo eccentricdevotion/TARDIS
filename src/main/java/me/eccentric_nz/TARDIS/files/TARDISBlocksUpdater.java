@@ -295,6 +295,9 @@ public class TARDISBlocksUpdater {
             blocks_config.set("version", 10);
             i += 3;
         }
+        if (tbs.contains("REINFORCED_DEEPSLAT")) {
+            tbs.remove("REINFORCED_DEEPSLAT");
+        }
         if (!tbs.contains("MANGROVE_LOG")) {
             List<String> blocks = new ArrayList<>();
             blocks.add("MANGROVE_LOG");
@@ -305,7 +308,6 @@ public class TARDISBlocksUpdater {
             blocks.add("MUDDY_MANGROVE_ROOTS");
             blocks.add("MUD_BRICKS");
             blocks.add("PACKED_MUD");
-            blocks.add("REINFORCED_DEEPSLAT");
             blocks.add("SCULK");
             blocks.add("STRIPPED_MANGROVE_LOG");
             blocks.add("STRIPPED_MANGROVE_WOOD");
