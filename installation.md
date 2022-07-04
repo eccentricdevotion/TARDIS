@@ -30,7 +30,7 @@ Place the following jar files in your plugins folder:
 
 You will most probably need to run a permissions plugin for players to actually use the TARDIS (it’s possible without one, but players will need to be opped!). As a minimum players will generally need the `tardis.use` permission to build a TARDIS, and `tardis.enter` to be a companion.
 
-If this is your first time using the plugin, you may want to set the TARDIS difficulty mode to _easy_. To do this use the in-game command: `/tardisadmin difficulty easy`.
+If this is your first time using the plugin, you may want to set the TARDIS difficulty mode to _easy_. To do this use the in-game command: `/tardisconfig difficulty easy`.
 
 #### Upgrade notes:
 

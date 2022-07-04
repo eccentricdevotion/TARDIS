@@ -18,7 +18,7 @@ TARDIS blueprints are a way for players to earn or purchase TARDIS features. If 
 
 To enable blueprints on your server, use the command:
 ```
-/tardisadmin blueprints true
+/tardisconfig blueprints true
 ```
 To disable, run the command again with the last argument set to `false`. 
 

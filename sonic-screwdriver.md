@@ -105,4 +105,4 @@ To change the screwdriver texture:
 
 ![Sonic Prefs Menu](images/docs/sonic_prefs_menu.jpg)
 
-Server admins can set the default screwdriver type — `/tardisadmin default_sonic [type]` — use tab completion to see a list of types.
+Server admins can set the default screwdriver type — `/tardisconfig default_sonic [type]` — use tab completion to see a list of types.

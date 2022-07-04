@@ -19,9 +19,9 @@ Currently, only the Police Box and Pandorica use custom block textures.
 
 ![CTM Pandorica](images/docs/pandorica.jpg)
 
-For interior textures, the TARDIS console and rooms are set to the SKY biome. There are custom wall, advanced console, disk storage container and door textures.
+For interior textures, the TARDIS console and rooms are set to the VOID biome. There are custom wall, advanced console, disk storage container and door textures.
 
-If you would prefer that TARDIS does not change the biome in your worlds, you can turn off the feature in the config — use the admin command to toggle the settings — for Police Boxes use: `/tardisadmin set_biome [true|false]`, and for TARDIS worlds use: `/tardisadmin sky_biome [true|false]`.
+If you would prefer that TARDIS does not change the biome in your worlds, you can turn off the feature in the config — use the admin command to toggle the settings — for Police Boxes use: `/tardisconfig set_biome [true|false]`, and for TARDIS worlds use: `/tardisconfig sky_biome [true|false]`.
 
 CIT allows TARDIS to have custom item textures by detecting the display name and/or lore of the item. For example, this lets sonic screwdrivers have a custom texture without changing _all_ BLAZE\_RODs to a sonic texture.
 
@@ -29,7 +29,7 @@ CIT allows TARDIS to have custom item textures by detecting the display name and
 
 An ‘umbrella’ is added to the police box when `set_biome` is `true` and the TARDIS lands in a dry biome. The umbrella is a 3 x 3 x 1 area of glass blocks set at y=255.
 
-Only new interiors and rooms are set to SKY biome, to change existing consoles and rooms, you will need to use the WorldEdit `//setbiome Sky` command
+Only new interiors and rooms are set to VOID biome, to change existing consoles and rooms, you will need to use the WorldEdit `//setbiome void` command
 
 The interior TARDIS door may need its hinge location changed, use the `/tardis update hinge` command while targeting the top-half of the door.
 

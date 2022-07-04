@@ -25,7 +25,7 @@ In manual flight mode the repeaters are called:
 
 In manual flight mode, the more repeaters you miss hitting, the further from your desired location you will land
 
-You can set the delay between having to click the repeaters in the config: `/tardisadmin manual_flight_delay [ticks]` — default is 60 (3 seconds)
+You can set the delay between having to click the repeaters in the config: `/tardisconfig manual_flight_delay [ticks]` — default is 60 (3 seconds)
 
 Video goes here
 
