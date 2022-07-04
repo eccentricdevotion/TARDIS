@@ -5,17 +5,15 @@ title: Troubleshooting/Common Problems
 
 # Troubleshooting/Common Problems
 
-- [I made a stack of blocks but the TARDIS doesn’t materialise!](#create)
-- [When I click the TARDIS seed block with a stick, nothing happens!](#stick)
+- [I made a stack of blocks but the TARDIS does not materialise](#i-made-a-stack-of-blocks-but-the-tardis-does-not-materialise)
+- [When I click the TARDIS seed block with a stick nothing happens](#when-i-click-the-tardis-seed-block-with-a-stick-nothing-happens)
 - [The plugin says ‘You cannot grow rooms unless your TARDIS was created in its own world’](#rooms)
 - [I made a room and it grew inside the TARDIS!](#grew)
 - [I try to grow a room but the plugin says “There seems to be a block in the way! You should be growing out into the void…”](#void)
 - [My TARDIS is not generating its own world!](#own-world)
 - [How do I import my TARDIS world into my multi-world plugin?](#import)
 - [Non-op players can’t break the blocks inside the TARDIS to grow rooms](#spawn)
-- [The console says “Could not find TARDIS map files, some recipes may not work!”](#maps)
 - [My Handbrake is not re-engaging!](#handbrake)
-- [I can’t craft the Stattenheim Circuit / upgrade my Sonic Screwdriver!](#stat)
 - [It says circuits are missing from the Advanced Console.](#advanced)
 - [It says I need to use the Advanced Console.](#difficulty)
 - [My TARDIS isn’t charging at a recharge beacon](#charging)
@@ -30,11 +28,11 @@ title: Troubleshooting/Common Problems
 - [Why does my TARDIS door open when I crouch-click it (and get out of sync with the other door)?](#sync)
 - [What is the Texture Pack in the videos?](#txtpac)
 
-#### I made a stack of blocks but the TARDIS doesn’t materialise!
+#### I made a stack of blocks but the TARDIS does not materialise
 
 The method for creating a TARDIS was changed in version 2.6, you should craft a TARDIS seed block instead. Check the ‘[Creating a TARDIS](creating-a-tardis.html)’ page for details.
 
-#### When I click the TARDIS seed block with a stick, nothing happens!
+#### When I click the TARDIS seed block with a stick nothing happens
 
 You didn’t read and follow the instructions — you need to click the seed block with the **TARDIS Key** — the key is only a stick if you have configured it to be one. Check the ‘[Creating a TARDIS](creating-a-tardis.html)’ page for details.
 
@@ -59,7 +57,7 @@ Things have changed quite a lot with the update to TARDIS v2.6, especially the w
 
 Read the answer [above](#grew), once you’ve done that (and you still want to grow a room manually) make sure the room you are growing from contains a pressure plate in the correct position for the piston door, then place the seed block in the right place — i.e. NOT in the wall.
 
-#### My TARDIS is not generating its own world!
+#### My TARDIS is not generating its own world
 
 For best results, follow these steps to set up the plugin to create TARDIS worlds:
 
@@ -67,49 +65,15 @@ For best results, follow these steps to set up the plugin to create TARDIS world
 2. Stop the server
 3. Delete the `plugins/TARDIS` folder
 4. Install TARDISChunkGenerator (if you haven’t already)
-5. Install [Multiverse-Core](http://dev.bukkit.org/bukkit-plugins/multiverse-core/)
-6. Make sure that the TARDIS config option `create_worlds` is set to `true` — (it gets disabled automatically if a multi-world plugin is not found).
-7. Start the server
-8. Create a TARDIS
+5. Make sure that the TARDIS config option `create_worlds` is set to `true`.
+6. Start the server
+7. Create a TARDIS
 
 [Back to top](#top)
 
 #### How do I import my TARDIS world into my multi-world plugin?
 
-You should only need to do this if you created a TARDIS before installing the multi-world plugin (and only if you’re using an early version 2.0 beta of TARDIS)
-
-If you are using **Multiverse-Core** :
-
-```
-    /mv import [world name] normal -g TARDISChunkGenerator -n
-    /mv modify set hidden true [world name]
-    /mv modify set weather false [world name]
-    /mv modify set portalform none [world name]
-    /mv modify set pvp false [world name]
-```
-
-Only the first command is required, but the TARDIS plugin sets the other world options as well by default.
-
-**Remember** to change `[world name]` to the name of your own TARDIS world!
-
-If you are using **MultiWorld**
-
-You’re a bit stuck, as MultiWorld doesn’t have an easy way of loading a world after it is created.
-
-1. Open up the MultiWorld config file and duplicate the section for the server’s default world.
-2. Change the section so it looks like the one below — don’t forget to change the world name to your actual world.
-
-```
-TARDIS_WORLD_eccentric_nz:
-    seed: -400605742453603641
-    worldgen: PLUGIN
-    options: TARDISChunkGenerator
-    difficulty: 2
-    autoload: true
-    flags:
-      PVP: false
-    spawnGroup: defaultGroup
-```
+You should never do this. The TARDIS plugin can mange its own worlds.
 
 [Back to top](#top)
 
@@ -119,35 +83,11 @@ This is probably because of Minecraft’s built-in spawn protection. The server 
 
 [Back to top](#top)
 
-#### The console says “Could not find TARDIS map files, some recipes may not work!”
-
-TARDIS requires some special `map.dat` files in order for some TARDIS recipes to work correctly. If you read the rest of the message in the server log, you will see that the required map files have been copied into the _Bukkit/plugins/TARDIS_ folder. It then tells you where to put the copied map files — they go into the `data` folder of the server’s main world folder (by default it is called ‘world’).
-
-You need to move all the TARDIS map files (named `map_1963.dat` to `map_1979.dat`) in to the world data folder located at: _Bukkit/ **world** /data_ — substitute _ **world** _ for whatever the name of the server’s main world is called.
-
-![](images/docs/mapfiles.jpg)
-
-[Back to top](#top)
-
 #### My Handbrake is not re-engaging!
 
 To re-engage the handbrake you must **LEFT** -click the lever.
 
 If you are stuck in the Time Vortex, restart the server and rebuild your TARDIS before trying to travel again.
-
-[Back to top](#top)
-
-#### I can’t craft the Stattenheim Circuit / upgrade my Sonic Screwdriver!
-
-There are a couple of things you can try:
-
-- Make sure that the TARDIS map files are in the correct location.
-- Delete any circuits and sonics that were created before the step above.
-- Assign more RAM to your server (in the startup script). Adding new recipes requires more memory!
-- Watch this video of the [Stattenheim Circuit being crafted](https://vimeo.com/83094452) on a freshly installed server.
-- Set the TARDIS difficulty level to `easy` — the Stattenheim Remote doesn’t use the Stattenheim Circuit in easy mode.
-- Change the recipe! All TARDIS item recipes are configurable as of TARDIS v2.7. Edit _recipes.yml_.
-- Use the `/tardisgive [player] s-circuit 1` command to give yourself the circuit.
 
 [Back to top](#top)
 
@@ -167,7 +107,7 @@ You haven’t crafted the appropriate circuit and placed it in the TARDIS Advanc
 
 This is probably because the TARDIS difficulty level is set to `hard`. On hard difficulty, most travel commands are disabled, and you must place the appropriate storage disk into the Advanced Console instead. See the [Advanced Console](advanced-console.html) page for more information.
 
-You can also use the `/tardisadmin difficulty easy` command to switch difficulty levels and re-enable the commands.
+You can also use the `/tardisconfig difficulty easy` command to switch difficulty levels and re-enable the commands.
 
 [Back to top](#top)
 
@@ -181,7 +121,7 @@ Charging is triggered by players actually travelling to the recharge point, not 
 
 #### I can’t hear the custom sound effects
 
-The custom TARDIS sound effects require you to have the **TARDIS Resource Pack** installed in the Minecraft client, and that you are running Minecraft 1.7.x or higher.
+The custom TARDIS sound effects require you to have the **TARDIS Sound Resource Pack** installed in the Minecraft client, and that you are running Minecraft 1.7.x or higher.
 
 You can download the resource pack from GitHub: [https://github.com/eccentricdevotion/TARDIS-SoundResourcePack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack) — take note of installation instructions on that page.
 
@@ -205,9 +145,9 @@ Please read the first part of the [Permissions](permissions.html) page.
 
 #### I changed some config options but they keep changing back!
 
-If you manually edit the TARDIS config file while the server is running, you will need to use the `/tardisadmin reload` command (DO NOT use `/reload` as the plugin saves the current settings when it is disabled).
+If you manually edit the TARDIS config file while the server is running, you will need to use the `/tardisconfig reload` command (DO NOT use `/reload` as the plugin saves the current settings when it is disabled).
 
-The better option is to set the config options in game with the `/tardisadmin [config option] [value]` command — changes take effect immediately, no server restart required. See the [Admin Commands](admin-commands.html) page for more details.
+The better option is to set the config options in game with the `/tardisconfig [config option] [value]` command — changes take effect immediately, no server restart required. See the [Admin Commands](admin-commands.html) page for more details.
 
 [Back to top](#top)
 
@@ -223,8 +163,8 @@ This is fairly standard behaviour for plugins. The **currently loaded** config o
 
 You have three options:
 
-1. Use the the TARDIS admin commands to change the options i.e. `/tardisadmin [config option] [value]` for example `/tardisadmin key CARROT` — the benefit is that changes take effect immediately, you don’t need to restart the server. Refer to the [admin commands](admin-commands.html) page.
-2. Manually edit the file, save it, and use the `/tardisadmin reload` command to load your changes into the server’ memory.
+1. Use the the TARDIS admin commands to change the options i.e. `/tardisconfig [config option] [value]` for example `/tardisconfig key CARROT` — the benefit is that changes take effect immediately, you don’t need to restart the server. Refer to the [admin commands](admin-commands.html) page.
+2. Manually edit the file, save it, and use the `/tardisconfig reload` command to load your changes into the server’ memory.
 3. **STOP** the server. Edit the config file, save it, then start the server.
 
 **Note:** It is generally not good practice to use the `/reload` command.
@@ -260,7 +200,7 @@ If you move the interior TARDIS door, remember to remove the LWC protection afte
 
 #### What is the Texture Pack in the videos?
 
-An unreleased (and unfinished — still most of the mobs to do) pack called Bromley Massive Vector, also by eccentric\_nz. Maybe, one day he will finish it. It’s [128X], and is compatible with Minecraft 1.11.2.
+An unreleased (and unfinished — still most of the mobs to do) pack called Bromley Massive Vector, also by eccentric\_nz. Maybe, one day he will finish it. It’s [128X], and is compatible with Minecraft 1.19.
 
 ![Bromley Massive Vector Texture Pack](images/docs/bmv.jpg)
 
