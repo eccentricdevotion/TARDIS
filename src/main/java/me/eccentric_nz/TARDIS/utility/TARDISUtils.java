@@ -65,7 +65,7 @@ public class TARDISUtils {
 
     public boolean canGrowRooms(String chunk) {
         String[] data = chunk.split(":");
-        World room_world = TARDISStaticLocationGetters.getWorld(chunk);
+        World room_world = TARDISStaticLocationGetters.getWorldFromSplitString(chunk);
         ChunkGenerator gen = room_world.getGenerator();
         String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {

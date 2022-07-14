@@ -70,7 +70,7 @@ class TARDISARSRunnable implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             plugin.getTrackerKeeper().getIsGrowingRooms().add(tardis.getTardis_id());
-            World w = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(tardis.getTardis_id());

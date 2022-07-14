@@ -57,7 +57,7 @@ public class TARDISCreeperChecker {
             if (!tardis.getCreeper().isEmpty()) {
                 // only if the TARDIS has been initialised
                 if (tardis.isTardis_init()) {
-                    World w = TARDISStaticLocationGetters.getWorld(tardis.getCreeper());
+                    World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getCreeper());
                     if (w != null) {
                         Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                         plugin.setTardisSpawn(true);

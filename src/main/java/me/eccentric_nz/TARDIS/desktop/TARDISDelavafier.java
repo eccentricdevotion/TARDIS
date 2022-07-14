@@ -65,7 +65,7 @@ class TARDISDelavafier {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             for (int level = 2; level < 6; level++) {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {

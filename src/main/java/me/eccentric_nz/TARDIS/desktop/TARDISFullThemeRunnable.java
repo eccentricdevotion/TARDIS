@@ -275,7 +275,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
             }
             downgrade = (h < ph || w < pw);
-            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));

@@ -118,7 +118,7 @@ class TARDISAddCompanionCommand {
                 }
                 // if using WorldGuard, add them to the region membership
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World w = TARDISStaticLocationGetters.getWorld(data);
+                    World w = TARDISStaticLocationGetters.getWorldFromSplitString(data);
                     if (w != null) {
                         if (addAll) {
                             // remove all members

@@ -126,7 +126,7 @@ public class TARDISRepair {
                     startz = gsl[2];
                 }
                 int starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
-                World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+                World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";
                 Material wall_type = Material.ORANGE_WOOL;

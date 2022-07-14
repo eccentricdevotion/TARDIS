@@ -144,7 +144,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 startz = gsl[2];
             }
             starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
-            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
             floor_type = Material.valueOf(tud.getFloor());

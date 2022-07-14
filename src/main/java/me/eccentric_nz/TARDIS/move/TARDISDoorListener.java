@@ -92,7 +92,7 @@ public class TARDISDoorListener {
             COMPASS d = rsd.getDoor_direction();
             tdl.setD(d);
             String doorLocStr = rsd.getDoor_location();
-            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+            World cw = TARDISStaticLocationGetters.getWorldFromSplitString(doorLocStr);
             tdl.setW(cw);
             Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
             int getx = tmp_loc.getBlockX();

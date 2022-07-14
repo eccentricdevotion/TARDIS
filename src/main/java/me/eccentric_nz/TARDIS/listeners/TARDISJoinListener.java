@@ -162,7 +162,7 @@ public class TARDISJoinListener implements Listener {
             if (!last_known_name.equals(player.getName())) {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World cw = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+                    World cw = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
                     // tardis region
                     plugin.getWorldGuardUtils().updateRegionForNameChange(cw, owner, player.getUniqueId(), "tardis");
                 }

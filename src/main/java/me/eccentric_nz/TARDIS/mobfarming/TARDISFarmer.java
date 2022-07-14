@@ -493,7 +493,7 @@ public class TARDISFarmer {
                 }
                 if (!apiary.isEmpty()) {
                     // get location of apiary room
-                    World world = TARDISStaticLocationGetters.getWorld(apiary);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(apiary);
                     if (bees.size() > 0) {
                         Location beehive = TARDISStaticLocationGetters.getSpawnLocationFromDB(apiary);
                         while (!world.getChunkAt(beehive).isLoaded()) {
@@ -527,7 +527,7 @@ public class TARDISFarmer {
                 }
                 if (!aquarium.isEmpty() && fish != null) {
                     // get location of aquarium room
-                    World world = TARDISStaticLocationGetters.getWorld(aquarium);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(aquarium);
                     Location fish_tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(aquarium);
                     switch (fish.getType()) {
                         case COD -> fish_tank.add(3.0d, 1.5d, 3.0d);
@@ -553,7 +553,7 @@ public class TARDISFarmer {
                 }
                 if (!bamboo.isEmpty()) {
                     // get location of bamboo room
-                    World world = TARDISStaticLocationGetters.getWorld(bamboo);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(bamboo);
                     if (pandas.size() > 0) {
                         Location forest = TARDISStaticLocationGetters.getSpawnLocationFromDB(bamboo);
                         while (!world.getChunkAt(forest).isLoaded()) {
@@ -586,7 +586,7 @@ public class TARDISFarmer {
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
-                    World world = TARDISStaticLocationGetters.getWorld(farm);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(farm);
                     if (chickens.size() > 0) {
                         Location chicken_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, -3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
@@ -714,7 +714,7 @@ public class TARDISFarmer {
                 }
                 if (!geode.isEmpty()) {
                     // get location of geode room
-                    World world = TARDISStaticLocationGetters.getWorld(geode);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(geode);
                     if (axolotls.size() > 0) {
                         Location pool = TARDISStaticLocationGetters.getSpawnLocationFromDB(geode);
                         while (!world.getChunkAt(pool).isLoaded()) {
@@ -746,7 +746,7 @@ public class TARDISFarmer {
                 }
                 if (!stable.isEmpty() && horses.size() > 0) {
                     // get location of stable room
-                    World world = TARDISStaticLocationGetters.getWorld(stable);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(stable);
                     Location horse_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stable);
                     while (!world.getChunkAt(horse_pen).isLoaded()) {
                         world.getChunkAt(horse_pen).load();
@@ -802,7 +802,7 @@ public class TARDISFarmer {
                 }
                 if (!stall.isEmpty() && llamas.size() > 0) {
                     // get location of stable room
-                    World world = TARDISStaticLocationGetters.getWorld(stall);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(stall);
                     Location llama_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stall);
                     while (!world.getChunkAt(llama_pen).isLoaded()) {
                         world.getChunkAt(llama_pen).load();
@@ -856,7 +856,7 @@ public class TARDISFarmer {
                 }
                 if (!hutch.isEmpty() && rabbits.size() > 0) {
                     // get location of hutch room
-                    World world = TARDISStaticLocationGetters.getWorld(hutch);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(hutch);
                     Location rabbit_hutch = TARDISStaticLocationGetters.getSpawnLocationFromDB(hutch);
                     while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
                         world.getChunkAt(rabbit_hutch).load();
@@ -886,7 +886,7 @@ public class TARDISFarmer {
                 }
                 if (!village.isEmpty() && villagers.size() > 0) {
                     // get location of village room
-                    World world = TARDISStaticLocationGetters.getWorld(village);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(village);
                     Location v_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(village);
                     while (!world.getChunkAt(v_room).isLoaded()) {
                         world.getChunkAt(v_room).load();
@@ -922,7 +922,7 @@ public class TARDISFarmer {
                 }
                 if (!igloo.isEmpty() && polarbears.size() > 0) {
                     // get location of igloo room
-                    World world = TARDISStaticLocationGetters.getWorld(igloo);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(igloo);
                     Location i_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(igloo);
                     while (!world.getChunkAt(i_room).isLoaded()) {
                         world.getChunkAt(i_room).load();
@@ -951,7 +951,7 @@ public class TARDISFarmer {
                 }
                 if (!birdcage.isEmpty() && parrots.size() > 0) {
                     // get location of birdcage room
-                    World world = TARDISStaticLocationGetters.getWorld(birdcage);
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(birdcage);
                     Location b_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(birdcage);
                     while (!world.getChunkAt(b_room).isLoaded()) {
                         world.getChunkAt(b_room).load();

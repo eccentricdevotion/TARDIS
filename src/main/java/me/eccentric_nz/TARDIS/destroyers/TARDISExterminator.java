@@ -107,7 +107,7 @@ public class TARDISExterminator {
                     }
                 }
                 cleanHashMaps(id);
-                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
+                World cw = TARDISStaticLocationGetters.getWorldFromSplitString(chunkLoc);
                 if (cw == null) {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
@@ -179,7 +179,7 @@ public class TARDISExterminator {
                 // remove Police Box
                 plugin.getPresetDestroyer().destroyPreset(dd);
             }
-            World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
+            World cw = TARDISStaticLocationGetters.getWorldFromSplitString(chunkLoc);
             if (cw == null) {
                 TARDISMessage.send(player, "WORLD_DELETED");
                 return true;

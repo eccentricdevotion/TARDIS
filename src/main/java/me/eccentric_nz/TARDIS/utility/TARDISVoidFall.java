@@ -47,7 +47,7 @@ public class TARDISVoidFall {
         if (rsi.resultSet()) {
             COMPASS innerD = rsi.getDoor_direction();
             String doorLocStr = rsi.getDoor_location();
-            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+            World cw = TARDISStaticLocationGetters.getWorldFromSplitString(doorLocStr);
             Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
             int getx = tardis_loc.getBlockX();
             int getz = tardis_loc.getBlockZ();

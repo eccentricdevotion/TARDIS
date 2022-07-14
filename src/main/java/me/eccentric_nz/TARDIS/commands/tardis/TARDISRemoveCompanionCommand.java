@@ -94,7 +94,7 @@ class TARDISRemoveCompanionCommand {
                         }
                         message = "COMPANIONS_REMOVE_ONE";
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                            World w = TARDISStaticLocationGetters.getWorld(data);
+                            World w = TARDISStaticLocationGetters.getWorldFromSplitString(data);
                             if (w != null) {
                                 plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, oluuid);
                             }
@@ -107,7 +107,7 @@ class TARDISRemoveCompanionCommand {
                 } else {
                     // if using WorldGuard, remove them from the region membership
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                        World w = TARDISStaticLocationGetters.getWorld(data);
+                        World w = TARDISStaticLocationGetters.getWorldFromSplitString(data);
                         if (w != null) {
                             if (args[1].equals("all")) {
                                 plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner, player.getUniqueId());

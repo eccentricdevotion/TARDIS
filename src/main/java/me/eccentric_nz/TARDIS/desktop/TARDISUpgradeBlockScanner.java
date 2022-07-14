@@ -91,7 +91,7 @@ public class TARDISUpgradeBlockScanner {
                 startz = gsl[2];
             }
             int starty = TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission()) ? 65 : 64;
-            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...

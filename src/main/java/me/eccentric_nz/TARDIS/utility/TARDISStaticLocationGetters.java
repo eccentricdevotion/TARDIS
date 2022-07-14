@@ -30,9 +30,9 @@ public class TARDISStaticLocationGetters {
      * Get a World from a stored string.
      *
      * @param data the string containing the world name
-     * @return the World or null if not world matched
+     * @return the World or null if no world matched
      */
-    public static World getWorld(String data) {
+    public static World getWorldFromSplitString(String data) {
         String[] split = data.split(":");
         return Bukkit.getServer().getWorld(split[0]);
     }
