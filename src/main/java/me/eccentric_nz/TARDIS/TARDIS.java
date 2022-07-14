@@ -83,6 +83,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.*;
+import java.lang.module.ModuleDescriptor;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -194,7 +195,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("WorldGuard", "7.0.7");
     }
 
-    private Version getServerVersion(String s) {
+    private ModuleDescriptor.Version getServerVersion(String s) {
         Pattern pat = Pattern.compile("\\((.+?)\\)", Pattern.DOTALL);
         Matcher mat = pat.matcher(s);
         String v;
@@ -209,33 +210,29 @@ public class TARDIS extends JavaPlugin {
         } else {
             v = "1.13";
         }
-        return new Version(v);
+        return ModuleDescriptor.Version.parse(v);
     }
 
     private boolean checkPluginVersion(String plg, String min) {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
-            Version minVersion = new Version(min);
+            ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version version;
+                ModuleDescriptor.Version version;
                 if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
-                    version = new Version("1");
+                    version = ModuleDescriptor.Version.parse("1");
                 } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
-                    version = new Version(semi[0]);
-                } else if (plg.equals("WorldGuard") && preSplit.contains("+")) {
-                    // eg  7.0.7+216b061
-                    String[] plus = split[0].split("\\+");
-                    version = new Version(plus[0]);
+                    version = ModuleDescriptor.Version.parse(semi[0]);
                 } else if (plg.equals("Towny") && preSplit.contains(" ")) {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
-                    version = new Version(space[0]);
+                    version = ModuleDescriptor.Version.parse(space[0]);
                 } else {
-                    version = new Version(split[0]);
+                    version = ModuleDescriptor.Version.parse(split[0]);
                 }
                 return (version.compareTo(minVersion) >= 0);
             } catch (IllegalArgumentException e) {
@@ -310,8 +307,8 @@ public class TARDIS extends JavaPlugin {
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
-        Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minVersion = new Version("1.19");
+        ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.19");
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
@@ -544,7 +541,7 @@ public class TARDIS extends JavaPlugin {
             // start bStats metrics
             new TARDISStats(this).startMetrics();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Spigot/Paper " + minVersion.get() + " or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -1059,8 +1056,8 @@ public class TARDIS extends JavaPlugin {
     public boolean checkTWA() {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
-            Version version = new Version(twa.getDescription().getVersion());
-            return (version.compareTo(new Version("3.3.1")) >= 0);
+            ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(twa.getDescription().getVersion());
+            return (version.compareTo(ModuleDescriptor.Version.parse("3.3.1")) >= 0);
         } else {
             return false;
         }
