@@ -73,9 +73,11 @@ public class TARDISCondensables {
             condensables.put("BEACON", 700);
             condensables.put("BEDROCK", 100);
             condensables.put("BEEF", 3);
+            condensables.put("BEEHIVE", 100);
             condensables.put("BEETROOT", 9);
             condensables.put("BEETROOT_SEEDS", 2);
             condensables.put("BEETROOT_SOUP", 5);
+            condensables.put("BEE_NEST", 100);
             condensables.put("BELL", 100);
             condensables.put("BIRCH_BOAT", 3);
             condensables.put("BIRCH_BUTTON", 1);

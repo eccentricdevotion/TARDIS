@@ -414,7 +414,9 @@ public class TARDISCondensablesUpdater {
             list.put("SCULK_SENSOR", 2);
             list.put("SCULK_SHRIEKER", 2);
             list.put("SCULK_VEIN", 2);
-
+            // Missing BEE hive and nest
+            list.put("BEEHIVE", 100);
+            list.put("BEE_NEST", 100);
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
             }
