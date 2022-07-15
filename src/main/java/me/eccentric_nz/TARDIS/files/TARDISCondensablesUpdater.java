@@ -396,18 +396,18 @@ public class TARDISCondensablesUpdater {
             list.put("DARK_OAK_CHEST_BOAT", 8);
             list.put("MANGROVE_CHEST_BOAT", 8);
             // --
-            list.put("Material.TADPOLE_BUCKET", 40);
-            list.put("Material.POWDER_SNOW_BUCKET", 40);
-            list.put("Material.PUFFERFISH_BUCKET", 40);
-            list.put("Material.SALMON_BUCKET", 40);
-            list.put("Material.COD_BUCKET", 40);
-            list.put("Material.TROPICAL_FISH_BUCKET", 40);
-            list.put("Material.AXOLOTL_BUCKET", 40);
-            list.put("Material.RECOVERY_COMPASS", 182);
-            list.put("Material.MUSIC_DISC_5", 180);
-            list.put("Material.DISC_FRAGMENT_5", 20);
-            list.put("Material.GOAT_HORN", 20);
-            list.put("Material.ECHO_SHARD", 20);
+            list.put("TADPOLE_BUCKET", 40);
+            list.put("POWDER_SNOW_BUCKET", 40);
+            list.put("PUFFERFISH_BUCKET", 40);
+            list.put("SALMON_BUCKET", 40);
+            list.put("COD_BUCKET", 40);
+            list.put("TROPICAL_FISH_BUCKET", 40);
+            list.put("AXOLOTL_BUCKET", 40);
+            list.put("RECOVERY_COMPASS", 182);
+            list.put("MUSIC_DISC_5", 180);
+            list.put("DISC_FRAGMENT_5", 20);
+            list.put("GOAT_HORN", 20);
+            list.put("ECHO_SHARD", 20);
             // --
             list.put("SCULK", 2);
             list.put("SCULK_CATALYST", 2);
@@ -419,6 +419,9 @@ public class TARDISCondensablesUpdater {
             list.put("BEE_NEST", 100);
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
+            }
+            if (plugin.getCondensablesConfig().contains("Material")) {
+                plugin.getCondensablesConfig().set("Material", null);
             }
             try {
                 String condensablesPath = plugin.getDataFolder() + File.separator + "condensables.yml";
