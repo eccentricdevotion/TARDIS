@@ -81,6 +81,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.LAZARUS.user", false);
         booleanOptions.put("rooms.LIBRARY.enabled", true);
         booleanOptions.put("rooms.LIBRARY.user", false);
+        booleanOptions.put("rooms.MANGROVE.enabled", true);
+        booleanOptions.put("rooms.MANGROVE.user", false);
         booleanOptions.put("rooms.MAZE.enabled", true);
         booleanOptions.put("rooms.MAZE.user", false);
         booleanOptions.put("rooms.MUSHROOM.enabled", true);
@@ -156,6 +158,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.LAZARUS.offset", -4);
         integerOptions.put("rooms.LIBRARY.cost", 550);
         integerOptions.put("rooms.LIBRARY.offset", -4);
+        integerOptions.put("rooms.MANGROVE.cost", 450);
+        integerOptions.put("rooms.MANGROVE.offset", -4);
         integerOptions.put("rooms.MAZE.cost", 650);
         integerOptions.put("rooms.MAZE.offset", -4);
         integerOptions.put("rooms.MUSHROOM.cost", 350);
@@ -211,6 +215,7 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
+        stringOptions.put("rooms.MANGROVE.seed", "MUDDY_MANGROVE_ROOTS");
         stringOptions.put("rooms.MAZE.seed", "LODESTONE");
         stringOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         stringOptions.put("rooms.NETHER.seed", "BLACKSTONE");

@@ -66,6 +66,12 @@ rooms:
     offset: -4
     seed: ENCHANTING_TABLE
     user: false
+  MANGROVE:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: MUDDY_MANGROVE_ROOTS
+    user: false
   MAZE:
     enabled: true
     cost: 650
