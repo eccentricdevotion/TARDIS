@@ -100,6 +100,7 @@ public class TARDISFarmer {
             List<TARDISBee> bees = new ArrayList<>();
             List<TARDISVillager> villagers = new ArrayList<>();
             List<TARDISPanda> pandas = new ArrayList<>();
+            List<TARDISFrog> frogs = new ArrayList<>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
@@ -107,6 +108,7 @@ public class TARDISFarmer {
             }
             // count total farm mobs
             int farmtotal = 0;
+            Material material = Material.OCHRE_FROGLIGHT;
             // is there a farm room?
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
@@ -122,6 +124,7 @@ public class TARDISFarmer {
                 String stable = farming.getStable();
                 String stall = farming.getStall();
                 String village = farming.getVillage();
+                String mangrove = farming.getMangrove();
                 // collate the mobs
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
@@ -243,6 +246,22 @@ public class TARDISFarmer {
                             }
                             if (taf != null) {
                                 taf.doAchievement("HORSE");
+                            }
+                        }
+                        case FROG -> {
+                            Frog frog = (Frog) entity;
+                            TARDISFrog tmfrog = new TARDISFrog();
+                            tmfrog.setType(EntityType.FROG);
+                            tmfrog.setFrogVariant(frog.getVariant());
+                            tmfrog.setAge(frog.getAge());
+                            tmfrog.setHealth(frog.getHealth());
+                            tmfrog.setName(entity.getCustomName());
+                            frogs.add(tmfrog);
+                            if (!mangrove.isEmpty() || (mangrove.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("FROG");
                             }
                         }
                         case LLAMA -> {
@@ -480,7 +499,7 @@ public class TARDISFarmer {
                         fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0) {
+                if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0 || frogs.size() > 0) {
                     boolean canfarm = switch (plugin.getInvManager()) {
                         case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                         default -> true;
@@ -980,6 +999,36 @@ public class TARDISFarmer {
                     p.updateInventory();
                 } else if (parrots.size() > 0) {
                     TARDISMessage.send(p, "FARM_BIRDCAGE");
+                }
+                if (!mangrove.isEmpty()) {
+                    if (frogs.size() > 0) {
+                        // get location of bamboo room
+                        Location swamp = TARDISStaticLocationGetters.getSpawnLocationFromDB(mangrove);
+                        World world = swamp.getWorld();
+                        while (!world.getChunkAt(swamp).isLoaded()) {
+                            world.getChunkAt(swamp).load();
+                        }
+                        frogs.forEach((e) -> {
+                            plugin.setTardisSpawn(true);
+                            Frog frog = (Frog) world.spawnEntity(swamp, EntityType.FROG);
+                            frog.setVariant(e.getFrogVariant());
+                            frog.setAge(e.getAge());
+                            frog.setHealth(e.getHealth());
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                frog.setCustomName(name);
+                            }
+                            frog.setRemoveWhenFarAway(false);
+                        });
+                    }
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && frogs.size() > 0) {
+                    // give spawn eggs
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.FROG_SPAWN_EGG, frogs.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (frogs.size() > 0) {
+                    TARDISMessage.send(p, "FARM_MANGROVE");
                 }
             }
         }

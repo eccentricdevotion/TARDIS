@@ -80,6 +80,7 @@ public class ResultSetFarming {
                         rs.getString("geode"),
                         rs.getString("hutch"),
                         rs.getString("igloo"),
+                        rs.getString("mangrove"),
                         rs.getString("stable"),
                         rs.getString("stall"),
                         rs.getString("village")

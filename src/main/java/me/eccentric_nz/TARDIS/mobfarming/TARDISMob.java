@@ -32,13 +32,13 @@ import org.bukkit.entity.EntityType;
 public class TARDISMob {
 
     private EntityType type;
-    private Type catType;
+    private Type catType; // should be moved to TARDISCat.java
     private int age;
     private double health;
-    private boolean sitting;
+    private boolean sitting; // used by parrots, cats and wolves
     private boolean baby;
     private boolean tamed;
-    private DyeColor colour;
+    private DyeColor colour; // used by sheep, cat and wolf collars
     private String name;
 
     public EntityType getType() {

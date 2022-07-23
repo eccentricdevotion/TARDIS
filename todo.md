@@ -6,6 +6,7 @@
 
 ## Next version `4.11.1`
 
+0. Fix GEODE room so that water pools are 2 block deep (so axolotls don't die)
 1. Deal with removal of datapack worlds that may have TARDISes in them
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 3. Cache TARDIS data to speed lookups and reduce database queries

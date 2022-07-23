@@ -41,6 +41,7 @@ public enum Room {
     KITCHEN,
     LAZARUS,
     LIBRARY,
+    MANGROVE,
     MAZE,
     MUSHROOM,
     NETHER,

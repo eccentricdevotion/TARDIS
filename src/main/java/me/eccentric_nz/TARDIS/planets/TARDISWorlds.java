@@ -52,6 +52,11 @@ public class TARDISWorlds {
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
             }
+            boolean structures = true; // true if not specified
+            if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".generate_structures")) {
+                structures = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".generate_structures");
+            }
+            worldCreator.generateStructures(structures);
             boolean hardcore = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
             if (hardcore) {
                 worldCreator.hardcore(true);

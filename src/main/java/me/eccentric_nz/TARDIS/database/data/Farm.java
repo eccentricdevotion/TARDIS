@@ -30,11 +30,12 @@ public class Farm {
     private final String geode;
     private final String hutch;
     private final String igloo;
+    private final String mangrove;
     private final String stable;
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String mangrove, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
         this.aquarium = aquarium;
@@ -44,6 +45,7 @@ public class Farm {
         this.geode = geode;
         this.hutch = hutch;
         this.igloo = igloo;
+        this.mangrove = mangrove;
         this.stable = stable;
         this.stall = stall;
         this.village = village;
@@ -136,6 +138,16 @@ public class Farm {
      */
     public String getIgloo() {
         return igloo;
+    }
+
+    /**
+     * Returns a String representation of the Mangrove room frog spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
+     *
+     * @return the Mangrove room frog spawn location string, or an empty string if the room does not exist
+     */
+    public String getMangrove() {
+        return mangrove;
     }
 
     /**

@@ -89,10 +89,10 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private final boolean wasResumed;
     private final List<String> postBlocks;
+    private final boolean isLastTask;
     private int maze_count = 0;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private boolean running;
-    private final boolean isLastTask;
     private World world;
     private JsonArray arr;
     private Location aqua_spawn;
@@ -616,7 +616,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("MANGROVE") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -643,6 +643,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
                         case GEODE -> data = Material.CLAY.createBlockData();
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
+                        case MANGROVE -> data = Material.WATER.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         default -> {
                             data = TARDISConstants.BLACK;

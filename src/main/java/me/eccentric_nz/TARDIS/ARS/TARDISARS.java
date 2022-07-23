@@ -45,6 +45,7 @@ public enum TARDISARS implements ARS {
     KITCHEN("PUMPKIN", "Kitchen", 1),
     LAZARUS("FURNACE", "Genetic Manipulator", 1),
     LIBRARY("ENCHANTING_TABLE", "Library", 1),
+    MANGROVE("MUDDY_MANGROVE_ROOTS", "Mangrove", 1),
     MAZE("LODESTONE", "Maze", 1),
     MUSHROOM("GRAVEL", "Mycellium", 1),
     NETHER("BLACKSTONE", "Nether", 1),
