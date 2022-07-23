@@ -58,6 +58,8 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("load")) {
             return partial(args[1], FILE_SUBS);
+        }  else if (args.length == 2 && args[0].equalsIgnoreCase("paste")) {
+            return ImmutableList.of("no_air");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("replace")) {
             return partial(args[1], MAT_SUBS);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("replace")) {

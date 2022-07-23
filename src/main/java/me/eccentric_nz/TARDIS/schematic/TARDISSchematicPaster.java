@@ -46,6 +46,7 @@ class TARDISSchematicPaster implements Runnable {
 
     private final TARDIS plugin;
     private final Player player;
+    private final boolean air;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
     private int task, l, r, h, w, d, x, y, z;
@@ -57,9 +58,10 @@ class TARDISSchematicPaster implements Runnable {
     private boolean running = false;
     private BossBar bb;
 
-    TARDISSchematicPaster(TARDIS plugin, Player player) {
+    TARDISSchematicPaster(TARDIS plugin, Player player, boolean air) {
         this.plugin = plugin;
         this.player = player;
+        this.air = air;
         l = 0;
         r = 0;
     }
@@ -147,6 +149,11 @@ class TARDISSchematicPaster implements Runnable {
                 plugin.getBlockLogger().logRemoval(block);
             }
             switch (data.getMaterial()) {
+                case AIR, CAVE_AIR, VOID_AIR -> {
+                    if (air) {
+                        block.setBlockData(data, true);
+                    }
+                }
                 case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
                 case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
                     JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;

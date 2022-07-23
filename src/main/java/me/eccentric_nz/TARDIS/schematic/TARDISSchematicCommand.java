@@ -74,7 +74,13 @@ public class TARDISSchematicCommand implements CommandExecutor {
             }
             UUID uuid = player.getUniqueId();
             if (args.length == 1 && args[0].equalsIgnoreCase("paste")) {
-                TARDISSchematicPaster paster = new TARDISSchematicPaster(plugin, player);
+                TARDISSchematicPaster paster = new TARDISSchematicPaster(plugin, player, true);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
+                paster.setTask(task);
+                return true;
+            }
+            if (args.length == 2 && args[0].equalsIgnoreCase("paste") && args[1].equalsIgnoreCase("no_air")) {
+                TARDISSchematicPaster paster = new TARDISSchematicPaster(plugin, player, false);
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                 paster.setTask(task);
                 return true;
