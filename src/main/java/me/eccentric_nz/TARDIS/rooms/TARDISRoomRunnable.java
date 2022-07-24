@@ -79,6 +79,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<Material> notThese = new ArrayList<>();
     private final List<BlockData> flora = new ArrayList<>();
     private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
+    private final HashMap<Block, BlockData> propagules = new HashMap<>();
     private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
     private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
@@ -131,6 +132,7 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.DARK_OAK_DOOR);
         notThese.add(Material.JUNGLE_DOOR);
         notThese.add(Material.LEVER);
+        notThese.add(Material.MANGROVE_PROPAGULE);
         notThese.add(Material.MELON_STEM);
         notThese.add(Material.OAK_DOOR);
         notThese.add(Material.PISTON_HEAD);
@@ -256,7 +258,7 @@ public class TARDISRoomRunnable implements Runnable {
                         TARDISMessage.send(player, "ICE");
                     }
                     // set all the ice to water
-                    iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                    iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                     iceblocks.clear();
                 }
                 if (room.equals("CHEMISTRY") && signblocks.size() > 0) {
@@ -272,6 +274,11 @@ public class TARDISRoomRunnable implements Runnable {
                             sign.setLine(2, "is fun!");
                         }
                         sign.update();
+                    }
+                }
+                if (room.equals("MANGROVE") && propagules.size() > 0) {
+                    for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
+                        prop.getKey().setBlockData(prop.getValue());
                     }
                 }
                 if (room.equals("AQUARIUM")) {
@@ -643,7 +650,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
                         case GEODE -> data = Material.CLAY.createBlockData();
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
-                        case MANGROVE -> data = Material.WATER.createBlockData();
+                        case MANGROVE -> data = TARDISConstants.WATER;
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         default -> {
                             data = TARDISConstants.BLACK;
@@ -788,9 +795,12 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     if (level == 4 && room.equals("GREENHOUSE")) {
                         // set all the ice to water
-                        iceblocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                        iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                         iceblocks.clear();
                     }
+                }
+                if (room.equals("MANGROVE") && type.equals(Material.MANGROVE_PROPAGULE)) {
+                    propagules.put(world.getBlockAt(startx, starty, startz), data);
                 }
                 if (room.equals("RAIL") && type.equals(Material.OAK_FENCE)) {
                     // remember fence location so we can teleport the storage minecart
@@ -858,7 +868,7 @@ public class TARDISRoomRunnable implements Runnable {
                 chunkList.add(thisChunk);
                 if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                     if (type.equals(Material.WATER)) {
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.ICE.createBlockData());
+                        TARDISBlockSetters.setBlock(world, startx, starty, startz, TARDISConstants.ICE);
                     } else {
                         TARDISBlockSetters.setBlock(world, startx, starty, startz, data);
                     }
@@ -867,7 +877,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if ((type.equals(Material.WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
                     Block icy = world.getBlockAt(startx, starty, startz);
                     iceblocks.add(icy);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.ICE.createBlockData().getAsString());
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.ICE.getAsString());
                 }
                 // remember lamp blocks
                 if (type.equals(Material.REDSTONE_LAMP)) {
