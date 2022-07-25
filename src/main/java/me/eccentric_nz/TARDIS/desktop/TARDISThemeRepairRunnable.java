@@ -306,7 +306,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             if (tud.getSchematic().getPermission().equals("cave")) {
-                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                 iceBlocks.clear();
             }
             if (postBedrock != null) {

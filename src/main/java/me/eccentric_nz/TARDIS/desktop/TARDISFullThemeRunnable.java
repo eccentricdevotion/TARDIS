@@ -380,7 +380,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             });
             if (tud.getSchematic().getPermission().equals("cave")) {
-                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                 iceBlocks.clear();
             }
             for (int f = 0; f < fractalBlocks.size(); f++) {
@@ -847,7 +847,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 level++;
             }
         }
-
     }
 
     private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {

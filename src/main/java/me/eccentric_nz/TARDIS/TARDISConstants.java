@@ -130,6 +130,10 @@ public class TARDISConstants {
      */
     public static final BlockData ICE = Material.ICE.createBlockData();
     /**
+     * BlockData for WATER
+     */
+    public static final BlockData WATER = Material.WATER.createBlockData();
+    /**
      * BlockData for police box LIGHT
      */
     public static final Levelled LIGHT = setLight(7);

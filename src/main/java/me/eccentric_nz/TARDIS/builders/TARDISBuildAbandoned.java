@@ -198,7 +198,7 @@ class TARDISBuildAbandoned implements Runnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             if (schm.getPermission().equals("cave")) {
-                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                 iceBlocks.clear();
             }
 
