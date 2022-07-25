@@ -84,6 +84,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> seagrass = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
@@ -139,6 +140,7 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.POTATOES);
         notThese.add(Material.PUMPKIN_STEM);
         notThese.add(Material.REDSTONE_TORCH);
+        notThese.add(Material.SEAGRASS);
         notThese.add(Material.SPRUCE_DOOR);
         notThese.add(Material.SUGAR_CANE);
         notThese.add(Material.TORCH);
@@ -186,53 +188,25 @@ public class TARDISRoomRunnable implements Runnable {
                             Block postBlock = world.getBlockAt(location);
                             BlockData postData = plugin.getServer().createBlockData(split[1]);
                             switch (postData.getMaterial()) {
-                                case ICE:
-                                    iceblocks.add(postBlock);
-                                    break;
-                                case REDSTONE_LAMP:
-                                    lampblocks.add(postBlock);
-                                    break;
-                                case TORCH:
-                                    torchblocks.put(postBlock, postData);
-                                    break;
-                                case REDSTONE_TORCH:
-                                    redstoneTorchblocks.put(postBlock, postData);
-                                    break;
-                                case COCOA:
-                                    cocoablocks.put(postBlock, postData);
-                                    break;
-                                case SUGAR_CANE:
-                                    caneblocks.add(postBlock);
-                                    break;
-                                case MELON_STEM:
-                                    melonblocks.add(postBlock);
-                                    break;
-                                case POTATOES:
-                                    potatoblocks.add(postBlock);
-                                    break;
-                                case CARROTS:
-                                    carrotblocks.add(postBlock);
-                                    break;
-                                case PUMPKIN_STEM:
-                                    pumpkinblocks.add(postBlock);
-                                    break;
-                                case WHEAT:
-                                    wheatblocks.add(postBlock);
-                                    break;
-                                case FARMLAND:
-                                    farmlandblocks.add(postBlock);
-                                    break;
-                                case SPRUCE_SIGN:
-                                    signblocks.add(postBlock);
-                                    break;
-                                case OAK_DOOR:
-                                    doorblocks.put(postBlock, postData);
-                                    break;
-                                case LEVER:
-                                    leverblocks.put(postBlock, postData);
-                                    break;
-                                default:
-                                    break;
+                                case ICE -> iceblocks.add(postBlock);
+                                case REDSTONE_LAMP -> lampblocks.add(postBlock);
+                                case TORCH -> torchblocks.put(postBlock, postData);
+                                case REDSTONE_TORCH -> redstoneTorchblocks.put(postBlock, postData);
+                                case COCOA -> cocoablocks.put(postBlock, postData);
+                                case SUGAR_CANE -> caneblocks.add(postBlock);
+                                case MANGROVE_PROPAGULE -> propagules.put(postBlock, postData);
+                                case SEAGRASS -> seagrass.put(postBlock, postData);
+                                case MELON_STEM -> melonblocks.add(postBlock);
+                                case POTATOES -> potatoblocks.add(postBlock);
+                                case CARROTS -> carrotblocks.add(postBlock);
+                                case PUMPKIN_STEM -> pumpkinblocks.add(postBlock);
+                                case WHEAT -> wheatblocks.add(postBlock);
+                                case FARMLAND -> farmlandblocks.add(postBlock);
+                                case SPRUCE_SIGN -> signblocks.add(postBlock);
+                                case OAK_DOOR -> doorblocks.put(postBlock, postData);
+                                case LEVER -> leverblocks.put(postBlock, postData);
+                                default -> {
+                                }
                             }
                         }
                     }
@@ -276,9 +250,14 @@ public class TARDISRoomRunnable implements Runnable {
                         sign.update();
                     }
                 }
-                if (room.equals("MANGROVE") && propagules.size() > 0) {
+                if (propagules.size() > 0) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
+                    }
+                }
+                if (seagrass.size() > 0) {
+                    for (Map.Entry<Block, BlockData> grass : seagrass.entrySet()) {
+                        grass.getKey().setBlockData(grass.getValue());
                     }
                 }
                 if (room.equals("AQUARIUM")) {
@@ -799,8 +778,13 @@ public class TARDISRoomRunnable implements Runnable {
                         iceblocks.clear();
                     }
                 }
-                if (room.equals("MANGROVE") && type.equals(Material.MANGROVE_PROPAGULE)) {
+                if (type.equals(Material.MANGROVE_PROPAGULE)) {
                     propagules.put(world.getBlockAt(startx, starty, startz), data);
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                }
+                if (type.equals(Material.SEAGRASS) || type.equals(Material.TALL_SEAGRASS)) {
+                    seagrass.put(world.getBlockAt(startx, starty, startz), data);
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (room.equals("RAIL") && type.equals(Material.OAK_FENCE)) {
                     // remember fence location so we can teleport the storage minecart
