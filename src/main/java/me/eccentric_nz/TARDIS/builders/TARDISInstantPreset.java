@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
 import org.bukkit.*;
@@ -282,7 +283,7 @@ public class TARDISInstantPreset {
                                     int sy = y - 1;
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
                                     Block sponge = world.getBlockAt(xx, sy, zz);
-                                    plugin.getWorldGuardUtils().sponge(sponge, true);
+                                    TARDISSponge.removeWater(sponge);
                                 } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                 }

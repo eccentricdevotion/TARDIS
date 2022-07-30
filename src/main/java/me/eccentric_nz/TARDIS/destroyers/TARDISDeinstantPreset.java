@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -167,7 +168,7 @@ public class TARDISDeinstantPreset {
                     if (hasResult) {
                         if (rs.getReplacedBlock().getLocation() != null) {
                             Block b = rs.getReplacedBlock().getLocation().getBlock();
-                            plugin.getWorldGuardUtils().sponge(b, false);
+                            TARDISSponge.addWater(b);
                         }
                     }
                 });

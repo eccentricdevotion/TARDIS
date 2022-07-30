@@ -32,13 +32,11 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.sk89q.worldguard.util.SpongeUtil;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -649,22 +647,6 @@ public class TARDISWorldGuardUtils {
      */
     private BlockVector3 makeBlockVector(Location location) {
         return BlockVector3.at(location.getX(), location.getY(), location.getZ());
-    }
-
-    /**
-     * Sets a block with the properties of a sponge
-     *
-     * @param b     the sponge block
-     * @param clear whether to set the sponge area or remove it
-     */
-    public void sponge(Block b, boolean clear) {
-        if (clear) {
-            // remove water
-            SpongeUtil.clearSpongeWater(new BukkitWorld(b.getWorld()), b.getX(), b.getY(), b.getZ());
-        } else {
-            // put water back
-            SpongeUtil.addSpongeWater(new BukkitWorld(b.getWorld()), b.getX(), b.getY(), b.getZ());
-        }
     }
 
     /**
