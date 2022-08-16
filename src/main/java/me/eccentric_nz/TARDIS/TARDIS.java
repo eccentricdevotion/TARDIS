@@ -192,7 +192,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("TARDISChunkGenerator", "4.11.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
-        versions.put("WorldGuard", "7.0.7");
+        versions.put("WorldGuard", "7.0.8");
     }
 
     private ModuleDescriptor.Version getServerVersion(String s) {
@@ -308,7 +308,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
-        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.19");
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.19.2");
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
