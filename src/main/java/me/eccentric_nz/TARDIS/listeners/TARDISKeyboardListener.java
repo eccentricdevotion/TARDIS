@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.utility.TARDISSign;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -71,6 +72,11 @@ public class TARDISKeyboardListener implements Listener {
         Block b = event.getClickedBlock();
         if (b != null && Tag.SIGNS.isTagged(b.getType())) {
             Player player = event.getPlayer();
+            Sign sign = (Sign) b.getState();
+            if (sign.getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
+                TARDISSign.sendSignLink(player);
+                return;
+            }
             String loc = event.getClickedBlock().getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
             where.put("type", 7);
@@ -86,7 +92,6 @@ public class TARDISKeyboardListener implements Listener {
                     TARDISMessage.send(player, "INPUT_MISSING");
                     return;
                 }
-                Sign sign = (Sign) b.getState();
                 plugin.getTrackerKeeper().getSign().put(loc, sign);
                 player.openSign(sign);
             }
@@ -106,6 +111,11 @@ public class TARDISKeyboardListener implements Listener {
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
+            // wiki?
+            if (event.getLine(0).equalsIgnoreCase("wiki")) {
+                TARDISSign.sendSignLink(p);
+                return;
+            }
             int id = rs.getTardis_id();
             // player?
             if (plugin.getServer().getPlayer(event.getLine(0)) != null) {
