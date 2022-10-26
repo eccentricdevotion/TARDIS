@@ -71,31 +71,41 @@ public class TARDISHandlesCommand implements CommandExecutor {
         }
         UUID uuid;
         try {
-            uuid = UUID.fromString(args[1]);
+            uuid = (args[0].equals("brake")) ? UUID.fromString(args[2]) : UUID.fromString(args[1]);
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "HANDLES_INTERNAL");
             return true;
         }
         player = plugin.getServer().getPlayer(uuid);
         switch (args[0]) {
-            case "land":
+            case "land" -> {
                 return new TARDISHandlesLandCommand(plugin).exitVortex(player, TARDISNumberParsers.parseInt(args[2]), args[1]);
-            case "lock":
-            case "unlock":
+            }
+            case "lock", "unlock" -> {
                 return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
-            case "name":
+            }
+            case "name" -> {
                 TARDISMessage.handlesSend(player, "HANDLES_NAME", player.getName());
                 return true;
-            case "remind":
+            }
+            case "remind" -> {
                 return new TARDISHandlesRemindCommand(plugin).doReminder(player, args);
-            case "say":
+            }
+            case "say" -> {
                 return new TARDISHandlesSayCommand().say(player, args);
-            case "scan":
+            }
+            case "scan" -> {
                 return new TARDISHandlesScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();
-            case "takeoff":
+            }
+            case "takeoff" -> {
                 return new TARDISHandlesTakeoffCommand(plugin).enterVortex(player, args);
-            case "time":
+            }
+            case "time" -> {
                 return new TARDISHandlesTimeCommand(plugin).sayTime(player);
+            }
+            case "brake" -> {
+                return new TARDISHandlesBrakeCommand(plugin).park(player, args);
+            }
         }
         return false;
     }

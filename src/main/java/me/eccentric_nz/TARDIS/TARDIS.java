@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
+import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
@@ -681,6 +682,7 @@ public class TARDIS extends JavaPlugin {
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
+        new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
     }
 
     /**

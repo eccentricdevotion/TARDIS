@@ -18,6 +18,7 @@ core-commands:
   direction: '\b(?:fac(?:ing|e)|direction)\s+(\w+)'
   lights: '\b(?:lights\b.*\b(off|on)|(off|on)\b.*\blights)\b'
   power: '\b(?:power\b.*\b(off|on)|(off|on)\b.*\bpower)\b'
+  brake: '\b(?:(?:hand)*brake|park)\b'
   travel:
     save: '\b(?:travel|go)\s+(?:to\s+)?.*?(?:saved?(?:\s+(?:location|destination|place|point))?|destination)\s+(\w+)'
     home: '\b(?:travel|go)\s+(?:to\s+)?.*?home\b'

@@ -38,19 +38,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TARDISHandlesRequest {
 
     private final TARDIS plugin;
-    private final ItemStack handles;
     private final Pattern handlesPattern;
 
     public TARDISHandlesRequest(TARDIS plugin) {
         this.plugin = plugin;
-        handles = getHandles();
         handlesPattern = TARDISHandlesPattern.getPattern("prefix", false);
     }
 
@@ -90,7 +91,16 @@ public class TARDISHandlesRequest {
                 }
             } else {
                 // Handles must be in inventory
-                if (!player.getInventory().contains(handles)) {
+                boolean found = false;
+                for (ItemStack is : player.getInventory().getContents()) {
+                    if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
+                        ItemMeta im = is.getItemMeta();
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
+                            found = true;
+                        }
+                    }
+                }
+                if (!found) {
                     TARDISMessage.send(player, "HANDLES_INVENTORY");
                     return;
                 }
@@ -120,7 +130,7 @@ public class TARDISHandlesRequest {
             }
             if (matched) {
                 switch (key) {
-                    case "craft":
+                    case "craft" -> {
                         if (groups != null) {
                             String tardis = groups.get(1);
                             if (tardis == null || tardis.isEmpty()) {
@@ -146,8 +156,8 @@ public class TARDISHandlesRequest {
                             // don't understand
                             TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                         }
-                        break;
-                    case "remind":
+                    }
+                    case "remind" -> {
                         if (!plugin.getHandlesConfig().getBoolean("reminders.enabled")) {
                             TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             return;
@@ -158,35 +168,38 @@ public class TARDISHandlesRequest {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid + " " + reminder + " " + time), 1L);
                             return;
                         }
-                        break;
-                    case "say":
+                    }
+                    case "say" -> {
                         if (groups != null) {
                             String g = groups.get(0);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid + " " + TARDISStringUtils.normalizeSpace(g)), 1L);
                         }
-                        break;
-                    case "name":
+                    }
+                    case "name" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid), 1L);
-                        break;
-                    case "time":
+                    }
+                    case "time" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid), 1L);
-                        break;
-                    case "call":
+                    }
+                    case "call" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid + " " + id), 1L);
-                        break;
-                    case "takeoff":
+                    }
+                    case "takeoff" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id), 1L);
-                        break;
-                    case "land":
+                    }
+                    case "land" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id), 1L);
-                        break;
-                    case "hide":
+                    }
+                    case "hide" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis hide"), 1L);
-                        break;
-                    case "rebuild":
+                    }
+                    case "rebuild" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis rebuild"), 1L);
-                        break;
-                    case "direction":
+                    }
+                    case "brake" -> {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles brake on " + uuid + " " + id), 1L);
+                    }
+                    case "direction" -> {
                         if (groups != null) {
                             COMPASS direction = null;
                             if (groups.get(0).equalsIgnoreCase("east")) {
@@ -203,8 +216,8 @@ public class TARDISHandlesRequest {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis direction " + d), 1L);
                             }
                         }
-                        break;
-                    case "lights":
+                    }
+                    case "lights" -> {
                         if (groups != null) {
                             boolean onoff = groups.get(0).equalsIgnoreCase("on");
                             // get tardis
@@ -218,8 +231,8 @@ public class TARDISHandlesRequest {
                                 }
                             }
                         }
-                        break;
-                    case "power":
+                    }
+                    case "power" -> {
                         if (groups != null) {
                             boolean onoff = groups.get(0).equalsIgnoreCase("off");
                             // get tardis
@@ -235,8 +248,8 @@ public class TARDISHandlesRequest {
                                 }
                             }
                         }
-                        break;
-                    case "travel.save":
+                    }
+                    case "travel.save" -> {
                         if (groups != null) {
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("tardis_id", id);
@@ -251,11 +264,11 @@ public class TARDISHandlesRequest {
                                 }
                             }
                         }
-                        break;
-                    case "travel.home":
+                    }
+                    case "travel.home" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
-                        break;
-                    case "travel.random":
+                    }
+                    case "travel.random" -> {
                         // get tardis
                         HashMap<String, Object> wherel = new HashMap<>();
                         wherel.put("tardis_id", id);
@@ -265,8 +278,8 @@ public class TARDISHandlesRequest {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtron_level(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
                             return;
                         }
-                        break;
-                    case "travel.player":
+                    }
+                    case "travel.player" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                                 TARDISMessage.handlesSend(player, "NO_PERM_PLAYER");
@@ -282,8 +295,8 @@ public class TARDISHandlesRequest {
                                 TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
-                        break;
-                    case "travel.area":
+                    }
+                    case "travel.area" -> {
                         if (groups != null) {
                             String area = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
                             ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
@@ -299,8 +312,8 @@ public class TARDISHandlesRequest {
                                 TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
-                        break;
-                    case "travel.biome":
+                    }
+                    case "travel.biome" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
                                 TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
@@ -318,40 +331,40 @@ public class TARDISHandlesRequest {
                             // don't understand
                             TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                         }
-                        break;
-                    case "travel.cave":
+                    }
+                    case "travel.cave" -> {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
                             TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_CAVE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave"), 1L);
-                        break;
-                    case "travel.village":
+                    }
+                    case "travel.village" -> {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
                             TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village"), 1L);
-                        break;
-                    case "door.open":
+                    }
+                    case "door.open" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door OPEN"), 1L);
-                        break;
-                    case "door.close":
+                    }
+                    case "door.close" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door CLOSE"), 1L);
-                        break;
-                    case "door.lock":
+                    }
+                    case "door.lock" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid + " " + id + " true"), 1L);
-                        break;
-                    case "door.unlock":
+                    }
+                    case "door.unlock" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid + " " + id + " false"), 1L);
-                        break;
-                    case "scan":
+                    }
+                    case "scan" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
-                        break;
-                    case "teleport":
+                    }
+                    case "teleport" -> {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
-                        break;
-                    case "transmat":
+                    }
+                    case "transmat" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
                                 TARDISMessage.handlesSend(player, "NO_PERMS");
@@ -370,9 +383,9 @@ public class TARDISHandlesRequest {
                                 TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT");
                             }
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
                 if (key.equals("remind")) {
                     TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
@@ -425,14 +438,5 @@ public class TARDISHandlesRequest {
                 }
             }
         }
-    }
-
-    private ItemStack getHandles() {
-        ItemStack is = new ItemStack(Material.BIRCH_BUTTON);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
-        is.setItemMeta(im);
-        return is;
     }
 }
