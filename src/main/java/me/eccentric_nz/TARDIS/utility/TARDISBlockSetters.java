@@ -41,9 +41,9 @@ public class TARDISBlockSetters {
      * @param bd the block data to set the block to.
      */
     public static void setBlock(Location l, BlockData bd) {
-        Block b = l.getBlock();
-        BlockData blockData;
-        if (b != null) {
+        if (l != null) {
+            Block b = l.getBlock();
+            BlockData blockData;
             switch (bd.getMaterial()) {
                 case CAKE -> {
                     // cake -> handbrake
@@ -79,8 +79,8 @@ public class TARDISBlockSetters {
      * @param data the block data to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, BlockData data) {
-        Block b = w.getBlockAt(x, y, z);
-        if (b != null) {
+        if (w != null) {
+            Block b = w.getBlockAt(x, y, z);
             switch (data.getMaterial()) {
                 case CAKE -> {
                     // cake -> handbrake
@@ -116,9 +116,9 @@ public class TARDISBlockSetters {
      * @param material the Material to apply to the block.
      */
     public static void setBlock(World w, int x, int y, int z, Material material) {
-        Block b = w.getBlockAt(x, y, z);
-        BlockData blockData = material.createBlockData();
-        if (b != null) {
+        if (w != null) {
+            Block b = w.getBlockAt(x, y, z);
+            BlockData blockData = material.createBlockData();
             switch (material) {
                 case CAKE -> {
                     // cake -> handbrake
