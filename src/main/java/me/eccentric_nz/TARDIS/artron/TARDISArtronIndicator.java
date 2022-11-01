@@ -60,7 +60,7 @@ public class TARDISArtronIndicator {
             int percent = Math.round((current_level * 100F) / fc);
             if (!isFiltered) {
                 Scoreboard board = manager.getNewScoreboard();
-                Objective objective = board.registerNewObjective("TARDIS", "Artron", plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                Objective objective = board.registerNewObjective("TARDIS", Criteria.create("Artron"), plugin.getLanguage().getString("ARTRON_DISPLAY"));
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 if (used == 0) {
                     Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");

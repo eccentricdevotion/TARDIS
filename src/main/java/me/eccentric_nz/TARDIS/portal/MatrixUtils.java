@@ -34,7 +34,7 @@ public class MatrixUtils {
         int size = capture[0].length;
         BlockData[][][] rotated = new BlockData[layers][size][size];
         for (int l = 0; l < layers; l++) {
-            BlockData data[][] = new BlockData[size][size];
+            BlockData[][] data = new BlockData[size][size];
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
                     // process problem blocks

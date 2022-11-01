@@ -117,15 +117,15 @@ public class TARDISDynmap {
         window = window.replace("%powered%", data.getPowered());
         window = window.replace("%door%", data.getDoor());
         window = window.replace("%siege%", data.getSiege());
-        String travellers = "";
+        StringBuilder travellers = new StringBuilder();
         if (data.getOccupants().size() > 0) {
             for (String o : data.getOccupants()) {
-                travellers += o + "<br />";
+                travellers.append(o).append("<br />");
             }
         } else {
-            travellers = "Empty";
+            travellers = new StringBuilder("Empty");
         }
-        window = window.replace("%occupants%", travellers);
+        window = window.replace("%occupants%", travellers.toString());
         return window;
     }
 

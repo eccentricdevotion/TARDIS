@@ -121,7 +121,7 @@ public class TARDISCondenserListener implements Listener {
                     // non-condensable items we need to return to the player
                     ArrayList<ItemStack> returnedItems = new ArrayList<>();
                     // how many items we neglected to condense due to them being enchanted
-                    Integer savedEnchantedItems = 0;
+                    int savedEnchantedItems = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
                     Inventory inv = event.getInventory();
@@ -248,7 +248,7 @@ public class TARDISCondenserListener implements Listener {
                         }
                         // warn players about not condensing enchanted items
                         if (savedEnchantedItems > 0) {
-                            TARDISMessage.send(player, "CONDENSE_NO_ENCHANTED", savedEnchantedItems.toString());
+                            TARDISMessage.send(player, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
                         }
                         // halve it cause 1:1 is too much...
                         amount = Math.round(amount / 2.0F);

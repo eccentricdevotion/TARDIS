@@ -66,7 +66,7 @@ class TARDISGetter {
             // only get worlds that are enabled for time travel, and only regular worlds as dynmap doesn't support custom dimensions yet
             for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
                 if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
-                    sb.append("'" + planet + "',");
+                    sb.append("'").append(planet).append("',");
                 }
             }
             query += " AND " + prefix + "current.world IN (" + sb.substring(0, sb.length() - 1) + ")";
