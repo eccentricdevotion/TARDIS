@@ -21,6 +21,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.EntityType;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,7 @@ public class TARDISMaterials {
 
     public static final HashMap<Material, EntityType> fishMap = new HashMap<>() {
 
+        @Serial
         private static final long serialVersionUID = 3109256773218160485L;
 
         {

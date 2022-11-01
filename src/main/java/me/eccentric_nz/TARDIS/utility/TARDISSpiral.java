@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.awt.*;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ class TARDISSpiral {
 
         SPIRAL = new ArrayList<>() {
 
+            @Serial
             private static final long serialVersionUID = 3109256773218160485L;
 
             {

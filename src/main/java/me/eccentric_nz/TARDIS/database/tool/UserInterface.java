@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.database.tool;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +27,7 @@ import java.util.logging.Logger;
  */
 public class UserInterface extends javax.swing.JFrame {
 
+    @Serial
     private static final long serialVersionUID = 3259909191489626727L;
     private final PrintWriter consoleStream;
     private File lastDir = new File(".");
