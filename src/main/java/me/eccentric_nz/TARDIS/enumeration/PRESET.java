@@ -132,14 +132,14 @@ public enum PRESET {
         }
     }
 
-    Material craftMaterial;
-    Material guiDisplay;
-    int slot;
-    String firstLine;
-    String secondLine;
-    boolean door;
-    boolean portal;
-    String displayName;
+    final Material craftMaterial;
+    final Material guiDisplay;
+    final int slot;
+    final String firstLine;
+    final String secondLine;
+    final boolean door;
+    final boolean portal;
+    final String displayName;
 
     PRESET(Material craftMaterial, String firstLine, String secondLine, boolean door, boolean portal) {
         this.craftMaterial = craftMaterial;

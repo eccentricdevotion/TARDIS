@@ -56,9 +56,9 @@ public enum GlowstoneCircuit {
         }
     }
 
-    String displayName;
-    int customModelData;
-    int damaged;
+    final String displayName;
+    final int customModelData;
+    final int damaged;
 
     GlowstoneCircuit(String displayName, int customModelData) {
         this.displayName = displayName;

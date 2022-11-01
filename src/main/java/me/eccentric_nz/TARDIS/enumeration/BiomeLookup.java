@@ -53,8 +53,8 @@ public enum BiomeLookup {
         }
     }
 
-    String regular;
-    String upper;
+    final String regular;
+    final String upper;
 
     BiomeLookup(String regular, String upper) {
         this.regular = regular;

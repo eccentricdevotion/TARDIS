@@ -23,8 +23,8 @@ public enum Theme {
     TWENTY_TWENTY("theme_20", 2080),
     RANDOM("theme", 2620);
 
-    String filename;
-    long length;
+    final String filename;
+    final long length;
 
     Theme(String filename, long length) {
         this.filename = filename;

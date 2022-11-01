@@ -62,8 +62,8 @@ public enum DiskCircuit {
         }
     }
 
-    String name;
-    Material material;
+    final String name;
+    final Material material;
 
     DiskCircuit(String name, Material material) {
         this.name = name;
