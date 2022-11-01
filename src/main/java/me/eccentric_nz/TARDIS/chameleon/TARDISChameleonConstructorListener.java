@@ -161,7 +161,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                             ItemStack d = view.getItem(s + c);
                                             if (d != null) {
                                                 Material type = d.getType();
-                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
+                                                if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.WOOL_CARPETS.isTagged(type)) {
                                                     TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);
