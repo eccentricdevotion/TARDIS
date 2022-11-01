@@ -26,9 +26,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class ARSRoomCounts {
 
+    private static final Pattern JSON_FLUFF = Pattern.compile("[\"\\[\\]]");
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
@@ -52,7 +54,7 @@ public class ARSRoomCounts {
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    String json = rs.getString("json").replaceAll("[\"\\[\\]]", "");
+                    String json = JSON_FLUFF.matcher(rs.getString("json")).replaceAll("");
                     double num = 0;
                     List<String> materials = new ArrayList<>(Arrays.asList(json.split(",")));
                     materials.removeAll(STONE);

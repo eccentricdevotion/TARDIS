@@ -38,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Command /tardisarea [arguments].
@@ -50,6 +51,7 @@ import java.util.Locale;
 public class TARDISAreaCommands implements CommandExecutor {
 
     public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
     public TARDISAreaCommands(TARDIS plugin) {
@@ -80,7 +82,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             switch (args[0].toLowerCase()) {
                 case "start":
                     // check name is unique and acceptable
-                    if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                    if (args.length < 2 || !LETTERS_NUMBERS.matcher(args[1]).matches()) {
                         TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
                         return false;
                     }

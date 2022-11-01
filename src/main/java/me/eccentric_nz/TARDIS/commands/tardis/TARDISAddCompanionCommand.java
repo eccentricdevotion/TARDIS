@@ -35,12 +35,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
  */
 class TARDISAddCompanionCommand {
 
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_*.]{2,16}");
     private final TARDIS plugin;
 
     TARDISAddCompanionCommand(TARDIS plugin) {
@@ -82,7 +84,7 @@ class TARDISAddCompanionCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
+            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));

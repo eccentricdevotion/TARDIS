@@ -29,12 +29,14 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
  */
 class TARDISRemoveCompanionCommand {
 
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_*.]{2,16}");
     private final TARDIS plugin;
 
     TARDISRemoveCompanionCommand(TARDIS plugin) {
@@ -68,7 +70,7 @@ class TARDISRemoveCompanionCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
+            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 String newList = "";

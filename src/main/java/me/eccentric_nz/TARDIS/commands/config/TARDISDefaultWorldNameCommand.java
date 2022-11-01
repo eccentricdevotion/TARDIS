@@ -21,12 +21,14 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
  */
 class TARDISDefaultWorldNameCommand {
 
+    private static final Pattern DOTS = Pattern.compile("\\.");
     private final TARDIS plugin;
 
     TARDISDefaultWorldNameCommand(TARDIS plugin) {
@@ -37,7 +39,7 @@ class TARDISDefaultWorldNameCommand {
         // get world name
         String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         // need to make there are no periods(.) in the text
-        String nodots = t.replaceAll("\\.", "_");
+        String nodots = DOTS.matcher(t).replaceAll("_");
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED", "default_world_name");

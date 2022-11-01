@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Book Monsters are creatures were made up entirely of books. They were known to ‘sleep’, and were capable of living
@@ -38,6 +39,7 @@ import java.util.Scanner;
  */
 public class TARDISBook {
 
+    private static final Pattern AT_P = Pattern.compile("@p");
     private final TARDIS plugin;
 
     public TARDISBook(TARDIS plugin) {
@@ -68,7 +70,7 @@ public class TARDISBook {
         } catch (FileNotFoundException f) {
             plugin.debug("Could not find file");
         }
-        book_str = book_str.replaceAll("@p", p.getName());
+        book_str = AT_P.matcher(book_str).replaceAll(p.getName());
         // two line breaks = new page
         List<String> pages = Arrays.asList(book_str.split(ls + ls));
         // make the book

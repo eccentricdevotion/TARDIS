@@ -24,12 +24,14 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
  */
 class TARDISRenameSavedLocationCommand {
 
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
     TARDISRenameSavedLocationCommand(TARDIS plugin) {
@@ -56,7 +58,7 @@ class TARDISRenameSavedLocationCommand {
                 TARDISMessage.send(player, "SAVE_NOT_FOUND");
                 return false;
             }
-            if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
+            if (!LETTERS_NUMBERS.matcher(args[2]).matches()) {
                 TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                 return false;
             } else if (args[2].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {

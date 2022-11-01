@@ -30,12 +30,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISDiskWriterCommand {
 
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_*]{2,16}");
     private final TARDIS plugin;
     private final List<String> disks = new ArrayList<>();
 
@@ -71,7 +73,7 @@ public class TARDISDiskWriterCommand {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
-                if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
+                if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return false;
                 }
@@ -198,7 +200,7 @@ public class TARDISDiskWriterCommand {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
-                if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
+                if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
                     TARDISMessage.send(player, "PLAYER_NOT_VALID");
                     return false;
                 }

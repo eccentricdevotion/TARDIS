@@ -32,9 +32,11 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 class TARDISTransmatCommand {
 
+    private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
     TARDISTransmatCommand(TARDIS plugin) {
@@ -125,7 +127,7 @@ class TARDISTransmatCommand {
                     return true;
                 }
                 // get the transmat name
-                if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
+                if (!LETTERS_NUMBERS.matcher(args[2]).matches()) {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return true;
                 }
