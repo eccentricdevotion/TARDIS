@@ -175,30 +175,14 @@ public class TARDISHandlesRequest {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid + " " + TARDISStringUtils.normalizeSpace(g)), 1L);
                         }
                     }
-                    case "name" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid), 1L);
-                    }
-                    case "time" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid), 1L);
-                    }
-                    case "call" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid + " " + id), 1L);
-                    }
-                    case "takeoff" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id), 1L);
-                    }
-                    case "land" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id), 1L);
-                    }
-                    case "hide" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis hide"), 1L);
-                    }
-                    case "rebuild" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis rebuild"), 1L);
-                    }
-                    case "brake" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles brake on " + uuid + " " + id), 1L);
-                    }
+                    case "name" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid), 1L);
+                    case "time" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid), 1L);
+                    case "call" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid + " " + id), 1L);
+                    case "takeoff" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id), 1L);
+                    case "land" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id), 1L);
+                    case "hide" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis hide"), 1L);
+                    case "rebuild" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis rebuild"), 1L);
+                    case "brake" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles brake on " + uuid + " " + id), 1L);
                     case "direction" -> {
                         if (groups != null) {
                             COMPASS direction = null;
@@ -265,9 +249,7 @@ public class TARDISHandlesRequest {
                             }
                         }
                     }
-                    case "travel.home" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
-                    }
+                    case "travel.home" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
                     case "travel.random" -> {
                         // get tardis
                         HashMap<String, Object> wherel = new HashMap<>();
@@ -346,24 +328,12 @@ public class TARDISHandlesRequest {
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village"), 1L);
                     }
-                    case "door.open" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door OPEN"), 1L);
-                    }
-                    case "door.close" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door CLOSE"), 1L);
-                    }
-                    case "door.lock" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid + " " + id + " true"), 1L);
-                    }
-                    case "door.unlock" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid + " " + id + " false"), 1L);
-                    }
-                    case "scan" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
-                    }
-                    case "teleport" -> {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
-                    }
+                    case "door.open" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door OPEN"), 1L);
+                    case "door.close" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door CLOSE"), 1L);
+                    case "door.lock" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid + " " + id + " true"), 1L);
+                    case "door.unlock" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid + " " + id + " false"), 1L);
+                    case "scan" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
+                    case "teleport" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
                     case "transmat" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {

@@ -43,14 +43,10 @@ public class TARDISSetFlightCommand {
         }
         int mode = 1;
         switch (fm) {
-            case REGULATOR:
-                mode = 2;
-                break;
-            case MANUAL:
-                mode = 3;
-                break;
-            default:
-                break;
+            case REGULATOR -> mode = 2;
+            case MANUAL -> mode = 3;
+            default -> {
+            }
         }
         HashMap<String, Object> setf = new HashMap<>();
         setf.put("flying_mode", mode);

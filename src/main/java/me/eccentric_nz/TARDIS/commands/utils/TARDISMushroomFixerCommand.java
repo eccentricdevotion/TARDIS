@@ -59,15 +59,9 @@ public class TARDISMushroomFixerCommand extends TARDISCompleter implements Comma
                 }
                 BlockData data;
                 switch (type) {
-                    case "red" -> {
-                        data = Material.RED_MUSHROOM_BLOCK.createBlockData();
-                    }
-                    case "brown" -> {
-                        data = Material.BROWN_MUSHROOM_BLOCK.createBlockData();
-                    }
-                    default -> {
-                        data = Material.MUSHROOM_STEM.createBlockData();
-                    }
+                    case "red" -> data = Material.RED_MUSHROOM_BLOCK.createBlockData();
+                    case "brown" -> data = Material.BROWN_MUSHROOM_BLOCK.createBlockData();
+                    default -> data = Material.MUSHROOM_STEM.createBlockData();
                 }
                 Block block = player.getLocation().add(-radius, -radius, -radius).getBlock();
                 World world = block.getWorld();

@@ -589,7 +589,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         if (downgrade) {
                             // reset slots to stone
                             switch (size_prev) {
-                                case MASSIVE:
+                                case MASSIVE -> {
                                     // the 8 slots on the same level &
                                     existing[1][4][5] = "STONE";
                                     existing[1][4][6] = "STONE";
@@ -609,8 +609,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                     existing[2][6][4] = "STONE";
                                     existing[2][6][5] = "STONE";
                                     existing[2][6][6] = "STONE";
-                                    break;
-                                case TALL:
+                                }
+                                case TALL -> {
                                     // the 3 slots on the same level &
                                     existing[1][4][5] = "STONE";
                                     existing[1][5][4] = "STONE";
@@ -620,23 +620,23 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                     existing[2][4][5] = "STONE";
                                     existing[2][5][4] = "STONE";
                                     existing[2][5][5] = "STONE";
-                                    break;
-                                case MEDIUM:
+                                }
+                                case MEDIUM -> {
                                     // the 3 slots on the same level
                                     existing[1][4][5] = "STONE";
                                     existing[1][5][4] = "STONE";
                                     existing[1][5][5] = "STONE";
-                                    break;
-                                default:
-                                    // SMALL size do nothing
-                                    break;
+                                }
+                                default -> {
+                                }
+                                // SMALL size do nothing
                             }
                         }
                         // add control blocks
                         String control = tud.getSchematic().getSeedMaterial().toString();
                         existing[1][4][4] = control;
                         switch (size_next) {
-                            case MASSIVE:
+                            case MASSIVE -> {
                                 // the 8 slots on the same level &
                                 existing[1][4][5] = control;
                                 existing[1][4][6] = control;
@@ -656,8 +656,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 existing[2][6][4] = control;
                                 existing[2][6][5] = control;
                                 existing[2][6][6] = control;
-                                break;
-                            case TALL:
+                            }
+                            case TALL -> {
                                 // the 3 slots on the same level &
                                 existing[1][4][5] = control;
                                 existing[1][5][4] = control;
@@ -667,16 +667,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 existing[2][4][5] = control;
                                 existing[2][5][4] = control;
                                 existing[2][5][5] = control;
-                                break;
-                            case MEDIUM:
+                            }
+                            case MEDIUM -> {
                                 // the 3 slots on the same level
                                 existing[1][4][5] = control;
                                 existing[1][5][4] = control;
                                 existing[1][5][5] = control;
-                                break;
-                            default:
-                                // SMALL size do nothing
-                                break;
+                            }
+                            default -> {
+                            }
+                            // SMALL size do nothing
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                         JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
@@ -854,7 +854,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         switch (prev) {
             case MASSIVE:
                 switch (next) {
-                    case TALL:
+                    case TALL -> {
                         // the 5 chunks on the same level &
                         list.add(new TARDISARSJettison(chunk, 1, 4, 6));
                         list.add(new TARDISARSJettison(chunk, 1, 5, 6));
@@ -867,9 +867,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 6, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 6));
-
-                        break;
-                    case MEDIUM:
+                    }
+                    case MEDIUM -> {
                         // the 5 chunks on the same level &
                         list.add(new TARDISARSJettison(chunk, 1, 4, 6));
                         list.add(new TARDISARSJettison(chunk, 1, 5, 6));
@@ -886,8 +885,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 6, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 6));
-                        break;
-                    case SMALL:
+                    }
+                    case SMALL -> {
                         // the 8 chunks on the same level &
                         list.add(new TARDISARSJettison(chunk, 1, 4, 5));
                         list.add(new TARDISARSJettison(chunk, 1, 4, 6));
@@ -907,22 +906,22 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 6, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 6));
-                        break;
-                    default:
-                        // same size do nothing
-                        break;
+                    }
+                    default -> {
+                    }
+                    // same size do nothing
                 }
                 break;
             case TALL:
                 switch (next) {
-                    case MEDIUM:
+                    case MEDIUM -> {
                         // the 4 chunks on the level above
                         list.add(new TARDISARSJettison(chunk, 2, 4, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 4, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 5, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        break;
-                    case SMALL:
+                    }
+                    case SMALL -> {
                         // the 3 chunks on the same level &
                         list.add(new TARDISARSJettison(chunk, 1, 4, 5));
                         list.add(new TARDISARSJettison(chunk, 1, 5, 4));
@@ -932,10 +931,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 4, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 5, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        break;
-                    default:
-                        // same size or bigger do nothing
-                        break;
+                    }
+                    default -> {
+                    }
+                    // same size or bigger do nothing
                 }
                 break;
             case MEDIUM:

@@ -134,31 +134,31 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                 }
             } else {
                 switch (identifier) {
-                    case "ars_status":
+                    case "ars_status" -> {
                         Integer percent = plugin.getBuildKeeper().getRoomProgress().get(player.getUniqueId());
                         if (percent != null) {
                             result = Integer.toString(percent);
                         } else {
                             result = "ARS not in use";
                         }
-                        break;
-                    case "artron_amount":
+                    }
+                    case "artron_amount" -> {
                         rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = Integer.toString(rsl.getArtronLevel());
                         } else {
                             result = "0";
                         }
-                        break;
-                    case "artron_percent":
+                    }
+                    case "artron_percent" -> {
                         rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                         } else {
                             result = "0%";
                         }
-                        break;
-                    case "console":
+                    }
+                    case "console" -> {
                         where.put("uuid", uuid);
                         rst = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rst.resultSet()) {
@@ -166,8 +166,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "preset":
+                    }
+                    case "preset" -> {
                         where.put("uuid", uuid);
                         rst = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rst.resultSet()) {
@@ -175,8 +175,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location":
+                    }
+                    case "current_location" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -189,8 +189,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_x":
+                    }
+                    case "current_location_x" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -203,8 +203,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_y":
+                    }
+                    case "current_location_y" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -217,8 +217,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_z":
+                    }
+                    case "current_location_z" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -231,8 +231,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_world":
+                    }
+                    case "current_location_world" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -245,8 +245,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_direction":
+                    }
+                    case "current_location_direction" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -259,8 +259,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "current_location_biome":
+                    }
+                    case "current_location_biome" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
                             where.put("tardis_id", rsti.getTardis_id());
@@ -275,17 +275,17 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         } else {
                             result = "";
                         }
-                        break;
-                    case "timelord_artron_amount":
+                    }
+                    case "timelord_artron_amount" -> {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                         if (rsp.resultSet()) {
                             result = Integer.toString(rsp.getArtronLevel());
                         } else {
                             result = "0";
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
         }

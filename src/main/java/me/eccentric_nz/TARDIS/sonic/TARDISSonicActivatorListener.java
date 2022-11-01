@@ -72,16 +72,14 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 9) {
                 switch (slot) {
-                    case 7:
-                        event.setCancelled(true);
-                        break;
-                    case 8:
+                    case 7 -> event.setCancelled(true);
+                    case 8 -> {
                         event.setCancelled(true);
                         // close
                         save(p, view);
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

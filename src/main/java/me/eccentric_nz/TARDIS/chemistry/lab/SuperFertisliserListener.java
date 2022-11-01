@@ -85,19 +85,13 @@ public class SuperFertisliserListener implements Listener {
                 boolean removeItem = false;
                 if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters(player, Flag.getNoMessageFlags()))) {
                     switch (block.getType()) {
-                        case PUMPKIN_STEM:
-                        case MELON_STEM:
-                        case CARROTS:
-                        case WHEAT:
-                        case POTATOES:
-                        case BEETROOTS:
-                        case SWEET_BERRY_BUSH:
+                        case PUMPKIN_STEM, MELON_STEM, CARROTS, WHEAT, POTATOES, BEETROOTS, SWEET_BERRY_BUSH -> {
                             Ageable ageable = (Ageable) block.getBlockData();
                             ageable.setAge(ageable.getMaximumAge());
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(ageable), 3L);
                             removeItem = true;
-                            break;
-                        case BAMBOO_SAPLING:
+                        }
+                        case BAMBOO_SAPLING -> {
                             Bamboo bamboo = (Bamboo) Material.BAMBOO.createBlockData();
                             bamboo.setAge(1);
                             bamboo.setStage(1);
@@ -117,9 +111,9 @@ public class SuperFertisliserListener implements Listener {
                                 last.setBlockData(bamboo);
                             }, 3L);
                             removeItem = true;
-                            break;
-                        default:
-                            break;
+                        }
+                        default -> {
+                        }
                     }
                 }
                 if (removeItem && !player.getGameMode().equals(GameMode.CREATIVE)) {

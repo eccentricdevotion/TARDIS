@@ -47,8 +47,7 @@ public class TARDISSonicRedstone {
             Material blockType = block.getType();
             // do redstone activation
             switch (blockType) {
-                case DETECTOR_RAIL:
-                case POWERED_RAIL:
+                case DETECTOR_RAIL, POWERED_RAIL -> {
                     RedstoneRail rail = (RedstoneRail) block.getBlockData();
                     if (plugin.getGeneralKeeper().getSonicRails().contains(block.getLocation().toString())) {
                         plugin.getGeneralKeeper().getSonicRails().remove(block.getLocation().toString());
@@ -58,8 +57,8 @@ public class TARDISSonicRedstone {
                         rail.setPowered(true);
                     }
                     block.setBlockData(rail, true);
-                    break;
-                case IRON_DOOR:
+                }
+                case IRON_DOOR -> {
                     // get bottom door block
                     Block tmp = block;
                     Bisected bisected = (Bisected) block.getBlockData();
@@ -87,14 +86,13 @@ public class TARDISSonicRedstone {
                             plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
                         }, 60L);
                     }
-                    break;
-                case IRON_TRAPDOOR:
+                }
+                case IRON_TRAPDOOR -> {
                     TrapDoor trapDoor = (TrapDoor) block.getBlockData();
                     trapDoor.setOpen(!trapDoor.isOpen());
                     block.setBlockData(trapDoor, true);
-                    break;
-                case PISTON:
-                case STICKY_PISTON:
+                }
+                case PISTON, STICKY_PISTON -> {
                     Piston piston = (Piston) block.getBlockData();
                     // find the direction the piston is facing
                     if (plugin.getGeneralKeeper().getSonicPistons().contains(block.getLocation().toString())) {
@@ -112,8 +110,8 @@ public class TARDISSonicRedstone {
                         block.setBlockData(piston, true);
                         player.playSound(block.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1.0f, 1.0f);
                     }
-                    break;
-                case REDSTONE_LAMP:
+                }
+                case REDSTONE_LAMP -> {
                     Lightable lightable = (Lightable) block.getBlockData();
                     if (!lightable.isLit()) {
                         plugin.getGeneralKeeper().getSonicLamps().add(block.getLocation().toString());
@@ -132,8 +130,8 @@ public class TARDISSonicRedstone {
                         lightable.setLit(false);
                         block.setBlockData(lightable, true);
                     }
-                    break;
-                case REDSTONE_WIRE:
+                }
+                case REDSTONE_WIRE -> {
                     RedstoneWire wire = (RedstoneWire) block.getBlockData();
                     if (plugin.getGeneralKeeper().getSonicWires().contains(block.getLocation().toString())) {
                         plugin.getGeneralKeeper().getSonicWires().remove(block.getLocation().toString());
@@ -153,8 +151,8 @@ public class TARDISSonicRedstone {
                         });
                     }
                     block.setBlockData(wire, true);
-                    break;
-                case MUSHROOM_STEM:
+                }
+                case MUSHROOM_STEM -> {
                     // check the block is a chemistry lamp block
                     MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
                     if (TARDISMushroomBlock.isChemistryStemOn(multipleFacing)) {
@@ -167,9 +165,9 @@ public class TARDISSonicRedstone {
                         LampToggler.createLight(block);
                     }
                     block.setBlockData(multipleFacing, true);
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
     }

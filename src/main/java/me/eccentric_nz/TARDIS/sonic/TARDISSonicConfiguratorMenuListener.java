@@ -59,32 +59,27 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(slot != 18);
                 switch (slot) {
-                    case 18:
+                    case 18 -> {
                         // load configured sonic
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             loadSonic(view.getItem(18), player, view);
                             setOptions(player, view);
                         }, 1L);
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                    case 13:
-                    case 14:
-                    case 15:
-                    case 16:
+                    }
+                    case 9, 10, 11, 12, 13, 14, 15, 16 -> {
                         // toggle option enabled / disabled
                         toggleOption(view.getItem(slot));
-                    case 25:
+                    }
+                    case 25 -> {
                         // save selected options
                         saveConfiguredSonic(player, view);
-                        break;
-                    case 26:
+                    }
+                    case 26 -> {
                         close(player);
-                        break;
-                    default:
+                    }
+                    default -> {
                         event.setCancelled(true);
+                    }
                 }
             } else {
                 ClickType click = event.getClick();
@@ -169,19 +164,19 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
         ItemMeta im = option.getItemMeta();
         Material cmd = option.getType();
         switch (cmd) {
-            case LIME_WOOL:
+            case LIME_WOOL -> {
                 // disable
                 im.setDisplayName("Disabled");
                 option.setType(Material.RED_WOOL);
-                break;
-            case RED_WOOL:
+            }
+            case RED_WOOL -> {
                 // enable
                 im.setDisplayName("Enabled");
                 option.setType(Material.LIME_WOOL);
-                break;
-            default:
+            }
+            default -> {
                 // not upgraded, do nothing
-                break;
+            }
         }
         option.setItemMeta(im);
     }
@@ -196,32 +191,16 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
                 for (int i = 1; i < lore.size(); i++) {
                     String upgrade = lore.get(i);
                     switch (upgrade) {
-                        case "Bio-scanner Upgrade":
-                            configuredSonic.setBio(SonicConfig.ENABLED);
-                            break;
-                        case "Diamond Upgrade":
-                            configuredSonic.setDiamond(SonicConfig.ENABLED);
-                            break;
-                        case "Emerald Upgrade":
-                            configuredSonic.setEmerald(SonicConfig.ENABLED);
-                            break;
-                        case "Redstone Upgrade":
-                            configuredSonic.setRedstone(SonicConfig.ENABLED);
-                            break;
-                        case "Painter Upgrade":
-                            configuredSonic.setPainter(SonicConfig.ENABLED);
-                            break;
-                        case "Ignite Upgrade":
-                            configuredSonic.setIgnite(SonicConfig.ENABLED);
-                            break;
-                        case "Pickup Arrows Upgrade":
-                            configuredSonic.setArrow(SonicConfig.ENABLED);
-                            break;
-                        case "Knockback Upgrade":
-                            configuredSonic.setKnockback(SonicConfig.ENABLED);
-                            break;
-                        default:
-                            break;
+                        case "Bio-scanner Upgrade" -> configuredSonic.setBio(SonicConfig.ENABLED);
+                        case "Diamond Upgrade" -> configuredSonic.setDiamond(SonicConfig.ENABLED);
+                        case "Emerald Upgrade" -> configuredSonic.setEmerald(SonicConfig.ENABLED);
+                        case "Redstone Upgrade" -> configuredSonic.setRedstone(SonicConfig.ENABLED);
+                        case "Painter Upgrade" -> configuredSonic.setPainter(SonicConfig.ENABLED);
+                        case "Ignite Upgrade" -> configuredSonic.setIgnite(SonicConfig.ENABLED);
+                        case "Pickup Arrows Upgrade" -> configuredSonic.setArrow(SonicConfig.ENABLED);
+                        case "Knockback Upgrade" -> configuredSonic.setKnockback(SonicConfig.ENABLED);
+                        default -> {
+                        }
                     }
                 }
             }

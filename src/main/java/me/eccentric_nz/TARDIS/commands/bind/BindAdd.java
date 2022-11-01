@@ -47,7 +47,7 @@ class BindAdd {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         switch (bind) {
-            case SAVE: // type 0
+            case SAVE -> { // type 0
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("name", which);
@@ -60,18 +60,13 @@ class BindAdd {
                     set.put("name", which);
                     bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                 }
-                break;
-            case CAVE: // type 1
-            case HIDE:
-            case HOME:
-            case MAKE_HER_BLUE:
-            case OCCUPY:
-            case REBUILD:
+            } // type 1
+            case CAVE, HIDE, HOME, MAKE_HER_BLUE, OCCUPY, REBUILD -> {
                 set.put("type", 1);
                 set.put("name", bind.toString().toLowerCase());
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
-                break;
-            case PLAYER: // type 2
+            }
+            case PLAYER -> { // type 2
                 // get player online or offline
                 Player p = plugin.getServer().getPlayer(which);
                 if (p == null) {
@@ -84,8 +79,8 @@ class BindAdd {
                 set.put("name", which);
                 set.put("type", 2);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
-                break;
-            case AREA: // type 3
+            }
+            case AREA -> { // type 3
                 // check area name
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("area_name", which);
@@ -101,8 +96,8 @@ class BindAdd {
                 set.put("name", which.toLowerCase(Locale.ENGLISH));
                 set.put("type", 3);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
-                break;
-            case BIOME:  // type 4
+            }
+            case BIOME -> {  // type 4
                 // check valid biome
                 Biome biome;
                 try {
@@ -116,8 +111,8 @@ class BindAdd {
                     TARDISMessage.send(player, "BIOME_NOT_VALID");
                     return true;
                 }
-                break;
-            case CHAMELEON: // type 5
+            }
+            case CHAMELEON -> { // type 5
                 if (which.equalsIgnoreCase("OFF") || which.equalsIgnoreCase("ADAPT")) {
                     set.put("name", which.toUpperCase(Locale.ENGLISH));
                 } else {
@@ -134,8 +129,8 @@ class BindAdd {
                 }
                 set.put("type", 5);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
-                break;
-            case TRANSMAT: // type 6
+            }
+            case TRANSMAT -> { // type 6
                 // check transmat location exists
                 if (args.length > 2) {
                     ResultSetTransmat rst = new ResultSetTransmat(plugin, id, which);
@@ -151,9 +146,9 @@ class BindAdd {
                 }
                 set.put("type", 6);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         if (bind_id != 0) {
             plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bind_id);

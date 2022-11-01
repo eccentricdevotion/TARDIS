@@ -73,15 +73,8 @@ public class TARDISMinecartListener implements Listener {
                 int bz = block_loc.getBlockZ();
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
                 switch (material) {
-                    case ACACIA_DOOR: // is it a TARDIS door?
-                    case BIRCH_DOOR:
-                    case CRIMSON_DOOR:
-                    case DARK_OAK_DOOR:
-                    case IRON_DOOR:
-                    case JUNGLE_DOOR:
-                    case OAK_DOOR:
-                    case SPRUCE_DOOR:
-                    case WARPED_DOOR:
+                    // is it a TARDIS door?
+                    case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", db_loc);
                         where.put("door_type", 0);
@@ -102,13 +95,9 @@ public class TARDISMinecartListener implements Listener {
                                 plugin.getTrackerKeeper().getMinecart().add(id);
                             }
                         }
-                        break;
-                    case ACACIA_FENCE: // is it a RAIL room fence?
-                    case BIRCH_FENCE:
-                    case DARK_OAK_FENCE:
-                    case JUNGLE_FENCE:
-                    case OAK_FENCE:
-                    case SPRUCE_FENCE:
+                    }
+                    // is it a RAIL room fence?
+                    case ACACIA_FENCE, BIRCH_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, OAK_FENCE, SPRUCE_FENCE -> {
                         // get police box location
                         HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("rail", db_loc);
@@ -134,9 +123,9 @@ public class TARDISMinecartListener implements Listener {
                                 plugin.getTrackerKeeper().getMinecart().remove(id);
                             }
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
                 if (data != null && data.length > 3) {
                     boolean shouldPrevent = switch (plugin.getInvManager()) {

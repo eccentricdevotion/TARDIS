@@ -87,20 +87,12 @@ public class TARDISMazeGenerator {
                 // cut into it - like shuffling a deck of cards and drawing the top card
                 cut_order = mix(cut_order);
                 switch (cut_order[0]) {
-                    case 1:
-                        cutNextUp();
-                        break;
-                    case 2:
-                        cutNextRight();
-                        break;
-                    case 3:
-                        cutNextDown();
-                        break;
-                    case 4:
-                        cutNextLeft();
-                        break;
-                    default:
-                        break;
+                    case 1 -> cutNextUp();
+                    case 2 -> cutNextRight();
+                    case 3 -> cutNextDown();
+                    case 4 -> cutNextLeft();
+                    default -> {
+                    }
                 }
             } else {
                 // if there are no directions to cut, back up one location

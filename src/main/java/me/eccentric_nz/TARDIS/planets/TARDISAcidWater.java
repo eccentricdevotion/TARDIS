@@ -184,88 +184,48 @@ public class TARDISAcidWater implements Listener {
         double red = 0.0;
         if (helmet != null) {
             switch (helmet.getType()) {
-                case LEATHER_HELMET:
-                    red += 0.04;
-                    break;
-                case GOLDEN_HELMET:
-                    red += 0.06;
-                    break;
-                case CHAINMAIL_HELMET:
-                    red += 0.08;
-                    break;
-                case IRON_HELMET:
-                    red += 0.10;
-                    break;
-                case DIAMOND_HELMET:
-                    red += 0.12;
-                    break;
-                default:
-                    break;
+                case LEATHER_HELMET -> red += 0.04;
+                case GOLDEN_HELMET -> red += 0.06;
+                case CHAINMAIL_HELMET -> red += 0.08;
+                case IRON_HELMET -> red += 0.10;
+                case DIAMOND_HELMET -> red += 0.12;
+                default -> {
+                }
             }
         }
         if (boots != null) {
             switch (boots.getType()) {
-                case LEATHER_BOOTS:
-                    red += 0.04;
-                    break;
-                case GOLDEN_BOOTS:
-                    red += 0.06;
-                    break;
-                case CHAINMAIL_BOOTS:
-                    red += 0.08;
-                    break;
-                case IRON_BOOTS:
-                    red += 0.10;
-                    break;
-                case DIAMOND_BOOTS:
-                    red += 0.12;
-                    break;
-                default:
-                    break;
+                case LEATHER_BOOTS -> red += 0.04;
+                case GOLDEN_BOOTS -> red += 0.06;
+                case CHAINMAIL_BOOTS -> red += 0.08;
+                case IRON_BOOTS -> red += 0.10;
+                case DIAMOND_BOOTS -> red += 0.12;
+                default -> {
+                }
             }
         }
         // Pants
         if (pants != null) {
             switch (pants.getType()) {
-                case LEATHER_LEGGINGS:
-                    red += 0.08;
-                    break;
-                case GOLDEN_LEGGINGS:
-                    red += 0.12;
-                    break;
-                case CHAINMAIL_LEGGINGS:
-                    red += 0.16;
-                    break;
-                case IRON_LEGGINGS:
-                    red += 0.20;
-                    break;
-                case DIAMOND_LEGGINGS:
-                    red += 0.24;
-                    break;
-                default:
-                    break;
+                case LEATHER_LEGGINGS -> red += 0.08;
+                case GOLDEN_LEGGINGS -> red += 0.12;
+                case CHAINMAIL_LEGGINGS -> red += 0.16;
+                case IRON_LEGGINGS -> red += 0.20;
+                case DIAMOND_LEGGINGS -> red += 0.24;
+                default -> {
+                }
             }
         }
         // Chest plate
         if (chest != null) {
             switch (chest.getType()) {
-                case LEATHER_CHESTPLATE:
-                    red += 0.12;
-                    break;
-                case GOLDEN_CHESTPLATE:
-                    red += 0.20;
-                    break;
-                case CHAINMAIL_CHESTPLATE:
-                    red += 0.22;
-                    break;
-                case IRON_CHESTPLATE:
-                    red += 0.24;
-                    break;
-                case DIAMOND_CHESTPLATE:
-                    red += 0.32;
-                    break;
-                default:
-                    break;
+                case LEATHER_CHESTPLATE -> red += 0.12;
+                case GOLDEN_CHESTPLATE -> red += 0.20;
+                case CHAINMAIL_CHESTPLATE -> red += 0.22;
+                case IRON_CHESTPLATE -> red += 0.24;
+                case DIAMOND_CHESTPLATE -> red += 0.32;
+                default -> {
+                }
             }
         }
         return red;

@@ -59,38 +59,28 @@ public class TARDISSonicScanner {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case SLIME_BALL: // dalek
-                                    et = EntityType.LLAMA_SPIT;
-                                    break;
-                                case IRON_INGOT: // Cyberman
-                                    et = EntityType.AREA_EFFECT_CLOUD;
-                                    break;
-                                case SUGAR: // Empty Child
-                                    et = EntityType.FALLING_BLOCK;
-                                    break;
-                                case SNOWBALL: // Ice Warrior
-                                    et = EntityType.ARROW;
-                                    break;
-                                case FEATHER: // Silurian
-                                    et = EntityType.BOAT;
-                                    break;
-                                case POTATO: // Sontaran
-                                    et = EntityType.FIREWORK;
-                                    break;
-                                case BAKED_POTATO: // Strax
-                                    et = EntityType.EGG;
-                                    break;
-                                case BOOK: // Vashta Nerada
-                                    et = EntityType.ENDER_CRYSTAL;
-                                    break;
-                                case PAINTING: // Zygon
-                                    et = EntityType.FISHING_HOOK;
-                                    break;
-                                case STONE_BUTTON: // weeping angel
-                                    et = EntityType.DRAGON_FIREBALL;
-                                    break;
-                                default:
-                                    break;
+                                case SLIME_BALL -> // dalek
+                                        et = EntityType.LLAMA_SPIT;
+                                case IRON_INGOT -> // Cyberman
+                                        et = EntityType.AREA_EFFECT_CLOUD;
+                                case SUGAR -> // Empty Child
+                                        et = EntityType.FALLING_BLOCK;
+                                case SNOWBALL -> // Ice Warrior
+                                        et = EntityType.ARROW;
+                                case FEATHER -> // Silurian
+                                        et = EntityType.BOAT;
+                                case POTATO -> // Sontaran
+                                        et = EntityType.FIREWORK;
+                                case BAKED_POTATO -> // Strax
+                                        et = EntityType.EGG;
+                                case BOOK -> // Vashta Nerada
+                                        et = EntityType.ENDER_CRYSTAL;
+                                case PAINTING -> // Zygon
+                                        et = EntityType.FISHING_HOOK;
+                                case STONE_BUTTON -> // weeping angel
+                                        et = EntityType.DRAGON_FIREBALL;
+                                default -> {
+                                }
                             }
                         }
                     }
@@ -102,20 +92,16 @@ public class TARDISSonicScanner {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case YELLOW_DYE: // Judoon
-                                    et = EntityType.SHULKER_BULLET;
-                                    break;
-                                case BONE: // K9
-                                    et = EntityType.EVOKER_FANGS;
-                                    break;
-                                case ROTTEN_FLESH: // Ood
-                                    et = EntityType.ITEM_FRAME;
-                                    break;
-                                case GUNPOWDER: // Toclafane
-                                    et = EntityType.DROPPED_ITEM;
-                                    break;
-                                default:
-                                    break;
+                                case YELLOW_DYE -> // Judoon
+                                        et = EntityType.SHULKER_BULLET;
+                                case BONE -> // K9
+                                        et = EntityType.EVOKER_FANGS;
+                                case ROTTEN_FLESH -> // Ood
+                                        et = EntityType.ITEM_FRAME;
+                                case GUNPOWDER -> // Toclafane
+                                        et = EntityType.DROPPED_ITEM;
+                                default -> {
+                                }
                             }
                         }
                     }

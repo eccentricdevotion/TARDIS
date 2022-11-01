@@ -55,14 +55,11 @@ public class TARDISHostileAction {
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn() && poweredOn) {
                     switch (rsp.getHadsType()) {
-                        case DISPLACEMENT:
-                            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
-                            break;
-                        case DISPERSAL:
-                            new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
-                            break;
-                        default:
-                            break;
+                        case DISPLACEMENT ->
+                                new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
+                        case DISPERSAL -> new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                        default -> {
+                        }
                     }
                 } else {
                     plugin.getTrackerKeeper().getHadsDamage().remove(id);

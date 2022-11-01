@@ -272,7 +272,7 @@ public class TARDISDoorListener {
             ((Tameable) ent).setTamed(true);
             ((Tameable) ent).setOwner(player);
             switch (pet.getType()) {
-                case WOLF:
+                case WOLF -> {
                     Wolf wolf = (Wolf) ent;
                     wolf.setCollarColor(pet.getColour());
                     wolf.setSitting(pet.getSitting());
@@ -280,8 +280,8 @@ public class TARDISDoorListener {
                     if (pet.isBaby()) {
                         wolf.setBaby();
                     }
-                    break;
-                case CAT:
+                }
+                case CAT -> {
                     Cat cat = (Cat) ent;
                     cat.setCollarColor(pet.getColour());
                     cat.setCatType(pet.getCatType());
@@ -290,8 +290,8 @@ public class TARDISDoorListener {
                     if (pet.isBaby()) {
                         cat.setBaby();
                     }
-                    break;
-                case PARROT:
+                }
+                case PARROT -> {
                     Parrot parrot = (Parrot) ent;
                     parrot.setSitting(pet.getSitting());
                     parrot.setAge(pet.getAge());
@@ -305,9 +305,9 @@ public class TARDISDoorListener {
                     if (pet.isOnRightShoulder()) {
                         player.setShoulderEntityRight(parrot);
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
         pets.clear();

@@ -101,7 +101,7 @@ class TARDISHostileDispersal {
         int sbz = l.getBlockZ() - 1;
         // remove problem blocks first
         switch (preset) {
-            case GRAVESTONE:
+            case GRAVESTONE -> {
                 // remove flower
                 int flowerx;
                 int flowery = (l.getBlockY() + 1);
@@ -125,18 +125,12 @@ class TARDISHostileDispersal {
                     }
                 }
                 TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
-                break;
-            case DUCK:
-                plugin.getPresetDestroyer().destroyDuckEyes(l, d);
-                break;
-            case MINESHAFT:
-                plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
-                break;
-            case LAMP:
-                plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
-                break;
-            default:
-                break;
+            }
+            case DUCK -> plugin.getPresetDestroyer().destroyDuckEyes(l, d);
+            case MINESHAFT -> plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
+            case LAMP -> plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
+            default -> {
+            }
         }
         plugin.getTrackerKeeper().getDematerialising().remove(id);
         l.getChunk().setForceLoaded(false);

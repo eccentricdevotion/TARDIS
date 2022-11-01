@@ -331,8 +331,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     d = d_backup;
                                 }
                                 switch (doortype) {
-                                    case 1:
-                                    case 4:
+                                    case 1, 4 -> {
                                         // is the TARDIS materialising?
                                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
@@ -409,8 +408,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         } else {
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                                         }
-                                        break;
-                                    case 0:
+                                    }
+                                    case 0 -> {
                                         // is the TARDIS materialising?
                                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
@@ -482,8 +481,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         } else {
                                             TARDISMessage.send(player, "SIEGE_COMPANION");
                                         }
-                                        break;
-                                    case 2:
+                                    }
+                                    case 2 -> {
                                         if (artron < required) {
                                             TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
@@ -526,8 +525,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         wheree.put("tardis_id", id);
                                         int cost = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
-                                        break;
-                                    case 3:
+                                    }
+                                    case 3 -> {
                                         if (artron < required) {
                                             TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
@@ -597,10 +596,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         wherea.put("tardis_id", id);
                                         int costa = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
-                                        break;
-                                    default:
-                                        // do nothing
-                                        break;
+                                    }
+                                    default -> {
+                                    }
+                                    // do nothing
                                 }
                             }
                         }

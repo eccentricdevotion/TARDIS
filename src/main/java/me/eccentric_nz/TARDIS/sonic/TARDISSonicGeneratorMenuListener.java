@@ -102,23 +102,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
             if (slot >= 0 && slot < 54) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                    case 14:
-                    case 15:
-                    case 16:
-                    case 17:
+                    case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
                         // set display name of sonic in slot 49
                         sonic = view.getItem(49);
                         if (sonic == null) {
@@ -137,9 +121,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             view.setItem(49, sonic);
                             setCost(view, costs.get("Standard Sonic"));
                         }
-
-                        break;
-                    case 27:
+                    }
+                    case 27 -> {
                         // reset to standard
                         sonic = view.getItem(49);
                         if (sonic == null) {
@@ -157,15 +140,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
                         setCost(view, costs.get("Standard Sonic"));
-                        break;
-                    case 28:
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                    case 33:
-                    case 34:
-                    case 35:
+                    }
+                    case 28, 29, 30, 31, 32, 33, 34, 35 -> {
                         ItemStack upgrade = view.getItem(slot);
                         ItemMeta upgrade_im = upgrade.getItemMeta();
                         String upgrade_name = upgrade_im.getDisplayName();
@@ -194,28 +170,27 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         if (slotWasNull) {
                             view.setItem(49, sonic);
                         }
-                        break;
-                    case 43:
+                    }
+                    case 43 -> {
                         // save
                         sonic = view.getItem(49);
                         if (sonic != null) {
                             save(p, sonic, true);
                         }
-                        break;
-                    case 44:
+                    }
+                    case 44 -> {
                         // save & generate
                         sonic = view.getItem(49);
                         if (sonic != null) {
                             save(p, sonic, false);
                             generate(p, sonic, getCost(view));
                         }
-                        break;
-                    case 53:
+                    }
+                    case 53 ->
                         // close
-                        close(p);
-                        break;
-                    default:
-                        break;
+                            close(p);
+                    default -> {
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

@@ -84,40 +84,12 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
                 // adjust the landing location based on the final slot
                 int blocks = 0;
                 switch (final_slot) {
-                    case 0:
-                    case 4:
-                    case 36:
-                    case 40:
-                        blocks = 8;
-                        break;
-                    case 1:
-                    case 3:
-                    case 9:
-                    case 13:
-                    case 27:
-                    case 31:
-                    case 37:
-                    case 39:
-                        blocks = 6;
-                        break;
-                    case 2:
-                    case 10:
-                    case 12:
-                    case 18:
-                    case 22:
-                    case 28:
-                    case 30:
-                    case 38:
-                        blocks = 4;
-                        break;
-                    case 11:
-                    case 19:
-                    case 21:
-                    case 29:
-                        blocks = 2;
-                        break;
-                    default:
-                        break;
+                    case 0, 4, 36, 40 -> blocks = 8;
+                    case 1, 3, 9, 13, 27, 31, 37, 39 -> blocks = 6;
+                    case 2, 10, 12, 18, 22, 28, 30, 38 -> blocks = 4;
+                    case 11, 19, 21, 29 -> blocks = 2;
+                    default -> {
+                    }
                 }
                 // adjust location
                 if (blocks != 0) {
@@ -137,40 +109,40 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
             int old_slot = plugin.getTrackerKeeper().getRegulating().get(uuid).getSlot();
             if (directions.contains(slot)) {
                 switch (slot) {
-                    case 16: // up
+                    case 16 -> { // up
                         int up = upSlot(old_slot);
                         if (bounds.contains(up)) {
                             view.setItem(old_slot, vortex);
                             view.setItem(up, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(up);
                         }
-                        break;
-                    case 24: // left
+                    }
+                    case 24 -> { // left
                         int left = leftSlot(old_slot);
                         if (bounds.contains(left)) {
                             view.setItem(old_slot, vortex);
                             view.setItem(left, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(left);
                         }
-                        break;
-                    case 26: // right
+                    }
+                    case 26 -> { // right
                         int right = rightSlot(old_slot);
                         if (bounds.contains(right)) {
                             view.setItem(old_slot, vortex);
                             view.setItem(right, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(right);
                         }
-                        break;
-                    case 34: // down
+                    }
+                    case 34 -> { // down
                         int down = downSlot(old_slot);
                         if (bounds.contains(down)) {
                             view.setItem(old_slot, vortex);
                             view.setItem(down, box);
                             plugin.getTrackerKeeper().getRegulating().get(uuid).setSlot(down);
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
             event.setCancelled(true);

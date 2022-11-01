@@ -55,7 +55,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                 if (is != null) {
                     event.setCancelled(true);
                     switch (slot) {
-                        case 8:
+                        case 8 -> {
                             // back to seeds
                             close(p);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -64,9 +64,8 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                                 gui.setContents(seeds);
                                 p.openInventory(gui);
                             }, 2L);
-                            break;
-                        case 11:
-                        case 20:
+                        }
+                        case 11, 20 -> {
                             // wall & floor
                             close(p);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -75,13 +74,12 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                                 gui.setContents(recipe);
                                 p.openInventory(gui);
                             }, 2L);
-                            break;
-                        case 26:
+                        }
+                        case 26 ->
                             // close
-                            close(p);
-                            break;
-                        default:
-                            break;
+                                close(p);
+                        default -> {
+                        }
                     }
                 }
             } else {

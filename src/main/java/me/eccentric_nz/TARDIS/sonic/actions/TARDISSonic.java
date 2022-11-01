@@ -74,15 +74,7 @@ public class TARDISSonic {
             // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
             if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
                 switch (blockType) {
-                    case ACACIA_DOOR:
-                    case BIRCH_DOOR:
-                    case CRIMSON_DOOR:
-                    case DARK_OAK_DOOR:
-                    case IRON_DOOR:
-                    case JUNGLE_DOOR:
-                    case OAK_DOOR:
-                    case SPRUCE_DOOR:
-                    case WARPED_DOOR:
+                    case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                         Block lowerdoor;
                         Bisected bisected = (Bisected) targetBlock.getBlockData();
                         if (bisected.getHalf().equals(Bisected.Half.TOP)) {
@@ -113,32 +105,16 @@ public class TARDISSonic {
                                 }, 60L);
                             }
                         }
-                        break;
-                    case LEVER:
-                    case ACACIA_BUTTON:
-                    case BIRCH_BUTTON:
-                    case DARK_OAK_BUTTON:
-                    case JUNGLE_BUTTON:
-                    case OAK_BUTTON:
-                    case SPRUCE_BUTTON:
-                    case STONE_BUTTON:
-                    case CRIMSON_BUTTON:
-                    case POLISHED_BLACKSTONE_BUTTON:
-                    case WARPED_BUTTON:
-                        powerSurroundingBlock(targetBlock);
-                        break;
-                    case ACACIA_FENCE_GATE:
-                    case BIRCH_FENCE_GATE:
-                    case DARK_OAK_FENCE_GATE:
-                    case JUNGLE_FENCE_GATE:
-                    case OAK_FENCE_GATE:
-                    case SPRUCE_FENCE_GATE:
+                    }
+                    case LEVER, ACACIA_BUTTON, BIRCH_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, CRIMSON_BUTTON, POLISHED_BLACKSTONE_BUTTON, WARPED_BUTTON ->
+                            powerSurroundingBlock(targetBlock);
+                    case ACACIA_FENCE_GATE, BIRCH_FENCE_GATE, DARK_OAK_FENCE_GATE, JUNGLE_FENCE_GATE, OAK_FENCE_GATE, SPRUCE_FENCE_GATE -> {
                         Gate gate = (Gate) targetBlock.getBlockData();
                         gate.setOpen(!gate.isOpen());
                         targetBlock.setBlockData(gate, true);
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
         } else {

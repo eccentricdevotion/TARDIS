@@ -135,32 +135,16 @@ public enum TARDISHandlesBlock {
     static {
         for (TARDISHandlesBlock block : values()) {
             switch (block.getCategory()) {
-                case BUTTON:
-                    buttons.add(block);
-                    break;
-                case COMMAND:
-                    commands.add(block);
-                    break;
-                case CONTROL:
-                    controls.add(block);
-                    break;
-                case EVENT:
-                    events.add(block);
-                    break;
-                case NUMBER:
-                    numbers.add(block);
-                    break;
-                case OPERATOR:
-                    operators.add(block);
-                    break;
-                case SELECTOR:
-                    selectors.add(block);
-                    break;
-                case VARIABLE:
-                    variables.add(block);
-                    break;
-                default:
-                    break;
+                case BUTTON -> buttons.add(block);
+                case COMMAND -> commands.add(block);
+                case CONTROL -> controls.add(block);
+                case EVENT -> events.add(block);
+                case NUMBER -> numbers.add(block);
+                case OPERATOR -> operators.add(block);
+                case SELECTOR -> selectors.add(block);
+                case VARIABLE -> variables.add(block);
+                default -> {
+                }
             }
             BY_NAME.put(block.displayName, block);
         }
