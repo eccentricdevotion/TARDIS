@@ -98,7 +98,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
+        if (args.length == 1) {
             return null;
         } else if (args.length == 2) {
             return partial(lastArg, GIVE_SUBS);
