@@ -150,7 +150,7 @@ public class TARDISConsoleListener implements Listener {
                         }
                         // open gui
                         p.openInventory(inv);
-                    } else if (disk.equals(Material.MUSIC_DISC_FAR)) {
+                    } else if (disk.getType().equals(Material.MUSIC_DISC_FAR)) {
                         ItemMeta im = disk.getItemMeta();
                         if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk")) {
                             // get the UUID from the disk

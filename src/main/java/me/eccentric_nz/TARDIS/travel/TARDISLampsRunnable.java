@@ -56,7 +56,7 @@ class TARDISLampsRunnable implements Runnable {
             lit.setLit(true);
         }
         this.use_wool = use_wool;
-        MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
+        MUSHROOM = (this.light.getMaterial().equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
         lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
     }
 
