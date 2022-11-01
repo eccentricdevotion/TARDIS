@@ -22,14 +22,16 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.StructureType;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.structure.Structure;
+import org.bukkit.util.StructureSearchResult;
 
-import java.util.HashMap;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author eccentric_nz
@@ -37,9 +39,19 @@ import java.util.HashMap;
 public class TARDISVillageTravel {
 
     private final TARDIS plugin;
+    private final List<Structure> netherStructures = new ArrayList<>();
+    private final List<Structure> villageStructures = new ArrayList<>();
 
     public TARDISVillageTravel(TARDIS plugin) {
         this.plugin = plugin;
+        netherStructures.add(Structure.ANCIENT_CITY);
+        netherStructures.add(Structure.BASTION_REMNANT);
+        netherStructures.add(Structure.FORTRESS);
+        villageStructures.add(Structure.VILLAGE_PLAINS);
+        villageStructures.add(Structure.VILLAGE_DESERT);
+        villageStructures.add(Structure.VILLAGE_SAVANNA);
+        villageStructures.add(Structure.VILLAGE_SNOWY);
+        villageStructures.add(Structure.VILLAGE_TAIGA);
     }
 
     public Location getRandomVillage(Player p, int id) {
@@ -53,14 +65,23 @@ public class TARDISVillageTravel {
             Environment env = world.getEnvironment();
             Location loc;
             switch (env) {
-                case NETHER -> loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
+                case NETHER -> {
+                    // choose a random Nether structure - FORTRESS, ANCIENT_CITY, BASTION_REMNANT
+                    StructureSearchResult netherResult = world.locateNearestStructure(location, netherStructures.get(ThreadLocalRandom.current().nextInt(netherStructures.size())), 64, false);
+                    loc = netherResult.getLocation();
+                }
                 case THE_END -> {
-                    loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
+                    StructureSearchResult endResult = world.locateNearestStructure(location, Structure.END_CITY, 64, false);
+                    loc = endResult.getLocation();
                     int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
                     loc.setY(highesty);
                 }
                 // NORMAL
-                default -> loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
+                default -> {
+                    // choose a random village structure - VILLAGE_DESERT, VILLAGE_PLAINS, VILLAGE_SAVANNA, VILLAGE_SNOWY, VILLAGE_TAIGA
+                    StructureSearchResult normalResult = world.locateNearestStructure(location, villageStructures.get(ThreadLocalRandom.current().nextInt(villageStructures.size())), 64, false);
+                    loc = normalResult.getLocation();
+                }
             }
             if (loc == null) {
                 return null;
