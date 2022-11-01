@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Inspired by Nether Portal Calculator v1.0 by D3Phoenix http://ilurker.rooms.cwal.net/portal.html
+ * Inspired by Nether Portal Calculator v1.0 by D3Phoenix <a href="http://ilurker.rooms.cwal.net/portal.html">...</a>
  * <p>
  * Choose a location for a portal in the OVERWORLD and, without lighting it, build the frame. Walk into your portal
  * frame as if you were going to use it, and run the command /tnp. You will be messaged the coordinates for placing your

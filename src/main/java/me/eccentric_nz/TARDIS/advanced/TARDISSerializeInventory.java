@@ -26,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * @author original code by comphenix - https://gist.github.com/aadnk/8138186
+ * @author original code by comphenix - <a href="https://gist.github.com/aadnk/8138186">...</a>
  */
 public class TARDISSerializeInventory {
 

@@ -30,11 +30,11 @@ import java.util.Arrays;
  * <p>
  * Adapted from ExperienceUtils code originally in ScrollingMenuSign.
  * <p>
- * Credit to nisovin (http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480)
+ * Credit to nisovin (<a href="http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480">...</a>)
  * for an implementation that avoids the problems of getTotalExperience(), which doesn't work properly after a player
  * has enchanted something.
  * <p>
- * Credit to comphenix for further contributions: See http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
+ * Credit to comphenix for further contributions: See <a href="http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622">...</a>
  */
 class TARDISXPRewarder {
 
@@ -65,7 +65,7 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Initialize the XP lookup table. See http://minecraft.gamepedia.com/Experience
+     * Initialize the XP lookup table. See <a href="http://minecraft.gamepedia.com/Experience">...</a>
      *
      * @param maxLevel The highest level handled by the lookup tables
      */

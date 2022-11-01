@@ -49,7 +49,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
+ * Borrowed from the SimpleSort plugin. <a href="http://dev.bukkit.org/bukkit-plugins/simplesort/">...</a>
  *
  * @author Shadow1013GL
  * @author Pyr0Byt3
