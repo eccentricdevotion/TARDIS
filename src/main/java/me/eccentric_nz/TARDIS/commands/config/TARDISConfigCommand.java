@@ -87,6 +87,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("all_blocks", "allow");
         firstsBool.put("allow_end_after_visit", "travel");
         firstsBool.put("allow_nether_after_visit", "travel");
+        firstsBool.put("any_key", "preferences");
         firstsBool.put("archive", "");
         firstsBool.put("autonomous", "allow");
         firstsBool.put("blueprints", "");

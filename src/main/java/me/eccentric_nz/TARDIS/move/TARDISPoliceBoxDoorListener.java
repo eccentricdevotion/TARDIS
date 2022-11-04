@@ -117,7 +117,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                 key = plugin.getConfig().getString("preferences.key");
                                             }
                                             Material m = Material.valueOf(key);
-                                            if (player.getInventory().getItemInMainHand().getType().equals(m)) {
+                                            if (player.getInventory().getItemInMainHand().getType().equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                                                 if (player.isSneaking()) {
                                                     // tp to the interior
                                                     // get INNER TARDIS location

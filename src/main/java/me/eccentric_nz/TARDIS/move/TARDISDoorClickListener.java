@@ -139,7 +139,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             return;
                         }
                         int doortype = rsd.getDoor_type();
-                        if (material.equals(m)) {
+                        if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                             COMPASS dd = rsd.getDoor_direction();
                             int end_doortype = switch (doortype) {
                                 case 0 -> // outside preset door

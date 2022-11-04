@@ -162,7 +162,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
                             if (rs.fromUUID(playerUUID.toString())) {
                                 // must use key to lock / unlock door
-                                if (material.equals(m)) {
+                                if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                                     if (rs.getTardis_id() != id) {
                                         TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
                                         return;
@@ -230,7 +230,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
                                             if (doortype == 0 || doortype == 1) {
                                                 boolean open = TARDISStaticUtils.isDoorOpen(block);
-                                                if (!material.equals(m) && doortype == 0 && !open) {
+                                                if ((!material.equals(m) && doortype == 0 && !open) && !plugin.getConfig().getBoolean("preferences.any_key")) {
                                                     // must use key to open the outer door
                                                     String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                                                     Material sonic = Material.valueOf(split[0]);
@@ -273,7 +273,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 }
                             }
                         } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                            if (!material.equals(m) && doortype == 0) {
+                            if ((!material.equals(m) && doortype == 0) && !plugin.getConfig().getBoolean("preferences.any_key")) {
                                 // must use key to open and close the outer door
                                 TARDISMessage.send(player, "NOT_KEY", key);
                                 return;

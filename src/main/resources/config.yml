@@ -76,6 +76,7 @@ preferences:
   notify_update: true
   language: en
   key: GOLD_NUGGET
+  any_key: false
   walk_in_tardis: true
   open_door_policy: false
   use_worldguard: true

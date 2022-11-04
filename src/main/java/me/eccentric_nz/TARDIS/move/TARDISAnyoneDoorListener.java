@@ -152,7 +152,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     return;
                                 }
                                 // must use key to lock / unlock door
-                                if (material.equals(m)) {
+                                if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                                     if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
                                         return;
                                     }
@@ -219,7 +219,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             boolean toggle = true;
                                             // must use key to open the outer door
                                             if (doortype == 0 && !open) {
-                                                if (material.equals(m)) {
+                                                if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                                                     // must be Time Lord or companion
                                                     ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                                     toggle = rsc.getCompanions().contains(playerUUID);
@@ -271,7 +271,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 }
                             }
                         } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                            if (!material.equals(m) && doortype == 0) {
+                            if ((!material.equals(m) && doortype == 0) && !plugin.getConfig().getBoolean("preferences.any_key")) {
                                 // must use key to open and close the outer door
                                 TARDISMessage.send(player, "NOT_KEY", key);
                                 return;
@@ -360,7 +360,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             }
                                             exitLoc.setYaw(yaw);
                                             // get location from database
-                                            // make location safe ie. outside of the bluebox
+                                            // make  safe location outside of the bluebox
                                             double ex = exitLoc.getX();
                                             double ez = exitLoc.getZ();
                                             if (opened) {
@@ -452,7 +452,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             // enter TARDIS!
                                             cw.getChunkAt(tardis_loc).load();
                                             tardis_loc.setPitch(pitch);
-                                            // get inner door direction so we can adjust yaw if necessary
+                                            // get inner door direction, so we can adjust yaw if necessary
                                             if (!innerD.equals(pd)) {
                                                 yaw += adjustYaw(pd, innerD);
                                             }
@@ -472,7 +472,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 }
                                             }
                                             // put player into travellers table
-                                            // remove them first as they may have exited incorrectly and we only want them listed once
+                                            // remove them first as they may have exited incorrectly, and we only want them listed once
                                             removeTraveller(playerUUID);
                                             HashMap<String, Object> set = new HashMap<>();
                                             set.put("tardis_id", id);
