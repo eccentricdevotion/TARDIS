@@ -814,11 +814,12 @@ commands:
     description: Travel to destinations in various ways.
     usage: |
       /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name] or /<command> biome [biome]
-      Example: /<command> eccentric_nz - travel to a players location
+      Example: /<command> eccentric_nz - travel to a player's location
       Example: /<command> New_new_earth -117 64 273 - travel to co-ordinates in a specific world
       Example: /<command> dest mine - travel to saved destination called 'mine'
       Example: /<command> area airport - travel to the TARDIS area called 'airport'
       Example: /<command> biome DESERT - travel to the nearest DESERT biome
+      Example: /<command> structure VILLAGE_SAVANNAH - travel to the nearest savannah village
     permission: tardis.timetravel
     permission-message: You don't have the permission <permission> to use this command
     home:
@@ -851,8 +852,12 @@ commands:
       usage: /<command> cave
       permission: tardis.timetravel.cave
     village:
-      description: Time travel to a village.
-      usage: /<command> village
+      description: Time travel to a village or other structure.
+      usage: /<command> village [optional structure]
+      permission: tardis.timetravel.village
+    structure:
+      description: Time travel to a structure.
+      usage: /<command> structure [optional structure]
       permission: tardis.timetravel.village
     costs:
       description: Display a list of Artron Energy travel costs.

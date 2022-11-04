@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * TabCompleter for /tardistravel
@@ -37,6 +38,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
     private final List<String> ROOT_SUBS = new ArrayList<>();
     private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> AREA_SUBS = new ArrayList<>();
+    private final List<String> STRUCTURE_SUBS;
 
     public TARDISTravelTabComplete(TARDIS plugin) {
         for (Biome bi : org.bukkit.block.Biome.values()) {
@@ -44,12 +46,13 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "random", "cancel", "costs", "stop"));
+        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "structure", "random", "cancel", "costs", "stop"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
             AREA_SUBS.addAll(rsa.getNames());
         }
+        STRUCTURE_SUBS = Arrays.asList("VILLAGE_DESERT", "VILLAGE_PLAINS", "VILLAGE_SAVANNA", "VILLAGE_SNOWY", "VILLAGE_TAIGA", "MANSION", "JUNGLE_PYRAMID", "DESERT_PYRAMID", "IGLOO", "SWAMP_HUT", "FORTRESS", "ANCIENT_CITY", "BASTION_REMNANT", "END_CITY");
     }
 
     @Override
@@ -60,12 +63,15 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
             List<String> part = partial(args[0], ROOT_SUBS);
             return (part.size() > 0) ? part : null;
         } else if (args.length == 2) {
-            String sub = args[0];
+            String sub = args[0].toLowerCase(Locale.ROOT);
             if (sub.equals("area")) {
                 return partial(lastArg, AREA_SUBS);
             }
             if (sub.equals("biome")) {
                 return partial(lastArg, BIOME_SUBS);
+            }
+            if (sub.equals("village") || sub.equals("structure")) {
+                return partial(lastArg, STRUCTURE_SUBS);
             }
             if (sub.equals("player")) {
                 return null;
