@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -53,16 +50,23 @@ public class TARDISStructureTravel {
         netherStructures.add(Structure.BASTION_REMNANT);
         netherStructures.add(Structure.FORTRESS);
         overworldStructures.add(Structure.ANCIENT_CITY);
-        overworldStructures.add(Structure.VILLAGE_PLAINS);
+        overworldStructures.add(Structure.DESERT_PYRAMID);
+        overworldStructures.add(Structure.IGLOO);
+        overworldStructures.add(Structure.JUNGLE_PYRAMID);
+        overworldStructures.add(Structure.MANSION);
+        overworldStructures.add(Structure.MINESHAFT);
+        overworldStructures.add(Structure.MINESHAFT_MESA);
+        overworldStructures.add(Structure.MONUMENT);
+        overworldStructures.add(Structure.PILLAGER_OUTPOST);
+        overworldStructures.add(Structure.SHIPWRECK);
+        overworldStructures.add(Structure.SHIPWRECK_BEACHED);
+        overworldStructures.add(Structure.STRONGHOLD);
+        overworldStructures.add(Structure.SWAMP_HUT);
         overworldStructures.add(Structure.VILLAGE_DESERT);
+        overworldStructures.add(Structure.VILLAGE_PLAINS);
         overworldStructures.add(Structure.VILLAGE_SAVANNA);
         overworldStructures.add(Structure.VILLAGE_SNOWY);
         overworldStructures.add(Structure.VILLAGE_TAIGA);
-        overworldStructures.add(Structure.MANSION);
-        overworldStructures.add(Structure.JUNGLE_PYRAMID);
-        overworldStructures.add(Structure.DESERT_PYRAMID);
-        overworldStructures.add(Structure.IGLOO);
-        overworldStructures.add(Structure.SWAMP_HUT);
     }
 
     public TARDISStructureLocation getRandomVillage(Player p, int id, String[] args) {
@@ -81,13 +85,19 @@ public class TARDISStructureTravel {
                     TARDISMessage.send(p, "VILLAGE_NO_STRUCTURE", args[1]);
                     return null;
                 }
+                // check structure travel permission
+                String perm = structure.getKey().getKey();
+                if (!p.hasPermission("tardis.timetravel.structure." + perm)) {
+                    TARDISMessage.send(p, "NO_PERM_STRUCTURE", TARDISStringUtils.capitalise(perm));
+                    return null;
+                }
                 // check structure arg is appropriate for the world environment
                 if (!env.equals(Environment.NETHER) && netherStructures.contains(structure)) {
                     TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
                 if (!env.equals(Environment.THE_END) && structure.equals(Structure.END_CITY)) {
-                    TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
+                    TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], "a " + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
                 if (!env.equals(Environment.NORMAL) && overworldStructures.contains(structure)) {
@@ -121,8 +131,16 @@ public class TARDISStructureTravel {
                         structure = overworldStructures.get(ThreadLocalRandom.current().nextInt(overworldStructures.size()));
                     }
                     StructureSearchResult normalResult = world.locateNearestStructure(location, structure, 64, false);
-                    // TODO if ANCIENT_CITY, get underground location
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
+                    // if ANCIENT_CITY, get underground location
+                    if (loc != null && structure.equals(Structure.ANCIENT_CITY)) {
+                        TARDISCaveFinder.Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+                        if (check.isSafe()) {
+                            loc.setY(check.getY());
+                        }
+                    } else {
+                        loc.setY(world.getHighestBlockYAt(loc));
+                    }
                 }
             }
             if (loc == null) {
@@ -148,5 +166,32 @@ public class TARDISStructureTravel {
             TARDISMessage.send(p, "CURRENT_NOT_FOUND");
             return null;
         }
+    }
+
+    private TARDISCaveFinder.Check isThereRoom(World w, int x, int starty, int z) {
+        TARDISCaveFinder.Check ret = new TARDISCaveFinder.Check();
+        ret.setSafe(false);
+        for (int y = starty; y > w.getMinHeight() + 14; y--) {
+            if (w.getBlockAt(x, y, z).getType().isAir()) {
+                int yy = TARDISCaveFinder.getLowestAirBlock(w, x, y, z);
+                // check there is enough height for the police box
+                if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
+                    // check there is room for the police box
+                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir()
+                            && w.getBlockAt(x - 1, yy, z).getType().isAir()
+                            && w.getBlockAt(x - 1, yy, z + 1).getType().isAir()
+                            && w.getBlockAt(x, yy, z - 1).getType().isAir()
+                            && w.getBlockAt(x, yy, z + 1).getType().isAir()
+                            && w.getBlockAt(x + 1, yy, z - 1).getType().isAir()
+                            && w.getBlockAt(x + 1, yy, z).getType().isAir()
+                            && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()
+                    ) {
+                        ret.setSafe(true);
+                        ret.setY(yy);
+                    }
+                }
+            }
+        }
+        return ret;
     }
 }

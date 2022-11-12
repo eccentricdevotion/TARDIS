@@ -41,6 +41,14 @@ public class TARDISCaveFinder {
         this.plugin = plugin;
     }
 
+    public static int getLowestAirBlock(World w, int x, int y, int z) {
+        int yy = y;
+        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > w.getMinHeight() + 7) {
+            yy--;
+        }
+        return yy;
+    }
+
     public Location searchCave(Player p, int id) {
         // get the current TARDIS location
         HashMap<String, Object> where = new HashMap<>();
@@ -125,7 +133,7 @@ public class TARDISCaveFinder {
     private Check isThereRoom(World w, int x, int z, COMPASS d) {
         Check ret = new Check();
         ret.setSafe(false);
-        for (int y = 35; y > 14; y--) {
+        for (int y = 35; y > w.getMinHeight() + 14; y--) {
             if (w.getBlockAt(x, y, z).getType().isAir()) {
                 int yy = getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the police box
@@ -167,14 +175,6 @@ public class TARDISCaveFinder {
         return ret;
     }
 
-    private int getLowestAirBlock(World w, int x, int y, int z) {
-        int yy = y;
-        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > w.getMinHeight() + 7) {
-            yy--;
-        }
-        return yy;
-    }
-
     private boolean worldCheck(World w) {
         if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
             // caves not generated
@@ -201,7 +201,7 @@ public class TARDISCaveFinder {
         }
     }
 
-    private static class Check {
+    public static class Check {
 
         private boolean safe;
         private int y;

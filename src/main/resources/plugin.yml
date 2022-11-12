@@ -159,6 +159,30 @@ permissions:
   tardis.timetravel.village:
     description: Allow players to travel to villages.
     default: op
+  tardis.timetravel.structure.*:
+    description: Allow players to travel to villages.
+    children:
+      tardis.timetravel.structure.bastion_remnant: true
+      tardis.timetravel.structure.ancient_city: true
+      tardis.timetravel.structure.desert_pyramid: true
+      tardis.timetravel.structure.fortress: true
+      tardis.timetravel.structure.igloo: true
+      tardis.timetravel.structure.jungle_pyramid: true
+      tardis.timetravel.structure.mansion: true
+      tardis.timetravel.structure.mineshaft: true
+      tardis.timetravel.structure.mineshaft_mesa: true
+      tardis.timetravel.structure.monument: true
+      tardis.timetravel.structure.pillager_outpost: true
+      tardis.timetravel.structure.shipwreck: true
+      tardis.timetravel.structure.shipwreck_beached: true
+      tardis.timetravel.structure.stronghold: true
+      tardis.timetravel.structure.swamp_hut: true
+      tardis.timetravel.structure.village_desert: true
+      tardis.timetravel.structure.village_plains: true
+      tardis.timetravel.structure.village_savanna: true
+      tardis.timetravel.structure.village_snowy: true
+      tardis.timetravel.structure.village_taiga: true
+    default: op
   tardis.prefs.*:
     description: Allow players to use /tardisprefs commands.
     children:
