@@ -13,8 +13,8 @@ listener classes on the server, and generate the spawn chunks ready for TARDIS t
 The planets are created by installing custom datapacks on the server. To enable the planets on the server use the
 command `/tardisworld load [gallifrey|siluria|skaro]` - this will install the appropriate custom dimension datapack on
 the server, and the world will be generated on the next server restart. The worlds will be named according to vanilla
-Minecraft conventions using the default world name as specified in `server.properties` e.g. _world_tardis_gallifrey_, _
-world_tardis_siluria_, and _world_tardis_skaro_
+Minecraft conventions using the default world name as specified in `server.properties` e.g. _world_tardis_gallifrey_, 
+_world_tardis_siluria_, and _world_tardis_skaro_
 
 The planets are listed and described below!
 
@@ -32,8 +32,8 @@ Otherwise, mobs will look like vanilla mobs!
 
 - This world is limited to the customised Desert biome.
 - If configured, all water is acid and will harm / kill the player (wearing armour reduces the effect). Use a boat!
-- Dalek structures will generate automatically as you explore the world — there are currently two building types, a big
-  main building and a smaller corridor type one.
+- Dalek structures will generate automatically as you explore the world — there are currently two Dalek building types, a big
+  main building and a smaller corridor type one, and some other village type structures will also spawn nearby.
 - Daleks will spawn in the big main buildings. There is a 10% chance that a Dalek will spawn flying in the air, but this
   can be disabled in the config described below.
 - A random loot chest is located in the main Dalek building — wear plenty of armour if you want to raid these!
@@ -47,7 +47,7 @@ Otherwise, mobs will look like vanilla mobs!
 ![planet gallifrey](images/docs/gallifrey.jpg)
 
 - This world is limited to customised Badlands, Wooded Badlands and Eroded Badlands biomes.
-- Time Lord structures will generate automatically as you explore the world — there is currently one building type.
+- Time Lord structures will generate automatically as you explore the world — multiple buildings will be grouped in a small village.
 - Time Lords will spawn in these structures.
 - A random loot chest is also located in the structures.
 
