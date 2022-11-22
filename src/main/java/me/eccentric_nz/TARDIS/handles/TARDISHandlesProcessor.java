@@ -82,8 +82,10 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> event = thb.toString();
-                    default -> { }
+                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON ->
+                            event = thb.toString();
+                    default -> {
+                    }
                 }
             }
         }
@@ -358,7 +360,8 @@ public class TARDISHandlesProcessor {
                                                     }
                                                 }
                                                 TARDISMessage.handlesSend(player, "BIOME_SEARCH");
-                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+//                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+                                                Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
                                                 if (nsob == null) {
                                                     TARDISMessage.handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;
@@ -543,7 +546,8 @@ public class TARDISHandlesProcessor {
                             }
                             case HIDE -> player.performCommand("tardis hide");
                             case REBUILD -> player.performCommand("tardis rebuild");
-                            case SCAN -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
+                            case SCAN ->
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
                             case COMEHERE -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
                             case TAKE_OFF -> {
                                 // player must be in TARDIS
@@ -551,7 +555,8 @@ public class TARDISHandlesProcessor {
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
                                 }
                             }
-                            case LAND -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
+                            case LAND ->
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
                         }
                     }
                 }

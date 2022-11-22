@@ -191,7 +191,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 }
                                             }
                                             TARDISMessage.send(p, "BIOME_SEARCH");
-                                            Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+//                                            Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+                                            Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
                                             if (nsob == null) {
                                                 TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                 continue;
