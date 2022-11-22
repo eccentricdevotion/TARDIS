@@ -26,7 +26,7 @@ To open the tool, double click the TARDIS.jar file. Follow the steps below to co
 
 ## Uh-oh! `***** Error: SQLite JDBC driver not found!`
 
-To fix this, you'll need to download the sqlite-jdbc jar from [this link](https://bitbucket.org/xerial/sqlite-jdbc/downloads/).
+To fix this, you'll need to download the sqlite-jdbc jar from [this link](https://github.com/xerial/sqlite-jdbc/releases).
 
 You might also need the MySQL connector from [here](https://dev.mysql.com/downloads/connector/j/). Make sure to get the version for your computer!
 
