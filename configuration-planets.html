@@ -22,7 +22,6 @@
   ga('send', 'pageview');
 
 
-
     </script>
 </head>
 <body>
@@ -50,7 +49,6 @@
 			td { vertical-align:top; }
 			td.noborder { border-bottom: none; }
 			tr.coption { background-color: #eee; }
-
 
 
         </style>
@@ -205,6 +203,19 @@
                 <td colspan="2">A list of game rules that should be applied to the world &mdash; such as:
                     doWeatherCycle, doDaylightCycle &mdash; values must be true or false. See <a
                             href="https://minecraft.gamepedia.com/Commands/gamerule" target="_blank">https://minecraft.gamepedia.com/Commands/gamerule</a>
+                </td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>generate_structures</code>
+                </td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Whether the world should generate vanilla structures &mdash; you would set this to
+                    <code>false</code> for example,
+                    if the generator was set to the Terra World Generator plugin e.g. <code>Terra:TARTARUS</code>
                 </td>
             </tr>
         </table>

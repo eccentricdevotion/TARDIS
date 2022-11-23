@@ -31,6 +31,7 @@ This list is in alphabetical order.
 - [Kitchen](#kitchen)
 - [Library](#library)
 - [Llama Stall](#llama-stall)
+- [Mangrove](#mangrove)
 - [Mob Farm](#mob-farm)
 - [Mycelium](#mushroom)
 - [Passage](#passage)
@@ -128,6 +129,10 @@ This list is in alphabetical order.
 #### Llama Stall
 
 ![Llama Stall](images/rooms/stall.jpg)
+
+#### Mangrove
+
+![Mangrove](images/rooms/mangrove.jpg)
 
 #### Mob Farm
 
