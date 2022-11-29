@@ -73,7 +73,9 @@ public class TARDISTakeoff {
             // materialise
             new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         } else {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+            if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+            }
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.VORTEX, id));
         }
         if (bar) {
@@ -124,7 +126,9 @@ public class TARDISTakeoff {
                 // materialise
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
             } else {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+                if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+                }
             }
             if (bar) {
                 new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
