@@ -38,19 +38,17 @@ public class Capture {
      * @return A 3D array of BlockData objects
      */
     public BlockData[][][] captureInterior(Location location, int distance, UUID rotor) {
-        int iy, ix, iz;
+        // TODO get depth of the console from ConsoleSize
+        int iy, ix, iz = 16;
         if (distance > 6) {
-            iy = 3;
-            ix = 3;
-            iz = 3;
-        } else if (distance > 1) {
-            iy = 3;
+            iy = 5;
             ix = 5;
-            iz = 5;
-        } else {
+        } else if (distance > 1) {
             iy = 6;
             ix = 9;
-            iz = 9;
+        } else {
+            iy = 7;
+            ix = 9;
         }
         // make block array
         BlockData[][][] capture = new BlockData[iy][ix][iz];
@@ -74,7 +72,6 @@ public class Capture {
                 }
             }
         }
-        // TODO add a box / view limiter
         // capture time rotor item frame
         if (rotor != null) {
             for (Entity e : world.getEntities()) {

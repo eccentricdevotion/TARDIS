@@ -31,12 +31,13 @@ public class MatrixUtils {
     public static BlockData[][][] rotateToWest(BlockData[][][] capture) {
         // anti-clockwise
         int layers = capture.length;
-        int size = capture[0].length;
-        BlockData[][][] rotated = new BlockData[layers][size][size];
+        int sizeR = capture[0].length;
+        int sizeC = capture[0][0].length;
+        BlockData[][][] rotated = new BlockData[layers][sizeC][sizeR];
         for (int l = 0; l < layers; l++) {
-            BlockData[][] data = new BlockData[size][size];
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
+            BlockData[][] data = new BlockData[sizeC][sizeR];
+            for (int r = 0; r < sizeR; r++) {
+                for (int c = 0; c < sizeC; c++) {
                     // process problem blocks
                     BlockData blockData = capture[l][r][c];
                     if (blockData instanceof Directional directional) {
@@ -49,9 +50,9 @@ public class MatrixUtils {
                             default -> face = BlockFace.EAST;
                         }
                         directional.setFacing(face);
-                        data[size - 1 - c][r] = directional;
+                        data[sizeC - 1 - c][r] = directional;
                     } else {
-                        data[size - 1 - c][r] = blockData;
+                        data[sizeC - 1 - c][r] = blockData;
                     }
                 }
             }
@@ -69,12 +70,13 @@ public class MatrixUtils {
     public static BlockData[][][] rotateToEast(BlockData[][][] capture) {
         // clockwise
         int layers = capture.length;
-        final int size = capture[0].length;
-        BlockData[][][] rotated = new BlockData[layers][size][size];
+        int sizeR = capture[0].length;
+        int sizeC = capture[0][0].length;
+        BlockData[][][] rotated = new BlockData[layers][sizeC][sizeR];
         for (int l = 0; l < layers; l++) {
-            BlockData[][] data = new BlockData[size][size];
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
+            BlockData[][] data = new BlockData[sizeC][sizeR];
+            for (int r = 0; r < sizeR; r++) {
+                for (int c = 0; c < sizeC; c++) {
                     // process problem blocks
                     BlockData blockData = capture[l][r][c];
                     if (blockData instanceof Directional directional) {
@@ -87,9 +89,9 @@ public class MatrixUtils {
                             default -> face = BlockFace.WEST;
                         }
                         directional.setFacing(face);
-                        data[c][size - 1 - r] = directional;
+                        data[c][sizeR - 1 - r] = directional;
                     } else {
-                        data[c][size - 1 - r] = blockData;
+                        data[c][sizeR - 1 - r] = blockData;
                     }
                 }
             }
@@ -107,20 +109,21 @@ public class MatrixUtils {
     public static BlockData[][][] rotateToNorth(BlockData[][][] capture) {
         // 180°
         int layers = capture.length;
-        final int size = capture[0].length;
-        BlockData[][][] rotated = new BlockData[layers][size][size];
+        int sizeR = capture[0].length;
+        int sizeC = capture[0][0].length;
+        BlockData[][][] rotated = new BlockData[layers][sizeR][sizeC];
         for (int l = 0; l < layers; l++) {
-            BlockData[][] data = new BlockData[size][size];
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
+            BlockData[][] data = new BlockData[sizeR][sizeC];
+            for (int r = 0; r < sizeR; r++) {
+                for (int c = 0; c < sizeC; c++) {
                     // process problem blocks
-                    BlockData blockData = capture[l][size - 1 - r][c];
+                    BlockData blockData = capture[l][sizeR - 1 - r][c];
                     if (blockData instanceof Directional directional) {
                         directional.setFacing(directional.getFacing().getOppositeFace());
-                        data[r][size - 1 - c] = directional;
+                        data[r][sizeC - 1 - c] = directional;
                     } else {
 
-                        data[r][size - 1 - c] = blockData;
+                        data[r][sizeC - 1 - c] = blockData;
                     }
                 }
             }

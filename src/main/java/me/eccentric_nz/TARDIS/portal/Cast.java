@@ -57,43 +57,46 @@ public class Cast {
             return;
         }
         int layers = capture.length;
-        int size = capture[0].length;
+        // get exterior direction
+        COMPASS facing = castData.getDirection();
+        // get sizes from direction
+        int sizeX = (facing == COMPASS.NORTH || facing == COMPASS.SOUTH) ? capture[0].length : capture[0][0].length;
+        int sizeZ = (facing == COMPASS.NORTH || facing == COMPASS.SOUTH) ? capture[0][0].length : capture[0].length;
+        int sizeR = Math.max(sizeX, sizeZ);
         // show blocks
         World world = location.getWorld();
         int bx;
         int bz;
         int sx;
         int sz;
-        // get exterior direction
-        COMPASS facing = castData.getDirection();
         // rotate capture array depending on exterior direction
         // & adjust start position
         BlockData[][][] rotated;
         switch (facing) {
             case NORTH -> { // towards negative z
-                bx = -size / 2;
-                bz = -size;
+                bx = -sizeX / 2;
+                bz = -sizeZ;
                 sx = -4;
                 sz = -9;
                 rotated = MatrixUtils.rotateToNorth(capture);
             }
             case WEST -> { // towards negative x
-                bx = -size;
-                bz = -size / 2;
+                bx = -sizeX;
+                bz = -sizeZ / 2;
                 sx = -9;
                 sz = -4;
                 rotated = MatrixUtils.rotateToWest(capture);
             }
             case EAST -> { // towards positive x
                 bx = 1;
-                bz = -size / 2;
+                bz = -sizeZ / 2;
                 sx = 1;
                 sz = -4;
                 rotated = MatrixUtils.rotateToEast(capture);
             }
             // SOUTH
             default -> { // towards positive z
-                bx = -size / 2;
+                bx = -sizeX / 2;
                 bz = 1;
                 sx = -4;
                 sz = 1;
@@ -108,9 +111,9 @@ public class Cast {
         int restoreZ = location.getBlockZ() + sz;
         // remember blocks
         Set<Block> restore = new HashSet<>();
-        for (int y = 0; y < 6; y++) {
-            for (int x = 0; x < 9; x++) {
-                for (int z = 0; z < 9; z++) {
+        for (int y = 0; y < 7; y++) {
+            for (int x = 0; x < sizeR; x++) {
+                for (int z = 0; z < sizeR; z++) {
                     int xx = restoreX + x;
                     int yy = restoreY + y;
                     int zz = restoreZ + z;
@@ -119,18 +122,19 @@ public class Cast {
                 }
             }
         }
+        plugin.getTrackerKeeper().getCastRestore().put(uuid, restore);
         // cast fake blocks
         for (int y = 0; y < layers; y++) {
-            for (int x = 0; x < size; x++) {
-                for (int z = 0; z < size; z++) {
+            for (int x = 0; x < sizeX; x++) {
+                for (int z = 0; z < sizeZ; z++) {
                     int xx = startX + x;
                     int yy = startY + y;
                     int zz = startZ + z;
-                    player.sendBlockChange(new Location(world, xx, yy, zz), rotated[y][x][z]);
+                    Location cast = new Location(world, xx, yy, zz);
+                    player.sendBlockChange(cast, rotated[y][x][z]);
                 }
             }
         }
-        plugin.getTrackerKeeper().getCastRestore().put(uuid, restore);
     }
 
     /**

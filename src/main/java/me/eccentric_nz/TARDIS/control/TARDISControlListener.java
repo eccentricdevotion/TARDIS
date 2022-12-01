@@ -394,7 +394,6 @@ public class TARDISControlListener implements Listener {
                                         Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
                                         sgui.setContents(shells);
                                         player.openInventory(sgui);
-
                                     } else {
                                         new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
                                     }
