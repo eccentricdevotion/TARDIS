@@ -76,29 +76,29 @@ public class Cast {
             case NORTH -> { // towards negative z
                 bx = -sizeX / 2;
                 bz = -sizeZ;
-                sx = -4;
-                sz = -9;
+                sx = -sizeR / 2;
+                sz = -sizeR;
                 rotated = MatrixUtils.rotateToNorth(capture);
             }
             case WEST -> { // towards negative x
                 bx = -sizeX;
                 bz = -sizeZ / 2;
-                sx = -9;
-                sz = -4;
+                sx = -sizeR;
+                sz = -sizeR / 2;
                 rotated = MatrixUtils.rotateToWest(capture);
             }
             case EAST -> { // towards positive x
                 bx = 1;
                 bz = -sizeZ / 2;
                 sx = 1;
-                sz = -4;
+                sz = -sizeR / 2;
                 rotated = MatrixUtils.rotateToEast(capture);
             }
             // SOUTH
             default -> { // towards positive z
                 bx = -sizeX / 2;
                 bz = 1;
-                sx = -4;
+                sx = -sizeR / 2;
                 sz = 1;
                 rotated = capture;
             }
@@ -130,8 +130,7 @@ public class Cast {
                     int xx = startX + x;
                     int yy = startY + y;
                     int zz = startZ + z;
-                    Location cast = new Location(world, xx, yy, zz);
-                    player.sendBlockChange(cast, rotated[y][x][z]);
+                    player.sendBlockChange(new Location(world, xx, yy, zz), rotated[y][x][z]);
                 }
             }
         }

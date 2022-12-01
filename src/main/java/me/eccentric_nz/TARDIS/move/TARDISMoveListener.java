@@ -116,7 +116,7 @@ public class TARDISMoveListener implements Listener {
                 Cast cast = new Cast(plugin, exterior);
                 if (distance <= 9 && angle < 26 && angle > -26) {
                     Capture capture = new Capture();
-                    BlockData[][][] dataArr = capture.captureInterior(interior, distance, data.getRotor());
+                    BlockData[][][] dataArr = capture.captureInterior(interior, distance, data.getRotor(), data.getConsoleSize());
                     cast.castInterior(uuid, dataArr);
                     if (capture.getRotorData().getFrame() != null) {
                         // get vector of rotor

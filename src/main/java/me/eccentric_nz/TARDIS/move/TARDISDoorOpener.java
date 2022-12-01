@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.portal.Capture;
 import me.eccentric_nz.TARDIS.portal.Cast;
@@ -204,7 +205,8 @@ public class TARDISDoorOpener {
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                     if (plugin.getConfig().getBoolean("police_box.view_interior")) {
-                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor()));
+                        ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
+                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
                         // get distance from door
                         Player player = plugin.getServer().getPlayer(uuid);
                         Location location = player.getLocation();
@@ -212,7 +214,7 @@ public class TARDISDoorOpener {
                         if (distance <= 9) {
                             // start casting
                             Capture capture = new Capture();
-                            BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor());
+                            BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor(), consoleSize);
                             Cast cast = new Cast(plugin, exportal);
                             cast.castInterior(uuid, data);
                             if (capture.getRotorData().getFrame() != null) {

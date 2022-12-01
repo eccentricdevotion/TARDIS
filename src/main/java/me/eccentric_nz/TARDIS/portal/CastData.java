@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.portal;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import org.bukkit.Location;
 
 import java.util.UUID;
@@ -28,11 +29,14 @@ public class CastData {
     final COMPASS direction;
     final UUID rotor;
 
-    public CastData(Location interior, Location exterior, COMPASS direction, UUID rotor) {
+    final ConsoleSize consoleSize;
+
+    public CastData(Location interior, Location exterior, COMPASS direction, UUID rotor, ConsoleSize consoleSize) {
         this.interior = interior;
         this.exterior = exterior;
         this.direction = direction;
         this.rotor = rotor;
+        this.consoleSize = consoleSize;
     }
 
     public Location getInterior() {
@@ -49,5 +53,9 @@ public class CastData {
 
     public UUID getRotor() {
         return rotor;
+    }
+
+    public ConsoleSize getConsoleSize() {
+        return consoleSize;
     }
 }
