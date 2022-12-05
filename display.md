@@ -41,9 +41,12 @@ The placeholders that can be used are:
 
 | Placeholder      | Description                                             |
 |------------------|---------------------------------------------------------|
+| `%WORLD%`        | the world the player is in                              |
 | `%X%`            | the `x` coordinate of the player’s location             |
 | `%Y%`            | the `y` coordinate of the player’s location             |
 | `%Z%`            | the `z` coordinate of the player’s location             |
+| `%PITCH%`        | the `pitch` component of the player’s location          |
+| `%YAW%`          | the `yaw` component of the player’s location            |
 | `%FACING%`       | the direction the player is facing (`N`, `W`, `S`, `E`) |
 | `%FACING_XZ%`    | the direction the player is facing (+/- `x`, +/- `z`)   |
 | `%TARGET_BLOCK%` | the type of block the player is targeting               |
