@@ -67,9 +67,8 @@ function randomName() {
 
 function speak() {
 	var text = document.getElementById("speak").value;
-	var url = "http://translate.google.com/translate_tts?tl=en&q="+text;
-	var elemIF = document.createElement("iframe"); 
-	elemIF.src = url; 
-	elemIF.style.display = "none"; 
-	document.body.appendChild(elemIF); 
+	var speech = new SpeechSynthesisUtterance();
+	speech.lang = "en";
+	speech.text = text;
+	window.speechSynthesis.speak(speech);
 }
