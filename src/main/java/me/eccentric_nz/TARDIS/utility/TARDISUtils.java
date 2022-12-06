@@ -267,8 +267,11 @@ public class TARDISUtils {
             );
             case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
                     .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+            case WORLD -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                    .replace("%WORLD%", player.getLocation().getWorld().getName()));
             default -> // ALL
                     ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
+                            .replace("%WORLD%", player.getLocation().getWorld().getName())
                             .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
                             .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
                             .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
