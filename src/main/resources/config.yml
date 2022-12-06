@@ -37,6 +37,7 @@ police_box:
   default_preset: FACTORY
   name_tardis: false
   view_interior: false
+  view_interior_uses_console_size: false
   materialise: true
   confirm_timeout: 15
   sign_colour: WHITE

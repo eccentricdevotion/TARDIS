@@ -143,6 +143,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_worldguard", "preferences");
         firstsBool.put("view_interior", "police_box");
+        firstsBool.put("view_interior_uses_console_size", "police_box");
         firstsBool.put("village_travel", "allow");
         firstsBool.put("walk_in_tardis", "preferences");
         firstsBool.put("weather_set", "allow");

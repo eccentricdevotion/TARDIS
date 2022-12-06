@@ -107,6 +107,7 @@ public class TARDISConfiguration {
         booleanOptions.put("police_box.name_tardis", false);
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.view_interior", false);
+        booleanOptions.put("police_box.view_interior_uses_console_size", false);
         booleanOptions.put("preferences.any_key", false);
         booleanOptions.put("preferences.nerf_pistons.enabled", false);
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);

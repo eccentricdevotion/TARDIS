@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.portal;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -42,7 +43,7 @@ public class Capture {
      */
     public BlockData[][][] captureInterior(Location location, int distance, UUID rotor, ConsoleSize consoleSize) {
         // get depth of the console from ConsoleSize
-        int iy, ix, iz = consoleSize.getCastDistance();
+        int iy, ix, iz = (TARDIS.plugin.getConfig().getBoolean("policebox.view_interior_uses_console_size")) ? consoleSize.getCastDistance() : 16;
         // determine height and width from distance from door
         if (distance > 6) {
             iy = 5;
