@@ -19,70 +19,139 @@ package me.eccentric_nz.TARDIS.universaltranslator;
  * Language - an enum of language codes supported by the Yandex API
  */
 public enum Language {
+
+    AUTO_DETECT("auto"),
     AFRIKAANS("af"),
     ALBANIAN("sq"),
+    AMHARIC("am"),
     ARABIC("ar"),
     ARMENIAN("hy"),
+    ASSAMESE("as"),
+    AYMARA("ay"),
     AZERBAIJANI("az"),
-    BASHKIR("ba"),
+    BAMBARA("bm"),
     BASQUE("eu"),
     BELARUSIAN("be"),
+    BENGALI("bn"),
+    BHOJPURI("bho"),
     BOSNIAN("bs"),
     BULGARIAN("bg"),
     CATALAN("ca"),
+    CEBUANO("ceb"),
+    CHICHEWA("ny"),
     CHINESE("zh"),
+    CORSICAN("co"),
     CROATIAN("hr"),
     CZECH("cs"),
     DANISH("da"),
+    DHIVEHI("dv"),
+    DOGRI("doi"),
     DUTCH("nl"),
     ENGLISH("en"),
+    ESPERANTO("eo"),
     ESTONIAN("et"),
+    EWE("ee"),
+    FILIPINO("tl"),
     FINNISH("fi"),
     FRENCH("fr"),
+    FRISIAN("fy"),
     GALICIAN("gl"),
     GEORGIAN("ka"),
     GERMAN("de"),
     GREEK("el"),
-    HAITIAN("ht"),
-    HEBREW("he"),
+    GUARANI("gn"),
+    GUJARATI("gu"),
+    HAITIAN_CREOLE("ht"),
+    HAUSA("ha"),
+    HAWAIIAN("haw"),
+    HEBREW("iw"),
+    HINDI("hi"),
+    HMONG("hmn"),
     HUNGARIAN("hu"),
     ICELANDIC("is"),
+    IGBO("ig"),
+    ILOCANO("ilo"),
     INDONESIAN("id"),
     IRISH("ga"),
     ITALIAN("it"),
     JAPANESE("ja"),
+    JAVANESE("jw"),
+    KANNADA("kn"),
     KAZAKH("kk"),
-    KIRGHIZ("ky"),
+    KHMER("km"),
+    KINYARWANDA("rw"),
+    KONKANI("gom"),
     KOREAN("ko"),
+    KRIO("kri"),
+    KURDISH("ku"),
+    KYRGYZ("ky"),
+    LAO("lo"),
     LATIN("la"),
-    LATVIAN("ly"),
+    LATVIAN("lv"),
+    LINGALA("ln"),
     LITHUANIAN("lt"),
+    LUGANDA("lg"),
+    LUXEMBOURGISH("lb"),
     MACEDONIAN("mk"),
+    MAITHILI("mai"),
     MALAGASY("mg"),
     MALAY("ms"),
+    MALAYALAM("ml"),
     MALTESE("mt"),
+    MAORI("mi"),
+    MARATHI("mr"),
+    MEITEILON("mni-mtei"),
+    MIZO("lus"),
     MONGOLIAN("mn"),
+    MYANMAR("my"),
+    NEPALI("ne"),
     NORWEGIAN("no"),
+    ODIA("or"),
+    OROMO("om"),
+    PASHTO("ps"),
     PERSIAN("fa"),
     POLISH("pl"),
     PORTUGUESE("pt"),
+    PUNJABI("pa"),
+    QUECHUA("qu"),
     ROMANIAN("ro"),
     RUSSIAN("ru"),
+    SAMOAN("sm"),
+    SANSKRIT("sa"),
+    SCOTS_GAELIC("gd"),
+    SEPEDI("nso"),
     SERBIAN("sr"),
+    SESOTHO("st"),
+    SHONA("sn"),
+    SINDHI("sd"),
+    SINHALA("si"),
     SLOVAK("sk"),
     SLOVENIAN("sl"),
+    SOMALI("so"),
     SPANISH("es"),
+    SUNDANESE("su"),
     SWAHILI("sw"),
     SWEDISH("sv"),
-    TAGALOG("tl"),
     TAJIK("tg"),
+    TAMIL("ta"),
     TATAR("tt"),
+    TELUGU("te"),
     THAI("th"),
+    TIGRINYA("ti"),
+    TSONGA("ts"),
     TURKISH("tr"),
+    TURKMEN("tk"),
+    TWI("ak"),
     UKRAINIAN("uk"),
+    URDU("ur"),
+    UYGHUR("ug"),
     UZBEK("uz"),
     VIETNAMESE("vi"),
-    WELSH("cy");
+    WELSH("cy"),
+    XHOSA("xh"),
+    YIDDISH("yi"),
+    YORUBA("yo"),
+    ZULU("zu");
 
     /**
      * String representation of this language.
@@ -92,10 +161,10 @@ public enum Language {
     /**
      * Enum constructor.
      *
-     * @param pLanguage The language identifier.
+     * @param language The language identifier.
      */
-    Language(String pLanguage) {
-        language = pLanguage;
+    Language(String language) {
+        this.language = language;
     }
 
     public static Language fromString(String pLanguage) {
@@ -108,12 +177,11 @@ public enum Language {
     }
 
     /**
-     * Returns the String representation of this language.
+     * Returns the language code.
      *
-     * @return The String representation of this language.
+     * @return The language code.
      */
-    @Override
-    public String toString() {
+    public String getCode() {
         return language;
     }
 }

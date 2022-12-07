@@ -1086,6 +1086,9 @@ commands:
     language:
       description: Set the language used in the '/tardis say' command.
       usage: /<command> language [language]
+    translate:
+      description: Set the languages and player used when auto translating messages.
+      usage: /<command> translate [language to] [language from] [player]
     lanterns:
       description: Toggle Sea Lanterns for lights on and off.
       usage: /<command> lanterns [on|off]

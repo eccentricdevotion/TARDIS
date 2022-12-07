@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.universaltranslator.TranslateData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -99,6 +100,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> perm = new HashMap<>();
     private final HashMap<UUID, String> updatePlayers = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
+    private final HashMap<UUID, TranslateData> translators = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
     private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
@@ -621,6 +623,15 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
+     * Tracks players that are in wanting to translate chat
+     *
+     * @return a map of player UUIDs and language codes
+     */
+    public HashMap<UUID, TranslateData> getTranslators() {
+        return translators;
+    }
+
+    /**
      * Tracks players placing TARDIS telepathic circuits
      *
      * @return a Map of player UUIDs and the location of the placed circut
@@ -722,7 +733,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks the locations of Artron furnaces
      *
-     * @return a list of location strings
+     * @return a collection of location strings
      */
     public Set<String> getArtronFurnaces() {
         return artronFurnaces;
@@ -731,7 +742,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks the locations of Chemistry heat blocks
      *
-     * @return a list of location strings
+     * @return a collection of location strings
      */
     public Set<String> getHeatBlocks() {
         return heatBlocks;
@@ -740,7 +751,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks reset worlds
      *
-     * @return a list of worlds
+     * @return a collection of worlds
      */
     public Set<String> getResetWorlds() {
         return resetWorlds;
@@ -749,7 +760,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are dematerialising
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getDematerialising() {
         return dematerialising;
@@ -758,7 +769,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that dematerialised to the Time Vortex (no travel destination set)
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getDidDematToVortex() {
         return didDematToVortex;
@@ -767,7 +778,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are dispersed
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getDispersedTARDII() {
         return dispersedTARDII;
@@ -776,7 +787,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that have had their handbrake disengaged
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getHasClickedHandbrake() {
         return hasClickedHandbrake;
@@ -785,7 +796,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that still have their handbrake engaged
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getHasNotClickedHandbrake() {
         return hasNotClickedHandbrake;
@@ -794,7 +805,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that have had their destination set randomly (these TARDIS es will not be able to scan the random destination)
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getHasRandomised() {
         return hasRandomised;
@@ -803,7 +814,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are in siege mode
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getInSiegeMode() {
         return inSiegeMode;
@@ -812,7 +823,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are currently passing through the Time Vortex
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getInVortex() {
         return inVortex;
@@ -821,7 +832,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are a siege cube block (not being carried)
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getIsSiegeCube() {
         return isSiegeCube;
@@ -830,7 +841,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are materialising
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getMaterialising() {
         return materialising;
@@ -839,7 +850,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that have a mincart entering the RAil room
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getMinecart() {
         return minecart;
@@ -848,7 +859,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes in submarine mode
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getSubmarine() {
         return submarine;
@@ -857,7 +868,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks TARDISes that are growing rooms
      *
-     * @return a list of TARDIS ids
+     * @return a collection of TARDIS ids
      */
     public Set<Integer> getIsGrowingRooms() {
         return isGrowingRooms;
@@ -866,7 +877,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are rearranging saves in the Saves GUI
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getArrangers() {
         return arrangers;
@@ -875,7 +886,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are colouring TARDIS beacon glass blocks
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getBeaconColouring() {
         return beaconColouring;
@@ -884,7 +895,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are using the Chameleon Construction GUI
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getConstructors() {
         return constructors;
@@ -893,7 +904,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that have discovered the TARDIS easter egg. Used for cooldown purposes
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getEggs() {
         return eggs;
@@ -902,7 +913,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that have used TARDIS atmospheric excitation to make it snow. Used for cooldown purposes
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getExcitation() {
         return excitation;
@@ -911,7 +922,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are farming mobs while entering the TARDIS
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getFarming() {
         return farming;
@@ -920,7 +931,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are frozen by the sonic screwdriver
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getFrozenPlayers() {
         return frozenPlayers;
@@ -929,7 +940,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are genetically modified
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getGeneticallyModified() {
         return geneticallyModified;
@@ -938,7 +949,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are using the genetic manipulator GUI
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getGeneticManipulation() {
         return geneticManipulation;
@@ -947,7 +958,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that have time travelled
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getHasTravelled() {
         return hasTravelled;
@@ -956,7 +967,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that using the How to build a TARDIS helper GUI
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getHowTo() {
         return howTo;
@@ -965,7 +976,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players entering TARDISes
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getMover() {
         return mover;
@@ -974,7 +985,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are viewing TARDIS recipes
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getRecipeViewers() {
         return recipeViewers;
@@ -983,7 +994,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are inside the Render room
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getRenderRoomOccupants() {
         return renderRoomOccupants;
@@ -992,7 +1003,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are sonicing doors
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getSonicDoors() {
         return sonicDoors;
@@ -1001,7 +1012,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are wearing 3-D glasses
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getSpectacleWearers() {
         return spectacleWearers;
@@ -1010,7 +1021,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are temporally (re)located
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getTemporallyLocated() {
         return temporallyLocated;
@@ -1019,7 +1030,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players that are in the Zero room
      *
-     * @return a list of player UUIDs
+     * @return a collection of player UUIDs
      */
     public Set<UUID> getZeroRoomOccupants() {
         return zeroRoomOccupants;

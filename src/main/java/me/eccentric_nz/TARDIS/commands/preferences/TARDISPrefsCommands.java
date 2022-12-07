@@ -64,7 +64,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "quotes",
             "renderer",
             "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
-            "telepathy", "travelbar",
+            "telepathy", "translate", "travelbar",
             "wall", "wool_lights"
     );
     private final TARDIS plugin;
@@ -132,28 +132,34 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         plugin.getQueryFactory().doInsert("player_prefs", set);
                     }
                     switch (pref) {
-                        case "difficulty":
+                        case "difficulty" -> {
                             return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
-                        case "eps_message":
+                        }
+                        case "eps_message" -> {
                             return new TARDISEPSMessageCommand().setMessage(player, args);
-                        case "flight":
+                        }
+                        case "flight" -> {
                             return new TARDISSetFlightCommand().setMode(player, args);
-                        case "hads_type":
+                        }
+                        case "hads_type" -> {
                             return new TARDISHadsTypeCommand().setHadsPref(player, args);
-                        case "hum":
+                        }
+                        case "hum" -> {
                             return new TARDISHumCommand().setHumPref(player, args);
-                        case "isomorphic":
+                        }
+                        case "isomorphic" -> {
                             return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
-                        case "key":
+                        }
+                        case "key" -> {
                             return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
-                        case "language":
-                            return new TARDISSetLanguageCommand().setLanguagePref(player, args);
-                        case "wall":
-                        case "floor":
-                        case "siege_wall":
-                        case "siege_floor":
+                        }
+                        case "language", "translate" -> {
+                            return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
+                        }
+                        case "wall", "floor", "siege_wall", "siege_floor" -> {
                             return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
-                        default:
+                        }
+                        default -> {
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                                 TARDISMessage.send(player, "PREF_ON_OFF", pref);
                                 return false;
@@ -186,6 +192,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                 case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
                                 default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
                             };
+                        }
                     }
                 } else {
                     TARDISMessage.send(player, "NO_PERMS");

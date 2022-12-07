@@ -34,9 +34,7 @@ public class TARDISTextureTabComplete extends TARDISCompleter implements TabComp
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
         String lastArg = args[args.length - 1];
-
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {

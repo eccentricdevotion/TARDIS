@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -41,11 +42,14 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;
-    private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("AFRIKAANS", "ALBANIAN", "ARABIC", "ARMENIAN", "AZERBAIJANI", "BASHKIR", "BASQUE", "BELARUSIAN", "BOSNIAN", "BULGARIAN", "CATALAN", "CHINESE", "CROATIAN", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GALICIAN", "GEORGIAN", "GERMAN", "GREEK", "HAITIAN", "HEBREW", "HUNGARIAN", "ICELANDIC", "INDONESIAN", "IRISH", "ITALIAN", "JAPANESE", "KAZAKH", "KIRGHIZ", "KOREAN", "LATIN", "LATVIAN", "LITHUANIAN", "MACEDONIAN", "MALAGASY", "MALAY", "MALTESE", "MONGOLIAN", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SERBIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWAHILI", "SWEDISH", "TAGALOG", "TAJIK", "TATAR", "THAI", "TURKISH", "UKRAINIAN", "UZBEK", "VIETNAMESE", "WELSH");
+    private final List<String> LANGUAGE_SUBS = new ArrayList<>();
 
     public TARDISPrefsTabComplete(TARDIS plugin) {
         List<String> mats = new ArrayList<>();
         TARDISWalls.BLOCKS.forEach((key) -> mats.add(key.toString()));
+        for (Language l : Language.values()) {
+            LANGUAGE_SUBS.add(l.toString());
+        }
         MAT_SUBS = ImmutableList.copyOf(mats);
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
@@ -71,13 +75,18 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
                 case "add", "remove" -> null; // return null to default to online player name matching
                 case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
                 case "key" -> partial(lastArg, KEY_SUBS);
-                case "language" -> partial(lastArg, LANGUAGE_SUBS);
+                case "language", "translate" -> partial(lastArg, LANGUAGE_SUBS);
                 case "flight" -> partial(lastArg, FLIGHT_SUBS);
                 case "difficulty" -> partial(lastArg, DIFF_SUBS);
                 case "hads_type" -> partial(lastArg, HADS_SUBS);
                 case "hum" -> partial(lastArg, HUM_SUBS);
                 default -> partial(lastArg, ONOFF_SUBS);
             };
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("translate")) {
+            return partial(lastArg, LANGUAGE_SUBS);
+        } else if (args.length == 4 && args[0].equalsIgnoreCase("translate")) {
+            // return null to default to online player name matching
+            return null;
         }
         return ImmutableList.of();
     }

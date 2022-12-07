@@ -69,11 +69,10 @@ public class TARDISSayCommand implements CommandExecutor {
             String whatToTranslate = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             String lang = args[0].toUpperCase(Locale.ENGLISH);
             try {
-                Language to = Language.valueOf(lang);
                 Language from = Language.valueOf(preferedLang);
-                Translate.setKey("trnsl.1.1.20170312T202552Z.b0bd3c7ce48fe120.8d084aec9ae76b8d17b7882cd3026202c61ee7e0");
+                Language to = Language.valueOf(lang);
                 try {
-                    String translatedText = Translate.execute(whatToTranslate, from, to);
+                    String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
                     if (sender instanceof Player player) {
                         player.chat(UT + translatedText);
                     } else {
