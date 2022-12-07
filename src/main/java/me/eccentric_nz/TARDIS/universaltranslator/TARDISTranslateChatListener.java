@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.universaltranslator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,7 +30,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class TARDISTranslateChatListener implements Listener {
 
     private final TARDIS plugin;
-    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
 
     public TARDISTranslateChatListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -38,6 +37,9 @@ public class TARDISTranslateChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onTranslateChat(AsyncPlayerChatEvent event) {
+        if (plugin.getTrackerKeeper().getTranslators().isEmpty()) {
+            return;
+        }
         String sender = event.getPlayer().getName(); // the player SENDING the chat message
         for (Player p : event.getRecipients()) {
             if (plugin.getTrackerKeeper().getTranslators().containsKey(p.getUniqueId())) {
@@ -53,7 +55,7 @@ public class TARDISTranslateChatListener implements Listener {
     private void translateChat(Player p, Language from, Language to, String message) {
         try {
             String translatedText = LingvaTranslate.fetch(from.toString(), to.toString(), message);
-            p.sendMessage(UT + translatedText);
+            p.sendMessage(TARDISConstants.UT + translatedText);
         } catch (Exception ex) {
             plugin.debug("Could not get translation! " + ex);
             ex.printStackTrace();

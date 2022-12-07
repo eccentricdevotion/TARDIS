@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.universaltranslator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +40,6 @@ import java.util.Locale;
 public class TARDISSayCommand implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
 
     public TARDISSayCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -74,9 +73,9 @@ public class TARDISSayCommand implements CommandExecutor {
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
                     if (sender instanceof Player player) {
-                        player.chat(UT + translatedText);
+                        player.chat(TARDISConstants.UT + translatedText);
                     } else {
-                        plugin.getServer().dispatchCommand(sender, "say " + UT + translatedText);
+                        plugin.getServer().dispatchCommand(sender, "say " + TARDISConstants.UT + translatedText);
                     }
                     return true;
                 } catch (Exception ex) {

@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.boss.BarFlag;
@@ -191,11 +188,16 @@ public class TARDISConstants {
      * A list of materials used in ItemFrame Chameleon presets
      */
     public static final List<Material> DYES = Arrays.asList(Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE, Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE, Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE);
+
+    /**
+     * Prefix for Universal Translation
+     */
+    public static final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
     private static final Material[] CHAMELEON_BLOCKS_CHANGE_ARR = {Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM, Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK, Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS, Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS, Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS, Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE};
     private static final Material[] CHAMELEON_BLOCKS_CHANGE_TO_ARR = {Material.ACACIA_PLANKS, Material.ACACIA_PLANKS, Material.ACACIA_PLANKS, Material.MELON, Material.PUMPKIN, Material.BIRCH_PLANKS, Material.BIRCH_PLANKS, Material.BIRCH_PLANKS, Material.BRICKS, Material.SANDSTONE, Material.COBBLESTONE, Material.COBBLESTONE, Material.DARK_OAK_PLANKS, Material.DARK_OAK_PLANKS, Material.DARK_OAK_PLANKS, Material.END_STONE, Material.DIRT, Material.DIRT, Material.STONE, Material.CHISELED_STONE_BRICKS, Material.COBBLESTONE, Material.CRACKED_STONE_BRICKS, Material.MOSSY_STONE_BRICKS, Material.STONE_BRICKS, Material.STONE, Material.GLASS, Material.JUNGLE_PLANKS, Material.JUNGLE_PLANKS, Material.JUNGLE_PLANKS, Material.MELON, Material.NETHER_BRICKS, Material.NETHER_BRICKS, Material.OAK_PLANKS, Material.OAK_PLANKS, Material.OAK_PLANKS, Material.PUMPKIN, Material.PURPUR_BLOCK, Material.PURPUR_BLOCK, Material.QUARTZ_BLOCK, Material.QUARTZ_BLOCK, Material.RED_SANDSTONE, Material.RED_SANDSTONE, Material.RED_SANDSTONE, Material.SANDSTONE, Material.SANDSTONE, Material.SANDSTONE, Material.SNOW_BLOCK, Material.SPRUCE_PLANKS, Material.SPRUCE_PLANKS, Material.SPRUCE_PLANKS, Material.STONE_BRICKS, Material.STONE_BRICKS, Material.OAK_LEAVES};
 
     /**
-     * Ba map of blocks to change to their full block counterparts
+     * A map of blocks to change to their full block counterparts
      */
     public static final HashMap<Material, Material> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
 
