@@ -190,7 +190,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.11.0");
+        versions.put("TARDISChunkGenerator", "4.12.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.8");
@@ -250,7 +250,7 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (hasVersion) {
+        if (hasVersion && this.isEnabled()) {
             if (tardisDynmap != null) {
                 tardisDynmap.disable();
             }
