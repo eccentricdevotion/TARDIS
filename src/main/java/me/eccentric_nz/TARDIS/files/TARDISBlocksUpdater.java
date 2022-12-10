@@ -380,6 +380,51 @@ public class TARDISBlocksUpdater {
             blocks_config.set("tardis_blocks", dripLeafBlocks);
             i++;
         }
+        if (!tbs.contains("BAMBOO_BLOCK")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("BAMBOO_BLOCK");
+            blocks.add("BAMBOO_MOSAIC");
+            blocks.add("BAMBOO_PLANKS");
+            blocks.add("CHISELED_BOOKSHELF");
+            blocks.add("STRIPPED_BAMBOO_BLOCK");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            // chameleon blocks
+            List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
+            chameleon.addAll(blocks);
+            chameleon.sort(Comparator.naturalOrder());
+            blocks_config.set("chameleon_blocks", chameleon);
+            // under door blocks
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("ACACIA_HANGING_SIGN");
+            under.add("BAMBOO_BUTTON");
+            under.add("BAMBOO_DOOR");
+            under.add("BAMBOO_FENCE");
+            under.add("BAMBOO_FENCE_GATE");
+            under.add("BAMBOO_HANGING_SIGN");
+            under.add("BAMBOO_MOSAIC_SLAB");
+            under.add("BAMBOO_MOSAIC_STAIRS");
+            under.add("BAMBOO_PRESSURE_PLATE");
+            under.add("BAMBOO_SIGN");
+            under.add("BAMBOO_SLAB");
+            under.add("BAMBOO_STAIRS");
+            under.add("BAMBOO_TRAPDOOR");
+            under.add("BAMBOO_WALL_SIGN");
+            under.add("BIRCH_HANGING_SIGN");
+            under.add("CRIMSON_HANGING_SIGN");
+            under.add("DARK_OAK_HANGING_SIGN");
+            under.add("JUNGLE_HANGING_SIGN");
+            under.add("MANGROVE_HANGING_SIGN");
+            under.add("OAK_HANGING_SIGN");
+            under.add("PIGLIN_HEAD");
+            under.add("SPRUCE_HANGING_SIGN");
+            under.add("WARPED_HANGING_SIGN");
+            blocks_config.set("under_door_blocks", under);
+            blocks_config.set("version", 12);
+            i += 3;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {

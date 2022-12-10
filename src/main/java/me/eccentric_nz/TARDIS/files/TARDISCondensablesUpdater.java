@@ -417,6 +417,37 @@ public class TARDISCondensablesUpdater {
             // Missing BEE hive and nest
             list.put("BEEHIVE", 100);
             list.put("BEE_NEST", 100);
+            // 1.20
+            list.put("ACACIA_HANGING_SIGN", 2);
+            list.put("BAMBOO_BLOCK", 2);
+            list.put("BAMBOO_BUTTON", 1);
+            list.put("BAMBOO_CHEST_RAFT", 8);
+            list.put("BAMBOO_DOOR", 3);
+            list.put("BAMBOO_FENCE", 1);
+            list.put("BAMBOO_FENCE_GATE", 5);
+            list.put("BAMBOO_HANGING_SIGN", 2);
+            list.put("BAMBOO_MOSAIC", 2);
+            list.put("BAMBOO_MOSAIC_SLAB", 2);
+            list.put("BAMBOO_MOSAIC_STAIRS", 1);
+            list.put("BAMBOO_PLANKS", 2);
+            list.put("BAMBOO_PRESSURE_PLATE", 1);
+            list.put("BAMBOO_RAFT", 3);
+            list.put("BAMBOO_SIGN", 2);
+            list.put("BAMBOO_SLAB", 2);
+            list.put("BAMBOO_STAIRS", 1);
+            list.put("BAMBOO_TRAPDOOR", 6);
+            list.put("BIRCH_HANGING_SIGN", 2);
+            list.put("CHISELED_BOOKSHELF", 20);
+            list.put("CRIMSON_HANGING_SIGN", 2);
+            list.put("DARK_OAK_HANGING_SIGN", 2);
+            list.put("JUNGLE_HANGING_SIGN", 2);
+            list.put("MANGROVE_HANGING_SIGN", 2);
+            list.put("OAK_HANGING_SIGN", 2);
+            list.put("PIGLIN_HEAD", 200);
+            list.put("SPRUCE_HANGING_SIGN", 2);
+            list.put("STRIPPED_BAMBOO_BLOCK", 2);
+            list.put("WARPED_HANGING_SIGN", 2);
+
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
             }

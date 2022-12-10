@@ -561,26 +561,26 @@ public class TARDISCondensables {
             // ---
             condensables.put("REINFORCED_DEEPSLATE", 100);
             // ---
-			condensables.put("OAK_CHEST_BOAT", 8);
-			condensables.put("SPRUCE_CHEST_BOAT", 8);
-			condensables.put("BIRCH_CHEST_BOAT", 8);
-			condensables.put("JUNGLE_CHEST_BOAT", 8);
-			condensables.put("ACACIA_CHEST_BOAT", 8);
-			condensables.put("DARK_OAK_CHEST_BOAT", 8);
-			condensables.put("MANGROVE_CHEST_BOAT", 8);
-			// --
-			condensables.put("Material.TADPOLE_BUCKET", 40);
-			condensables.put("Material.POWDER_SNOW_BUCKET", 40);
-			condensables.put("Material.PUFFERFISH_BUCKET", 40);
-			condensables.put("Material.SALMON_BUCKET", 40);
-			condensables.put("Material.COD_BUCKET", 40);
-			condensables.put("Material.TROPICAL_FISH_BUCKET", 40);
-			condensables.put("Material.AXOLOTL_BUCKET", 40);
-			condensables.put("Material.RECOVERY_COMPASS", 182);
-			condensables.put("Material.MUSIC_DISC_5", 180);
-			condensables.put("Material.DISC_FRAGMENT_5", 20);
-			condensables.put("Material.GOAT_HORN", 20);
-			condensables.put("Material.ECHO_SHARD", 20);
+            condensables.put("OAK_CHEST_BOAT", 8);
+            condensables.put("SPRUCE_CHEST_BOAT", 8);
+            condensables.put("BIRCH_CHEST_BOAT", 8);
+            condensables.put("JUNGLE_CHEST_BOAT", 8);
+            condensables.put("ACACIA_CHEST_BOAT", 8);
+            condensables.put("DARK_OAK_CHEST_BOAT", 8);
+            condensables.put("MANGROVE_CHEST_BOAT", 8);
+            // --
+            condensables.put("Material.TADPOLE_BUCKET", 40);
+            condensables.put("Material.POWDER_SNOW_BUCKET", 40);
+            condensables.put("Material.PUFFERFISH_BUCKET", 40);
+            condensables.put("Material.SALMON_BUCKET", 40);
+            condensables.put("Material.COD_BUCKET", 40);
+            condensables.put("Material.TROPICAL_FISH_BUCKET", 40);
+            condensables.put("Material.AXOLOTL_BUCKET", 40);
+            condensables.put("Material.RECOVERY_COMPASS", 182);
+            condensables.put("Material.MUSIC_DISC_5", 180);
+            condensables.put("Material.DISC_FRAGMENT_5", 20);
+            condensables.put("Material.GOAT_HORN", 20);
+            condensables.put("Material.ECHO_SHARD", 20);
             // --
             condensables.put("SCULK", 2);
             condensables.put("SCULK_CATALYST", 2);
@@ -1067,6 +1067,36 @@ public class TARDISCondensables {
             condensables.put("WEATHERED_CUT_COPPER_STAIRS", 120);
             condensables.put("WHITE_CANDLE", 35);
             condensables.put("YELLOW_CANDLE", 35);
+            // 1.20
+            condensables.put("ACACIA_HANGING_SIGN", 2);
+            condensables.put("BAMBOO_BLOCK", 2);
+            condensables.put("BAMBOO_BUTTON", 1);
+            condensables.put("BAMBOO_CHEST_RAFT", 8);
+            condensables.put("BAMBOO_DOOR", 3);
+            condensables.put("BAMBOO_FENCE", 1);
+            condensables.put("BAMBOO_FENCE_GATE", 5);
+            condensables.put("BAMBOO_HANGING_SIGN", 2);
+            condensables.put("BAMBOO_MOSAIC", 2);
+            condensables.put("BAMBOO_MOSAIC_SLAB", 2);
+            condensables.put("BAMBOO_MOSAIC_STAIRS", 1);
+            condensables.put("BAMBOO_PLANKS", 2);
+            condensables.put("BAMBOO_PRESSURE_PLATE", 1);
+            condensables.put("BAMBOO_RAFT", 3);
+            condensables.put("BAMBOO_SIGN", 2);
+            condensables.put("BAMBOO_SLAB", 2);
+            condensables.put("BAMBOO_STAIRS", 1);
+            condensables.put("BAMBOO_TRAPDOOR", 6);
+            condensables.put("BIRCH_HANGING_SIGN", 2);
+            condensables.put("CHISELED_BOOKSHELF", 20);
+            condensables.put("CRIMSON_HANGING_SIGN", 2);
+            condensables.put("DARK_OAK_HANGING_SIGN", 2);
+            condensables.put("JUNGLE_HANGING_SIGN", 2);
+            condensables.put("MANGROVE_HANGING_SIGN", 2);
+            condensables.put("OAK_HANGING_SIGN", 2);
+            condensables.put("PIGLIN_HEAD", 200);
+            condensables.put("SPRUCE_HANGING_SIGN", 2);
+            condensables.put("STRIPPED_BAMBOO_BLOCK", 2);
+            condensables.put("WARPED_HANGING_SIGN", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
             items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));

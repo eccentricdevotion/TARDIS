@@ -70,6 +70,10 @@ class TARDISLazarusExtraInventory {
         disguises.add(Material.FROG_SPAWN_EGG);
         disguises.add(Material.TADPOLE_SPAWN_EGG);
         disguises.add(Material.WARDEN_SPAWN_EGG);
+        // 1.20
+        disguises.add(Material.CAMEL_SPAWN_EGG);
+        disguises.add(Material.IRON_GOLEM_SPAWN_EGG);
+        disguises.add(Material.SNOW_GOLEM_SPAWN_EGG);
         terminal = getItemStack();
     }
 
@@ -87,21 +91,6 @@ class TARDISLazarusExtraInventory {
         brine.setDisplayName("HEROBRINE");
         hero.setItemMeta(brine);
         eggs[i] = hero;
-        i++;
-        // golems
-        // put iron golem
-        ItemStack iron = new ItemStack(Material.IRON_BLOCK, 1);
-        ItemMeta golem = iron.getItemMeta();
-        golem.setDisplayName("IRON_GOLEM");
-        iron.setItemMeta(golem);
-        eggs[i] = iron;
-        i++;
-        // put snowman
-        ItemStack snow = new ItemStack(Material.SNOWBALL, 1);
-        ItemMeta man = snow.getItemMeta();
-        man.setDisplayName("SNOWMAN");
-        snow.setItemMeta(man);
-        eggs[i] = snow;
         i++;
         // put wither
         ItemStack wit = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
