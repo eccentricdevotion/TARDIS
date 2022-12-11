@@ -117,7 +117,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     disguises.put(uuid, "PLAYER");
                 }
             }
-            if (slot == 45) { // The Master Switch : ON | OFF
+            if (slot == 47) { // The Master Switch : ON | OFF
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
@@ -135,19 +135,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 is.setItemMeta(im);
             }
-            if (slot == 47) { // adult / baby
+            if (slot == 48) { // adult / baby
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
                 im.setLore(Collections.singletonList(onoff));
                 is.setItemMeta(im);
             }
-            if (slot == 48) { // type / colour
+            if (slot == 49) { // type / colour
                 if (disguises.containsKey(uuid)) {
                     setSlotFourtyEight(view, disguises.get(uuid), uuid);
                 }
             }
-            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
+            if (slot == 50) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
