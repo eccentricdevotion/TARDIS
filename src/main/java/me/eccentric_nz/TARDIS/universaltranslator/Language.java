@@ -16,7 +16,7 @@
 package me.eccentric_nz.TARDIS.universaltranslator;
 
 /**
- * Language - an enum of language codes supported by the Yandex API
+ * Language - an enum of language codes supported by the Lingva API
  */
 public enum Language {
 

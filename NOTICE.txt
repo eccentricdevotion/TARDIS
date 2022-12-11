@@ -1,1 +1,1 @@
-This product includes software for Yandex API calls (https://www.rmtheis.com/), and GZip archiving and extraction (https://rauschig.org/jarchivelib/).
+This product includes software for GZip archiving and extraction (https://rauschig.org/jarchivelib/).
