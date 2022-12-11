@@ -6,18 +6,18 @@ public class TranslateData {
     Language from;
     Language to;
 
-    public TranslateData(Language to, Language from, String sender) {
-        this.to = to;
+    public TranslateData(Language from, Language to, String sender) {
         this.from = from;
+        this.to = to;
         this.sender = sender;
-    }
-
-    public Language getTo() {
-        return to;
     }
 
     public Language getFrom() {
         return from;
+    }
+
+    public Language getTo() {
+        return to;
     }
 
     public String getSender() {

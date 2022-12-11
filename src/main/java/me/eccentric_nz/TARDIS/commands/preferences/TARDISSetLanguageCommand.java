@@ -46,14 +46,14 @@ class TARDISSetLanguageCommand {
             return false;
         }
         UUID uuid = player.getUniqueId();
-        String to = args[1].toUpperCase(Locale.ENGLISH);
+        String first = args[1].toUpperCase(Locale.ENGLISH);
         if (args[0].equalsIgnoreCase("translate") && args[1].equalsIgnoreCase("off")) {
             plugin.getTrackerKeeper().getTranslators().remove(uuid);
             TARDISMessage.send(player, "TRANSLATE_OFF");
         } else {
-            Language langTo;
+            Language langFirst;
             try {
-                langTo = Language.valueOf(to);
+                langFirst = Language.valueOf(first);
             } catch (IllegalArgumentException e) {
                 TARDISMessage.send(player, "LANG_NOT_VALID");
                 return true;
@@ -63,10 +63,10 @@ class TARDISSetLanguageCommand {
                     TARDISMessage.send(player, "PREF_NEED", "language to translate from");
                     return false;
                 }
-                String from = args[2].toUpperCase(Locale.ENGLISH);
-                Language langFrom;
+                String second = args[2].toUpperCase(Locale.ENGLISH);
+                Language langSecond;
                 try {
-                    langFrom = Language.valueOf(from);
+                    langSecond = Language.valueOf(second);
                 } catch (IllegalArgumentException e) {
                     TARDISMessage.send(player, "LANG_NOT_VALID");
                     return true;
@@ -81,12 +81,12 @@ class TARDISSetLanguageCommand {
                     return true;
                 }
                 String name = sender.getName();
-                TranslateData data = new TranslateData(langTo, langFrom, name);
+                TranslateData data = new TranslateData(langFirst, langSecond, name);
                 plugin.getTrackerKeeper().getTranslators().put(uuid, data);
                 TARDISMessage.send(player, "TRANSLATE_ON", name);
             } else {
                 HashMap<String, Object> setl = new HashMap<>();
-                setl.put(pref, to);
+                setl.put(pref, first);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 plugin.getQueryFactory().doUpdate("player_prefs", setl, where);

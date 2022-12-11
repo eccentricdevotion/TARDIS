@@ -27,11 +27,10 @@ import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
 
 public class LingvaTranslate {
 
-    private static List<String> domains = Arrays.asList("lingva.ml", "translate.plausibility.cloud", "translate.projectsegfau.lt", "translate.dr460nf1r3.org", "lingva.garudalinux.org");
+    private static List<String> domains = Arrays.asList("lingva.ml", "translate.projectsegfau.lt", "translate.dr460nf1r3.org", "lingva.garudalinux.org");
 
     /**
      * Fetches a translation from a Lingva instance
@@ -49,7 +48,6 @@ public class LingvaTranslate {
             // Convert to a JSON object
             JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             String translation = root.getAsJsonObject().get("translation").getAsString();
-            TARDIS.plugin.getServer().getLogger().log(Level.INFO, translation);
             return translation;
         } catch (Exception ex) {
             TARDIS.plugin.debug("Failed to fetch a translation from " + host + ". " + ex.getMessage());
