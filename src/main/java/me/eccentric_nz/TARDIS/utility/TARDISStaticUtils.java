@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.*;
@@ -69,7 +70,8 @@ public class TARDISStaticUtils {
      */
     public static boolean isOceanBiome(Biome b) {
         return switch (b) {
-            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN -> true;
+            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN ->
+                    true;
             default -> false;
         };
     }
@@ -214,11 +216,13 @@ public class TARDISStaticUtils {
     }
 
     public static String getNick(UUID uuid) {
-        Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-        if (essentials != null) {
-            User user = essentials.getUser(uuid);
-            String prefix = essentials.getSettings().getNicknamePrefix();
-            return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
+        if (TARDIS.plugin.getConfig().getBoolean("police_box.use_nick")) {
+            Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            if (essentials != null) {
+                User user = essentials.getUser(uuid);
+                String prefix = essentials.getSettings().getNicknamePrefix();
+                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+            }
         }
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
@@ -230,11 +234,13 @@ public class TARDISStaticUtils {
     }
 
     public static String getNick(Player player) {
-        Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-        if (essentials != null) {
-            User user = essentials.getUser(player.getUniqueId());
-            String prefix = essentials.getSettings().getNicknamePrefix();
-            return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
+        if (TARDIS.plugin.getConfig().getBoolean("police_box.use_nick")) {
+            Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            if (essentials != null) {
+                User user = essentials.getUser(player.getUniqueId());
+                String prefix = essentials.getSettings().getNicknamePrefix();
+                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+            }
         }
         return player.getName();
     }
