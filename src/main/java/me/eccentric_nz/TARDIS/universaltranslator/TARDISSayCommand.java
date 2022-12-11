@@ -79,7 +79,7 @@ public class TARDISSayCommand implements CommandExecutor {
                     }
                     return true;
                 } catch (Exception ex) {
-                    plugin.debug("Could not get translation! " + ex);
+                    plugin.debug("Could not get translation! " + ex.getMessage());
                     ex.printStackTrace();
                     TARDISMessage.send(sender, "YT_UNAVAILABLE");
                 }

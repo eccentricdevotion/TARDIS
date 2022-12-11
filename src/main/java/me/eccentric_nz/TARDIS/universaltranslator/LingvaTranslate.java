@@ -52,8 +52,8 @@ public class LingvaTranslate {
             TARDIS.plugin.getServer().getLogger().log(Level.INFO, translation);
             return translation;
         } catch (Exception ex) {
-            TARDIS.plugin.debug("Failed to fetch a translation from " + host + ".");
+            TARDIS.plugin.debug("Failed to fetch a translation from " + host + ". " + ex.getMessage());
         }
-        return null;
+        return "Translation failed :(";
     }
 }
