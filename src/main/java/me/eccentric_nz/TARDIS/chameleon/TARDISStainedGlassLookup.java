@@ -864,6 +864,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.YELLOW_CANDLE, Material.YELLOW_STAINED_GLASS);
         // 1.19
         stain.put(Material.MANGROVE_BUTTON, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_DOOR, Material.BROWN_STAINED_GLASS);
         stain.put(Material.MANGROVE_FENCE, Material.BROWN_STAINED_GLASS);
         stain.put(Material.MANGROVE_FENCE_GATE, Material.BROWN_STAINED_GLASS);
         stain.put(Material.MANGROVE_LEAVES, Material.GREEN_STAINED_GLASS);
@@ -895,6 +896,35 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.STRIPPED_MANGROVE_LOG, Material.BROWN_STAINED_GLASS);
         stain.put(Material.STRIPPED_MANGROVE_WOOD, Material.BROWN_STAINED_GLASS);
         stain.put(Material.VERDANT_FROGLIGHT, Material.LIME_STAINED_GLASS);
+        // 1.20
+        stain.put(Material.ACACIA_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.BAMBOO_BLOCK, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_BUTTON, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_CHEST_RAFT, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_DOOR, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_FENCE, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_FENCE_GATE, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_HANGING_SIGN, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_MOSAIC, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_MOSAIC_SLAB, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_MOSAIC_STAIRS, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_PLANKS, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_PRESSURE_PLATE, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_SIGN, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_SLAB, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_STAIRS, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BAMBOO_TRAPDOOR, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.BIRCH_HANGING_SIGN, Material.WHITE_STAINED_GLASS);
+        stain.put(Material.CHISELED_BOOKSHELF, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.CRIMSON_HANGING_SIGN, Material.MAGENTA_STAINED_GLASS);
+        stain.put(Material.DARK_OAK_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.JUNGLE_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.MANGROVE_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.OAK_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.PIGLIN_HEAD, Material.PINK_STAINED_GLASS);
+        stain.put(Material.SPRUCE_HANGING_SIGN, Material.BROWN_STAINED_GLASS);
+        stain.put(Material.STRIPPED_BAMBOO_BLOCK, Material.YELLOW_STAINED_GLASS);
+        stain.put(Material.WARPED_HANGING_SIGN, Material.CYAN_STAINED_GLASS);
     }
 
     public HashMap<Material, Material> getStain() {
