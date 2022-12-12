@@ -455,8 +455,6 @@ class TARDISMaterialisePreset implements Runnable {
                                                         }
                                                     }
                                                 }
-                                                case CUSTOM -> {
-                                                }
                                                 default -> {
                                                     s.setLine(1, sign_colour + line1);
                                                     s.setLine(2, sign_colour + line2);
