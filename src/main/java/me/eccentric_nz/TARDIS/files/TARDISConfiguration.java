@@ -104,8 +104,9 @@ public class TARDISConfiguration {
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
-        booleanOptions.put("police_box.name_tardis", false);
         booleanOptions.put("police_box.load_shells", false);
+        booleanOptions.put("police_box.name_tardis", false);
+        booleanOptions.put("police_box.use_nick", false);
         booleanOptions.put("police_box.view_interior", false);
         booleanOptions.put("police_box.view_interior_uses_console_size", false);
         booleanOptions.put("preferences.any_key", false);

@@ -36,6 +36,7 @@ creation:
 police_box:
   default_preset: FACTORY
   name_tardis: false
+  use_nick: false
   view_interior: false
   view_interior_uses_console_size: false
   materialise: true
