@@ -60,6 +60,7 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, true, false));
         // MASTER's schematic designed by ShadowAssociate
         Consoles.getBY_NAMES().put("MASTER", new Schematic("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
+        Consoles.getBY_NAMES().put("ORIGINAL", new Schematic("PACKED_MUD", "original", "The original TARDIS plugin Console", ConsoleSize.SMALL, false, true, false));
         Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
@@ -78,11 +79,11 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("TALL", new Schematic("COBBLESTONE", "tall", "32x32x32 cobblestone template", ConsoleSize.TALL, false, true, false));
         // legacy consoles
         if (plugin.getConfig().getBoolean("creation.enable_legacy")) {
-            Consoles.getBY_NAMES().put("LEGACY_BIGGER", new Schematic("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "The original Bigger Console", ConsoleSize.MEDIUM, true, false, false));
-            Consoles.getBY_NAMES().put("LEGACY_BUDGET", new Schematic("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "The original Default Console", ConsoleSize.SMALL, true, false, false));
-            Consoles.getBY_NAMES().put("LEGACY_DELUXE", new Schematic("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "The original Deluxe Console", ConsoleSize.TALL, true, false, false));
-            Consoles.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "The original 11th Doctor's Console", ConsoleSize.TALL, true, true, false));
-            Consoles.getBY_NAMES().put("LEGACY_REDSTONE", new Schematic("RED_GLAZED_TERRACOTTA", "legacy_redstone", "The original Redstone Console", ConsoleSize.TALL, true, false, false));
+            Consoles.getBY_NAMES().put("LEGACY_BIGGER", new Schematic("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "Legacy Bigger Console", ConsoleSize.MEDIUM, true, false, false));
+            Consoles.getBY_NAMES().put("LEGACY_BUDGET", new Schematic("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "Legacy Default Console", ConsoleSize.SMALL, true, false, false));
+            Consoles.getBY_NAMES().put("LEGACY_DELUXE", new Schematic("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "Legacy Deluxe Console", ConsoleSize.TALL, true, false, false));
+            Consoles.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "Legacy 11th Doctor's Console", ConsoleSize.TALL, true, true, false));
+            Consoles.getBY_NAMES().put("LEGACY_REDSTONE", new Schematic("RED_GLAZED_TERRACOTTA", "legacy_redstone", "Legacy Redstone Console", ConsoleSize.TALL, true, false, false));
         }
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

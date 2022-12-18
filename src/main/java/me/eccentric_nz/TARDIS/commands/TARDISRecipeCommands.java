@@ -72,6 +72,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
         t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("ORIGINAL", Material.PACKED_MUD); // original
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
@@ -293,27 +294,23 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // seed block
         ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
         // tardis type
-        ItemStack tardis;
+        ItemStack tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         // should be mushroom block
         int model;
         if (Consoles.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
             model = 45;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("DELTA")) {
             model = 43;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("ROTOR")) {
             model = 44;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("COPPER")) {
             model = 46;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("CAVE")) {
             model = 56;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("WEATHERED")) {
             model = 57;
-            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("ORIGINAL")) {
+            model = 58;
         } else {
             model = TARDISSeedModel.modelByString(type.toUpperCase());
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

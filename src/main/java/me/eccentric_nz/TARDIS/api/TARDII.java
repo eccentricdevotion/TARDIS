@@ -472,7 +472,7 @@ public class TARDII implements TardisAPI {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
             ItemStack is;
             int model = TARDISSeedModel.modelByString(schematic);
-            if (Consoles.getBY_NAMES().get(schematic).isCustom() || schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER") || schematic.equalsIgnoreCase("CAVE") || schematic.equalsIgnoreCase("WEATHERED")) {
+            if (Consoles.getBY_NAMES().get(schematic).isCustom() || schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER") || schematic.equalsIgnoreCase("CAVE") || schematic.equalsIgnoreCase("WEATHERED") || schematic.equalsIgnoreCase("ORIGINAL")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
@@ -496,7 +496,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public List<BlueprintType> getBlueprints() {
-        // TODO
+        // TODO list blueprints
         return null;
     }
 

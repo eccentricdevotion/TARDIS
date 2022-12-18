@@ -153,9 +153,11 @@ public class TARDISMushroomBlockData {
             // animated seed grow
             put(55, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
             // cave seed block
-            put(56, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=true]");
+            put(56, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=true]");
             // weathered seed block
-            put(57, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=false]");
+            put(57, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=false]");
+            // original seed block
+            put(58, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=true]");
         }
     };
 }

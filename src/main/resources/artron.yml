@@ -40,6 +40,7 @@ upgrades:
   factory: 7500
   master: 10000
   delta: 7500
+  original: 5000
   plank: 5000
   pyramid: 5000
   redstone: 7500

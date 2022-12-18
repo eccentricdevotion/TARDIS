@@ -80,6 +80,8 @@ public class TARDISSeedModel {
             put(Material.DRIPSTONE_BLOCK, 56);
             // weathered
             put(Material.WEATHERED_COPPER, 57);
+            // original
+            put(Material.PACKED_MUD, 58);
 //            // custom
 //            put(Material.MUSHROOM_STEM, 45);
 //            // templates
@@ -100,6 +102,7 @@ public class TARDISSeedModel {
             put("ELEVENTH", 19);
             put("ENDER", 20);
             put("PLANK", 21);
+            put("ORIGINAL", 58);
             put("PYRAMID", 22);
             put("REDSTONE", 23);
             put("STEAMPUNK", 24);

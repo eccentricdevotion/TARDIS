@@ -113,6 +113,7 @@ public enum TARDISDescription {
     DIVISION("The Division Interuniverse Spaceship."),
     CAVE("A dripstone cave TARDIS."),
     WEATHERED("A weathered copper TARDIS."),
+    ORIGINAL("The original v1.0 TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),
     AQUARIUM("Tanks for your fish."),

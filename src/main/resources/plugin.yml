@@ -272,6 +272,7 @@ permissions:
       tardis.legacy_eleventh: true
       tardis.legacy_redstone: true
       tardis.master: true
+      tardis.original: true
       tardis.plank: true
       tardis.pyramid: true
       tardis.redstone: true
