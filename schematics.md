@@ -41,17 +41,21 @@ right in!
 7. The are some special placeholder blocks that are needed so the that plugin will record the location of the TARDIS
    controls. They are:
 
-| Block           | Control                                                        |
-|-----------------|----------------------------------------------------------------|
-| `Cake block`    | handbrake                                                      |
-| `Mushroom stem` | All 4 repeaters                                                |
-| `Oak Sign`      | Control centre                                                 |
-| `Wood button`   | Artron Energy Button                                           |
-| `Stone button`  | Random Destination Button                                      |
-| `Chest`         | Artron Energy Condenser                                        |
-| `Iron door`     | TARDIS interior door                                           |
-| `Spawner`       | Scanner                                                        |
-| `Bedrock`       | To block off the Beacon beam (used when turning off the power) |
+| Block               | Control                                                        |
+|---------------------|----------------------------------------------------------------|
+| `Cake block`        | handbrake                                                      |
+| `Mushroom stem`     | All 4 repeaters                                                |
+| `Oak Sign`          | Control centre                                                 |
+| `Wood button`       | Artron Energy Button                                           |
+| `Stone button`      | Random Destination Button                                      |
+| `Chest`             | Artron Energy Condenser                                        |
+| `Iron door`         | TARDIS interior door                                           |
+| `Spawner`           | Scanner                                                        |
+| `Bedrock`           | To block off the Beacon beam (used when turning off the power) |
+| `Jukebox`           | Advanced Sonsole                                               |
+| `Note block`        | Disk Storage                                                   |
+| `Command block`     | Artron charged creeper spawn location                          |
+| `Daylight detector` | Telepathic Circuit                          |
 
 ## Making the schematics (pre-v3.0)
 
