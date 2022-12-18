@@ -27,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -34,9 +35,32 @@ import java.io.IOException;
 class TARDISCSVPaster {
 
     private final TARDIS plugin;
+    private final HashMap<String, Material> ID_LOOKUP = new HashMap<>();
 
     TARDISCSVPaster(TARDIS plugin) {
         this.plugin = plugin;
+        ID_LOOKUP.put("20", Material.GLASS);
+        ID_LOOKUP.put("25", Material.NOTE_BLOCK);
+        ID_LOOKUP.put("29:1", Material.STICKY_PISTON);
+        ID_LOOKUP.put("35:0", Material.WHITE_WOOL);
+        ID_LOOKUP.put("35:1", Material.ORANGE_WOOL);
+        ID_LOOKUP.put("35:11", Material.BLUE_WOOL);
+        ID_LOOKUP.put("35:7", Material.GRAY_WOOL);
+        ID_LOOKUP.put("35:8", Material.LIGHT_GRAY_WOOL);
+        ID_LOOKUP.put("50:5", Material.TORCH);
+        ID_LOOKUP.put("54:~", Material.CHEST);
+        ID_LOOKUP.put("55", Material.REDSTONE_WIRE);
+        ID_LOOKUP.put("58", Material.CRAFTING_TABLE);
+        ID_LOOKUP.put("61:~", Material.FURNACE);
+        ID_LOOKUP.put("70", Material.STONE_PRESSURE_PLATE);
+        ID_LOOKUP.put("71:8", Material.IRON_DOOR);
+        ID_LOOKUP.put("71:~", Material.IRON_DOOR);
+        ID_LOOKUP.put("76:5", Material.REDSTONE_TORCH);
+        ID_LOOKUP.put("76:~", Material.REDSTONE_TORCH);
+        ID_LOOKUP.put("77:~", Material.STONE_BUTTON);
+        ID_LOOKUP.put("85", Material.OAK_FENCE);
+        ID_LOOKUP.put("89", Material.GLOWSTONE);
+        ID_LOOKUP.put("93:~", Material.REPEATER);
     }
 
     String[][][] arrayFromCSV(File file) {
@@ -64,12 +88,17 @@ class TARDISCSVPaster {
         int resetz = location.getBlockZ();
         int level;
         int starty = location.getBlockY();
+        Material material;
         for (level = 0; level < 8; level++) {
             for (int row = 0; row < 11; row++) {
                 for (int col = 0; col < 11; col++) {
                     String tmp = s[level][row][col];
-                    if (!tmp.equals("-")) {
-                        Material material = Material.valueOf(tmp);
+                    if (!tmp.equals("-") && !tmp.equals("0")) {
+                        try {
+                            material = Material.valueOf(tmp);
+                        } catch (IllegalArgumentException e) {
+                            material = ID_LOOKUP.get(tmp);
+                        }
                         BlockData id = material.createBlockData();
                         TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
                     }
