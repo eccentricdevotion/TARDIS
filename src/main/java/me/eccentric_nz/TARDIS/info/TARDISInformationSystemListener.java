@@ -547,10 +547,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("1")) {
                     showInfo(p, TARDISInfoMenu.COPPER_11TH);
                 }
-                if (chat.equalsIgnoreCase("=")) {
+                if (chat.equals("=")) {
                     showInfo(p, TARDISInfoMenu.DELTA);
                 }
-                if (chat.equalsIgnoreCase("/")) {
+                if (chat.equals("/")) {
                     showInfo(p, TARDISInfoMenu.DIVISION);
                 }
                 if (chat.equalsIgnoreCase("v")) {
@@ -561,6 +561,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("g")) {
                     showInfo(p, TARDISInfoMenu.ORIGINAL);
+                }
+                if (chat.equals("*")) {
+                    showInfo(p, TARDISInfoMenu.ANCIENT);
                 }
                 break;
             case FOOD_ACCESSORIES:

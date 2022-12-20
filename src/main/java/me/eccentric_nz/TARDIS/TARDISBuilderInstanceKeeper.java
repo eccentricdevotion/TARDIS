@@ -70,6 +70,7 @@ public class TARDISBuilderInstanceKeeper {
                 Map.entry("REDSTONE_WALL_TORCH", "REDSTONE_TORCH"),
                 Map.entry("REDSTONE_WIRE", "REDSTONE"),
                 Map.entry("RED_MUSHROOM_BLOCK", "RED_MUSHROOM"),
+                Map.entry("SCULK_VEIN", "SCULK"),
                 Map.entry("SNOW", "SNOWBALL"),
                 Map.entry("SPRUCE_LEAVES", "SPRUCE_SAPLING"),
                 Map.entry("STONE", "COBBLESTONE"),

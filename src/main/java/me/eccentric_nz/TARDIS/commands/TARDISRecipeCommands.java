@@ -59,6 +59,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
         }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+        t.put("ANCIENT", Material.SCULK); // ancient
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("BUDGET", Material.IRON_BLOCK); // budget

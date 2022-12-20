@@ -42,6 +42,7 @@ public class TARDISConsoleLoader {
 
     //    new Schematic(String seed, String permission, String description, ConsoleSize size, boolean beacon, boolean lanterns, boolean custom)
     public void addSchematics() {
+        Consoles.getBY_NAMES().put("ANCIENT", new Schematic("SCULK", "ancient", "Ancient Console", ConsoleSize.SMALL, false, false, false));
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         Consoles.getBY_NAMES().put("ARS", new Schematic("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));
         Consoles.getBY_NAMES().put("BIGGER", new Schematic("GOLD_BLOCK", "bigger", "A Bigger Console", ConsoleSize.MEDIUM, true, false, false));

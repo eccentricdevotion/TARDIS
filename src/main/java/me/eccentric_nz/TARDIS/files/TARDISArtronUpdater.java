@@ -82,6 +82,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("the_end_min", 5500);
         integerOptions.put("travel", 100);
         integerOptions.put("zero", 250);
+        integerOptions.put("upgrades.ancient", 5000);
         integerOptions.put("upgrades.ars", 5000);
         integerOptions.put("upgrades.bigger", 7500);
         integerOptions.put("upgrades.budget", 5000);

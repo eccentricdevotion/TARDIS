@@ -254,6 +254,7 @@ permissions:
   tardis.console.*:
     description: Allow players to build all TARDIS types.
     children:
+      tardis.ancient: true
       tardis.ars: true
       tardis.bigger: true
       tardis.cave: true

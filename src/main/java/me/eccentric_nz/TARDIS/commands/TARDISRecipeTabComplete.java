@@ -33,7 +33,7 @@ import java.util.Set;
 public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
 
     public static final Set<String> ROOT_SUBS = new HashSet<>();
-    public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "cave", "copper", "coral",
+    public static final List<String> TARDIS_TYPES = ImmutableList.of("ancient", "ars", "bigger", "budget", "cave", "copper", "coral",
             "custom", "delta", "deluxe", "division", "eleventh", "ender", "factory", "master", "original", "plank", "pyramid",
             "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "weathered", "wood", "legacy_budget",
             "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");

@@ -185,6 +185,7 @@ public enum TARDISInfoMenu {
     WAR("TIS|TARDIS Types|War", "TYPES", "W"),
     WEATHERED("TIS|TARDIS Types|Weathered", "TYPES", "h"),
     ORIGINAL("TIS|TARDIS Types|Original", "TYPES", "g"),
+    ANCIENT("TIS|TARDIS Types|Ancient*", "TYPES", "*"),
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),

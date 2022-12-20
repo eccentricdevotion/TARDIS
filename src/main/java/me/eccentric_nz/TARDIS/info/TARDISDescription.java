@@ -114,6 +114,7 @@ public enum TARDISDescription {
     CAVE("A dripstone cave TARDIS."),
     WEATHERED("A weathered copper TARDIS."),
     ORIGINAL("The original v1.0 TARDIS."),
+    ANCIENT("An ancient deep dark TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),
     AQUARIUM("Tanks for your fish."),

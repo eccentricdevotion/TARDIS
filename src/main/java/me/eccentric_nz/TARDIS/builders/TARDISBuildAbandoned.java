@@ -77,6 +77,8 @@ class TARDISBuildAbandoned implements Runnable {
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
@@ -184,6 +186,7 @@ class TARDISBuildAbandoned implements Runnable {
             postDoorBlocks.forEach(Block::setBlockData);
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
+            postLanternBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
@@ -197,6 +200,7 @@ class TARDISBuildAbandoned implements Runnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
+            postSculkVeinBlocks.forEach(Block::setBlockData);
             if (schm.getPermission().equals("cave")) {
                 iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                 iceBlocks.clear();
@@ -525,6 +529,10 @@ class TARDISBuildAbandoned implements Runnable {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.GLOW_LICHEN)) {
                 postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.SCULK_VEIN)) {
+                postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
+                postLanternBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (TARDISStaticUtils.isBanner(type)) {
                 JsonObject state = c.has("banner") ? c.getAsJsonObject("banner") : null;
                 if (state != null) {

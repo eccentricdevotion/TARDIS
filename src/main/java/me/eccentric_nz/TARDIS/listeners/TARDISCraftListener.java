@@ -71,6 +71,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
         t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
+        t.put(Material.SCULK, "ANCIENT"); // ancient city
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.DRIPSTONE_BLOCK, "CAVE"); // dripstone cave
         t.put(Material.WEATHERED_COPPER, "WEATHERED"); // weathered copper

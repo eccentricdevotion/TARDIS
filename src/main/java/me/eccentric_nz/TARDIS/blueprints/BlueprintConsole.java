@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.blueprints;
 
 public enum BlueprintConsole {
 
+    ANCIENT("tardis.ancient"),
     ARS("tardis.ars"),
     BIGGER("tardis.bigger"),
     CAVE("tardis.cave"),

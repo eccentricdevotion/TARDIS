@@ -24,6 +24,8 @@ public class TARDISSeedModel {
 
     public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
         {
+            // ancient
+            put(Material.SCULK, 12);
             // division
             put(Material.PINK_GLAZED_TERRACOTTA, 13);
             // ars

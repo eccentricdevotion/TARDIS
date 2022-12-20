@@ -83,6 +83,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private boolean running;
     private int id;
     private int slot;
@@ -340,9 +342,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postLeverBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
+            postLanternBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
+            postSculkVeinBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -778,6 +782,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.GLOW_LICHEN)) {
                     postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
+                    postLanternBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.SCULK_VEIN)) {
+                    postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);

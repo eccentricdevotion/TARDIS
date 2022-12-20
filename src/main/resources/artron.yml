@@ -27,6 +27,7 @@ render: 250
 zero: 250
 # upgrades
 upgrades:
+  ancient: 5000
   ars: 5000
   bigger: 7500
   budget: 5000

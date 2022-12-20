@@ -85,6 +85,8 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
     private final List<Block> postLightBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
@@ -232,6 +234,7 @@ public class TARDISBuilderInner implements Runnable {
             postDoorBlocks.forEach(Block::setBlockData);
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
+            postLanternBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
@@ -245,6 +248,7 @@ public class TARDISBuilderInner implements Runnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
+            postSculkVeinBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
@@ -671,6 +675,10 @@ public class TARDISBuilderInner implements Runnable {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.GLOW_LICHEN)) {
                 postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.SCULK_VEIN)) {
+                postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
+                postLanternBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (TARDISStaticUtils.isBanner(type)) {
                 JsonObject state = c.has("banner") ? c.get("banner").getAsJsonObject() : null;
                 if (state != null) {

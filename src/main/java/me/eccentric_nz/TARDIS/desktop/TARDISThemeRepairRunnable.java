@@ -81,6 +81,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final boolean clean;
     private boolean running;
     private int id;
@@ -263,9 +265,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postLeverBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
+            postLanternBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
+            postSculkVeinBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -554,6 +558,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.LEVER)) {
                     postLeverBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
+                    postLanternBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
                     postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
@@ -570,6 +576,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.GLOW_LICHEN)) {
                     postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.SCULK_VEIN)) {
+                    postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
