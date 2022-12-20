@@ -5,17 +5,17 @@ title: Big list of permissions
 
 <style>
 td { vertical-align: top; }
-#child>tbody>tr>td,
-#child>tbody>tr>th {
+.child>tbody>tr>td,
+.child>tbody>tr>th {
   border-top: none!important;
   border: 0px;
 }
-#child {
+.child {
   margin-top: -53px;
   border-bottom: 1px solid #aaa;
   margin-bottom: 0px;
 }
-#child>tbody>tr>th {
+.child>tbody>tr>th {
   margin-top: 100px;
 }
 </style>
@@ -59,7 +59,7 @@ td { vertical-align: top; }
 | | |
 | `tardis.preset.*` | Allow players to use all exterior Chameleon Presets. | op |
 
-{:#child}
+{:.child}
 | | |
 | ---------- | -------------------- | ------- |
 | Children of `tardis.preset.*` | `tardis.preset.andesite` | true |
@@ -137,7 +137,7 @@ td { vertical-align: top; }
 | `tardis.timetravel.village` | Allow players to travel to villages. | op |
 | `tardis.timetravel.structure.*` | Allow players to travel to structures. | op |
 
-{:#child}
+{:.child}
 | | |
 | ---------- | -------------------- | ------- |
 | Children of `tardis.timetravel.structure.*` | `tardis.timetravel.structure.bastion_remnant` | true |
@@ -209,7 +209,7 @@ td { vertical-align: top; }
 | `tardis.nether` | Allow players to time travel to the NETHER. | op |
 | `tardis.room` | Allow players to grow extra rooms. | op |
 
-{:#child}
+{:.child}
 | | |
 | ---------- | -------------------- | ------- |
 | Children of `tardis.room` | `tardis.room.antigravity` | true |
@@ -285,7 +285,7 @@ td { vertical-align: top; }
 | `tardis.transmat` | Allows a player to add internal transmat locations to their TARDIS. | op |
 | `tardis.handles` | Allow players to use the Handles companion. | op |
 
-{:#child}
+{:.child}
 | | |
 | ---------- | -------------------- | ------- |
 | Children of `tardis.handles` | `tardis.handles.use` | true |
@@ -308,7 +308,7 @@ td { vertical-align: top; }
 | `tardis.forcefield` | Allow a player to turn on the TARDIS force field. | op |
 | `tardis.prefs.*` | Allow players to use /tardisprefs commands. | op |
 
-{:#child}
+{:.child}
 | | |
 | ---------- | -------------------- | ------- |
 | Children of `tardis.prefs.*` | `tardis.prefs.auto` | true |
