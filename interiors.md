@@ -8,6 +8,13 @@ title: Interiors
 These interiors are designed to be used with the TARDIS.
 To find their corresponding block required to use them, see [TARDIS types](creating-a-tardis#tardis-types).
 
+## ANCIENT
+
+Ancient City TARDIS - inspired by the deep dark
+
+![Ancient City TARDIS](images/consoles/ancient.jpg)
+
+
 ## ARS
 
 ‘ARS’ TARDIS - Lots of quartz
@@ -99,6 +106,13 @@ Factory TARDIS - The 1st Doctor’s Factory TARDIS (thanks to vistaero)
 ‘Master’ TARDIS - The Master’s TARDIS (thanks to ShadowAssociate)
 
 ![Master's TARDIS](images/consoles/master.jpg)
+
+
+## ORIGINAL
+
+The original console from v1.0 of the TARDIS plugin - For those with nostalgia
+
+![Original TARDIS](images/consoles/original.jpg)
 
 
 ## PLANK

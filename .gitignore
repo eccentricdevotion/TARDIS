@@ -23,6 +23,7 @@ CVS
 /sounds/
 /.idea/
 /OTG_Files/
+nbactions.xml
 
 # Jekyll Files
 .sass-cache/
