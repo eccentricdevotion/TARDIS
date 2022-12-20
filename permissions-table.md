@@ -5,19 +5,6 @@ title: Big list of permissions
 
 <style>
 td { vertical-align: top; }
-.child>tbody>tr>td,
-.child>tbody>tr>th {
-  border-top: none!important;
-  border: 0px;
-}
-.child {
-  margin-top: -53px;
-  border-bottom: 1px solid #aaa;
-  margin-bottom: 0px;
-}
-.child>tbody>tr>th {
-  margin-top: 100px;
-}
 </style>
 
 # Permission List
@@ -33,10 +20,9 @@ td { vertical-align: top; }
 | `tardis.remote`      | Allow players to remote control a TARDIS.                                | op      |
 | `tardis.use`         | Allow players to create & delete a TARDIS, and teleport to destinations. | op      |
 
-{:#child}
-| | |
+| Children of `tardis.use` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.use` | `tardis.budget` | true |
+| | `tardis.budget` | true |
 | | `tardis.create` | true |
 | | `tardis.exterminate` | true |
 | | `tardis.timetravel` | true |
@@ -59,10 +45,9 @@ td { vertical-align: top; }
 | | |
 | `tardis.preset.*` | Allow players to use all exterior Chameleon Presets. | op |
 
-{:.child}
-| | |
+| Children of `tardis.preset.*` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.preset.*` | `tardis.preset.andesite` | true |
+| | `tardis.preset.andesite` | true |
 | | `tardis.preset.angel` | true |
 | | `tardis.preset.apperture` | true |
 | | `tardis.preset.cake` | true |
@@ -137,10 +122,9 @@ td { vertical-align: top; }
 | `tardis.timetravel.village` | Allow players to travel to villages. | op |
 | `tardis.timetravel.structure.*` | Allow players to travel to structures. | op |
 
-{:.child}
-| | |
+| Children of `tardis.timetravel.structure.*` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.timetravel.structure.*` | `tardis.timetravel.structure.bastion_remnant` | true |
+| | `tardis.timetravel.structure.bastion_remnant` | true |
 | | `tardis.timetravel.structure.ancient_city` | true |
 | | `tardis.timetravel.structure.desert_pyramid` | true |
 | | `tardis.timetravel.structure.fortress` | true |
@@ -209,10 +193,9 @@ td { vertical-align: top; }
 | `tardis.nether` | Allow players to time travel to the NETHER. | op |
 | `tardis.room` | Allow players to grow extra rooms. | op |
 
-{:.child}
-| | |
+| Children of `tardis.room` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.room` | `tardis.room.antigravity` | true |
+| | `tardis.room.antigravity` | true |
 | | `tardis.room.apiary` | true |
 | | `tardis.room.aquarium` | true |
 | | `tardis.room.arboretum` | true |
@@ -285,10 +268,9 @@ td { vertical-align: top; }
 | `tardis.transmat` | Allows a player to add internal transmat locations to their TARDIS. | op |
 | `tardis.handles` | Allow players to use the Handles companion. | op |
 
-{:.child}
-| | |
+| Children of `tardis.handles` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.handles` | `tardis.handles.use` | true |
+| | `tardis.handles.use` | true |
 | | `tardis.handles.communicator` | true |
 | | `tardis.handles.program` | true |
 | `tardis.paper_bag` | Allows a player to store and dispense Jelly Babies from a paper bag. | op |
@@ -308,10 +290,9 @@ td { vertical-align: top; }
 | `tardis.forcefield` | Allow a player to turn on the TARDIS force field. | op |
 | `tardis.prefs.*` | Allow players to use /tardisprefs commands. | op |
 
-{:.child}
-| | |
+| Children of `tardis.prefs.*` | | |
 | ---------- | -------------------- | ------- |
-| Children of `tardis.prefs.*` | `tardis.prefs.auto` | true |
+| | `tardis.prefs.auto` | true |
 | | `tardis.prefs.auto_powerup` | true |
 | | `tardis.prefs.auto_rescue` | true |
 | | `tardis.prefs.auto_siege` | true |
