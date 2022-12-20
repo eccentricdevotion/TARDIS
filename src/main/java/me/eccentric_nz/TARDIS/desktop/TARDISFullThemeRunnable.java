@@ -717,6 +717,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                             data = Material.END_STONE_BRICKS.createBlockData();
                         } else if (tud.getSchematic().getPermission().equals("delta")) {
                             data = Material.BLACKSTONE.createBlockData();
+                        } else if (tud.getSchematic().getPermission().equals("ancient")) {
+                            data = Material.GRAY_WOOL.createBlockData();
                         } else {
                             data = Material.STONE_BRICKS.createBlockData();
                         }

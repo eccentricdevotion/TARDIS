@@ -113,10 +113,10 @@ public class TARDISBuilderInner implements Runnable {
      * Builds the inside of the TARDIS.
      *
      * @param plugin     an instance of the main TARDIS plugin class
-     * @param schm       the name of the schematic file to use can be ARS, BIGGER, BUDGET, CORAL, CUSTOM, DELUXE,
-     *                   DIVISION, ELEVENTH, ENDER, MASTER, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
-     *                   WOOD, LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM
-     *                   name.
+     * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BUDGET, CORAL, CUSTOM, DELTA,
+     *                   DELUXE, DIVISION, ELEVENTH, ENDER, MASTER, ORIGINAL, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH,
+     *                   TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     *                   LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.
      * @param player     an instance of the player who owns the TARDIS.
@@ -609,6 +609,8 @@ public class TARDISBuilderInner implements Runnable {
                         data = Material.END_STONE_BRICKS.createBlockData();
                     } else if (schm.getPermission().equals("delta")) {
                         data = Material.BLACKSTONE.createBlockData();
+                    } else if (schm.getPermission().equals("ancient")) {
+                        data = Material.GRAY_WOOL.createBlockData();
                     } else {
                         data = Material.STONE_BRICKS.createBlockData();
                     }

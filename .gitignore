@@ -32,6 +32,7 @@ CVS
 .project
 .settings
 nb-configuration.xml
+nbactions.xml
 
 .idea/
 *.iml
