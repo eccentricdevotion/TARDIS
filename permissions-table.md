@@ -20,7 +20,7 @@ td { vertical-align: top; }
 | `tardis.remote`      | Allow players to remote control a TARDIS.                                | op      |
 | `tardis.use`         | Allow players to create & delete a TARDIS, and teleport to destinations. | op      |
 
-| Children of `tardis.use` | | |
+| Children of tardis.use | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.budget` | true |
 | | `tardis.create` | true |
@@ -44,7 +44,7 @@ td { vertical-align: top; }
 | | `tardis.preset.*` | true |
 | `tardis.preset.*` | Allow players to use all exterior Chameleon Presets. | op |
 
-| Children of `tardis.preset.*` | | |
+| Children of tardis.preset.* | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.preset.andesite` | true |
 | | `tardis.preset.angel` | true |
@@ -121,7 +121,7 @@ td { vertical-align: top; }
 | `tardis.timetravel.village` | Allow players to travel to villages. | op |
 | `tardis.timetravel.structure.*` | Allow players to travel to structures. | op |
 
-| Children of `tardis.timetravel.structure.*` | | |
+| Children of tardis.timetravel.structure.* | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.timetravel.structure.bastion_remnant` | true |
 | | `tardis.timetravel.structure.ancient_city` | true |
@@ -192,7 +192,7 @@ td { vertical-align: top; }
 | `tardis.nether` | Allow players to time travel to the NETHER. | op |
 | `tardis.room` | Allow players to grow extra rooms. | op |
 
-| Children of `tardis.room` | | |
+| Children of tardis.room | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.room.antigravity` | true |
 | | `tardis.room.apiary` | true |
@@ -267,7 +267,7 @@ td { vertical-align: top; }
 | `tardis.transmat` | Allows a player to add internal transmat locations to their TARDIS. | op |
 | `tardis.handles` | Allow players to use the Handles companion. | op |
 
-| Children of `tardis.handles` | | |
+| Children of tardis.handles | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.handles.use` | true |
 | | `tardis.handles.communicator` | true |
@@ -289,7 +289,7 @@ td { vertical-align: top; }
 | `tardis.forcefield` | Allow a player to turn on the TARDIS force field. | op |
 | `tardis.prefs.*` | Allow players to use /tardisprefs commands. | op |
 
-| Children of `tardis.prefs.*` | | |
+| Children of tardis.prefs.* | | |
 | ---------- | -------------------- | ------- |
 | | `tardis.prefs.auto` | true |
 | | `tardis.prefs.auto_powerup` | true |
