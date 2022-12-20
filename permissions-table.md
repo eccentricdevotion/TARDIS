@@ -42,7 +42,6 @@ td { vertical-align: top; }
 | | `tardis.storage` | true |
 | | `tardis.vault` | true |
 | | `tardis.preset.*` | true |
-| | |
 | `tardis.preset.*` | Allow players to use all exterior Chameleon Presets. | op |
 
 | Children of `tardis.preset.*` | | |
