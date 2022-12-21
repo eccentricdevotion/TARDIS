@@ -109,7 +109,7 @@ tr.child code { font-size: 11px; }
     <tr class="child"><td colspan="2"><code>tardis.preset.weeping_angel</code></td><td>true</td></tr>
     <tr><td><code>tardis.exile</code></td><td colspan="2">Disallow players from travelling anywhere but to areas they have a permission node for.</td><td>false</td></tr>
     <tr><td><code>tardis.create</code></td><td colspan="2">Allow players to create a TARDIS.</td><td>op</td></tr>
-    <tr><td><code>tardis.create_world</code></td><td colspan="2">Allow players to create a TARDIS in it's own world. This is only used in conjuction with the create_worlds_with_perms config option.</td><td>op</td></tr>
+    <tr><td><code>tardis.create_world</code></td><td colspan="2">Allow players to create a TARDIS in it's own world. This is only used in conjuction with the <code>create_worlds_with_perms</code> config option.</td><td>op</td></tr>
     <tr><td><code>tardis.exterminate</code></td><td colspan="2">Allow players to delete their own TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel</code></td><td colspan="2">Allow players to travel to random locations and saved destinations.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel.player</code></td><td colspan="2">Allow players to travel to player locations.</td><td>op</td></tr>
@@ -118,7 +118,7 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.timetravel.biome</code></td><td colspan="2">Allow players to travel to specific biomes.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel.cave</code></td><td colspan="2">Allow players to travel to caves.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel.village</code></td><td colspan="2">Allow players to travel to villages.</td><td>op</td></tr>
-    <tr><td><code>tardis.timetravel.structure.*</code></td><td colspan="2">Allow players to travel to villages.</td><td>op</td></tr>
+    <tr><td><code>tardis.timetravel.structure.*</code></td><td colspan="2">Allow players to travel to structures.</td><td>op</td></tr>
     <tr class="child"><td rowspan="20"> &nbsp; &mdash; children of <code>tardis.timetravel.structure.*</code></td><td colspan="2"><code>tardis.timetravel.structure.bastion_remnant</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.timetravel.structure.ancient_city</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.timetravel.structure.desert_pyramid</code></td><td>true</td></tr>
