@@ -33,7 +33,11 @@ class TARDISDevListCommand {
     boolean listStuff(CommandSender sender, String[] args) {
         if (args.length > 1 && (args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints"))) {
             if (args[1].equalsIgnoreCase("perms")) {
-                new TARDISPermissionLister(plugin).listPerms(sender);
+                if (args.length > 2) {
+                    new TARDISPermissionLister(plugin).listPermsHtml(sender);
+                } else {
+                    new TARDISPermissionLister(plugin).listPerms(sender);
+                }
                 return true;
             } else if (args[1].equalsIgnoreCase("recipes")) {
                 new TARDISRecipesLister(plugin).listRecipes(sender, args);

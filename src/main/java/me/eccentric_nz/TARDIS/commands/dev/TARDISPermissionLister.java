@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.command.CommandSender;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.command.CommandSender;
 
 public class TARDISPermissionLister {
 
@@ -43,6 +43,48 @@ public class TARDISPermissionLister {
                     lastPerm = perm;
                 }
             }
+        }
+    }
+    
+    void listPermsHtml(CommandSender sender) {
+        List<String> lines = new ArrayList<>();;
+        List<String> perms = new ArrayList<>(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true));
+        String def = "op";
+        String desc = "";
+        int count = 0;
+        for (int i = perms.size() - 1; i >= 0; i--) {
+            String perm = perms.get(i);
+            if (perm.contains(".")) {
+                if (perm.contains("default")) {
+                    def = plugin.getGeneralKeeper().getPluginYAML().getString("permissions." + perm);
+                } else if (perm.contains("description")) {
+                    desc = plugin.getGeneralKeeper().getPluginYAML().getString("permissions." + perm);
+                } else {
+                    if (perm.contains("children")) {
+                        def = plugin.getGeneralKeeper().getPluginYAML().getString("permissions." + perm);
+                        desc = "";
+                    }
+                    if (!def.contains("MemorySection")) {
+                        String trimmed = perm;
+                        if (perm.contains("children")) {
+                            trimmed = perm.substring(perm.indexOf("children.") + 9);
+                            count++;
+                        }
+                        lines.add("<tr" + ((perm.contains("children") ? " class=\"child\"" : "")) + "><td" + ((perm.contains("children") ? " colspan=\"2\"" : "")) + "><code>" + trimmed + "</code></td>" + ((desc.isEmpty()) ? "" : "<td" + ((!perm.contains("children") ? " colspan=\"2\"" : "")) + ">" + desc + "</td>") + "<td>"+ def + "</td></tr>");
+                    } else if (perm.endsWith("children")) {
+                        String trimmed = perm.substring(0, perm.length() - 9);
+                        String path = "permissions." + trimmed + ".description";
+                        String dd = plugin.getGeneralKeeper().getPluginYAML().getString(path);
+                        lines.add("<tr class=\"child\"><td rowspan=\"" + count + "\"> &nbsp; &mdash; children of <code>" + trimmed + "</code></td>");
+                        lines.add("<tr><td><code>" + trimmed + "</code></td><td colspan=\"2\">" + dd + "</td><td>op</td></tr>");
+                        count = 0;
+                    }
+                }
+            }
+        }
+        Collections.reverse(lines);
+        for (String l : lines) {
+            sender.sendMessage(l);
         }
     }
 

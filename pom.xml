@@ -268,7 +268,7 @@
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
-            <version>7.2.13-SNAPSHOT</version>
+            <version>7.2.14-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -407,7 +407,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>10.0.31</version>
+            <version>10.0.31-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>

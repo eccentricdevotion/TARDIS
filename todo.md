@@ -1,13 +1,12 @@
 # TODO
 
-## Current version `4.11.0`
+## Current version `4.12.0`
 
-1. Add walls to interior view - use TARDIS's wall preference
+1. ?
 
-## Next version `4.11.1`
+## Next version `4.12.1`
 
-0. Add command to reset monster spawning in TARDIS (purge portals that contain the TARDIS id)
-1. Deal with removal of datapack worlds that may have TARDISes in them
+1. Add command to reset monster spawning in TARDIS (purge portals that contain the TARDIS id)
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 3. Cache TARDIS data to speed lookups and reduce database queries
 4. Update documentation...
