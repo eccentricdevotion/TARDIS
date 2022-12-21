@@ -160,7 +160,7 @@ permissions:
     description: Allow players to travel to villages.
     default: op
   tardis.timetravel.structure.*:
-    description: Allow players to travel to villages.
+    description: Allow players to travel to Minecraft structures.
     children:
       tardis.timetravel.structure.bastion_remnant: true
       tardis.timetravel.structure.ancient_city: true
