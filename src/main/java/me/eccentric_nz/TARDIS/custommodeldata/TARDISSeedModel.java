@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import org.bukkit.Material;
-
 import java.util.HashMap;
+import org.bukkit.Material;
 
 public class TARDISSeedModel {
 
@@ -95,6 +94,7 @@ public class TARDISSeedModel {
 
     public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
         {
+            put("ANCIENT", 12);
             put("DIVISION", 13);
             put("ARS", 14);
             put("BIGGER", 15);
