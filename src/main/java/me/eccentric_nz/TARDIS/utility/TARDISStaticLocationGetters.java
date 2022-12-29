@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 /**
  * @author eccentric_nz
@@ -169,5 +171,16 @@ public class TARDISStaticLocationGetters {
             }
         }
         return y;
+    }
+
+    public static int getNetherHighest(Location location) {
+        Block startBlock = location.getBlock();
+        while (!startBlock.getType().isAir()) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        while (startBlock.getType().isAir() && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        return startBlock.getY() + 1;
     }
 }

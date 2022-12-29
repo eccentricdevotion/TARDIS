@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
@@ -50,15 +54,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Command /tardistravel [arguments].
  * <p>
- * Time travel is the process of travelling through time, even in a non-linear direction.
+ * Time travel is the process of travelling through time, even in a non-linear
+ * direction.
  *
  * @author eccentric_nz
  */
@@ -949,6 +949,11 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "WORLD_NOT_FOUND");
             return null;
         }
+        // must be at least a world name/~ and x, z
+        if (args.length < 3) {
+            TARDISMessage.send(player, "ARG_COORDS");
+            return null;
+        }
         if (args[1].startsWith("~")) {
             TARDISMessage.send(player, "NO_WORLD_RELATIVE");
             return null;
@@ -988,7 +993,8 @@ public class TARDISTravelCommands implements CommandExecutor {
         if (args.length > 3) {
             x = TARDISNumberParsers.parseInt(args[args.length - 3]);
             y = TARDISNumberParsers.parseInt(args[args.length - 2]);
-            if (y < 0 || y > 250) {
+            // y values are now lesser and greater in 1.18+, but normal worlds have higher altitude
+            if (y < -64 || ((w.getEnvironment().equals(Environment.NORMAL) && y > 310) || (!w.getEnvironment().equals(Environment.NORMAL) && y > 240))) {
                 TARDISMessage.send(player, "Y_NOT_VALID");
                 return null;
             }
@@ -998,7 +1004,11 @@ public class TARDISTravelCommands implements CommandExecutor {
             while (!chunk.isLoaded()) {
                 chunk.load();
             }
-            y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+            if (w.getEnvironment().equals(Environment.NETHER)) {
+                y = TARDISStaticLocationGetters.getNetherHighest(new Location(w, x, 240, z));
+            } else {
+                y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+            }
         }
         int max = Math.min(plugin.getConfig().getInt("travel.max_distance"), (int) (w.getWorldBorder().getSize() / 2) - 17);
         if (x > max || x < -max || z > max || z < -max) {
@@ -1007,86 +1017,6 @@ public class TARDISTravelCommands implements CommandExecutor {
         }
         return new Location(w, x, y, z);
     }
-
-//    public Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
-//        if (b == null) {
-//            TARDISMessage.send(p, "BIOME_NOT_VALID");
-//            return null;
-//        }
-//        HashMap<String, Object> wherecl = new HashMap<>();
-//        wherecl.put("tardis_id", id);
-//        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-//        if (!rsc.resultSet()) {
-//            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
-//            return null;
-//        }
-//        // get a world
-//        // Assume all non-nether/non-end world environments are NORMAL
-//        if (w != null && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-//            int limite = startx + 30000;
-//            int limits = startz + 30000;
-//            int limitw = startx - 30000;
-//            int limitn = startz - 30000;
-//            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-//                // get the border limit for this world
-//                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
-//                int[] data = wb.getBorderDistance(w.getName());
-//                limite = data[0];
-//                limits = data[1];
-//                limitw = -data[0];
-//                limitn = -data[1];
-//            }
-//            int step = 10;
-//            // search in a random direction
-//            Integer[] directions = new Integer[]{0, 1, 2, 3};
-//            Collections.shuffle(Arrays.asList(directions));
-//            for (int i = 0; i < 4; i++) {
-//                switch (directions[i]) {
-//                    case 0:
-//                        // east
-//                        for (int east = startx; east < limite; east += step) {
-//                            Biome chkb = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
-//                            if (chkb.equals(b)) {
-//                                TARDISMessage.send(p, "BIOME_E", b.toString());
-//                                return new Location(w, east, TARDISStaticLocationGetters.getHighestYin3x3(w, east, startz), startz);
-//                            }
-//                        }
-//                        break;
-//                    case 1:
-//                        // south
-//                        for (int south = startz; south < limits; south += step) {
-//                            Biome chkb = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
-//                            if (chkb.equals(b)) {
-//                                TARDISMessage.send(p, "BIOME_S", b.toString());
-//                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, south), south);
-//                            }
-//                        }
-//                        break;
-//                    case 2:
-//                        // west
-//                        for (int west = startx; west > limitw; west -= step) {
-//                            Biome chkb = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
-//                            if (chkb.equals(b)) {
-//                                TARDISMessage.send(p, "BIOME_W", b.toString());
-//                                return new Location(w, west, TARDISStaticLocationGetters.getHighestYin3x3(w, west, startz), startz);
-//                            }
-//                        }
-//                        break;
-//                    case 3:
-//                        // north
-//                        for (int north = startz; north > limitn; north -= step) {
-//                            Biome chkb = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
-//                            if (chkb.equals(b)) {
-//                                TARDISMessage.send(p, "BIOME_N", b.toString());
-//                                return new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, north), north);
-//                            }
-//                        }
-//                        break;
-//                }
-//            }
-//        }
-//        return null;
-//    }
 
     private int checkLocation(Location location, Player player, int id) {
         if (location.getWorld().getEnvironment().equals(Environment.NETHER) && location.getY() > 127) {

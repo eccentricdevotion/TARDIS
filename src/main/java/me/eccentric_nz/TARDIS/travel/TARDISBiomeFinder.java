@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -24,14 +25,11 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class TARDISBiomeFinder {
 
@@ -64,7 +62,7 @@ public class TARDISBiomeFinder {
         }
         int highest = tb.getWorld().getHighestBlockYAt(tb);
         if (tb.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-            highest = getNetherHighest(tb);
+            highest = TARDISStaticLocationGetters.getNetherHighest(tb);
         }
         tb.setY(highest + 1);
         int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
@@ -93,16 +91,5 @@ public class TARDISBiomeFinder {
             new TARDISLand(plugin, id, player).exitVortex();
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.BIOME, id));
         }
-    }
-
-    private int getNetherHighest(Location location) {
-        Block startBlock = location.getBlock();
-        while (!startBlock.getType().isAir()) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-        }
-        while (startBlock.getType().isAir() && startBlock.getLocation().getBlockY() > 30) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-        }
-        return startBlock.getY() + 1;
     }
 }
