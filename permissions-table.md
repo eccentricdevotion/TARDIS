@@ -230,6 +230,7 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.eleventh</code></td><td colspan="2">Allow players to build the 'eleventh' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.ender</code></td><td colspan="2">Allow players to build the Ender TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.factory</code></td><td colspan="2">Allow players to build the First Doctor's TARDIS.</td><td>op</td></tr>
+    <tr><td><code>tardis.fugitive</code></td><td colspan="2">Allow players to build the Fugitive (Ruth Clayton) Doctor's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.master</code></td><td colspan="2">Allow players to build the Master's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.plank</code></td><td colspan="2">Allow players to build the 'wood' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.pyramid</code></td><td colspan="2">Allow players to build the Sandstone Pyramid TARDIS.</td><td>op</td></tr>
