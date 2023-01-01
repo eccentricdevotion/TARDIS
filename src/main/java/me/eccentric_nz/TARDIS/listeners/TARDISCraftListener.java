@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import org.bukkit.ChatColor;
@@ -37,9 +39,6 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.*;
-import java.util.logging.Level;
-
 /**
  * @author eccentric_nz
  */
@@ -54,33 +53,34 @@ public class TARDISCraftListener implements Listener {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
+        t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
+        t.put(Material.DRIPSTONE_BLOCK, "CAVE"); // dripstone cave
         t.put(Material.EMERALD_BLOCK, "ELEVENTH"); // eleventh
         t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
+        t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
         t.put(Material.IRON_BLOCK, "BUDGET"); // budget
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.NETHER_BRICKS, "MASTER"); // master schematic designed by ShadowAssociate
         t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
-        t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
         t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
-        t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
+        t.put(Material.PACKED_MUD, "ORIGINAL"); // original
+        t.put(Material.POLISHED_DEEPSLATE, "FUGITIVE"); // fugitive schematic based on design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
+        t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
-        t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
-        t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
-        t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.SCULK, "ANCIENT"); // ancient city
-        t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
-        t.put(Material.DRIPSTONE_BLOCK, "CAVE"); // dripstone cave
+        t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
         t.put(Material.WEATHERED_COPPER, "WEATHERED"); // weathered copper
-        t.put(Material.PACKED_MUD, "ORIGINAL"); // original
+        t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
+        t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
+        t.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
         t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
         t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone
-        t.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         // custom seeds
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

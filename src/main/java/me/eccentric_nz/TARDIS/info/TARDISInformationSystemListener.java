@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -28,9 +30,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * The TARDIS information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
@@ -510,6 +509,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("y")) {
                     showInfo(p, TARDISInfoMenu.FACTORY);
+                }
+                if (chat.equalsIgnoreCase("u")) {
+                    showInfo(p, TARDISInfoMenu.FUGITIVE);
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     showInfo(p, TARDISInfoMenu.REDSTONE);

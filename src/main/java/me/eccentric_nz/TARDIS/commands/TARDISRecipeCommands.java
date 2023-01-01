@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
@@ -35,8 +36,6 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
@@ -76,6 +75,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("ORIGINAL", Material.PACKED_MUD); // original
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
+        t.put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel

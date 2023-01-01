@@ -98,6 +98,7 @@ public enum TARDISDescription {
     TWELFTH("The 12th Doctor's TARDIS - console design by killeratnight."),
     THIRTEENTH("The 13th Doctor's TARDIS - console design by Razihel."),
     FACTORY("The 1st Doctor's TARDIS; straight from the factory! - console design by Razihel."),
+    FUGITIVE("The Fugitive Doctor's TARDIS; don't get captured by the Judoon! - based on design by DT10."),
     REDSTONE("This one has some redstone in it - console design by killeratnight & L0rd Rahl."),
     STEAMPUNK("Small, but steamy."),
     PLANK("A wood based interior."),

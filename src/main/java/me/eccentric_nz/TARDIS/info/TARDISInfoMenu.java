@@ -174,6 +174,7 @@ public enum TARDISInfoMenu {
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
     ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
     FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),
+    FUGITIVE("TIS|TARDIS Types|Fugitive", "TYPES", "u"),
     MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
     PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "y"),

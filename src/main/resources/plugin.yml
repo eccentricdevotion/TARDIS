@@ -267,6 +267,7 @@ permissions:
       tardis.eleventh: true
       tardis.ender: true
       tardis.factory: true
+      tardis.fugitive: true
       tardis.legacy_bigger: true
       tardis.legacy_budget: true
       tardis.legacy_deluxe: true
