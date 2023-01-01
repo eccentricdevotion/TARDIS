@@ -201,6 +201,7 @@ tr.child code { font-size: 11px; }
     <tr class="child"><td colspan="2"><code>tardis.eleventh</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.ender</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.factory</code></td><td>true</td></tr>
+    <tr class="child"><td colspan="2"><code>tardis.fugitive</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_bigger</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_budget</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_deluxe</code></td><td>true</td></tr>

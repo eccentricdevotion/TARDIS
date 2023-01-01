@@ -23,7 +23,15 @@ To automatically set permissions for TARDIS worlds when they are created go read
 
 * * *
 
-Tested with PermissionsBukkit, there are a number of self explanatory permissions:
+## ???
+
+Can't find the permission you’re looking for?
+
+Check out the [Big list of permissions](permissions-table.html) taken directly from _plugin.yml_.
+
+* * *
+
+There are a number of self explanatory permissions:
 
 ## General
 
@@ -53,26 +61,33 @@ There are a number of (probably unnecessary and self explanatory) child nodes. T
 
 ## TARDIS build sizes
 
-In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘twelfth’, ‘redstone’, ‘steampunk’, ‘ARS’, ‘tom’, ‘plank’, ‘war’, ‘master’, ‘pyramid’, ‘custom’TARDIS, or any of the other consoles players will need:
+In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘twelfth’, ‘redstone’, ‘steampunk’, ‘ARS’, ‘tom’, ‘plank’, ‘war’, ‘master’, ‘pyramid’, ‘custom’ TARDIS, or any of the other consoles players will need:
 
-    tardis.factory
-    tardis.bigger
-    tardis.deluxe
-    tardis.eleventh
-    tardis.twelfth
-    tardis.thirteenth
-    tardis.redstone
-    tardis.steampunk
+    tardis.ancient
     tardis.ars
-    tardis.tom
-    tardis.plank
-    tardis.war
-    tardis.master
-    tardis.pyramid
+    tardis.bigger
+    tardis.cave
+    tardis.copper
     tardis.coral
-    tardis.ender
-    tardis.rotor
     tardis.delta
+    tardis.deluxe
+    tardis.division
+    tardis.eleventh
+    tardis.ender
+    tardis.factory
+    tardis.fugitive
+    tardis.master
+    tardis.original
+    tardis.plank
+    tardis.pyramid
+    tardis.redstone
+    tardis.rotor
+    tardis.steampunk
+    tardis.thirteenth
+    tardis.tom
+    tardis.twelfth
+    tardis.war
+    tardis.weathered
     tardis.legacy_bigger
     tardis.legacy_budget
     tardis.legacy_deluxe
