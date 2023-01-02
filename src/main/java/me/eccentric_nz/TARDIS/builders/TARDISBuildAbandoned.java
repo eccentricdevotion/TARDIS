@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.io.File;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -44,9 +46,6 @@ import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -465,7 +464,7 @@ class TARDISBuildAbandoned implements Runnable {
                         data = Material.END_STONE_BRICKS.createBlockData();
                     } else if (schm.getPermission().equals("delta")) {
                         data = Material.BLACKSTONE.createBlockData();
-                    } else if (schm.getPermission().equals("ancient")) {
+                    } else if (schm.getPermission().equals("ancient") || schm.getPermission().equals("fugitive")) {
                         data = Material.GRAY_WOOL.createBlockData();
                     } else {
                         data = Material.STONE_BRICKS.createBlockData();

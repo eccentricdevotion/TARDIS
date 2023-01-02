@@ -17,6 +17,11 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -46,12 +51,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -609,7 +608,7 @@ public class TARDISBuilderInner implements Runnable {
                         data = Material.END_STONE_BRICKS.createBlockData();
                     } else if (schm.getPermission().equals("delta")) {
                         data = Material.BLACKSTONE.createBlockData();
-                    } else if (schm.getPermission().equals("ancient")) {
+                    } else if (schm.getPermission().equals("ancient") || schm.getPermission().equals("fugitive")) {
                         data = Material.GRAY_WOOL.createBlockData();
                     } else {
                         data = Material.STONE_BRICKS.createBlockData();

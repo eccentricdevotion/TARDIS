@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
+import java.io.File;
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -53,9 +55,6 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
@@ -717,7 +716,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                             data = Material.END_STONE_BRICKS.createBlockData();
                         } else if (tud.getSchematic().getPermission().equals("delta")) {
                             data = Material.BLACKSTONE.createBlockData();
-                        } else if (tud.getSchematic().getPermission().equals("ancient")) {
+                        } else if (tud.getSchematic().getPermission().equals("ancient") || tud.getSchematic().getPermission().equals("fugitive")) {
                             data = Material.GRAY_WOOL.createBlockData();
                         } else {
                             data = Material.STONE_BRICKS.createBlockData();
