@@ -515,7 +515,7 @@ For Spigot 1.12.2
 - Add missing 1.9 attributes to inventory saving
 - Prevented use of more controls when in Siege Mode
 - Fixed the MySQL database converter
-- Added missing [help|tab completion] entries for commands
+- Added missing \[help|tab completion\] entries for commands
 - Fixed spelling mistakes in some TARDIS messages
 - Fixed the Junk Mode save sign not working after a new TARDIS was created, and persist Junk Mode players between server restarts
 - Fixed the INVISIBLE chameleon preset not updating the exterior door location
