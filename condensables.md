@@ -41,6 +41,7 @@ The following list contains all the valid condensable items that can be used to 
 | APPLE | 10 |
 | ARMOR_STAND | 8 |
 | ARROW | 4 |
+| AXOLOTL_BUCKET | 40 |
 | AZALEA | 2 |
 | AZALEA_LEAVES | 1 |
 | AZURE_BLUET | 2 |
@@ -210,6 +211,7 @@ The following list contains all the valid condensable items that can be used to 
 | COBWEB | 4 |
 | COCOA_BEANS | 1 |
 | COD | 5 |
+| COD_BUCKET | 40 |
 | COMPARATOR | 110 |
 | COMPASS | 22 |
 | COMPOSTER | 10 |
@@ -326,6 +328,7 @@ The following list contains all the valid condensable items that can be used to 
 | DIORITE_STAIRS | 2 |
 | DIORITE_WALL | 2 |
 | DIRT | 1 |
+| DISC_FRAGMENT_5 | 20 |
 | DISPENSER | 58 |
 | DRAGON_BREATH | 50 |
 | DRAGON_EGG | 200 |
@@ -334,6 +337,7 @@ The following list contains all the valid condensable items that can be used to 
 | DRIED_KELP_BLOCK | 45 |
 | DRIPSTONE_BLOCK | 2 |
 | DROPPER | 58 |
+| ECHO_SHARD | 20 |
 | EGG | 1 |
 | ELYTRA | 200 |
 | EMERALD | 200 |
@@ -388,6 +392,7 @@ The following list contains all the valid condensable items that can be used to 
 | GLOW_INK_SAC | 10 |
 | GLOW_ITEM_FRAME | 22 |
 | GLOW_LICHEN | 4 |
+| GOAT_HORN | 20 |
 | GOLDEN_APPLE | 100 |
 | GOLDEN_AXE | 16 |
 | GOLDEN_BOOTS | 16 |
@@ -621,6 +626,7 @@ The following list contains all the valid condensable items that can be used to 
 | MUD_BRICK_WALL | 16 |
 | MUSHROOM_STEW | 33 |
 | MUSIC_DISC_13 | 100 |
+| MUSIC_DISC_5 | 180 |
 | MUSIC_DISC_CAT | 100 |
 | MUSIC_DISC_FAR | 100 |
 | MUSIC_DISC_MELLOHI | 100 |
@@ -628,18 +634,6 @@ The following list contains all the valid condensable items that can be used to 
 | MUSIC_DISC_PIGSTEP | 100 |
 | MUTTON | 3 |
 | MYCELIUM | 1 |
-| Material.AXOLOTL_BUCKET | 40 |
-| Material.COD_BUCKET | 40 |
-| Material.DISC_FRAGMENT_5 | 20 |
-| Material.ECHO_SHARD | 20 |
-| Material.GOAT_HORN | 20 |
-| Material.MUSIC_DISC_5 | 180 |
-| Material.POWDER_SNOW_BUCKET | 40 |
-| Material.PUFFERFISH_BUCKET | 40 |
-| Material.RECOVERY_COMPASS | 182 |
-| Material.SALMON_BUCKET | 40 |
-| Material.TADPOLE_BUCKET | 40 |
-| Material.TROPICAL_FISH_BUCKET | 40 |
 | NAME_TAG | 100 |
 | NAUTILUS_SHELL | 100 |
 | NETHERITE_AXE | 1870 |
@@ -765,6 +759,7 @@ The following list contains all the valid condensable items that can be used to 
 | POTATO | 9 |
 | POTATOES | 9 |
 | POTION | 50 |
+| POWDER_SNOW_BUCKET | 40 |
 | POWERED_RAIL | 650 |
 | PRISMARINE | 32 |
 | PRISMARINE_BRICKS | 72 |
@@ -773,6 +768,7 @@ The following list contains all the valid condensable items that can be used to 
 | PRISMARINE_STAIRS | 2 |
 | PRISMARINE_WALL | 2 |
 | PUFFERFISH | 5 |
+| PUFFERFISH_BUCKET | 40 |
 | PUMPKIN | 50 |
 | PUMPKIN_PIE | 60 |
 | PUMPKIN_SEEDS | 2 |
@@ -808,6 +804,7 @@ The following list contains all the valid condensable items that can be used to 
 | RAW_COPPER | 20 |
 | RAW_GOLD | 100 |
 | RAW_IRON | 20 |
+| RECOVERY_COMPASS | 182 |
 | REDSTONE | 32 |
 | REDSTONE_BLOCK | 288 |
 | REDSTONE_LAMP | 160 |
@@ -847,6 +844,7 @@ The following list contains all the valid condensable items that can be used to 
 | ROTTEN_FLESH | 1 |
 | SADDLE | 100 |
 | SALMON | 5 |
+| SALMON_BUCKET | 40 |
 | SAND | 1 |
 | SANDSTONE | 3 |
 | SANDSTONE_SLAB | 2 |
@@ -956,6 +954,7 @@ The following list contains all the valid condensable items that can be used to 
 | SUNFLOWER | 2 |
 | SUSPICIOUS_STEW | 8 |
 | SWEET_BERRIES | 10 |
+| TADPOLE_BUCKET | 40 |
 | TALL_GRASS | 2 |
 | TARGET | 200 |
 | TERRACOTTA | 12 |
@@ -969,6 +968,7 @@ The following list contains all the valid condensable items that can be used to 
 | TRIPWIRE | 2 |
 | TRIPWIRE_HOOK | 25 |
 | TROPICAL_FISH | 5 |
+| TROPICAL_FISH_BUCKET | 40 |
 | TUBE_CORAL | 2 |
 | TUBE_CORAL_BLOCK | 2 |
 | TUBE_CORAL_FAN | 2 |
