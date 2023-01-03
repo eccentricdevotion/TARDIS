@@ -51,7 +51,7 @@ public class TARDISCommandsLister {
                 String perm = plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".permission");
                 sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc
                         + "</code></td><td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".description")
-                        + "</td><td class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".usage").replace("/<command>", "/tardis").replace("<", "&gt;").replace(">", "&lt;")
+                        + "</td><td class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".usage").replace("/<command>", "/tardis").replace("<", "&lt;").replace(">", "&gt;")
                         + "</code></td><td>" + (perm == null ? "none" : perm)
                         + "</td></tr>");
             } else if (tc == TardisCommand.colorize) {
