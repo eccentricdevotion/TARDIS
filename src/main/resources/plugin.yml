@@ -738,6 +738,11 @@ commands:
       usage: /<command> jettison [room type]
       permission: tardis.room
       permission-message: You don't have the permission <permission> to use this command
+    monsters:
+      description: Reset monster spawning or kill all monsters in the TARDIS.
+      usage: /<command> monsters [reset|kill]
+      permission: tardis.use
+      permission-message: You don't have the permission <permission> to use this command
     occupy:
       description: Toggle TARDIS occupation.
       usage: /<command> occupy

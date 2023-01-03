@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ public enum TardisCommand {
     lamps,
     list,
     make_her_blue,
+    monsters,
     namekey,
     occupy,
     rebuild,

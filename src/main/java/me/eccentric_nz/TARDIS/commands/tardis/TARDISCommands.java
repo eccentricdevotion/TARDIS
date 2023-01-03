@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
@@ -36,9 +38,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Command /tardis [arguments].
@@ -179,6 +178,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISListCommand(plugin).doList(player, args);
                 case make_her_blue:
                     return new TARDISMakeHerBlueCommand(plugin).show(player);
+                case monsters:
+                    return new TARDISMonstersCommand(plugin).reset(player, rs.getTardis_id(), args);
                 case namekey:
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
                 case occupy:

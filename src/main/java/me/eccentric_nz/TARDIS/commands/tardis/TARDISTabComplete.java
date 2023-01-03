@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -27,10 +30,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * TabCompleter for /tardis command
@@ -50,6 +49,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL", "MASSIVE");
     private final List<String> THEME_SUBS = ImmutableList.of("SIXTY_THREE", "ZERO_FIVE", "TWENTY_TWENTY", "RANDOM");
     private final List<String> TRANSMAT_SUBS = ImmutableList.of("tp", "add", "remove", "update", "list");
+    private final List<String> MONSTERS_SUBS = ImmutableList.of("reset", "kill");
     private final List<String> UPD_SUBS = new ArrayList<>();
     private final List<String> SEC_SUBS = new ArrayList<>();
     private final List<String> RECHARGER_SUBS;
@@ -109,6 +109,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "room":
                 case "jettison":
                     return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
+                case "monsters":
+                    return partial(lastArg, MONSTERS_SUBS);
                 case "transmat":
                     return partial(lastArg, TRANSMAT_SUBS);
                 case "secondary":
