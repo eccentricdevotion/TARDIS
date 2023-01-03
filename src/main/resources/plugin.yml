@@ -733,6 +733,7 @@ commands:
     inside:
       description: List players inside your TARDIS.
       usage: /<command> inside
+      permission: tardis.use
     jettison:
       description: Remove a TARDIS room.
       usage: /<command> jettison [room type]
@@ -769,6 +770,7 @@ commands:
     lamps:
       description: Scan the main control room for new or moved lamp blocks.
       usage: /<command> lamps
+      permission: tardis.use
     abandon:
       description: Abandon your current TARDIS.
       usage: /<command> abandon
@@ -780,6 +782,7 @@ commands:
     construct:
       description: Set the sign text of the TARDIS CONSTRUCT Chameleon preset.
       usage: /<command> construct [line number] [text with optional colour code]
+      permission: tardis.use
     arch_time:
       description: Display the time that a player must remain Chameleon arched.
       usage: /<command> arch_time
@@ -787,6 +790,11 @@ commands:
     arsremove:
       description: Remove the TARDIS' ARS records so that manual room growing can be used.
       usage: /<command> arsremove
+      permission: tardis.use
+    check_loc:
+      description: Checks the location the player is targeting is suitable for landing the TARDIS.
+      usage: /<command> check_loc
+      permission: tardis.use
     colourise:
       description: Allows a player to change the colour of their TARDIS beacon glass with a Sonic Screwdriver.
       usage: /<command> colourise
@@ -817,6 +825,14 @@ commands:
       description: Allows a player to erase the TARDIS Storage Disk they have in their hand.
       usage: /<command> erase
       permission: tardis.storage
+    handbrake:
+      description: Allows a player to toggle the TARDIS handbrake on or off.
+      usage: /<command> handbrake [on|off]
+      permission: tardis.use
+    item:
+      description: Allows a player to update TARDIS circuits from previous versions to the newer custom model data item.
+      usage: /<command> item [hand|inventory]
+      permission: tardis.use        
     make_her_blue:
       description: Makes the TARDIS visible again if it was using the INVISIBLE preset.
       usage: /<command> make_her_blue
@@ -829,6 +845,10 @@ commands:
       description: Open the TARDIS Update chat GUI.
       usage: /<command> section
       permission: tardis.update
+    sethome:
+      description: Allows a player to set a new location as the TARDIS home and optionally the Chameleon preset the TARDIS uses there.
+      usage: /<command> sethome <set> [preset]
+      permission: tardis.use
     tagtheood:
       description: Display the 'Tag the Ood' game statistics.
       usage: /<command> tagtheood
