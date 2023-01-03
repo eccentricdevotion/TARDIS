@@ -673,6 +673,7 @@ commands:
       usage: /<command> home
       permission: tardis.home
       permission-message: You don't have the permission <permission> to use this command
+      aliases: [ sethome ]
     find:
       description: Shows you the location of your TARDIS.
       usage: /<command> find
@@ -845,10 +846,6 @@ commands:
       description: Open the TARDIS Update chat GUI.
       usage: /<command> section
       permission: tardis.update
-    sethome:
-      description: Allows a player to set a new location as the TARDIS home and optionally the Chameleon preset the TARDIS uses there.
-      usage: /<command> sethome <set> [preset]
-      permission: tardis.use
     tagtheood:
       description: Display the 'Tag the Ood' game statistics.
       usage: /<command> tagtheood

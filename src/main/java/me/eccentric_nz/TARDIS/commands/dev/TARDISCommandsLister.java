@@ -56,6 +56,8 @@ public class TARDISCommandsLister {
                         + "</td></tr>");
             } else if (tc == TardisCommand.colorize) {
                 sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#colourise\"><code>colourise</code></a> sub command.</td></tr>");
+            } else if (tc == TardisCommand.sethome) {
+                sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#home\"><code>home</code></a> sub command.</td></tr>");
             } else if (tc == TardisCommand.theme || tc == TardisCommand.upgrade) {
                 sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#desktop\"><code>desktop</code></a> sub command.</td></tr>");
             } else {
