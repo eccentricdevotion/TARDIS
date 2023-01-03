@@ -7,7 +7,7 @@ title: Whovian food
 
 You can craft Whovian food items in-game so that you can eat like the Doctor.
 
-For best results (and custom textures) you should use the TARDIS-MCP resource pack, and an MCPatcher modded client.
+For best results (and custom textures) you should use the TARDIS-Resource-Pack.
 
 ### Jelly babies
 
