@@ -6,15 +6,14 @@
 
 ## Next version `4.12.1`
 
-1. Add command to reset monster spawning in TARDIS (purge portals that contain the TARDIS id)
-2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-3. Cache TARDIS data to speed lookups and reduce database queries
-4. Update documentation...
-5. Use the Vortex Manipulator to teleport past force fields
-6. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-7. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-9. All the things...
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+2. Cache TARDIS data to speed lookups and reduce database queries
+3. Update documentation...
+4. Use the Vortex Manipulator to teleport past force fields
+5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+8. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 
