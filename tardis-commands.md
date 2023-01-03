@@ -1,9 +1,17 @@
 ---
 layout: default
-title: commands
+title: TARDIS commands
 ---
 
 # TARDIS commands
+
+## ???
+
+Can't find the sub command you’re looking for?
+
+Check out the [Big list of /tardis sub commands](tardis-commands-table.html) taken directly from _plugin.yml_.
+
+* * *
 
 ### /tardis home
 
@@ -356,3 +364,11 @@ Display the 'Tag the Ood' game statistics.
 Sets an internal TARDIS transmat location.
 
     /tardis transmat [name]
+
+* * *
+
+## ???
+
+Can't find the sub command you’re looking for?
+
+Check out the [Big list of /tardis sub commands](tardis-commands-table.html) taken directly from _plugin.yml_.
