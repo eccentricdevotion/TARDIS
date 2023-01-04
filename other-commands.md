@@ -1,5 +1,6 @@
 ---
-layout: default title: Big list of other commands
+layout: default
+title: Big list of other commands
 ---
 
 <style>
