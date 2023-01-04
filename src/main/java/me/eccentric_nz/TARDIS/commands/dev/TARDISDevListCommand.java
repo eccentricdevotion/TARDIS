@@ -46,7 +46,11 @@ class TARDISDevListCommand {
                 new TARDISBlueprintsLister().listBlueprints(sender);
                 return true;
             } else if (args[1].equalsIgnoreCase("commands")) {
-                new TARDISCommandsLister(plugin).listTARDISCommands(sender);
+                if (args.length > 2) {
+                    new TARDISCommandsLister(plugin).listOtherTARDISCommands(sender);
+                } else {
+                    new TARDISCommandsLister(plugin).listTARDISCommands(sender);
+                }
                 return true;
             } else {
                 // preset permissions

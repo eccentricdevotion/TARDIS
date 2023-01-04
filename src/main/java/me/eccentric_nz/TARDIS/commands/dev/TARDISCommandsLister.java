@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import org.bukkit.command.CommandSender;
@@ -64,6 +65,54 @@ public class TARDISCommandsLister {
                 sender.sendMessage("<tr><td colspan=\"4\">********</td></tr>");
                 sender.sendMessage("<tr><td colspan=\"4\">plugin.yml does not contain an entry for " + tc + "!</td></tr>");
                 sender.sendMessage("<tr><td colspan=\"4\">********</td></tr>");
+            }
+        }
+        sender.sendMessage("</table>");
+    }
+
+    void listOtherTARDISCommands(CommandSender sender) {
+        int i = 0;
+        Set<String> commands = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false);
+        sender.sendMessage("<table>");
+        sender.sendMessage("<tr><th>Command</th><th>Aliases</th><th>Description</th><th>Permission</th></tr>");
+        for (String c : commands) {
+            if (!c.equals("tardis")) {
+                String lighter = (i % 2 == 1) ? " class=\"lighter\"" : "";
+                String perm = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".permission");
+                Set<String> keys = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + c).getKeys(false);
+                int size = (keys.size() - 4) * 2;
+                if (size <= 0) {
+                    size = 2;
+                }
+                sender.sendMessage("<tr" + lighter + "><td rowspan=\"" + size + "\" id=\"" + c + "\"><strong>" + c + "</strong></td>");
+                for (String k : keys) {
+                    switch (k) {
+                        case "aliases" -> {
+                            sender.sendMessage("<td><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".aliases") + "</code></td>");
+                        }
+                        case "description" -> {
+                            sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".description") + "</td>");
+                        }
+                        case "permission" -> {
+                            sender.sendMessage("<td>" + (perm == null ? "none" : perm) + "</td></tr>");
+                        }
+                        case "permission-message" -> {
+                            // do nothing
+                        }
+                        case "usage" -> {
+                            sender.sendMessage("<tr" + lighter + "><td colspan=\"3\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
+                        }
+                        default -> {
+                            String subperm = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".permission");
+                            // get sub commands
+                            sender.sendMessage("<tr" + lighter + "><td rowspan=\"2\"><code>" + c + " " + k + "</code></td>");
+                            sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".description") + "</td>");
+                            sender.sendMessage("<td>" + (subperm == null ? perm : subperm) + "</td></tr>");
+                            sender.sendMessage("<tr" + lighter + "><td colspan=\"2\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
+                        }
+                    }
+                }
+                i++;
             }
         }
         sender.sendMessage("</table>");
