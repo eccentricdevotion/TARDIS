@@ -215,7 +215,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisconfig")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
+                    new TARDISCommandHelper(plugin).getCommand("tardisconfig", sender);
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
@@ -227,8 +227,27 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISReloadCommand(plugin).reloadConfig(sender);
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                    return false;
+                    // get the option path
+                    boolean isMainConfig = true;
+                    String path = "";
+                    if (firstsStr.containsKey(first)) {
+                        path = firstsStr.get(first) + "." + first;
+                    } else if (firstsBool.containsKey(first)) {
+                        path = firstsBool.get(first) + "." + first;
+                    } else if (firstsInt.containsKey(first)) {
+                        path = firstsInt.get(first) + "." + first;
+                    } else if (firstsStrArtron.contains(first) || firstsIntArtron.contains(first)) {
+                        isMainConfig = false;
+                        path = first;
+                    }
+                    // show the value of the config option
+                    if (isMainConfig) {
+                        TARDISMessage.send(sender, "CONFIG_OPTION", path, plugin.getConfig().getString(path));
+                    } else {
+                        TARDISMessage.send(sender, "CONFIG_OPTION_ARTRON", first, plugin.getArtronConfig().getString(path));
+                    }
+                    TARDISMessage.send(sender, "CONFIG_OPTION_SET", first);
+                    return true;
                 }
                 if (first.equals("reload")) {
                     return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
