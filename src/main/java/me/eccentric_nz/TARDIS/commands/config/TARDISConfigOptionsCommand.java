@@ -36,13 +36,25 @@ class TARDISConfigOptionsCommand {
 
     TARDISConfigOptionsCommand(TARDIS plugin) {
         this.plugin = plugin;
-        sections.add("storage");
-        sections.add("creation");
-        sections.add("police_box");
-        sections.add("travel");
-        sections.add("preferences");
+        sections.add("abandon");
         sections.add("allow");
+        sections.add("arch");
+        sections.add("archive");
+        sections.add("autonomous_areas");
+        sections.add("blueprints");
+        sections.add("circuits");
+        sections.add("conversions");
+        sections.add("creation");
+        sections.add("desktop");
+        sections.add("dynmap");
         sections.add("growth");
+        sections.add("junk");
+        sections.add("police_box");
+        sections.add("preferences");
+        sections.add("rechargers");
+        sections.add("siege");
+        sections.add("storage");
+        sections.add("travel");
     }
 
     boolean showConfigOptions(CommandSender sender, String[] args) {
@@ -52,11 +64,11 @@ class TARDISConfigOptionsCommand {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);
             options.forEach((o) -> {
-                if (o.equals("mysql")) {
-                    sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
-                    sender.sendMessage("        " + ChatColor.GREEN + o + "url: " + plugin.getConfig().getString(section + ".mysql.url"));
-                    sender.sendMessage("        " + ChatColor.GREEN + o + "user: " + plugin.getConfig().getString(section + ".mysql.user"));
-                    sender.sendMessage("        " + ChatColor.GREEN + o + "password: " + plugin.getConfig().getString(section + ".mysql.password"));
+                if (plugin.getConfig().isConfigurationSection(section + "." + o)) {
+                    sender.sendMessage("    " + ChatColor.GREEN + o + ":");
+                    for (String indent : plugin.getConfig().getConfigurationSection(section + "." + o).getKeys(false)) {
+                        sender.sendMessage("        " + ChatColor.GREEN + indent + ": " + plugin.getConfig().getString(section + "." + o + "." + indent));
+                    }
                 } else {
                     sender.sendMessage("    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
                 }

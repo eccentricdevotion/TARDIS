@@ -38,7 +38,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
-    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
+    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("abandon", "allow", "arch", "archive", "autonomous_areas", "blueprints", "circuits", "conversions", "creation", "desktop", "dynmap", "growth", "junk", "police_box", "preferences", "rechargers", "siege", "storage", "travel");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
     private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
@@ -83,7 +83,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             if (sub.equals("include") || sub.equals("exclude")) {
                 return partial(lastArg, WORLD_SUBS);
             }
-            if (sub.equals("config")) {
+            if (sub.equals("options")) {
                 return partial(lastArg, CONFIG_SUBS);
             }
             if (sub.equals("difficulty")) {
