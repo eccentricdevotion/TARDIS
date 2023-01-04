@@ -833,7 +833,7 @@ commands:
     item:
       description: Allows a player to update TARDIS circuits from previous versions to the newer custom model data item.
       usage: /<command> item [hand|inventory]
-      permission: tardis.use        
+      permission: tardis.use
     make_her_blue:
       description: Makes the TARDIS visible again if it was using the INVISIBLE preset.
       usage: /<command> make_her_blue
@@ -989,7 +989,7 @@ commands:
   tardisdev:
     aliases: tdev
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
-    usage: /<command> [add_regions|advancements|tree|list|stats] [preset_perms|perms|recipes|blueprints]
+    usage: /<command> [add_regions|advancements|tree|list|stats] [preset_perms|perms|recipes|blueprints|commands]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgive:
@@ -1465,7 +1465,7 @@ commands:
     permission-message: You don't have the permission <permission> to use this command
   tardisdisplay:
     aliases: tdisplay
-    description: Toggle coordinates on and off.
+    description: Toggle the TARDIS HUD on and off.
     usage: /<command> [ALL|BIOME|COORDS|DIRECTION|TARGET_BLOCK]
     permission: tardis.display
     permission-message: You don't have the permission <permission> to use this command

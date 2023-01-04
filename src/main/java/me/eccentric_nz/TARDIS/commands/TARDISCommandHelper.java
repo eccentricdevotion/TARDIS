@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RootCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -41,7 +42,7 @@ public class TARDISCommandHelper {
         if (c.isEmpty()) {
             sender.sendMessage("------");
             sender.sendMessage(ChatColor.GOLD + "TARDIS commands - use " + ChatColor.AQUA + "/tardis? <command> " + ChatColor.RESET + "for more info");
-            sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + "http://goo.gl/f8lWbP");
+            sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + "https://eccentricdevotion.github.io/TARDIS/commands.html");
             plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false).forEach((o) -> {
                 if (!o.equals("tardis?")) {
                     sender.sendMessage("/" + o);
@@ -51,7 +52,7 @@ public class TARDISCommandHelper {
         } else {
             String[] split = c.split(" ");
             try {
-                ROOT_COMMAND root = ROOT_COMMAND.valueOf(split[0].toLowerCase(Locale.ENGLISH));
+                RootCommand root = RootCommand.valueOf(split[0].toLowerCase(Locale.ENGLISH));
                 if (split.length > 1) {
                     if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH))) {
                         sender.sendMessage("------");
@@ -100,42 +101,6 @@ public class TARDISCommandHelper {
             } catch (IllegalArgumentException e) {
                 sender.sendMessage("Invalid TARDIS help command argument: " + c);
             }
-        }
-    }
-
-    public enum ROOT_COMMAND {
-
-        tardis("https://goo.gl/55uTqL"),
-        tardistravel("https://goo.gl/5rZR1T"),
-        tardisadmin("https://goo.gl/jWFyLX"),
-        tardisgive("https://goo.gl/LGQgy5"),
-        tardisroom("https://goo.gl/zh9RKK"),
-        tardisprefs("https://goo.gl/6k3RqD"),
-        tardisarea("https://goo.gl/AJM2i3"),
-        tardisartron("https://goo.gl/00ueX0"),
-        tardisbind("https://goo.gl/sedpK4"),
-        tardisgravity("https://goo.gl/vczqjf"),
-        tardisbook("https://goo.gl/BGPh3t"),
-        tardistexture("https://goo.gl/FPuxoa"),
-        tardisrecipe("https://goo.gl/WSHA6N"),
-        tardissay("https://goo.gl/iphcoM"),
-        tardisremote("https://goo.gl/8GpxUV"),
-        tardisschematic("https://goo.gl/BG4TtW"),
-        tardisnetherportal("https://goo.gl/B2M36Y"),
-        tardisjunk("https://goo.gl/xNcBd5"),
-        handles("https://tardis.page.link/handles"),
-        tardisteleport("Not yet available"),
-        tardisworld("Not yet available"),
-        tardisgamemode("Not yet available"),
-        tardischemistry("https://eccentricdevotion.github.io/TARDIS/chemistry-lab"),
-        tardissudo("https://eccentricdevotion.github.io/TARDIS/sudo-commands.html"),
-        tardistime("Not yet available"),
-        tardisweather("Not yet available");
-
-        final String URL;
-
-        ROOT_COMMAND(String URL) {
-            this.URL = URL;
         }
     }
 }
