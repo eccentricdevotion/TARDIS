@@ -141,10 +141,10 @@ public class TARDISCondensables {
             condensables.put("BREAD", 30);
             condensables.put("BREWING_STAND", 200);
             condensables.put("BRICK", 5);
-            condensables.put("BRICK_SLAB", 2);
-            condensables.put("BRICK_STAIRS", 121);
-            condensables.put("BRICK_WALL", 2);
-            condensables.put("BRICKS", 21);
+            condensables.put("BRICK_SLAB", 10);
+            condensables.put("BRICK_STAIRS", 30);
+            condensables.put("BRICK_WALL", 20);
+            condensables.put("BRICKS", 20);
             condensables.put("BROWN_BANNER", 120);
             condensables.put("BROWN_BED", 68);
             condensables.put("BROWN_CARPET", 13);
@@ -569,18 +569,18 @@ public class TARDISCondensables {
             condensables.put("DARK_OAK_CHEST_BOAT", 8);
             condensables.put("MANGROVE_CHEST_BOAT", 8);
             // --
-            condensables.put("Material.TADPOLE_BUCKET", 40);
-            condensables.put("Material.POWDER_SNOW_BUCKET", 40);
-            condensables.put("Material.PUFFERFISH_BUCKET", 40);
-            condensables.put("Material.SALMON_BUCKET", 40);
-            condensables.put("Material.COD_BUCKET", 40);
-            condensables.put("Material.TROPICAL_FISH_BUCKET", 40);
-            condensables.put("Material.AXOLOTL_BUCKET", 40);
-            condensables.put("Material.RECOVERY_COMPASS", 182);
-            condensables.put("Material.MUSIC_DISC_5", 180);
-            condensables.put("Material.DISC_FRAGMENT_5", 20);
-            condensables.put("Material.GOAT_HORN", 20);
-            condensables.put("Material.ECHO_SHARD", 20);
+            condensables.put("TADPOLE_BUCKET", 40);
+            condensables.put("POWDER_SNOW_BUCKET", 40);
+            condensables.put("PUFFERFISH_BUCKET", 40);
+            condensables.put("SALMON_BUCKET", 40);
+            condensables.put("COD_BUCKET", 40);
+            condensables.put("TROPICAL_FISH_BUCKET", 40);
+            condensables.put("AXOLOTL_BUCKET", 40);
+            condensables.put("RECOVERY_COMPASS", 182);
+            condensables.put("MUSIC_DISC_5", 180);
+            condensables.put("DISC_FRAGMENT_5", 20);
+            condensables.put("GOAT_HORN", 20);
+            condensables.put("ECHO_SHARD", 20);
             // --
             condensables.put("SCULK", 2);
             condensables.put("SCULK_CATALYST", 2);

@@ -454,6 +454,42 @@ public class TARDISCondensablesUpdater {
             if (plugin.getCondensablesConfig().contains("Material")) {
                 plugin.getCondensablesConfig().set("Material", null);
             }
+            // fix BRICK_STAIRS
+            if (plugin.getCondensablesConfig().getInt("BRICK_STAIRS") == 121) {
+                plugin.getCondensablesConfig().set("BRICKS", 20);
+                plugin.getCondensablesConfig().set("BRICK_SLAB", 10);
+                plugin.getCondensablesConfig().set("BRICK_STAIRS", 30);
+                plugin.getCondensablesConfig().set("BRICK_WALL", 20);
+            }
+            // fix Material.
+            if (plugin.getCondensablesConfig().contains("Material.TADPOLE_BUCKET")) {
+                // remove
+                plugin.getCondensablesConfig().set("Material.TADPOLE_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.POWDER_SNOW_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.PUFFERFISH_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.SALMON_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.COD_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.TROPICAL_FISH_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.AXOLOTL_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material.RECOVERY_COMPASS", null);
+                plugin.getCondensablesConfig().set("Material.MUSIC_DISC_5", null);
+                plugin.getCondensablesConfig().set("Material.DISC_FRAGMENT_5", null);
+                plugin.getCondensablesConfig().set("Material.GOAT_HORN", null);
+                plugin.getCondensablesConfig().set("Material.ECHO_SHARD", null);
+                // correct
+                plugin.getCondensablesConfig().set("TADPOLE_BUCKET", 40);
+                plugin.getCondensablesConfig().set("POWDER_SNOW_BUCKET", 40);
+                plugin.getCondensablesConfig().set("PUFFERFISH_BUCKET", 40);
+                plugin.getCondensablesConfig().set("SALMON_BUCKET", 40);
+                plugin.getCondensablesConfig().set("COD_BUCKET", 40);
+                plugin.getCondensablesConfig().set("TROPICAL_FISH_BUCKET", 40);
+                plugin.getCondensablesConfig().set("AXOLOTL_BUCKET", 40);
+                plugin.getCondensablesConfig().set("RECOVERY_COMPASS", 182);
+                plugin.getCondensablesConfig().set("MUSIC_DISC_5", 180);
+                plugin.getCondensablesConfig().set("DISC_FRAGMENT_5", 20);
+                plugin.getCondensablesConfig().set("GOAT_HORN", 20);
+                plugin.getCondensablesConfig().set("ECHO_SHARD", 20);
+            }
             try {
                 String condensablesPath = plugin.getDataFolder() + File.separator + "condensables.yml";
                 plugin.getCondensablesConfig().save(new File(condensablesPath));
