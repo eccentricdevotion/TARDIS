@@ -27,11 +27,11 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * TabCompleter for /tardisadmin
+ * TabCompleter for /tardisdev
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "list", "stats", "tree");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands");
     private final List<String> MAT_SUBS = new ArrayList<>();
 
