@@ -1079,14 +1079,6 @@ Use `/tardis? [command] [subcommand]` when necessary to view the command informa
         <td colspan="3" class="usage"><code>/tardistime [day|morning|noon|night|midnight|?AM|?PM|ticks]</code></td>
     </tr>
     <tr>
-        <td rowspan="2" id="tardisbiome"><strong>tardisbiome</strong></td>
-        <td><code>tbiome</code></td>
-        <td>Get the biome the player is looking at.</td>
-        <td>tardis.admin</td>
-    </tr>
-    <tr>
-        <td colspan="3" class="usage"><code>/tardisbiome</code></td>
-    </tr>
     <tr class="lighter">
         <td rowspan="2" id="tardisdisplay"><strong>tardisdisplay</strong></td>
         <td><code>tdisplay</code></td>
