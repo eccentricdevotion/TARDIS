@@ -993,7 +993,7 @@ commands:
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [add_regions|advancements|tree|list|stats] [preset_perms|perms|recipes|blueprints|commands]
+    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree] [preset_perms|perms|recipes|blueprints|commands] [html|all]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
@@ -1449,12 +1449,6 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     usage: /<command> [day|morning|noon|night|midnight|?AM|?PM|ticks]
-  tardisbiome:
-    aliases: tbiome
-    description: Get the biome the player is looking at.
-    permission: tardis.admin
-    permission-message: You don't have the permission <permission> to use this command
-    usage: /<command>
   tardisdisplay:
     aliases: tdisplay
     description: Toggle the TARDIS HUD on and off.
