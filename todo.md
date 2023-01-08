@@ -17,8 +17,7 @@
 
 ## Resource Pack / TARDISWeepingAngels
 
-1. Remove use of Optifine for CIT armour - doesn't work anymore on macOS anyway - replace with static/animated model (can we track entities efficiently enough to swap models between moving/not moving?).
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Re-skin mobs for Resource pack, and add new mob sounds
 
     * Clockwork Droid
     * Hath _started_
