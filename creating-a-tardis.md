@@ -42,6 +42,7 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 
 | Name                               | Block Required         | Description                                             |
 |------------------------------------|------------------------|---------------------------------------------------------|
+| [ANCIENT](interiors#ancient)       | Sculk                  | Ancient city console                                    |
 | [ARS](interiors#ars)               | Quartz Block           | The "ARS” TARDIS                                        |
 | [BUDGET](interiors#budget)         | Iron Block             | The default “budget” TARDIS interior                    |
 | [BIGGER](interiors#bigger)         | Gold Block             | A "bigger" version of the default TARDIS                |
@@ -54,6 +55,8 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 | [ELEVENTH](interiors#eleventh)     | Emerald Block          | The 11th Doctor's TARDIS interior                       |
 | [ENDER](interiors#ender)           | Purpur Block           | An End-inspired TARDIS interior                         |
 | [FACTORY](interiors#factory)       | Yellow Concrete Powder | 1st Doctor's Factory TARDIS (by Razihel)                |
+| [FUGITIVE](interiors#fugitive)     | Polished Deepslate     | Ruth (The Fugitive Doctor) Clayton's Console (by DT10)  |
+| [ORIGINAL](interiors#original)     | Packed Mud             | The original TARDIS plugin Console                      |
 | [MASTER](interiors#master)         | Nether Bricks          | The Master's TARDIS interior (by ShadowAssociate)       |
 | [PLANK](interiors#plank)           | Bookshelf              | A "wood plank" TARDIS interior                          |
 | [PYRAMID](interiors#pyramid)       | Sandstone Stairs       | A sandstone pyramid TARDIS interior (by airomis)        |

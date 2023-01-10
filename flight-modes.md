@@ -30,6 +30,7 @@ You can set the delay between having to click the repeaters in the config: `/tar
 Video goes here
 
 <!--<iframe src="https://player.vimeo.com/video/57807692" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+
 ### Regulator flight mode
 
 Use the four direction buttons to keep the flight path stabilised in the centre of the vortex blocks (black stained-glass).
@@ -39,6 +40,7 @@ In regulator flight mode, the further away from the centre the regulator block i
 Video goes here
 
 <iframe src="https://player.vimeo.com/video/90391961" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
 ### Note:
 
 Currently if the destination is inside a building, the adjusted location will most probably end up on the roof (even if there is room inside the building).
