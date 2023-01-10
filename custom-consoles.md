@@ -29,9 +29,9 @@ You can add as many custom consoles as you wish, all you need to do is duplicate
 
 - `enabled: [true|false]` — pretty self-explanatory, whether to load this console when the plugin starts up
 - `schematic: [sometext]` — this affects the schematic filename, the permission node and the artron upgrade cost — best shown by example — if this is set to `rani`, then the schematic filename needs to _‘rani.tschm’_, the permission to create this TARDIS will be _‘tardis.rani’_ and there needs to be a corresponding entry in _artron.yml_ in the `upgrades` section e.g. `rani: 8000` - it should be a lowercase version of the schematic name.
-- `seed: [Material]` — this will determine the type of seed block this TARDIS uses — `[Material]` must be a valid Bukkit [Material](https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java) enum
+- `seed: [Material]` — this will determine the type of seed block this TARDIS uses — `[Material]` must be a valid Bukkit [Material](https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java) enum
 - `has_beacon: [true|false]` — again pretty self-explanatory, whether this TARDIS has a beacon in it
-- `has_lanterns: [true|false]` — again pretty self-explanatory, whether this TARDIS has a sea lanterns for lights
+- `has_lanterns: [true|false]` — again pretty self-explanatory, whether this TARDIS has sea lanterns for lights
 - `description: [some other text]` — this is the display name that appears when you hover over the block in the ARS and Desktop Theme GUIs
 
 ### artron.yml
