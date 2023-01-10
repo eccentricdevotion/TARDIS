@@ -13,7 +13,7 @@ Storing Artron Energy requires a player to have the `tardis.store` permission.
 
 To see the crafting recipe for Artron Storage Cells use the command:
 
-    /tardisrecipe cell
+    /tardisrecipe atron-storage-cell
 
 ### Artron Storage command
 

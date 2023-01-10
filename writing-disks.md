@@ -9,12 +9,12 @@ Save Storage Disks and Player Storage Disks can have data written to them using 
 
 ### Crafting the blank disks
 
-You will need a blank storage disk first — `/tardisrecipe blank`
+You will need a blank storage disk first — `/tardisrecipe blank-storage-disk`
 
 - By default a Save Storage Disk is crafted with a Blank Storage Disk and a Redstone.
 - By default a Player Storage Disk is crafted with a Blank Storage Disk and a Lapis Block.
 
-Check the recipes using the `/tardisrecipe [save-disk|player-disk]` command.
+Check the recipes using the `/tardisrecipe [save-storage-disk|player-storage-disk]` command.
 
 ### Writing Save Disks
 

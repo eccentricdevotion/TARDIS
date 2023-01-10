@@ -9,12 +9,12 @@ Biome and Preset Storage Disks have data crafted into them by combining a Blank 
 
 ### Crafting the blank disks
 
-You will need a blank storage disk first — `/tardisrecipe blank`
+You will need a blank storage disk first — `/tardisrecipe blank-storage-disk`
 
 - By default a Biome Storage Disk is crafted with a Blank Storage Disk and an Emerald.
 - By default a Preset Storage Disk is crafted with a Blank Storage Disk and a Chameleon Circuit.
 
-Check the recipes using the `/tardisrecipe [biome-disk|preset-disk]` command.
+Check the recipes using the `/tardisrecipe [biome-storage-disk|preset-storage-disk]` command.
 
 ## Biome Storage Disks
 

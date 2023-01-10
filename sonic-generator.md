@@ -9,7 +9,7 @@ title: Sonic Generator
 
 The Sonic Generator allows players to configure and produce a new screwdriver from the console. Each time a sonic is generated it costs a certain amount of Artron Energy.
 
-You can craft a Sonic Generator (use `/tardisrecipe generator` to see the recipe), or place a flower pot and update it (`/tardis update generator`). If you place a flower pot, you will need to activate the generator the first time you use it. You do this by placing the craft ingredients into the GUI.
+You can craft a Sonic Generator (use `/tardisrecipe sonic-generator` to see the recipe), or place a flower pot and update it (`/tardis update generator`). If you place a flower pot, you will need to activate the generator the first time you use it. You do this by placing the craft ingredients into the GUI.
 
 Right-clicking the generator opens the GUI where you can select the Sonic Screwdriver type and apply upgrades to it. The settings are saved when you generate a new sonic, so that in the future, SHIFT-right-clicking the generator will build a sonic with the last used settings without having to open the GUI.
 

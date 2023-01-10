@@ -15,7 +15,7 @@ The Tenth Doctor used a Chameleon Arch to change himself into the human John Smi
 
 To view the fob watch recipe type:
 
-    /tardisrecipe watch
+    /tardisrecipe fob-watch
 
 ### Chameleon Arch use
 

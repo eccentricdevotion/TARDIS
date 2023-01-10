@@ -9,7 +9,7 @@ TARDIS Artron Furnaces are special furnaces that can use Artron Storage Cells fo
 
 Anyone can craft an Artron Furnace, but only players with the `tardis.furnace` permission can place them. In order to function TARDISHelper v1.2 or higher must be installed.
 
-To view the recipe use the `/tardisrecipe furnace` command.
+To view the recipe use the `/tardisrecipe atron-furnace` command.
 
 ![Artron Furnace recipe](images/docs/artronfurnace.jpg)
 

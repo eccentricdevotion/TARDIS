@@ -5,7 +5,7 @@ title: Rift Manipulator
 
 # Rift Manipulator
 
-**Note:** The Rift Manipulator can only be obtained if the Skaro planet is enabled, and _map\_1983.dat_ is installed in the server’s main world folder, so that players can craft a Rift Circuit.
+**Note:** The Rift Manipulator can only be obtained if the Skaro planet is enabled.
 
 Permission: `tardis.rift`
 

@@ -58,7 +58,7 @@ Storage Disks are automatically read and processed when you close the Advanced C
 
 Crafting storage disks is a three step process:
 
-1. Craft a Blank Storage Disk (shaped recipe) — `/tardisrecipe blank`
+1. Craft a Blank Storage Disk (shaped recipe) — `/tardisrecipe blank-storage-disk`
 2. Craft the desired type of storage disk (shapeless recipe) — combine a blank storage disk with the appropriate item, for example Blank Storage Disk + Redstone = Save Storage Disk
 3. Craft or write information to the disk — for Save and Player disks you use a command to write information to the disk (see below), for the others you craft them with a specific item.
 

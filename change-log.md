@@ -474,7 +474,7 @@ For Spigot 1.12.2
   - the config option `allow.power_down` must be `true`
 - Added `hum` player preference and GUI to set the TARDIS interior hum sound effect preference — use the Sonic Preferences GUI or the `/tardisprefs hum [sound name]` command
 - Added Acid Batteries, the Rift Circuit, [Rift Manipulator](rift-manipulator.html) and the Rust Plague Sword 
-  - `/tardisrecipe [acid-battery|rift-circuit|rift-manipulator|rust]`
+  - `/tardisrecipe [acid-battery|rift-circuit|rift-manipulator|rust-plague-sword]`
   - Acid Batteries and the Rift Circuit are ingredients in crafting the Rift Manipulator
   - The Rift Manipulator allows players to create personal TARDIS rechargers — permission `tardis.rift`
 

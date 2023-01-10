@@ -26,7 +26,7 @@ Because the durability of the crafted bow ties has been set quite low (to preven
 
 The Tenth Doctor used a pair of 3-D glasses when observing the effects the Void had on people and objects. you can do the same! To see the recipe type:
 
-    /tardisrecipe glasses
+    /tardisrecipe 3-d-glasses
 
 3-D glasses give you night vision when worn, but lose one durability point every minute and eventually will break and drop paper. If you time it right, you should get a good 6 minutes of night vision.
 

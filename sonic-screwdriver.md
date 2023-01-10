@@ -25,16 +25,16 @@ There are 6 upgrades that you can give your Sonic:
 td{vertical-align:top;}
 </style>
 
-| Upgrade | Recipe | Permissions |
-| --- | --- | --- |
-| Bio-scanner Circuit | `/tardisrecipe bio-circuit` | `tardis.sonic.bio`<br>`tardis.sonic.freeze` |
-| Redstone Activator Circuit | `/tardisrecipe r-circuit` | `tardis.sonic.redstone` |
-| Emerald Environment Circuit | `/tardisrecipe e-circuit` | `tardis.sonic.emerald`<br>`tardis.sonic.plant` |
-| Diamond Disruptor Circuit | `/tardisrecipe d-circuit` | `tardis.sonic.diamond`<br>`tardis.sonic.silktouch` |
-| Painter Circuit | `/tardisrecipe painter` | `tardis.sonic.paint` |
-| Ignite Circuit | `/tardisrecipe ignite-circuit` | `tardis.sonic.ignite` |
-| Pickup Arrows Circuit | `/tardisrecipe arrow-circuit` | `tardis.sonic.arrow` |
-| Server Admin Circuit | `/tardisrecipe a-circuit` | `tardis.sonic.admin` |
+| Upgrade                     | Recipe                                      | Permissions                                        |
+|-----------------------------|---------------------------------------------|----------------------------------------------------|
+| Bio-scanner Circuit         | `/tardisrecipe bio-scanner-circuit`         | `tardis.sonic.bio`<br>`tardis.sonic.freeze`        |
+| Redstone Activator Circuit  | `/tardisrecipe redstone-activator-circuit`  | `tardis.sonic.redstone`                            |
+| Emerald Environment Circuit | `/tardisrecipe emerald-environment-circuit` | `tardis.sonic.emerald`<br>`tardis.sonic.plant`     |
+| Diamond Disruptor Circuit   | `/tardisrecipe diamond-disruptor-circuit`   | `tardis.sonic.diamond`<br>`tardis.sonic.silktouch` |
+| Painter Circuit             | `/tardisrecipe painter-circuit`             | `tardis.sonic.paint`                               |
+| Ignite Circuit              | `/tardisrecipe ignite-circuit`              | `tardis.sonic.ignite`                              |
+| Pickup Arrows Circuit       | `/tardisrecipe picup-arrow-circuit`         | `tardis.sonic.arrow`                               |
+| Server Admin Circuit        | `/tardisrecipe server-admin-circuit`        | `tardis.sonic.admin`                               |
 
 To upgrade your Sonic Screwdriver, you combine it with a new circuit in the crafting table. Each circuit has an associated permission, see the [permissions page](permissions.html) for more details.
 

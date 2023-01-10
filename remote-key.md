@@ -11,7 +11,7 @@ The Tenth Doctor installed a system that allowed him to lock the TARDIS remotely
 
 To see the recipe type:
 
-    /tardisrecipe r-key
+    /tardisrecipe remote-key
 
 In plugins version \< v3.2.8, the recipe will show a GOLD\_NUGGET — **_you will actually have to use a crafted TARDIS Key._**
 
