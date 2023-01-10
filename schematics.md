@@ -13,7 +13,7 @@ As of version 3.0-beta-1, TARDIS now uses its own JSON schematic format. The met
 basically the same, with the following differences:
 
 - The schematic region start and end points must be defined with the TARDIS schematic
-  wand (`/tardisgive [player] wand 1`)
+  wand (`/tardisgive [player] schematic_wand 1`)
 - RIGHT-clicking with the wand sets the start point
 - LEFT-clicking with the wand sets the end point
 - Once the region is defined, use the `/tardisschematic` command (`/ts` for short) to save the schematic — see
@@ -23,22 +23,22 @@ basically the same, with the following differences:
 
 ## Guidelines for custom TARDIS schematics
 
-You can create a custom schematic for the inner TARDIS, but there are a few things you need to know before you jump
+You can create multiple custom schematics for the inner TARDIS, but there are a few things you need to know before you jump
 right in!
 
-1. In order to be loaded by the plugin, the schematic file must be named _custom.tschm_ (_custom.schematic_ for pre-v3.0
-   versions), and should be located in the _plugins/TARDIS/user\_schematics_ folder.
-2. The custom TARDIS can only have 1 iron door, 1 stone button, and 1 wood button in its initial design (in addition to
+1. In order to be loaded by the plugin, the schematic file must be located in the _plugins/TARDIS/user\_schematics_ folder.
+2. There must be an entry for the console in _custom_consoles.yml_ and _artron.yml_ — see
+   [Custom Consoles](custom_consoles.html) for more information.
+3. The custom TARDIS can only have 1 iron door, 1 stone button, and 1 wood button in its initial design (in addition to
    the placeholder blocks as listed below).
-3. The TARDIS should be sized in multiples of 16 blocks (1 chunk). Schematics can be a maximum 3x3 chunks in size.
-4. TARDISes should be squares i.e. that same width (x) and length (z) dimensions. A 16 x 16 block TARDIS is _good_, a 24
+4. The TARDIS should be sized in multiples of 16 blocks (1 chunk). Schematics can be a maximum 3x3 chunks in size.
+5. TARDISes should be squares i.e. that same width (x) and length (z) dimensions. A 16 x 16 block TARDIS is _good_, a 24
    x 18 block TARDIS would be **bad**.
-5. Custom consoles are always grown starting at the same Y level (Y=64), this means that — the level of the floor where
+6. Custom consoles are always grown starting at the same Y level (Y=64), this means that — the level of the floor where
    the doors are — needs to be at a certain height for the doors to line up with any rooms that are grown. You should be
-   able to determine the floor level by basing your design on any console schematic except the REDSTONE one or using one
-   of the template consoles (small, medium, tall).
-6. When you are facing the outside of the TARDIS door, you should be pointing SOUTH.
-7. The are some special placeholder blocks that are needed so the that plugin will record the location of the TARDIS
+   able to determine the floor level by basing your design on one of the template consoles (small, medium, tall).
+7. When you are facing the outside of the TARDIS door, you should be pointing SOUTH.
+8. The are some special placeholder blocks that are needed so the that plugin will record the location of the TARDIS
    controls. They are:
 
 | Block               | Control                                                        |
@@ -55,21 +55,4 @@ right in!
 | `Jukebox`           | Advanced Sonsole                                               |
 | `Note block`        | Disk Storage                                                   |
 | `Command block`     | Artron charged creeper spawn location                          |
-| `Daylight detector` | Telepathic Circuit                          |
-
-## Making the schematics (pre-v3.0)
-
-The WorldEdit plugin was used to create the default set of TARDIS schematics.
-
-So you could:
-
-1. Build a TARDIS
-2. Make a cuboid WorldEdit selection e.g. with the commands `//hpos1` and `//hpos2`, or using the WorldEdit wand (wood
-   axe)
-3. `//copy`
-4. `//schematic save custom`
-5. Move the schematic file into the _plugins/TARDIS/user\_schematics_ folder and start up your server.
-
-### Video
-
-<iframe src="https://player.vimeo.com/video/52214021" width="600" height="375" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+| `Daylight detector` | Telepathic Circuit                                             |
