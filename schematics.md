@@ -3,11 +3,9 @@ layout: default
 title: Schematics
 ---
 
-[Jump to video](#video)
-
 # Schematics
 
-## New schematic format
+## Schematic format
 
 As of version 3.0-beta-1, TARDIS now uses its own JSON schematic format. The method for creating schematics remains
 basically the same, with the following differences:
