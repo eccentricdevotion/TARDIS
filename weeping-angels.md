@@ -25,6 +25,7 @@ For the full experience (textures and sounds), you'll need the [TARDIS-Resource-
 * Daleks
 * Empty Children
 * Hath
+* Headless Monks
 * Ice Warriors
 * Judoon
 * K9
@@ -65,7 +66,7 @@ Weeping Angels can only be killed with the configured weapon - by default a DIAM
 
 The angels move pretty fast, but you can freeze them in place by looking at them and quickly pressing the sneak key. Better arm yourself or flee quickly though, as they'll be after you again in a snap - and if they touch you, you'll be teleported away to a random location. If the TARDIS plugin is also installed, your TARDIS Key will be stolen.
 
-![Weeping Angel](images/docs/weepingangel1.jpg)
+![Weeping Angel](images/docs/weeping_angel.jpg)
 
 ### Cybermen
 
@@ -77,7 +78,7 @@ Cybermen can spawn at anytime. If configured, Cybermen will upgrade villagers an
 
 Ice Warriors are really angry. They can spawn at anytime, but only spawn in snowy, icy or cold biomes. They carry an ice dagger. Did I mention they're angry!
 
-![Ice Warrior](images/docs/ice_warrior2.jpg)
+![Ice Warrior](images/docs/ice_warrior.jpg)
 
 ### Daleks
 
@@ -97,9 +98,17 @@ Hath don't do much yet, but they look pretty cool.
 
 ![Hath](images/docs/hath.jpg)
 
+### Headless Monk
+
+Headless Monks fire energy blasts from their hands as well as channelling that energy into their swords.
+
+![Headless Monk](images/docs/headless_monk.jpg)
+
 ### Judoon
 
 Judoon are the police force of the Whoniverse. Click an Judoon to claim it as your own. You can equip Judoon with ammunition (craft with arrows and gunpowder and put into a shulker box, then right click the Judoon with the box). Judoon can then be toggled to be in guard mode and will shoot any hostile mobs nearby. Use the /twa follow command to make the Judoon follow you around.
+
+![Judoon](images/docs/judoon.jpg)
 
 ### Ood
 
@@ -123,7 +132,7 @@ BBB
 
 Only spawn underground in caves. Watch out for their Silurian guns!
 
-![Silurian](images/docs/silurian.png)
+![Silurian](images/docs/silurian.jpg)
 
 ### Sontarans
 
@@ -136,6 +145,13 @@ Sontarans will try to kill you (as any good Sontaran should). If you manage to r
 If you right-click Strax he'll talk to you, and if you right-click him with an empty bucket, you'll be able to milk him. Yum, yum Sontaran lactic fluid :) Be careful not to anger him though as he'll go rabid on you and let his killer Sontaran instincts get the better of him!
 
 ![Strax](images/docs/strax.jpg)
+
+
+### Toclafane
+
+Toclafane fly around passively until you hit them, then watch out as they get angry with you. They explode when they die.
+
+![Toclafane](images/docs/toclafane.jpg)
 
 ### Vashta Nerada
 
