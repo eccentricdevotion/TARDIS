@@ -7,7 +7,7 @@ title: Weeping Angels
 
 # Weeping Angels
 
-TARDISWeepingAngels is a complementary add-on plugin that transforms skeletons into terrifying Weeping Angels, zombies into Cybermen and Pig Zombies into angry Ice Warriors.
+TARDISWeepingAngels is a complementary add-on plugin that transforms Minecraft mobs into terrifying Whovian [monsters](https://www.bbc.co.uk/programmes/articles/4tDN85fyxYXTtVPrCql8jB/monsters).
 
 You can download the TARDISWeepingAngels JAR from here: [http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/](http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/)
 
