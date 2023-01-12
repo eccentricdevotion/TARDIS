@@ -27,3 +27,10 @@ This will give the a player the specified TARDIS item kit. Kits can be configure
 
 `amount` determines how many of the item to give the player.
 
+    /tardisgive [player] seed [tardis type] [wall black] [floor block]
+
+This will give the a player a TARDIS seed block.
+
+`tardis type` You can find a list here: [List of interiors](list-of-interiors.html)
+
+`wall block` and ` floor block` can be any valid Bukkit [material](https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java) name 
