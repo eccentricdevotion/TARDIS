@@ -41,7 +41,7 @@ To list the companions currently in your TARDIS, type the command:
 
     /tardis inside
 
-You can prevent anyone — including companions and yourself — from entering the TARDIS by locking the Police Box door. To do this, **LEFT** -click the door with your TARDIS key.
+You can prevent anyone — including companions and yourself — from entering the TARDIS by locking the Police Box door. To do this, **LEFT**-click the door with your TARDIS key.
 
 ### Video
 <iframe src="https://player.vimeo.com/video/59322488" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

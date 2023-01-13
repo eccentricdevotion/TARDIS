@@ -5,9 +5,17 @@ title: Chameleon Presets
 
 # Chameleon Presets
 
-Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 44 presets in total, plus one special hidden preset, and one custom preset that server admins can set up themselves — see the [Custom preset page.](custom-preset.html)
+Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 64 presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up themselves — see the [Custom preset page.](custom-preset.html)
 
-![presets gui](images/chameleon/presets_gui.jpg)
+## Page one
+
+These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for their animation.
+
+![Stained glass materialisation preset](images/presets/stained_block.jpg)
+
+![Glass materialisation preset](images/presets/glass_block.jpg)
+
+![presets gui](images/chameleon/presets_gui_1.jpg)
 
 **ANGEL** — A weeping angel. Each time it materialises it wings can be either up or down, and its head faces a random direction.
 
@@ -181,4 +189,78 @@ Chameleon Presets can be selected and applied in the [Chameleon Circuit](chamele
 
 **YELLOW** — A yellow submarine.
 
+![yellow submarine](images/presets/yellow_sub.jpg)
+
+## Page two
+
+Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an Item Frame. They have custom block models for the materialisation animation as well.
+
+![presets gui](images/presets/stained.jpg)
+
+![presets gui](images/presets/glass.jpg)
+
+![presets gui](images/chameleon/presets_gui_2.jpg)
+
+**POLICE\_BOX\_BLUE** — A standard blue police box.
+
+![Police Box](images/presets/blue.jpg)
+
+**POLICE\_BOX\_WHITE** — A white police box.
+
+![yellow submarine](images/presets/white.jpg)
+
+**POLICE\_BOX\_ORANGE** — An orange police box.
+
+![yellow submarine](images/presets/orange.jpg)
+
+**POLICE\_BOX\_LIGHT\_BLUE** — A light blue police box.
+
+![yellow submarine](images/presets/light_blue.jpg)
+
+**POLICE\_BOX\_YELLOW** — A yellow police box.
+
 ![yellow submarine](images/presets/yellow.jpg)
+
+**POLICE\_BOX\_LIME** — A lime police box.
+
+![yellow submarine](images/presets/lime.jpg)
+
+**POLICE\_BOX\_PINK** — A pink police box.
+
+![yellow submarine](images/presets/pink.jpg)
+
+**POLICE\_BOX\_GRAY** — A gray police box.
+
+![yellow submarine](images/presets/gray.jpg)
+
+**POLICE\_BOX\_LIGHT\_GRAY** — A light gray police box.
+
+![yellow submarine](images/presets/light_gray.jpg)
+
+**POLICE\_BOX\_CYAN** — A cyan police box.
+
+![yellow submarine](images/presets/cyan.jpg)
+
+**POLICE\_BOX\_PURPLE** — A purple police box.
+
+![yellow submarine](images/presets/purple.jpg)
+
+**POLICE\_BOX\_BROWN** — A brown police box.
+
+![yellow submarine](images/presets/brown.jpg)
+
+**POLICE\_BOX\_GREEN** — A green police box.
+
+![yellow submarine](images/presets/green.jpg)
+
+**POLICE\_BOX\_RED** — A red police box.
+
+![yellow submarine](images/presets/red.jpg)
+
+**POLICE\_BOX\_BLACK** — A black police box.
+
+![yellow submarine](images/presets/black.jpg)
+
+**WEEPING_ANGEL** — A weeping angel.
+
+![yellow submarine](images/presets/weeping.jpg)
