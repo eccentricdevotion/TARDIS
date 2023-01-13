@@ -64,6 +64,7 @@ public enum BlueprintPreset {
     POLICE_BOX_RED("tardis.preset.police_box_red"),
     POLICE_BOX_WHITE("tardis.preset.police_box_white"),
     POLICE_BOX_YELLOW("tardis.preset.police_box_yellow"),
+    POLICE_BOX_TENNANT("tardis.preset.police_box_tennant"),
     PORTAL("tardis.preset.portal"),
     PRISMARINE("tardis.preset.prismarine"),
     PUNKED("tardis.preset.punked"),

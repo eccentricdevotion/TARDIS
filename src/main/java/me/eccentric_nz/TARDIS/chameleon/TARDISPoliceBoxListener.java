@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -34,9 +36,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -91,7 +90,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> set = new HashMap<>();
                             switch (slot) {
-                                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 -> {
+                                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 -> {
                                     // item frame preset
                                     PRESET selected = PRESET.getItemFramePresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());

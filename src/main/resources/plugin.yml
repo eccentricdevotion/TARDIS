@@ -124,6 +124,7 @@ permissions:
       tardis.preset.police_box_green: true
       tardis.preset.police_box_red: true
       tardis.preset.police_box_black: true
+      tardis.preset.police_box_tennant: true
       tardis.preset.weeping_angel: true
     default: op
   tardis.exile:
