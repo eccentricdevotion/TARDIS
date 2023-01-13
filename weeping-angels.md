@@ -20,6 +20,7 @@ The TARDISWeepingAngel models and textures are part of the [TARDIS-Resource-Pack
 For the full experience (textures and sounds), you'll need the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/)
 
 ## Monsters
+
 * Weeping Angels
 * Cybermen
 * Daleks
@@ -104,15 +105,17 @@ Headless Monks fire energy blasts from their hands as well as channelling that e
 
 ![Headless Monk](images/docs/headless_monk.jpg)
 
+![Headless Monk](images/docs/headless_monk_2.jpg)
+
 ### Judoon
 
-Judoon are the police force of the Whoniverse. Click an Judoon to claim it as your own. You can equip Judoon with ammunition (craft with arrows and gunpowder and put into a shulker box, then right click the Judoon with the box). Judoon can then be toggled to be in guard mode and will shoot any hostile mobs nearby. Use the /twa follow command to make the Judoon follow you around.
+Judoon are the police force of the Whoniverse. Click an Judoon to claim it as your own. You can equip Judoon with ammunition (craft with arrows and gunpowder and put into a shulker box, then right click the Judoon with the box). Judoon can then be toggled to be in guard mode and will shoot any hostile mobs nearby. Use the `/twa follow` command to make the Judoon follow you around.
 
 ![Judoon](images/docs/judoon.jpg)
 
 ### Ood
 
-Ood spawn randomly around villagers. Click an Ood to claim it as your own. Use the /twa follow command to make the Ood follow you around.
+Ood spawn randomly around villagers. Click an Ood to claim it as your own. Use the `/twa follow` command to make the Ood follow you around.
 
 ![Ood](images/docs/ood.jpg)
 
@@ -184,43 +187,129 @@ Zygons don't do much yet (except try to kill you), but they look pretty cool.
 
 The default config is shown below:
 
-    angels:
-        spawn_rate:
-            how_many: 5
-            how_often: 400
-            max_per_world: 50
-        worlds:
-            - world
-        freeze_time: 100
-        weapon: DIAMOND_PICKAXE
-        drops:
-            - COBBLESTONE
-            - STONE
-        angels_can_steal: true
-    ice_warriors:
-        spawn_rate:
-            how_many: 3
-            how_often: 400
-            max_per_world: 25
-        worlds:
-            - world
-        drops:
-            - ICE
-            - PACKED_ICE
-            - SNOW_BLOCK
-    cybermen:
-        spawn_rate:
-            how_many: 3
-            how_often: 400
-            max_per_world: 30
-        worlds:
-            - world
-        drops:
-            - REDSTONE
-            - STONE_BUTTON
-        can_upgrade: true
+```
+config_version: 2.0
+spawn_rate:
+  how_many: 2
+  how_often: 400
+  default_max: 0
+angels:
+  worlds:
+    world: 20
+  teleport_worlds:
+    - world
+  freeze_time: 100
+  weapon: DIAMOND_PICKAXE
+  drops:
+    - COBBLESTONE
+    - STONE
+  angels_can_steal: true
+  can_build: true
+  spawn_from_chat:
+    enabled: true
+    chance: 50
+    distance_from_player: 10
+cybermen:
+  worlds:
+    world: 10
+  drops:
+    - REDSTONE
+    - STONE_BUTTON
+  can_upgrade: true
+daleks:
+  worlds:
+    world: 20
+  drops:
+    - SLIME_BALL
+    - ROTTEN_FLESH
+empty_child:
+  worlds:
+    world: 10
+  drops:
+    - COOKED_BEEF
+    - SUGAR
+hath:
+  worlds:
+    world: 10
+  drops:
+    - SALMON
+    - STONE_PICKAXE
+headless_monks:
+  worlds:
+    world: 10
+  drops:
+    - BOOK
+    - RED_CANDLE
+  projectile: SMALL_FIREBALL
+  particles: true
+ice_warriors:
+  worlds:
+    world: 20
+  drops:
+    - ICE
+    - PACKED_ICE
+    - SNOW_BLOCK
+k9:
+  by_taming: true
+  can_build: true
+  worlds:
+    world: true
+silurians:
+  worlds:
+    world: 20
+  drops:
+    - GOLD_NUGGET
+    - FEATHER
+ood:
+  worlds:
+    world: true
+  drops:
+    - NAME_TAG
+  spawn_from_villager: 20
+  spawn_from_cured: 5
+judoon:
+  guards: true
+  can_build: true
+  ammunition: 25
+  damage: 4
+  worlds:
+    world: 20
+sontarans:
+  worlds:
+    world: 20
+  drops:
+    - POTATO
+    - MILK_BUCKET
+  can_tame: true
+toclafane:
+  spawn_from_bee: 5
+  destroy_blocks: true
+  worlds:
+    world: 20
+  drops:
+    - GUNPOWDER
+    - HONEYCOMB
+vashta_nerada:
+  worlds:
+    world: 10
+  drops:
+    - BONE
+    - LEATHER
+zygons:
+  worlds:
+    world: 10
+  drops:
+    - PAINTING
+    - SAND
+silent:
+  worlds:
+    world: 10
+  drops:
+    - INK_SAC
+    - FLOWER_POT
+```
 
-The `spawn_rate` section sets Angel, Cybermen and Ice Warrior spawning options
+The `spawn_rate` section sets monster spawning options
 
 - `how_many` sets how many monsters to spawn each time.
 - `how_often` is the time period (in server ticks — _20 ticks = 1 second_) between spawn attempts.
