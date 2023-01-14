@@ -25,5 +25,7 @@ When HADS (DISPERSAL) has been activated, the TARDIS scatters its particles and 
 
 Once dispersed, the Time Lord of the TARDIS must stand in the centre of the carpet and RIGHT-CLICK-AIR with their Sonic Screwdriver to rebuild the Police Box.
 
+If there are issues with un-dispersing, a server admin can run the command `/tardissudo [player] assemble`, then the player can rebuild the TARDIS.
+
 ### Video
 <iframe src="https://player.vimeo.com/video/66992762" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
