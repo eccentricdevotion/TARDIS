@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
-
-import java.util.HashMap;
-import java.util.UUID;
+import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
@@ -45,10 +45,12 @@ class SudoAssemble {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardis_id())) {
-                plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
-            }
+            plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
             TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
+            Player dispersed = plugin.getServer().getPlayer(uuid);
+            if (dispersed != null) {
+                TARDISMessage.send(dispersed, "ASSEMBLE_REBUILD");
+            }
         }
         return true;
     }
