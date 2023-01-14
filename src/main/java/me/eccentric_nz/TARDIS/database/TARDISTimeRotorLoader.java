@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
@@ -63,7 +62,7 @@ public class TARDISTimeRotorLoader {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " portals.");
+                plugin.getLogger().log(Level.INFO, "Loaded " + count + " time rotors.");
             }
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for time rotor loading: " + ex.getMessage());
