@@ -321,7 +321,7 @@ For Spigot 1.12.2
 - Added the ability to enter the TARDIS with a parrot on your shoulder(s)
 - Added Parrots to Genetic Manipulation (Lazarus) Device
 - Added Atmospheric Excitation — use the command `/tardis excite` or right-click the exterior TARDIS sign with your Sonic Screwdriver — permission: `tardis.atmospheric` — [https://www.youtube.com/watch?v=vFGJkrnTTfI](https://www.youtube.com/watch?v=vFGJkrnTTfI)
-- Added the ability to give Knowledge books with TARDIS recipes — doesn’t do anything yet… you get a knowledge book, but the recipe doesn’t display in the recipe book so pretty useless… waiting for Minecraft 1.13... — `/tardis give [tardis item] knowledge`
+- Added the ability to give Knowledge books with TARDIS recipes — doesn’t do anything yet... you get a knowledge book, but the recipe doesn’t display in the recipe book so pretty useless... waiting for Minecraft 1.13... — `/tardis give [tardis item] knowledge`
 - (Re)added the original old consoles to desktop themes / seed blocks
 - Added a Silurian Underworld and Gallifrey — home world of the Time Lords 
   - as with the Skaro world it requires TerrainControl to be enabled on the server.

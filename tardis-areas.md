@@ -22,7 +22,7 @@ There are 2 commands used to set up TARDIS areas:
 
 After typing `/tardisarea start [name]` you will be prompted to define the first corner of the TARDIS area by clicking on the block where you want it to start. Change `[name]` to something suitable (between 2 and 16 characters, no spaces).
 
-You will then have 60 seconds to run the second command `/tardisarea end`. Once again you will be prompted to click on the block (diagonally opposite the start block…) where you want the TARDIS area to end. The end block must be at the same Y-level coordinate as the start block
+You will then have 60 seconds to run the second command `/tardisarea end`. Once again you will be prompted to click on the block (diagonally opposite the start block...) where you want the TARDIS area to end. The end block must be at the same Y-level coordinate as the start block
 
 TARDIS areas cannot overlap, and ideally should be nice flat areas.
 

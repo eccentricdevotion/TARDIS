@@ -14,7 +14,7 @@ server and when a player creates a TARDIS. You can also give kits to players usi
 ## Configuring kits
 
 All kits are configured in _kits.yml_ — the default configuation can be see
-here: [kits.yml](https://github.com/eccentricdevotion/TARDIS/blob/2.7/src/main/resources/kits.yml).
+here: [kits.yml](https://github.com/eccentricdevotion/TARDIS/blob/master/src/main/resources/kits.yml).
 
 The kits file is split into two sections `give` and `kits`:
 

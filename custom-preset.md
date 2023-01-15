@@ -44,5 +44,3 @@ If your custom preset contained a sign, you can change the text that is displaye
 
 ### Video
 <iframe src="https://player.vimeo.com/video/88423516" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-Video here

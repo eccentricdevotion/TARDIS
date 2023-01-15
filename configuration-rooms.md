@@ -20,27 +20,27 @@ The format is:
 
 All rooms are enabled by default, the rest of the settings are:
 
-| ROOMTYPE | cost | offset | seed block |
-| --- | --- | --- | --- |
-| ARBORETUM | 325 | -4 | LEAVES |
-| BAKER | 350 | -1 | ENDER\_STONE |
-| BEDROOM | 475 | -1 | GLOWSTONE |
-| CROSS | 350 | -1 | SOUL\_SAND |
-| EMPTY | 250 | -1 | GLASS |
-| FARM | 350 | -1 | DIRT |
-| GRAVITY | 625 | -12 | MOSSY\_COBBLESTONE |
-| ANTIGRAVITY | 625 | -2 | SANDSTONE |
-| GREENHOUSE | 450 | -2 | MELON\_BLOCK |
-| HARMONY | 450 | -1 | SMOOTH\_STAIRS |
-| KITCHEN | 450 | -1 | PUMPKIN |
-| LIBRARY | 550 | -1 | BOOKSHELF |
-| LONG | 300 | -2 | NOTE\_BLOCK |
-| MUSHROOM | 350 | -1 | GRAVEL |
-| PASSAGE | 325 | -2 | LEAVES |
-| POOL | 450 | -3 | SNOW\_BLOCK |
-| VAULT | 350 | -1 | DISPENSER |
-| WOOD | 350 | -1 | WOOD |
-| WORKSHOP | 400 | -1 | NETHER\_BRICK |
+| ROOMTYPE    | cost  | offset  | seed block         |
+|-------------|-------|---------|--------------------|
+| ARBORETUM   | 325   | -4      | LEAVES             |
+| BAKER       | 350   | -1      | ENDER\_STONE       |
+| BEDROOM     | 475   | -1      | GLOWSTONE          |
+| CROSS       | 350   | -1      | SOUL\_SAND         |
+| EMPTY       | 250   | -1      | GLASS              |
+| FARM        | 350   | -1      | DIRT               |
+| GRAVITY     | 625   | -12     | MOSSY\_COBBLESTONE |
+| ANTIGRAVITY | 625   | -2      | SANDSTONE          |
+| GREENHOUSE  | 450   | -2      | MELON\_BLOCK       |
+| HARMONY     | 450   | -1      | SMOOTH\_STAIRS     |
+| KITCHEN     | 450   | -1      | PUMPKIN            |
+| LIBRARY     | 550   | -1      | BOOKSHELF          |
+| LONG        | 300   | -2      | NOTE\_BLOCK        |
+| MUSHROOM    | 350   | -1      | GRAVEL             |
+| PASSAGE     | 325   | -2      | LEAVES             |
+| POOL        | 450   | -3      | SNOW\_BLOCK        |
+| VAULT       | 350   | -1      | DISPENSER          |
+| WOOD        | 350   | -1      | WOOD               |
+| WORKSHOP    | 400   | -1      | NETHER\_BRICK      |
 
 ## Room jettisons
 

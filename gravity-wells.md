@@ -56,14 +56,14 @@ After running the command you will be prompted to click the wool block that beco
 
 The following table sets out the colour of the wool block needed for each gravity well direction.
 
-| Direction | Wool colour |
-| --- | --- |
-| Up | Light Green |
-| Down | Pink |
-| North | Black |
-| West | Purple |
-| South | Red |
-| East | Yellow |
+| Direction  | Wool colour |
+|------------|-------------|
+| Up         | Light Green |
+| Down       | Pink        |
+| North      | Black       |
+| West       | Purple      |
+| South      | Red         |
+| East       | Yellow      |
 
 ## Removing gravity well blocks
 

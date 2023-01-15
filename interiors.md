@@ -70,7 +70,7 @@ Division TARDIS - A TARDIS inspired by "[The Division ship outpost](https://tard
 
 ## ELEVENTH
 
-‘Eleventh’ TARDIS - It’s smaller on the outside…
+‘Eleventh’ TARDIS - It’s smaller on the outside...
 
 A TARDIS inspired by 11th Doctor's TARDIS.
 
@@ -121,7 +121,7 @@ The original console from v1.0 of the TARDIS plugin - For those with nostalgia
 
 ## REDSTONE
 
-‘Redstone’ TARDIS - Multi-level madness (this one has mushroom walls…)
+‘Redstone’ TARDIS - Multi-level madness (this one has mushroom walls...)
 
 ![Redstone TARDIS](images/consoles/redstone.jpg)
 

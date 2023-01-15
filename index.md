@@ -16,7 +16,7 @@ TARDIS is a Spigot / Paper plugin that allows you to create a TARDIS that lets y
 - Take companions with you when you time travel.
 - Collect Artron Energy to power your TARDIS.
 
-### Get started…
+### Get started...
 
 [Index / Site map](site-map.html)
 

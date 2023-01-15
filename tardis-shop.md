@@ -19,18 +19,18 @@ In order for TARDISShop to function you will need to install:
 
 ### Config options
 
-| Option  | Type    | Default | Description |
-| ------  | ------- | ------- | ----------- |
-| `debug` | boolean | `false` | Whether to display debug messages in the server log |
-| `block` | string  | `PRISMARINE_BRICKS` | The type of block that TARDIS items will be displayed on. This should be specified using the [Bukkit Material ENUM](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html) name |
-| `tardis_admin_free` | boolean | `true` | Whether players with `tardis.admin` permission get TARDIS items for free from the shop |
+| Option              | Type      | Default             | Description                                                                                                                                                                                 |
+|---------------------|-----------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `debug`             | boolean   | `false`             | Whether to display debug messages in the server log                                                                                                                                         |
+| `block`             | string    | `PRISMARINE_BRICKS` | The type of block that TARDIS items will be displayed on. This should be specified using the [Bukkit Material ENUM](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html) name |
+| `tardis_admin_free` | boolean   | `true`              | Whether players with `tardis.admin` permission get TARDIS items for free from the shop                                                                                                      |
 
 ### Permissions
 
-| Permission | Description | Default |
-| ---------- | ----------- | ------- |
-| `tardisshop.use` | Allow players to buy items from a TARDIS Shop | op |
-| `tardisshop.admin` | Allow players to set up a TARDIS Shop | op |
+| Permission         | Description                                   | Default |
+|--------------------|-----------------------------------------------|---------|
+| `tardisshop.use`   | Allow players to buy items from a TARDIS Shop | op      |
+| `tardisshop.admin` | Allow players to set up a TARDIS Shop         | op      |
 
 ## Setting up shop
 

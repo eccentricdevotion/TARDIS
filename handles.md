@@ -67,21 +67,21 @@ tr.coption { background-color: #eee; }
 th.wide { width: 33%; }
 </style>
 
-| Option | Type | Default Value |
-| --- | --- | --- |
-| allow: |
-| --- |
-| &nbsp;&nbsp;&nbsp;&nbsp;`handles` | boolean | `true` |
-| &nbsp; | Whether Handles is enabled on the server (requires restart if changed) |
-| handles: |
-| --- |
-| &nbsp;&nbsp;&nbsp;&nbsp;`prefix` | string | `Hey Handles` |
-| &nbsp; | The key word to trigger Handles chat processing |
-| &nbsp;&nbsp;&nbsp;&nbsp;`reminders:` |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`enabled` | boolean | `true` |
-| &nbsp; | Whether reminders are enabled |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`schedule` | integer | `1200` |
-| &nbsp; | Number of ticks between reminder checks (1200 = 1 minute) |
+| Option                                                     | Type                                                                   | Default Value |
+|------------------------------------------------------------|------------------------------------------------------------------------|---------------|
+| allow:                                                     |
+| ---                                                        |
+| &nbsp;&nbsp;&nbsp;&nbsp;`handles`                          | boolean                                                                | `true`        |
+| &nbsp;                                                     | Whether Handles is enabled on the server (requires restart if changed) |
+| handles:                                                   |
+| ---                                                        |
+| &nbsp;&nbsp;&nbsp;&nbsp;`prefix`                           | string                                                                 | `Hey Handles` |
+| &nbsp;                                                     | The key word to trigger Handles chat processing                        |
+| &nbsp;&nbsp;&nbsp;&nbsp;`reminders:`                       |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`enabled`  | boolean                                                                | `true`        |
+| &nbsp;                                                     | Whether reminders are enabled                                          |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`schedule` | integer                                                                | `1200`        |
+| &nbsp;                                                     | Number of ticks between reminder checks (1200 = 1 minute)              |
 
 Clicking on a placed handles plays a Handles voice
 snippet ([TARDIS-SoundResourcePack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack/) required)

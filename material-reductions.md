@@ -8,7 +8,7 @@ layout: default
 These are all vanilla items/blocks that can be reduced in the [material reducer](chemistry-lab#material-reducer). Useful for getting quick elements!
 
 | Item         | Reduction                                                                                              |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
+|--------------|--------------------------------------------------------------------------------------------------------|
 | Acacia Log   | 49 Carbon, 6 Hydrogen, 44 Oxygen, and 1 Nitrogen                                                       |
 | Andesite     | 33 Silicon and 67 Oxygen                                                                               |
 | Birch Log    | 49 Carbon, 6 Hydrogen, 44 Oxygen, and 1 Nitrogen                                                       |

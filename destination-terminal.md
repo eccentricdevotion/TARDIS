@@ -56,6 +56,6 @@ Bottom row: **check/set destination**.
 
 ### Video
 
-Slightly outdated, but you’ll get the idea…
+Slightly outdated, but you’ll get the idea...
 
 <iframe src="https://player.vimeo.com/video/68899459" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

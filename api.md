@@ -35,8 +35,12 @@ public class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-You can auto-generate a plugin that hooks into the TARDIS API at the [Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) page. Make sure to select the _TARDIS API_ checkbox.
+You can auto-generate a plugin that hooks into the TARDIS API at the 
+[Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) page. 
+Make sure to select the _TARDIS API_ checkbox.
 
-The Java Doc for the API is available here: [TARDIS API docs](http://thenosefairy.duckdns.org/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html)
+The Java Doc for the API is available here: 
+[TARDIS API docs](http://thenosefairy.duckdns.org/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html)
 
-An extensive working example plugin can be found here: [TARDISVortexManipulator source code](https://github.com/eccentricdevotion/TARDISVortexManipulator)
+An extensive working example plugin can be found here: 
+[TARDISVortexManipulator source code](https://github.com/eccentricdevotion/TARDISVortexManipulator)

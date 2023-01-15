@@ -36,6 +36,8 @@ There are a number of specific player preferences that you can change:
 
 Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).
 
+![Player prefs GUI](images/docs/player_prefs_custom.jpg)
+
 ## Player preference commands
 
 ### `/tardisprefs`

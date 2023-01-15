@@ -9,7 +9,7 @@ title: Troubleshooting/Common Problems
 - [When I click the TARDIS seed block with a stick nothing happens](#when-i-click-the-tardis-seed-block-with-a-stick-nothing-happens)
 - [The plugin says ‘You cannot grow rooms unless your TARDIS was created in its own world’](#rooms)
 - [I made a room and it grew inside the TARDIS!](#grew)
-- [I try to grow a room but the plugin says “There seems to be a block in the way! You should be growing out into the void…”](#void)
+- [I try to grow a room but the plugin says “There seems to be a block in the way! You should be growing out into the void...”](#void)
 - [My TARDIS is not generating its own world!](#own-world)
 - [How do I import my TARDIS world into my multi-world plugin?](#import)
 - [Non-op players can’t break the blocks inside the TARDIS to grow rooms](#spawn)
@@ -57,7 +57,7 @@ Things have changed quite a lot with the update to TARDIS v2.6, especially the w
 - make a new TARDIS
 - use [ARS](ars.html) to grow a new room
 
-#### I try to grow a room but the plugin says “There seems to be a block in the way! You should be growing out into the void…”
+#### I try to grow a room but the plugin says “There seems to be a block in the way! You should be growing out into the void...”
 
 Read the answer [above](#grew), once you’ve done that (and you still want to grow a room manually) make sure the room 
 you are growing from contains a pressure plate in the correct position for the piston door, then place the seed block in 

@@ -26,10 +26,10 @@ Once you have crafted the fob watch, you can put it to use!
   - You are given random name
   - The Steve skin is applied
   - Your current Time Lord inventory and armour is saved, and you are given a new empty inventory
-2. Do stuff… like trick people, become a farmer or join a village…
+2. Do stuff... like trick people, become a farmer or join a village...
 3. Try to pilot your TARDIS :(
   - Unfortunately the TARDIS no longer recognises that you are a Time Lord so denies you access to the controls
-4. Try to select fob watch in hotbar, even if you can when you try to…
+4. Try to select fob watch in hotbar, even if you can when you try to...
 5. Right-click-AIR to ‘de-fob’
   - You can’t until the configured minimum ‘fobbed’ time requirement has been met
 
@@ -66,6 +66,6 @@ Server admins can change the Chameleon Arch options.
 
 `min_time` — how long a player must remain ‘fobbed’ — default `20` minutes (1 Minecraft day)
 
-`switch_inventory` — whether to switch/clear the player’s inventory — default `true` (be careful enabling this if using other inventory management plugins…)
+`switch_inventory` — whether to switch/clear the player’s inventory — default `true` (be careful enabling this if using other inventory management plugins...)
 
 `clear_inv_on_death` — whether to clear (both) ‘fobbed’ and saved Time Lord inventories on death — default `false`

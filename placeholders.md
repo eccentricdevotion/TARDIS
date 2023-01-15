@@ -10,7 +10,7 @@ TARDIS hooks into PlaceholderAPI, here are the placeholders it supports:
 _Current Location placeholders have been added in build #2049_
 
 | Placeholder                           | What it does                                                                |
-| ------------------------------------- | --------------------------------------------------------------------------- |
+|---------------------------------------|-----------------------------------------------------------------------------|
 | `%tardis_artron_amount%`              | Gets your TARDIS's current Artron amount                                    |
 | `%tardis_artron_percent%`             | Gets your TARDIS's current Artron filled percentage                         |
 | `%tardis_timelord_artron_amount%`     | Gets your current Time-Lord Artron amount                                   |

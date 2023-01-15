@@ -9,7 +9,7 @@ title: Permissions
 > 
 > If you are getting the error:
 > 
-> > `Your exile status does not allow you to bring the TARDIS to this…`
+> > `Your exile status does not allow you to bring the TARDIS to this...`
 > 
 > or
 > 

@@ -5,7 +5,8 @@ title: Circuit use and repair
 
 # Circuit use and repair
 
-If configured (`difficulty: hard` and `damage: true`), circuits can become damaged after use. When the tardis malfunctions there is a 50% chance that a circuit will become damaged even more than usual.
+If configured (`difficulty: hard` and `damage: true`), circuits can become damaged after use. When the tardis malfunctions 
+there is a 50% chance that a circuit will become damaged even more than usual.
 
 ![circuit uses](images/docs/circuit_uses.jpg)
 
@@ -13,17 +14,17 @@ If configured (`difficulty: hard` and `damage: true`), circuits can become damag
 
 Circuit use could will decrease in the following circumstances:
 
-| Circuit | Used when |
-| --- | --- |
-| ars | clicking the ‘Reconfigure’ button in the ARS GUI |
-| chameleon | clicking the ‘Apply preset now’ button in the Chameleon Circuit GUI |
-| input | setting a destination with the Destination Terminal |
-| invisibility | selecting the Invibility preset in the Chameleon Circuit GUI |
-| materialisation | the TARDIS re-materialises after travelling |
-| memory | processing a disk in the Advanced Console |
-| randomiser | getting a random destination in the Advanced Console |
-| scanner | pressing the Scanner button |
-| temporal | setting the time in the Temporal Locator GUI |
+| Circuit         | Used when                                                           |
+|-----------------|---------------------------------------------------------------------|
+| ars             | clicking the ‘Reconfigure’ button in the ARS GUI                    |
+| chameleon       | clicking the ‘Apply preset now’ button in the Chameleon Circuit GUI |
+| input           | setting a destination with the Destination Terminal                 |
+| invisibility    | selecting the Invibility preset in the Chameleon Circuit GUI        |
+| materialisation | the TARDIS re-materialises after travelling                         |
+| memory          | processing a disk in the Advanced Console                           |
+| randomiser      | getting a random destination in the Advanced Console                |
+| scanner         | pressing the Scanner button                                         |
+| temporal        | setting the time in the Temporal Locator GUI                        |
 
 ### Repair
 
@@ -52,7 +53,8 @@ The defaults are shown below:
             scanner: 20
             temporal: 20
 
-`damage: [true|false]` — whether circuits get damaged after each use. Setting this to false (the default) means circuits have unlimited uses.
+`damage: [true|false]` — whether circuits get damaged after each use. Setting this to false (the default) means circuits 
+have unlimited uses.
 
-`uses: <circuit>: [amount]` — set the maximum number of uses a circuit has before it is vapourised. Setting this to `0` gives unlimited uses for that circuit.
-
+`uses: <circuit>: [amount]` — set the maximum number of uses a circuit has before it is vapourised. Setting this to `0` 
+gives unlimited uses for that circuit.

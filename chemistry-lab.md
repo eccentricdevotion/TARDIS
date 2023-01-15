@@ -33,7 +33,7 @@ How does it work?
 **TARDIS Chemistry Lab equipment is not given to users by default or with `tardis.use`, they must be given via the table below**
 
 | Permission Node             | Description                                                            |
-| --------------------------- | ---------------------------------------------------------------------- |
+|-----------------------------|------------------------------------------------------------------------|
 | `tardis.chemistry.command`  | Allow a player to open Chemistry GUIs by command.                      |
 | `tardis.chemistry.creative` | Allow a player to craft and open the Chemistry creative GUIs.          |
 | `tardis.construct.build`    | Allow a player to craft and open the 'Element constructor' GUI.        |

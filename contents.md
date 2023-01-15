@@ -39,7 +39,7 @@ To get started choose a page:
 
 ## Cool stuff to do & use
 
-[MCPatcher texture support](optifine.html) — Custom textures for TARDIS blocks and items
+[TARDIS Resource Pack](resource-packs.html) — Custom textures for TARDIS blocks and items
 
 [Zero Room](zero-room.html) — A place of peace and tranquility
 

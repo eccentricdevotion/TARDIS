@@ -94,7 +94,7 @@ The TARDIS-MCP resource pack has been updated, get it here: [TARDIS-MCP resource
 - Fixed broken TARDIS deletion
 - Fixed the Genetic Manipulator not working even though the power was on
 - Power is not removed in standby mode if the TARDIS is at a recharge point
-- Fixed the Artron creeper not being able to spawn — you may need to edit your TARDIS world’s WorldGuard region and remove the `mob_spawning: deny` flag…
+- Fixed the Artron creeper not being able to spawn — you may need to edit your TARDIS world’s WorldGuard region and remove the `mob_spawning: deny` flag...
 
 ### v2.9-beta-2
 
@@ -163,7 +163,7 @@ As always, some big changes to TARDIS entry mechanics — please read carefully.
   - if action = travel, `travel options` are: `home`, `area [area name]`, and coords e.g. `world x y z`
   - can be run from command blocks, but the specified player must be online
   - if the player who is running the command does **NOT** have `tardis.admin` permission, then the normal checks are performed (energy/permissions/circuits/plugin respect etc for the specified player)
-  - use via Command Block will fail silently if above checks fail, as we can’t message a command block…
+  - use via Command Block will fail silently if above checks fail, as we can’t message a command block...
   - if player has `tardis.admin` permission then no energy is used / only basic checks performed (so we’re not griefing anything)
   - `comehere` comes to the currently targeted block (only available to TARDIS admin players)
   - [https://www.youtube.com/watch?v=VypqSYls1QM](https://www.youtube.com/watch?v=VypqSYls1QM)
@@ -390,7 +390,7 @@ Added ‘Nations’ support to TARDIS Towny compatibility — the config will be
   - the tripwire hook in the Direction frame is protected from stealing
 - Added a configuration option to allow gravity wells outside of the TARDIS — `allow: external_gravity [true|false]`
 - Added a new ability to the Emerald Environment Sonic — you can now re-sow plants if the appropriate seed item is in the player’s inventory. Permission: `tardis.sonic.plant`
-- Added support for [Dynmap-TARDIS plugin](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) — one day the Bukkit team will get around to approving it… it’s been 5 days now and counting!
+- Added support for [Dynmap-TARDIS plugin](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) — one day the Bukkit team will get around to approving it... it’s been 5 days now and counting!
 - Added a message to players who don’t log out of the TARDIS Information System
 
 #### Changes
@@ -520,7 +520,7 @@ Added ‘Nations’ support to TARDIS Towny compatibility — the config will be
 - TARDIS item recipes are now configurable — [http://eccentricdevotion.github.io/TARDIS/recipes.html](http://eccentricdevotion.github.io/TARDIS/recipes.html)
 - The ARS GUI is now keyed to the TARDIS rather than the player clicking the sign, though it will only allow the player whose TARDIS it is to reconfigure — this allows admins to view a player’s ARS setup
 - There are new map files for the new TARDIS recipes and updated map files for existing TARDIS recipes. They will be copied to the _plugins/TARDIS_ folder — please update the files in the _main world/data_ folder.
-- Updated the code for texture pack switching to use resource packs — not sure that it actually works though… but I think that maybe it’s not TARDIS’s fault
+- Updated the code for texture pack switching to use resource packs — not sure that it actually works though... but I think that maybe it’s not TARDIS’s fault
 - If using the TARDIS Resource Pack sounds the server can now configure how loud they play
 - When a player creates a TARDIS, the plugin now uses the configured key item, instead of the default database value
 - The plugin now allows the use of `tardis.area.*` to give access to all areas
@@ -582,7 +582,7 @@ Added ‘Nations’ support to TARDIS Towny compatibility — the config will be
 
 ### v2.6
 
-There are lots of changes in v2.6 — some of which are not compatible with previous TARDISes… please read this and the [TARDIS v2.6-beta-1](#v26b1) and [TARDIS v2.6-beta-3](#v26b3) change logs carefully!
+There are lots of changes in v2.6 — some of which are not compatible with previous TARDISes... please read this and the [TARDIS v2.6-beta-1](#v26b1) and [TARDIS v2.6-beta-3](#v26b3) change logs carefully!
 
 #### Additions
 
@@ -614,9 +614,9 @@ There are lots of changes in v2.6 — some of which are not compatible with prev
 
 ### v2.6-beta-3
 
-What happened to _TARDIS v2.6-beta-2_, you might ask? It was rejected by Bukkit for having a non-compliant update checker. Perhaps an email advising developers of the change in policy would have been nice… but never mind here’s beta 3 :)
+What happened to _TARDIS v2.6-beta-2_, you might ask? It was rejected by Bukkit for having a non-compliant update checker. Perhaps an email advising developers of the change in policy would have been nice... but never mind here’s beta 3 :)
 
-There are lots of changes in v2.6 — some of which are not compatible with previous TARDISes… please read this and the [previous change log](#v26b1) carefully
+There are lots of changes in v2.6 — some of which are not compatible with previous TARDISes... please read this and the [previous change log](#v26b1) carefully
 
 #### Additions
 
@@ -660,7 +660,7 @@ There are lots of changes in v2.6 — some of which are not compatible with prev
 
 ### v2.6-beta-1
 
-There are lots of changes — some of which are not compatible with previous TARDISes… please read carefully — videos and full documentation are coming ASAP
+There are lots of changes — some of which are not compatible with previous TARDISes... please read carefully — videos and full documentation are coming ASAP
 
 #### Additions
 
@@ -1138,7 +1138,7 @@ First off a huge thank you to everyone who contributed ideas and caught bugs for
 - Added a check that the other backdoor has been added successfully before allowing use of the backdoor feature
 - Added a check when updating the inner backdoor, that the player has entered the TARDIS properly by the regular door
 - Added a config option: `return_room_seed: [true|false]` — whether the player gets back the room seed block when jettisoning a room
-- Custom room schematics now have their own folder _user\_schematics_ — please move any custom schematics to here, custom rooms will be disabled in the config until you do…
+- Custom room schematics now have their own folder _user\_schematics_ — please move any custom schematics to here, custom rooms will be disabled in the config until you do...
 - Removed the TRIPWIRE and TRIPWIRE\_HOOK items from the valid materials that can be used for the TARDIS key — they don’t work anyway
 - Fixed pet name tags showing when transported into the TARDIS when the pet never had a custom name
 - Made the controls converter far more robust, if any of the control locations are missing then the plugin determines their position automagically
@@ -1148,7 +1148,7 @@ First off a huge thank you to everyone who contributed ideas and caught bugs for
 
 - The default for the config option `rooms_require_blocks` is now `false`
 - Fixed the update checker giving the wrong message if a release version is available and the current version is a beta
-- Players can now add a **back door** to the tardis — and no funny jokes please… 
+- Players can now add a **back door** to the tardis — and no funny jokes please... 
   - Requires the permission `tardis.backdoor`
   - Place a pair of IRON doors — one inside and one outside!
   - Use the command `/tardis update backdoor` to tell the TARDIS where they are located
@@ -1226,7 +1226,7 @@ First off a huge thank you to everyone who contributed ideas and caught bugs for
 - Added command `/tardisbook start [book]` — to start the specified achievement
 - Added Mooshrooms to TARDIS mob farming
 - Player’s pets will now enter/exit the TARDIS with the player if they are close to the TARDIS doors (the same distance as for mob farming)
-- Added config options: `malfunction`, `malfunction_nether` and `malfunction_end` — if not set to `0` gives a chance of TARDIS malfunction when time travelling, deposting the player in a different location than expected — a small (configurable) chance it may be the Nether or The End, even if they are disabled in the config or the player doesn’t have permission. There is an emergency landing SFX (Spout required). Lights will flicker and there will be smoke and nausea effects (only if the TARDIS is created after updating to this version…) — see [malfunction.html](malfunction.html)
+- Added config options: `malfunction`, `malfunction_nether` and `malfunction_end` — if not set to `0` gives a chance of TARDIS malfunction when time travelling, deposting the player in a different location than expected — a small (configurable) chance it may be the Nether or The End, even if they are disabled in the config or the player doesn’t have permission. There is an emergency landing SFX (Spout required). Lights will flicker and there will be smoke and nausea effects (only if the TARDIS is created after updating to this version...) — see [malfunction.html](malfunction.html)
 - Added config option `exile: [true|false]` — sets whether the TARDIS exile feature is enabled
 - Added config option `per_world_perms: [true|false]` — sets whether to use permissions per world for time travel — if `true`, then the player requires the permission `tardis.travel.[world name]`
 - Added command `/tardisadmin prune [days]` — automatically delete TARDISes that have not been used for the specified number of days (last use is set by the player using the TARDIS handbrake)
@@ -1234,7 +1234,7 @@ First off a huge thank you to everyone who contributed ideas and caught bugs for
 - Added command aliases for all commands, see table below:
 
 | Command | Aliases |
-| --- | --- |
+|---|---|
 | `/tardis` | `/tt
                     /ttardis
                     //tardis
@@ -1401,7 +1401,7 @@ Big thanks to **vistaero** for finding a whole bunch of bugs and making a video 
   - Fixed `/tardisarea show` command throwing an error if no area name was supplied
   - The platform (if there is one) is destroyed correctly when using `/tardis comehere`
   - Optimised some of the various TARDIS Listener classes to (hopefully) reduce server lag
-  - You can now add more than one gravity well to the TARDIS. Technically you can make one go up a level, but you’ll have to be a bit creative… 
+  - You can now add more than one gravity well to the TARDIS. Technically you can make one go up a level, but you’ll have to be a bit creative... 
     - This breaks the current gravity wells so they will need updating
     - Added `/tardis gravity` command to update old gravity wells to the new format. Use the command while inside your TARDIS — changes should take effect immediately
   - Added some debug info for the EntityExplodeEvent Listener
@@ -1704,7 +1704,7 @@ Thanks to everyone who made suggestions or found bugs :)
 ### v1.6
 
   - Added different sized TARDIS interiors — The bottom block when creating a TARDIS determines the size — IRON block gives the current TARDIS, GOLD block gives a bigger TARDIS, DIAMOND block gives a deluxe TARDIS. Deluxe TARDIS schematic kindly provided by ewized.
-  - You can now use your own schematic files to build the inner TARDIS — see the [Schematics](schematics.html) page for more info…
+  - You can now use your own schematic files to build the inner TARDIS — see the [Schematics](schematics.html) page for more info...
   - A fix for the ‘chameleon circuit exploit’ — the Police Box is now indestructible in SURVIVAL mode (except for the sign & platform if there is one).
   - Random location finding and `/tardis comehere` command now respects WorldGuard regions (if WorldGuard is enabled on server).
   - New command `/tardis direction [north ` `west` | `south` | `east]` allows you to change the direction the TARDIS police box is facing. - Exit and entry locations fixed, should not take any damage now.
@@ -1766,7 +1766,7 @@ Thanks to everyone who made suggestions or found bugs :)
 ### v1.3.1
 
       - Companion names should now be case-insensitive
-      - Flying bugs fixed? Have reverted back to some older code with a few changes, seems to be working…
+      - Flying bugs fixed? Have reverted back to some older code with a few changes, seems to be working...
       - Platform building now copes with water better, also fixed incorrect platform building when TARDIS door was facing WEST
       - Location finding has been updated (again) let’s hope it works better this time
       - Planetoid worlds no longer cause client timeout and endless looping on the server

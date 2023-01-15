@@ -56,7 +56,7 @@ WorldEdit `//setbiome void` command
 The interior TARDIS door may need its hinge location changed, use the `/tardis update hinge` command while targeting the
 top-half of the door.
 
-For existing Police Boxes, things may look a little odd until you rebuild the TARDIS or travel…
+For existing Police Boxes, things may look a little odd until you rebuild the TARDIS or travel...
 
 A new `/tardisprefs ctm [on|off]` command can be used in conjunction with the custom textures — if `on` the plugin
 replaces the left front wool block in the Police box with a quartz pillar textured on ends with the TARDIS door sign.
@@ -65,7 +65,7 @@ You may prefer to set this `off` so that players without MCPatcher installed wil
 ### Sonic screwdriver and TARDIS keys
 
 CIT also lets us have multiple textures for some TARDIS items. Want your sonic screwdriver to look like the eighth
-Doctor’s one? Want your TARDIS key to be like the first Doctor’s brass Yale key? No problem… TARDIS now has a Sonic
+Doctor’s one? Want your TARDIS key to be like the first Doctor’s brass Yale key? No problem... TARDIS now has a Sonic
 Prefs Menu and a TARDIS Key Prefs Menu.
 
 To access the menus:
@@ -88,19 +88,19 @@ Here’s a quick run down on doing that:
 
 1. Download and install the GitHub client for your operating system:
 
-- [GitHub for Mac](https://mac.github.com/)
-- [GitHub for Windows](https://windows.github.com/)
+   - [GitHub for Mac](https://mac.github.com/)
+   - [GitHub for Windows](https://windows.github.com/)
 
 2. Start GitHub client and create a free GitHub account (if you don’t have one)
 3. In your web browser, naviagte to the TARDIS resource pack repositories
 
-- [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP)
-- [TARDIS-Sounds](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
+   - [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP)
+   - [TARDIS-Sounds](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
 
 4. Click the **Clone in Desktop** button
 5. Save the repository clone in the _minecraft/resourcepacks_ folder
 6. Repeat steps 4 and 5 for each resource pack
 7. To update the resource pack, use the desktop client to ‘Pull’ in any changes.
 
-- `Command-Shift-P` on a Mac
-- `Control-Shift-P` on Windows
+   - `Command-Shift-P` on a Mac
+   - `Control-Shift-P` on Windows

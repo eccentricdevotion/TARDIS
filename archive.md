@@ -13,13 +13,6 @@ Players will need the permission `tardis.archive`
 
 ### Config options
 
-<style type="text/css">
-			table, table code { font-size:85%; }
-			td { vertical-align:top; }
-			td.noborder { border-bottom: none; }
-			tr.coption { background-color: #eee; }
-		</style>
-
 | Option                            | Type                                                         | Default Value |
 |-----------------------------------|--------------------------------------------------------------|---------------|
 | `archive:`                        |
@@ -57,14 +50,14 @@ functions are explained below:
 
 ![TARDIS Archive GUI](images/docs/archive_gui.jpg)
 
-| Button     | Icon                                                                                                                              | Action                                                                                                                                                          |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Console(s) | Stained clay                                                                                                                      | Clicking this changes the desktop theme to the selected archived console.                                                                                       |
-| Size       | ![size](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/size_button.png?raw=true)       | Use this to set the size of the console to archive. Clicking the button multiple times will cycle through the three different sizes.                            |
-| Scan       | ![scan](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/scan_button.png?raw=true)       | Use this to scan the current console to check whether it can successfully be archived.                                                                          |
-| Archive    | ![archive](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/archive_button.png?raw=true) | Archives the current console. A random console name will be generated — if you want to name the console yourself, use the `/tardis archive add [name]` command. |
-| Small      | ![small](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/small.png?raw=true)            | Changes the Desktop Theme to the small (16 x 16 x 16 block) cobblestone template.                                                                               |
-| Medium     | ![medium](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/medium.png?raw=true)          | Changes the Desktop Theme to the medium (32 x 16 x 32 block) cobblestone template.                                                                              |
-| Tall       | ![tall](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/tall.png?raw=true)              | Changes the Desktop Theme to the tall (32 x 32 x 32 block) cobblestone template.                                                                                |
-| Close      | ![close](https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/optifine/cit/close.png?raw=true)            | Close the TARDIS Archive GUI.                                                                                                                                   |
+| Button     | Icon                                                                                                                                        | Action                                                                                                                                                          |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Console(s) | Stained clay                                                                                                                                | Clicking this changes the desktop theme to the selected archived console.                                                                                       |
+| Size       | ![size](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/size_button.png)       | Use this to set the size of the console to archive. Clicking the button multiple times will cycle through the three different sizes.                            |
+| Scan       | ![scan](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/scan_button.png)       | Use this to scan the current console to check whether it can successfully be archived.                                                                          |
+| Archive    | ![archive](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/archive_button.png) | Archives the current console. A random console name will be generated — if you want to name the console yourself, use the `/tardis archive add [name]` command. |
+| Small      | ![small](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/small.png)            | Changes the Desktop Theme to the small (16 x 16 x 16 block) cobblestone template.                                                                               |
+| Medium     | ![medium](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/medium.png)          | Changes the Desktop Theme to the medium (32 x 16 x 32 block) cobblestone template.                                                                              |
+| Tall       | ![tall](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/archive/tall.png)              | Changes the Desktop Theme to the tall (32 x 32 x 32 block) cobblestone template.                                                                                |
+| Close      | ![close](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/close.png)            | Close the TARDIS Archive GUI.                                                                                                                                   |
 

@@ -13,8 +13,8 @@ Used to run commands or functions as another player.
 
 The command has the follwing functions:
 
-| Function | Description                                                                       |
-| -------- | --------------------------------------------------------------------------------- |
+| Function     | Description                                                                   |
+|--------------|-------------------------------------------------------------------------------|
 | `ars`        | Open the Architectural Reconfiguration System GUI for the player’s TARDIS.    |
 | `assemble`   | Make a player’s TARDIS reassemble itself after a HADS dispersal.              |
 | `back`       | Make a player’s TARDIS travel back to its last known location.                |

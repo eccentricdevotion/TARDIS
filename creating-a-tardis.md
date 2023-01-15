@@ -87,6 +87,8 @@ Your TARDIS Police Box requires a 3 x 4 x 4 (w x d x h) cuboid region. Where you
 
 To create your TARDIS, right-click a placed seed block with the TARDIS key.
 
+Once clicked, the seed block will change into a TARDIS builder block and the TARDIS creation will be displayed as a progress bar with informative text.
+
 ## Entering the TARDIS
 
 Your TARDIS requires a key (default is a gold nugget, configurable in the config file).

@@ -39,12 +39,12 @@ To open the desktop theme GUI using a command type one of the following:
 
 ### Config options
 
-| Option | Type | Default Value |
-| --- | --- | --- |
-| &nbsp;&nbsp;&nbsp;&nbsp;`desktop.check_blocks_before_upgrade` | boolean | `false` |
-| &nbsp; | Sets whether to compare the amount of block changes before allowing an upgrade. |
-| &nbsp;&nbsp;&nbsp;&nbsp;`desktop.block_change_percent` | integer | `25` |
-| &nbsp; | Sets the maximum percentage of block change compared to the original schematic. |
+| Option                                                        | Type                                                                            | Default Value   |
+|---------------------------------------------------------------|---------------------------------------------------------------------------------|-----------------|
+| &nbsp;&nbsp;&nbsp;&nbsp;`desktop.check_blocks_before_upgrade` | boolean                                                                         | `false`         |
+| &nbsp;                                                        | Sets whether to compare the amount of block changes before allowing an upgrade. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`desktop.block_change_percent`        | integer                                                                         | `25`            |
+| &nbsp;                                                        | Sets the maximum percentage of block change compared to the original schematic. |
 
 ### Video
 <iframe width="600" height="366" src="https://www.youtube.com/embed/g-tHLnpR8oY?rel=0" frameborder="0" allowfullscreen></iframe><iframe src="https://player.vimeo.com/video/104995044" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

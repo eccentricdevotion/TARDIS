@@ -5,11 +5,14 @@ title: Chameleon Presets
 
 # Chameleon Presets
 
-Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 64 presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up themselves — see the [Custom preset page.](custom-preset.html)
+Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 64 
+presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up 
+themselves — see the [Custom preset page.](custom-preset.html)
 
 ## Page one
 
-These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for their animation.
+These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for 
+their animation.
 
 ![Stained glass materialisation preset](images/presets/stained_block.jpg)
 
@@ -45,7 +48,7 @@ These presets use regular Minecraft blocks. When materialising they cycle throug
 
 ![desert](images/presets/desert.jpg)
 
-**DUCK** — Rubber ducky, you’re the one, you make bath time so much fun. Rubber ducky I’m awfully fond of you…
+**DUCK** — Rubber ducky, you’re the one, you make bath time so much fun. Rubber ducky I’m awfully fond of you...
 
 ![duck](images/presets/duck.jpg)
 
@@ -101,13 +104,15 @@ These presets use regular Minecraft blocks. When materialising they cycle throug
 
 ![nether](images/presets/nether.jpg)
 
-**NEW** — The new taller style Police Box. This is the default preset. If the Chameleon Circuit is ON, this will blend in with its surroundings.
+**NEW** — The new taller style Police Box. This is the default preset. If the Chameleon Circuit is ON, this will blend 
+in with its surroundings.
 
 ![new police box](images/presets/new.jpg)
 
 ![chameleon circuit on](images/presets/chameleonON.jpg)
 
-**OLD** — The old style Police Box from the early days of the plugin. If the Chameleon Circuit is ON, this will blend in with its surroundings.
+**OLD** — The old style Police Box from the early days of the plugin. If the Chameleon Circuit is ON, this will blend in 
+with its surroundings.
 
 ![old police box](images/presets/old.jpg)
 
@@ -163,7 +168,7 @@ These presets use regular Minecraft blocks. When materialising they cycle throug
 
 ![telephone](images/presets/telephone.jpg)
 
-**TOILET** — A toilet, for when you just need to go…
+**TOILET** — A toilet, for when you just need to go...
 
 ![toilet](images/presets/toilet.jpg)
 
@@ -193,7 +198,8 @@ These presets use regular Minecraft blocks. When materialising they cycle throug
 
 ## Page two
 
-Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an Item Frame. They have custom block models for the materialisation animation as well.
+Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an 
+Item Frame. They have custom block models for the materialisation animation as well.
 
 ![presets gui](images/presets/stained.jpg)
 
