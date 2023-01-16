@@ -37,7 +37,8 @@ To add a time rotor to an existing console:
 
 ### To change a Time Rotor
 
-Time rotors are locked (and the item frame made invisible) when you update them. In order to make changes to the time rotor you need to unlock it.
+Time rotors are locked (and the item frame made invisible) when you update them. In order to make changes to the time 
+rotor you need to unlock it.
 
 1. Run the command `/tardis update rotor unlock`
 2. Make changes to the item frame and rotor

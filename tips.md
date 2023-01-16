@@ -7,7 +7,9 @@ title: Interior Positioning System
 
 By default (if you have a multi-world plugin installed) the plugin sets up a special world called **TARDIS\_TimeVortex** that uses the TARDIS Interior Positioning System. This is similar to the many skyblock and plots plugins, in that the TARDIS (when created) is placed in the middle of a 1024 x 1024 block square plot.
 
-The T.I.P.S grid is 20 x 20 plots deep and wide, giving a total of 400 plots. When a TARDIS is deleted, the free plot is reused.
+By default the T.I.P.S grid is 20 x 20 plots deep and wide, giving a total of 400 plots. When a TARDIS is deleted, the free plot is reused.
+
+If you need more slots, change the `creation.tips_limit` config option to a multiple of 400.
 
 If WorldGuard is also installed on the server, the entire plot is made a protected region, with the Time Lord of the TARDIS its owner. Access to the region is set to DENY for other players, so travel between plots is stopped. When a Time Lord adds a companion, they are added as a region member.
 
