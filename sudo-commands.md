@@ -11,7 +11,7 @@ Used to run commands or functions as another player.
 /tardissudo [player] [function] [options]
 ```
 
-The command has the follwing functions:
+The command has the following functions:
 
 | Function     | Description                                                                   |
 |--------------|-------------------------------------------------------------------------------|
