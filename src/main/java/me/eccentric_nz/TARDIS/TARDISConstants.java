@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.util.*;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
@@ -24,11 +25,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 
-import java.util.*;
-
 /**
- * One of the key features of a TARDIS is that the interior exists in a dimension different from the exterior. The main
- * application of this concept is that they are bigger on the inside than the outside.
+ * One of the key features of a TARDIS is that the interior exists in a
+ * dimension different from the exterior. The main application of this concept
+ * is that they are bigger on the inside than the outside.
  *
  * @author eccentric_nz
  */
@@ -60,7 +60,8 @@ public class TARDISConstants {
     public static final List<Material> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM, Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK, Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS, Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS, Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS, Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE);
 
     /**
-     * Chameleon blocks to check the surrounding blocks for a valid block to change to
+     * Chameleon blocks to check the surrounding blocks for a valid block to
+     * change to
      */
     public static final List<Material> CHAMELEON_BLOCKS_NEXT = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.POWERED_RAIL, Material.DETECTOR_RAIL, Material.COBWEB, Material.TALL_GRASS, Material.DEAD_BUSH, Material.DANDELION, Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.FERN, Material.GRASS, Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.WHITE_TULIP, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM, Material.RAIL, Material.DAYLIGHT_DETECTOR);
 
@@ -85,7 +86,8 @@ public class TARDISConstants {
     public static final List<Material> GOOD_MATERIALS = Arrays.asList(Material.LIGHT, Material.ACACIA_LEAVES, Material.ACACIA_SAPLING, Material.AIR, Material.ALLIUM, Material.AZURE_BLUET, Material.BAMBOO_SAPLING, Material.BIRCH_LEAVES, Material.BIRCH_SAPLING, Material.BLUE_ORCHID, Material.BROWN_MUSHROOM, Material.CAVE_AIR, Material.CORNFLOWER, Material.DANDELION, Material.DARK_OAK_LEAVES, Material.DARK_OAK_SAPLING, Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.JUNGLE_LEAVES, Material.JUNGLE_SAPLING, Material.LARGE_FERN, Material.LILAC, Material.LILY_OF_THE_VALLEY, Material.LILY_PAD, Material.NETHER_WART, Material.OAK_LEAVES, Material.OAK_SAPLING, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_MUSHROOM, Material.RED_TULIP, Material.ROSE_BUSH, Material.SNOW, Material.SPRUCE_LEAVES, Material.SPRUCE_SAPLING, Material.SUNFLOWER, Material.TALL_GRASS, Material.VOID_AIR, Material.WHITE_TULIP, Material.WITHER_ROSE);
 
     /**
-     * A list of water materials types that can be replaced when the TARDIS lands
+     * A list of water materials types that can be replaced when the TARDIS
+     * lands
      */
     public static final List<Material> GOOD_WATER = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE);
 
@@ -187,7 +189,7 @@ public class TARDISConstants {
     /**
      * A list of materials used in ItemFrame Chameleon presets
      */
-    public static final List<Material> DYES = Arrays.asList(Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE, Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE, Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE);
+    public static final List<Material> DYES = Arrays.asList(Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE, Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE, Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE);
 
     /**
      * Prefix for Universal Translation
@@ -233,10 +235,11 @@ public class TARDISConstants {
     }
 
     /**
-     * Creates a HashMap from two arrays. The resulting map is used by the chameleon circuit to change unsuitable blocks
-     * into more aesthetically pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
+     * Creates a HashMap from two arrays. The resulting map is used by the
+     * chameleon circuit to change unsuitable blocks into more aesthetically
+     * pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
      *
-     * @param keys   an array of block types to change
+     * @param keys an array of block types to change
      * @param values an array of block types to change to
      * @return the combined arrays as a HashMap
      */

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
@@ -23,9 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
@@ -69,6 +68,14 @@ class TARDISPoliceBoxInventory {
             }
             i++;
         }
+        // tennant
+        ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
+        ItemMeta tennant = david.getItemMeta();
+        tennant.setDisplayName("Tennant Era Police Box");
+        tennant.setCustomModelData(1001);
+        david.setItemMeta(tennant);
+        boxes[i] = david;
+        i++;
         // weeping angel
         ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
         ItemMeta im = is.getItemMeta();

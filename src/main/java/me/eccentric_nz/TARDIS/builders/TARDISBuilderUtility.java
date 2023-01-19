@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
 import org.bukkit.World;
-
-import java.util.HashMap;
 
 public class TARDISBuilderUtility {
 
@@ -57,6 +56,8 @@ public class TARDISBuilderUtility {
     public static Material getMaterialForItemFrame(PRESET preset) {
         if (preset.equals(PRESET.WEEPING_ANGEL)) {
             return Material.GRAY_STAINED_GLASS_PANE;
+        } else if (preset.equals(PRESET.POLICE_BOX_TENNANT)) {
+            return Material.CYAN_STAINED_GLASS_PANE;
         } else {
             String split = preset.toString().replace("POLICE_BOX_", "");
             String dye = split + "_DYE";
