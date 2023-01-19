@@ -30,9 +30,12 @@ For the full experience (textures and sounds), you'll need the [TARDIS-Resource-
 * Ice Warriors
 * Judoon
 * K9
+* Mire
 * Ood
+* Sea Devils
 * Silent
 * Silurians
+* Slitheen
 * Sontarans
 * Strax
 * Toclafane
@@ -113,12 +116,6 @@ Judoon are the police force of the Whoniverse. Click an Judoon to claim it as yo
 
 ![Judoon](images/docs/judoon.jpg)
 
-### Ood
-
-Ood spawn randomly around villagers. Click an Ood to claim it as your own. Use the `/twa follow` command to make the Ood follow you around.
-
-![Ood](images/docs/ood.jpg)
-
 ### K-9
 
 You can either craft a K-9 or tame a wolf to get a K-9! Clicking a K-9 will toggle whether he will follow you or stay put. The crafting recipe is 3 iron ingots, 3 redstone, and 3 bones in the crafting grid:
@@ -131,11 +128,39 @@ BBB
 
 ![K9](images/docs/k9.jpg)
 
+### Mire
+
+The Mire will distill you down to your essential nectar.
+
+![The Mire](images/docs/mire.jpg)
+
+![The Mire](images/docs/mire_helmetless.jpg)
+
+### Ood
+
+Ood spawn randomly around villagers. Click an Ood to claim it as your own. Use the `/twa follow` command to make the Ood follow you around.
+
+![Ood](images/docs/ood.jpg)
+
+### Sea Devils
+
+Found in the sea and on land, best if they don't find you!
+
+![Sea Devil](images/docs/sea_devil.jpg)
+
 ### Silurians
 
 Only spawn underground in caves. Watch out for their Silurian guns!
 
 ![Silurian](images/docs/silurian.jpg)
+
+### Slitheen
+
+A nasty flatulent surprise, best avoided if you want to survive.
+
+![Slitheen](images/docs/slitheen.jpg)
+
+![Slitheen](images/docs/slitheen_suit.jpg)
 
 ### Sontarans
 
@@ -160,7 +185,7 @@ Toclafane fly around passively until you hit them, then watch out as they get an
 
 Vashta Nerada have a random (configurable) chance of spawning when a bookshelf is broken, say "Hey who turned out the lights?" and of course try to eat you!
 
-![Daleks](images/docs/vashta_nerada.jpg)
+![Vashta Nerada](images/docs/vashta_nerada.jpg)
 
 ### Zygons
 
