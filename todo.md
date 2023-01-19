@@ -19,16 +19,15 @@
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
 
+    * Sea Devils
+    * Slitheen
+    * Whispermen
     * Clockwork Droid
-    * Hath _started_
     * Endermites -> Cybermats
     * Iron Golem -> Gunslinger
-    * Witches -> Slitheen / Whispermen?
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-    * The Mire
-    * Headless Monks
 
 ## Minecraft Bedrock Edition?
 
