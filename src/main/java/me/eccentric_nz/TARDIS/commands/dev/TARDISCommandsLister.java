@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import org.bukkit.command.CommandSender;
+
+import java.util.Set;
 
 /**
  *
@@ -45,12 +46,14 @@ public class TARDISCommandsLister {
           permission-message: You don't have the permission <permission> to use this command
      */
     public void listTARDISCommands(CommandSender sender) {
+        int i = 0;
         sender.sendMessage("<table>");
         sender.sendMessage("<tr><th>Sub command</th><th>Description</th><th>Usage</th><th>Permission</th></tr>");
         for (TardisCommand tc : TardisCommand.values()) {
+            String lighter = (i % 2 == 1) ? " class=\"lighter\"" : "";
             if (plugin.getGeneralKeeper().getPluginYAML().contains("commands.tardis." + tc)) {
                 String perm = plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".permission");
-                sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc
+                sender.sendMessage("<tr" + lighter + "><td id=\"" + tc + "\"><code>" + tc
                         + "</code></td><td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".description")
                         + "</td><td class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".usage").replace("/<command>", "/tardis").replace("<", "&lt;").replace(">", "&gt;")
                         + "</code></td><td>" + (perm == null ? "none" : perm)
@@ -66,6 +69,7 @@ public class TARDISCommandsLister {
                 sender.sendMessage("<tr><td colspan=\"4\">plugin.yml does not contain an entry for " + tc + "!</td></tr>");
                 sender.sendMessage("<tr><td colspan=\"4\">********</td></tr>");
             }
+            i++;
         }
         sender.sendMessage("</table>");
     }
