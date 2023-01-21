@@ -1,5 +1,6 @@
 ---
-layout: default title: Commands
+layout: default
+title: Commands
 ---
 
 # Commands
