@@ -1,5 +1,6 @@
 ---
-layout: default title: Planets
+layout: default
+title: Planets
 ---
 
 # Planets
@@ -90,7 +91,7 @@ world_tardis_skaro:
   acid_potions:
     - WEAKNESS
     - POISON
-  # Whether rust is enabled (not actually used yet).
+  # Whether rust is enabled (used to gain Rust Buckets - an ingredient in crafting the Rust Plague Sword).
   rust: true
   # Whether or not to enable flying daleks
   flying_daleks: true
