@@ -32,6 +32,7 @@ For the full experience (textures and sounds), you'll need the [TARDIS-Resource-
 * K9
 * Mire
 * Ood
+* Racnoss
 * Sea Devils
 * Silent
 * Silurians
@@ -142,6 +143,12 @@ Ood spawn randomly around villagers. Click an Ood to claim it as your own. Use t
 
 ![Ood](images/docs/ood.jpg)
 
+### Racnoss
+
+Racnoss spawn randomly in the Nether.
+
+![Racnoss](images/docs/racnoss.jpg)
+
 ### Sea Devils
 
 Found in the sea and on land, best if they don't find you!
@@ -220,7 +227,7 @@ spawn_rate:
   default_max: 0
 angels:
   worlds:
-    world: 20
+    world: 10
   teleport_worlds:
     - world
   freeze_time: 100
@@ -243,7 +250,7 @@ cybermen:
   can_upgrade: true
 daleks:
   worlds:
-    world: 20
+    world: 10
   drops:
     - SLIME_BALL
     - ROTTEN_FLESH
@@ -269,22 +276,23 @@ headless_monks:
   particles: true
 ice_warriors:
   worlds:
-    world: 20
+    world: 10
   drops:
     - ICE
     - PACKED_ICE
     - SNOW_BLOCK
+judoon:
+  worlds:
+    world: 10
+  guards: true
+  can_build: true
+  ammunition: 25
+  damage: 4
 k9:
   by_taming: true
   can_build: true
   worlds:
     world: true
-silurians:
-  worlds:
-    world: 20
-  drops:
-    - GOLD_NUGGET
-    - FEATHER
 ood:
   worlds:
     world: true
@@ -292,25 +300,54 @@ ood:
     - NAME_TAG
   spawn_from_villager: 20
   spawn_from_cured: 5
-judoon:
-  guards: true
-  can_build: true
-  ammunition: 25
-  damage: 4
+racnoss:
   worlds:
-    world: 20
+    world_nether: 5
+  drops:
+    - NETHERITE_INGOT
+    - ECHO_SHARD
+sea_devils:
+  worlds:
+    world: 10
+  drops:
+    - COD
+    - KELP
+silent:
+  worlds:
+    world: 10
+  drops:
+    - INK_SAC
+    - FLOWER_POT
+silurians:
+  worlds:
+    world: 10
+  drops:
+    - GOLD_NUGGET
+    - FEATHER
+slitheen:
+  worlds:
+    world: 10
+  drops:
+    - RABBIT_HIDE
+    - PHANTOM_MEMBRANE
 sontarans:
   worlds:
-    world: 20
+    world: 10
   drops:
     - POTATO
-    - MILK_BUCKET
+    - POISONOUS_POTATO
   can_tame: true
+the_mire:
+  worlds:
+    world: 10
+  drops:
+    - POTION
+    - HONEY_BOTTLE
 toclafane:
+  worlds:
+    world: 10
   spawn_from_bee: 5
   destroy_blocks: true
-  worlds:
-    world: 20
   drops:
     - GUNPOWDER
     - HONEYCOMB
@@ -326,12 +363,6 @@ zygons:
   drops:
     - PAINTING
     - SAND
-silent:
-  worlds:
-    world: 10
-  drops:
-    - INK_SAC
-    - FLOWER_POT
 ```
 
 The `spawn_rate` section sets monster spawning options
