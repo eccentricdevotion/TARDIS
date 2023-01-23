@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
@@ -41,14 +45,10 @@ import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
- * space into the Time Vortex and rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
+ * enabled it to dematerialise from normal space into the Time Vortex and
+ * rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -78,14 +78,15 @@ class TARDISMaterialisePreset implements Runnable {
     private BlockData slab_data;
 
     /**
-     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
-     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
+     * transparency of materialisation by building the Police Box first with
+     * GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
      * @param plugin instance of the TARDIS plugin
-     * @param bd     the Materialisation data
+     * @param bd the Materialisation data
      * @param preset the preset to construct
-     * @param data   the chameleon block data for the police box
-     * @param adapt  the chameleon circuit adaption setting
+     * @param data the chameleon block data for the police box
+     * @param adapt the chameleon circuit adaption setting
      */
     TARDISMaterialisePreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, Adaption adapt) {
         this.plugin = plugin;
@@ -143,12 +144,9 @@ class TARDISMaterialisePreset implements Runnable {
                 } else {
                     // determine preset to use
                     datas = switch (i % 3) {
-                        case 2 -> // stained
-                                stained_column.getBlockData();
-                        case 1 -> // glass
-                                glass_column.getBlockData();
-                        default -> // preset
-                                column.getBlockData();
+                        case 2 -> stained_column.getBlockData(); // stained
+                        case 1 -> glass_column.getBlockData(); // glass
+                        default -> column.getBlockData(); // preset
                     };
                 }
                 // rescue player?
@@ -180,8 +178,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER ->
-                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
                                     default -> "tardis_land";
                                 };
                             }
@@ -668,7 +665,8 @@ class TARDISMaterialisePreset implements Runnable {
                                 BlockData chai = (preset.equals(PRESET.FACTORY)) ? data : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                             }
-                            default -> { // everything else
+                            // everything else
+                            default -> {
                                 if (change) {
                                     if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)));

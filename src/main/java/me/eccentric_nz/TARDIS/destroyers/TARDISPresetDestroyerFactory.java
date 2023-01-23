@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
@@ -35,9 +37,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Destroy the TARDIS Police Box.
@@ -356,6 +355,13 @@ public class TARDISPresetDestroyerFactory {
     public void destroyLampTrapdoors(Location l, COMPASS d) {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
         plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
+    }
+    
+    public void destroyPistons(Location l) {
+        Block piston = l.getBlock();
+        Block piston_head = l.getBlock().getRelative(BlockFace.UP);
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> piston.getRelative(f).setBlockData(TARDISConstants.AIR));
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> piston_head.getRelative(f).setBlockData(TARDISConstants.AIR));
     }
 
     private BlockFace getOppositeFace(COMPASS c) {

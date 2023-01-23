@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -25,10 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -143,26 +142,26 @@ public class TARDISCaveFinder {
                         // finally check there is space to exit the police box
                         boolean safe = false;
                         switch (d) {
-                            case NORTH:
+                            case NORTH -> {
                                 if (w.getBlockAt(x - 1, yy, z + 2).getType().isAir() && w.getBlockAt(x, yy, z + 2).getType().isAir() && w.getBlockAt(x + 1, yy, z + 2).getType().isAir()) {
                                     safe = true;
                                 }
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 if (w.getBlockAt(x + 2, yy, z - 1).getType().isAir() && w.getBlockAt(x + 2, yy, z).getType().isAir() && w.getBlockAt(x + 2, yy, z + 1).getType().isAir()) {
                                     safe = true;
                                 }
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 if (w.getBlockAt(x - 1, yy, z - 2).getType().isAir() && w.getBlockAt(x, yy, z - 2).getType().isAir() && w.getBlockAt(x + 1, yy, z - 2).getType().isAir()) {
                                     safe = true;
                                 }
-                                break;
-                            default:
+                            }
+                            default -> {
                                 if (w.getBlockAt(x - 2, yy, z - 1).getType().isAir() && w.getBlockAt(x - 2, yy, z).getType().isAir() && w.getBlockAt(x - 2, yy, z + 1).getType().isAir()) {
                                     safe = true;
                                 }
-                                break;
+                            }
                         }
                         if (safe) {
                             ret.setSafe(true);

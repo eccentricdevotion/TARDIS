@@ -16,12 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import static me.eccentric_nz.TARDIS.enumeration.PRESET.PUNKED;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -36,12 +39,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.List;
-
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
- * space into the Time Vortex and rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
+ * enabled it to dematerialise from normal space into the Time Vortex and
+ * rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -61,12 +62,13 @@ class TARDISDematerialisePreset implements Runnable {
     private BlockData stain_colour;
 
     /**
-     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic the transparency of dematerialisation by
-     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic
+     * the transparency of dematerialisation by building the Police Box first
+     * with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin  instance of the TARDIS plugin
-     * @param dd      the DestroyData
-     * @param preset  the Chameleon preset currently in use by the TARDIS
+     * @param plugin instance of the TARDIS plugin
+     * @param dd the DestroyData
+     * @param preset the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
      */
     TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id) {
@@ -116,7 +118,7 @@ class TARDISDematerialisePreset implements Runnable {
             // first run - play sound
             if (i == 1) {
                 switch (preset) {
-                    case GRAVESTONE:
+                    case GRAVESTONE -> {
                         // remove flower
                         int flowerx;
                         int flowery = (dd.getLocation().getBlockY() + 1);
@@ -140,22 +142,17 @@ class TARDISDematerialisePreset implements Runnable {
                             }
                         }
                         TARDISBlockSetters.setBlock(world, flowerx, flowery, flowerz, Material.AIR);
-                        break;
-                    case CAKE:
-                        plugin.getPresetDestroyer().destroyLamp(dd.getLocation(), preset);
-                        break;
-                    case JUNK_MODE:
+                    }
+                    case CAKE -> plugin.getPresetDestroyer().destroyLamp(dd.getLocation(), preset);
+                    case JUNK_MODE -> {
                         plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
                         plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection());
-                        break;
-                    case SWAMP:
-                        plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
-                        break;
-                    case JAIL:
-                    case TOPSYTURVEY:
+                    }
+                    case SWAMP -> plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
+                    case JAIL, TOPSYTURVEY -> plugin.getPresetDestroyer().destroyDoor(dd.getTardisID()); 
+                    case MESA -> {
                         // destroy door
                         plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
-                    case MESA:
                         // remove dead bushes
                         int deadx;
                         int bushx;
@@ -190,9 +187,9 @@ class TARDISDematerialisePreset implements Runnable {
                         }
                         TARDISBlockSetters.setBlock(world, deadx, bushy, deadz, Material.AIR);
                         TARDISBlockSetters.setBlock(world, bushx, bushy, bushz, Material.AIR);
-                        break;
-                    default:
-                        break;
+                    }
+                    case PUNKED -> plugin.getPresetDestroyer().destroyPistons(dd.getLocation());
+                    default -> { }
                 }
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
@@ -228,6 +225,9 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                 });
             } else {
+                if (i % 3 == 1 && preset.equals(PRESET.PUNKED)) {
+                    plugin.getPresetDestroyer().destroyPistons(dd.getLocation());
+                }
                 // just change the walls
                 int xx, zz;
                 for (int n = 0; n < 9; n++) {
@@ -274,59 +274,18 @@ class TARDISDematerialisePreset implements Runnable {
                         boolean change = true;
                         Material mat = colData[yy].getMaterial();
                         switch (mat) {
-                            case GRASS_BLOCK:
-                            case DIRT:
+                            case GRASS_BLOCK, DIRT -> {
                                 BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
-                                break;
-                            case WHITE_WOOL:
-                            case LIME_WOOL:
+                            }
+                            case WHITE_WOOL, LIME_WOOL -> {
                                 BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
-                                break;
-                            case ACACIA_SAPLING:
-                            case ALLIUM:
-                            case AZURE_BLUET:
-                            case BAMBOO_SAPLING:
-                            case BEETROOTS:
-                            case BIRCH_SAPLING:
-                            case BLUE_ORCHID:
-                            case CARROTS:
-                            case CORNFLOWER:
-                            case CRIMSON_FUNGUS:
-                            case CRIMSON_ROOTS:
-                            case DANDELION:
-                            case DARK_OAK_SAPLING:
-                            case DEAD_BUSH:
-                            case FERN:
-                            case GRASS:
-                            case JUNGLE_SAPLING:
-                            case LARGE_FERN:
-                            case LILAC:
-                            case LILY_OF_THE_VALLEY:
-                            case OAK_SAPLING:
-                            case ORANGE_TULIP:
-                            case OXEYE_DAISY:
-                            case PEONY:
-                            case PINK_TULIP:
-                            case POPPY:
-                            case POTATOES:
-                            case RED_TULIP:
-                            case ROSE_BUSH:
-                            case SPRUCE_SAPLING:
-                            case SUGAR_CANE:
-                            case SUNFLOWER:
-                            case SWEET_BERRY_BUSH:
-                            case TALL_GRASS:
-                            case WARPED_FUNGUS:
-                            case WARPED_ROOTS:
-                            case WHEAT:
-                            case WHITE_TULIP:
-                            case WITHER_ROSE:
-                                break;
-                            case TORCH: // lamps, glowstone and torches
-                            case GLOWSTONE:
-                            case REDSTONE_LAMP:
+                            }
+                            case ACACIA_SAPLING, ALLIUM, AZURE_BLUET, BAMBOO_SAPLING, BEETROOTS, BIRCH_SAPLING, BLUE_ORCHID, CARROTS, CORNFLOWER, CRIMSON_FUNGUS, CRIMSON_ROOTS, DANDELION, DARK_OAK_SAPLING, DEAD_BUSH, FERN, GRASS, JUNGLE_SAPLING, LARGE_FERN, LILAC, LILY_OF_THE_VALLEY, OAK_SAPLING, ORANGE_TULIP, OXEYE_DAISY, PEONY, PINK_TULIP, POPPY, POTATOES, RED_TULIP, ROSE_BUSH, SPRUCE_SAPLING, SUGAR_CANE, SUNFLOWER, SWEET_BERRY_BUSH, TALL_GRASS, WARPED_FUNGUS, WARPED_ROOTS, WHEAT, WHITE_TULIP, WITHER_ROSE -> {
+                            }
+                            // lamps, glowstone and torches
+                            case TORCH, GLOWSTONE, REDSTONE_LAMP -> {
                                 BlockData light;
                                 if (dd.isSubmarine() && mat.equals(Material.TORCH)) {
                                     light = Material.GLOWSTONE.createBlockData();
@@ -334,57 +293,35 @@ class TARDISDematerialisePreset implements Runnable {
                                     light = colData[yy];
                                 }
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
-                                break;
-                            case ACACIA_DOOR: // wood, iron & trap doors
-                            case ACACIA_TRAPDOOR:
-                            case ACACIA_WALL_SIGN:
-                            case BIRCH_DOOR:
-                            case BIRCH_TRAPDOOR:
-                            case BIRCH_WALL_SIGN:
-                            case CRIMSON_DOOR:
-                            case CRIMSON_TRAPDOOR:
-                            case CRIMSON_WALL_SIGN:
-                            case DARK_OAK_DOOR:
-                            case DARK_OAK_TRAPDOOR:
-                            case DARK_OAK_WALL_SIGN:
-                            case IRON_DOOR:
-                            case JUNGLE_DOOR:
-                            case JUNGLE_TRAPDOOR:
-                            case JUNGLE_WALL_SIGN:
-                            case OAK_DOOR:
-                            case OAK_TRAPDOOR:
-                            case OAK_WALL_SIGN:
-                            case SPRUCE_DOOR:
-                            case SPRUCE_TRAPDOOR:
-                            case SPRUCE_WALL_SIGN:
-                            case WARPED_DOOR:
-                            case WARPED_TRAPDOOR:
-                            case WARPED_WALL_SIGN:
+                            }
+                            // wood, iron & trap doors
+                            case ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR, CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, IRON_DOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR, SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
                                 if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
-                                break;
-                            case WHITE_STAINED_GLASS:
+                            }
+                            case WHITE_STAINED_GLASS -> {
                                 BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaf);
-                                break;
-                            case LIME_STAINED_GLASS:
+                            }
+                            case LIME_STAINED_GLASS -> {
                                 BlockData chap = (preset.equals(PRESET.PARTY)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chap);
-                                break;
-                            case LIGHT_GRAY_STAINED_GLASS:
+                            }
+                            case LIGHT_GRAY_STAINED_GLASS -> {
                                 BlockData cham = (preset.equals(PRESET.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
-                                break;
-                            case LIGHT_GRAY_TERRACOTTA:
+                            }
+                            case LIGHT_GRAY_TERRACOTTA -> {
                                 BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
-                                break;
-                            default: // everything else
+                            }
+                            default -> {
+                                // everything else
                                 if (change) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                 }
-                                break;
+                            }
                         }
                     }
                 }

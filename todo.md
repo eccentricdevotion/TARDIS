@@ -4,7 +4,7 @@
 
 1. ?
 
-## Next version `4.12.1`
+## Next version `4.13.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 2. Cache TARDIS data to speed lookups and reduce database queries
@@ -19,8 +19,7 @@
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
 
-    * Sea Devils
-    * Slitheen
+    * Racnoss
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
