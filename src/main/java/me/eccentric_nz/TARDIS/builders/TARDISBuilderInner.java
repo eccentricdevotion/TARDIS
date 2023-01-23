@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -34,6 +35,8 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -327,6 +330,12 @@ public class TARDISBuilderInner implements Runnable {
                     ent.teleport(pl);
                     ent.setFacingDirection(facing, true);
                     ent.setArt(art, true);
+                }
+            }
+            if (obj.has("item_frames")) {
+                JsonArray frames = obj.get("item_frames").getAsJsonArray();
+                for (int i = 0; i < frames.size(); i++) {
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1);
                 }
             }
             // reset mushroom stem blocks
@@ -685,6 +694,17 @@ public class TARDISBuilderInner implements Runnable {
                 if (state != null) {
                     TARDISBannerData tbd = new TARDISBannerData(data, state);
                     postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
+                }
+            } else if (type.equals(Material.PLAYER_HEAD) || type.equals(Material.PLAYER_WALL_HEAD)) {
+                TARDISBlockSetters.setBlock(world, x, y, z, data);
+                if (c.has("head")) {
+                    JsonObject head = c.get("head").getAsJsonObject();
+                    if (head.has("uuid")) {
+                        UUID uuid = UUID.fromString(head.get("uuid").getAsString());
+                        if (uuid != null) {
+                            TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                        }
+                    }
                 }
             } else if (TARDISStaticUtils.isInfested(type)) {
                 // legacy monster egg stone for controls

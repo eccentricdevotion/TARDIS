@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -30,10 +31,9 @@ import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Skull;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -201,6 +201,17 @@ public class TARDISSchematicBuilder {
                         }
                         state.add("patterns", patterns);
                         obj.add("banner", state);
+                    }
+                    // player heads
+                    if (m.equals(Material.PLAYER_HEAD) || m.equals(Material.PLAYER_WALL_HEAD)) {
+                        JsonObject head = new JsonObject();
+                        Skull skull = (Skull) b.getState();
+                        if (skull.getOwnerProfile() != null) {
+                            plugin.debug("UUID: " + skull.getOwnerProfile().getUniqueId());
+                            head.addProperty("uuid", skull.getOwnerProfile().getUniqueId().toString());
+                            head.addProperty("texture", skull.getOwnerProfile().getTextures().getSkin().toString());
+                        }
+                        obj.add("head", head);
                     }
                     columns.add(obj);
                 }

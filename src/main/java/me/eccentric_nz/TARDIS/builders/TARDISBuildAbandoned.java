@@ -25,7 +25,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -45,12 +48,14 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
- * has substantially modified/rebuilt it.
+ * The TARDIS was prone to a number of technical faults, ranging from depleted
+ * resources to malfunctioning controls to a simple inability to arrive at the
+ * proper time or location. While the Doctor did not build the TARDIS from
+ * scratch, he has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
  */
@@ -86,7 +91,8 @@ class TARDISBuildAbandoned implements Runnable {
     private TARDISTIPSData pos;
     private JsonObject obj;
     private JsonArray arr;
-    private int task, h, w, d, level = 0, row = 0, startx, starty, startz, j = 2;
+    private int task, h, w, d, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
+    private Location cl;
     private Location ender = null;
     private Material type;
     private BlockData data;
@@ -99,11 +105,13 @@ class TARDISBuildAbandoned implements Runnable {
      * Builds the interior of an abandoned TARDIS.
      *
      * @param plugin an instance of the TARDIS plugin main class.
-     * @param schm   the name of the schematic file to use can be ARS, BIGGER, BUDGET, CORAL, CUSTOM, DELUXE, DIVISION,
-     *               ELEVENTH, ENDER, MASTER, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WOOD,
-     *               LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
-     * @param world  the world where the TARDIS is to be built.
-     * @param dbID   the unique key of the record for this TARDIS in the database.
+     * @param schm the name of the schematic file to use can be ARS, BIGGER,
+     * BUDGET, CORAL, CUSTOM, DELUXE, DIVISION, ELEVENTH, ENDER, MASTER,
+     * PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WOOD,
+     * LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     * LEGACY_REDSTONE or a CUSTOM name.
+     * @param world the world where the TARDIS is to be built.
+     * @param dbID the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
      */
     TARDISBuildAbandoned(TARDIS plugin, Schematic schm, World world, int dbID, Player player) {
@@ -144,15 +152,16 @@ class TARDISBuildAbandoned implements Runnable {
             // save the slot
             set.put("tips", slot);
             startx = pos.getCentreX();
+            resetx = pos.getCentreX();
             startz = pos.getCentreZ();
+            resetz = pos.getCentreZ();
             // get the correct chunk for ARS
-            Location cl = new Location(world, startx, starty, startz);
+            cl = new Location(world, startx, starty, startz);
             Chunk cars = world.getChunkAt(cl);
             String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
             set.put("chunk", chun);
-            Location wg1 = new Location(world, startx, starty, startz);
             // get list of used chunks
-            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
+            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
             // update chunks list in DB
             chunkList.forEach((ch) -> {
                 HashMap<String, Object> setc = new HashMap<>();
@@ -241,6 +250,29 @@ class TARDISBuildAbandoned implements Runnable {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
+            if (obj.has("paintings")) {
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                for (int i = 0; i < paintings.size(); i++) {
+                    JsonObject painting = paintings.get(i).getAsJsonObject();
+                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                    int px = rel.get("x").getAsInt();
+                    int py = rel.get("y").getAsInt();
+                    int pz = rel.get("z").getAsInt();
+                    Art art = Art.valueOf(painting.get("art").getAsString());
+                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
+                    Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                    ent.teleport(pl);
+                    ent.setFacingDirection(facing, true);
+                    ent.setArt(art, true);
+                }
+            }
+            if (obj.has("item_frames")) {
+                JsonArray frames = obj.get("item_frames").getAsJsonArray();
+                for (int i = 0; i < frames.size(); i++) {
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), cl);
+                }
+            }
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
             plugin.getServer().getScheduler().cancelTask(task);
@@ -276,8 +308,7 @@ class TARDISBuildAbandoned implements Runnable {
                             switch (use_clay) {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
-                                default ->
-                                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                             }
                         } else {
                             data = wall_type.createBlockData();
@@ -309,8 +340,7 @@ class TARDISBuildAbandoned implements Runnable {
                         switch (use_clay) {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
-                            default ->
-                                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                            default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                         }
                     }
                     default -> {
@@ -539,6 +569,17 @@ class TARDISBuildAbandoned implements Runnable {
                 if (state != null) {
                     TARDISBannerData tbd = new TARDISBannerData(data, state);
                     postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
+                }
+            } else if (type.equals(Material.PLAYER_HEAD) || type.equals(Material.PLAYER_WALL_HEAD)) {
+                TARDISBlockSetters.setBlock(world, x, y, z, data);
+                if (c.has("head")) {
+                    JsonObject head = c.get("head").getAsJsonObject();
+                    if (head.has("uuid")) {
+                        UUID uuid = UUID.fromString(head.get("uuid").getAsString());
+                        if (uuid != null) {
+                            TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                        }
+                    }
                 }
             } else if (TARDISStaticUtils.isInfested(type)) {
                 // legacy monster egg stone for controls

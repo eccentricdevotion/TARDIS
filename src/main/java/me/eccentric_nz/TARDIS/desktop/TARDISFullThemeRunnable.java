@@ -39,9 +39,14 @@ import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -57,8 +62,9 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
- * the deleted room, depositing them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted,
+ * automatically relocating any living beings in the deleted room, depositing
+ * them in the control room.
  *
  * @author eccentric_nz
  */
@@ -84,24 +90,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private boolean running;
-    private int id;
-    private int slot;
-    private int level = 0;
-    private int row = 0;
-    private int h;
-    private int w;
-    private int c;
-    private int ph;
-    private int pw;
-    private int startx;
-    private int starty;
-    private int startz;
-    private int j = 2;
+    private int id, slot, c, ph, pw, h, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
     private World world;
     private List<Chunk> chunks;
     private Block postBedrock;
     private Location postOod;
+    private JsonObject obj;
     private JsonArray arr;
     private Material wall_type;
     private Material floor_type;
@@ -165,7 +161,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             set = new HashMap<>();
             where = new HashMap<>();
-            JsonObject obj;
             if (archive_next == null) {
                 String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
@@ -264,11 +259,15 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
+                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
+                resetz = pos.getCentreZ();
             } else {
                 int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
+                resetx = gsl[1];
                 startz = gsl[2];
+                resetz = gsl[3];
             }
             if (tud.getSchematic().getPermission().equals("archive")) {
                 starty = archive_next.getY();
@@ -377,6 +376,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
+            TARDISBannerSetter.setBanners(postBannerBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
                     block.setBlockData(TARDISConstants.LIGHT_DIV);
@@ -404,6 +404,29 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (ender != null) {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
+            }
+            if (obj.has("paintings")) {
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                for (int i = 0; i < paintings.size(); i++) {
+                    JsonObject painting = paintings.get(i).getAsJsonObject();
+                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                    int px = rel.get("x").getAsInt();
+                    int py = rel.get("y").getAsInt();
+                    int pz = rel.get("z").getAsInt();
+                    Art art = Art.valueOf(painting.get("art").getAsString());
+                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
+                    Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                    ent.teleport(pl);
+                    ent.setFacingDirection(facing, true);
+                    ent.setArt(art, true);
+                }
+            }
+            if (obj.has("item_frames")) {
+                JsonArray frames = obj.get("item_frames").getAsJsonArray();
+                for (int i = 0; i < frames.size(); i++) {
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1);
+                }
             }
             // finished processing - update tardis table!
             if (set.size() > 0) {
@@ -787,6 +810,23 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postLanternBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.SCULK_VEIN)) {
                     postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (TARDISStaticUtils.isBanner(type)) {
+                    JsonObject state = bb.has("banner") ? bb.getAsJsonObject("banner") : null;
+                    if (state != null) {
+                        TARDISBannerData tbd = new TARDISBannerData(data, state);
+                        postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
+                    }
+                } else if (type.equals(Material.PLAYER_HEAD) || type.equals(Material.PLAYER_WALL_HEAD)) {
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    if (bb.has("head")) {
+                        JsonObject head = bb.get("head").getAsJsonObject();
+                        if (head.has("uuid")) {
+                            UUID uuid = UUID.fromString(head.get("uuid").getAsString());
+                            if (uuid != null) {
+                                TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                            }
+                        }
+                    }
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);

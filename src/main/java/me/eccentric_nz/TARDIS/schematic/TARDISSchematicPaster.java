@@ -18,9 +18,13 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -32,12 +36,6 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -111,7 +109,7 @@ class TARDISSchematicPaster implements Runnable {
             setBanners(postBanners);
             // paintings
             if (obj.has("paintings")) {
-                JsonArray paintings = (JsonArray) obj.get("paintings");
+                JsonArray paintings = obj.get("paintings").getAsJsonArray();
                 for (int i = 0; i < paintings.size(); i++) {
                     JsonObject painting = paintings.get(i).getAsJsonObject();
                     JsonObject rel = painting.get("rel_location").getAsJsonObject();
@@ -129,6 +127,13 @@ class TARDISSchematicPaster implements Runnable {
                     } catch (IllegalArgumentException e) {
                         plugin.debug("Invalid painting location!");
                     }
+                }
+            }
+            if (obj.has("item_frames")) {
+                JsonArray frames = obj.get("item_frames").getAsJsonArray();
+                Location start = new Location(world, x, y, z);
+                for (int i = 0; i < frames.size(); i++) {
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
@@ -160,6 +165,18 @@ class TARDISSchematicPaster implements Runnable {
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
                         postBanners.put(block, tbd);
+                    }
+                }
+                case PLAYER_HEAD, PLAYER_WALL_HEAD -> {
+                    block.setBlockData(data, true);
+                    JsonObject head = col.has("head") ? col.get("head").getAsJsonObject() : null;
+                    if (head != null) {
+                        if (head.has("uuid")) {
+                            UUID uuid = UUID.fromString(head.get("uuid").getAsString());
+                            if (uuid != null) {
+                                TARDISHeadSetter.textureSkull(plugin, uuid, head, block);
+                            }
+                        }
                     }
                 }
                 default -> {

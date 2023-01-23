@@ -18,6 +18,13 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -29,21 +36,18 @@ import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.Skull;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.GlowItemFrame;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.BoundingBox;
 
 public class TARDISSchematicCommand implements CommandExecutor {
 
@@ -54,7 +58,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisschematic")) {
             if (args.length < 1) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
@@ -203,6 +207,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     return true;
                 }
                 JsonArray paintings = new JsonArray();
+                JsonArray itemFrames = new JsonArray();
                 List<Entity> entities = new ArrayList<>();
                 // create JSON arrays for block data
                 JsonArray levels = new JsonArray();
@@ -215,20 +220,58 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             JsonObject obj = new JsonObject();
                             Block b = w.getBlockAt(r, l, c);
                             // check for paintings
-                            Location bLocation = b.getLocation();
-                            for (Entity entity : bLocation.getWorld().getNearbyEntities(bLocation, 1.25, 1.25, 1.25)) {
+                            Location location = b.getLocation();
+                            BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
+                            for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
+                                Location eloc = entity.getLocation();
                                 if (entity instanceof Painting art) {
-                                    Location ploc = entity.getLocation();
                                     if (!entities.contains(entity)) {
                                         JsonObject painting = new JsonObject();
                                         JsonObject loc = new JsonObject();
-                                        loc.addProperty("x", ploc.getBlockX() - minx);
-                                        loc.addProperty("y", ploc.getBlockY() - miny);
-                                        loc.addProperty("z", ploc.getBlockZ() - minz);
+                                        loc.addProperty("x", eloc.getBlockX() - minx);
+                                        loc.addProperty("y", eloc.getBlockY() - miny);
+                                        loc.addProperty("z", eloc.getBlockZ() - minz);
                                         painting.add("rel_location", loc);
                                         painting.addProperty("art", art.getArt().toString());
-                                        painting.addProperty("facing", entity.getFacing().toString());
+                                        painting.addProperty("facing", art.getFacing().toString());
                                         paintings.add(painting);
+                                        entities.add(entity);
+                                    }
+                                }
+                                if (entity instanceof ItemFrame f) {
+                                    if (!entities.contains(entity)) {
+                                        JsonObject frame = new JsonObject();
+                                        JsonObject loc = new JsonObject();
+                                        loc.addProperty("x", eloc.getBlockX() - minx);
+                                        loc.addProperty("y", eloc.getBlockY() - miny);
+                                        loc.addProperty("z", eloc.getBlockZ() - minz);
+                                        frame.add("rel_location", loc);
+                                        frame.addProperty("facing", f.getFacing().toString());
+                                        ItemStack item = f.getItem();
+                                        if (item != null) {
+                                            frame.addProperty("item", f.getItem().getType().toString());
+                                            if (item.hasItemMeta()) {
+                                                ItemMeta im = item.getItemMeta();
+                                                if (im.hasCustomModelData()) {
+                                                    frame.addProperty("cmd", im.getCustomModelData());
+                                                }
+                                                if (im.hasDisplayName()) {
+                                                    frame.addProperty("name", im.getDisplayName());
+                                                }
+                                                if (im.hasLore()) {
+                                                    JsonArray lore = new JsonArray();
+                                                    for (String s : im.getLore()) {
+                                                        lore.add(s);
+                                                    }
+                                                    frame.add("lore", lore);
+                                                }
+                                            }
+                                        }
+                                        frame.addProperty("fixed", f.isFixed());
+                                        frame.addProperty("visible", f.isVisible());
+                                        frame.addProperty("rotation", f.getRotation().toString());
+                                        frame.addProperty("glowing", (f instanceof GlowItemFrame));
+                                        itemFrames.add(frame);
                                         entities.add(entity);
                                     }
                                 }
@@ -251,6 +294,16 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                 state.add("patterns", patterns);
                                 obj.add("banner", state);
                             }
+                            // player heads
+                            if (b.getType().equals(Material.PLAYER_HEAD) || b.getType().equals(Material.PLAYER_WALL_HEAD)) {
+                                JsonObject head = new JsonObject();
+                                Skull skull = (Skull) b.getState();
+                                if (skull.getOwnerProfile() != null) {
+                                    head.addProperty("uuid", skull.getOwnerProfile().getUniqueId().toString());
+                                    head.addProperty("texture", skull.getOwnerProfile().getTextures().getSkin().toString());
+                                }
+                                obj.add("head", head);
+                            }
                             columns.add(obj);
                         }
                         rows.add(columns);
@@ -263,6 +316,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 schematic.add("input", levels);
                 if (paintings.size() > 0) {
                     schematic.add("paintings", paintings);
+                }
+                if (itemFrames.size() > 0) {
+                    schematic.add("item_frames", itemFrames);
                 }
                 String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
