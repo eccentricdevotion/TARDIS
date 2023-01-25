@@ -216,7 +216,13 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
+            if (tud.getSchematic().getPermission().equals("mechanical")) {
+                starty = 62;
+            } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
+                starty = 65;
+            } else {
+                starty = 64;
+            }
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);

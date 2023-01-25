@@ -65,6 +65,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
         t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
         t.put(Material.PACKED_MUD, "ORIGINAL"); // original
+        t.put(Material.POLISHED_ANDESITE, "MECHANICAL"); // mechanical adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
         t.put(Material.POLISHED_DEEPSLATE, "FUGITIVE"); // fugitive schematic based on design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
         t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)

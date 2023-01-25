@@ -38,6 +38,7 @@ public enum BlueprintConsole {
     LEGACY_ELEVENTH("tardis.legacy_eleventh"),
     LEGACY_REDSTONE("tardis.legacy_redstone"),
     MASTER("tardis.master"),
+    MECHANICAL("tardis.mechanical"),
     ORIGINAL("tardis.original"),
     PLANK("tardis.plank"),
     PYRAMID("tardis.pyramid"),

@@ -23,6 +23,8 @@ public class TARDISSeedModel {
 
     public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
         {
+            // mechanical
+            put(Material.POLISHED_ANDESITE, 10);
             // fugitive
             put(Material.POLISHED_DEEPSLATE, 11);
             // ancient
@@ -96,6 +98,7 @@ public class TARDISSeedModel {
 
     public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
         {
+            put("MECHANICAL", 10);
             put("FUGITIVE", 11);
             put("ANCIENT", 12);
             put("DIVISION", 13);

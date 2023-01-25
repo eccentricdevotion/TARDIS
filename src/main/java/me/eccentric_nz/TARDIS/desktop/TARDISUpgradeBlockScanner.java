@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -34,10 +37,6 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -90,7 +89,14 @@ public class TARDISUpgradeBlockScanner {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            int starty = TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission()) ? 65 : 64;
+            int starty;
+            if (tud.getPrevious().getPermission().equals("mechanical")) {
+                starty = 62;
+            } else if (TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission())) {
+                starty = 65;
+            } else {
+                starty = 64;
+            }
             World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             Material wall_type;
             Material floor_type;

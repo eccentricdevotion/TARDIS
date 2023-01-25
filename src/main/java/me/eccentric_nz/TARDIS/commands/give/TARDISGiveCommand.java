@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -42,8 +43,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -143,23 +142,17 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 int amount;
                 switch (args[2]) {
-                    case "full":
-                        amount = full;
-                        break;
-                    case "empty":
-                        amount = 0;
-                        break;
-                    case "knowledge":
-                        amount = 1;
-                        break;
-                    default:
+                    case "full" -> amount = full;
+                    case "empty" -> amount = 0;
+                    case "knowledge" -> amount = 1;
+                    default -> {
                         try {
                             amount = Integer.parseInt(args[2]);
                         } catch (NumberFormatException nfe) {
                             TARDISMessage.send(sender, "ARG_GIVE");
                             return true;
                         }
-                        break;
+                    }
                 }
                 if (item.equals("mushroom")) {
                     if (args.length < 4) {
@@ -245,7 +238,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         if (item.equals("vortex-manipulator")) {
             TARDISMessage.send(sender, "GIVE_VORTEX", player.getName());
         }
-        if (item.equals("invisible")) {
+        if (item.equals("invisibility-circuit")) {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
             List<String> lore = im.getLore();

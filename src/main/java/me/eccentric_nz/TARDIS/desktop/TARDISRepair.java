@@ -18,6 +18,10 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -37,11 +41,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -125,7 +124,14 @@ public class TARDISRepair {
                     startx = gsl[0];
                     startz = gsl[2];
                 }
-                int starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
+                int starty;
+                if (tardis.getSchematic().getPermission().equals("mechanical")) {
+                    starty = 62;
+                } else if (TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission())) {
+                    starty = 65;
+                } else {
+                    starty = 64;
+                }
                 World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";

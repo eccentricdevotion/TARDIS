@@ -939,6 +939,38 @@ shaped:
     result: LIGHT_GRAY_DYE
     amount: 1
     lore: ''
+  Time Rotor Engine:
+    easy_shape: 'BRB,GWG,GRG'
+    easy_ingredients:
+      B: BLUE_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      B: BLUE_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
+  Time Engine:
+    easy_shape: 'LRL,GAG,GRG'
+    easy_ingredients:
+      L: LIGHT_BLUE_DYE
+      R: REDSTONE
+      A: ANVIL
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      L: LIGHT_BLUE_DYE
+      R: REDSTONE_BLOCK
+      A: ANVIL
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
   Knockback Circuit:
     easy_shape: '-K-,RSR,-R-'
     easy_ingredients:

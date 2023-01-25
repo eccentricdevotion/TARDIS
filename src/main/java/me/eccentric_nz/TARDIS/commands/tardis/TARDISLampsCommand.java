@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -35,13 +38,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
- * The TARDIS scanner was the main method for the occupants of the vessel to observe the outside environment. The
- * appearance and specifications of the scanner system varied significantly in the course of the Doctor's travels.
+ * The TARDIS scanner was the main method for the occupants of the vessel to
+ * observe the outside environment. The appearance and specifications of the
+ * scanner system varied significantly in the course of the Doctor's travels.
  *
  * @author eccentric_nz
  */
@@ -54,12 +54,12 @@ class TARDISLampsCommand {
     }
 
     /**
-     * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
+     * Updates TARDISes from pre-malfunction plugin versions so that the lamps
+     * can flash.
      *
      * @param owner the Timelord of the TARDIS
      * @return true if the TARDIS has not been updated, otherwise false
      */
-
     boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
@@ -102,7 +102,13 @@ class TARDISLampsCommand {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 int h = dimensions.get("height").getAsInt();
-                starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
+                if (schm.getPermission().equals("mechanical")) {
+                    starty = 62;
+                } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
+                    starty = 65;
+                } else {
+                    starty = 64;
+                }
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks

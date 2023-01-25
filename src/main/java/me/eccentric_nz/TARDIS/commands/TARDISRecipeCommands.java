@@ -71,19 +71,20 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
         t.put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
-        t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
+        t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
+        t.put("MECHANICAL", Material.POLISHED_ANDESITE); // mechanical schematic adapted from design by Plastic Straw
         t.put("ORIGINAL", Material.PACKED_MUD); // original
+        t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
-        t.put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
-        t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
+        t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
         t.put("WEATHERED", Material.WEATHERED_COPPER); // weathered
-        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
         t.put("LEGACY_BUDGET", Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
         t.put("LEGACY_DELUXE", Material.LIME_GLAZED_TERRACOTTA);

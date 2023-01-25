@@ -271,8 +271,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             if (tud.getSchematic().getPermission().equals("archive")) {
                 starty = archive_next.getY();
+            } else if (tud.getSchematic().getPermission().equals("mechanical")) {
+                starty = 62;
+            } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
+                starty = 65;
             } else {
-                starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+                starty = 64;
             }
             downgrade = (h < ph || w < pw);
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());

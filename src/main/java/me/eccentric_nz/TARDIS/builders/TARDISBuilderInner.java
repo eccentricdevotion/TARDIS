@@ -148,7 +148,9 @@ public class TARDISBuilderInner implements Runnable {
                 task = -1;
                 return;
             }
-            if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
+            if (schm.getPermission().equals("mechanical")) {
+                starty = 62;
+            } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
                 starty = 65;
             } else {
                 starty = 64;

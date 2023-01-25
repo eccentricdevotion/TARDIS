@@ -42,6 +42,7 @@ upgrades:
   factory: 7500
   fugitive: 7500
   master: 10000
+  mechanical: 7500
   original: 5000
   plank: 5000
   pyramid: 5000
