@@ -16,8 +16,8 @@ SNOWY_TAIGA: &snowy COLD_TAIGA
 SNOWY_SLOPES: *snowy
 ```
 
-`&snowy` defines an _alias_ to the `COLD_TAIGA` preset
-`*snowy` is an _instance_ of the alias
+* `&snowy` defines an _alias_ to the `COLD_TAIGA` preset
+* `*snowy` is an _instance_ of the alias
 
 You can either change the alias `&snowy` to another Chameleon preset e.g. `&snowy PINE`, and the other instances will use that as well, or set a preset for each individual biome.
 
@@ -28,7 +28,7 @@ You can use any Chameleon block preset as well as the biome presets shown below.
 
 ## Biomes and presets
 
-By default the plugin maps biomes to presets in the follwing way:
+By default the plugin maps biomes to presets in the following way:
 
 ### Beach, frozen river, river, snowy beach, stony shore
 BOAT
@@ -60,7 +60,7 @@ NETHER
 
 ![Nether](images/docs/adaptive_nether.jpg)
 
-### Snowy plains, deep frozen ocean, frozen ocean jagged peaks, snowy peaks
+### Snowy plains, deep frozen ocean, frozen ocean, jagged peaks, snowy peaks
 ICE_FLATS
 
 ![Ice Flats](images/docs/adaptive_ice_flats.jpg)
@@ -110,7 +110,7 @@ THEEND
 
 ![The End](images/docs/adaptive_the_end.jpg)
 
-### OLd growth spruce taiga, taiga, old growth pine taiga
+### Old growth spruce taiga, taiga, old growth pine taiga
 TAIGA
 
 ![Taiga](images/docs/adaptive_taiga.jpg)
