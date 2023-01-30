@@ -195,27 +195,11 @@ public class TARDISPresetBuilderFactory {
         if (adaption.equals(Adaption.BLOCK)) {
             return PRESET.ADAPTIVE;
         } else {
-            return switch (biome) {
-                case BEACH, FROZEN_RIVER, RIVER, SNOWY_BEACH, STONY_SHORE -> PRESET.BOAT;
-                case COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, OCEAN, WARM_OCEAN -> PRESET.YELLOW;
-                case DESERT -> PRESET.DESERT;
-                case WINDSWEPT_GRAVELLY_HILLS, WINDSWEPT_HILLS, WINDSWEPT_FOREST -> PRESET.EXTREME_HILLS;
-                case BIRCH_FOREST, FOREST, OLD_GROWTH_BIRCH_FOREST -> PRESET.FOREST;
-                case NETHER_WASTES, SOUL_SAND_VALLEY, CRIMSON_FOREST, WARPED_FOREST, BASALT_DELTAS -> PRESET.NETHER;
-                case SNOWY_PLAINS, DEEP_FROZEN_OCEAN -> PRESET.ICE_FLATS;
-                case ICE_SPIKES -> PRESET.ICE_SPIKES;
-                case JUNGLE, SPARSE_JUNGLE, BAMBOO_JUNGLE -> PRESET.JUNGLE;
-                case BADLANDS, WOODED_BADLANDS, ERODED_BADLANDS -> PRESET.MESA;
-                case MUSHROOM_FIELDS -> PRESET.SHROOM;
-                case PLAINS, SUNFLOWER_PLAINS, MEADOW -> PRESET.PLAINS;
-                case DARK_FOREST, FLOWER_FOREST -> PRESET.ROOFED_FOREST;
-                case SAVANNA, WINDSWEPT_SAVANNA, SAVANNA_PLATEAU -> PRESET.SAVANNA;
-                case SWAMP -> PRESET.SWAMP;
-                case END_BARRENS, END_HIGHLANDS, END_MIDLANDS, SMALL_END_ISLANDS, THE_END -> PRESET.THEEND;
-                case OLD_GROWTH_SPRUCE_TAIGA, TAIGA, OLD_GROWTH_PINE_TAIGA -> PRESET.TAIGA;
-                case SNOWY_TAIGA, SNOWY_SLOPES, GROVE -> PRESET.COLD_TAIGA;
-                default -> PRESET.FACTORY;
-            };
+            try {
+                return PRESET.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+            } catch (IllegalArgumentException e) {
+                return PRESET.FACTORY;
+            }
         }
     }
 

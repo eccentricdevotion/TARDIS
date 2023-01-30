@@ -1,0 +1,94 @@
+# beach, shore & river biomes
+#
+# `&beach` defines an alias to the `BOAT` preset
+# `*beach` is an instance of the alias
+# you can either change the alias `&beach` to another Chameleon preset
+# and the other instances will use that as well,
+# or set a preset for each individual biome
+BEACH: &beach BOAT
+FROZEN_RIVER: *beach
+RIVER: *beach
+SNOWY_BEACH: *beach
+STONY_SHORE: *beach
+# ocean biomes
+COLD_OCEAN: &sub YELLOW
+DEEP_COLD_OCEAN: *sub
+DEEP_LUKEWARM_OCEAN: *sub
+DEEP_OCEAN: *sub
+LUKEWARM_OCEAN: *sub
+OCEAN: *sub
+WARM_OCEAN: *sub
+# desert biome
+DESERT: DESERT
+# hill biomes
+WINDSWEPT_GRAVELLY_HILLS: &hills EXTREME_HILLS
+WINDSWEPT_HILLS: *hills
+WINDSWEPT_FOREST: *hills
+STONY_PEAKS: *hills
+# forest biomes
+BIRCH_FOREST: &forest FOREST
+FOREST: *forest
+OLD_GROWTH_BIRCH_FOREST: *forest
+# nether biomes
+NETHER_WASTES: &nether NETHER
+SOUL_SAND_VALLEY: *nether
+CRIMSON_FOREST: *nether
+WARPED_FOREST: *nether
+BASALT_DELTAS: *nether
+# frozen biomes
+SNOWY_PLAINS: &ice ICE_FLATS
+DEEP_FROZEN_OCEAN: *ice
+FROZEN_OCEAN: *ice
+JAGGED_PEAKS: *ice
+SNOWY_PEAKS: *ice
+# ice spikes biome
+ICE_SPIKES: ICE_SPIKES
+# jungle biomes
+JUNGLE: &jungle JUNGLE
+SPARSE_JUNGLE: *jungle
+BAMBOO_JUNGLE: *jungle
+# mesa biomes
+BADLANDS: &mesa MESA
+WOODED_BADLANDS: *mesa
+ERODED_BADLANDS: *mesa
+# mycelium biome
+MUSHROOM_FIELDS: SHROOM
+# plains biomes
+PLAINS: &plains PLAINS
+SUNFLOWER_PLAINS: *plains
+MEADOW: *plains
+# dark forest biomes
+DARK_FOREST: &dark ROOFED_FOREST
+FLOWER_FOREST: *dark
+# savanna biomes
+SAVANNA: &savanna SAVANNA
+WINDSWEPT_SAVANNA: *savanna
+SAVANNA_PLATEAU: *savanna
+# swamp biomes
+SWAMP: &swamp SWAMP;
+MANGROVE_SWAMP: *swamp
+# the end biomes
+END_BARRENS: &end THEEND
+END_HIGHLANDS: *end
+END_MIDLANDS: *end
+SMALL_END_ISLANDS: *end
+THE_END: *end
+# taiga biomes
+OLD_GROWTH_SPRUCE_TAIGA: &taiga TAIGA
+TAIGA: *taiga
+OLD_GROWTH_PINE_TAIGA: *taiga
+# snowy biomes
+#
+# `&snowy` defines an alias to the `COLD_TAIGA` preset
+# `*snowy` is an instance of the alias
+# you can either change the alias `&snowy` to another Chameleon preset
+# e.g. `&snowy PINE`
+# and the other instances will use that as well,
+# or set a preset for each individual biome
+SNOWY_TAIGA: &snowy COLD_TAIGA
+SNOWY_SLOPES: *snowy
+GROVE: *snowy
+# cave biomes
+DEEP_DARK: &cave CAVE
+LUSH_CAVES: *cave
+DRIPSTONE_CAVES: *cave

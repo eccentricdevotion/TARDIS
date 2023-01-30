@@ -111,6 +111,8 @@ public class TARDISFileCopier {
         // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         // The ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         // The MASTER's schematic designed by ShadowAssociate
+        // The FUGITIVE schematic based on a design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
+        // The MECHANICAL schematic adapted from a design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
