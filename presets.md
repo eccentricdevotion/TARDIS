@@ -9,6 +9,9 @@ Chameleon Presets can be selected and applied in the [Chameleon Circuit](chamele
 presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up 
 themselves — see the [Custom preset page.](custom-preset.html)
 
+There are also some adaptive presets that are selected by biome when th Chameleon Circuit is set to Adaptive Biome mode.
+You can view those on the [Adaptive Presets page](adaptive-presets.html).
+
 ## Page one
 
 These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for 
