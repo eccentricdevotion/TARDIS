@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Wall materials
+title: Wall and floor materials
 ---
 
-# Wall materials
+# Wall and floor materials
 
-The following list contains all the valid wall block material that can be used to replace the standard ORANGE wool blocks.
+The following list contains all the valid wall and floor block materials that can be used to replace the standard ORANGE wool blocks (wall) and LIGHT GRAY wool blocks (floor).
 
     ACACIA_LOG
     ACACIA_PLANKS

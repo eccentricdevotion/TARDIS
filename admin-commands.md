@@ -13,6 +13,7 @@ Enter a player’s TARDIS (by direct teleport instead of the door).
 /tardisadmin enter [player]
 ```
 
+{#recharger}
 Set the beacon block you are targeting in game, as a TARDIS recharge station.
 
 ```
@@ -44,7 +45,7 @@ Remove a specified player’s TARDIS.
 /tardisadmin delete [player]
 ```
 
-Create a TARDIS for a player. The TARDIS exterior will appear on the block that 
+Create a TARDIS for a player. The TARDIS exterior will appear on the block that
 the command sender is targeting.
 
 ```
@@ -57,7 +58,7 @@ List TARDISes that haven’t been used for an extended period.
 /tardisadmin prunelist [number of days]
 ```
 
-Remove TARDISes that haven’t been used for an extended period. See the 
+Remove TARDISes that haven’t been used for an extended period. See the
 [Prune](prune.html) page for more details.
 
 ```
@@ -77,7 +78,7 @@ Delete a player’s TARDIS database records (will not remove any blocks in game)
 /tardisadmin purge [player]
 ```
 
-List chunks that are being kept loaded by TARDIS &mdash; either for room growing 
+List chunks that are being kept loaded by TARDIS &mdash; either for room growing
 or Police Box locations.
 
 ```

@@ -187,7 +187,7 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.help</code></td><td colspan="2">Allow players to view TARDIS help pages.</td><td>true</td></tr>
     <tr><td><code>tardis.update</code></td><td colspan="2">Allow players to modify the TARDIS interior.</td><td>true</td></tr>
     <tr><td><code>tardis.rebuild</code></td><td colspan="2">Allow players to rebuild the TARDIS.</td><td>true</td></tr>
-    <tr><td><code>tardis.console.*</code></td><td colspan="2">Allow players to build all TARDIS types.</td><td>op</td></tr>
+    <tr><td id="console-perms"><code>tardis.console.*</code></td><td colspan="2">Allow players to build all TARDIS types.</td><td>op</td></tr>
     <tr class="child"><td rowspan="31"> &nbsp; &mdash; children of <code>tardis.console.*</code></td><td colspan="2"><code>tardis.ancient</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.ars</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.bigger</code></td><td>true</td></tr>
@@ -208,6 +208,7 @@ tr.child code { font-size: 11px; }
     <tr class="child"><td colspan="2"><code>tardis.legacy_eleventh</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_redstone</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.master</code></td><td>true</td></tr>
+    <tr class="child"><td colspan="2"><code>tardis.mechanical</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.original</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.plank</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.pyramid</code></td><td>true</td></tr>

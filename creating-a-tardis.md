@@ -37,7 +37,7 @@ Seed blocks can be placed, broken and dropped and still remain as a valid seed b
 
 ## TARDIS types
 
-You can make your TARDIS any type of valid TARDIS block you like, listed below. 
+You can make your TARDIS any type of valid TARDIS block you like, listed below.
 The TARDIS type is the block that replaces the "Iron Block" in the above crafting grid.
 
 | Name                               | Block Required         | Description                                             |
@@ -58,6 +58,7 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 | [FUGITIVE](interiors#fugitive)     | Polished Deepslate     | Ruth (The Fugitive Doctor) Clayton's Console (by DT10)  |
 | [ORIGINAL](interiors#original)     | Packed Mud             | The original TARDIS plugin Console                      |
 | [MASTER](interiors#master)         | Nether Bricks          | The Master's TARDIS interior (by ShadowAssociate)       |
+| [MECHANICAL](interiors#mechanical) | Polished Andesite      | Mechanical TARDIS interior (by Plastic Straw)           |
 | [PLANK](interiors#plank)           | Bookshelf              | A "wood plank" TARDIS interior                          |
 | [PYRAMID](interiors#pyramid)       | Sandstone Stairs       | A sandstone pyramid TARDIS interior (by airomis)        |
 | [REDSTONE](interiors#redstone)     | Redstone Block         | A “redstone” TARDIS                                     |
