@@ -77,11 +77,12 @@ public class TARDISLister {
             for (String s : therechargers) {
                 // only list public rechargers
                 if (!s.startsWith("rift")) {
+                    String world = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
                     String w;
-                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                        w = plugin.getMVHelper().getAlias(world);
                     } else {
-                        w = TARDISAliasResolver.getWorldAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
+                        w = TARDISAliasResolver.getWorldAlias(world);
                     }
                     String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
                     String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
@@ -134,7 +135,7 @@ public class TARDISLister {
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
-                    String homeWorld = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
+                    String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
                     TextComponent tch = new TextComponent(plugin.getLanguage().getString("HOME"));
                     tch.setColor(ChatColor.GREEN);
                     tch.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", homeWorld, rsh.getX(), rsh.getY(), rsh.getZ()))));
@@ -148,7 +149,7 @@ public class TARDISLister {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
-                                String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+                                String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.get("world") + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
                                 TextComponent tcd = new TextComponent(map.get("dest_name"));
                                 tcd.setColor(ChatColor.GREEN);
                                 tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));

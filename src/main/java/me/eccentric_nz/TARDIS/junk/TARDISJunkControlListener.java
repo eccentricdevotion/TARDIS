@@ -210,7 +210,7 @@ public class TARDISJunkControlListener implements Listener {
                 return;
             }
             World w;
-            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + line1 + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(line1);
             } else {
                 w = TARDISAliasResolver.getWorldFromAlias(line1);

@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
@@ -53,6 +49,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Command /tardistravel [arguments].
@@ -971,7 +972,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             w = rsc.getWorld();
         } else {
-            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + w_str + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);
             } else {
                 w = TARDISAliasResolver.getWorldFromAlias(w_str);

@@ -161,7 +161,7 @@ public class TARDISRandomButton {
                     set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(id);
                     String worldname;
-                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         worldname = plugin.getMVHelper().getAlias(rand.getWorld());
                     } else {
                         worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());

@@ -212,13 +212,14 @@ public class TARDISScanner {
         String dayNight = TARDISStaticUtils.getTime(time);
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereIsIt);
-        String worldName;
-        if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldName = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
+        String worldName = scan_loc.getWorld().getName();
+        String alias;
+        if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            alias = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
-            worldName = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
+            alias = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
-        TARDISMessage.send(player, "SCAN_WORLD", worldName);
+        TARDISMessage.send(player, "SCAN_WORLD", alias);
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome

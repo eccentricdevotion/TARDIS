@@ -141,7 +141,7 @@ public class TARDISDeleteCommand {
                     // delete TARDIS world
                     List<Player> players = cw.getPlayers();
                     players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
-                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                     }
                     if (plugin.getPM().isPluginEnabled("WorldBorder")) {

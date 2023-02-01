@@ -254,7 +254,7 @@ public class TARDISExterminator {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             });
-            if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {

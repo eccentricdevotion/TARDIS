@@ -129,7 +129,7 @@ public class TARDISSaveSignInventory {
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
-                        String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+                        String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.get("world") + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
                         lore.add(world);
                         lore.add(map.get("x"));
                         lore.add(map.get("y"));
