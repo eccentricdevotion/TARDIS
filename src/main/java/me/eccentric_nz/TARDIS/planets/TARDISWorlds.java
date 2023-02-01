@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 
@@ -103,7 +102,7 @@ public class TARDISWorlds {
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
             if (TARDISAliasResolver.getWorldFromAlias(cw) == null) {
-                if (plugin.getWorldManager().equals(WorldManager.NONE) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+                if (worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getLogger().log(Level.INFO, "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }
