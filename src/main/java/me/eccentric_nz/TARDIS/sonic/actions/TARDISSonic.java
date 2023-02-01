@@ -71,7 +71,7 @@ public class TARDISSonic {
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
             TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
-            // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
+            // not protected doors - WorldGuard / GriefPrevention  / Towny
             if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
                 switch (blockType) {
                     case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {

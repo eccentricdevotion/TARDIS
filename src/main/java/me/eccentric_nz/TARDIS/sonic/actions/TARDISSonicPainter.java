@@ -175,7 +175,7 @@ public class TARDISSonicPainter {
             TARDISMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }
-        // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
+        // not protected blocks - WorldGuard / GriefPrevention / Towny
         if (TARDISSonicRespect.checkBlockRespect(plugin, player, b)) {
             long now = System.currentTimeMillis();
             TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
