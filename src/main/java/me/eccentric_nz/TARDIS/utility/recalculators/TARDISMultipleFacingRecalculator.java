@@ -30,7 +30,8 @@ import java.util.Set;
 public class TARDISMultipleFacingRecalculator {
 
     /**
-     * Recalculate the data for multiple facing block (FENCE, VINE, MUSHROOM_BLOCK) when the TARDIS preset changes direction.
+     * Recalculate the data for multiple facing block (FENCE, VINE, MUSHROOM_BLOCK) when the TARDIS preset changes
+     * direction.
      *
      * @param b the block data stored in the preset data
      * @param d the new direction of the TARDIS
@@ -51,18 +52,32 @@ public class TARDISMultipleFacingRecalculator {
                                 case NORTH -> set.add(BlockFace.WEST);
                                 case EAST -> set.add(BlockFace.NORTH);
                                 case SOUTH -> set.add(BlockFace.EAST);
-                                // WEST
-                                default -> set.add(BlockFace.SOUTH);
+                                case WEST -> set.add(BlockFace.SOUTH);
+                                default -> {
+                                    // UP and DOWN won't change
+                                    set.add(face);
+                                }
                             }
                         }
-                        case WEST -> set.add(face.getOppositeFace());
+                        case WEST -> {
+                            switch (face) {
+                                case NORTH, WEST, SOUTH, EAST -> set.add(face.getOppositeFace());
+                                default -> {
+                                    // UP and DOWN won't change
+                                    set.add(face);
+                                }
+                            }
+                        }
                         case SOUTH -> {
                             switch (face) {
                                 case NORTH -> set.add(BlockFace.EAST);
                                 case EAST -> set.add(BlockFace.SOUTH);
                                 case SOUTH -> set.add(BlockFace.WEST);
-                                // WEST
-                                default -> set.add(BlockFace.NORTH);
+                                case WEST -> set.add(BlockFace.NORTH);
+                                default -> {
+                                    // UP and DOWN won't change
+                                    set.add(face);
+                                }
                             }
                         }
                         default -> {

@@ -1,25 +1,28 @@
 # TODO
 
-## Current version `4.12.0`
+## Current version `4.12.1`
 
-1. ?
+1. Add CAVE Chameleon preset
+2. Add MECHANICAL seed to `/tgive` command
 
 ## Next version `4.13.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 2. Cache TARDIS data to speed lookups and reduce database queries
-3. Update documentation...
-4. Use the Vortex Manipulator to teleport past force fields
-5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-8. All the things...
+2. Use the Vortex Manipulator to teleport past force fields
+4. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+5. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+6. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+7. All the things...
+
+## Wiki Documentation
+
+* Add Mechanical interior
 
 ## Resource Pack / TARDISWeepingAngels
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
-
-    * Racnoss
+    * Davros
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
@@ -27,6 +30,7 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
+2. Animate models for player disguises (could be done in TARDIS instead?)
 
 ## Minecraft Bedrock Edition?
 
