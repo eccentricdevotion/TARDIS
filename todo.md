@@ -3,7 +3,6 @@
 ## Current version `4.12.1`
 
 1. Add CAVE Chameleon preset
-2. Add MECHANICAL seed to `/tgive` command
 
 ## Next version `4.13.0`
 
