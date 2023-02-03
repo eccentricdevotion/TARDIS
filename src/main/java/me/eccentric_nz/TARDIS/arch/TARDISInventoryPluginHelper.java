@@ -60,7 +60,7 @@ public class TARDISInventoryPluginHelper implements Listener {
     }
 
     /*
-     * Multiverse-Inventories and GameModeInventories listen on LOW priority, MultiInv on HIGHEST so if we listen on MONITOR
+     * Multiverse-Inventories and GameModeInventories listen on LOW priority, so if we listen on MONITOR
      * we should go after.
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
 
 /**
  * @author eccentric_nz
@@ -94,6 +95,7 @@ public enum PRESET {
     TAIGA(Material.BARRIER, "TAIGA", "", true, true),
     COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true),
     BOAT(Material.BARRIER, "BOAT", "", false, false),
+    CAVE(Material.BARRIER, "CAVE", "", true, true),
     // coloured police boxes
     POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, 0, "", "", false, true, "Blue Police Box"),
     POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, 1, "", "", false, false, "White Police Box"),
@@ -114,10 +116,10 @@ public enum PRESET {
     POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, false, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel");
 
+    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
     private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
     private final static Map<Integer, PRESET> BY_SLOT = Maps.newHashMap();
     private final static Map<Integer, PRESET> IF_BY_SLOT = Maps.newHashMap();
-    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
     static {
         for (PRESET preset : values()) {

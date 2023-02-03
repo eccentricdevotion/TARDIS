@@ -43,6 +43,7 @@ public class TARDISChameleonPreset {
     private final TARDISApertureSciencePreset aperture;
     private final TARDISCakePreset cake;
     private final TARDISCandyCanePreset candy;
+    private final TARDISCavePreset cave;
     private final TARDISChalicePreset chalice;
     private final TARDISChorusPreset chorus;
     private final TARDISColumnPreset column;
@@ -168,6 +169,7 @@ public class TARDISChameleonPreset {
         taiga = new TARDISTaigaPreset();
         cold = new TARDISColdTaigaPreset();
         boat = new TARDISBoatPreset();
+        cave = new TARDISCavePreset();
     }
 
     static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
@@ -355,6 +357,7 @@ public class TARDISChameleonPreset {
         taiga.makePresets();
         cold.makePresets();
         boat.makePresets();
+        cave.makePresets();
     }
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
@@ -487,6 +490,8 @@ public class TARDISChameleonPreset {
                 return cold.getBlueprint().get(d);
             case BOAT:
                 return boat.getBlueprint().get(d);
+            case CAVE:
+                return cave.getBlueprint().get(d);
             default:
                 return adaptive.getBlueprint().get(d);
         }
@@ -622,6 +627,8 @@ public class TARDISChameleonPreset {
                 return cold.getGlass().get(d);
             case BOAT:
                 return boat.getGlass().get(d);
+            case CAVE:
+                return cave.getGlass().get(d);
             default:
                 return adaptive.getGlass().get(d);
         }
@@ -757,6 +764,8 @@ public class TARDISChameleonPreset {
                 return cold.getStained().get(d);
             case BOAT:
                 return boat.getStained().get(d);
+            case CAVE:
+                return cave.getStained().get(d);
             default:
                 return adaptive.getStained().get(d);
         }
