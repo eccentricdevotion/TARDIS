@@ -101,6 +101,13 @@ Fugutive TARDIS - Ruth (The Fugitive Doctor) Clayton's Console
 
 ![Master's TARDIS](images/consoles/master.jpg)
 
+## MECHANICAL
+
+‘Mechanical’ TARDIS - adapted from design by Plastic
+Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
+
+![Mechanical TARDIS](images/consoles/mechanical.jpg)
+
 ## ORIGINAL
 
 The original console from v1.0 of the TARDIS plugin - For those with nostalgia
