@@ -46,6 +46,7 @@ public class TARDISChameleonGuiUpdater {
         chameleonListOptions.put("CONSTRUCT_LORE", Arrays.asList("Build your own", "Chameleon preset."));
         chameleonListOptions.put("DISABLED_LORE", Arrays.asList("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
         chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the TARDIS", "Invisiblity Circuit."));
+        chameleonListOptions.put("LOCK_LORE", Arrays.asList("Keep the current biome", "adaptive Chameleon preset.", "To cancel reengage 'Adaptive'", "or chose a different preset."));
         chameleonListOptions.put("SHORT_LORE", Arrays.asList("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
         chameleonListOptions.put("INFO_TRANSMAT", Arrays.asList("Click on a transmat", "location, then choose", "an action button."));
         chameleonOptions.put("ADAPT", "Adaptive");
@@ -54,6 +55,7 @@ public class TARDISChameleonGuiUpdater {
         chameleonOptions.put("CONSTRUCT", "Construct");
         chameleonOptions.put("DISABLED", "DISABLED");
         chameleonOptions.put("INVISIBLE", "Invisible");
+        chameleonOptions.put("LOCK", "Lock in the current preset");
         chameleonOptions.put("SHORT", "Shorted out");
         chameleonOptions.put("USE_PREV", "Use last saved construct");
     }

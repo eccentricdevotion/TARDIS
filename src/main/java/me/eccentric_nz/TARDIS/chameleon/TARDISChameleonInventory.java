@@ -114,6 +114,16 @@ public class TARDISChameleonInventory {
         truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
         truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
         cons.setItemMeta(truct);
+        // lock current preset
+        ItemStack lock = null;
+        if (adapt.equals(Adaption.BIOME)) {
+            lock = new ItemStack(Material.BOWL, 1);
+            ItemMeta circuit = lock.getItemMeta();
+            circuit.setDisplayName(plugin.getChameleonGuis().getString("LOCK"));
+            circuit.setLore(plugin.getChameleonGuis().getStringList("LOCK_LORE"));
+            circuit.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
+            lock.setItemMeta(circuit);
+        }
         // Disabled radio button
         boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
         ItemStack fac = isFactoryOff ? on.clone() : off.clone();
@@ -157,7 +167,11 @@ public class TARDISChameleonInventory {
         can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{apply, null, null, null, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};
+        return new ItemStack[]{
+                apply, null, null, lock, null, null, null, null, null,
+                null, null, dis, adap, invis, shor, cons, null, null,
+                null, null, fac, biome, not, pre, bui, null, close
+        };
     }
 
     public ItemStack[] getMenu() {

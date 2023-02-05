@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -28,7 +29,9 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -105,7 +108,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                             ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
                             boolean hasFrame = rsf.resultSet();
                             switch (slot) {
-                                case 0:
+                                case 0 -> {
                                     player.performCommand("tardis rebuild");
                                     close(player);
                                     // damage the circuit if configured
@@ -116,8 +119,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         int uses_left = tcc.getChameleonUses();
                                         new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
                                     }
-                                    break;
-                                case 11:
+                                }
+                                case 11 -> {
                                     // factory
                                     set.put("adapti_on", 0);
                                     ItemStack frb = view.getItem(20);
@@ -141,8 +144,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         }
                                         setDefault(view, player, chameleon);
                                     }
-                                    break;
-                                case 12:
+                                }
+                                case 12 -> {
                                     // cycle biome adaption
                                     int ca = adapt.ordinal() + 1;
                                     if (ca >= Adaption.values().length) {
@@ -170,8 +173,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     ItemMeta bio = arb.getItemMeta();
                                     bio.setDisplayName(a.getColour() + a.toString());
                                     arb.setItemMeta(bio);
-                                    break;
-                                case 13:
+                                }
+                                case 13 -> {
                                     // Invisibility
                                     set.put("adapti_on", 0);
                                     ItemStack irb = view.getItem(22);
@@ -211,38 +214,66 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         }
                                         setDefault(view, player, chameleon);
                                     }
-                                    break;
-                                case 14:
+                                }
+                                case 14 ->
                                     // presets
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
-                                        ItemStack[] items = tpi.getPresets();
-                                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
-                                        presetinv.setContents(items);
-                                        player.openInventory(presetinv);
-                                    }, 2L);
-                                    break;
-                                case 15:
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
+                                            ItemStack[] items = tpi.getPresets();
+                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+                                            presetinv.setContents(items);
+                                            player.openInventory(presetinv);
+                                        }, 2L);
+                                case 15 ->
                                     // constructor GUI
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
-                                        ItemStack[] items = tci.getConstruct();
-                                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
-                                        chamcon.setContents(items);
-                                        player.openInventory(chamcon);
-                                    }, 2L);
-                                    break;
-                                case 20:
-                                case 21:
-                                case 22:
-                                case 23:
-                                case 24:
-                                    break;
-                                default:
-                                    close(player);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                            ItemStack[] items = tci.getConstruct();
+                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+                                            chamcon.setContents(items);
+                                            player.openInventory(chamcon);
+                                        }, 2L);
+                                case 3 -> {
+                                    // set the current adaptive preset as shorted out - this
+                                    // will allow locking in a usually unavailable biome preset
+                                    // ONLY if the Chameleon Circuit is set to Adaptive BIOME
+                                    if (isBiomeAdaptive(view)) {
+                                        toggleOthers(ChameleonOption.PRESET, view);
+                                        // get current location's biome
+                                        HashMap<String, Object> wherel = new HashMap<>();
+                                        wherel.put("tardis_id", id);
+                                        ResultSetCurrentLocation rsl = new ResultSetCurrentLocation(plugin, wherel);
+                                        if (rsl.resultSet()) {
+                                            Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
+                                            Biome biome = current.getBlock().getBiome();
+                                            // get which preset
+                                            PRESET which = getAdaption(biome);
+                                            if (which != null) {
+                                                set.put("adapti_on", 0);
+                                                set.put("chameleon_preset", which.toString());
+                                                if (hasFrame) {
+                                                    tcf.updateChameleonFrame(which, rsf.getLocation());
+                                                }
+                                                // set preset lore
+                                                ItemStack p = view.getItem(23);
+                                                ItemMeta pim = p.getItemMeta();
+                                                pim.setDisplayName(ChatColor.GREEN + which.toString());
+                                                p.setItemMeta(pim);
+                                                // remove button
+                                                view.setItem(3, null);
+                                                TARDISStaticUtils.setSign(chameleon, 3, which.toString(), player);
+                                                TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + which.getDisplayName());
+                                            }
+                                        }
+                                    } else {
+                                        TARDISMessage.send(player, "CHAM_LOCK");
+                                    }
+                                }
+                                case 20, 21, 22, 23, 24 -> {
+                                }
+                                default -> close(player);
                             }
                             if (set.size() > 0) {
-                                //set.put("chameleon_demat", preset);
                                 plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                             }
                         }
@@ -285,6 +316,20 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
     private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
         for (HashMap<String, String> entry : map) {
             TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
+        }
+    }
+
+    private boolean isBiomeAdaptive(InventoryView view) {
+        ItemStack adaption = view.getItem(21);
+        ItemMeta im = adaption.getItemMeta();
+        return (ChatColor.stripColor(im.getDisplayName()).equals("BIOME"));
+    }
+
+    private PRESET getAdaption(Biome biome) {
+        try {
+            return PRESET.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+        } catch (IllegalArgumentException e) {
+            return null;
         }
     }
 }

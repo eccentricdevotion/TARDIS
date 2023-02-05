@@ -68,6 +68,12 @@ INVISIBLE: Invisible
 INVISIBLE_LORE:
   - Engages the TARDIS
   - Invisiblity Circuit.
+LOCK: Lock in the current preset
+LOCK_LORE:
+  - Keep the current biome
+  - adaptive Chameleon preset.
+  - To cancel reengage 'Adaptive'
+  - or chose a different preset.
 PB_DOOR:
   - Police Box door
   - Click this block to switch
