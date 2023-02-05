@@ -121,7 +121,7 @@ public class TARDISChameleonInventory {
             ItemMeta circuit = lock.getItemMeta();
             circuit.setDisplayName(plugin.getChameleonGuis().getString("LOCK"));
             circuit.setLore(plugin.getChameleonGuis().getStringList("LOCK_LORE"));
-            circuit.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
+            circuit.setCustomModelData(GUIChameleon.BUTTON_LOCK.getCustomModelData());
             lock.setItemMeta(circuit);
         }
         // Disabled radio button
