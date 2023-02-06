@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
@@ -376,10 +377,14 @@ public class TARDISControlListener implements Listener {
                                         // keyboard
                                     } else {
                                         // controls GUI
-                                        ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-                                        Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
-                                        cgui.setContents(controls);
-                                        player.openInventory(cgui);
+                                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                            TARDISFloodgate.sendControlForm(player.getUniqueId());
+                                        } else {
+                                            ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
+                                            Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
+                                            cgui.setContents(controls);
+                                            player.openInventory(cgui);
+                                        }
                                     }
                                     break;
                                 case 25:
