@@ -78,6 +78,6 @@ public class TARDISFloodgate {
     }
 
     public static void sendControlForm(UUID uuid) {
-        new FloodGateControlForm(uuid).send();
+        new FloodgateControlForm(uuid).send();
     }
 }
