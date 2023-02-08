@@ -29,11 +29,13 @@ import java.util.UUID;
 
 public class FloodgateSavesForm {
 
+    private final TARDIS plugin;
     private final String path = "textures/blocks/%s.png";
     private final UUID uuid;
     private final int id;
 
-    public FloodgateSavesForm(UUID uuid, int id) {
+    public FloodgateSavesForm(TARDIS plugin, UUID uuid, int id) {
+        this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
     }
@@ -43,7 +45,7 @@ public class FloodgateSavesForm {
         // get saves
         HashMap<String, Object> did = new HashMap<>();
         did.put("tardis_id", id);
-        ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, did, true);
+        ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Saves Menu");
         builder.button("Home", FormImage.Type.PATH, "textures/blocks/beehive_front.png");
@@ -63,18 +65,18 @@ public class FloodgateSavesForm {
         Player player = Bukkit.getPlayer(uuid);
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherec);
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
         Location current = null;
         if (rsc.resultSet()) {
             current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         }
         // get tardis artron level
-        ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDIS.plugin);
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
         if (!rs.fromID(id)) {
             return;
         }
         int level = rs.getArtronLevel();
-        int travel = TARDIS.plugin.getArtronConfig().getInt("travel");
+        int travel = plugin.getArtronConfig().getInt("travel");
         if (level < travel) {
             TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
             return;
@@ -85,7 +87,7 @@ public class FloodgateSavesForm {
             int dest_id = TARDISNumberParsers.parseInt(split[1]);
             HashMap<String, Object> where = new HashMap<>();
             where.put("dest_id", dest_id);
-            ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, where, false);
+            ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
             if (rsd.resultSet()) {
                 World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
                 if (w == null) {
@@ -98,10 +100,10 @@ public class FloodgateSavesForm {
                         return;
                     }
                     // check the player is allowed!
-                    if (!TARDIS.plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
+                    if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                         return;
                     }
-                    TARDISAreaCheck tac = TARDIS.plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                    TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
                     if (tac.isInArea()) {
                         // save is in a TARDIS area, so check that the spot is not occupied
                         HashMap<String, Object> wheresave = new HashMap<>();
@@ -109,7 +111,7 @@ public class FloodgateSavesForm {
                         wheresave.put("x", rsd.getX());
                         wheresave.put("y", rsd.getY());
                         wheresave.put("z", rsd.getZ());
-                        ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(TARDIS.plugin, wheresave);
+                        ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                         if (rsz.resultSet()) {
                             TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                             return;
@@ -117,7 +119,7 @@ public class FloodgateSavesForm {
                         String invisibility = tac.getArea().getInvisibility();
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
-                        ResultSetTardis resultSetTardis = new ResultSetTardis(TARDIS.plugin, wheret, "", false, 2);
+                        ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
                         if (resultSetTardis.resultSet()) {
                             if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
                                 // check preset
@@ -132,11 +134,11 @@ public class FloodgateSavesForm {
                                 seti.put("chameleon_preset", invisibility);
                                 // set chameleon adaption to OFF
                                 seti.put("adapti_on", 0);
-                                TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                             }
                         }
                     }
-                    if (!save_dest.equals(current) || TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                    if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("world", rsd.getWorld());
                         set.put("x", rsd.getX());
@@ -150,16 +152,16 @@ public class FloodgateSavesForm {
                         sett.put("adapti_on", 0);
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
-                        TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                        plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
                         HashMap<String, Object> whereid = new HashMap<>();
                         wheret.put("tardis_id", id);
-                        TARDIS.plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
-                        TARDIS.plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.SAVE));
-                        TARDIS.plugin.getTrackerKeeper().getRescue().remove(id);
-                        TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-                        if (TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                            new TARDISLand(TARDIS.plugin, id, player).exitVortex();
-                            TARDIS.plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.SAVE, id));
+                        plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
+                        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.SAVE));
+                        plugin.getTrackerKeeper().getRescue().remove(id);
+                        TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            new TARDISLand(plugin, id, player).exitVortex();
+                            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.SAVE, id));
                         }
                     } else {
                         TARDISMessage.send(player, "AT_DEST", split[0]);
@@ -172,10 +174,10 @@ public class FloodgateSavesForm {
             // home
             HashMap<String, Object> wherehl = new HashMap<>();
             wherehl.put("tardis_id", id);
-            ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
+            ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
             if (rsh.resultSet()) {
                 Location home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
-                if (!home.equals(current) || TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                if (!home.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("world", rsh.getWorld());
                     set.put("x", rsh.getX());
@@ -189,16 +191,16 @@ public class FloodgateSavesForm {
                     sett.put("adapti_on", 0);
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
-                    TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                    plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
                     HashMap<String, Object> whereid = new HashMap<>();
                     wheret.put("tardis_id", id);
-                    TARDIS.plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
-                    TARDIS.plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.HOME));
-                    TARDIS.plugin.getTrackerKeeper().getRescue().remove(id);
-                    TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-                    if (TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        new TARDISLand(TARDIS.plugin, id, player).exitVortex();
-                        TARDIS.plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.HOME, id));
+                    plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.HOME));
+                    plugin.getTrackerKeeper().getRescue().remove(id);
+                    TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        new TARDISLand(plugin, id, player).exitVortex();
+                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.HOME, id));
                     }
                 } else {
                     TARDISMessage.send(player, "AT_HOME");

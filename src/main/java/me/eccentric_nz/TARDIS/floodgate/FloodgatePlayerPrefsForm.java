@@ -36,7 +36,8 @@ public class FloodgatePlayerPrefsForm {
             rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             rsp.resultSet();
         }
-        CustomForm form = CustomForm.builder().title("Player Prefs Menu")
+        CustomForm form = CustomForm.builder()
+                .title("Player Prefs Menu")
                 .toggle("Autonomous Homing", rsp.isAutoOn())
                 .toggle("Autonomous Siege Mode", rsp.isAutoSiegeOn())
                 .toggle("Autonomous Rescue", rsp.isAutoRescueOn())

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
@@ -78,6 +79,6 @@ public class TARDISFloodgate {
     }
 
     public static void sendControlForm(UUID uuid) {
-        new FloodgateControlForm(uuid).send();
+        new FloodgateControlForm(TARDIS.plugin, uuid).send();
     }
 }

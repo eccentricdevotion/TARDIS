@@ -6,7 +6,9 @@
 
 ## Next version `4.13.0`
 
-1. Better support for Geyser/Bedrock users
+1. Better support for Geyser/Bedrock users - _in progress_
+   * Use forms for GUIs
+   * Add commands where forms can't be used
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 3. Cache TARDIS data to speed lookups and reduce database queries
 4. Use the Vortex Manipulator to teleport past force fields

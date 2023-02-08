@@ -49,6 +49,32 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
         this.plugin = plugin;
     }
 
+    public static void addCompanion(int id, String comps, String puid) {
+        HashMap<String, Object> tid = new HashMap<>();
+        HashMap<String, Object> set = new HashMap<>();
+        tid.put("tardis_id", id);
+        if (comps != null && !comps.isEmpty() && !puid.equalsIgnoreCase("everyone")) {
+            // add to the list
+            String newList = comps + ":" + puid;
+            set.put("companions", newList);
+        } else {
+            // make a list
+            set.put("companions", puid);
+        }
+        TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, tid);
+    }
+
+    public static void addToRegion(String world, String owner, String companion) {
+        // if using WorldGuard, add them to the region membership
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        if (w != null) {
+            Player player = TARDIS.plugin.getServer().getPlayer(companion);
+            if (player != null) {
+                TARDIS.plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player.getUniqueId());
+            }
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionAddGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
@@ -132,31 +158,5 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                 player.openInventory(cominv);
             }
         }, 5L);
-    }
-
-    private void addCompanion(int id, String comps, String puid) {
-        HashMap<String, Object> tid = new HashMap<>();
-        HashMap<String, Object> set = new HashMap<>();
-        tid.put("tardis_id", id);
-        if (comps != null && !comps.isEmpty() && !puid.equalsIgnoreCase("everyone")) {
-            // add to the list
-            String newList = comps + ":" + puid;
-            set.put("companions", newList);
-        } else {
-            // make a list
-            set.put("companions", puid);
-        }
-        plugin.getQueryFactory().doUpdate("tardis", set, tid);
-    }
-
-    private void addToRegion(String world, String owner, String companion) {
-        // if using WorldGuard, add them to the region membership
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
-        if (w != null) {
-            Player player = plugin.getServer().getPlayer(companion);
-            if (player != null) {
-                plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player.getUniqueId());
-            }
-        }
     }
 }

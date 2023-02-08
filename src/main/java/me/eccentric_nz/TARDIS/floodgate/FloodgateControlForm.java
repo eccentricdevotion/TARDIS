@@ -31,9 +31,11 @@ import java.util.UUID;
 
 public class FloodgateControlForm {
 
+    private final TARDIS plugin;
     private final UUID uuid;
 
-    public FloodgateControlForm(UUID uuid) {
+    public FloodgateControlForm(TARDIS plugin, UUID uuid) {
+        this.plugin = plugin;
         this.uuid = uuid;
     }
 
@@ -75,12 +77,12 @@ public class FloodgateControlForm {
         // get the TARDIS the player is in
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", uuid.toString());
-        ResultSetTravellers rst = new ResultSetTravellers(TARDIS.plugin, wheres, false);
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
                 // check they initialised
@@ -88,7 +90,7 @@ public class FloodgateControlForm {
                     TARDISMessage.send(player, "ENERGY_NO_INIT");
                     return;
                 }
-                if (TARDIS.plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && buttonId != 7 && buttonId != 12 && buttonId != 17) {
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && buttonId != 7 && buttonId != 12 && buttonId != 17) {
                     TARDISMessage.send(player, "POWER_DOWN");
                     return;
                 }
@@ -99,7 +101,7 @@ public class FloodgateControlForm {
                             return;
                         }
                         case 6, 7, 11, 12, 13, 14, 15, 18 -> {
-                            if (!TARDIS.plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                 TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                 return;
                             }
@@ -110,24 +112,24 @@ public class FloodgateControlForm {
                 boolean lights = tardis.isLights_on();
                 int level = tardis.getArtron_level();
                 TARDISCircuitChecker tcc = null;
-                if (!TARDIS.plugin.getDifficulty().equals(Difficulty.EASY)) {
-                    tcc = new TARDISCircuitChecker(TARDIS.plugin, id);
+                if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+                    tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
                 switch (buttonId) {
                     case 0 -> { // random button
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        if (tcc != null && !tcc.hasInput() && !TARDIS.plugin.getUtils().inGracePeriod(player, false)) {
+                        if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "INPUT_MISSING");
                             return;
                         }
-                        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> new TARDISRandomButton(TARDIS.plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
                     }
                     case 1 -> { // saves gui
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
@@ -135,24 +137,44 @@ public class FloodgateControlForm {
                             TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                             return;
                         }
-                        new FloodgateSavesForm(uuid, id).send();
+                        new FloodgateSavesForm(plugin, uuid, id).send();
                     }
                     case 2 -> { // back / fast return
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        if (tcc != null && !tcc.hasInput() && !TARDIS.plugin.getUtils().inGracePeriod(player, false)) {
+                        if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "INPUT_MISSING");
                             return;
                         }
-                        new TARDISFastReturnButton(TARDIS.plugin, player, id, level).clickButton();
+                        new TARDISFastReturnButton(plugin, player, id, level).clickButton();
                     }
                     case 3 -> { // areas gui
-
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (tcc != null && !tcc.hasMemory()) {
+                            TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                            return;
+                        }
+                        new FloodgateAreasForm(plugin, uuid).send();
                     }
                     case 4 -> { // destination terminal
-
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (level < plugin.getArtronConfig().getInt("travel")) {
+                            TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                            return;
+                        }
+                        if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                            TARDISMessage.send(player, "INPUT_MISSING");
+                            return;
+                        }
+                        new FloodgateDestinationTerminalForm(plugin, uuid).send();
                     }
                     case 5 -> { // ars
 
@@ -161,29 +183,29 @@ public class FloodgateControlForm {
 
                     }
                     case 7 -> { // power
-                        if (TARDIS.plugin.getConfig().getBoolean("allow.power_down")) {
-                            new TARDISPowerButton(TARDIS.plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
+                        if (plugin.getConfig().getBoolean("allow.power_down")) {
+                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
                         } else {
                             TARDISMessage.send(player, "POWER_DOWN_DISABLED");
                         }
                     }
                     case 8 -> { // light switch
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        if (!lights && TARDIS.plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                        if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        new TARDISLightSwitch(TARDIS.plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
                     }
                     case 9 -> { // door toggle
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISBlackWoolToggler(TARDIS.plugin).toggleBlocks(id, player);
+                        new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                     }
                     case 10 -> { // map
                     }
@@ -194,30 +216,30 @@ public class FloodgateControlForm {
                             TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                             return;
                         }
-                        new TARDISSiegeButton(TARDIS.plugin, player, tardis.isPowered_on(), id).clickButton();
+                        new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
                     }
                     case 13 -> { // hide
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISHideCommand(TARDIS.plugin).hide(player);
+                        new TARDISHideCommand(plugin).hide(player);
                     }
                     case 14 -> { // rebuild
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISRebuildCommand(TARDIS.plugin).rebuildPreset(player);
+                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
                     }
                     case 15 -> { // direction
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, whered);
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
                         String direction = "EAST";
                         if (rsc.resultSet()) {
                             direction = rsc.getDirection().toString();
@@ -228,27 +250,27 @@ public class FloodgateControlForm {
                             direction = COMPASS.values()[ordinal].toString();
                         }
                         String[] args = new String[]{"direction", direction};
-                        new TARDISDirectionCommand(TARDIS.plugin).changeDirection(player, args);
+                        new TARDISDirectionCommand(plugin).changeDirection(player, args);
                     }
                     case 16 -> { // temporal
                     }
                     case 17 -> { // artron level
-                        new TARDISArtronIndicator(TARDIS.plugin).showArtronLevel(player, id, 0);
+                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                     }
                     case 18 -> { // scanner
-                        TARDISScanner.scan(player, id, TARDIS.plugin.getServer().getScheduler());
+                        TARDISScanner.scan(player, id, plugin.getServer().getScheduler());
                     }
                     case 19 -> { // TIS
-                        new TARDISInfoMenuButton(TARDIS.plugin, player).clickButton();
+                        new TARDISInfoMenuButton(plugin, player).clickButton();
                     }
                     case 20 -> { // transmat
                     }
                     case 21 -> { // zero room
-                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        int zero_amount = TARDIS.plugin.getArtronConfig().getInt("zero");
+                        int zero_amount = plugin.getArtronConfig().getInt("zero");
                         if (level < zero_amount) {
                             TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
                             return;
@@ -256,18 +278,26 @@ public class FloodgateControlForm {
                         Location zero = TARDISStaticLocationGetters.getLocationFromDB(tardis.getZero());
                         if (zero != null) {
                             TARDISMessage.send(player, "ZERO_READY");
-                            TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> new TARDISExteriorRenderer(TARDIS.plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
-                            TARDIS.plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
+                            plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
                             HashMap<String, Object> wherez = new HashMap<>();
                             wherez.put("tardis_id", id);
-                            TARDIS.plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                            plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
                         } else {
                             TARDISMessage.send(player, "NO_ZERO");
                         }
                     }
                     case 22 -> { // player prefs
+                        new FloodgatePlayerPrefsForm(plugin, uuid).send();
                     }
                     case 23 -> { // companions
+                        String comps = tardis.getCompanions();
+                        if (comps == null || comps.isEmpty()) {
+                            TARDISMessage.send(player, "COMPANIONS_NONE");
+                            return;
+                        }
+                        String[] companionData = comps.split(":");
+                        new FloodgateCompanionsForm(plugin, uuid, companionData).send();
                     }
                     default -> { // do nothing
                     }

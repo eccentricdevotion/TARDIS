@@ -51,6 +51,43 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
         this.plugin = plugin;
     }
 
+    public static void removeCompanion(int id, String comps, String uuid, Player player) {
+        if (comps.equalsIgnoreCase("everyone")) {
+            TARDISMessage.send(player, "COMPANIONS_ALL");
+        } else {
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
+            String newList = "";
+            String[] split = comps.split(":");
+            StringBuilder buf = new StringBuilder();
+            if (split.length > 1) {
+                // recompile string without the specified player
+                for (String c : split) {
+                    if (!c.equals(uuid)) {
+                        // add to new string
+                        buf.append(c).append(":");
+                    }
+                }
+                // remove trailing colon
+                if (buf.length() > 0) {
+                    newList = buf.substring(0, buf.length() - 1);
+                }
+                set.put("companions", newList);
+            } else {
+                set.put("companions", "");
+            }
+            tid.put("tardis_id", id);
+            TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, tid);
+        }
+    }
+
+    public static void removeFromRegion(String world, String owner, UUID uuid) {
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        if (w != null) {
+            TARDIS.plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, uuid);
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
@@ -107,43 +144,6 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                     }
                 }
             }
-        }
-    }
-
-    private void removeCompanion(int id, String comps, String uuid, Player player) {
-        if (comps.equalsIgnoreCase("everyone")) {
-            TARDISMessage.send(player, "COMPANIONS_ALL");
-        } else {
-            HashMap<String, Object> tid = new HashMap<>();
-            HashMap<String, Object> set = new HashMap<>();
-            String newList = "";
-            String[] split = comps.split(":");
-            StringBuilder buf = new StringBuilder();
-            if (split.length > 1) {
-                // recompile string without the specified player
-                for (String c : split) {
-                    if (!c.equals(uuid)) {
-                        // add to new string
-                        buf.append(c).append(":");
-                    }
-                }
-                // remove trailing colon
-                if (buf.length() > 0) {
-                    newList = buf.substring(0, buf.length() - 1);
-                }
-                set.put("companions", newList);
-            } else {
-                set.put("companions", "");
-            }
-            tid.put("tardis_id", id);
-            plugin.getQueryFactory().doUpdate("tardis", set, tid);
-        }
-    }
-
-    private void removeFromRegion(String world, String owner, UUID uuid) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
-        if (w != null) {
-            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, uuid);
         }
     }
 }
