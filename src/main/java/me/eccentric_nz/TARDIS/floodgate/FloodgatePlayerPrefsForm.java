@@ -14,9 +14,9 @@ public class FloodgatePlayerPrefsForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private List<String> flightmodes = Arrays.asList("NORMAL", "REGULATOR", "MANUAL");
-    private List<String> hums = Arrays.asList("ALIEN", "ATMOSPHERE", "COMPUTER", "COPPER", "CORAL", "GALAXY", "COMPUTER", "COPPER", "LEARNING", "MIND", "NEON", "SLEEPING", "VOID", "RANDOM");
-    private List<String> automodes = Arrays.asList("OFF", "HOME", "AREAS", "CONFIGURED_AREAS", "CLOSEST");
+    private final List<String> flightmodes = Arrays.asList("NORMAL", "REGULATOR", "MANUAL");
+    private final List<String> hums = Arrays.asList("ALIEN", "ATMOSPHERE", "COMPUTER", "COPPER", "CORAL", "GALAXY", "COMPUTER", "COPPER", "LEARNING", "MIND", "NEON", "SLEEPING", "VOID", "RANDOM");
+    private final List<String> automodes = Arrays.asList("OFF", "HOME", "AREAS", "CONFIGURED_AREAS", "CLOSEST");
 
     public FloodgatePlayerPrefsForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
@@ -77,18 +77,18 @@ public class FloodgatePlayerPrefsForm {
         set.put("dnd_on", (response.asToggle(5)) ? 1 : 0);
         set.put("eps_on", (response.asToggle(6)) ? 1 : 0);
         set.put("hads_on", (response.asToggle(7)) ? 1 : 0);
-        set.put("quotes_type", (response.asToggle(8)) ? "DISPERSION" : "DISPLACEMENT");
-        set.put("renderer_on", (response.asToggle(9)) ? 1 : 0);
-        set.put("sfx_on", (response.asToggle(10)) ? 1 : 0);
-        set.put("submarine_on", (response.asToggle(11)) ? 1 : 0);
-        set.put("texture_on", (response.asToggle(12)) ? 1 : 0);
-        set.put("build_on", (response.asToggle(13)) ? 1 : 0);
-        set.put("wool_lights_on", (response.asToggle(14)) ? 1 : 0);
-        set.put("sign_on", (response.asToggle(15)) ? 1 : 0);
-        set.put("travelbar_on", (response.asToggle(16)) ? 1 : 0);
-        set.put("farm_on", (response.asToggle(17)) ? 1 : 0);
-        set.put("telepathy_on", (response.asToggle(18)) ? 1 : 0);
-        set.put("sign_on", (response.asToggle(19)) ? 1 : 0);
+        set.put("hads_type", (response.asToggle(8)) ? "DISPERSION" : "DISPLACEMENT");
+        set.put("quotes_on", (response.asToggle(9)) ? 1 : 0);
+        set.put("renderer_on", (response.asToggle(10)) ? 1 : 0);
+        set.put("sfx_on", (response.asToggle(11)) ? 1 : 0);
+        set.put("submarine_on", (response.asToggle(12)) ? 1 : 0);
+        set.put("texture_on", (response.asToggle(13)) ? 1 : 0);
+        set.put("build_on", (response.asToggle(14)) ? 1 : 0);
+        set.put("wool_lights_on", (response.asToggle(15)) ? 1 : 0);
+        set.put("sign_on", (response.asToggle(16)) ? 1 : 0);
+        set.put("travelbar_on", (response.asToggle(17)) ? 1 : 0);
+        set.put("farm_on", (response.asToggle(18)) ? 1 : 0);
+        set.put("telepathy_on", (response.asToggle(19)) ? 1 : 0);
         set.put("flight_mode", response.asDropdown(20) + 1);
         set.put("hum", hums.get(response.asDropdown(21)));
         set.put("auto_default", automodes.get(response.asDropdown(22)));
