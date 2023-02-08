@@ -2,13 +2,23 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
@@ -128,44 +138,132 @@ public class FloodgateControlForm {
                         new FloodgateSavesForm(uuid, id).send();
                     }
                     case 2 -> { // back / fast return
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (tcc != null && !tcc.hasInput() && !TARDIS.plugin.getUtils().inGracePeriod(player, false)) {
+                            TARDISMessage.send(player, "INPUT_MISSING");
+                            return;
+                        }
+                        new TARDISFastReturnButton(TARDIS.plugin, player, id, level).clickButton();
                     }
                     case 3 -> { // areas gui
+
                     }
                     case 4 -> { // destination terminal
+
                     }
                     case 5 -> { // ars
+
                     }
                     case 6 -> { // desktop theme
+
                     }
                     case 7 -> { // power
+                        if (TARDIS.plugin.getConfig().getBoolean("allow.power_down")) {
+                            new TARDISPowerButton(TARDIS.plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
+                        } else {
+                            TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+                        }
                     }
                     case 8 -> { // light switch
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (!lights && TARDIS.plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                        new TARDISLightSwitch(TARDIS.plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
                     }
                     case 9 -> { // door toggle
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        new TARDISBlackWoolToggler(TARDIS.plugin).toggleBlocks(id, player);
                     }
                     case 10 -> { // map
                     }
                     case 11 -> { // chameleon circuit
                     }
                     case 12 -> { // siege mode
+                        if (tcc != null && !tcc.hasMaterialisation()) {
+                            TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                            return;
+                        }
+                        new TARDISSiegeButton(TARDIS.plugin, player, tardis.isPowered_on(), id).clickButton();
                     }
                     case 13 -> { // hide
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        new TARDISHideCommand(TARDIS.plugin).hide(player);
                     }
                     case 14 -> { // rebuild
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        new TARDISRebuildCommand(TARDIS.plugin).rebuildPreset(player);
                     }
                     case 15 -> { // direction
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, whered);
+                        String direction = "EAST";
+                        if (rsc.resultSet()) {
+                            direction = rsc.getDirection().toString();
+                            int ordinal = COMPASS.valueOf(direction).ordinal() + 1;
+                            if (ordinal == 4) {
+                                ordinal = 0;
+                            }
+                            direction = COMPASS.values()[ordinal].toString();
+                        }
+                        String[] args = new String[]{"direction", direction};
+                        new TARDISDirectionCommand(TARDIS.plugin).changeDirection(player, args);
                     }
                     case 16 -> { // temporal
                     }
                     case 17 -> { // artron level
+                        new TARDISArtronIndicator(TARDIS.plugin).showArtronLevel(player, id, 0);
                     }
                     case 18 -> { // scanner
+                        TARDISScanner.scan(player, id, TARDIS.plugin.getServer().getScheduler());
                     }
                     case 19 -> { // TIS
+                        new TARDISInfoMenuButton(TARDIS.plugin, player).clickButton();
                     }
                     case 20 -> { // transmat
                     }
                     case 21 -> { // zero room
+                        if (TARDIS.plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        int zero_amount = TARDIS.plugin.getArtronConfig().getInt("zero");
+                        if (level < zero_amount) {
+                            TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
+                            return;
+                        }
+                        Location zero = TARDISStaticLocationGetters.getLocationFromDB(tardis.getZero());
+                        if (zero != null) {
+                            TARDISMessage.send(player, "ZERO_READY");
+                            TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> new TARDISExteriorRenderer(TARDIS.plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
+                            TARDIS.plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
+                            HashMap<String, Object> wherez = new HashMap<>();
+                            wherez.put("tardis_id", id);
+                            TARDIS.plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                        } else {
+                            TARDISMessage.send(player, "NO_ZERO");
+                        }
                     }
                     case 22 -> { // player prefs
                     }

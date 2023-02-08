@@ -30,7 +30,7 @@ public class TARDISInfoMenuButton {
     private final TARDIS plugin;
     private final Player player;
 
-    TARDISInfoMenuButton(TARDIS plugin, Player player) {
+    public TARDISInfoMenuButton(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }

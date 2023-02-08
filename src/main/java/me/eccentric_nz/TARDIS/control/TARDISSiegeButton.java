@@ -35,7 +35,7 @@ public class TARDISSiegeButton {
     private final boolean powered;
     private final int id;
 
-    TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
+    public TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
         this.plugin = plugin;
         this.player = player;
         this.powered = powered;

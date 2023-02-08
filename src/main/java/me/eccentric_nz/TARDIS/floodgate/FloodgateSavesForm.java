@@ -13,7 +13,10 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
@@ -43,10 +46,10 @@ public class FloodgateSavesForm {
         ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, did, true);
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Saves Menu");
-        builder.button("Home", FormImage.Type.PATH, String.format(path, Material.values()[1].toString().toLowerCase()));
+        builder.button("Home", FormImage.Type.PATH, "textures/blocks/beehive_front.png");
         if (rsd.resultSet()) {
             for (HashMap<String, String> map : rsd.getData()) {
-                builder.button(map.get("dest_name") + " ~ " + map.get("dest_id"), FormImage.Type.URL, String.format(path, Material.values()[i].toString().toLowerCase()));
+                builder.button(map.get("dest_name") + " ~ " + map.get("dest_id"), FormImage.Type.URL, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                 i++;
             }
         }
