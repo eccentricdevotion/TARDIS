@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
@@ -253,6 +254,15 @@ public class FloodgateControlForm {
                         new TARDISDirectionCommand(plugin).changeDirection(player, args);
                     }
                     case 16 -> { // temporal
+                        if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {
+                            TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+                            return;
+                        }
+                        if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
+                            TARDISMessage.send(player, "TEMP_MISSING");
+                            return;
+                        }
+                        new FloodgateTemporalForm(plugin, uuid).send();
                     }
                     case 17 -> { // artron level
                         new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
