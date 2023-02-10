@@ -1,9 +1,14 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
@@ -75,9 +80,28 @@ public class FloodgateDesktopThemeForm {
 
     private void handleResponse(SimpleFormResponse response) {
         String label = response.clickedButton().text();
-        // do stuff
-
-        // open wall form
-        new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
+        Schematic schm = Consoles.getBY_NAMES().get(label);
+        if (schm != null) {
+            Player p = plugin.getServer().getPlayer(uuid);
+            // get permission based on choice
+            String perm = schm.getPermission();
+            if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
+                // remember the upgrade choice
+                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
+                int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
+                if (tud.getLevel() >= needed) {
+                    tud.setSchematic(schm);
+                    plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
+                    if (tud.getPrevious().getPermission().equals("archive")) {
+                        new ArchiveUpdate(plugin, p.getUniqueId().toString(), "ª°º").setInUse();
+                    }
+                    // open wall form
+                    new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
+                }
+            } else {
+                TARDISMessage.send(p, "NO_PERM_UPGRADE_CONSOLE");
+            }
+        }
     }
 }

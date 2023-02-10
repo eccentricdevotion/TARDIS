@@ -46,6 +46,15 @@ public class TARDISThemeButton {
         this.id = id;
     }
 
+    public static int getTardisId(String uuid) {
+        int tid = 0;
+        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
+        if (rs.fromUUID(uuid)) {
+            tid = rs.getTardis_id();
+        }
+        return tid;
+    }
+
     public void clickButton() {
         // check player is in own TARDIS
         int p_tid = getTardisId(player.getUniqueId().toString());
@@ -68,14 +77,5 @@ public class TARDISThemeButton {
         Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);
-    }
-
-    private int getTardisId(String uuid) {
-        int tid = 0;
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(uuid)) {
-            tid = rs.getTardis_id();
-        }
-        return tid;
     }
 }

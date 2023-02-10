@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.desktop.TARDISThemeProcessor;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Bukkit;
@@ -46,13 +48,18 @@ public class FloodgateWallFloorForm {
             material = Material.matchMaterial(response.asInput(0));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(Bukkit.getPlayer(uuid), "ARG_MATERIAL");
+            return;
         }
         // save block
+        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         if (which.equals("Wall")) {
+            tud.setWall(material.toString());
             // open floor form
             new FloodgateWallFloorForm(plugin, uuid, "Floor").send();
         } else {
+            tud.setFloor(material.toString());
             // run desktop change
+            new TARDISThemeProcessor(plugin, uuid).changeDesktop();
         }
     }
 }

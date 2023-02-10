@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
@@ -12,6 +13,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -19,8 +21,11 @@ import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
@@ -178,10 +183,49 @@ public class FloodgateControlForm {
                         new FloodgateDestinationTerminalForm(plugin, uuid).send();
                     }
                     case 5 -> { // ars
-
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        // check they're in a compatible world
+                        if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
+                            TARDISMessage.send(player, "ROOM_OWN_WORLD");
+                            return;
+                        }
+                        // check they have permission to grow rooms
+                        if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
+                            TARDISMessage.send(player, "NO_PERM_ROOMS");
+                            return;
+                        }
+                        if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                            TARDISMessage.send(player, "ARS_MISSING");
+                            return;
+                        }
+                        TARDISMessage.send(player, "ARS_USE_CMD");
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
+                            Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                            ars.setContents(tars);
+                            player.openInventory(ars);
+                        }, 100);
                     }
                     case 6 -> { // desktop theme
-
+                        // check player is in own TARDIS
+                        int p_tid = TARDISThemeButton.getTardisId(uuid.toString());
+                        if (p_tid != id) {
+                            TARDISMessage.send(player, "UPGRADE_OWN");
+                            return;
+                        }
+                        // check they are not growing rooms
+                        if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(id)) {
+                            TARDISMessage.send(player, "NO_UPGRADE_WHILE_GROWING");
+                            return;
+                        }
+                        // get player's current console
+                        TARDISUpgradeData tud = new TARDISUpgradeData();
+                        tud.setPrevious(tardis.getSchematic());
+                        tud.setLevel(level);
+                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                     }
                     case 7 -> { // power
                         if (plugin.getConfig().getBoolean("allow.power_down")) {
@@ -209,6 +253,7 @@ public class FloodgateControlForm {
                         new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                     }
                     case 10 -> { // map
+                        
                     }
                     case 11 -> { // chameleon circuit
                     }
