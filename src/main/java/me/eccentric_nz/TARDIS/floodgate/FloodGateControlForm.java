@@ -1,7 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -33,6 +31,9 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class FloodgateControlForm {
 
@@ -255,7 +256,19 @@ public class FloodgateControlForm {
                         new FloodgateMapForm(plugin, uuid, id).send();
                     }
                     case 11 -> { // chameleon circuit
-                        
+                        if (tcc != null && !tcc.hasChameleon()) {
+                            TARDISMessage.send(player, "CHAM_MISSING");
+                            return;
+                        }
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                            TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                            return;
+                        }
+                        new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
                     }
                     case 12 -> { // siege mode
                         if (tcc != null && !tcc.hasMaterialisation()) {
@@ -319,6 +332,7 @@ public class FloodgateControlForm {
                         new TARDISInfoMenuButton(plugin, player).clickButton();
                     }
                     case 20 -> { // transmat
+                        new FloodgateTransmatForm(plugin, uuid, id).send();
                     }
                     case 21 -> { // zero room
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
