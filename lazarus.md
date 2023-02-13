@@ -7,12 +7,14 @@ title: Genetic Manipulator (AKA Lazarus Device)
 
 # TARDIS Genetic Manipulator (AKA Lazarus Device)
 
-## Requirements
+## Recommendation
 
-The Genetic Manipulator depends on two plugins being installed alongside TARDIS:
+Although nit required, the Genetic Manipulator works best when the following two plugins are installed alongside TARDIS:
 
 - [LibsDisguises](http://www.spigotmc.org/resources/libs-disguises.81/), and
 - [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/)
+
+Genetic manipulation will still work without LibsDisguises, but the changes will only be visible to other players, not yourself.
 
 ## Genetic Manipulation
 
