@@ -1,15 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -19,6 +9,13 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class FloodgateMapForm {
 
@@ -30,7 +27,7 @@ public class FloodgateMapForm {
     private final List<String> STONE = Collections.singletonList("STONE");
     private final UUID uuid;
     private final int id;
-    private final String path = "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/%s.png";
+    private final String path = "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/room/%s.png";
 
     public FloodgateMapForm(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
@@ -56,7 +53,7 @@ public class FloodgateMapForm {
     private void handleResponse(SimpleFormResponse response) {
         String label = response.clickedButton().text();
     }
-    
+
     private List<String> getRooms(int id) {
         List<String> data = new ArrayList<>();
         Statement statement = null;
