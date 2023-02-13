@@ -157,7 +157,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 im.setLore(lore);
                 is.setItemMeta(im);
             }
-            if (slot == 51) { //remove disguise
+            if (slot == 51) { // remove disguise
                 plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls

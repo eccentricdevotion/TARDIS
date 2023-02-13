@@ -28,7 +28,7 @@ import org.bukkit.block.data.type.Wall;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusRunnable implements Runnable {
+public class TARDISLazarusRunnable implements Runnable {
 
     private static final int LOOPS = 12;
     private final TARDIS plugin;
@@ -42,7 +42,7 @@ class TARDISLazarusRunnable implements Runnable {
     private int taskID;
     private int i = 0;
 
-    TARDISLazarusRunnable(TARDIS plugin, Block block) {
+    public TARDISLazarusRunnable(TARDIS plugin, Block block) {
         this.plugin = plugin;
         this.block = block;
     }

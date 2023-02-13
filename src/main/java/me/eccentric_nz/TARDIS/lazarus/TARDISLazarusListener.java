@@ -84,7 +84,7 @@ public class TARDISLazarusListener implements Listener {
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
                     // open the GUI
                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
-                        new FloodgateGeneticManipulatorForm(plugin, uuid).send();
+                        new FloodgateGeneticManipulatorForm(plugin, uuid, b).send();
                     } else {
                         Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                         if (player.isSneaking()) {
