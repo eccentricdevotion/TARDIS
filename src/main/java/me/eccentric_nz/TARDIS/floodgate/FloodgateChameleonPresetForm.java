@@ -22,17 +22,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
-public class ChameleonPresetForm {
+public class FloodgateChameleonPresetForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private final int id;
     private final String path = "textures/blocks/%s.png";
 
-    public ChameleonPresetForm(TARDIS plugin, UUID uuid, int id) {
+    public FloodgateChameleonPresetForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.id = id;
     }
 
     public void send() {

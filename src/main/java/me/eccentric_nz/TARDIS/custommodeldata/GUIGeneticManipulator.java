@@ -29,6 +29,7 @@ public enum GUIGeneticManipulator {
     BUTTON_RESTORE(1, 51, Material.APPLE),
     BUTTON_DNA(1, 52, Material.WRITABLE_BOOK),
     BUTTON_CANCEL(16, 53, Material.BOWL),
+    // TODO ADD new TARDISWeepingAngels monsters
     ANGEL(1, 1, Material.BRICK),
     CYBERMAN(1, 1, Material.IRON_INGOT),
     DALEK(1, 1, Material.SLIME_BALL),

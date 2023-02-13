@@ -128,7 +128,7 @@ public class FloodgateChameleonCircuitForm {
                 }
                 TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
             }
-            case "Shorted out" -> new ChameleonPresetForm(plugin, uuid, id).send();
+            case "Shorted out" -> new FloodgateChameleonPresetForm(plugin, uuid).send();
             case "Construct" -> TARDISMessage.send(player, "CONSTRUCT_USE_SHELL");
             default -> {
                 // do nothing

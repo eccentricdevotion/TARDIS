@@ -115,6 +115,7 @@ class TARDISLazarusExtraInventory {
             eggs[i] = egg;
             i++;
         }
+        // TODO TARDISWeepingAngels monsters on their own page
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
             ItemStack weep = new ItemStack(Material.BRICK, 1);
@@ -223,6 +224,7 @@ class TARDISLazarusExtraInventory {
             eggs[i] = zyg;
         }
         // add options
+        // TODO master only on first page
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
