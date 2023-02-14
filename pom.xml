@@ -230,7 +230,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardisweepingangels</groupId>
             <artifactId>TARDISWeepingAngels</artifactId>
-            <version>3.6.2</version>
+            <version>4.1.0</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>

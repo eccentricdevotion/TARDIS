@@ -36,7 +36,7 @@ import java.util.List;
  */
 class TARDISLazarusExtraInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] extra;
     private final TARDIS plugin;
     private final List<Material> disguises = new ArrayList<>();
 
@@ -74,11 +74,11 @@ class TARDISLazarusExtraInventory {
         disguises.add(Material.CAMEL_SPAWN_EGG);
         disguises.add(Material.IRON_GOLEM_SPAWN_EGG);
         disguises.add(Material.SNOW_GOLEM_SPAWN_EGG);
-        terminal = getItemStack();
+        extra = getItemStack();
     }
 
     /**
-     * Constructs an inventory for the Temporal Locator GUI.
+     * Constructs an inventory for the Genetic Manipulator GUI.
      *
      * @return an Array of itemStacks (an inventory)
      */
@@ -121,7 +121,7 @@ class TARDISLazarusExtraInventory {
             ItemStack weep = new ItemStack(Material.BRICK, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("WEEPING ANGEL");
-            ing.setCustomModelData(GUIGeneticManipulator.ANGEL.getCustomModelData());
+            ing.setCustomModelData(GUIGeneticManipulator.WEEPING_ANGEL.getCustomModelData());
             weep.setItemMeta(ing);
             eggs[i] = weep;
             i++;
@@ -277,7 +277,7 @@ class TARDISLazarusExtraInventory {
         return eggs;
     }
 
-    public ItemStack[] getTerminal() {
-        return terminal;
+    public ItemStack[] getExtra() {
+        return extra;
     }
 }
