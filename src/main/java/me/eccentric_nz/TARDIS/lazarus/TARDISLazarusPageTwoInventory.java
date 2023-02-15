@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -118,12 +118,12 @@ class TARDISLazarusPageTwoInventory {
         brine.setDisplayName("HEROBRINE");
         hero.setItemMeta(brine);
         stacks[i] = hero;
-        // page two
+        // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta two = page.getItemMeta();
-        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
-        page.setItemMeta(two);
+        ItemMeta one = page.getItemMeta();
+        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        page.setItemMeta(one);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
@@ -135,7 +135,6 @@ class TARDISLazarusPageTwoInventory {
             stacks[44] = weep;
         }
         // add options
-
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));

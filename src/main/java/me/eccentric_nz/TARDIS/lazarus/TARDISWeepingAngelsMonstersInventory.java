@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
@@ -37,6 +39,20 @@ public class TARDISWeepingAngelsMonstersInventory {
             stacks[i] = mon;
             i++;
         }
+        // page one
+        ItemStack page1 = new ItemStack(Material.ARROW, 1);
+        ItemMeta one = page1.getItemMeta();
+        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        page1.setItemMeta(one);
+        stacks[43] = page1;
+        // page two
+        ItemStack page2 = new ItemStack(Material.ARROW, 1);
+        ItemMeta two = page2.getItemMeta();
+        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
+        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        page2.setItemMeta(two);
+        stacks[44] = page2;
         // master
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
