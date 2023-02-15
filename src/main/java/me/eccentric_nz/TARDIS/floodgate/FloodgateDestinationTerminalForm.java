@@ -37,6 +37,7 @@ public class FloodgateDestinationTerminalForm {
     }
 
     private void handleResponse(CustomFormResponse response) {
+        // TODO
         // check player hs permission for world
         // if nether or the end check if travel is enabled there
         // check location

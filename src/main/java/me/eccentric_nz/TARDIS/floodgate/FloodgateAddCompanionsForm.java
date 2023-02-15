@@ -2,8 +2,10 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
+import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
@@ -15,25 +17,37 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class FloodgateAddCompanionsForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
+    private final Player player;
 
     public FloodgateAddCompanionsForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
+        this.player = this.plugin.getServer().getPlayer(this.uuid);
     }
 
     public void send() {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Add Companion");
         builder.content("To ADD a companion select a player button.");
+        List<String> comps;
+        // get current companions
+        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+        if (rs.fromUUID(uuid.toString()) && rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
+            comps = Arrays.asList(rs.getCompanions().split(":"));
+        } else {
+            comps = new ArrayList<>();
+        }
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            builder.button(p.getName());
+            UUID puid = p.getUniqueId();
+            if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
+                builder.button(p.getName());
+            }
         }
         builder.button("Everyone");
         builder.validResultHandler(response -> handleResponse(response));

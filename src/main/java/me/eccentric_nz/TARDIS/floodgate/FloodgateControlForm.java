@@ -226,6 +226,7 @@ public class FloodgateControlForm {
                         tud.setPrevious(tardis.getSchematic());
                         tud.setLevel(level);
                         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                        new FloodgateDesktopThemeForm(plugin, uuid).send();
                     }
                     case 7 -> { // power
                         if (plugin.getConfig().getBoolean("allow.power_down")) {
