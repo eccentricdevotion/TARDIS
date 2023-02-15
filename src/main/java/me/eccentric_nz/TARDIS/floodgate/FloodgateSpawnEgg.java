@@ -27,6 +27,7 @@ public class FloodgateSpawnEgg {
         disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
         disguises.add(Material.ENDERMAN_SPAWN_EGG);
         disguises.add(Material.ENDERMITE_SPAWN_EGG);
+        disguises.add(Material.ENDER_DRAGON_SPAWN_EGG);
         disguises.add(Material.EVOKER_SPAWN_EGG);
         disguises.add(Material.FOX_SPAWN_EGG);
         disguises.add(Material.FROG_SPAWN_EGG);
@@ -77,6 +78,7 @@ public class FloodgateSpawnEgg {
         disguises.add(Material.WARDEN_SPAWN_EGG);
         disguises.add(Material.WITCH_SPAWN_EGG);
         disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
+        disguises.add(Material.WITHER_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);
         disguises.add(Material.ZOGLIN_SPAWN_EGG);
         disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
