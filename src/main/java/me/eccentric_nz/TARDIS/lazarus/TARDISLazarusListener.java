@@ -88,9 +88,9 @@ public class TARDISLazarusListener implements Listener {
                     } else {
                         Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                         if (player.isSneaking()) {
-                            inv.setContents(new TARDISLazarusExtraInventory(plugin).getExtra());
+                            inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
                         } else {
-                            inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                            inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                         }
                         player.openInventory(inv);
                     }

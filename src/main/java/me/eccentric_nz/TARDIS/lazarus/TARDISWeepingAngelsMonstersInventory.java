@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
+
 public class TARDISWeepingAngelsMonstersInventory {
 
     private final ItemStack[] monsters;
@@ -23,7 +25,7 @@ public class TARDISWeepingAngelsMonstersInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] eggs = new ItemStack[54];
+        ItemStack[] stacks = new ItemStack[54];
         int i = 0;
         for (Monster monster : Monster.values()) {
             ItemStack mon = new ItemStack(monster.getMaterial(), 1);
@@ -32,30 +34,43 @@ public class TARDISWeepingAngelsMonstersInventory {
             GUIGeneticManipulator gui = GUIGeneticManipulator.valueOf(monster.toString());
             ster.setCustomModelData(gui.getCustomModelData());
             mon.setItemMeta(ster);
-            eggs[i] = mon;
+            stacks[i] = mon;
             i++;
         }
+        // master
+        ItemStack the = new ItemStack(Material.COMPARATOR, 1);
+        ItemMeta master = the.getItemMeta();
+        master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
+        master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
+        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
+        the.setItemMeta(master);
+        stacks[45] = the;
         // add buttons
         ItemStack rem = new ItemStack(Material.APPLE, 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
         ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
         rem.setItemMeta(ove);
-        eggs[51] = rem;
+        stacks[51] = rem;
         // set
         ItemStack s = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.getCustomModelData());
         s.setItemMeta(sim);
-        eggs[52] = s;
+        stacks[52] = s;
         // cancel
         ItemStack can = new ItemStack(Material.BOWL, 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
         cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
         can.setItemMeta(cel);
-        eggs[53] = can;
-        return eggs;
+        stacks[53] = can;
+
+        return stacks;
+    }
+
+    public ItemStack[] getMonsters() {
+        return monsters;
     }
 }

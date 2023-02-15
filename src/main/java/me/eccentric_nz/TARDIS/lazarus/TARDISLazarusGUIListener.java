@@ -68,8 +68,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "EMPTY CHILD", "ICE WARRIOR", "JUDOON", "K9", "OOD", "SILENT", "SILURIAN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "ZYGON");
-    private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Empty Child Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Ood Head", "Silent Head", "Silurian Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Zygon Head");
+    private final List<String> twaMonsters = Arrays.asList("CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "MIRE", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "WEEPING ANGEL", "ZYGON");
+    private final List<String> twaHelmets = Arrays.asList("Cyberman Head", "Dalek Head", "Dalek Sec Head", "Davros Head", "Empty Child Head", "Hath Head", "Headless Monk Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Mire Head", "Ood Head", "Racnoss Head", "Silent Head", "Silurian Head", "Slitheen Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Weeping Angel Head", "Zygon Head");
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -117,7 +117,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     disguises.put(uuid, "PLAYER");
                 }
             }
-            if (slot == 47) { // The Master Switch : ON | OFF
+            if (slot == 43) {
+                // go to page one or two
+            }
+            if (slot == 44) {
+                // go to monsters page
+            }
+            if (slot == 45) { // The Master Switch : ON | OFF
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
@@ -135,19 +141,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 }
                 is.setItemMeta(im);
             }
-            if (slot == 48) { // adult / baby
+            if (slot == 47) { // adult / baby
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
                 im.setLore(Collections.singletonList(onoff));
                 is.setItemMeta(im);
             }
-            if (slot == 49) { // type / colour
+            if (slot == 48) { // type / colour
                 if (disguises.containsKey(uuid)) {
                     setSlotFourtyEight(view, disguises.get(uuid), uuid);
                 }
             }
-            if (slot == 50) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
+            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
@@ -739,7 +745,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         ItemStack helmet = player.getInventory().getHelmet();
         if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
             String metaName = helmet.getItemMeta().getDisplayName();
-            if (twaHelmets.contains(metaName)) {
+            if (setSlotFortyEight.contains(metaName)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + player.getUniqueId());
             }
         }
