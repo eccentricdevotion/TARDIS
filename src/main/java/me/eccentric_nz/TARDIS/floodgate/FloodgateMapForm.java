@@ -1,9 +1,18 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
@@ -40,6 +49,7 @@ public class FloodgateMapForm {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Map");
         builder.content("Click a room name to transmat to that room.");
+        builder.button("Console");
         // get rooms from ARS
         for (String room : getRooms(id)) {
             builder.button(room, FormImage.Type.URL, String.format(path, room.toLowerCase()));
@@ -51,7 +61,17 @@ public class FloodgateMapForm {
     }
 
     private void handleResponse(SimpleFormResponse response) {
+        Player player = plugin.getServer().getPlayer(uuid);
         String label = response.clickedButton().text();
+        String mat = TARDISARS.valueOf(label).getMaterial().toString();
+        Location location = getTransmatLocation(mat);
+        if (location != null) {
+            TARDISMessage.send(player, "TRANSMAT");
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                player.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                player.teleport(location);
+            }, 10L);
+        }
     }
 
     private List<String> getRooms(int id) {
@@ -72,7 +92,9 @@ public class FloodgateMapForm {
                         // only count if not a console block
                         if (!Consoles.getBY_MATERIALS().containsKey(material)) {
                             String room = TARDISARS.ARSFor(material).toString();
-                            data.add(room);
+                            if (!room.equals("RENDERER")) {
+                                data.add(room);
+                            }
                         }
                     }
                 }
@@ -92,5 +114,38 @@ public class FloodgateMapForm {
             }
         }
         return data;
+    }
+
+    private Location getTransmatLocation(String room) {
+        // get map data
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetARS rs = new ResultSetARS(plugin, where);
+        if (rs.resultSet()) {
+            String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
+            for (int l = 0; l < 3; l++) {
+                for (int r = 0; r < 9; r++) {
+                    for (int c = 0; c < 9; c++) {
+                        if (room.equals("Console")) {
+                            if (Consoles.getBY_MATERIALS().containsKey(json[l][r][c])) {
+                                // get inner door tp location
+                                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
+                                return idl.getL();
+                            }
+                        }
+                        if (json[l][r][c].equals(room)) {
+                            // will always get the first room of this type on this level
+                            TARDISARSSlot a = new TARDISARSSlot();
+                            a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
+                            a.setY(l);
+                            a.setX(r);
+                            a.setZ(c);
+                            return new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d);
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

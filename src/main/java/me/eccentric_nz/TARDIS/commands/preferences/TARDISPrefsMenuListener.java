@@ -31,6 +31,8 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -224,12 +226,16 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         if (rs.resultSet()) {
                             // close this gui and load the TARDIS map
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
-                                // close inventory
-                                p.closeInventory();
-                                // open new inventory
-                                new_inv.setContents(new TARDISARSMap(plugin).getMap());
-                                p.openInventory(new_inv);
+                                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                                    new FloodgateMapForm(plugin, uuid, rs.getTardis_id()).send();
+                                } else {
+                                    Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
+                                    // close inventory
+                                    p.closeInventory();
+                                    // open new inventory
+                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
+                                    p.openInventory(new_inv);
+                                }
                             }, 1L);
                         } else {
                             TARDISMessage.send(p, "NOT_IN_TARDIS");
