@@ -59,7 +59,6 @@ public class FloodgateDestinationTerminalForm {
     }
 
     private void handleResponse(CustomFormResponse response) {
-        // TODO
         Player player = plugin.getServer().getPlayer(uuid);
         String world = worlds.get(response.asDropdown(3));
         // check player hs permission for world

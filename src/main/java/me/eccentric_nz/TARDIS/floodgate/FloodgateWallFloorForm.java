@@ -3,9 +3,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeProcessor;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.response.CustomFormResponse;
@@ -27,14 +25,15 @@ public class FloodgateWallFloorForm {
         this.plugin = plugin;
         this.uuid = uuid;
         this.which = which;
-        for (Material entry : TARDISWalls.BLOCKS) {
-            blocks.add(entry.toString());
+        blocks.add("Default");
+        for (Material mat : TARDISWalls.BLOCKS) {
+            blocks.add(mat.toString());
         }
     }
 
     public void send() {
         CustomForm form = CustomForm.builder()
-                .title("TARDIS "+which+" Menu")
+                .title("TARDIS " + which + " Menu")
                 .dropdown("Material", blocks)
                 .validResultHandler(response -> handleResponse(response))
                 .build();
@@ -43,21 +42,18 @@ public class FloodgateWallFloorForm {
     }
 
     private void handleResponse(CustomFormResponse response) {
-        Material material;
-        try {
-            material = Material.matchMaterial(response.asInput(0));
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(Bukkit.getPlayer(uuid), "ARG_MATERIAL");
-            return;
-        }
         // save block
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        String m = blocks.get(response.asDropdown(0));
+        if (m.equals("Default")) {
+            m = (which.equals("Wall")) ? "ORANGE_WOOL" : "LIGHT_GRAY_WOOL";
+        }
         if (which.equals("Wall")) {
-            tud.setWall(material.toString());
+            tud.setWall(m);
             // open floor form
             new FloodgateWallFloorForm(plugin, uuid, "Floor").send();
         } else {
-            tud.setFloor(material.toString());
+            tud.setFloor(m);
             // run desktop change
             new TARDISThemeProcessor(plugin, uuid).changeDesktop();
         }

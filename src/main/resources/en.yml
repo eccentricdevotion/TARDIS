@@ -1030,6 +1030,7 @@ UPDATE_INTERFACE: "Click on the TARDIS User Interface you want to update in the 
 UPDATE_IN_WORLD: "You must be in a TARDIS world to update this block!"
 UPDATE_LOCATION: "Click on the TARDIS Internal Spawn Location you want to update in the list below"
 UPDATE_NOT_VALID: "That is not a valid TARDIS block name!"
+UPDATE_NO_ENERGY: "You do not have enough Artron energy to upgrade to the %s console!"
 UPDATE_NO_PERM: "You do not have permission to update the %s!"
 UPDATE_OTHER: "Click on the Other Component you want to update in the list below:"
 UPDATE_ROOM: "You must grow a %s room before you can update its position!"

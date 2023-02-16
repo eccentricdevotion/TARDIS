@@ -29,38 +29,39 @@ public class FloodgateDesktopThemeForm {
     public FloodgateDesktopThemeForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        blocks.put("CAVE", "cave");
-        blocks.put("STEAMPUNK", "coal");
-        blocks.put("CUSTOM", "custom");
-        blocks.put("DELUXE", "diamond");
-        blocks.put("ELEVENTH", "emerald");
+        blocks.put("ANCIENT", "sculk");
+        blocks.put("ARS", "quartz");
         blocks.put("BIGGER", "gold");
-        blocks.put("ROTOR", "honeycomb_block");
         blocks.put("BUDGET", "iron");
-        blocks.put("TOM", "lapis");
-        blocks.put("LEGACY_ELEVENTH", "cyan_glazed");
+        blocks.put("CAVE", "cave");
+        blocks.put("COPPER", "warped_planks");
+        blocks.put("CORAL", "netherwart");
+        blocks.put("CUSTOM", "custom");
+        blocks.put("DELTA", "delta");
+        blocks.put("DELUXE", "diamond");
+        blocks.put("DIVISION", "pink_glazed");
+        blocks.put("ELEVENTH", "emerald");
+        blocks.put("ENDER", "purpur");
+        blocks.put("FACTORY", "yellow_concrete_powder");
+        blocks.put("FUGITIVE", "polished_deepslate");
+        blocks.put("LEGACY_BIGGER", "orange_glazed");
         blocks.put("LEGACY_BUDGET", "light_gray_glazed");
         blocks.put("LEGACY_DELUXE", "lime_glazed");
-        blocks.put("MASTER", "netherbrick");
-        blocks.put("CORAL", "netherwart");
-        blocks.put("THIRTEENTH", "orange_concrete");
-        blocks.put("LEGACY_BIGGER", "orange_glazed");
-        blocks.put("ORIGINAL", "packed_mud");
-        blocks.put("DIVISION", "pink_glazed");
-        blocks.put("PLANK", "plank");
-        blocks.put("MECHANICAL", "polished_andesite");
-        blocks.put("FUGITIVE", "polished_deepslate");
-        blocks.put("TWELFTH", "prismarine");
-        blocks.put("ENDER", "purpur");
-        blocks.put("ARS", "quartz");
+        blocks.put("LEGACY_ELEVENTH", "cyan_glazed");
         blocks.put("LEGACY_REDSTONE", "red_glazed");
-        blocks.put("REDSTONE", "redstone");
+        blocks.put("MASTER", "netherbrick");
+        blocks.put("MECHANICAL", "polished_andesite");
+        blocks.put("ORIGINAL", "packed_mud");
+        blocks.put("PLANK", "plank");
         blocks.put("PYRAMID", "sandstone");
-        blocks.put("ANCIENT", "sculk");
-        blocks.put("COPPER", "warped_planks");
-        blocks.put("WEATHERED", "weathered");
+        blocks.put("REDSTONE", "redstone");
+        blocks.put("ROTOR", "honeycomb_block");
+        blocks.put("STEAMPUNK", "coal");
+        blocks.put("THIRTEENTH", "orange_concrete");
+        blocks.put("TOM", "lapis");
+        blocks.put("TWELFTH", "prismarine");
         blocks.put("WAR", "white_terracotta");
-        blocks.put("FACTORY", "yellow_concrete_powder");
+        blocks.put("WEATHERED", "weathered");
     }
 
     public void send() {
@@ -82,25 +83,27 @@ public class FloodgateDesktopThemeForm {
         String label = response.clickedButton().text();
         Schematic schm = Consoles.getBY_NAMES().get(label);
         if (schm != null) {
-            Player p = plugin.getServer().getPlayer(uuid);
+            Player player = plugin.getServer().getPlayer(uuid);
             // get permission based on choice
             String perm = schm.getPermission();
-            if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
+            if (TARDISPermission.hasPermission(player, "tardis." + perm)) {
                 // remember the upgrade choice
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                 int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                 int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
                 if (tud.getLevel() >= needed) {
                     tud.setSchematic(schm);
-                    plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
+                    plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
                     if (tud.getPrevious().getPermission().equals("archive")) {
-                        new ArchiveUpdate(plugin, p.getUniqueId().toString(), "ª°º").setInUse();
+                        new ArchiveUpdate(plugin, player.getUniqueId().toString(), "ª°º").setInUse();
                     }
                     // open wall form
                     new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
+                } else {
+                    TARDISMessage.send(player, "UPDATE_NO_ENERGY", label);
                 }
             } else {
-                TARDISMessage.send(p, "NO_PERM_UPGRADE_CONSOLE");
+                TARDISMessage.send(player, "NO_PERM_UPGRADE_CONSOLE");
             }
         }
     }
