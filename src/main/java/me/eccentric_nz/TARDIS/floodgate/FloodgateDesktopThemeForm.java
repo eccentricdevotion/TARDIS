@@ -37,7 +37,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("COPPER", "warped_planks");
         blocks.put("CORAL", "netherwart");
         blocks.put("CUSTOM", "custom");
-        blocks.put("DELTA", "delta");
+        blocks.put("DELTA", "crying_obsidian");
         blocks.put("DELUXE", "diamond");
         blocks.put("DIVISION", "pink_glazed");
         blocks.put("ELEVENTH", "emerald");

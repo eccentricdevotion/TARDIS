@@ -24,6 +24,7 @@
 
 * Bedrock / floodgate features
 * Semi-random assigned parking
+* Update lazarus / genetic manipulator
 
 ## Resource Pack / TARDISWeepingAngels
 

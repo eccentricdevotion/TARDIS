@@ -20,7 +20,6 @@ import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 public class FloodgateChameleonPresetForm {
@@ -41,15 +40,14 @@ public class FloodgateChameleonPresetForm {
         builder.title("TARDIS Chameleon Circuit");
         for (PRESET preset : PRESET.values()) {
             if (preset.isBlockPreset() && TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
-                String path = String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT));
-                plugin.debug("texture path -> " + path);
+                String path = String.format("textures/%s.png", FloodgateTextures.lookup.get(preset.getGuiDisplay().toString()));
                 builder.button(preset.toString(), FormImage.Type.PATH, path);
             }
         }
         // TODO TARDIS-Bedrock-Resource-Pack.mcpack for ItemFrame police boxes and sounds
 //        for (PRESET preset : PRESET.values()) {
 //            if (preset.usesItemFrame()) {
-//                builder.button(preset.toString(), FormImage.Type.PATH, String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT)));
+//                builder.button(preset.toString(), FormImage.Type.PATH, String.format("textures/%s.png", FloodgateTextures.lookup.get(preset.getGuiDisplay().toString())));
 //            }
 //        }
         builder.validResultHandler(response -> handleResponse(response));
