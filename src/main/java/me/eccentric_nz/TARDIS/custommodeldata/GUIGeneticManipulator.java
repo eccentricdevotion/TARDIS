@@ -22,7 +22,6 @@ import org.bukkit.Material;
 public enum GUIGeneticManipulator {
 
     // Genetic Manipulator
-    // TODO check slot numbers
     BUTTON_MASTER(3, 45, Material.COMPARATOR),
     BUTTON_AGE(2, 47, Material.HOPPER),
     BUTTON_TYPE(1, 48, Material.CYAN_DYE),
@@ -30,7 +29,7 @@ public enum GUIGeneticManipulator {
     BUTTON_RESTORE(1, 51, Material.APPLE),
     BUTTON_DNA(1, 52, Material.WRITABLE_BOOK),
     BUTTON_CANCEL(16, 53, Material.BOWL),
-    BUTTON_TWA(147, 46, Material.BOWL),
+    BUTTON_TWA(147, 44, Material.BOWL),
 
     CYBERMAN(1, 1, Material.IRON_INGOT),
     DALEK(1, 1, Material.SLIME_BALL),
