@@ -46,7 +46,8 @@ public class FloodgateControlForm {
     }
 
     public void send() {
-        SimpleForm form = SimpleForm.builder().title("TARDIS Control Menu")
+        SimpleForm form = SimpleForm.builder()
+                .title("TARDIS Control Menu")
                 .button("Random", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/random_button.png")
                 .button("Saves", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/saves_button.png")
                 .button("Back", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/back_button.png")

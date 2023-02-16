@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -26,26 +27,31 @@ public class FloodgateChameleonPresetForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private final String path = "textures/blocks/%s.png";
+    private final Player player;
+
 
     public FloodgateChameleonPresetForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
+        this.player = this.plugin.getServer().getPlayer(this.uuid);
     }
 
     public void send() {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Chameleon Circuit");
         for (PRESET preset : PRESET.values()) {
-            if (preset.isBlockPreset()) {
-                builder.button(preset.toString(), FormImage.Type.PATH, String.format(path, preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT)));
+            if (preset.isBlockPreset() && TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
+                String path = String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT));
+                plugin.debug("texture path -> " + path);
+                builder.button(preset.toString(), FormImage.Type.PATH, path);
             }
         }
-        for (PRESET preset : PRESET.values()) {
-            if (preset.usesItemFrame()) {
-                builder.button(preset.toString(), FormImage.Type.PATH, String.format(path, preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT)));
-            }
-        }
+        // TODO TARDIS-Bedrock-Resource-Pack.mcpack for ItemFrame police boxes and sounds
+//        for (PRESET preset : PRESET.values()) {
+//            if (preset.usesItemFrame()) {
+//                builder.button(preset.toString(), FormImage.Type.PATH, String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT)));
+//            }
+//        }
         builder.validResultHandler(response -> handleResponse(response));
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
@@ -54,7 +60,7 @@ public class FloodgateChameleonPresetForm {
 
     private void handleResponse(SimpleFormResponse response) {
         String label = response.clickedButton().text();
-// get the TARDIS the player is in
+        // get the TARDIS the player is in
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", uuid.toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -75,7 +81,6 @@ public class FloodgateChameleonPresetForm {
                 wheref.put("type", Control.FRAME.getId());
                 ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
                 boolean hasFrame = rsf.resultSet();
-                Player player = plugin.getServer().getPlayer(uuid);
                 // set the Chameleon Circuit sign(s)
                 HashMap<String, Object> set = new HashMap<>();
                 PRESET selected = PRESET.valueOf(label);
