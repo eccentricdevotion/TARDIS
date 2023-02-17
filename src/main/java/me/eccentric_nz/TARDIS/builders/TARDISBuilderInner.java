@@ -17,12 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -54,6 +48,9 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a

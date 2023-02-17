@@ -17,15 +17,16 @@
 package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz

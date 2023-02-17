@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.util.*;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
@@ -24,6 +23,8 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.entity.EntityType;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
+
+import java.util.*;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a

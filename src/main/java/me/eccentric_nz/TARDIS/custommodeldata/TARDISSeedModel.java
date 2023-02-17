@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import java.util.HashMap;
 import org.bukkit.Material;
+
+import java.util.HashMap;
 
 public class TARDISSeedModel {
 
