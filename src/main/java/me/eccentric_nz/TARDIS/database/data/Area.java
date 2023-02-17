@@ -21,6 +21,7 @@ package me.eccentric_nz.TARDIS.database.data;
  */
 public class Area {
 
+    private final int areaId;
     private final String areaName;
     private final String world;
     private final int minX;
@@ -33,7 +34,8 @@ public class Area {
     private final String direction;
     private final boolean grid;
 
-    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction, boolean grid) {
+    public Area(int areaId, String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction, boolean grid) {
+        this.areaId = areaId;
         this.areaName = areaName;
         this.world = world;
         this.minX = minX;
@@ -45,6 +47,10 @@ public class Area {
         this.invisibility = invisibility;
         this.direction = direction;
         this.grid = grid;
+    }
+
+    public int getAreaId() {
+        return areaId;
     }
 
     public String getAreaName() {

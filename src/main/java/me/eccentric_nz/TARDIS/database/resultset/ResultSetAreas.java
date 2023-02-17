@@ -100,6 +100,7 @@ public class ResultSetAreas {
                 while (rs.next()) {
                     if (!onlynames) {
                         area = new Area(
+                                rs.getInt("area_id"),
                                 rs.getString("area_name"),
                                 rs.getString("world"),
                                 rs.getInt("minx"),
@@ -151,4 +152,6 @@ public class ResultSetAreas {
     public List<String> getNames() {
         return names;
     }
+
+
 }

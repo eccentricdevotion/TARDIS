@@ -1196,7 +1196,7 @@ commands:
     description: Set up predefined TARDIS travel areas.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [start|end|parking|show|remove] [name]
+    usage: /<command> [start|end|parking|show|remove|parking|invisibilty|yard|direction|create|add] [name]
     start:
       description: Start defining a TARDIS area.
       usage: /<command> start [name]
@@ -1215,6 +1215,18 @@ commands:
     yard:
       description: Visually mark the area with parking spots, where the first [material] is the block to use as the floor, and the second [material] is the block to use to mark the parking spot.
       usage: /<command> yard [name] [material] [material]
+    invisibility:
+      description: Set whether a TARDIS area allows invisible landings.
+      usage: /<command> invisibility [name] [ALLOW|DENY]
+    direction:
+      description: Set the direction TARDIS's will face when landing in the specified area. Setting to NONE doesn't enforce a direction.
+      usage: /<command> direction [name] [NORTH|SOUTH|EAST|WEST|NONE]
+    create:
+      description: Create an empty area, ready to be filled with admin defined, semi-random landing locations.
+      usage: /<command> create [name]
+    add:
+      description: Add an admin defined, semi-random landing location to the specified area at the player's current location.
+      usage: /<command> add [name]
   tardisartron:
     aliases: tartron
     description: Transfer Artron Energy to an Artron Storage Cell

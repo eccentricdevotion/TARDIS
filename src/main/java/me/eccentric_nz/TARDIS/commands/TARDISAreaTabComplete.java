@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction", "create", "add");
     private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
     private final List<String> DIRECTION_SUBS = new ArrayList<>();
 
