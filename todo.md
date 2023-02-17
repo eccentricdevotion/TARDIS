@@ -3,8 +3,6 @@
 ## Current version `4.13.0`
 
 1. Better support for Geyser/Bedrock users - _in progress_
-2. TARDIS-Bedrock-Resource-Pack.mcpack for ItemFrame police boxes and sounds
-
 
 ## Next version `4.14.0`
 
