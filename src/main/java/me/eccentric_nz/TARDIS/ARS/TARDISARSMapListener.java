@@ -81,28 +81,19 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             }
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
-                    case 1:
-                    case 9:
-                    case 11:
-                    case 19:
+                    case 1, 9, 11, 19 ->
                         // up
                         moveMap(playerUUID, view, slot);
-                        break;
-                    case 10:
+                    case 10 ->
                         // load map
                         loadMap(view, playerUUID);
-                        break;
-                    case 45:
+                    case 45 ->
                         // close
                         close(player);
-                        break;
-                    case 47:
+                    case 47 ->
                         // where am I?
                         findPlayer(player, view);
-                        break;
-                    case 27:
-                    case 28:
-                    case 29:
+                    case 27, 28, 29 -> {
                         // change levels
                         if (map_data.containsKey(playerUUID)) {
                             switchLevel(view, slot, playerUUID);
@@ -112,8 +103,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
-                        break;
-                    case 46:
+                    }
+                    case 46 -> {
                         if (map_data.containsKey(playerUUID)) {
                             // transmat
                             if (!selectedLocation.containsKey(playerUUID)) {
@@ -134,8 +125,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
-                        break;
-                    default:
+                    }
+                    default -> {
                         if (map_data.containsKey(playerUUID)) {
                             ItemStack is = view.getItem(slot);
                             if (is != null) {
@@ -148,7 +139,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
-                        break;
+                    }
                 }
             }
         }

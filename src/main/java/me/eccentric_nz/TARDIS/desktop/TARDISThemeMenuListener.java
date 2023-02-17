@@ -60,27 +60,25 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             if (slot >= 0 && slot < 54) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 46:
+                    case 46 ->
                         // archive
-                        archive(p);
-                        break;
-                    case 47:
+                            archive(p);
+                    case 47 -> {
                         // repair
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             repair(p);
                         }
-                        break;
-                    case 48:
+                    }
+                    case 48 -> {
                         // clean
                         if (plugin.getConfig().getBoolean("allow.repair")) {
                             clean(p);
                         }
-                        break;
-                    case 53:
+                    }
+                    case 53 ->
                         // close
-                        close(p);
-                        break;
-                    default:
+                            close(p);
+                    default -> {
                         // get Display name of selected console
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
@@ -102,7 +100,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                                 }
                             }
                         }
-                        break;
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

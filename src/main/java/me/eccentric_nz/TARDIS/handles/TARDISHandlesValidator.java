@@ -46,64 +46,45 @@ class TARDISHandlesValidator {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case FOR:
+                    case FOR -> {
                         if (!validateFor(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The FOR loop does not compute!");
                             return false;
                         }
-                        break;
-                    case IF:
+                    }
+                    case IF -> {
                         if (!validateIF(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The IF statement does not compute!");
                             return false;
                         }
-                        break;
-                    case VARIABLE:
+                    }
+                    case VARIABLE -> {
                         if (!validateVar(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Variable assignment does not compute!");
                             return false;
                         }
-                        break;
-                    case X:
-                    case Y:
-                    case Z:
+                    }
+                    case X, Y, Z -> {
                         if (!validateCoordOrMath(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Coordinate assignment does not compute!");
                             return false;
                         }
-                        break;
-                    case ARTRON:
-                    case DEATH:
-                    case DEMATERIALISE:
-                    case ENTER:
-                    case EXIT:
-                    case HADS:
-                    case LOG_OUT:
-                    case MATERIALISE:
-                    case SIEGE_OFF:
-                    case SIEGE_ON:
+                    }
+                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> {
                         if (eventCount > 0) {
                             TARDISMessage.handlesMessage(player, "You can only have one event per program!");
                             return false;
                         }
                         eventCount++;
-                        break;
-                    case ADDITION:
-                    case SUBTRACTION:
-                    case MULTIPLICATION:
-                    case DIVISION:
-                    case MODULO:
-                    case LESS_THAN:
-                    case LESS_THAN_EQUAL:
-                    case GREATER_THAN:
-                    case GREATER_THAN_EQUAL:
+                    }
+                    case ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, MODULO, LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL -> {
                         // must be followed by a number (and maybe a variable)
                         if (!validateCoordOrMath(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
                             return false;
                         }
-                        break;
-                    case RANDOM:
+                    }
+                    case RANDOM -> {
                         // must be followed by a number or preceded by travel
                         ItemStack pre = program[i - 1];
                         TARDISHandlesBlock cede = TARDISHandlesBlock.BY_NAME.get(pre.getItemMeta().getDisplayName());
@@ -111,37 +92,37 @@ class TARDISHandlesValidator {
                             TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
                             return false;
                         }
-                    case DOOR:
+                    }
+                    case DOOR -> {
                         // must be followed by =, ==, OPEN, CLOSED, LOCK, UNLOCK
                         if (!validateDoor(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Door action does not compute!");
                             return false;
                         }
-                        break;
-                    case LIGHTS:
-                    case SIEGE:
+                    }
+                    case LIGHTS, SIEGE -> {
                         // must be followed by =, ==, ON, OFF
                         if (!validateOnOff(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The ON / OFF action does not compute!");
                             return false;
                         }
-                        break;
-                    case POWER:
+                    }
+                    case POWER -> {
                         // must be followed by =, ==, ON, OFF, SHOW, REDSTONE
                         if (!validatePower(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Power action does not compute!");
                             return false;
                         }
-                        break;
-                    case TRAVEL:
+                    }
+                    case TRAVEL -> {
                         // must be followed by X, Y, Z, RECHARGER, HOME, RANDOM, Biome disk, Player disk, Save disk, Area disk
                         if (!validateTravel(i + 1)) {
                             TARDISMessage.handlesMessage(player, "The Travel destination does not compute!");
                             return false;
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
             i++;
@@ -225,33 +206,32 @@ class TARDISHandlesValidator {
             }
             TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
             switch (i - start) {
-                case 0: // must be a variable
+                case 0 -> { // must be a variable
                     if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE)) {
                         return false;
                     }
-                    break;
-                case 1: // must be assignment
+                }
+                case 1 -> { // must be assignment
                     if (!thb.getDisplayName().equals("Assignment operator")) {
                         return false;
                     }
-                    break;
-                case 2:
-                case 4: // must be a number
+                }
+                case 2, 4 -> { // must be a number
                     if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER)) {
                         return false;
                     }
-                    break;
-                case 3: // must be a TO
+                }
+                case 3 -> { // must be a TO
                     if (!thb.equals(TARDISHandlesBlock.TO)) {
                         return false;
                     }
-                    break;
-                case 5: // must be a DO
+                }
+                case 5 -> { // must be a DO
                     if (!thb.equals(TARDISHandlesBlock.DO)) {
                         return false;
                     }
-                    break;
-                default: // search for end
+                }
+                default -> { // search for end
                     if (thb.equals(TARDISHandlesBlock.IF)) {
                         endCount++;
                     }
@@ -260,6 +240,7 @@ class TARDISHandlesValidator {
                             return true;
                         }
                     }
+                }
             }
         }
         return true;
@@ -279,22 +260,22 @@ class TARDISHandlesValidator {
             }
             TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
             switch (i - start) {
-                case 0: // must be an event, variable or selector
+                case 0 -> { // must be an event, variable or selector
                     if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) && !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT)) {
                         return false;
                     }
-                    break;
-                case 1: // must be an operator
+                }
+                case 1 -> { // must be an operator
                     if (!thb.getCategory().equals(TARDISHandlesCategory.OPERATOR)) {
                         return false;
                     }
-                    break;
-                case 2: // must be a number or event or variable
+                }
+                case 2 -> { // must be a number or event or variable
                     if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT) && !thb.getCategory().equals(TARDISHandlesCategory.VARIABLE)) {
                         return false;
                     }
-                    break;
-                case 3: // check for second condition
+                }
+                case 3 -> { // check for second condition
                     if (thb.equals(TARDISHandlesBlock.AND) || thb.equals(TARDISHandlesBlock.OR)) {
                         twoConditions = true;
                     } else {
@@ -303,8 +284,8 @@ class TARDISHandlesValidator {
                             return false;
                         }
                     }
-                    break;
-                case 4: // must be an event, variable or selector if twoConditions
+                }
+                case 4 -> { // must be an event, variable or selector if twoConditions
                     if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) && !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT))) {
                         return false;
                     } else {
@@ -317,8 +298,8 @@ class TARDISHandlesValidator {
                             }
                         }
                     }
-                    break;
-                case 5: // must be an operator if twoConditions
+                }
+                case 5 -> { // must be an operator if twoConditions
                     if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.OPERATOR))) {
                         return false;
                     } else {
@@ -331,8 +312,8 @@ class TARDISHandlesValidator {
                             }
                         }
                     }
-                    break;
-                case 6: // must be a number or event or variable if twoConditions
+                }
+                case 6 -> { // must be a number or event or variable if twoConditions
                     if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT) && !thb.getCategory().equals(TARDISHandlesCategory.VARIABLE))) {
                         return false;
                     } else {
@@ -345,8 +326,8 @@ class TARDISHandlesValidator {
                             }
                         }
                     }
-                    break;
-                case 7: // must be a DO
+                }
+                case 7 -> { // must be a DO
                     if (twoConditions && !thb.equals(TARDISHandlesBlock.DO)) {
                         return false;
                     } else {
@@ -359,8 +340,8 @@ class TARDISHandlesValidator {
                             }
                         }
                     }
-                    break;
-                default: // search for end
+                }
+                default -> { // search for end
                     if (thb.equals(TARDISHandlesBlock.IF)) {
                         endCount++;
                     }
@@ -369,6 +350,7 @@ class TARDISHandlesValidator {
                             return true;
                         }
                     }
+                }
             }
         }
         return true;

@@ -75,58 +75,27 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
             }
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
-                    case 1:
-                    case 9:
-                    case 11:
-                    case 19:
+                    case 1, 9, 11, 19 ->
                         // up, left, right, down
                         moveMap(playerUUID, view, slot);
-                        break;
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 13:
-                    case 14:
-                    case 15:
-                    case 16:
-                    case 17:
-                    case 22:
-                    case 23:
-                    case 24:
-                    case 25:
-                    case 26:
-                    case 31:
-                    case 32:
-                    case 33:
-                    case 34:
-                    case 35:
-                    case 40:
-                    case 41:
-                    case 42:
-                    case 43:
-                    case 44:
+                    case 4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44 -> {
                         if (!checkSlotForConsole(view, slot, uuid.toString())) {
                             // select slot
                             selected_slot.put(playerUUID, slot);
                         }
-                        break;
-                    case 10:
+                    }
+                    case 10 ->
                         // load map
-                        loadMap(view, playerUUID);
-                        break;
-                    case 12:
+                            loadMap(view, playerUUID);
+                    case 12 -> {
                         // reconfigure
                         if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
                             close(player);
                         } else {
                             TARDISMessage.send(player, "ARS_ACTIVE");
                         }
-                        break;
-                    case 27:
-                    case 28:
-                    case 29:
+                    }
+                    case 27, 28, 29 -> {
                         // switch level
                         if (map_data.containsKey(playerUUID)) {
                             switchLevel(view, slot, playerUUID);
@@ -136,14 +105,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                         }
-                        break;
-                    case 30:
+                    }
+                    case 30 -> {
                         // reset selected slot to empty
                         if (selected_slot.containsKey(playerUUID)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
                             if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), 0)) {
                                 setLore(view, slot, plugin.getLanguage().getString("ARS_RESET_SLOT"));
-                                break;
                             } else {
                                 ItemStack stone = new ItemStack(Material.STONE, 1);
                                 ItemMeta s1 = stone.getItemMeta();
@@ -156,8 +124,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
-                        break;
-                    case 36:
+                    }
+                    case 36 -> {
                         // scroll left
                         int startl;
                         int max = room_materials.size() - 9;
@@ -174,8 +142,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
                             setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), playerUUID, false, true);
                         }
-                        break;
-                    case 38:
+                    }
+                    case 38 -> {
                         // scroll right
                         int startr;
                         if (scroll_start.containsKey(playerUUID)) {
@@ -191,8 +159,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
                             setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), playerUUID, false, true);
                         }
-                        break;
-                    case 39:
+                    }
+                    case 39 -> {
                         // jettison
                         if (selected_slot.containsKey(playerUUID)) {
                             // need to check for gravity wells, and jettison both layers...
@@ -206,22 +174,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
-                        break;
-                    case 45:
-                    case 46:
-                    case 47:
-                    case 48:
-                    case 49:
-                    case 50:
-                    case 51:
-                    case 52:
-                    case 53:
+                    }
+                    case 45, 46, 47, 48, 49, 50, 51, 52, 53 -> {
                         // put room in selected slot
                         if (selected_slot.containsKey(playerUUID)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
                             if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), 0)) {
                                 setLore(view, slot, "Jettison existing room first!");
-                                break;
                             } else {
                                 ItemStack ris = view.getItem(slot);
                                 String displayName = ris.getItemMeta().getDisplayName();
@@ -247,9 +206,9 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
         }

@@ -832,15 +832,8 @@ public class TARDISRoomRunnable implements Runnable {
                     if (!existing.getType().isAir() && !(room.equals("BAMBOO") && existing.getType().equals(Material.BAMBOO))) {
                         if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                             switch (type) {
-                                case AIR:
-                                case GRAY_WOOL:
-                                case LIGHT_GRAY_WOOL:
-                                case ORANGE_WOOL:
-                                case STONE_BRICKS:
-                                    break;
-                                default:
-                                    data = existing.getBlockData();
-                                    break;
+                                case AIR, GRAY_WOOL, LIGHT_GRAY_WOOL, ORANGE_WOOL, STONE_BRICKS -> { }
+                                default -> data = existing.getBlockData();
                             }
                         } else {
                             data = existing.getBlockData();

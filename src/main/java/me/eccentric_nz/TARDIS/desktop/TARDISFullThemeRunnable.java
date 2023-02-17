@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
-import java.io.File;
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -40,17 +38,8 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.schematic.*;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,6 +49,9 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -905,7 +897,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<>();
         switch (prev) {
-            case MASSIVE:
+            case MASSIVE -> {
                 switch (next) {
                     case TALL -> {
                         // the 5 chunks on the same level &
@@ -964,8 +956,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                     // same size do nothing
                 }
-                break;
-            case TALL:
+            }
+            case TALL -> {
                 switch (next) {
                     case MEDIUM -> {
                         // the 4 chunks on the level above
@@ -989,17 +981,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                     // same size or bigger do nothing
                 }
-                break;
-            case MEDIUM:
+            }
+            case MEDIUM -> {
                 // same size or bigger do nothing
                 if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
                     list.add(new TARDISARSJettison(chunk, 1, 4, 5));
                     list.add(new TARDISARSJettison(chunk, 1, 5, 4));
                     list.add(new TARDISARSJettison(chunk, 1, 5, 5));
                 }
-                break;
-            default: // SMALL size do nothing
-                break;
+            }
+            default -> {
+            } // SMALL size do nothing
         }
         return list;
     }

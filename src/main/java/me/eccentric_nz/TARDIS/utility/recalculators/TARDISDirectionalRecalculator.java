@@ -36,7 +36,7 @@ public class TARDISDirectionalRecalculator {
     public BlockData recalculate(BlockData b, COMPASS d) {
         Directional directional = (Directional) b;
         switch (d) {
-            case SOUTH:
+            case SOUTH -> {
                 switch (directional.getFacing()) {
                     case EAST -> directional.setFacing(BlockFace.SOUTH);
                     case WEST -> directional.setFacing(BlockFace.NORTH);
@@ -45,8 +45,8 @@ public class TARDISDirectionalRecalculator {
                     default -> {
                     }
                 }
-                break;
-            case WEST:
+            }
+            case WEST -> {
                 switch (directional.getFacing()) {
                     case EAST -> directional.setFacing(BlockFace.WEST);
                     case WEST -> directional.setFacing(BlockFace.EAST);
@@ -55,8 +55,8 @@ public class TARDISDirectionalRecalculator {
                     default -> {
                     }
                 }
-                break;
-            default:
+            }
+            default -> {
                 switch (directional.getFacing()) {
                     case EAST -> directional.setFacing(BlockFace.NORTH);
                     case WEST -> directional.setFacing(BlockFace.SOUTH);
@@ -65,7 +65,7 @@ public class TARDISDirectionalRecalculator {
                     default -> {
                     }
                 }
-                break;
+            }
         }
         return directional;
     }

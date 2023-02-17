@@ -231,7 +231,7 @@ public class TARDISTimeTravel {
         randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
 
         switch (randworld.getEnvironment()) {
-            case NETHER:
+            case NETHER -> {
                 for (int n = 0; n < attempts; n++) {
                     wherex = randomX(range, quarter, rx, ry, e, current);
                     wherez = randomZ(range, quarter, rz, ry, e, current);
@@ -239,8 +239,8 @@ public class TARDISTimeTravel {
                         break;
                     }
                 }
-                break;
-            case THE_END:
+            }
+            case THE_END -> {
                 if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
                     // any location will do!
                     int voidx = randomX(range, quarter, rx, ry, e, current);
@@ -282,8 +282,8 @@ public class TARDISTimeTravel {
                     }
                 }
                 dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
-                break;
-            default:
+            }
+            default -> {
                 // Assume every non-nether/non-END world qualifies as NORMAL.
                 if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".false_nether")) {
                     for (int n = 0; n < attempts; n++) {
@@ -376,7 +376,7 @@ public class TARDISTimeTravel {
                     }
                     dest = new Location(randworld, wherex, highest, wherez);
                 }
-                break;
+            }
         }
         return dest;
     }

@@ -92,12 +92,10 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> set = new HashMap<>();
                             switch (slot) {
-                                case 47:
-                                case 49:
-                                case 50:
+                                case 47, 49, 50 -> {
                                     // do nothing
-                                    break;
-                                case 48:
+                                }
+                                case 48 -> {
                                     // custom
                                     set.put("chameleon_preset", "CUSTOM");
                                     if (hasSign) {
@@ -107,8 +105,8 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         new TARDISChameleonFrame().updateChameleonFrame(PRESET.CUSTOM, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
-                                    break;
-                                case 51:
+                                }
+                                case 51 -> {
                                     // return to Chameleon Circuit GUI
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -117,8 +115,8 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         gui.setContents(stacks);
                                         player.openInventory(gui);
                                     }, 2L);
-                                    break;
-                                case 52:
+                                }
+                                case 52 -> {
                                     // go to page two (coloured police boxes)
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -127,11 +125,9 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         gui.setContents(boxes);
                                         player.openInventory(gui);
                                     }, 2L);
-                                    break;
-                                case 53:
-                                    close(player);
-                                    break;
-                                default:
+                                }
+                                case 53 -> close(player);
+                                default -> {
                                     PRESET selected = PRESET.getPresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
                                     if (hasSign) {
@@ -141,7 +137,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
-                                    break;
+                                }
                             }
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);

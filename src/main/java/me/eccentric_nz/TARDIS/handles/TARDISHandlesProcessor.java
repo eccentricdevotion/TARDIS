@@ -574,23 +574,11 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case LESS_THAN:
-                    case LESS_THAN_EQUAL:
-                    case GREATER_THAN:
-                    case GREATER_THAN_EQUAL:
-                    case EQUALS:
+                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> {
                         // operator
                         comparison = thb;
-                    case ONE:
-                    case TWO:
-                    case THREE:
-                    case FOUR:
-                    case FIVE:
-                    case SIX:
-                    case SEVEN:
-                    case EIGHT:
-                    case NINE:
-                    case ZERO:
+                    }
+                    case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
                         // find all sequential number blocks
                         if (first) {
                             level = getNumber(thb, i);
@@ -611,8 +599,8 @@ public class TARDISHandlesProcessor {
                             }
                             first = false;
                         }
-                    case DO:
-                        processCommand(i);
+                    }
+                    case DO -> processCommand(i);
                 }
             }
         }

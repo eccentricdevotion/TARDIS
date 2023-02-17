@@ -50,44 +50,44 @@ public class TARDISGravityWellRunnable implements Runnable {
     @Override
     public void run() {
         switch (dir) {
-            case 1:
+            case 1 -> {
                 if (p.getLocation().getY() < end && p.getLocation().getBlockX() == x && p.getLocation().getBlockZ() == z) {
                     p.setVelocity(new Vector(0.0D, up, 0.0D));
                 } else {
                     p.setFallDistance(0.0F);
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 if (p.getLocation().getZ() > end && p.getLocation().getBlockX() == x) {
                     p.setVelocity(new Vector(0.0D, 0.0D, -up));
                 } else {
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 if (p.getLocation().getX() > end && p.getLocation().getBlockZ() == z) {
                     p.setVelocity(new Vector(-up, 0.0D, 0.0D));
                 } else {
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
-                break;
-            case 4:
+            }
+            case 4 -> {
                 if (p.getLocation().getZ() < end && p.getLocation().getBlockX() == x) {
                     p.setVelocity(new Vector(0.0D, 0.0D, up));
                 } else {
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
-                break;
-            case 5:
+            }
+            case 5 -> {
                 if (p.getLocation().getX() < end && p.getLocation().getBlockZ() == z) {
                     p.setVelocity(new Vector(up, 0.0D, 0.0D));
                 } else {
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 

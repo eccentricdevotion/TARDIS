@@ -81,52 +81,53 @@ public class TARDISFarmBlockListener implements Listener {
                     Ageable ageable = (Ageable) block.getBlockData();
                     if (ageable.getAge() == ageable.getMaximumAge()) {
                         switch (material) {
-                            case BEETROOTS:
+                            case BEETROOTS -> {
                                 if (player.getInventory().contains(bs)) {
                                     processHarvest(player, bs, block);
                                 }
-                                break;
-                            case CARROTS:
+                            }
+                            case CARROTS -> {
                                 if (player.getInventory().contains(ci)) {
                                     processHarvest(player, ci, block);
                                 }
-                                break;
-                            case COCOA:
+                            }
+                            case COCOA -> {
                                 if (player.getInventory().contains(is)) {
                                     processHarvest(player, is, block);
                                 }
-                                break;
-                            case WHEAT:
+                            }
+                            case WHEAT -> {
                                 if (player.getInventory().contains(ss)) {
                                     processHarvest(player, ss, block);
                                 }
-                                break;
-                            case MELON_STEM:
+                            }
+                            case MELON_STEM -> {
                                 if (player.getInventory().contains(ms)) {
                                     processHarvest(player, ms, block);
                                 }
-                                break;
-                            case NETHER_WART:
+                            }
+                            case NETHER_WART -> {
                                 if (player.getInventory().contains(nw)) {
                                     processHarvest(player, nw, block);
                                 }
-                                break;
-                            case POTATOES:
+                            }
+                            case POTATOES -> {
                                 if (player.getInventory().contains(pi)) {
                                     processHarvest(player, pi, block);
                                 }
-                                break;
-                            case PUMPKIN_STEM:
+                            }
+                            case PUMPKIN_STEM -> {
                                 if (player.getInventory().contains(ps)) {
                                     processHarvest(player, ps, block);
                                 }
-                                break;
-                            case SWEET_BERRY_BUSH:
+                            }
+                            case SWEET_BERRY_BUSH -> {
                                 if (player.getInventory().contains(sb)) {
                                     processHarvest(player, sb, block);
                                 }
-                            default:
-                                break;
+                            }
+                            default -> {
+                            }
                         }
                     }
                 }

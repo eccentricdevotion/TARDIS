@@ -93,65 +93,43 @@ public class TARDISTerminalListener implements Listener {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
                     switch (slot) {
-                        case 1:
-                            terminalStep.put(uuid, 10);
-                            break;
-                        case 3:
-                            terminalStep.put(uuid, 25);
-                            break;
-                        case 5:
-                            terminalStep.put(uuid, 50);
-                            break;
-                        case 7:
-                            terminalStep.put(uuid, 100);
-                            break;
-                        case 9:
-                            setSlots(view, 10, 16, false, "X", true, uuid);
-                            break;
-                        case 17:
-                            setSlots(view, 10, 16, true, "X", true, uuid);
-                            break;
-                        case 18:
-                            setSlots(view, 19, 25, false, "Z", true, uuid);
-                            break;
-                        case 26:
-                            setSlots(view, 19, 25, true, "Z", true, uuid);
-                            break;
-                        case 27:
-                            setSlots(view, 28, 34, false, "Multiplier", false, uuid);
-                            break;
-                        case 35:
-                            setSlots(view, 28, 34, true, "Multiplier", false, uuid);
-                            break;
-                        case 36:
+                        case 1 -> terminalStep.put(uuid, 10);
+                        case 3 -> terminalStep.put(uuid, 25);
+                        case 5 -> terminalStep.put(uuid, 50);
+                        case 7 -> terminalStep.put(uuid, 100);
+                        case 9 -> setSlots(view, 10, 16, false, "X", true, uuid);
+                        case 17 -> setSlots(view, 10, 16, true, "X", true, uuid);
+                        case 18 -> setSlots(view, 19, 25, false, "Z", true, uuid);
+                        case 26 -> setSlots(view, 19, 25, true, "Z", true, uuid);
+                        case 27 -> setSlots(view, 28, 34, false, "Multiplier", false, uuid);
+                        case 35 -> setSlots(view, 28, 34, true, "Multiplier", false, uuid);
+                        case 36 -> {
                             // current world
                             terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 36);
-                            break;
-                        case 38:
+                        }
+                        case 38 -> {
                             // normal
                             terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 38);
-                            break;
-                        case 40:
+                        }
+                        case 40 -> {
                             // nether
                             terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 40);
-                            break;
-                        case 42:
+                        }
+                        case 42 -> {
                             // the end
                             terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
                             setCurrent(view, player, 42);
-                            break;
-                        case 44:
+                        }
+                        case 44 ->
                             // submarine
-                            toggleSubmarine(view, player);
-                            break;
-                        case 46:
+                                toggleSubmarine(view, player);
+                        case 46 ->
                             // check destination
-                            checkSettings(view, player);
-                            break;
-                        case 49:
+                                checkSettings(view, player);
+                        case 49 -> {
                             // set destination
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<>();
@@ -190,12 +168,10 @@ public class TARDISTerminalListener implements Listener {
                                 im.setLore(lore);
                                 is.setItemMeta(im);
                             }
-                            break;
-                        case 52:
-                            close(player);
-                            break;
-                        default:
-                            break;
+                        }
+                        case 52 -> close(player);
+                        default -> {
+                        }
                     }
                 }
             }
@@ -316,29 +292,26 @@ public class TARDISTerminalListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (i == slot) {
                 switch (slot) {
-                    case 38:
+                    case 38 ->
                         // get a normal world
-                        lore = Collections.singletonList(getWorld("NORMAL", current, p));
-                        break;
-                    case 40:
+                            lore = Collections.singletonList(getWorld("NORMAL", current, p));
+                    case 40 -> {
                         // get a nether world
                         if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
                             lore = Collections.singletonList(getWorld("NETHER", current, p));
                         } else {
                             lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.nether"), current, p));
                         }
-                        break;
-                    case 42:
+                    }
+                    case 42 -> {
                         // get an end world
                         if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
                             lore = Collections.singletonList(getWorld("THE_END", current, p));
                         } else {
                             lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.the_end"), current, p));
                         }
-                        break;
-                    default:
-                        lore = Collections.singletonList(current);
-                        break;
+                    }
+                    default -> lore = Collections.singletonList(current);
                 }
             }
             im.setLore(lore);

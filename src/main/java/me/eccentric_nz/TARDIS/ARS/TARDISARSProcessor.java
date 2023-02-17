@@ -78,7 +78,7 @@ class TARDISARSProcessor {
                             }
                         } else {
                             switch (end[l][x][z]) {
-                                case "SANDSTONE":
+                                case "SANDSTONE" -> {
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an anti-gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
@@ -88,8 +88,8 @@ class TARDISARSProcessor {
                                         slot.setZ(z);
                                         changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                     }
-                                    break;
-                                case "MOSSY_COBBLESTONE":
+                                }
+                                case "MOSSY_COBBLESTONE" -> {
                                     if (l == 2 || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
@@ -99,15 +99,15 @@ class TARDISARSProcessor {
                                         slot.setZ(z);
                                         changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                     }
-                                    break;
-                                default:
+                                }
+                                default -> {
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
                                     changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
-                                    break;
+                                }
                             }
                         }
                     }
