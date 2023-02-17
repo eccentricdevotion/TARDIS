@@ -3,11 +3,13 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeather;
+import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
@@ -33,6 +35,7 @@ public class FloodgateWeatherForm {
                 .button("clear", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/clear.png")
                 .button("rain", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/rain.png")
                 .button("thunder", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/thunder.png")
+                .button("excite", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/excite.png")
                 .validResultHandler(response -> handleResponse(response))
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
@@ -46,29 +49,56 @@ public class FloodgateWeatherForm {
             TARDISMessage.send(player, "WEATHER_DISABLED");
             return;
         }
-        Location location = player.getLocation();
-        World world = location.getWorld();
-        if (plugin.getUtils().inTARDISWorld(player)) {
-            // get TARDIS player is in
-            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
-            // get current TARDIS location
+        // get the TARDIS the player is in
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+        if (rst.resultSet()) {
+            int id = rst.getTardis_id();
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
-            if (rsc.resultSet()) {
-                world = rsc.getWorld();
-            } else {
-                // can't change weather in TARDIS world
-                TARDISMessage.send(player, "WEATHER_TARDIS");
-                return;
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
+                // check they initialised
+                if (!tardis.isTardis_init()) {
+                    TARDISMessage.send(player, "ENERGY_NO_INIT");
+                    return;
+                }
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                    TARDISMessage.send(player, "POWER_DOWN");
+                    return;
+                }
+                if (!tardis.isHandbrake_on()) {
+                    TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                    return;
+                }
+                // get current location
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("tardis_id", tardis.getTardis_id());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                if (!rsc.resultSet()) {
+                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                }
+                if (label.equals("excite")) {
+                    // atmospheric excitation
+                    if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
+                        TARDISMessage.send(player, "CMD_EXCITE");
+                        return;
+                    }
+                    new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
+                    plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
+                } else {
+                    // change weather
+                    Weather weather = Weather.fromString(label);
+                    String perm = weather.toString().toLowerCase();
+                    if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
+                        TARDISMessage.send(player, "NO_PERMS");
+                    }
+                    TARDISWeather.setWeather(rsc.getWorld(), weather);
+                    TARDISMessage.send(player, "WEATHER_SET", perm);
+                }
             }
         }
-        Weather weather = Weather.fromString(label);
-        String perm = weather.toString().toLowerCase();
-        if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
-            TARDISMessage.send(player, "NO_PERMS");
-        }
-        TARDISWeather.setWeather(world, weather);
-        TARDISMessage.send(player, "WEATHER_SET", perm);
     }
 }
