@@ -1,24 +1,28 @@
 # TODO
 
-## Current version `4.12.1`
+## Current version `4.13.0`
 
-1. ?
+1. Better support for Geyser/Bedrock users - _in progress_
 
-## Next version `4.13.0`
+## Next version `4.14.0`
 
-1. Better support for Geyser/Bedrock users
+1. Semi-random assigned parking in TARDIS areas - [#696](https://github.com/eccentricdevotion/TARDIS/issues/696)
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-3. Cache TARDIS data to speed lookups and reduce database queries
-4. Use the Vortex Manipulator to teleport past force fields
-5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-8. All the things...
+
+## Future versions
+
+1. Cache TARDIS data to speed lookups and reduce database queries
+2. Use the Vortex Manipulator to teleport past force fields
+3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+6. All the things...
 
 ## Wiki Documentation
 
-* Add Mechanical interior
-* Update view interiors
+* Bedrock / floodgate features
+* Semi-random assigned parking
+* Update lazarus / genetic manipulator
 
 ## Resource Pack / TARDISWeepingAngels
 

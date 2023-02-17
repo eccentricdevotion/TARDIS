@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.floodgate.*;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
@@ -161,6 +162,7 @@ public class TARDISControlListener implements Listener {
                         int level = tardis.getArtron_level();
                         boolean hb = tardis.isHandbrake_on();
                         UUID ownerUUID = tardis.getUuid();
+                        UUID playerUUID = player.getUniqueId();
                         TARDISCircuitChecker tcc = null;
                         if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
@@ -210,10 +212,14 @@ public class TARDISControlListener implements Listener {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
-                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-                                    Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
-                                    aec.setContents(items);
-                                    player.openInventory(aec);
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                        new FloodgateDestinationTerminalForm(plugin, playerUUID).send();
+                                    } else {
+                                        ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
+                                        Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+                                        aec.setContents(items);
+                                        player.openInventory(aec);
+                                    }
                                     break;
                                 case 10: // ARS sign
                                     if (!hb) {
@@ -262,10 +268,14 @@ public class TARDISControlListener implements Listener {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }
-                                    ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
-                                    tmpl.setContents(clocks);
-                                    player.openInventory(tmpl);
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                        new FloodgateTemporalForm(plugin, playerUUID).send();
+                                    } else {
+                                        ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+                                        Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+                                        tmpl.setContents(clocks);
+                                        player.openInventory(tmpl);
+                                    }
                                     break;
                                 case 12: // Control room light switch
                                     new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
@@ -274,7 +284,6 @@ public class TARDISControlListener implements Listener {
                                     new TARDISInfoMenuButton(plugin, player).clickButton();
                                     break;
                                 case 14: // Disk Storage
-                                    UUID playerUUID = player.getUniqueId();
                                     if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUUID)) {
                                         return;
                                     }
@@ -376,10 +385,14 @@ public class TARDISControlListener implements Listener {
                                         // keyboard
                                     } else {
                                         // controls GUI
-                                        ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-                                        Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
-                                        cgui.setContents(controls);
-                                        player.openInventory(cgui);
+                                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                            TARDISFloodgate.sendControlForm(playerUUID);
+                                        } else {
+                                            ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
+                                            Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
+                                            cgui.setContents(controls);
+                                            player.openInventory(cgui);
+                                        }
                                     }
                                     break;
                                 case 25:
@@ -390,10 +403,14 @@ public class TARDISControlListener implements Listener {
                                             return;
                                         }
                                         // Chameleon load GUI
-                                        ItemStack[] shells = new TARDISShellInventory(plugin, player, id).getShells();
-                                        Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
-                                        sgui.setContents(shells);
-                                        player.openInventory(sgui);
+                                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                            new FloodgateShellLoaderForm(plugin, playerUUID, id).send();
+                                        } else {
+                                            ItemStack[] shells = new TARDISShellInventory(plugin, player, id).getShells();
+                                            Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
+                                            sgui.setContents(shells);
+                                            player.openInventory(sgui);
+                                        }
                                     } else {
                                         new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
                                     }
@@ -485,11 +502,19 @@ public class TARDISControlListener implements Listener {
                                     break;
                                 case 31:
                                     // chameleon sign
-                                    new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset());
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                        new FloodgateChameleonCircuitForm(plugin, playerUUID, id, rs.getTardis().getPreset()).send();
+                                    } else {
+                                        new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset());
+                                    }
                                     break;
                                 case 32:
                                     // save_sign
-                                    new TARDISSaveSign(plugin).openGUI(player, id);
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                        new FloodgateSavesForm(plugin, playerUUID, id).send();
+                                    } else {
+                                        new TARDISSaveSign(plugin).openGUI(player, id);
+                                    }
                                     break;
                                 case 33:
                                     // scanner
@@ -509,10 +534,14 @@ public class TARDISControlListener implements Listener {
                                     break;
                                 case 38:
                                     // weather menu
-                                    ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
-                                    Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
-                                    forecast.setContents(weather);
-                                    player.openInventory(forecast);
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                        new FloodgateWeatherForm(plugin, playerUUID).send();
+                                    } else {
+                                        ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
+                                        Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
+                                        forecast.setContents(weather);
+                                        player.openInventory(forecast);
+                                    }
                                     break;
                                 case 39:
                                     // space/time throttle
@@ -538,7 +567,7 @@ public class TARDISControlListener implements Listener {
                                 case 16 -> doZero(level, player, tardis.getZero(), id);
                                 case 40 -> // WEST
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            // has player moved out of the maze  in a northerly direction
+                                            // has player moved out of the maze in a northerly direction
                                             Location playerLocation = player.getLocation();
                                             if (playerLocation.getBlockX() < blockLocation.getBlockX()) {
                                                 // reconfigure maze

@@ -40,18 +40,18 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISThemeProcessor {
+public class TARDISThemeProcessor {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private Archive archive_next;
 
-    TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
+    public TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
     }
 
-    void changeDesktop() {
+    public void changeDesktop() {
         // get upgrade data
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);

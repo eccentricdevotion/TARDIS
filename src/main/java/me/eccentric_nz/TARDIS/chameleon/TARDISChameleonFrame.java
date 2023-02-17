@@ -24,9 +24,9 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-class TARDISChameleonFrame {
+public class TARDISChameleonFrame {
 
-    void updateChameleonFrame(PRESET preset, String loc) {
+    public void updateChameleonFrame(PRESET preset, String loc) {
         // get location of Chameleon frame
         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
         if (location != null) {

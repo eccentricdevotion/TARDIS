@@ -55,7 +55,7 @@ public class TARDISAreasInventory {
      */
     private ItemStack[] getItemStack() {
         List<ItemStack> areas = new ArrayList<>();
-        // saved destinations
+        // TARDIS areas
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
         int i = 0;
         if (rsa.resultSet()) {

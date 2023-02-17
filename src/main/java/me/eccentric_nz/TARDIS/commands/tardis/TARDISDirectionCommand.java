@@ -153,13 +153,11 @@ public class TARDISDirectionCommand {
                 bd.setTardisID(id);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
+                TARDISMessage.send(player, "DIRECTION_CHANGED");
             }
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
-            if (hid) {
-                TARDISMessage.send(player, "DIRECTION_CHANGED");
-            }
             // if they have a Direction Frame, update the rotation
             HashMap<String, Object> wheredf = new HashMap<>();
             wheredf.put("tardis_id", id);

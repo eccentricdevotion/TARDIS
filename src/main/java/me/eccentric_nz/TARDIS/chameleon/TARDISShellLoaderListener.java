@@ -30,7 +30,9 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,9 +41,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -49,21 +49,10 @@ import java.util.List;
 public class TARDISShellLoaderListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> problemBlocks = new ArrayList<>();
 
     public TARDISShellLoaderListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        problemBlocks.add(Material.LEVER);
-        problemBlocks.add(Material.REDSTONE_TORCH);
-        problemBlocks.add(Material.REDSTONE_WALL_TORCH);
-        problemBlocks.add(Material.TORCH);
-        problemBlocks.add(Material.WALL_TORCH);
-        problemBlocks.addAll(Tag.BUTTONS.getValues());
-        problemBlocks.addAll(Tag.DOORS.getValues());
-        problemBlocks.addAll(Tag.FLOWERS.getValues());
-        problemBlocks.addAll(Tag.TRAPDOORS.getValues());
-        problemBlocks.addAll(Tag.WALL_SIGNS.getValues());
     }
 
     /**
@@ -154,7 +143,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                         for (int c = 0; c < 10; c++) {
                                             for (int y = fy; y < fy + 4; y++) {
                                                 Block block = w.getBlockAt(fx + TARDISShellRoomConstructor.orderx[c], y, fz + TARDISShellRoomConstructor.orderz[c]);
-                                                if (problemBlocks.contains(block.getType())) {
+                                                if (ShellLoaderProblemBlocks.DO_FIRST.contains(block.getType())) {
                                                     block.setBlockData(TARDISConstants.AIR);
                                                 }
                                             }

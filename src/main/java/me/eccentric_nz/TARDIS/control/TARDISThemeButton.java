@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -46,6 +48,15 @@ public class TARDISThemeButton {
         this.id = id;
     }
 
+    public static int getTardisId(String uuid) {
+        int tid = 0;
+        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
+        if (rs.fromUUID(uuid)) {
+            tid = rs.getTardis_id();
+        }
+        return tid;
+    }
+
     public void clickButton() {
         // check player is in own TARDIS
         int p_tid = getTardisId(player.getUniqueId().toString());
@@ -64,18 +75,13 @@ public class TARDISThemeButton {
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         // open the upgrade menu
-        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
-        Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
-        upg.setContents(consoles);
-        player.openInventory(upg);
-    }
-
-    private int getTardisId(String uuid) {
-        int tid = 0;
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(uuid)) {
-            tid = rs.getTardis_id();
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            new FloodgateDestinationTerminalForm(plugin, player.getUniqueId()).send();
+        } else {
+            ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+            Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
+            upg.setContents(consoles);
+            player.openInventory(upg);
         }
-        return tid;
     }
 }

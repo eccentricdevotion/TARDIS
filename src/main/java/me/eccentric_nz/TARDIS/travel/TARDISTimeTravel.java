@@ -451,7 +451,7 @@ public class TARDISTimeTravel {
      * @param p      the player to check permissions for
      * @return true or false
      */
-    boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
+    public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;

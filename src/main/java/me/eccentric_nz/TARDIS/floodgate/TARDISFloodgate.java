@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.floodgate;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
@@ -75,5 +76,9 @@ public class TARDISFloodgate {
             return false;
         }
         return (!VALID_KEY.matcher(player.getName()).matches());
+    }
+
+    public static void sendControlForm(UUID uuid) {
+        new FloodgateControlForm(TARDIS.plugin, uuid).send();
     }
 }

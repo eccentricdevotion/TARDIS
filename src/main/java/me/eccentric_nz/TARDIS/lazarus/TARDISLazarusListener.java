@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateGeneticManipulatorForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,6 +37,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -53,7 +56,8 @@ public class TARDISLazarusListener implements Listener {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.OAK_PRESSURE_PLATE)) {
             Player player = event.getPlayer();
-            if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
+            UUID uuid = player.getUniqueId();
+            if (plugin.getTrackerKeeper().getLazarus().containsKey(uuid)) {
                 return;
             }
             if (TARDISPermission.hasPermission(player, "tardis.lazarus")) {
@@ -74,18 +78,18 @@ public class TARDISLazarusListener implements Listener {
                         }
                     }
                     // track the block
-                    plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
+                    plugin.getTrackerKeeper().getLazarus().put(uuid, b);
                     // close the door
                     b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
                     // open the GUI
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                    if (player.isSneaking()) {
-                        inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                        new FloodgateGeneticManipulatorForm(plugin, uuid, b).send();
                     } else {
-                        inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                        Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                        inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
+                        player.openInventory(inv);
                     }
-                    player.openInventory(inv);
                 }
             }
         }

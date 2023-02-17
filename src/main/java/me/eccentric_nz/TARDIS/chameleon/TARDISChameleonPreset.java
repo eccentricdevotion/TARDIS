@@ -172,7 +172,7 @@ public class TARDISChameleonPreset {
         cave = new TARDISCavePreset();
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
         if (d.equals(COMPASS.EAST)) {
