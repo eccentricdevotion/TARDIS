@@ -31,8 +31,9 @@ public class Area {
     private final int parkingDistance;
     private final String invisibility;
     private final String direction;
+    private final boolean grid;
 
-    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction) {
+    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction, boolean grid) {
         this.areaName = areaName;
         this.world = world;
         this.minX = minX;
@@ -43,6 +44,7 @@ public class Area {
         this.parkingDistance = parkingDistance;
         this.invisibility = invisibility;
         this.direction = direction;
+        this.grid = grid;
     }
 
     public String getAreaName() {
@@ -83,5 +85,9 @@ public class Area {
 
     public String getDirection() {
         return direction;
+    }
+
+    public boolean isGrid() {
+        return grid;
     }
 }
