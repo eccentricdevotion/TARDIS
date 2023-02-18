@@ -31,6 +31,8 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -224,12 +226,16 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         if (rs.resultSet()) {
                             // close this gui and load the TARDIS map
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
-                                // close inventory
-                                p.closeInventory();
-                                // open new inventory
-                                new_inv.setContents(new TARDISARSMap(plugin).getMap());
-                                p.openInventory(new_inv);
+                                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                                    new FloodgateMapForm(plugin, uuid, rs.getTardis_id()).send();
+                                } else {
+                                    Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
+                                    // close inventory
+                                    p.closeInventory();
+                                    // open new inventory
+                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
+                                    p.openInventory(new_inv);
+                                }
                             }, 1L);
                         } else {
                             TARDISMessage.send(p, "NOT_IN_TARDIS");
@@ -274,7 +280,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                     String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
                     int b = (bool) ? 0 : 1;
                     switch (im.getDisplayName()) {
-                        case "Junk TARDIS": {
+                        case "Junk TARDIS" -> {
                             // must be outside of the TARDIS
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("uuid", uuid);
@@ -362,22 +368,21 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 TARDISMessage.send(p, message);
                                 p.performCommand("tardis rebuild");
                             }
-                            break;
                         }
-                        case "Companion Build":
+                        case "Companion Build" -> {
                             String[] args = new String[2];
                             args[0] = "";
                             args[1] = value;
                             new TARDISBuildCommand(plugin).toggleCompanionBuilding(p, args);
-                            break;
-                        case "Lock Containers":
+                        }
+                        case "Lock Containers" -> {
                             if (bool) {
                                 plugin.getWorldGuardUtils().unlockContainers(p.getWorld(), p.getName());
                             } else {
                                 plugin.getWorldGuardUtils().lockContainers(p.getWorld(), p.getName());
                             }
-                            break;
-                        default: {
+                        }
+                        default -> {
                             HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", uuid.toString());
@@ -388,7 +393,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 set.put(lookup.get(im.getDisplayName()), b);
                             }
                             plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-                            break;
                         }
                     }
                     lore.set(0, value);

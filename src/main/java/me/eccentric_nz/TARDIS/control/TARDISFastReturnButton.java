@@ -38,7 +38,7 @@ public class TARDISFastReturnButton {
     private final int id;
     private final int level;
 
-    TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
+    public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;

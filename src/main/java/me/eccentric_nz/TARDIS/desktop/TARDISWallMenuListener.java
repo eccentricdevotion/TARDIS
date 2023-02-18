@@ -161,7 +161,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     }
 
     /**
-     * Closes the inventory and opens the Wall block selector menu.
+     * Closes the inventory and opens the Floor block selector menu.
      *
      * @param p the player using the GUI
      */

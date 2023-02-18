@@ -422,7 +422,7 @@ public class TARDISMonsterRunnable implements Runnable {
             }
             if (m.getPassenger() != null) {
                 if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
-                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
+                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent, false);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
                     ent.addPassenger(passenger);

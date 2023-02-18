@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,58 +36,56 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusInventory {
+class TARDISLazarusPageTwoInventory {
 
-    private final ItemStack[] pageOne;
+    private final ItemStack[] extra;
     private final TARDIS plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    TARDISLazarusInventory(TARDIS plugin) {
+    TARDISLazarusPageTwoInventory(TARDIS plugin) {
         this.plugin = plugin;
-        // maximum number of eggs is 45
-        // passive
-        disguises.add(Material.ALLAY_SPAWN_EGG);
-        disguises.add(Material.AXOLOTL_SPAWN_EGG);
-        disguises.add(Material.BAT_SPAWN_EGG);
-        disguises.add(Material.CAMEL_SPAWN_EGG);
-        disguises.add(Material.CAT_SPAWN_EGG);
-        disguises.add(Material.CHICKEN_SPAWN_EGG);
-        disguises.add(Material.COD_SPAWN_EGG);
-        disguises.add(Material.COW_SPAWN_EGG);
-        disguises.add(Material.DONKEY_SPAWN_EGG);
-        disguises.add(Material.FOX_SPAWN_EGG);
-        disguises.add(Material.FROG_SPAWN_EGG);
-        disguises.add(Material.GLOW_SQUID_SPAWN_EGG);
-        disguises.add(Material.HORSE_SPAWN_EGG);
-        disguises.add(Material.MOOSHROOM_SPAWN_EGG);
-        disguises.add(Material.MULE_SPAWN_EGG);
-        disguises.add(Material.OCELOT_SPAWN_EGG);
-        disguises.add(Material.PARROT_SPAWN_EGG);
-        disguises.add(Material.PIG_SPAWN_EGG);
-        disguises.add(Material.PUFFERFISH_SPAWN_EGG);
-        disguises.add(Material.RABBIT_SPAWN_EGG);
-        disguises.add(Material.SALMON_SPAWN_EGG);
-        disguises.add(Material.SHEEP_SPAWN_EGG);
-        disguises.add(Material.SKELETON_HORSE_SPAWN_EGG);
-        disguises.add(Material.SNOW_GOLEM_SPAWN_EGG);
-        disguises.add(Material.SQUID_SPAWN_EGG);
-        disguises.add(Material.STRIDER_SPAWN_EGG);
-        disguises.add(Material.TADPOLE_SPAWN_EGG);
-        disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
-        disguises.add(Material.TURTLE_SPAWN_EGG);
-        disguises.add(Material.VILLAGER_SPAWN_EGG);
-        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
-        // neutral
-        disguises.add(Material.BEE_SPAWN_EGG);
-        disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);
-        disguises.add(Material.DOLPHIN_SPAWN_EGG);
-        disguises.add(Material.ENDERMAN_SPAWN_EGG);
-        disguises.add(Material.GOAT_SPAWN_EGG);
-        disguises.add(Material.IRON_GOLEM_SPAWN_EGG);
-        disguises.add(Material.LLAMA_SPAWN_EGG);
-        disguises.add(Material.PANDA_SPAWN_EGG);
+        disguises.add(Material.PIGLIN_SPAWN_EGG);
+        disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
+        disguises.add(Material.SPIDER_SPAWN_EGG);
+        disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
+        disguises.add(Material.WOLF_SPAWN_EGG);
+        disguises.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
+        // hostile
+        disguises.add(Material.BLAZE_SPAWN_EGG);
+        disguises.add(Material.CREEPER_SPAWN_EGG);
+        disguises.add(Material.DROWNED_SPAWN_EGG);
+        disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
+        disguises.add(Material.ENDERMITE_SPAWN_EGG);
+        disguises.add(Material.EVOKER_SPAWN_EGG);
+        disguises.add(Material.GHAST_SPAWN_EGG);
+        disguises.add(Material.GUARDIAN_SPAWN_EGG);
+        disguises.add(Material.HOGLIN_SPAWN_EGG);
+        disguises.add(Material.HUSK_SPAWN_EGG);
+        disguises.add(Material.MAGMA_CUBE_SPAWN_EGG);
+        disguises.add(Material.PHANTOM_SPAWN_EGG);
+        disguises.add(Material.PIGLIN_BRUTE_SPAWN_EGG);
+        disguises.add(Material.PILLAGER_SPAWN_EGG);
+        disguises.add(Material.RAVAGER_SPAWN_EGG);
+        disguises.add(Material.SHULKER_SPAWN_EGG);
+        disguises.add(Material.SILVERFISH_SPAWN_EGG);
+        disguises.add(Material.SKELETON_SPAWN_EGG);
+        disguises.add(Material.SLIME_SPAWN_EGG);
+        disguises.add(Material.STRAY_SPAWN_EGG);
+        disguises.add(Material.VEX_SPAWN_EGG);
+        disguises.add(Material.VINDICATOR_SPAWN_EGG);
+        disguises.add(Material.WARDEN_SPAWN_EGG);
+        disguises.add(Material.WITCH_SPAWN_EGG);
+        disguises.add(Material.WITHER_SKELETON_SPAWN_EGG);
+        disguises.add(Material.ZOGLIN_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_SPAWN_EGG);
+        disguises.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
+        // boss
+        disguises.add(Material.ENDER_DRAGON_SPAWN_EGG);
+        disguises.add(Material.WITHER_SPAWN_EGG);
+        // unused
+        disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
 
-        pageOne = getItemStack();
+        extra = getItemStack();
     }
 
     /**
@@ -98,26 +96,36 @@ class TARDISLazarusInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
+        // hostile & boss & unused
         for (Material m : disguises) {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();
-            switch (m) {
-                case MOOSHROOM_SPAWN_EGG -> me.setDisplayName("MUSHROOM_COW");
-                case ZOMBIFIED_PIGLIN_SPAWN_EGG -> me.setDisplayName("PIG_ZOMBIE");
-                default -> me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
-            }
+            me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
             egg.setItemMeta(me);
             stacks[i] = egg;
             i++;
         }
-        // page two
+        // put illusioner
+        ItemStack ill = new ItemStack(Material.BOW, 1);
+        ItemMeta usi = ill.getItemMeta();
+        usi.setDisplayName("ILLUSIONER");
+        ill.setItemMeta(usi);
+        stacks[i] = ill;
+        i++;
+        // put herobrine
+        ItemStack hero = new ItemStack(Material.PLAYER_HEAD, 1);
+        ItemMeta brine = hero.getItemMeta();
+        brine.setDisplayName("HEROBRINE");
+        hero.setItemMeta(brine);
+        stacks[i] = hero;
+        // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta two = page.getItemMeta();
-        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
-        page.setItemMeta(two);
+        ItemMeta one = page.getItemMeta();
+        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        page.setItemMeta(one);
         stacks[43] = page;
-        // if TARDISWeepingAngels is enabled add TARDIS monsters
+        // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
             ItemStack weep = new ItemStack(Material.BRICK, 1);
             ItemMeta ing = weep.getItemMeta();
@@ -184,7 +192,7 @@ class TARDISLazarusInventory {
         return stacks;
     }
 
-    public ItemStack[] getPageOne() {
-        return pageOne;
+    public ItemStack[] getPageTwo() {
+        return extra;
     }
 }

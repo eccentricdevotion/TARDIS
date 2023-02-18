@@ -35,7 +35,7 @@ public class TARDISWeather {
         world.setStorm(false);
     }
 
-    static void setWeather(World world, Weather weather) {
+    public static void setWeather(World world, Weather weather) {
         switch (weather) {
             case RAIN -> setRain(world);
             case THUNDER -> setThunder(world);

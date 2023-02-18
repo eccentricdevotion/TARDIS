@@ -50,30 +50,28 @@ public class TARDISCompanionAddInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] heads = new ItemStack[54];
         // get current companions
+        List<String> comps;
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-        if (rs.fromUUID(uuid.toString())) {
-            List<String> comps;
-            if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
-                comps = Arrays.asList(rs.getCompanions().split(":"));
-            } else {
-                comps = new ArrayList<>();
-            }
-            int i = 0;
-            for (Player p : plugin.getServer().getOnlinePlayers()) {
-                if (i < 45) {
-                    UUID puid = p.getUniqueId();
-                    if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
-                        ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-                        SkullMeta skull = (SkullMeta) head.getItemMeta();
-                        skull.setOwningPlayer(p);
-                        skull.setDisplayName(p.getName());
-                        ArrayList<String> lore = new ArrayList<>();
-                        lore.add(p.getUniqueId().toString());
-                        skull.setLore(lore);
-                        head.setItemMeta(skull);
-                        heads[i] = head;
-                        i++;
-                    }
+        if (rs.fromUUID(uuid.toString()) && rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
+            comps = Arrays.asList(rs.getCompanions().split(":"));
+        } else {
+            comps = new ArrayList<>();
+        }
+        int i = 0;
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            if (i < 45) {
+                UUID puid = p.getUniqueId();
+                if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
+                    ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
+                    SkullMeta skull = (SkullMeta) head.getItemMeta();
+                    skull.setOwningPlayer(p);
+                    skull.setDisplayName(p.getName());
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(p.getUniqueId().toString());
+                    skull.setLore(lore);
+                    head.setItemMeta(skull);
+                    heads[i] = head;
+                    i++;
                 }
             }
         }

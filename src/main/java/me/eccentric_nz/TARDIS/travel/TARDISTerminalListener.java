@@ -437,7 +437,7 @@ public class TARDISTerminalListener implements Listener {
                     }
                     String loc_str = world + ":" + slotx + ":" + slotz;
                     switch (e) {
-                        case THE_END:
+                        case THE_END -> {
                             int endy = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
                             if (endy > 40 && Math.abs(slotx) > 9 && Math.abs(slotz) > 9) {
                                 Location loc = new Location(w, slotx, 0, slotz);
@@ -462,8 +462,8 @@ public class TARDISTerminalListener implements Listener {
                                 lore.add(loc_str);
                                 lore.add("is not safe!");
                             }
-                            break;
-                        case NETHER:
+                        }
+                        case NETHER -> {
                             if (tt.safeNether(w, slotx, slotz, d, p)) {
                                 String save = world + ":" + slotx + ":" + plugin.getUtils().getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
                                 terminalDestination.put(uuid, save);
@@ -473,8 +473,8 @@ public class TARDISTerminalListener implements Listener {
                                 lore.add(loc_str);
                                 lore.add("is not safe!");
                             }
-                            break;
-                        default:
+                        }
+                        default -> {
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
                             int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
@@ -513,7 +513,7 @@ public class TARDISTerminalListener implements Listener {
                                 lore.add(loc_str);
                                 lore.add("is not safe!");
                             }
-                            break;
+                        }
                     }
                 }
             }

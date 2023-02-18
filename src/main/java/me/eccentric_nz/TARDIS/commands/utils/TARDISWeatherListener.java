@@ -75,7 +75,7 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
                                 return;
                             }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 13 && slot != 20) {
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                                 TARDISMessage.send(player, "POWER_DOWN");
                                 return;
                             }

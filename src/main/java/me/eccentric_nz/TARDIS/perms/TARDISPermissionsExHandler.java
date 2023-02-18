@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.perms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 
 import java.io.BufferedReader;
 import java.io.File;
