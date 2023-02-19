@@ -41,6 +41,7 @@ public enum BlueprintConsole {
     MECHANICAL("tardis.mechanical"),
     ORIGINAL("tardis.original"),
     PLANK("tardis.plank"),
+    PLAYGROUND("tardis.playground"),
     PYRAMID("tardis.pyramid"),
     REDSTONE("tardis.redstone"),
     ROTOR("tardis.rotor"),

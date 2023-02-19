@@ -53,6 +53,7 @@ public class TARDISCraftListener implements Listener {
         this.plugin = plugin;
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put(Material.BOOKSHELF, "PLANK"); // plank
+        t.put(Material.CHAIN, "PLAYGROUND"); // playground
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
         t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe

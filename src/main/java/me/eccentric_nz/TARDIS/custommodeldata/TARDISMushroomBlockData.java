@@ -35,6 +35,8 @@ public class TARDISMushroomBlockData {
 
     public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<>() {
         {
+            // playground
+            put(9, "minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=true]");
             // mechanical
             put(10, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=true]");
             // fugitive

@@ -178,6 +178,7 @@ public enum TARDISInfoMenu {
     MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
     MECHANICAL("TIS|TARDIS Types|Mechanical^", "TYPES", "^"),
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
+    PLAYGROUND("TIS|TARDIS Types|Playground+", "TYPES", "+"),
     PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "y"),
     REDSTONE("TIS|TARDIS Types|Redstone", "TYPES", "R"),
     STEAMPUNK("TIS|TARDIS Types|Steampunk", "TYPES", "S"),

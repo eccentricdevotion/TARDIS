@@ -67,6 +67,7 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("MECHANICAL", new Schematic("POLISHED_ANDESITE", "mechanical", "Mechanical Console", ConsoleSize.MEDIUM, false, true, false));
         Consoles.getBY_NAMES().put("ORIGINAL", new Schematic("PACKED_MUD", "original", "The original TARDIS plugin Console", ConsoleSize.SMALL, false, true, false));
         Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
+        Consoles.getBY_NAMES().put("PLAYGROUND", new Schematic("CHAIN", "playground", "Playground Console", ConsoleSize.MEDIUM, false, false, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         Consoles.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));

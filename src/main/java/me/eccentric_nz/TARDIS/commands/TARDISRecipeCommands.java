@@ -77,6 +77,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("MECHANICAL", Material.POLISHED_ANDESITE); // mechanical schematic adapted from design by Plastic Straw
         t.put("ORIGINAL", Material.PACKED_MUD); // original
         t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("PLAYGROUND", Material.CHAIN); // playground
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor

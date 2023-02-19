@@ -571,6 +571,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equals("*")) {
                     showInfo(p, TARDISInfoMenu.ANCIENT);
                 }
+                if (chat.equals("+")) {
+                    showInfo(p, TARDISInfoMenu.PLAYGROUND);
+                }
             }
             case FOOD_ACCESSORIES -> {
                 if (chat.equalsIgnoreCase("B")) {
