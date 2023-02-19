@@ -329,7 +329,12 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_AREA_PERM", first);
                                                     continue;
                                                 }
-                                                Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                                Location l;
+                                                if (rsa.getArea().isGrid()) {
+                                                    l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                                } else {
+                                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                                }
                                                 if (l == null) {
                                                     TARDISMessage.handlesSend(player, "NO_MORE_SPOTS");
                                                     continue;
@@ -627,7 +632,11 @@ public class TARDISHandlesProcessor {
             if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.getTardisArea().getNextSpot(area);
+            if (rsa.getArea().isGrid()) {
+                l = plugin.getTardisArea().getNextSpot(area);
+            } else {
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            }
         }
         return l;
     }

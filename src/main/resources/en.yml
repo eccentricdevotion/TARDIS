@@ -86,6 +86,7 @@ AREA_NO_STAT: "You cannot use the Stattenheim Remote to bring the Police Box to 
 AREA_PARK: "You need to specify a parking distance (the space between TARDISes)."
 AREA_PARK_SET: "The area [%s] parking space set successfully"
 AREA_SAVED: "The area [%s] was saved successfully"
+AREA_SHOW_NONGRID: "You cannot show the boundaries of a non-grid type area!"
 AREA_WORLD: "Area start and end blocks must be in the same world! Try again"
 AREA_Y: "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area."
 ARG_BLUEPRINT: "Invalid blueprint argument!"

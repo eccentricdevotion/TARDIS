@@ -245,7 +245,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                 // get the exile area
                 String permArea = plugin.getTardisArea().getExileArea(player);
                 TARDISMessage.send(player, "EXILE", permArea);
-                Location l = plugin.getTardisArea().getNextSpot(permArea);
+                Location l;
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("area_name", permArea);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+                rsa.resultSet();
+                if (rsa.getArea().isGrid()) {
+                    l = plugin.getTardisArea().getNextSpot(permArea);
+                } else {
+                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                }
                 if (l == null) {
                     TARDISMessage.send(player, "NO_MORE_SPOTS");
                     return true;
@@ -690,7 +699,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                     seti.put("adapti_on", 0);
                     plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                 }
-                Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                Location l;
+                if (rsa.getArea().isGrid()) {
+                    l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                } else {
+                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                }
                 if (l == null) {
                     TARDISMessage.send(player, "NO_MORE_SPOTS");
                     return true;

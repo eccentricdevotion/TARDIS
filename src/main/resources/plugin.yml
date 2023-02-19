@@ -1217,7 +1217,7 @@ commands:
       usage: /<command> yard [name] [material] [material]
     invisibility:
       description: Set whether a TARDIS area allows invisible landings.
-      usage: /<command> invisibility [name] [ALLOW|DENY]
+      usage: /<command> invisibility [name] [ALLOW|DENY|PRESET]
     direction:
       description: Set the direction TARDIS's will face when landing in the specified area. Setting to NONE doesn't enforce a direction.
       usage: /<command> direction [name] [NORTH|SOUTH|EAST|WEST|NONE]

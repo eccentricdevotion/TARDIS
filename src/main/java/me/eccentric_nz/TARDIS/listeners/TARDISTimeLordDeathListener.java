@@ -415,7 +415,11 @@ public class TARDISTimeLordDeathListener implements Listener {
             if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.getTardisArea().getNextSpot(area);
+            if (rsa.getArea().isGrid()) {
+                l = plugin.getTardisArea().getNextSpot(area);
+            } else {
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            }
         }
         return l;
     }
@@ -432,9 +436,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                 if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                     return null;
                 }
-                Location location = plugin.getTardisArea().getNextSpot(area);
-                if (location != null) {
-                    return location;
+                Location l;
+                if (rsa.getArea().isGrid()) {
+                    l = plugin.getTardisArea().getNextSpot(area);
+                } else {
+                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                }
+                if (l != null) {
+                    return l;
                 }
             }
         }

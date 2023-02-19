@@ -156,6 +156,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                         TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return false;
                     }
+                    if (!rsaShow.getArea().isGrid()) {
+                        TARDISMessage.send(player, "AREA_SHOW_NONGRID");
+                        return true;
+                    }
                     Area a = rsaShow.getArea();
                     int mix = a.getMinX();
                     int miz = a.getMinZ();
@@ -290,13 +294,28 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return true;
                 }
                 case "create" -> {
-                    // check area name
-                    
-                    // add new area without min/max, grid = 0
-                    if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                    // check name is unique and acceptable
+                    if (args.length < 2 || !LETTERS_NUMBERS.matcher(args[1]).matches()) {
+                        TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
                         return false;
                     }
+                    ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
+                    if (rsa.resultSet()) {
+                        for (String s : rsa.getNames()) {
+                            if (s.equals(args[1])) {
+                                TARDISMessage.send(player, "AREA_IN_USE");
+                                return false;
+                            }
+                        }
+                    }
+                    // add new area without min/max, grid = 0
+                    HashMap<String, Object> create = new HashMap<>();
+                    create.put("area_name", args[1]);
+                    create.put("world", player.getLocation().getWorld().getName());
+                    create.put("grid", 0);
+                    plugin.getQueryFactory().doInsert("areas", create);
+                    TARDISMessage.send(player, "AREA_SAVED", args[1]);
+                    return true;
                 }
                 case "add" -> {
                     // add location to specified area
