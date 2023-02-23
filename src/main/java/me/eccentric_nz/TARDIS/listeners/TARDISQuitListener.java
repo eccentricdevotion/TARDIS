@@ -70,12 +70,14 @@ public class TARDISQuitListener implements Listener {
             Tardis tardis = rs.getTardis();
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardis_id());
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-            if (rsc.resultSet()) {
-                World w = rsc.getWorld();
-                if (w != null) {
-                    Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    chunk.setForceLoaded(false);
+            if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (rsc.resultSet()) {
+                    World w = rsc.getWorld();
+                    if (w != null) {
+                        Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                        chunk.setForceLoaded(false);
+                    }
                 }
             }
             // power down TARDIS

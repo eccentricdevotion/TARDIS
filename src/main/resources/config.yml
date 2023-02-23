@@ -44,6 +44,7 @@ police_box:
   sign_colour: WHITE
   rebuild_cooldown: 10000
   load_shells: false
+  keep_chunk_force_loaded: true
 # travel settings
 # https://eccentricdevotion.github.io/TARDIS/configuration-travel.html
 travel:

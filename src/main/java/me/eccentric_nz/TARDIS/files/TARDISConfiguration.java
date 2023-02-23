@@ -105,7 +105,8 @@ public class TARDISConfiguration {
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("police_box.load_shells", false);
-        booleanOptions.put("police_box.name_tardis", false);
+        booleanOptions.put("police_box.load_shells", false);
+        booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);
         booleanOptions.put("police_box.view_interior", false);
         booleanOptions.put("police_box.view_interior_uses_console_size", false);
