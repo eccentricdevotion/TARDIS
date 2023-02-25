@@ -34,7 +34,7 @@ public enum GUIGeneticManipulator {
     CYBERMAN(1, 1, Material.IRON_INGOT),
     DALEK(1, 1, Material.SLIME_BALL),
     DALEK_SEC(1,1, Material.MANGROVE_PROPAGULE),
-//    DAVROS(1,1, Material.),
+    DAVROS(1,1, Material.CRIMSON_BUTTON),
     EMPTY_CHILD(1, 1, Material.SUGAR),
     ICE_WARRIOR(1, 1, Material.SNOWBALL),
     HATH(1,1, Material.PUFFERFISH),
