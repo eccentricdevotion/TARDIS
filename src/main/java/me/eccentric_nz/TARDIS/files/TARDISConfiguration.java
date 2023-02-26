@@ -199,6 +199,7 @@ public class TARDISConfiguration {
         stringOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         stringOptions.put("creation.use_clay", "WOOL");
+        stringOptions.put("creation.tips_next", "FREE");
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");

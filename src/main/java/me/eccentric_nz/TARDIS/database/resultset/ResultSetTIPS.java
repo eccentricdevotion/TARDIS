@@ -68,4 +68,35 @@ public class ResultSetTIPS {
             }
         }
     }
+
+    /**
+     * Get the highest TIPS slot number
+     */
+    public int getHightestSlot() {
+        Statement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT MAX(tips) as highest FROM " + prefix + "tardis";
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                return rs.getInt("highest");
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
+            }
+            return -1;
+        }
+    }
 }
