@@ -20,17 +20,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LingvaTranslate {
 
-    private static List<String> domains = Arrays.asList("lingva.ml", "translate.projectsegfau.lt", "translate.dr460nf1r3.org", "lingva.garudalinux.org");
+    private static List<String> domains = Arrays.asList("lingva.ml", "translate.dr460nf1r3.org", "lingva.garudalinux.org");
 
     /**
      * Fetches a translation from a Lingva instance
@@ -39,14 +40,21 @@ public class LingvaTranslate {
         // get random domain
         String host = domains.get(ThreadLocalRandom.current().nextInt(domains.size()));
         try {
+            String encoded = message.replace(" ", "%20");
             // We're connecting to TARDIS's Jenkins REST api
-            URL url = new URL("https://" + host + "/api/v1/" + from + "/" + to + "/" + message);
-            // Create a connection
-            URLConnection request = url.openConnection();
-            request.setRequestProperty("User-Agent", "TARDISPlugin");
-            request.connect();
-            // Convert to a JSON object
-            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            URI uri = URI.create("https://" + host + "/api/v1/" + from + "/" + to + "/" + encoded);
+            // Create a client, request and response
+            HttpClient client = HttpClient.newBuilder()
+                    .version(HttpClient.Version.HTTP_2)
+                    .connectTimeout(Duration.ofSeconds(10))
+                    .build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(uri)
+                    .header("User-Agent", "TARDISPlugin")
+                    .build();
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonElement root = JsonParser.parseString((String) response.body());
             String translation = root.getAsJsonObject().get("translation").getAsString();
             return translation;
         } catch (Exception ex) {
