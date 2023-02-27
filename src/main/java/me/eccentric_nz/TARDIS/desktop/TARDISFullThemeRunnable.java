@@ -54,9 +54,8 @@ import java.io.File;
 import java.util.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted,
- * automatically relocating any living beings in the deleted room, depositing
- * them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
  */
@@ -226,10 +225,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                 // only if entity still exists
                 if (itemFrame != null) {
+                    if (tud.getPrevious().getPermission().equals("mechanical")) {
+                        // remove the engine item frame
+                        ItemFrame engine = TARDISItemFrameSetter.getItemFrameFromLocation(itemFrame.getLocation().add(0, -4, 0));
+                        if (engine != null) {
+                            engine.setItem(null, false);
+                            engine.remove();
+                        }
+                    }
                     itemFrame.setItem(null, false);
                     itemFrame.remove();
                 }
                 TARDISTimeRotor.updateRotorRecord(id, "");
+                plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
             }
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {

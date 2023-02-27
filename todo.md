@@ -2,9 +2,7 @@
 
 ## Current version `4.14.0`
 
-1. Semi-random assigned parking in TARDIS areas - [#696](https://github.com/eccentricdevotion/TARDIS/issues/696)
-2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-3. Remove Mechanical engine item frame when changing desktop theme / deleting
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Next version `4.15.0`
 
