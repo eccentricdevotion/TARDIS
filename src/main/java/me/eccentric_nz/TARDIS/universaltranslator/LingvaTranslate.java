@@ -41,7 +41,7 @@ public class LingvaTranslate {
         String host = domains.get(ThreadLocalRandom.current().nextInt(domains.size()));
         try {
             String encoded = message.replace(" ", "%20");
-            // We're connecting to TARDIS's Jenkins REST api
+            // We're connecting to a random Lingva host's REST api
             URI uri = URI.create("https://" + host + "/api/v1/" + from + "/" + to + "/" + encoded);
             // Create a client, request and response
             HttpClient client = HttpClient.newBuilder()
@@ -53,10 +53,9 @@ public class LingvaTranslate {
                     .uri(uri)
                     .header("User-Agent", "TARDISPlugin")
                     .build();
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JsonElement root = JsonParser.parseString((String) response.body());
-            String translation = root.getAsJsonObject().get("translation").getAsString();
-            return translation;
+            return root.getAsJsonObject().get("translation").getAsString();
         } catch (Exception ex) {
             TARDIS.plugin.debug("Failed to fetch a translation from " + host + ". " + ex.getMessage());
         }

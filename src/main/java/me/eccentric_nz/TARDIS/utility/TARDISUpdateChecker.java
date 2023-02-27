@@ -115,7 +115,7 @@ public class TARDISUpdateChecker implements Runnable {
                     .uri(uri)
                     .header("User-Agent", "TARDISPlugin")
                     .build();
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JsonElement root = JsonParser.parseString((String) response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {

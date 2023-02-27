@@ -83,7 +83,7 @@ public class TARDISSpigotChecker implements Runnable {
                     .GET()
                     .uri(uri)
                     .build();
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JsonElement root = JsonParser.parseString((String) response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
