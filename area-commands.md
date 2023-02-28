@@ -30,6 +30,21 @@ area with parking spots, where:
 
 ![TARDIS parking yard](images/docs/yard.jpg)
 
+## Semi-random parking areas
+
+You can set up an area where parking spaces are assigned manually instead of in a grid-like fashion, 
+for example like in the image below, where each red cross is a parking spot.
+
+![](images/docs/semi-random-area.jpg)
+
+To create a non-grid type area, type:
+
+`tardisarea create [name]`
+
+To assign parking spots to the area, stand at the location you want a TARDIS to park and use the command:
+
+`tardisarea add [name]` - where `name` is the area the parking spot should belong to.
+
 ### Video
 
 **Note:** The command in the video has changed in since this video was made! 

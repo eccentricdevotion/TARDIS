@@ -9,7 +9,7 @@ title: Genetic Manipulator (AKA Lazarus Device)
 
 ## Recommendation
 
-Although nit required, the Genetic Manipulator works best when the following two plugins are installed alongside TARDIS:
+Although not required, the Genetic Manipulator works best when the following two plugins are installed alongside TARDIS:
 
 - [LibsDisguises](http://www.spigotmc.org/resources/libs-disguises.81/), and
 - [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/)
@@ -25,7 +25,7 @@ If you have the permission `tardis.lazarus`, you too can transform yourself into
 - Grow a ‘LAZARUS’ room using ARS or the `/tardis room lazarus` command (you’ll need the permission `tardis.room.lazarus`)
 - Once the room is grown, step into the Genetic Manipulator and trigger the wood pressure plate
 - The Genetic Manipulator GUI will open automatically
-- Select an animal or monster to turn into — if the TARDIS WeepingAngels plugin is installed you can also choose to be an Angel, Cyberman or Ice Warrior
+- Select an animal or monster to turn into — if the TARDIS WeepingAngels plugin is installed you can also choose to be any Whovian monster provided by the plugin
 - To transform into the mob, click the “Modify my genetic material” button
 - Wait while the Genetic Manipulator reconfigures your DNA
 - When it is done exit, and go off to scare your friends :)

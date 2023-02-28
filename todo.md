@@ -1,11 +1,11 @@
 # TODO
 
-## Current version `4.12.1`
+## Current version `4.13.0`
 
 1. Add CAVE Chameleon preset
 2. Update mushroom block states in SHROOM, EXTREME_HILLS presets during/after materialisation
 
-## Next version `4.13.0`
+## Next version `4.14.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 2. Cache TARDIS data to speed lookups and reduce database queries
@@ -17,12 +17,12 @@
 
 ## Wiki Documentation
 
-* Add Mechanical interior
+* Screenshot images for Bedrock / floodgate forms
+* Add images to Genetic Manipulator
 
 ## Resource Pack / TARDISWeepingAngels
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
-    * Davros
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
@@ -31,6 +31,9 @@
     * Husk -> Sycorax
     * Stray -> Scarecrows
 2. Animate models for player disguises (could be done in TARDIS instead?)
+   - make player invisible
+   - store player uuid in set
+   - check player move event - switch to animated model when moving
 
 ## Minecraft Bedrock Edition?
 
