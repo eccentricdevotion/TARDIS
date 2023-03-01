@@ -31,7 +31,7 @@ Click a button to load an area to travel to.
 
 ## Destination terminal
 
-Use the form controls to find a unique location.
+Use the form controls to find a unique location. When parameters have been selected, click the submit button.
 
 ![Floodgate destination terminal](images/floodgate/terminal.jpg)
 
@@ -43,7 +43,7 @@ Click a button to change to a new desktop theme.
 
 Select a block to use for the floor /walls of the new interior.
 
-![Floodgate wallls and floors](images/floodgate/walls.jpg)
+![Floodgate wallls and floors](images/floodgate/wall.jpg)
 
 ## Map
 
@@ -59,12 +59,6 @@ Click a button to set Chameleon Circuit options.
 
 ![Floodgate presets](images/floodgate/presets.jpg)
 
-## Direction
-
-Click a button to change the exterior direction.
-
-![Floodgate direction](images/floodgate/direction.jpg)
-
 ## Temporal circuit
 
 Click a button to change the relative time when exiting the TARDIS.
@@ -75,11 +69,11 @@ Click a button to change the relative time when exiting the TARDIS.
 
 Click a button to transmat to a saved interior location.
 
-![Floodgate transmat](images/floodgate/transamt.jpg)
+![Floodgate transmat](images/floodgate/transmat.jpg)
 
 ## Player Preferences
 
-Click a button to toggle player preferences on or off.
+Click a button to toggle player preferences on or off. When preferences are set, click the submit button.
 
 ![Floodgate preferences](images/floodgate/prefs.jpg)
 
@@ -91,7 +85,7 @@ Click a button to add / remove a player as a TARDIS companion.
 
 ## Genetic Manipulator
 
-Click a button to genetic modify your appearance.
+Click a button to genetic modify your appearance. _Probably won’t work as you're a bedrock player on a Java server..._
 
 ![Floodgate genetic manipulator](images/floodgate/genetic.jpg)
 
