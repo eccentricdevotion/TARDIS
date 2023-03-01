@@ -62,6 +62,7 @@ public class FloodgateAreasForm {
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("area_name", label);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+        rsa.resultSet();
         if (rsa.getArea().isGrid()) {
             l = plugin.getTardisArea().getNextSpot(label);
         } else {

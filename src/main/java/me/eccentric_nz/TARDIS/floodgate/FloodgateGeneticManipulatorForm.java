@@ -22,8 +22,6 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -32,7 +30,6 @@ public class FloodgateGeneticManipulatorForm {
     private final TARDIS plugin;
     private final UUID uuid;
     private final Block block;
-    private final List<Material> disguises = new ArrayList<>();
     private final String path = "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/spawn_eggs/%s.png";
 
     public FloodgateGeneticManipulatorForm(TARDIS plugin, UUID uuid, Block block) {
@@ -50,6 +47,7 @@ public class FloodgateGeneticManipulatorForm {
         }
         builder.button("Master's Reverse Polarity");
         builder.validResultHandler(response -> handleResponse(response));
+        builder.closedOrInvalidResultHandler(response -> handleClose());
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
@@ -76,8 +74,7 @@ public class FloodgateGeneticManipulatorForm {
         // open the door
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             openDoor(block);
-            untrack(uuid, true);
-            plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
+            untrack(uuid);
         }, 100L);
         String label = response.clickedButton().text();
         switch (label) {
@@ -248,13 +245,16 @@ public class FloodgateGeneticManipulatorForm {
         }
     }
 
-    private void untrack(UUID uuid, boolean remove) {
+    private void handleClose() {
+        openDoor(block);
+        untrack(uuid);
+    }
+
+    private void untrack(UUID uuid) {
         // stop tracking player
         plugin.getTrackerKeeper().getLazarus().remove(uuid);
-        if (remove) {
-            disguises.remove(uuid);
-        }
         plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
+        plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
     }
 
     private void openDoor(Block block) {

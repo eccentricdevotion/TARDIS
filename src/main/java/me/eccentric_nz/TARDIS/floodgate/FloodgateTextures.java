@@ -48,7 +48,7 @@ public class FloodgateTextures {
         lookup.put("RED_WOOL", "blocks/wool_colored_red");
         lookup.put("SANDSTONE", "blocks/sandstone_normal");
         lookup.put("SNOW_BLOCK", "blocks/snow");
-        lookup.put("SPRUCE_LEAVES", "blocks/leaves_spruce_carried");
+        lookup.put("SPRUCE_LEAVES", "blocks/leaves_spruce_opaque");
         lookup.put("STONE_BRICK_STAIRS", "blocks/stone_slab_top");
         lookup.put("STONE_BRICKS", "blocks/stonebrick");
         lookup.put("TERRACOTTA", "blocks/hardened_clay");

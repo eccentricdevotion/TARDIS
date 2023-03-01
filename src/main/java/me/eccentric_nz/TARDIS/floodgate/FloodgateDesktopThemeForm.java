@@ -53,6 +53,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("MECHANICAL", "polished_andesite");
         blocks.put("ORIGINAL", "packed_mud");
         blocks.put("PLANK", "plank");
+        blocks.put("PLAYGROUND", "chain");
         blocks.put("PYRAMID", "sandstone");
         blocks.put("REDSTONE", "redstone");
         blocks.put("ROTOR", "honeycomb_block");
