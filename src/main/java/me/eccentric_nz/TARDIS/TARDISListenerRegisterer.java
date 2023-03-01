@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
+import me.eccentric_nz.TARDIS.commands.areas.TARDISEditAreasGUIListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
@@ -106,6 +107,7 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the TARDIS.
      */
     TARDISInformationSystemListener registerListeners() {
+        plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {

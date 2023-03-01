@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.commands.*;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
+import me.eccentric_nz.TARDIS.commands.areas.TARDISAreaCommands;
+import me.eccentric_nz.TARDIS.commands.areas.TARDISAreaTabComplete;
 import me.eccentric_nz.TARDIS.commands.bind.TARDISBindCommands;
 import me.eccentric_nz.TARDIS.commands.bind.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;

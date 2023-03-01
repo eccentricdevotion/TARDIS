@@ -81,7 +81,7 @@ public class TARDISCompanionInventory {
         add.setItemMeta(aa);
         heads[48] = add;
         ItemStack del = new ItemStack(Material.BUCKET, 1);
-        ItemMeta dd = add.getItemMeta();
+        ItemMeta dd = del.getItemMeta();
         dd.setDisplayName("Remove");
         del.setItemMeta(dd);
         heads[51] = del;

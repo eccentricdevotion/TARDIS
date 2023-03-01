@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.TARDIS.commands.areas;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -35,6 +36,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -80,7 +83,8 @@ public class TARDISAreaCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
-            switch (args[0].toLowerCase()) {
+            String first = args[0].toLowerCase();
+            switch (first) {
                 case "start" -> {
                     // check name is unique and acceptable
                     if (args.length < 2 || !LETTERS_NUMBERS.matcher(args[1]).matches()) {
@@ -317,7 +321,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_SAVED", args[1]);
                     return true;
                 }
-                case "add" -> {
+                case "add", "edit" -> {
                     // add location to specified area
                     if (args.length < 2) {
                         TARDISMessage.send(player, "AREA_NEED");
@@ -335,18 +339,27 @@ public class TARDISAreaCommands implements CommandExecutor {
                         TARDISMessage.send(player, "AREA_NOT_GRID");
                         return true;
                     }
-                    // get player's location
-                    Location location = player.getLocation();
-                    HashMap<String, Object> add = new HashMap<>();
-                    add.put("area_id", rsaId.getArea().getAreaId());
-                    add.put("world", location.getWorld().getName());
-                    add.put("x", location.getBlockX());
-                    add.put("y", location.getBlockY());
-                    add.put("z", location.getBlockZ());
-                    plugin.getQueryFactory().doInsert("area_locations", add);
-                    TARDISMessage.send(player, "AREA_ADD_LOCATION", args[1]);
+                    if (first.equals("edit")) {
+                        // open edit gui to allow removal of added locations
+                        ItemStack[] locations = new TARDISEditAreasInventory(plugin, rsaId.getArea().getAreaId()).getLocations();
+                        Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Area Locations");
+                        inventory.setContents(locations);
+                        player.openInventory(inventory);
+                    } else {
+                        // get player's location
+                        Location location = player.getLocation();
+                        HashMap<String, Object> add = new HashMap<>();
+                        add.put("area_id", rsaId.getArea().getAreaId());
+                        add.put("world", location.getWorld().getName());
+                        add.put("x", location.getBlockX());
+                        add.put("y", location.getBlockY());
+                        add.put("z", location.getBlockZ());
+                        plugin.getQueryFactory().doInsert("area_locations", add);
+                        TARDISMessage.send(player, "AREA_ADD_LOCATION", args[1]);
+                    }
                     return true;
                 }
+
                 default -> {
                     return false;
                 }
