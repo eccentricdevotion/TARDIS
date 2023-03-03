@@ -31,7 +31,16 @@ class TARDISDevListCommand {
     }
 
     boolean listStuff(CommandSender sender, String[] args) {
-        if (args.length > 1 && (args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints") || args[1].equalsIgnoreCase("commands"))) {
+        if (args.length > 1 &&
+            (
+                args[1].equalsIgnoreCase("preset_perms")
+                || args[1].equalsIgnoreCase("perms")
+                || args[1].equalsIgnoreCase("recipes")
+                || args[1].equalsIgnoreCase("blueprints")
+                || args[1].equalsIgnoreCase("commands")
+                || args[1].equalsIgnoreCase("block_colours")
+            )
+        ) {
             if (args[1].equalsIgnoreCase("perms")) {
                 if (args.length > 2) {
                     new TARDISPermissionLister(plugin).listPermsHtml(sender);
@@ -51,6 +60,9 @@ class TARDISDevListCommand {
                 } else {
                     new TARDISCommandsLister(plugin).listTARDISCommands(sender);
                 }
+                return true;
+            } else if (args[1].equalsIgnoreCase("block_colours")) {
+                plugin.getTardisHelper().listBlockColours();
                 return true;
             } else {
                 // preset permissions

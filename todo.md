@@ -2,11 +2,12 @@
 
 ## Current version `4.14.0`
 
-1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+1. Experiment with bigger on the inside for item frame police boxes - using 
+   maps, if successful, switch to/add config option for preset exteriors as well...?
 
 ## Next version `4.15.0`
 
-1. ?
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Future versions
 
@@ -19,9 +20,8 @@
 
 ## Wiki Documentation
 
-* Bedrock / floodgate features
-* Semi-random assigned parking
-* Update lazarus / genetic manipulator
+* Semi-random assigned parking - add GUI
+* Add other area sub-commands
 
 ## Resource Pack / TARDISWeepingAngels
 
