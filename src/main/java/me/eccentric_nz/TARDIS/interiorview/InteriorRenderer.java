@@ -1,5 +1,22 @@
+/*
+ * Copyright (C) 2023 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.interiorview;
 
+import java.awt.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
@@ -11,8 +28,6 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
-
-import java.awt.*;
 
 public class InteriorRenderer extends MapRenderer {
 
@@ -42,7 +57,7 @@ public class InteriorRenderer extends MapRenderer {
                 RayTraceResult result = player.getWorld().rayTraceBlocks(location, rayTraceVector, 256);
                 // colour change for liquids
                 RayTraceResult liquidResult = player.getWorld().rayTraceBlocks(location, rayTraceVector, 256, FluidCollisionMode.ALWAYS, false);
-                double[] dye = new double[]{1, 1, 1}; // values color is multiplied by
+                double[] dye = new double[]{1, 1, 1}; // values colour is multiplied by
                     if (liquidResult != null) {
                         if (liquidResult.getHitBlock().getType().equals(Material.WATER))
                             dye = new double[]{.5, .5, 1};
@@ -60,7 +75,7 @@ public class InteriorRenderer extends MapRenderer {
                     canvas.setPixelColor(x, y, color);
                     canvasColours[x][y] = color;
                 } else if (liquidResult != null) {
-                    // set map pixel to color of liquid block found
+                    // set map pixel to colour of liquid block found
                     Color color = MaterialColour.colourFromType(liquidResult.getHitBlock(), new double[]{1, 1, 1});
                     canvas.setPixelColor(x, y, color);
                     canvasColours[x][y] = color;
