@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.interiorview;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
@@ -26,7 +27,7 @@ import org.bukkit.map.MapView;
 
 public class InteriorMapView {
 
-    public static boolean getInteriorSnapshot(Location location) {
+    public static boolean getInteriorSnapshot(Location location, Player player) {
         ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
@@ -38,7 +39,9 @@ public class InteriorMapView {
         mapView.addRenderer(renderer);
         mapMeta.setMapView(mapView);
         itemStack.setItemMeta(mapMeta);
+        // render the map?
         // set map in Item frame
+        player.getInventory().addItem(itemStack);
         return true;
     }
 }

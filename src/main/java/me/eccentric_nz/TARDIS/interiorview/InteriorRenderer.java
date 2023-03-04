@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.interiorview;
 
-import java.awt.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
@@ -28,6 +27,9 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 
 public class InteriorRenderer extends MapRenderer {
 
@@ -39,7 +41,7 @@ public class InteriorRenderer extends MapRenderer {
     }
 
     @Override
-    public void render(MapView map, MapCanvas canvas, Player player) {
+    public void render(MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
         if (map.isLocked()) {
             return;
         }
@@ -54,9 +56,9 @@ public class InteriorRenderer extends MapRenderer {
                 double yrotate = -((y) * .9 / 128 - .45);
                 double xrotate = ((x) * .9 / 128 - .45);
                 Vector rayTraceVector = new Vector(Math.cos(yaw + xrotate) * Math.cos(pitch + yrotate), Math.sin(pitch + yrotate), Math.sin(yaw + xrotate) * Math.cos(pitch + yrotate));
-                RayTraceResult result = player.getWorld().rayTraceBlocks(location, rayTraceVector, 256);
+                RayTraceResult result = location.getWorld().rayTraceBlocks(location, rayTraceVector, 256);
                 // colour change for liquids
-                RayTraceResult liquidResult = player.getWorld().rayTraceBlocks(location, rayTraceVector, 256, FluidCollisionMode.ALWAYS, false);
+                RayTraceResult liquidResult = location.getWorld().rayTraceBlocks(location, rayTraceVector, 256, FluidCollisionMode.ALWAYS, false);
                 double[] dye = new double[]{1, 1, 1}; // values colour is multiplied by
                     if (liquidResult != null) {
                         if (liquidResult.getHitBlock().getType().equals(Material.WATER))

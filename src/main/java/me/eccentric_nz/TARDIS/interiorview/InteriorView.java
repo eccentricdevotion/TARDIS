@@ -19,6 +19,14 @@ package me.eccentric_nz.TARDIS.interiorview;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.map.MapCanvas;
+import org.bukkit.map.MapRenderer;
+import org.bukkit.map.MapView;
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,13 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.map.MapCanvas;
-import org.bukkit.map.MapRenderer;
-import org.bukkit.map.MapView;
-import org.jetbrains.annotations.NotNull;
 
 public class InteriorView {
 
@@ -49,6 +50,7 @@ public class InteriorView {
         File folder = new File(plugin.getDataFolder() + "/interior_views");
         if (!folder.exists()) {
             folder.mkdir();
+            folder.setExecutable(true);
         }
         Gson gson = new Gson();
         for (File file : folder.listFiles()) {
