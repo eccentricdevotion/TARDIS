@@ -17,22 +17,38 @@
 package me.eccentric_nz.TARDIS.interiorview;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
 
 public class MapStorage {
 
-    private final Gson gson = new Gson();
+    private final GsonBuilder builder;
+    private final Gson gson;
+
+    public MapStorage() {
+        builder = new GsonBuilder();
+        builder.registerTypeAdapter(Color.class, new ColorTypeAdapter());
+        gson = builder.create();
+    }
 
     public void store(int id, Color[][] data) {
+        File folder = new File (TARDIS.plugin.getDataFolder(), "interior_views");
+        if (!folder.exists()) {
+            folder.mkdir();
+            folder.setExecutable(true);
+        }
         File file = new File (TARDIS.plugin.getDataFolder(), "interior_views" + File.separator + "view_" + id + ".json");
         try {
-            gson.toJson(data, new FileWriter(file));
+            FileWriter writer = new FileWriter(file);
+            gson.toJson(data, writer);
+            writer.close();
         } catch (IOException e) {
             Bukkit.getLogger().log(Level.SEVERE, "Error writing to mapId: {0}", id);
         }
