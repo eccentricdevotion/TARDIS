@@ -327,6 +327,34 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Paper Bag.lore", "Smaller on the outside");
             i++;
         }
+        if (!recipes_config.contains("shaped.TARDIS Monitor")) {
+            recipes_config.set("shaped.TARDIS Monitor.easy_shape", "MRM,RGR,MRM");
+            recipes_config.set("shaped.TARDIS Monitor.easy_ingredients.M", "MAP");
+            recipes_config.set("shaped.TARDIS Monitor.easy_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.TARDIS Monitor.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Monitor.hard_shape", "MRM,RGR,MRM");
+            recipes_config.set("shaped.TARDIS Monitor.hard_ingredients.M", "MAP");
+            recipes_config.set("shaped.TARDIS Monitor.hard_ingredients.G", "TINTED_GLASS");
+            recipes_config.set("shaped.TARDIS Monitor.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.TARDIS Monitor.result", "MAP");
+            recipes_config.set("shaped.TARDIS Monitor.amount", 1);
+            recipes_config.set("shaped.TARDIS Monitor.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Monitor Frame")) {
+            recipes_config.set("shaped.Monitor Frame.easy_shape", "BBB,BGB,BRB");
+            recipes_config.set("shaped.Monitor Frame.easy_ingredients.B", "BLACKSTONE");
+            recipes_config.set("shaped.Monitor Frame.easy_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.Monitor Frame.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Monitor Frame.hard_shape", "BBB,BGB,BRB");
+            recipes_config.set("shaped.Monitor Frame.hard_ingredients.B", "BLACKSTONE");
+            recipes_config.set("shaped.Monitor Frame.hard_ingredients.G", "TINTED_GLASS");
+            recipes_config.set("shaped.Monitor Frame.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Monitor Frame.result", "GLASS");
+            recipes_config.set("shaped.Monitor Frame.amount", 1);
+            recipes_config.set("shaped.Monitor Frame.lore", "Place in an upwards~facing item frame");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Knockback Circuit")) {
             recipes_config.set("shaped.Knockback Circuit.easy_shape", "-K-,RSR,-R-");
             recipes_config.set("shaped.Knockback Circuit.easy_ingredients.K", "GOLDEN_SWORD");
