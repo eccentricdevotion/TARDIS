@@ -17,6 +17,13 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -54,6 +61,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
+import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
@@ -82,14 +90,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -465,8 +465,9 @@ public class TARDIS extends JavaPlugin {
                 TARDISHadsPersister thp = new TARDISHadsPersister(this);
                 thp.load();
             }
-            TARDISTimeRotorLoader trl = new TARDISTimeRotorLoader(this);
-            trl.load();
+            new TARDISTimeRotorLoader(this).load();
+            // load the custom map renderer for TARDIS monitor maps
+            new SnapshotLoader(this).load();
             if (getConfig().getBoolean("allow.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
                 new BleachRecipe(this).setRecipes();
@@ -704,7 +705,7 @@ public class TARDIS extends JavaPlugin {
         Set<String> booknames = achievementConfig.getKeys(false);
         booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
     }
-
+    
     /**
      * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
      */

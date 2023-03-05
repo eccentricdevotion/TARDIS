@@ -14,13 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.interiorview;
+package me.eccentric_nz.TARDIS.monitor;
 
+import java.awt.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
@@ -29,15 +31,15 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-
-public class InteriorRenderer extends MapRenderer {
+public class SnapshotRenderer extends MapRenderer {
 
     private final Location location;
+    private final int distance;
 
-    public InteriorRenderer(Location location) {
+    public SnapshotRenderer(Location location, int distance) {
         super();
         this.location = location;
+        this.distance = distance;
     }
 
     @Override
@@ -48,6 +50,7 @@ public class InteriorRenderer extends MapRenderer {
         // get pitch and yaw to calculate ray trace directions
         double pitch = -Math.toRadians(location.getPitch());
         double yaw = Math.toRadians(location.getYaw() + 90);
+        World world = location.getWorld();
         Color[][] canvasColours = new Color[128][128];
         // loop through every pixel on map
         for (int x = 0; x < 128; x++) {
@@ -56,16 +59,18 @@ public class InteriorRenderer extends MapRenderer {
                 double yrotate = -((y) * .9 / 128 - .45);
                 double xrotate = ((x) * .9 / 128 - .45);
                 Vector rayTraceVector = new Vector(Math.cos(yaw + xrotate) * Math.cos(pitch + yrotate), Math.sin(pitch + yrotate), Math.sin(yaw + xrotate) * Math.cos(pitch + yrotate));
-                RayTraceResult result = location.getWorld().rayTraceBlocks(location, rayTraceVector, 256);
+                RayTraceResult result = world.rayTraceBlocks(location, rayTraceVector, distance);
                 // colour change for liquids
-                RayTraceResult liquidResult = location.getWorld().rayTraceBlocks(location, rayTraceVector, 256, FluidCollisionMode.ALWAYS, false);
+                RayTraceResult liquidResult = world.rayTraceBlocks(location, rayTraceVector, distance, FluidCollisionMode.ALWAYS, false);
                 double[] dye = new double[]{1, 1, 1}; // values colour is multiplied by
-                    if (liquidResult != null) {
-                        if (liquidResult.getHitBlock().getType().equals(Material.WATER))
-                            dye = new double[]{.5, .5, 1};
-                        if (liquidResult.getHitBlock().getType().equals(Material.LAVA))
-                            dye = new double[]{1, .3, .3};
+                if (liquidResult != null) {
+                    if (liquidResult.getHitBlock().getType().equals(Material.WATER)) {
+                        dye = new double[]{.5, .5, 1};
                     }
+                    if (liquidResult.getHitBlock().getType().equals(Material.LAVA)) {
+                        dye = new double[]{1, .3, .3};
+                    }
+                }
                 if (result != null) {
                     byte lightLevel = result.getHitBlock().getRelative(result.getHitBlockFace()).getLightLevel();
                     if (lightLevel > 0) {
@@ -82,13 +87,41 @@ public class InteriorRenderer extends MapRenderer {
                     canvas.setPixelColor(x, y, color);
                     canvasColours[x][y] = color;
                 } else {
+                    Color c = Color.gray;
                     // no block was hit, so we will assume we are looking at the distance
-                    canvas.setPixelColor(x, y, Color.gray);
-                    canvasColours[x][y] = Color.gray;
+                    if (!world.getName().contains("TARDIS")) {
+                        switch (world.getEnvironment()) {
+                            case NETHER -> {
+                                switch (location.getBlock().getBiome()) {
+                                    case NETHER_WASTES -> c = new Color(50, 15, 15);
+                                    case BASALT_DELTAS -> c = new Color(90, 80, 95);
+                                    case CRIMSON_FOREST -> c = new Color(35, 5, 5);
+                                    case WARPED_FOREST -> c = new Color(10, 10, 50);
+                                    case SOUL_SAND_VALLEY -> c = new Color(35, 90, 80);
+                                }
+                            }
+                            case THE_END -> {
+                                c = new Color(30, 20, 50);
+                            }
+                            default -> {
+                                // get time of day
+                                long ticks = world.getTime();
+                                if (world.getName().equals("skaro")) {
+                                    c = SkyColour.getSkaroFromTime(ticks);
+                                } else if (world.getName().equals("gallifrey")) {
+                                    c = SkyColour.getGallifreyFromTime(ticks);
+                                } else {
+                                    c = SkyColour.getNormalFromTime(ticks);
+                                }
+                            }
+                        }
+                    }
+                    canvas.setPixelColor(x, y, c);
+                    canvasColours[x][y] = c;
                 }
             }
         }
-        Bukkit.getScheduler().runTaskAsynchronously(TARDIS.plugin, () -> new MapStorage().store(map.getId(), canvasColours));
+        Bukkit.getScheduler().runTaskAsynchronously(TARDIS.plugin, () -> new SnapshotStorage().store(map.getId(), canvasColours));
         map.setLocked(true);
     }
 }

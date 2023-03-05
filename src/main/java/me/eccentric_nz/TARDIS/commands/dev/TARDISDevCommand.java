@@ -17,20 +17,19 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.common.collect.Sets;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.interiorview.InteriorMapView;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -41,24 +40,20 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
- * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
- * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
+ * The Lord President was the most powerful member of the Time Lord Council and
+ * had near absolute authority, and used a link to the Matrix, a vast computer
+ * network containing the knowledge and experiences of all past generations of
+ * Time Lords, to set Time Lord policy and remain alert to potential threats
+ * from lesser civilisations.
  *
  * @author eccentric_nz
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "interior");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -150,58 +145,12 @@ public class TARDISDevCommand implements CommandExecutor {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
                     return true;
                 }
-                if (first.equals("interior")) {
+                if (first.equals("snapshot")) {
                     if (sender instanceof Player player) {
-                        // get interior door location
-                        ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                        if (rst.fromUUID(player.getUniqueId().toString())) {
-                            int id = rst.getTardis_id();
-                            HashMap<String, Object> whered = new HashMap<>();
-                            whered.put("tardis_id", id);
-                            whered.put("door_type", 1);
-                            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                            if (rsd.resultSet()) {
-                                COMPASS d = rsd.getDoor_direction();
-                                Location doorBottom = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
-                                doorBottom.add(0, 1.6f, 0); // set y position to eye height
-                                int getx = doorBottom.getBlockX();
-                                int getz = doorBottom.getBlockZ();
-                                float yaw = 0.05f;
-                                switch (d) {
-                                    case NORTH -> {
-                                        // z -ve
-                                        doorBottom.setX(getx + 0.5);
-                                        doorBottom.setZ(getz - 0.5);
-                                        yaw = 180;
-                                    }
-                                    case EAST -> {
-                                        // x +ve
-                                        doorBottom.setX(getx + 1.5);
-                                        doorBottom.setZ(getz + 0.5);
-                                        yaw = -90;
-                                    }
-                                    case SOUTH -> {
-                                        // z +ve
-                                        doorBottom.setX(getx + 0.5);
-                                        doorBottom.setZ(getz + 1.5);
-                                    }
-                                    case WEST -> {
-                                        // x -ve
-                                        doorBottom.setX(getx - 0.5);
-                                        doorBottom.setZ(getz + 0.5);
-                                        yaw = 90;
-                                    }
-                                }
-                                doorBottom.setPitch(25);
-                                doorBottom.setYaw(yaw);
-                                Location doorTop = doorBottom.clone();
-                                doorTop.setPitch(-25.5f);
-                                while (!doorBottom.getChunk().isLoaded()) {
-                                    doorBottom.getChunk().load();
-                                }
-                                InteriorMapView.getInteriorSnapshot(doorBottom, player);
-                                InteriorMapView.getInteriorSnapshot(doorTop, player);
-                            }
+                        if (args[1].equals("c")) {
+                            player.performCommand("minecraft:clear @s minecraft:filled_map");
+                        } else {
+                            new MonitorSnapshot(plugin).get(args[1].equals("in"), player);
                         }
                     }
                 }

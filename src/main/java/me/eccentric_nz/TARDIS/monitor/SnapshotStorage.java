@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.interiorview;
+package me.eccentric_nz.TARDIS.monitor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,12 +27,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public class MapStorage {
+public class SnapshotStorage {
 
     private final GsonBuilder builder;
     private final Gson gson;
 
-    public MapStorage() {
+    public SnapshotStorage() {
         builder = new GsonBuilder();
         builder.registerTypeAdapter(Color.class, new ColorTypeAdapter());
         gson = builder.create();

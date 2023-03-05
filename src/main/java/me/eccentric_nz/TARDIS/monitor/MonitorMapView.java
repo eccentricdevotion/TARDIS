@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.interiorview;
+package me.eccentric_nz.TARDIS.monitor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,9 +25,9 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
-public class InteriorMapView {
+public class MonitorMapView {
 
-    public static boolean getInteriorSnapshot(Location location, Player player) {
+    public static boolean getSetSnapshot(Location location, Player player, int distance) {
         ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
@@ -35,11 +35,10 @@ public class InteriorMapView {
         for (MapRenderer renderer : mapView.getRenderers()) {
             mapView.removeRenderer(renderer);
         }
-        InteriorRenderer renderer = new InteriorRenderer(location);
+        SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
         mapView.addRenderer(renderer);
         mapMeta.setMapView(mapView);
         itemStack.setItemMeta(mapMeta);
-        // render the map?
         // set map in Item frame
         player.getInventory().addItem(itemStack);
         return true;

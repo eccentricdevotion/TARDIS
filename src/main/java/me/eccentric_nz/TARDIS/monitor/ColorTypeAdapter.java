@@ -1,11 +1,10 @@
-package me.eccentric_nz.TARDIS.interiorview;
+package me.eccentric_nz.TARDIS.monitor;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 
 public class ColorTypeAdapter extends TypeAdapter<Color> {
@@ -16,7 +15,7 @@ public class ColorTypeAdapter extends TypeAdapter<Color> {
             jsonWriter.nullValue();
             return;
         }
-        String rgba = color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
+        String rgba = color.getRGB() + "," + color.getGreen() + "," + color.getBlue() + "," + color.getAlpha();
         jsonWriter.value(rgba);
     }
 
@@ -28,10 +27,10 @@ public class ColorTypeAdapter extends TypeAdapter<Color> {
         }
         String rgba = jsonReader.nextString();
         String[] parts = rgba.split(",");
-        float r = Float.parseFloat(parts[0]);
-        float g = Float.parseFloat(parts[1]);
-        float b = Float.parseFloat(parts[2]);
-        float a = Float.parseFloat(parts[3]);
+        int r = Integer.parseInt(parts[0]);
+        int g = Integer.parseInt(parts[1]);
+        int b = Integer.parseInt(parts[2]);
+        int a = Integer.parseInt(parts[3]);
         return new Color(r, g, b, a);
     }
 }
