@@ -164,7 +164,7 @@ public class MonitorSnapshot {
                         }
                     }
                 }
-                MonitorMapView.getSetSnapshot(doorBottom, player, distance);
+                MonitorMapView.createSnapshot(doorBottom, player, distance);
             }
         }
     }

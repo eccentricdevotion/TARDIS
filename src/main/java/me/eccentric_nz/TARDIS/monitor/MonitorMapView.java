@@ -27,7 +27,7 @@ import org.bukkit.map.MapView;
 
 public class MonitorMapView {
 
-    public static boolean getSetSnapshot(Location location, Player player, int distance) {
+    public static void createSnapshot(Location location, Player player, int distance) {
         ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
@@ -41,6 +41,18 @@ public class MonitorMapView {
         itemStack.setItemMeta(mapMeta);
         // set map in Item frame
         player.getInventory().addItem(itemStack);
-        return true;
+    }
+
+    public static void updateSnapshot(Location location, Player player, int distance, ItemStack map) {
+        MapMeta mapMeta = (MapMeta) map.getItemMeta();
+        MapView mapView = Bukkit.createMap(location.getWorld());
+        mapView.setTrackingPosition(false);
+        for (MapRenderer renderer : mapView.getRenderers()) {
+            mapView.removeRenderer(renderer);
+        }
+        SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
+        mapView.addRenderer(renderer);
+        mapMeta.setMapView(mapView);
+        map.setItemMeta(mapMeta);
     }
 }

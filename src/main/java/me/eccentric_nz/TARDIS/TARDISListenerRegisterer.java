@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISTelepathicListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISHangingListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISItemFrameUpdateListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
 import me.eccentric_nz.TARDIS.advanced.*;
@@ -73,6 +77,9 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.*;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISDirectionFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISHandlesFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISMonitorFrameListener;
 import me.eccentric_nz.TARDIS.move.*;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
@@ -278,7 +285,10 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISItemFrameUpdateListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISDirectionFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISHandlesFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISMonitorFrameListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
