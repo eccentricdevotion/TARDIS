@@ -80,7 +80,7 @@ public class TARDISTimeRotor {
         itemFrame.setVisible(false);
     }
 
-    public static void unlockRotor(ItemFrame itemFrame) {
+    public static void unlockItemFrame(ItemFrame itemFrame) {
         itemFrame.setFixed(false);
         itemFrame.setVisible(true);
     }

@@ -17,14 +17,14 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.monitor.MonitorMapView;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
+import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.BoundingBox;
 
 /**
  * @author eccentric_nz
@@ -67,14 +66,27 @@ public class TARDISMonitorFrameListener implements Listener {
                     im.setCustomModelData(cmd);
                     is.setItemMeta(im);
                     // get the monitor item frame, from the same block location
-                    ItemFrame mapFrame = getItemFrameFromLocation(l, frame.getUniqueId());
+                    ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
                     if (mapFrame != null) {
                         // does it have a filled map?
                         ItemStack map = mapFrame.getItem();
                         if (map.getType() == Material.FILLED_MAP) {
-                            // get door location
-                            // update the map
-                            MonitorMapView.updateSnapshot(l, player, 128, map);
+                            // get the TARDIS the player is inside
+                            HashMap<String, Object> wheret = new HashMap<>();
+                            wheret.put("uuid", player.getUniqueId().toString());
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                            if (rst.resultSet()) {
+                                int id = rst.getTardis_id();
+                                // get door location
+                                Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
+                                Location door = snapshot.getLocation();
+                                if (door != null) {
+                                    // load chunks
+                                    MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                    // update the map
+                                    MonitorUtils.updateSnapshot(door, player, 128, map);
+                                }
+                            }
                         }
                     }
                 }
@@ -82,13 +94,5 @@ public class TARDISMonitorFrameListener implements Listener {
         }
     }
 
-    private ItemFrame getItemFrameFromLocation(Location location, UUID uuid) {
-        BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
-        for (Entity e : location.getWorld().getNearbyEntities(box, (e) -> e.getType() == EntityType.ITEM_FRAME)) {
-            if (e instanceof ItemFrame frame && frame.getUniqueId() != uuid) {
-                return frame;
-            }
-        }
-        return null;
-    }
+
 }

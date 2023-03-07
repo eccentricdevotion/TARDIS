@@ -88,83 +88,87 @@ public class MonitorSnapshot {
                     }
                 }
                 // set pitch to up and down so we can fill two maps
-//                doorBottom.setPitch(25);
-                doorBottom.setPitch(0);
+                doorBottom.setPitch(25);
                 doorBottom.setYaw(yaw);
-//                Location doorTop = doorBottom.clone();
-//                doorTop.setPitch(-25.5f);
-                if (in) {
-                    // load all console chunks!
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", id);
-                    ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
-                    if (rsc.resultSet()) {
-                        for (HashMap<String, String> map : rsc.getData()) {
-                            int x = TARDISNumberParsers.parseInt(map.get("x"));
-                            int z = TARDISNumberParsers.parseInt(map.get("z"));
-                            Chunk chunk = doorBottom.getWorld().getChunkAt(x, z);
-                            while (!chunk.isLoaded()) {
-                                chunk.load();
-                            }
-                        }
-                    }
-                } else {
-                    // load distant chunks
-                    int dx = 0;
-                    int dz = 0;
-                    boolean bx = false;
-                    boolean bz = false;
-                    switch (d) {
-                        case NORTH -> {
-                            dz = 1;
-                            bx = true;
-                        }
-                        case EAST -> {
-                            dx = -1;
-                            bz = true;
-                        }
-                        case SOUTH -> {
-                            dz = -1;
-                            bx = true;
-                        }
-                        case WEST -> {
-                            dx = 1;
-                            bz = true;
-                        }
-                    }
-                    Chunk chunk = doorBottom.getChunk();
+                Location doorTop = doorBottom.clone();
+                doorTop.setPitch(-25.5f);
+                loadChunks(plugin, doorBottom, in, d, id, distance);
+                MonitorUtils.createSnapshot(doorBottom, player, distance);
+                MonitorUtils.createSnapshot(doorTop, player, distance);
+            }
+        }
+    }
+
+    public static void loadChunks(TARDIS plugin, Location doorBottom, boolean in, COMPASS d, int id, int distance) {
+        if (in) {
+            // load all console chunks!
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
+            if (rsc.resultSet()) {
+                for (HashMap<String, String> map : rsc.getData()) {
+                    int x = TARDISNumberParsers.parseInt(map.get("x"));
+                    int z = TARDISNumberParsers.parseInt(map.get("z"));
+                    Chunk chunk = doorBottom.getWorld().getChunkAt(x, z);
                     while (!chunk.isLoaded()) {
                         chunk.load();
                     }
-                    int cx = chunk.getX();
-                    int cz = chunk.getZ();
-                    // 16 x 8 = 128 blocks - the ray trace distance for exterior
-                    // the further out we go, the wider we need to load chunks...
-                    int side = 0;
-                    for (int i = 1; i < ((distance / 16) + 1); i++) {
-                        cx += dx;
-                        cz += dz;
-                        Chunk next = doorBottom.getWorld().getChunkAt(cx, cz);
-                        while (!next.isLoaded()) {
-                            next.load();
-                        }
-                        for (int j = -side; j <= side; j++) {
-                            if (bx) {
-                                next = doorBottom.getWorld().getChunkAt(cx + j, cz);
-                            }
-                            if (bz) {
-                                next = doorBottom.getWorld().getChunkAt(cx, cz + j);
-                            }
-                            while (!next.isLoaded()) {
-                                next.load();
-                            }
-                        }
-                        if (i % 2 == 0) {
-                            side += 2;
-                        }
+                }
+            }
+        } else {
+            // load distant chunks
+            int dx = 0;
+            int dz = 0;
+            boolean bx = false;
+            boolean bz = false;
+            switch (d) {
+                case NORTH -> {
+                    dz = 1;
+                    bx = true;
+                }
+                case EAST -> {
+                    dx = -1;
+                    bz = true;
+                }
+                case SOUTH -> {
+                    dz = -1;
+                    bx = true;
+                }
+                case WEST -> {
+                    dx = 1;
+                    bz = true;
+                }
+            }
+            Chunk chunk = doorBottom.getChunk();
+            while (!chunk.isLoaded()) {
+                chunk.load();
+            }
+            int cx = chunk.getX();
+            int cz = chunk.getZ();
+            // 16 x 8 = 128 blocks - the ray trace distance for exterior
+            // the further out we go, the wider we need to load chunks...
+            int side = 0;
+            for (int i = 1; i < ((distance / 16) + 1); i++) {
+                cx += dx;
+                cz += dz;
+                Chunk next = doorBottom.getWorld().getChunkAt(cx, cz);
+                while (!next.isLoaded()) {
+                    next.load();
+                }
+                for (int j = -side; j <= side; j++) {
+                    if (bx) {
+                        next = doorBottom.getWorld().getChunkAt(cx + j, cz);
+                    }
+                    if (bz) {
+                        next = doorBottom.getWorld().getChunkAt(cx, cz + j);
+                    }
+                    while (!next.isLoaded()) {
+                        next.load();
                     }
                 }
-                MonitorMapView.createSnapshot(doorBottom, player, distance);
+                if (i % 2 == 0) {
+                    side += 2;
+                }
             }
         }
     }

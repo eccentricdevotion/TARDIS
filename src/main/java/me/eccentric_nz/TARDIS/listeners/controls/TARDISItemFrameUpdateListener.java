@@ -25,6 +25,9 @@ import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
+import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
@@ -84,7 +87,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     return;
                                 }
                             }
-                            String l = frame.getLocation().toString();
+                            Location l = frame.getLocation();
                             // check whether they have a item frame control of this type already
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("location", l);
@@ -93,14 +96,14 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             HashMap<String, Object> set = new HashMap<>();
                             if (rsc.resultSet()) {
                                 // update location
-                                set.put("location", l);
+                                set.put("location", l.toString());
                                 HashMap<String, Object> whereu = new HashMap<>();
                                 whereu.put("tardis_id", id);
                                 whereu.put("type", control.getId());
                                 plugin.getQueryFactory().doUpdate("controls", set, whereu);
                             } else {
                                 // add control
-                                plugin.getQueryFactory().insertControl(id, control.getId(), l, 0);
+                                plugin.getQueryFactory().insertControl(id, control.getId(), l.toString(), 0);
                             }
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             String which;
@@ -121,14 +124,46 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 case MONITOR -> {
                                     which = "TARDIS Monitor";
                                     // add initial snapshot
+                                    ItemStack map = frame.getItem();
+                                    // does it have a filled map?
+                                    if (map.getType() == Material.MAP) {
+                                        map.setType(Material.FILLED_MAP);
+                                    }
+                                    // get door location
+                                    Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
+                                    Location door = snapshot.getLocation();
+                                    if (door != null) {
+                                        // load chunks
+                                        MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                        // update the map
+                                        MonitorUtils.updateSnapshot(door, player, 128, map);
+                                    }
                                     // make frame invisible and fixed
                                     frame.setFixed(true);
                                     frame.setVisible(false);
                                 }
                                 default -> { // MONITOR_FRAME
+                                    // TODO check they have placed/updated a monitor first
                                     which = "Monitor Frame";
                                     frame.setFixed(true);
                                     frame.setVisible(false);
+                                    // get the monitor item frame, from the same block location
+                                    ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
+                                    if (mapFrame != null) {
+                                        // does it have a filled map?
+                                        ItemStack map = mapFrame.getItem();
+                                        if (map.getType() == Material.FILLED_MAP) {
+                                            // get door location
+                                            Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
+                                            Location door = snapshot.getLocation();
+                                            if (door != null) {
+                                                // load chunks
+                                                MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                                // update the map
+                                                MonitorUtils.updateSnapshot(door, player, 128, map);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             TARDISMessage.send(player, "FRAME_UPDATE", which);

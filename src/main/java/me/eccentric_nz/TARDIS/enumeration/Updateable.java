@@ -53,6 +53,8 @@ public enum Updateable {
     KEYBOARD(true, false, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.OTHERS, "Keyboard Input sign"),
     LIGHT(true, true, TARDISUpdateableCategory.OTHERS, "Console Light switch"),
     MAP(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "TARDIS Scanner Map"),
+    MONITOR(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "TARDIS Monitor"),
+    MONITOR_FRAME(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Monitor Frame"),
     RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES), TARDISUpdateableCategory.LOCATIONS, "Rail room entry point"),
     ROTOR(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Time Rotor item frame"),
     SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Saved locations and TARDIS areas"),
