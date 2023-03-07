@@ -15,7 +15,7 @@ public class ColorTypeAdapter extends TypeAdapter<Color> {
             jsonWriter.nullValue();
             return;
         }
-        String rgba = color.getRGB() + "," + color.getGreen() + "," + color.getBlue() + "," + color.getAlpha();
+        String rgba = color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "," + color.getAlpha();
         jsonWriter.value(rgba);
     }
 
@@ -27,10 +27,14 @@ public class ColorTypeAdapter extends TypeAdapter<Color> {
         }
         String rgba = jsonReader.nextString();
         String[] parts = rgba.split(",");
-        int r = Integer.parseInt(parts[0]);
-        int g = Integer.parseInt(parts[1]);
-        int b = Integer.parseInt(parts[2]);
-        int a = Integer.parseInt(parts[3]);
+        int r = ensureRange(Integer.parseInt(parts[0]));
+        int g = ensureRange(Integer.parseInt(parts[1]));
+        int b = ensureRange(Integer.parseInt(parts[2]));
+        int a = ensureRange(Integer.parseInt(parts[3]));
         return new Color(r, g, b, a);
+    }
+
+    int ensureRange(int value) {
+        return Math.min(Math.max(value, 0), 255);
     }
 }
