@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -40,9 +42,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -105,7 +104,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                             HashMap<String, Object> wheref = new HashMap<>();
                             wheref.put("tardis_id", id);
                             wheref.put("type", Control.FRAME.getId());
-                            ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
+                            ResultSetControls rsf = new ResultSetControls(plugin, wheref, false);
                             boolean hasFrame = rsf.resultSet();
                             switch (slot) {
                                 case 0 -> {
