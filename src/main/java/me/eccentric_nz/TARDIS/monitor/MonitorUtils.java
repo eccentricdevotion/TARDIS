@@ -59,6 +59,8 @@ public class MonitorUtils {
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
         mapView.setTrackingPosition(false);
+        // !IMPORTANT unlock map else it won't get a new render
+        mapView.setLocked(false);
         for (MapRenderer renderer : mapView.getRenderers()) {
             mapView.removeRenderer(renderer);
         }

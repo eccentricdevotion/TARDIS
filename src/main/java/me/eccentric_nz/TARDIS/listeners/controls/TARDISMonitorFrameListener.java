@@ -94,6 +94,4 @@ public class TARDISMonitorFrameListener implements Listener {
             }
         }
     }
-
-
 }
