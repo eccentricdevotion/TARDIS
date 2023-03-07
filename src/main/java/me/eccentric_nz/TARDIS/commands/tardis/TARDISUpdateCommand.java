@@ -128,7 +128,7 @@ class TARDISUpdateCommand {
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
                 if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME))
                         && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
-                    // get Time Rotor frame location
+                    // get frame location
                     ItemFrame itemFrame = null;
                     switch (updateable) {
                         case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());

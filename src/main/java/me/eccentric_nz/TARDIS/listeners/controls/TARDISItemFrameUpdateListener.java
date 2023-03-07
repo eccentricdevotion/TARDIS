@@ -108,8 +108,10 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             String which;
                             switch (control) {
-                                case DIRECTION -> which = "Direction";
-                                case FRAME -> which = "Chameleon";
+                                case DIRECTION ->
+                                    which = "Direction";
+                                case FRAME ->
+                                    which = "Chameleon";
                                 case MAP -> {
                                     which = "Scanner Map";
                                     // place a map
@@ -122,12 +124,13 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     }
                                 }
                                 case MONITOR -> {
-                                    which = "TARDIS Monitor";
-                                    // add initial snapshot
                                     ItemStack map = frame.getItem();
-                                    // does it have a filled map?
-                                    if (map.getType() == Material.MAP) {
+                                    // does it have a TARDIS Monitor map?
+                                    if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasCustomModelData()) {
                                         map.setType(Material.FILLED_MAP);
+                                    } else {
+                                        TARDISMessage.send(player, "MONITOR_PLACE_MAP");
+                                        return;
                                     }
                                     // get door location
                                     Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
@@ -141,29 +144,40 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     // make frame invisible and fixed
                                     frame.setFixed(true);
                                     frame.setVisible(false);
+                                    which = "TARDIS Monitor";
                                 }
                                 default -> { // MONITOR_FRAME
-                                    // TODO check they have placed/updated a monitor first
-                                    which = "Monitor Frame";
-                                    frame.setFixed(true);
-                                    frame.setVisible(false);
-                                    // get the monitor item frame, from the same block location
-                                    ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
-                                    if (mapFrame != null) {
-                                        // does it have a filled map?
-                                        ItemStack map = mapFrame.getItem();
-                                        if (map.getType() == Material.FILLED_MAP) {
-                                            // get door location
-                                            Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
-                                            Location door = snapshot.getLocation();
-                                            if (door != null) {
-                                                // load chunks
-                                                MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
-                                                // update the map
-                                                MonitorUtils.updateSnapshot(door, player, 128, map);
+                                    ItemStack glass = frame.getItem();
+                                    // does it have a Monitor frame?
+                                    if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasCustomModelData()) {
+                                        // get the monitor item frame, from the same block location
+                                        ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
+                                        if (mapFrame != null) {
+                                            // does it have a filled map?
+                                            ItemStack map = mapFrame.getItem();
+                                            if (map.getType() == Material.FILLED_MAP) {
+                                                // get door location
+                                                Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
+                                                Location door = snapshot.getLocation();
+                                                if (door != null) {
+                                                    // load chunks
+                                                    MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                                    // update the map
+                                                    MonitorUtils.updateSnapshot(door, player, 128, map);
+                                                    frame.setFixed(true);
+                                                    frame.setVisible(false);
+                                                }
                                             }
+                                        } else {
+                                            // they haven't placed/updated a monitor first
+                                            TARDISMessage.send(player, "MONITOR_PLACE_FIRST");
+                                            return;
                                         }
+                                    } else {
+                                        TARDISMessage.send(player, "MONITOR_PLACE_FRAME");
+                                        return;
                                     }
+                                    which = "Monitor Frame";
                                 }
                             }
                             TARDISMessage.send(player, "FRAME_UPDATE", which);

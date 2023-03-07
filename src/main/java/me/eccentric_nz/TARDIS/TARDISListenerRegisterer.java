@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.listeners.controls.TARDISTelepathicListener;
-import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
-import me.eccentric_nz.TARDIS.listeners.controls.TARDISHangingListener;
-import me.eccentric_nz.TARDIS.listeners.controls.TARDISItemFrameUpdateListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
 import me.eccentric_nz.TARDIS.advanced.*;
@@ -79,7 +75,11 @@ import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.TARDISDirectionFrameListener;
 import me.eccentric_nz.TARDIS.listeners.controls.TARDISHandlesFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISHangingListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISItemFrameUpdateListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.controls.TARDISMonitorFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISTelepathicListener;
 import me.eccentric_nz.TARDIS.move.*;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
@@ -293,7 +293,6 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.debug("Skaro enabled, registering planet event listeners");
             if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
