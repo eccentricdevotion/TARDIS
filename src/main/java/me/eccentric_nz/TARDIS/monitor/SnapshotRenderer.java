@@ -44,9 +44,9 @@ public class SnapshotRenderer extends MapRenderer {
 
     @Override
     public void render(MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
-        if (map.isLocked()) {
-            return;
-        }
+//        if (map.isLocked()) {
+//            return;
+//        }
         // get pitch and yaw to calculate ray trace directions
         double pitch = -Math.toRadians(location.getPitch());
         double yaw = Math.toRadians(location.getYaw() + 90);
