@@ -91,7 +91,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             Location l = frame.getLocation();
                             // check whether they have a item frame control of this type already
                             HashMap<String, Object> where = new HashMap<>();
-                            where.put("location", l);
+                            where.put("location", l.toString());
                             where.put("type", control.getId());
                             ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                             HashMap<String, Object> set = new HashMap<>();
