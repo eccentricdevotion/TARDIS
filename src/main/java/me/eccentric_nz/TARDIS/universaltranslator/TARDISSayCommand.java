@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -72,12 +71,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language to = Language.valueOf(lang);
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
-                    String prefix = (TARDISFloodgate.isFloodgateEnabled()) ? "[TARDIS Universal Translator] " : TARDISConstants.UT;
-                    if (sender instanceof Player player) {
-                        player.chat(prefix + translatedText);
-                    } else {
-                        plugin.getServer().dispatchCommand(sender, "say " + prefix + translatedText);
-                    }
+                    plugin.getServer().dispatchCommand(sender, "say " + TARDISConstants.UT + translatedText);
                     return true;
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex.getMessage());
