@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Rotation;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,7 +84,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 ItemStack map = frame.getItem();
                                 if (map.getType() != Material.MAP && map.getType() != Material.FILLED_MAP) {
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                    TARDISMessage.send(player, control.equals(Control.MAP) ? "SCANNER_NO_MAP" : "MONITOR_NO_MAP");
+                                    TARDISMessage.send(player, control.equals(Control.MAP) ? "SCANNER_NO_MAP" : "MONITOR_PLACE_MAP");
                                     return;
                                 }
                             }
@@ -128,9 +129,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     // does it have a TARDIS Monitor map?
                                     if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasCustomModelData()) {
                                         map.setType(Material.FILLED_MAP);
-                                    } else {
-                                        TARDISMessage.send(player, "MONITOR_PLACE_MAP");
-                                        return;
+                                        frame.setRotation(Rotation.NONE);
                                     }
                                     // get door location
                                     Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
@@ -164,6 +163,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                                     MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
                                                     // update the map
                                                     MonitorUtils.updateSnapshot(door, player, 128, map);
+                                                    frame.setRotation(Rotation.NONE);
                                                     frame.setFixed(true);
                                                     frame.setVisible(false);
                                                 }

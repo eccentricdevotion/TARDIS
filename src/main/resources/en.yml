@@ -643,7 +643,6 @@ MAT_MISSING: "The Materialisation Circuit is missing from the console! No destin
 MONITOR_PLACE_FIRST: "You need to place and update a TARDIS Monitor before updating a Monitor Frame."
 MONITOR_PLACE_FRAME: "You need to place a Monitor Frame into the item frame before updating it - /trecipe monitor-frame"
 MONITOR_PLACE_MAP: "You need to place a TARDIS Monitor into the item frame before updating it - /trecipe monitor"
-MONITOR_NO_MAP: "You must place a TARDIS Monitor in the item frame before updating it!"
 MONSTER: "A %s entered the TARDIS!"
 MONSTERS_RESET: "All monsters in the TARDIS have been removed! Respawn the Artron Creeper by left-clicking the Artron button with the TARDIS key while sneaking."
 MULTIVERSE_ENABLED: "You must have Multiverse-Core enabled on the server!"
