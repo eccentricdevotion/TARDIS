@@ -18,14 +18,13 @@ package me.eccentric_nz.TARDIS.monitor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
 
 public class SnapshotStorage {
 
@@ -39,12 +38,12 @@ public class SnapshotStorage {
     }
 
     public void store(int id, Color[][] data) {
-        File folder = new File (TARDIS.plugin.getDataFolder(), "interior_views");
+        File folder = new File (TARDIS.plugin.getDataFolder(), "monitor_snapshots");
         if (!folder.exists()) {
             folder.mkdir();
             folder.setExecutable(true);
         }
-        File file = new File (TARDIS.plugin.getDataFolder(), "interior_views" + File.separator + "view_" + id + ".json");
+        File file = new File (TARDIS.plugin.getDataFolder(), "monitor_snapshots" + File.separator + "view_" + id + ".json");
         try {
             FileWriter writer = new FileWriter(file);
             gson.toJson(data, writer);

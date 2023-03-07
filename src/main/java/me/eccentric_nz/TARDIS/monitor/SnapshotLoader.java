@@ -52,7 +52,7 @@ public class SnapshotLoader {
     }
 
     public void load() {
-        File folder = new File(plugin.getDataFolder() + "/interior_views");
+        File folder = new File(plugin.getDataFolder() + "/monitor_snapshots");
         if (!folder.exists()) {
             folder.mkdir();
             folder.setExecutable(true);
