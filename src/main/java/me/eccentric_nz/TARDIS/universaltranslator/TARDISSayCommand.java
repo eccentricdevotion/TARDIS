@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
+import java.util.Arrays;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -27,13 +29,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Locale;
-
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
- * signals that travel along the time contours in the Space/Time Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
+ * is stored in the Secondary Control Room. All TARDISes have one of these
+ * devices, which can be used to remotely control a TARDIS by broadcasting
+ * Stattenheim signals that travel along the time contours in the Space/Time
+ * Vortex.
  *
  * @author eccentric_nz
  */
@@ -72,11 +73,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language to = Language.valueOf(lang);
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
-                    if (sender instanceof Player player) {
-                        player.chat(TARDISConstants.UT + translatedText);
-                    } else {
-                        plugin.getServer().dispatchCommand(sender, "say " + TARDISConstants.UT + translatedText);
-                    }
+                    plugin.getServer().dispatchCommand(sender, "say " + TARDISConstants.UT + translatedText);
                     return true;
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex.getMessage());
