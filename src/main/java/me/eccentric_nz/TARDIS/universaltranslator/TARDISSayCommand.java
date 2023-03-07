@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
+import java.util.Arrays;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.Locale;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
@@ -72,10 +72,11 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language to = Language.valueOf(lang);
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
+                    String prefix = (TARDISFloodgate.isFloodgateEnabled()) ? "[TARDIS Universal Translator] " : TARDISConstants.UT;
                     if (sender instanceof Player player) {
-                        player.chat(TARDISConstants.UT + translatedText);
+                        player.chat(prefix + translatedText);
                     } else {
-                        plugin.getServer().dispatchCommand(sender, "say " + TARDISConstants.UT + translatedText);
+                        plugin.getServer().dispatchCommand(sender, "say " + prefix + translatedText);
                     }
                     return true;
                 } catch (Exception ex) {

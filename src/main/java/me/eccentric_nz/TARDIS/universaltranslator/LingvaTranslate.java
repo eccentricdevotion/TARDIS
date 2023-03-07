@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.universaltranslator;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,6 +26,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 public class LingvaTranslate {
 
