@@ -16,13 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.awt.*;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
-import org.bukkit.FluidCollisionMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
@@ -30,6 +25,8 @@ import org.bukkit.map.MapView;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.Color;
 
 public class SnapshotRenderer extends MapRenderer {
 
@@ -44,9 +41,9 @@ public class SnapshotRenderer extends MapRenderer {
 
     @Override
     public void render(MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
-//        if (map.isLocked()) {
-//            return;
-//        }
+        if (map.isLocked()) {
+            return;
+        }
         // get pitch and yaw to calculate ray trace directions
         double pitch = -Math.toRadians(location.getPitch());
         double yaw = Math.toRadians(location.getYaw() + 90);
@@ -100,9 +97,7 @@ public class SnapshotRenderer extends MapRenderer {
                                     case SOUL_SAND_VALLEY -> c = new Color(35, 90, 80);
                                 }
                             }
-                            case THE_END -> {
-                                c = new Color(30, 20, 50);
-                            }
+                            case THE_END ->  c = new Color(30, 20, 50);
                             default -> {
                                 // get time of day
                                 long ticks = world.getTime();

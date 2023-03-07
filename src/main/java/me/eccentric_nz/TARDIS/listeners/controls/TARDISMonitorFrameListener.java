@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,6 +31,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -84,7 +85,7 @@ public class TARDISMonitorFrameListener implements Listener {
                                     // load chunks
                                     MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
                                     // update the map
-                                    MonitorUtils.updateSnapshot(door, player, 128, map);
+                                    MonitorUtils.updateSnapshot(door, 128, map);
                                 }
                             }
                         }

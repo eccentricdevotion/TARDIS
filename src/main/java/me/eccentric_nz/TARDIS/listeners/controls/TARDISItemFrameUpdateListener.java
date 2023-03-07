@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
@@ -37,6 +37,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -138,7 +141,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                         // load chunks
                                         MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
                                         // update the map
-                                        MonitorUtils.updateSnapshot(door, player, 128, map);
+                                        MonitorUtils.updateSnapshot(door, 128, map);
                                     }
                                     // make frame invisible and fixed
                                     frame.setFixed(true);
@@ -162,7 +165,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                                     // load chunks
                                                     MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
                                                     // update the map
-                                                    MonitorUtils.updateSnapshot(door, player, 128, map);
+                                                    MonitorUtils.updateSnapshot(door, 128, map);
                                                     frame.setRotation(Rotation.NONE);
                                                     frame.setFixed(true);
                                                     frame.setVisible(false);

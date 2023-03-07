@@ -16,16 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.EAST;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.NORTH;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.SOUTH;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,6 +33,9 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.BoundingBox;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class MonitorUtils {
 
@@ -58,7 +55,7 @@ public class MonitorUtils {
         player.getInventory().addItem(itemStack);
     }
 
-    public static void updateSnapshot(Location location, Player player, int distance, ItemStack map) {
+    public static void updateSnapshot(Location location, int distance, ItemStack map) {
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
         mapView.setTrackingPosition(false);
