@@ -42,6 +42,8 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -133,7 +135,14 @@ class TARDISUpdateCommand {
                     switch (updateable) {
                         case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                         case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), true);
-                        case MONITOR_FRAME -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), false);
+                        case MONITOR_FRAME -> {
+                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), false);
+                            // reinstate display name
+                            ItemStack glass = itemFrame.getItem();
+                            ItemMeta im = glass.getItemMeta();
+                            im.setDisplayName("Monitor Frame");
+                            glass.setItemMeta(im);
+                        }
                     }
                     if (itemFrame != null) {
                         TARDISTimeRotor.unlockItemFrame(itemFrame);
