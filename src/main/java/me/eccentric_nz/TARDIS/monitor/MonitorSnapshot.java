@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -93,8 +94,14 @@ public class MonitorSnapshot {
                 Location doorTop = doorBottom.clone();
                 doorTop.setPitch(-25.5f);
                 loadChunks(plugin, doorBottom, in, d, id, distance);
-                MonitorUtils.createSnapshot(doorBottom, player, distance);
-                MonitorUtils.createSnapshot(doorTop, player, distance);
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.FILLED_MAP)
+                        && player.getInventory().getItemInOffHand().getType().equals(Material.FILLED_MAP)) {
+                    MonitorUtils.updateSnapshot(doorTop, distance, player.getInventory().getItemInMainHand());
+                    MonitorUtils.updateSnapshot(doorBottom, distance, player.getInventory().getItemInOffHand());
+                } else {
+                    MonitorUtils.createSnapshot(doorBottom, player, distance);
+                    MonitorUtils.createSnapshot(doorTop, player, distance);
+                }
             }
         }
     }
