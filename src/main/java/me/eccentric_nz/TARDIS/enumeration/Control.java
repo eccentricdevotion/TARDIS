@@ -69,7 +69,7 @@ public enum Control {
     MAZE_SOUTH(43, "", true, false),
     MAZE_SPAWN(44, "", false, false),
     MONITOR(45, "monitor", false, false),
-    MONITOR_FRAME(46, "monitor_frame", true, false);
+    MONITOR_FRAME(46, "monitor-frame", true, false);
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
     private static final HashMap<Integer, Control> BY_ID = new HashMap<>();

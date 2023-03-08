@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -34,10 +36,22 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.BoundingBox;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class MonitorUtils {
+
+    public static ItemStack createMap(Location location, int distance) {
+        ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
+        MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
+        MapView mapView = Bukkit.createMap(location.getWorld());
+        mapView.setTrackingPosition(false);
+        for (MapRenderer renderer : mapView.getRenderers()) {
+            mapView.removeRenderer(renderer);
+        }
+        SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
+        mapView.addRenderer(renderer);
+        mapMeta.setMapView(mapView);
+        itemStack.setItemMeta(mapMeta);
+        return itemStack;
+    }
 
     public static void createSnapshot(Location location, Player player, int distance) {
         ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
@@ -51,13 +65,18 @@ public class MonitorUtils {
         mapView.addRenderer(renderer);
         mapMeta.setMapView(mapView);
         itemStack.setItemMeta(mapMeta);
-        // set map in Item frame
+        // give the player the map
         player.getInventory().addItem(itemStack);
     }
 
     public static void updateSnapshot(Location location, int distance, ItemStack map) {
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
-        MapView mapView = Bukkit.createMap(location.getWorld());
+        MapView mapView;
+        if (mapMeta.hasMapView()) {
+            mapView = mapMeta.getMapView();
+        } else {
+            mapView = Bukkit.createMap(location.getWorld());
+        }
         mapView.setTrackingPosition(false);
         // !IMPORTANT unlock map else it won't get a new render
         mapView.setLocked(false);

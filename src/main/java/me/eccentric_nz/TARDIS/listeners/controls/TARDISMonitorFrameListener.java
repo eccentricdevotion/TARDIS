@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -31,8 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -66,6 +65,7 @@ public class TARDISMonitorFrameListener implements Listener {
                     }
                     im.setCustomModelData(cmd);
                     is.setItemMeta(im);
+                    frame.setItem(is);
                     // get the monitor item frame, from the same block location
                     ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
                     if (mapFrame != null) {
