@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.io.File;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.commands.*;
@@ -48,8 +49,6 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
-
-import java.io.File;
 
 /**
  * Loads all TARDIS command executors and tab completers.
@@ -145,11 +144,9 @@ class TARDISCommandSetter {
             plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
             plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
         }
-        if (plugin.getConfig().getBoolean("allow.weather_set")) {
-            TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
-            plugin.getCommand("tardisweather").setExecutor(tardisWeatherCommand);
-            plugin.getCommand("tardisweather").setTabCompleter(tardisWeatherCommand);
-        }
+        TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
+        plugin.getCommand("tardisweather").setExecutor(tardisWeatherCommand);
+        plugin.getCommand("tardisweather").setTabCompleter(tardisWeatherCommand);
         TARDISTimeCommand tardisTimeCommand = new TARDISTimeCommand(plugin);
         plugin.getCommand("tardistime").setExecutor(tardisTimeCommand);
         plugin.getCommand("tardistime").setTabCompleter(tardisTimeCommand);
