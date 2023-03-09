@@ -2,8 +2,7 @@
 
 ## Current version `4.14.0`
 
-1. Experiment with bigger on the inside for item frame police boxes - using 
-   maps, if successful, switch to/add config option for preset exteriors as well...?
+1. Finish PLAYGROUND console
 
 ## Next version `4.15.0`
 
