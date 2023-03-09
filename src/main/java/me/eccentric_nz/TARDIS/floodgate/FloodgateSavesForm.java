@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -23,9 +25,6 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class FloodgateSavesForm {
 
@@ -147,14 +146,16 @@ public class FloodgateSavesForm {
                         set.put("direction", rsd.getDirection());
                         set.put("submarine", rsd.isSubmarine() ? 1 : 0);
                         HashMap<String, Object> sett = new HashMap<>();
-                        sett.put("chameleon_preset", rsd.getPreset());
-                        // set chameleon adaption to OFF
-                        sett.put("adapti_on", 0);
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", id);
-                        plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                        if (!rsd.getPreset().isEmpty()) {
+                            sett.put("chameleon_preset", rsd.getPreset());
+                            // set chameleon adaption to OFF
+                            sett.put("adapti_on", 0);
+                            HashMap<String, Object> wheret = new HashMap<>();
+                            wheret.put("tardis_id", id);
+                            plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                        }
                         HashMap<String, Object> whereid = new HashMap<>();
-                        wheret.put("tardis_id", id);
+                        whereid.put("tardis_id", id);
                         plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.SAVE));
                         plugin.getTrackerKeeper().getRescue().remove(id);
