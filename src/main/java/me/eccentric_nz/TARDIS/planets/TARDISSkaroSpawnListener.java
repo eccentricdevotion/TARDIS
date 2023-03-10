@@ -69,7 +69,6 @@ public class TARDISSkaroSpawnListener implements Listener {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));
                     le.setGliding(true);
-                    plugin.getTardisHelper().setFallFlyingTag(le);
                 }, 2L);
             }
         }

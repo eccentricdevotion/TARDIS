@@ -17,6 +17,13 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -82,14 +89,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -186,7 +185,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("LibsDisguises", "10.0.26");
         versions.put("Multiverse-Core", "4.0");
         versions.put("Multiverse-Inventories", "4.0");
-        versions.put("TARDISChunkGenerator", "4.12.1");
+        versions.put("TARDISChunkGenerator", "4.14.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.8");
