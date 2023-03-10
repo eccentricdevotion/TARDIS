@@ -9,6 +9,10 @@
 1. Semi-random assigned parking in TARDIS areas - [#696](https://github.com/eccentricdevotion/TARDIS/issues/696)
 2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
+## Version 5.0.0
+
+1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
+
 ## Future versions
 
 1. Cache TARDIS data to speed lookups and reduce database queries
