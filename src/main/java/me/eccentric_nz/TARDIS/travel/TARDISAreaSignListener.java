@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -31,8 +32,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -86,7 +85,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                             return;
                         }
                         // check the player is not already in the area!
-                        if (plugin.getTardisArea().isInExistingArea(l)) {
+                        if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().getAreaId())) {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA");
                             close(player);
                             return;
