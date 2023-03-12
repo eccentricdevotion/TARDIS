@@ -102,7 +102,6 @@ public enum TARDISDescription {
     REDSTONE("This one has some redstone in it - console design by killeratnight & L0rd Rahl."),
     STEAMPUNK("Small, but steamy."),
     PLANK("A wood based interior."),
-    PLAYGROUND("At the playground..."),
     TOM("The 4th Doctor's TARDIS."),
     ARS("The Architectural Reconfiguration System TARDIS - console design by killeratnight & L0rd Rahl."),
     WAR("The War Doctor's TARDIS."),

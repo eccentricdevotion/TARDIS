@@ -1,5 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -14,10 +17,6 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class FloodgateDesktopThemeForm {
 
@@ -53,7 +52,6 @@ public class FloodgateDesktopThemeForm {
         blocks.put("MECHANICAL", "polished_andesite");
         blocks.put("ORIGINAL", "packed_mud");
         blocks.put("PLANK", "plank");
-        blocks.put("PLAYGROUND", "chain");
         blocks.put("PYRAMID", "sandstone");
         blocks.put("REDSTONE", "redstone");
         blocks.put("ROTOR", "honeycomb_block");

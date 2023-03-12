@@ -278,7 +278,6 @@ permissions:
       tardis.mechanical: true
       tardis.original: true
       tardis.plank: true
-      tardis.playground: true
       tardis.pyramid: true
       tardis.redstone: true
       tardis.rotor: true

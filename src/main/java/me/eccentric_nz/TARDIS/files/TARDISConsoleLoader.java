@@ -17,16 +17,15 @@
 package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -67,7 +66,6 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("MECHANICAL", new Schematic("POLISHED_ANDESITE", "mechanical", "Mechanical Console", ConsoleSize.MEDIUM, false, true, false));
         Consoles.getBY_NAMES().put("ORIGINAL", new Schematic("PACKED_MUD", "original", "The original TARDIS plugin Console", ConsoleSize.SMALL, false, true, false));
         Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
-        Consoles.getBY_NAMES().put("PLAYGROUND", new Schematic("CHAIN", "playground", "Playground Console", ConsoleSize.MEDIUM, false, false, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         Consoles.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));

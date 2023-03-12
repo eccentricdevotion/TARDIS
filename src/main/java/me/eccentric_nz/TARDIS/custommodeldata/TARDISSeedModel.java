@@ -16,16 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import org.bukkit.Material;
-
 import java.util.HashMap;
+import org.bukkit.Material;
 
 public class TARDISSeedModel {
 
     public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
         {
-            // playground
-            put(Material.CHAIN, 9);
             // mechanical
             put(Material.POLISHED_ANDESITE, 10);
             // fugitive
@@ -101,7 +98,6 @@ public class TARDISSeedModel {
 
     public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
         {
-            put("PLAYGROUND", 9);
             put("MECHANICAL", 10);
             put("FUGITIVE", 11);
             put("ANCIENT", 12);

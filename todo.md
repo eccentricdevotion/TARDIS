@@ -2,8 +2,6 @@
 
 ## Current version `4.14.0`
 
-1. Finish PLAYGROUND console
-
 ## Next version `4.15.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS

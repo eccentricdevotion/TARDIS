@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -105,7 +104,6 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.delta", 7500);
         integerOptions.put("upgrades.original", 5000);
         integerOptions.put("upgrades.plank", 5000);
-        integerOptions.put("upgrades.playground", 7500);
         integerOptions.put("upgrades.pyramid", 5000);
         integerOptions.put("upgrades.redstone", 7500);
         integerOptions.put("upgrades.rotor", 5000);
