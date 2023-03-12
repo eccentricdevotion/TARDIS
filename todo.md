@@ -1,13 +1,11 @@
 # TODO
 
-## Current version `4.13.x`
 
-1. Bug fixes
+## Current version `4.14.0`
 
-## Next version `4.14.0`
+## Next version `4.15.0`
 
-1. Semi-random assigned parking in TARDIS areas - [#696](https://github.com/eccentricdevotion/TARDIS/issues/696)
-2. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Version 5.0.0
 
@@ -24,9 +22,8 @@
 
 ## Wiki Documentation
 
-* Bedrock / floodgate features
-* Semi-random assigned parking
-* Update lazarus / genetic manipulator
+* Semi-random assigned parking - add GUI
+* Add other area sub-commands
 
 ## Resource Pack / TARDISWeepingAngels
 

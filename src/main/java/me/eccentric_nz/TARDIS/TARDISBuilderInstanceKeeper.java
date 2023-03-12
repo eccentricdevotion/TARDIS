@@ -40,6 +40,7 @@ public class TARDISBuilderInstanceKeeper {
     static {
         BLOCK_CONVERSION = Map.ofEntries(
                 Map.entry("ACACIA_LEAVES", "ACACIA_SAPLING"),
+                Map.entry("BARRIER", "STONE"),
                 Map.entry("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF"),
                 Map.entry("BIRCH_LEAVES", "BIRCH_SAPLING"),
                 Map.entry("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM"),

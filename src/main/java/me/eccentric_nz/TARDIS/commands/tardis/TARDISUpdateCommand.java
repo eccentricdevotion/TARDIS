@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
@@ -27,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
+import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -38,10 +42,8 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -126,11 +128,24 @@ class TARDISUpdateCommand {
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
-                if (updateable.equals(Updateable.ROTOR) && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
-                    // get Time Rotor frame location
-                    ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME))
+                        && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
+                    // get frame location
+                    ItemFrame itemFrame = null;
+                    switch (updateable) {
+                        case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                        case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), true);
+                        case MONITOR_FRAME -> {
+                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), false);
+                            // reinstate display name
+                            ItemStack glass = itemFrame.getItem();
+                            ItemMeta im = glass.getItemMeta();
+                            im.setDisplayName("Monitor Frame");
+                            glass.setItemMeta(im);
+                        }
+                    }
                     if (itemFrame != null) {
-                        TARDISTimeRotor.unlockRotor(itemFrame);
+                        TARDISTimeRotor.unlockItemFrame(itemFrame);
                         // also need to remove the item frame protection
                         plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
                         // and block protection

@@ -139,15 +139,17 @@ public class TARDISJoinListener implements Listener {
             String last_known_name = tardis.getLastKnownName();
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-            if (rsc.resultSet()) {
-                World w = rsc.getWorld();
-                if (w != null) {
-                    Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    while (!chunk.isLoaded()) {
-                        chunk.load();
+            if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (rsc.resultSet()) {
+                    World w = rsc.getWorld();
+                    if (w != null) {
+                        Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                        while (!chunk.isLoaded()) {
+                            chunk.load();
+                        }
+                        chunk.setForceLoaded(true);
                     }
-                    chunk.setForceLoaded(true);
                 }
             }
             long now;

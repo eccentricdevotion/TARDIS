@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -27,7 +28,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -213,5 +216,30 @@ public class TARDISArea {
             }
         }
         return area;
+    }
+
+    /**
+     * Gets a random location from a non-grid type area
+     *
+     * @param id the area_id to get the location from
+     * @return a random location or null if all the spots are already taken
+     */
+    public Location getSemiRandomLocation(int id) {
+        ResultSetAreaLocations rs = new ResultSetAreaLocations(plugin, id);
+        if (rs.resultSet()) {
+            List<Location> locations = rs.getLocations();
+            Collections.shuffle(locations);
+            for (Location l : locations) {
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("world", l.getWorld().getName());
+                wherec.put("x", l.getBlockX());
+                wherec.put("z", l.getBlockZ());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                if (!rsc.resultSet()) {
+                    return l;
+                }
+            }
+        }
+        return null;
     }
 }

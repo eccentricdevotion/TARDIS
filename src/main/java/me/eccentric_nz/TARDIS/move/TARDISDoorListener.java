@@ -370,29 +370,29 @@ public class TARDISDoorListener {
      */
     private void playDoorSound(Player player, int sound, Location location, boolean minecart) {
         switch (sound) {
-            case 1:
+            case 1 -> {
                 if (!minecart) {
                     TARDISSounds.playTARDISSound(location, "tardis_door_open");
                 } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 if (!minecart) {
                     TARDISSounds.playTARDISSound(location, "tardis_door_close");
                 } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 if (!minecart) {
                     TARDISSounds.playTARDISSound(location, "tardis_enter");
                 } else {
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 

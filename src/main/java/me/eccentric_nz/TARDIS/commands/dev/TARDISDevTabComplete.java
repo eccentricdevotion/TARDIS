@@ -31,8 +31,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree");
-    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
+    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours");
+    private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
@@ -51,6 +52,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             }
             if (sub.equals("tree")) {
                 return partial(lastArg, MAT_SUBS);
+            }
+            if (sub.equals("snapshot")) {
+                return partial(lastArg, SNAPSHOT_SUBS);
             }
         } else if (args.length > 2) {
             return partial(lastArg, MAT_SUBS);

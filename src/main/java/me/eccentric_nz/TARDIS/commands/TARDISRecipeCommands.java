@@ -340,49 +340,61 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     private String getDisplayName(String recipe, int quartzCount) {
         switch (recipe) {
-            case "TARDIS Locator":
+            case "TARDIS Locator" -> {
                 return "TARDIS Locator Circuit"; // 1965
-            case "Stattenheim Remote":
+            }
+            case "Stattenheim Remote" -> {
                 return "TARDIS Stattenheim Circuit"; // 1963
-            case "TARDIS Chameleon Circuit":
-            case "TARDIS Remote Key":
+            }
+            case "TARDIS Chameleon Circuit", "TARDIS Remote Key" -> {
                 return "TARDIS Materialisation Circuit"; // 1964
-            case "TARDIS Invisibility Circuit":
-            case "Perception Filter":
+            }
+            case "TARDIS Invisibility Circuit", "Perception Filter" -> {
                 return "Perception Circuit"; // 1978
-            case "Sonic Screwdriver":
-            case "Server Admin Circuit":
+            }
+            case "Sonic Screwdriver", "Server Admin Circuit" -> {
                 return "Sonic Oscillator"; // 1967
-            case "Fob Watch":
+            }
+            case "Fob Watch" -> {
                 return "TARDIS Chameleon Circuit"; // 1966
-            case "TARDIS Biome Reader":
+            }
+            case "TARDIS Biome Reader", "Emerald Upgrade" -> {
                 return "Emerald Environment Circuit"; // 1972
-            case "Rift Manipulator":
+            }
+            case "Rift Manipulator" -> {
                 return "Rift Circuit"; // 1983
-            case "Admin Upgrade":
+            }
+            case "Admin Upgrade" -> {
                 return "Server Admin Circuit";
-            case "Bio-scanner Upgrade":
+            }
+            case "Bio-scanner Upgrade" -> {
                 return "Bio-scanner Circuit";
-            case "Redstone Upgrade":
+            }
+            case "Redstone Upgrade" -> {
                 return "Redstone Activator Circuit";
-            case "Diamond Upgrade":
+            }
+            case "Diamond Upgrade" -> {
                 return "Diamond Disruptor Circuit";
-            case "Emerald Upgrade":
-                return "Emerald Environment Circuit";
-            case "Painter Upgrade":
+            }
+            case "Painter Upgrade" -> {
                 return "Painter Circuit";
-            case "Ignite Upgrade":
+            }
+            case "Ignite Upgrade" -> {
                 return "Ignite Circuit";
-            case "Pickup Arrows Upgrade":
+            }
+            case "Pickup Arrows Upgrade" -> {
                 return "Pickup Arrows Circuit";
-            case "Knockback Upgrade":
+            }
+            case "Knockback Upgrade" -> {
                 return "Knockback Circuit";
-            default:  //TARDIS Stattenheim Circuit"
+            }
+            default -> {  // TARDIS Stattenheim Circuit"
                 if (quartzCount == 0) {
                     return "TARDIS Locator Circuit"; // 1965
                 } else {
                     return "TARDIS Materialisation Circuit"; // 1964
                 }
+            }
         }
     }
 }

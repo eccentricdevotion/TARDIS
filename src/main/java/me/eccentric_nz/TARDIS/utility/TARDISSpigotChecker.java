@@ -22,10 +22,11 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.logging.Level;
 
 public class TARDISSpigotChecker implements Runnable {
@@ -72,27 +73,18 @@ public class TARDISSpigotChecker implements Runnable {
     private JsonObject fetchLatestSpigotBuild() {
         //
         try {
-            URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
-            return root.getAsJsonObject();
-        } catch (Exception ex) {
-            plugin.debug("Failed to check for the latest build info from Spigot.");
-        }
-        return null;
-    }
-
-    /**
-     * Fetches the latest build information from hub.spigotmc.org
-     */
-    private JsonObject fetch1dot18SpigotBuild() {
-        //
-        try {
-            URL url = new URL("https://hub.spigotmc.org/versions/1.18.json");
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            URI uri = URI.create("https://hub.spigotmc.org/versions/latest.json");
+            // Create a client, request and response
+            HttpClient client = HttpClient.newBuilder()
+                    .version(HttpClient.Version.HTTP_2)
+                    .connectTimeout(Duration.ofSeconds(10))
+                    .build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(uri)
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonElement root = JsonParser.parseString((String) response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");

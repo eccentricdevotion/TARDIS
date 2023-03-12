@@ -18,9 +18,11 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -57,5 +59,9 @@ public class TARDISMultiverseHelper {
     public World getWorld(String w) {
         MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
         return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
+    }
+
+    public void importWorlds(CommandSender sender) {
+        new TARDISMultiverseImporter(TARDIS.plugin, mvc, sender).transfer();
     }
 }

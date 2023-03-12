@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
+import me.eccentric_nz.TARDIS.commands.areas.TARDISEditAreasGUIListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
@@ -72,6 +73,13 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.*;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISDirectionFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISHandlesFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISHangingListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISItemFrameUpdateListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISMonitorFrameListener;
+import me.eccentric_nz.TARDIS.listeners.controls.TARDISTelepathicListener;
 import me.eccentric_nz.TARDIS.move.*;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
@@ -106,6 +114,7 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the TARDIS.
      */
     TARDISInformationSystemListener registerListeners() {
+        plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
@@ -276,12 +285,14 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISItemFrameUpdateListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISDirectionFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISHandlesFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISMonitorFrameListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.debug("Skaro enabled, registering planet event listeners");
             if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {

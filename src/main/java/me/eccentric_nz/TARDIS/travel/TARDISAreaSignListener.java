@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -69,7 +70,16 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String area = im.getDisplayName();
-                        Location l = plugin.getTardisArea().getNextSpot(area);
+                        HashMap<String, Object> wherea = new HashMap<>();
+                        wherea.put("area_name", area);
+                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+                        rsa.resultSet();
+                        Location l;
+                        if (rsa.getArea().isGrid()) {
+                            l = plugin.getTardisArea().getNextSpot(area);
+                        } else {
+                            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                        }
                         if (l == null) {
                             TARDISMessage.send(player, "NO_MORE_SPOTS");
                             close(player);

@@ -695,7 +695,11 @@ commands:
       description: Modify the interior of the TARDIS.
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> update [advanced|ars|artron|back|backdoor|button|chameleon|condenser|creeper|door|eps|farm|handbrake|info|keyboard|light|rail|save-sign|scanner|stable|storage|temporal|terminal|village|world-repeater|x-repeater|y-repeater|z-repeater]
+      usage: >
+        /<command> update [advanced|ars|artron|back|backdoor|beacon|bell|button|chameleon|condenser|control|creeper|
+        direction|dispenser|door|eps|farm|flight|forcefield|frame|fuel|generator|handbrake|hinge|igloo|info|keyboard|light|
+        map|monitor|monitor-frame|rail|rotor|save-sign|scanner|siege|smelt|stable|stall|storage|telepathic|temporal|
+        terminal|throttle|toggle-wool|vault|village|weather|world-repeater|x-repeater|y-repeater|z-repeater|zero]
     secondary:
       description: Set secondary TARDIS controls.
       permission: tardis.update
@@ -995,7 +999,7 @@ commands:
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree] [preset_perms|perms|recipes|blueprints|commands] [html|all]
+    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree|snapshot] [preset_perms|perms|recipes|blueprints|commands|block_colours] [html|all]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
@@ -1196,7 +1200,7 @@ commands:
     description: Set up predefined TARDIS travel areas.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [start|end|parking|show|remove] [name]
+    usage: /<command> [start|end|parking|show|remove|parking|invisibilty|yard|direction|create|add] [name]
     start:
       description: Start defining a TARDIS area.
       usage: /<command> start [name]
@@ -1215,6 +1219,18 @@ commands:
     yard:
       description: Visually mark the area with parking spots, where the first [material] is the block to use as the floor, and the second [material] is the block to use to mark the parking spot.
       usage: /<command> yard [name] [material] [material]
+    invisibility:
+      description: Set whether a TARDIS area allows invisible landings.
+      usage: /<command> invisibility [name] [ALLOW|DENY|PRESET]
+    direction:
+      description: Set the direction TARDIS's will face when landing in the specified area. Setting to NONE doesn't enforce a direction.
+      usage: /<command> direction [name] [NORTH|SOUTH|EAST|WEST|NONE]
+    create:
+      description: Create an empty area, ready to be filled with admin defined, semi-random landing locations.
+      usage: /<command> create [name]
+    add:
+      description: Add an admin defined, semi-random landing location to the specified area at the player's current location.
+      usage: /<command> add [name]
   tardisartron:
     aliases: tartron
     description: Transfer Artron Energy to an Artron Storage Cell

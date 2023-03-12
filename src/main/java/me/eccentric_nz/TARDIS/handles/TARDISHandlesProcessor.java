@@ -329,7 +329,12 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_AREA_PERM", first);
                                                     continue;
                                                 }
-                                                Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                                Location l;
+                                                if (rsa.getArea().isGrid()) {
+                                                    l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                                } else {
+                                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                                }
                                                 if (l == null) {
                                                     TARDISMessage.handlesSend(player, "NO_MORE_SPOTS");
                                                     continue;
@@ -574,23 +579,11 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case LESS_THAN:
-                    case LESS_THAN_EQUAL:
-                    case GREATER_THAN:
-                    case GREATER_THAN_EQUAL:
-                    case EQUALS:
+                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> {
                         // operator
                         comparison = thb;
-                    case ONE:
-                    case TWO:
-                    case THREE:
-                    case FOUR:
-                    case FIVE:
-                    case SIX:
-                    case SEVEN:
-                    case EIGHT:
-                    case NINE:
-                    case ZERO:
+                    }
+                    case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
                         // find all sequential number blocks
                         if (first) {
                             level = getNumber(thb, i);
@@ -611,8 +604,8 @@ public class TARDISHandlesProcessor {
                             }
                             first = false;
                         }
-                    case DO:
-                        processCommand(i);
+                    }
+                    case DO -> processCommand(i);
                 }
             }
         }
@@ -639,7 +632,11 @@ public class TARDISHandlesProcessor {
             if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.getTardisArea().getNextSpot(area);
+            if (rsa.getArea().isGrid()) {
+                l = plugin.getTardisArea().getNextSpot(area);
+            } else {
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            }
         }
         return l;
     }

@@ -247,56 +247,26 @@ public class TARDISScanner {
                         message = " (" + buf.substring(2) + ")";
                     }
                     switch (entry.getKey()) {
-                        case AREA_EFFECT_CLOUD:
-                            player.sendMessage("    Cyberman: " + entry.getValue());
-                            break;
-                        case LLAMA_SPIT:
-                            player.sendMessage("    Dalek: " + entry.getValue());
-                            break;
-                        case FALLING_BLOCK:
-                            player.sendMessage("    Empty Child: " + entry.getValue());
-                            break;
-                        case ARROW:
-                            player.sendMessage("    Ice Warrior: " + entry.getValue());
-                            break;
-                        case SHULKER_BULLET:
-                            player.sendMessage("    Judoon: " + entry.getValue());
-                            break;
-                        case EVOKER_FANGS:
-                            player.sendMessage("    K9: " + entry.getValue());
-                            break;
-                        case ITEM_FRAME:
-                            player.sendMessage("    Ood: " + entry.getValue());
-                            break;
-                        case SPLASH_POTION:
-                            player.sendMessage("    Silent: " + entry.getValue());
-                            break;
-                        case BOAT:
-                            player.sendMessage("    Silurian: " + entry.getValue());
-                            break;
-                        case FIREWORK:
-                            player.sendMessage("    Sontaran: " + entry.getValue());
-                            break;
-                        case EGG:
-                            player.sendMessage("    Strax: " + entry.getValue());
-                            break;
-                        case DROPPED_ITEM:
-                            player.sendMessage("    Toclafane: " + entry.getValue());
-                            break;
-                        case ENDER_CRYSTAL:
-                            player.sendMessage("    Vashta Nerada: " + entry.getValue());
-                            break;
-                        case DRAGON_FIREBALL:
-                            player.sendMessage("    Weeping Angel: " + entry.getValue());
-                            break;
-                        case FISHING_HOOK:
-                            player.sendMessage("    Zygon: " + entry.getValue());
-                            break;
-                        default:
+                        case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + entry.getValue());
+                        case LLAMA_SPIT -> player.sendMessage("    Dalek: " + entry.getValue());
+                        case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + entry.getValue());
+                        case ARROW -> player.sendMessage("    Ice Warrior: " + entry.getValue());
+                        case SHULKER_BULLET -> player.sendMessage("    Judoon: " + entry.getValue());
+                        case EVOKER_FANGS -> player.sendMessage("    K9: " + entry.getValue());
+                        case ITEM_FRAME -> player.sendMessage("    Ood: " + entry.getValue());
+                        case SPLASH_POTION -> player.sendMessage("    Silent: " + entry.getValue());
+                        case BOAT -> player.sendMessage("    Silurian: " + entry.getValue());
+                        case FIREWORK -> player.sendMessage("    Sontaran: " + entry.getValue());
+                        case EGG -> player.sendMessage("    Strax: " + entry.getValue());
+                        case DROPPED_ITEM -> player.sendMessage("    Toclafane: " + entry.getValue());
+                        case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + entry.getValue());
+                        case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + entry.getValue());
+                        case FISHING_HOOK -> player.sendMessage("    Zygon: " + entry.getValue());
+                        default -> {
                             if (entry.getKey() != EntityType.ARMOR_STAND) {
                                 player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                             }
-                            break;
+                        }
                     }
                 }
                 scannedEntities.clear();

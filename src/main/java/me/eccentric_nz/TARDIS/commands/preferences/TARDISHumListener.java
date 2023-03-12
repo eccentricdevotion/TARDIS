@@ -74,7 +74,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
                     switch (slot) {
-                        case 11:
+                        case 11 -> {
                             HashMap<String, Object> setr = new HashMap<>();
                             HashMap<String, Object> wherer = new HashMap<>();
                             wherer.put("uuid", uuid.toString());
@@ -82,20 +82,19 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
                             close(p);
                             TARDISMessage.send(p, "HUM_SAVED");
-                            break;
-                        case 15:
+                        }
+                        case 15 -> {
                             // toggle play save
                             if (isPlay(view)) {
                                 setPlay(view, "SAVE");
                             } else {
                                 setPlay(view, "PLAY");
                             }
-                            break;
-                        case 17:
+                        }
+                        case 17 ->
                             // close
-                            close(p);
-                            break;
-                        default:
+                                close(p);
+                        default -> {
                             if (isPlay(view)) {
                                 long now = System.currentTimeMillis();
                                 if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
@@ -115,7 +114,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 close(p);
                                 TARDISMessage.send(p, "HUM_SAVED");
                             }
-                            break;
+                        }
                     }
                 }
             }

@@ -18,9 +18,6 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -37,6 +34,10 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -164,7 +165,7 @@ public class TARDISUpgradeBlockScanner {
                                 use_clay = UseClay.WOOL;
                             }
                             switch (type) {
-                                case ORANGE_WOOL:
+                                case ORANGE_WOOL -> {
                                     if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
                                         type = switch (use_clay) {
                                             case TERRACOTTA -> Material.ORANGE_TERRACOTTA;
@@ -174,8 +175,8 @@ public class TARDISUpgradeBlockScanner {
                                     } else {
                                         type = wall_type;
                                     }
-                                    break;
-                                case LIGHT_GRAY_WOOL:
+                                }
+                                case LIGHT_GRAY_WOOL -> {
                                     if (!tud.getSchematic().getPermission().equals("eleventh")) {
                                         if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
                                             type = switch (use_clay) {
@@ -196,11 +197,9 @@ public class TARDISUpgradeBlockScanner {
                                         }
                                         type = Material.getMaterial(m);
                                     }
-                                    break;
-                                case BLUE_WOOL:
-                                    type = Material.MUSHROOM_STEM;
-                                    break;
-                                default:
+                                }
+                                case BLUE_WOOL -> type = Material.MUSHROOM_STEM;
+                                default -> {
                                     String[] tsplit = type.toString().split("_");
                                     String m;
                                     if (tsplit.length > 2) {
@@ -209,6 +208,7 @@ public class TARDISUpgradeBlockScanner {
                                         m = tsplit[0] + "_" + use_clay;
                                     }
                                     type = Material.getMaterial(m);
+                                }
                             }
                         }
                         if (type.isAir()) {

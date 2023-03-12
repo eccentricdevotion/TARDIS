@@ -48,7 +48,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
                     switch (slot) {
-                        case 0:
+                        case 0 -> {
                             // back
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
@@ -56,21 +56,21 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                                 categories.setContents(emenu);
                                 player.openInventory(categories);
                             }, 2L);
-                            break;
-                        case 4:
+                        }
+                        case 4 -> {
                             // info
-                            break;
-                        case 8:
+                        }
+                        case 8 -> {
                             // close
                             close(player);
-                            break;
-                        default:
+                        }
+                        default -> {
                             String command = ChatColor.stripColor(is.getItemMeta().getLore().get(0)).substring(1);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 player.performCommand(command);
                                 plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
                             }, 2L);
-                            break;
+                        }
                     }
                 }
             }

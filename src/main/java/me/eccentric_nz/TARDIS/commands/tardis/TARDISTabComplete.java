@@ -17,9 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -30,6 +27,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * TabCompleter for /tardis command
@@ -84,41 +85,50 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase();
             switch (sub) {
-                case "add":
-                case "comehere":
-                case "remove":
-                case "rescue":
-                case "save_player":
+                case "add", "comehere", "remove", "rescue", "save_player" -> {
                     return null;
-                case "archive":
+                }
+                case "archive" -> {
                     return partial(lastArg, ARCHIVE_SUBS);
-                case "bell":
+                }
+                case "bell" -> {
                     return partial(lastArg, ON_OFF_SUBS);
-                case "direction":
+                }
+                case "direction" -> {
                     return partial(lastArg, DIR_SUBS);
-                case "door":
+                }
+                case "door" -> {
                     return partial(lastArg, DOOR_SUBS);
-                case "egg":
+                }
+                case "egg" -> {
                     return partial(lastArg, THEME_SUBS);
-                case "home":
+                }
+                case "home" -> {
                     return partial(lastArg, Collections.singletonList("set"));
-                case "item":
+                }
+                case "item" -> {
                     return partial(lastArg, ITEM_SUBS);
-                case "list":
+                }
+                case "list" -> {
                     return partial(lastArg, LIST_SUBS);
-                case "room":
-                case "jettison":
+                }
+                case "room", "jettison" -> {
                     return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
-                case "monsters":
+                }
+                case "monsters" -> {
                     return partial(lastArg, MONSTERS_SUBS);
-                case "transmat":
+                }
+                case "transmat" -> {
                     return partial(lastArg, TRANSMAT_SUBS);
-                case "secondary":
+                }
+                case "secondary" -> {
                     return partial(lastArg, SEC_SUBS);
-                case "update":
+                }
+                case "update" -> {
                     return partial(lastArg, UPD_SUBS);
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         } else if (args.length == 3) {
             String sub = args[1].toLowerCase();

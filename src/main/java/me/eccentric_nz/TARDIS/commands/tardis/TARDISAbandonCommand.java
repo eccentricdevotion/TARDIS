@@ -61,7 +61,7 @@ public class TARDISAbandonCommand {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
-            case JUNK_MODE:
+            case JUNK_MODE -> {
                 switch (d) {
                     case EAST -> {
                         signx = 0;
@@ -76,12 +76,12 @@ public class TARDISAbandonCommand {
                         signz = 0;
                     }
                 }
-                break;
-            case GRAVESTONE:
+            }
+            case GRAVESTONE -> {
                 signx = 0;
                 signz = 0;
-                break;
-            case TORCH:
+            }
+            case TORCH -> {
                 switch (d) {
                     case EAST -> {
                         signx = -1;
@@ -100,8 +100,8 @@ public class TARDISAbandonCommand {
                         signz = 1;
                     }
                 }
-                break;
-            case TOILET:
+            }
+            case TOILET -> {
                 switch (d) {
                     case EAST -> {
                         signx = 1;
@@ -120,8 +120,8 @@ public class TARDISAbandonCommand {
                         signz = -1;
                     }
                 }
-                break;
-            case APPERTURE:
+            }
+            case APPERTURE -> {
                 switch (d) {
                     case EAST -> {
                         signx = 1;
@@ -140,8 +140,8 @@ public class TARDISAbandonCommand {
                         signz = -1;
                     }
                 }
-                break;
-            default:
+            }
+            default -> {
                 switch (d) {
                     case EAST -> {
                         signx = -2;
@@ -160,7 +160,7 @@ public class TARDISAbandonCommand {
                         signz = 2;
                     }
                 }
-                break;
+            }
         }
         signy = switch (p) {
             case GAZEBO, JAIL, SHROOM, SWAMP -> 3;

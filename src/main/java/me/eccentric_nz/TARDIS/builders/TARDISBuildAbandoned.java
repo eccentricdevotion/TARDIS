@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
-import java.io.File;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -45,11 +43,10 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Painting;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted

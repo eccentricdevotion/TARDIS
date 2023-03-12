@@ -24,10 +24,11 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.logging.Level;
 
 public class TARDISUpdateChecker implements Runnable {
@@ -103,13 +104,19 @@ public class TARDISUpdateChecker implements Runnable {
     private JsonObject fetchLatestJenkinsBuild() {
         try {
             // We're connecting to TARDIS's Jenkins REST api
-            URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
-            // Create a connection
-            URLConnection request = url.openConnection();
-            request.setRequestProperty("User-Agent", "TARDISPlugin");
-            request.connect();
-            // Convert to a JSON object
-            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            URI uri = URI.create("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
+            // Create a client, request and response
+            HttpClient client = HttpClient.newBuilder()
+                    .version(HttpClient.Version.HTTP_2)
+                    .connectTimeout(Duration.ofSeconds(10))
+                    .build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(uri)
+                    .header("User-Agent", "TARDISPlugin")
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonElement root = JsonParser.parseString((String) response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");

@@ -18,13 +18,9 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -36,6 +32,12 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz

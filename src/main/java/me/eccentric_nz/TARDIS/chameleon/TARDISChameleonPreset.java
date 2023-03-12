@@ -362,412 +362,604 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
         switch (p) {
-            case ANDESITE:
+            case ANDESITE -> {
                 return andesite.getBlueprint().get(d);
-            case ANGEL:
+            }
+            case ANGEL -> {
                 if (r == 0) {
                     return angelu.getBlueprint().get(d);
                 } else {
                     return angeld.getBlueprint().get(d);
                 }
-            case APPERTURE:
+            }
+            case APPERTURE -> {
                 return aperture.getBlueprint().get(d);
-            case CAKE:
+            }
+            case CAKE -> {
                 return cake.getBlueprint().get(d);
-            case CANDY:
+            }
+            case CANDY -> {
                 return candy.getBlueprint().get(d);
-            case CHALICE:
+            }
+            case CHALICE -> {
                 return chalice.getBlueprint().get(d);
-            case CHORUS:
+            }
+            case CHORUS -> {
                 return chorus.getBlueprint().get(d);
-            case CREEPY:
+            }
+            case CREEPY -> {
                 return creepy.getBlueprint().get(d);
-            case DESERT:
+            }
+            case DESERT -> {
                 return desert.getBlueprint().get(d);
-            case DIORITE:
+            }
+            case DIORITE -> {
                 return diorite.getBlueprint().get(d);
-            case DUCK:
+            }
+            case DUCK -> {
                 return duck.getBlueprint().get(d);
-            case FACTORY:
+            }
+            case FACTORY -> {
                 return factory.getBlueprint().get(d);
-            case FENCE:
+            }
+            case FENCE -> {
                 return fence.getBlueprint().get(d);
-            case FLOWER:
+            }
+            case FLOWER -> {
                 return flower.getBlueprint().get(d);
-            case GAZEBO:
+            }
+            case GAZEBO -> {
                 return gazebo.getBlueprint().get(d);
-            case GRANITE:
+            }
+            case GRANITE -> {
                 return granite.getBlueprint().get(d);
-            case GRAVESTONE:
+            }
+            case GRAVESTONE -> {
                 return gravestone.getBlueprint().get(d);
-            case HELIX:
+            }
+            case HELIX -> {
                 return helix.getBlueprint().get(d);
-            case INVISIBLE:
+            }
+            case INVISIBLE -> {
                 return invisible.getBlueprint().get(d);
-            case JAIL:
+            }
+            case JAIL -> {
                 return jail.getBlueprint().get(d);
-            case JUNGLE:
+            }
+            case JUNGLE -> {
                 return jungle.getBlueprint().get(d);
-            case JUNK_MODE:
+            }
+            case JUNK_MODE -> {
                 return junk.getBlueprint().get(d);
-            case LAMP:
+            }
+            case LAMP -> {
                 return lamp.getBlueprint().get(d);
-            case LIBRARY:
+            }
+            case LIBRARY -> {
                 return library.getBlueprint().get(d);
-            case LIGHTHOUSE:
+            }
+            case LIGHTHOUSE -> {
                 return lighthouse.getBlueprint().get(d);
-            case MINESHAFT:
+            }
+            case MINESHAFT -> {
                 return mine.getBlueprint().get(d);
-            case NETHER:
+            }
+            case NETHER -> {
                 return nether.getBlueprint().get(d);
-            case PANDORICA:
+            }
+            case PANDORICA -> {
                 return pandorica.getBlueprint().get(d);
-            case PARTY:
+            }
+            case PARTY -> {
                 return party.getBlueprint().get(d);
-            case PEANUT:
+            }
+            case PEANUT -> {
                 return peanut.getBlueprint().get(d);
-            case PINE:
+            }
+            case PINE -> {
                 return pine.getBlueprint().get(d);
-            case PORTAL:
+            }
+            case PORTAL -> {
                 return portal.getBlueprint().get(d);
-            case PRISMARINE:
+            }
+            case PRISMARINE -> {
                 return prismarine.getBlueprint().get(d);
-            case PUNKED:
+            }
+            case PUNKED -> {
                 return punked.getBlueprint().get(d);
-            case RENDER:
+            }
+            case RENDER -> {
                 return render.getBlueprint().get(d);
-            case ROBOT:
+            }
+            case ROBOT -> {
                 return robot.getBlueprint().get(d);
-            case SHROOM:
+            }
+            case SHROOM -> {
                 return shroom.getBlueprint().get(d);
-            case SNOWMAN:
+            }
+            case SNOWMAN -> {
                 return snowman.getBlueprint().get(d);
-            case STONE:
+            }
+            case STONE -> {
                 return column.getBlueprint().get(d);
-            case SUBMERGED:
+            }
+            case SUBMERGED -> {
                 return submerged.getBlueprint().get(d);
-            case SWAMP:
+            }
+            case SWAMP -> {
                 return swamp.getBlueprint().get(d);
-            case TELEPHONE:
+            }
+            case TELEPHONE -> {
                 return telephone.getBlueprint().get(d);
-            case THEEND:
+            }
+            case THEEND -> {
                 return theend.getBlueprint().get(d);
-            case TOILET:
+            }
+            case TOILET -> {
                 return toilet.getBlueprint().get(d);
-            case TOPSYTURVEY:
+            }
+            case TOPSYTURVEY -> {
                 return topsyturvey.getBlueprint().get(d);
-            case TORCH:
+            }
+            case TORCH -> {
                 return torch.getBlueprint().get(d);
-            case VILLAGE:
+            }
+            case VILLAGE -> {
                 return village.getBlueprint().get(d);
-            case WELL:
+            }
+            case WELL -> {
                 return well.getBlueprint().get(d);
-            case WINDMILL:
+            }
+            case WINDMILL -> {
                 return windmill.getBlueprint().get(d);
-            case YELLOW:
+            }
+            case YELLOW -> {
                 return yellow.getBlueprint().get(d);
-            case CUSTOM:
+            }
+            case CUSTOM -> {
                 return custom.getBlueprint().get(d);
-            case EXTREME_HILLS:
+            }
+            case EXTREME_HILLS -> {
                 return extreme.getBlueprint().get(d);
-            case FOREST:
+            }
+            case FOREST -> {
                 return forest.getBlueprint().get(d);
-            case ICE_FLATS:
+            }
+            case ICE_FLATS -> {
                 return flats.getBlueprint().get(d);
-            case ICE_SPIKES:
+            }
+            case ICE_SPIKES -> {
                 return spikes.getBlueprint().get(d);
-            case MESA:
+            }
+            case MESA -> {
                 return mesa.getBlueprint().get(d);
-            case PLAINS:
+            }
+            case PLAINS -> {
                 return plains.getBlueprint().get(d);
-            case ROOFED_FOREST:
+            }
+            case ROOFED_FOREST -> {
                 return roofed.getBlueprint().get(d);
-            case SAVANNA:
+            }
+            case SAVANNA -> {
                 return savanna.getBlueprint().get(d);
-            case TAIGA:
+            }
+            case TAIGA -> {
                 return taiga.getBlueprint().get(d);
-            case COLD_TAIGA:
+            }
+            case COLD_TAIGA -> {
                 return cold.getBlueprint().get(d);
-            case BOAT:
+            }
+            case BOAT -> {
                 return boat.getBlueprint().get(d);
-            case CAVE:
+            }
+            case CAVE -> {
                 return cave.getBlueprint().get(d);
-            default:
+            }
+            default -> {
                 return adaptive.getBlueprint().get(d);
+            }
         }
     }
 
     public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
         switch (p) {
-            case ANDESITE:
+            case ANDESITE -> {
                 return andesite.getGlass().get(d);
-            case ANGEL:
+            }
+            case ANGEL -> {
                 if (r == 0) {
                     return angelu.getGlass().get(d);
                 } else {
                     return angeld.getGlass().get(d);
                 }
-            case APPERTURE:
+            }
+            case APPERTURE -> {
                 return aperture.getGlass().get(d);
-            case CAKE:
+            }
+            case CAKE -> {
                 return cake.getGlass().get(d);
-            case CANDY:
+            }
+            case CANDY -> {
                 return candy.getGlass().get(d);
-            case CHALICE:
+            }
+            case CHALICE -> {
                 return chalice.getGlass().get(d);
-            case CHORUS:
+            }
+            case CHORUS -> {
                 return chorus.getGlass().get(d);
-            case CREEPY:
+            }
+            case CREEPY -> {
                 return creepy.getGlass().get(d);
-            case DESERT:
+            }
+            case DESERT -> {
                 return desert.getGlass().get(d);
-            case DIORITE:
+            }
+            case DIORITE -> {
                 return diorite.getGlass().get(d);
-            case DUCK:
+            }
+            case DUCK -> {
                 return duck.getGlass().get(d);
-            case FACTORY:
+            }
+            case FACTORY -> {
                 return factory.getGlass().get(d);
-            case FENCE:
+            }
+            case FENCE -> {
                 return fence.getGlass().get(d);
-            case FLOWER:
+            }
+            case FLOWER -> {
                 return flower.getGlass().get(d);
-            case GAZEBO:
+            }
+            case GAZEBO -> {
                 return gazebo.getGlass().get(d);
-            case GRANITE:
+            }
+            case GRANITE -> {
                 return granite.getGlass().get(d);
-            case GRAVESTONE:
+            }
+            case GRAVESTONE -> {
                 return gravestone.getGlass().get(d);
-            case HELIX:
+            }
+            case HELIX -> {
                 return helix.getGlass().get(d);
-            case INVISIBLE:
+            }
+            case INVISIBLE -> {
                 return invisible.getGlass().get(d);
-            case JAIL:
+            }
+            case JAIL -> {
                 return jail.getGlass().get(d);
-            case JUNGLE:
+            }
+            case JUNGLE -> {
                 return jungle.getGlass().get(d);
-            case JUNK_MODE:
+            }
+            case JUNK_MODE -> {
                 return junk.getGlass().get(d);
-            case LAMP:
+            }
+            case LAMP -> {
                 return lamp.getGlass().get(d);
-            case LIBRARY:
+            }
+            case LIBRARY -> {
                 return library.getGlass().get(d);
-            case LIGHTHOUSE:
+            }
+            case LIGHTHOUSE -> {
                 return lighthouse.getGlass().get(d);
-            case MINESHAFT:
+            }
+            case MINESHAFT -> {
                 return mine.getGlass().get(d);
-            case NETHER:
+            }
+            case NETHER -> {
                 return nether.getGlass().get(d);
-            case PANDORICA:
+            }
+            case PANDORICA -> {
                 return pandorica.getGlass().get(d);
-            case PARTY:
+            }
+            case PARTY -> {
                 return party.getGlass().get(d);
-            case PEANUT:
+            }
+            case PEANUT -> {
                 return peanut.getGlass().get(d);
-            case PINE:
+            }
+            case PINE -> {
                 return pine.getGlass().get(d);
-            case PORTAL:
+            }
+            case PORTAL -> {
                 return portal.getGlass().get(d);
-            case PRISMARINE:
+            }
+            case PRISMARINE -> {
                 return prismarine.getGlass().get(d);
-            case PUNKED:
+            }
+            case PUNKED -> {
                 return punked.getGlass().get(d);
-            case RENDER:
+            }
+            case RENDER -> {
                 return render.getGlass().get(d);
-            case ROBOT:
+            }
+            case ROBOT -> {
                 return robot.getGlass().get(d);
-            case SHROOM:
+            }
+            case SHROOM -> {
                 return shroom.getGlass().get(d);
-            case SNOWMAN:
+            }
+            case SNOWMAN -> {
                 return snowman.getGlass().get(d);
-            case STONE:
+            }
+            case STONE -> {
                 return column.getGlass().get(d);
-            case SUBMERGED:
+            }
+            case SUBMERGED -> {
                 return submerged.getGlass().get(d);
-            case SWAMP:
+            }
+            case SWAMP -> {
                 return swamp.getGlass().get(d);
-            case TELEPHONE:
+            }
+            case TELEPHONE -> {
                 return telephone.getGlass().get(d);
-            case THEEND:
+            }
+            case THEEND -> {
                 return theend.getGlass().get(d);
-            case TOILET:
+            }
+            case TOILET -> {
                 return toilet.getGlass().get(d);
-            case TOPSYTURVEY:
+            }
+            case TOPSYTURVEY -> {
                 return topsyturvey.getGlass().get(d);
-            case TORCH:
+            }
+            case TORCH -> {
                 return torch.getGlass().get(d);
-            case VILLAGE:
+            }
+            case VILLAGE -> {
                 return village.getGlass().get(d);
-            case WELL:
+            }
+            case WELL -> {
                 return well.getGlass().get(d);
-            case WINDMILL:
+            }
+            case WINDMILL -> {
                 return windmill.getGlass().get(d);
-            case YELLOW:
+            }
+            case YELLOW -> {
                 return yellow.getGlass().get(d);
-            case CUSTOM:
+            }
+            case CUSTOM -> {
                 return custom.getGlass().get(d);
-            case EXTREME_HILLS:
+            }
+            case EXTREME_HILLS -> {
                 return extreme.getGlass().get(d);
-            case FOREST:
+            }
+            case FOREST -> {
                 return forest.getGlass().get(d);
-            case ICE_FLATS:
+            }
+            case ICE_FLATS -> {
                 return flats.getGlass().get(d);
-            case ICE_SPIKES:
+            }
+            case ICE_SPIKES -> {
                 return spikes.getGlass().get(d);
-            case MESA:
+            }
+            case MESA -> {
                 return mesa.getGlass().get(d);
-            case PLAINS:
+            }
+            case PLAINS -> {
                 return plains.getGlass().get(d);
-            case ROOFED_FOREST:
+            }
+            case ROOFED_FOREST -> {
                 return roofed.getGlass().get(d);
-            case SAVANNA:
+            }
+            case SAVANNA -> {
                 return savanna.getGlass().get(d);
-            case TAIGA:
+            }
+            case TAIGA -> {
                 return taiga.getGlass().get(d);
-            case COLD_TAIGA:
+            }
+            case COLD_TAIGA -> {
                 return cold.getGlass().get(d);
-            case BOAT:
+            }
+            case BOAT -> {
                 return boat.getGlass().get(d);
-            case CAVE:
+            }
+            case CAVE -> {
                 return cave.getGlass().get(d);
-            default:
+            }
+            default -> {
                 return adaptive.getGlass().get(d);
+            }
         }
     }
 
     public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
         switch (p) {
-            case ANDESITE:
+            case ANDESITE -> {
                 return andesite.getStained().get(d);
-            case ANGEL:
+            }
+            case ANGEL -> {
                 if (r == 0) {
                     return angelu.getStained().get(d);
                 } else {
                     return angeld.getStained().get(d);
                 }
-            case APPERTURE:
+            }
+            case APPERTURE -> {
                 return aperture.getStained().get(d);
-            case CAKE:
+            }
+            case CAKE -> {
                 return cake.getStained().get(d);
-            case CANDY:
+            }
+            case CANDY -> {
                 return candy.getStained().get(d);
-            case CHALICE:
+            }
+            case CHALICE -> {
                 return chalice.getStained().get(d);
-            case CHORUS:
+            }
+            case CHORUS -> {
                 return chorus.getStained().get(d);
-            case CREEPY:
+            }
+            case CREEPY -> {
                 return creepy.getStained().get(d);
-            case DESERT:
+            }
+            case DESERT -> {
                 return desert.getStained().get(d);
-            case DIORITE:
+            }
+            case DIORITE -> {
                 return diorite.getStained().get(d);
-            case DUCK:
+            }
+            case DUCK -> {
                 return duck.getStained().get(d);
-            case FACTORY:
+            }
+            case FACTORY -> {
                 return factory.getStained().get(d);
-            case FENCE:
+            }
+            case FENCE -> {
                 return fence.getStained().get(d);
-            case FLOWER:
+            }
+            case FLOWER -> {
                 return flower.getStained().get(d);
-            case GAZEBO:
+            }
+            case GAZEBO -> {
                 return gazebo.getStained().get(d);
-            case GRANITE:
+            }
+            case GRANITE -> {
                 return granite.getStained().get(d);
-            case GRAVESTONE:
+            }
+            case GRAVESTONE -> {
                 return gravestone.getStained().get(d);
-            case HELIX:
+            }
+            case HELIX -> {
                 return helix.getStained().get(d);
-            case INVISIBLE:
+            }
+            case INVISIBLE -> {
                 return invisible.getStained().get(d);
-            case JAIL:
+            }
+            case JAIL -> {
                 return jail.getStained().get(d);
-            case JUNGLE:
+            }
+            case JUNGLE -> {
                 return jungle.getStained().get(d);
-            case JUNK_MODE:
+            }
+            case JUNK_MODE -> {
                 return junk.getStained().get(d);
-            case LAMP:
+            }
+            case LAMP -> {
                 return lamp.getStained().get(d);
-            case LIBRARY:
+            }
+            case LIBRARY -> {
                 return library.getStained().get(d);
-            case LIGHTHOUSE:
+            }
+            case LIGHTHOUSE -> {
                 return lighthouse.getStained().get(d);
-            case MINESHAFT:
+            }
+            case MINESHAFT -> {
                 return mine.getStained().get(d);
-            case NETHER:
+            }
+            case NETHER -> {
                 return nether.getStained().get(d);
-            case PANDORICA:
+            }
+            case PANDORICA -> {
                 return pandorica.getStained().get(d);
-            case PARTY:
+            }
+            case PARTY -> {
                 return party.getStained().get(d);
-            case PEANUT:
+            }
+            case PEANUT -> {
                 return peanut.getStained().get(d);
-            case PINE:
+            }
+            case PINE -> {
                 return pine.getStained().get(d);
-            case PORTAL:
+            }
+            case PORTAL -> {
                 return portal.getStained().get(d);
-            case PRISMARINE:
+            }
+            case PRISMARINE -> {
                 return prismarine.getStained().get(d);
-            case PUNKED:
+            }
+            case PUNKED -> {
                 return punked.getStained().get(d);
-            case RENDER:
+            }
+            case RENDER -> {
                 return render.getStained().get(d);
-            case ROBOT:
+            }
+            case ROBOT -> {
                 return robot.getStained().get(d);
-            case SHROOM:
+            }
+            case SHROOM -> {
                 return shroom.getStained().get(d);
-            case SNOWMAN:
+            }
+            case SNOWMAN -> {
                 return snowman.getStained().get(d);
-            case STONE:
+            }
+            case STONE -> {
                 return column.getStained().get(d);
-            case SUBMERGED:
+            }
+            case SUBMERGED -> {
                 return submerged.getStained().get(d);
-            case SWAMP:
+            }
+            case SWAMP -> {
                 return swamp.getStained().get(d);
-            case TELEPHONE:
+            }
+            case TELEPHONE -> {
                 return telephone.getStained().get(d);
-            case THEEND:
+            }
+            case THEEND -> {
                 return theend.getStained().get(d);
-            case TOILET:
+            }
+            case TOILET -> {
                 return toilet.getStained().get(d);
-            case TOPSYTURVEY:
+            }
+            case TOPSYTURVEY -> {
                 return topsyturvey.getStained().get(d);
-            case TORCH:
+            }
+            case TORCH -> {
                 return torch.getStained().get(d);
-            case VILLAGE:
+            }
+            case VILLAGE -> {
                 return village.getStained().get(d);
-            case WELL:
+            }
+            case WELL -> {
                 return well.getStained().get(d);
-            case WINDMILL:
+            }
+            case WINDMILL -> {
                 return windmill.getStained().get(d);
-            case YELLOW:
+            }
+            case YELLOW -> {
                 return yellow.getStained().get(d);
-            case CUSTOM:
+            }
+            case CUSTOM -> {
                 return custom.getStained().get(d);
-            case EXTREME_HILLS:
+            }
+            case EXTREME_HILLS -> {
                 return extreme.getStained().get(d);
-            case FOREST:
+            }
+            case FOREST -> {
                 return forest.getStained().get(d);
-            case ICE_FLATS:
+            }
+            case ICE_FLATS -> {
                 return flats.getStained().get(d);
-            case ICE_SPIKES:
+            }
+            case ICE_SPIKES -> {
                 return spikes.getStained().get(d);
-            case MESA:
+            }
+            case MESA -> {
                 return mesa.getStained().get(d);
-            case PLAINS:
+            }
+            case PLAINS -> {
                 return plains.getStained().get(d);
-            case ROOFED_FOREST:
+            }
+            case ROOFED_FOREST -> {
                 return roofed.getStained().get(d);
-            case SAVANNA:
+            }
+            case SAVANNA -> {
                 return savanna.getStained().get(d);
-            case TAIGA:
+            }
+            case TAIGA -> {
                 return taiga.getStained().get(d);
-            case COLD_TAIGA:
+            }
+            case COLD_TAIGA -> {
                 return cold.getStained().get(d);
-            case BOAT:
+            }
+            case BOAT -> {
                 return boat.getStained().get(d);
-            case CAVE:
+            }
+            case CAVE -> {
                 return cave.getStained().get(d);
-            default:
+            }
+            default -> {
                 return adaptive.getStained().get(d);
+            }
         }
     }
 

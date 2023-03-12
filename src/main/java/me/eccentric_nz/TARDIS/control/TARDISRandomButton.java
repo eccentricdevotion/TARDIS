@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -82,7 +79,16 @@ public class TARDISRandomButton {
             // get the exile area
             String permArea = plugin.getTardisArea().getExileArea(player);
             TARDISMessage.send(player, "EXILE", permArea);
-            Location l = plugin.getTardisArea().getNextSpot(permArea);
+            Location l;
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("area_name", permArea);
+            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+            rsa.resultSet();
+            if (rsa.getArea().isGrid()) {
+                l = plugin.getTardisArea().getNextSpot(permArea);
+            } else {
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            }
             if (l == null) {
                 TARDISMessage.send(player, "NO_MORE_SPOTS");
             } else {

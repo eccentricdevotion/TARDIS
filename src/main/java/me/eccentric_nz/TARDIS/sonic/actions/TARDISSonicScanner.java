@@ -152,56 +152,26 @@ public class TARDISSonicScanner {
                         message = " (" + buf.substring(2) + ")";
                     }
                     switch (ent) {
-                        case AREA_EFFECT_CLOUD:
-                            player.sendMessage("    Cyberman: " + value);
-                            break;
-                        case LLAMA_SPIT:
-                            player.sendMessage("    Dalek: " + value);
-                            break;
-                        case FALLING_BLOCK:
-                            player.sendMessage("    Empty Child: " + value);
-                            break;
-                        case ARROW:
-                            player.sendMessage("    Ice Warrior: " + value);
-                            break;
-                        case SHULKER_BULLET:
-                            player.sendMessage("    Judoon: " + value);
-                            break;
-                        case EVOKER_FANGS:
-                            player.sendMessage("    K9: " + value);
-                            break;
-                        case ITEM_FRAME:
-                            player.sendMessage("    Ood: " + value);
-                            break;
-                        case SPLASH_POTION:
-                            player.sendMessage("    Silent: " + value);
-                            break;
-                        case BOAT:
-                            player.sendMessage("    Silurian: " + value);
-                            break;
-                        case FIREWORK:
-                            player.sendMessage("    Sontaran: " + value);
-                            break;
-                        case EGG:
-                            player.sendMessage("    Strax: " + value);
-                            break;
-                        case DROPPED_ITEM:
-                            player.sendMessage("    Toclafane: " + value);
-                            break;
-                        case ENDER_CRYSTAL:
-                            player.sendMessage("    Vashta Nerada: " + value);
-                            break;
-                        case DRAGON_FIREBALL:
-                            player.sendMessage("    Weeping Angel: " + value);
-                            break;
-                        case FISHING_HOOK:
-                            player.sendMessage("    Zygon: " + value);
-                            break;
-                        default:
+                        case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + value);
+                        case LLAMA_SPIT -> player.sendMessage("    Dalek: " + value);
+                        case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + value);
+                        case ARROW -> player.sendMessage("    Ice Warrior: " + value);
+                        case SHULKER_BULLET -> player.sendMessage("    Judoon: " + value);
+                        case EVOKER_FANGS -> player.sendMessage("    K9: " + value);
+                        case ITEM_FRAME -> player.sendMessage("    Ood: " + value);
+                        case SPLASH_POTION -> player.sendMessage("    Silent: " + value);
+                        case BOAT -> player.sendMessage("    Silurian: " + value);
+                        case FIREWORK -> player.sendMessage("    Sontaran: " + value);
+                        case EGG -> player.sendMessage("    Strax: " + value);
+                        case DROPPED_ITEM -> player.sendMessage("    Toclafane: " + value);
+                        case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + value);
+                        case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + value);
+                        case FISHING_HOOK -> player.sendMessage("    Zygon: " + value);
+                        default -> {
                             if (ent != EntityType.ARMOR_STAND) {
                                 player.sendMessage("    " + ent + ": " + value + message);
                             }
-                            break;
+                        }
                     }
                 });
                 scannedentities.clear();

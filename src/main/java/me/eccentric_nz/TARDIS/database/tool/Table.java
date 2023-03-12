@@ -22,6 +22,7 @@ public enum Table {
     arched,
     archive,
     areas,
+    area_locations,
     ars,
     back,
     bind,

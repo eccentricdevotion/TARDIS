@@ -133,7 +133,9 @@ public class TARDISPresetBuilderFactory {
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
-            thisChunk.setForceLoaded(true);
+            if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
+                thisChunk.setForceLoaded(true);
+            }
             if (bd.isRebuild()) {
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 // always destroy it first as the player may just be switching presets

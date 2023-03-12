@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
@@ -23,10 +26,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus. The machine would turn anyone inside
@@ -119,7 +118,7 @@ class TARDISLazarusInventory {
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled add TARDIS monsters
         if (plugin.checkTWA()) {
-            ItemStack weep = new ItemStack(Material.BRICK, 1);
+            ItemStack weep = new ItemStack(Material.BOWL, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("TARDIS Monsters");
             ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.getCustomModelData());

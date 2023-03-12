@@ -52,23 +52,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                    case 14:
-                    case 15:
-                    case 16:
-                    case 17:
+                    case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
                         event.setCancelled(true);
                         // set display name of sonic in slot 18
                         ItemStack sonic = view.getItem(18);
@@ -83,17 +67,14 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
                         sonic_im.setDisplayName(choice_name);
                         sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
-                        break;
-                    case 18:
-                        break;
-                    case 26:
+                    }
+                    case 18 -> { }
+                    case 26 -> {
                         // close
                         event.setCancelled(true);
                         close(p);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
+                    }
+                    default -> event.setCancelled(true);
                 }
             } else {
                 ClickType click = event.getClick();

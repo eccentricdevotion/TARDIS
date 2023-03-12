@@ -66,8 +66,12 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryArchive);
 
             // Table structure for table 'areas'
-            String queryAreas = "CREATE TABLE IF NOT EXISTS " + prefix + "areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER, parking_distance INTEGER DEFAULT 2, invisibility TEXT DEFAULT 'ALLOW', direction TEXT DEFAULT '')";
+            String queryAreas = "CREATE TABLE IF NOT EXISTS " + prefix + "areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER, parking_distance INTEGER DEFAULT 2, invisibility TEXT DEFAULT 'ALLOW', direction TEXT DEFAULT '', grid INTEGER DEFAULT 1)";
             statement.executeUpdate(queryAreas);
+
+            // Table structure for table 'area_locations'
+            String queryAreaLocations = "CREATE TABLE IF NOT EXISTS " + prefix + "area_locations (area_location_id INTEGER PRIMARY KEY NOT NULL, area_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER)";
+            statement.executeUpdate(queryAreaLocations);
 
             // Table structure for table 'ars'
             String queryARS = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";

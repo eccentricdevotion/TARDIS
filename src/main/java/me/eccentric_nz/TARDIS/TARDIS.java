@@ -61,6 +61,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
+import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
@@ -464,8 +465,9 @@ public class TARDIS extends JavaPlugin {
                 TARDISHadsPersister thp = new TARDISHadsPersister(this);
                 thp.load();
             }
-            TARDISTimeRotorLoader trl = new TARDISTimeRotorLoader(this);
-            trl.load();
+            new TARDISTimeRotorLoader(this).load();
+            // load the custom map renderer for TARDIS monitor maps
+            new SnapshotLoader(this).load();
             if (getConfig().getBoolean("allow.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
                 new BleachRecipe(this).setRecipes();
@@ -703,7 +705,7 @@ public class TARDIS extends JavaPlugin {
         Set<String> booknames = achievementConfig.getKeys(false);
         booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
     }
-
+    
     /**
      * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
      */

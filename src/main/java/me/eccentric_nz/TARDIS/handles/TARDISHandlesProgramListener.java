@@ -81,59 +81,58 @@ public class TARDISHandlesProgramListener implements Listener {
                 event.setCancelled(true);
             }
             switch (slot) {
-                case 36:
+                case 36 -> {
                     // set control blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getControls());
                     setList(uuid, TARDISHandlesCategory.CONTROL, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 37:
+                }
+                case 37 -> {
                     // set operator blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getOperators());
                     setList(uuid, TARDISHandlesCategory.OPERATOR, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 38:
+                }
+                case 38 -> {
                     // set variable blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getVariables());
                     setList(uuid, TARDISHandlesCategory.VARIABLE, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 39:
+                }
+                case 39 -> {
                     // set number blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getNumbers());
                     setList(uuid, TARDISHandlesCategory.NUMBER, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 40:
+                }
+                case 40 -> {
                     // set event blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getEvents());
                     setList(uuid, TARDISHandlesCategory.EVENT, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 41:
+                }
+                case 41 -> {
                     // set command blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getCommands());
                     setList(uuid, TARDISHandlesCategory.COMMAND, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 42:
+                }
+                case 42 -> {
                     // set selector blocks
                     scroll_list.put(uuid, TARDISHandlesBlock.getSelectors());
                     setList(uuid, TARDISHandlesCategory.SELECTOR, view);
                     scroll_start.put(uuid, 0);
-                    break;
-                case 43:
+                }
+                case 43 ->
                     // go to saved disks
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
-                        ItemStack[] items = thsi.getPrograms();
-                        Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
-                        programsinv.setContents(items);
-                        player.openInventory(programsinv);
-                    }, 2L);
-                    break;
-                case 44:
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
+                            ItemStack[] items = thsi.getPrograms();
+                            Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
+                            programsinv.setContents(items);
+                            player.openInventory(programsinv);
+                        }, 2L);
+                case 44 -> {
                     // save program
                     int pid = saveDisk(view, uuid.toString(), player);
                     if (pid != -1) {
@@ -150,14 +149,8 @@ public class TARDISHandlesProgramListener implements Listener {
                     } else {
                         TARDISMessage.send(player, "HANDLES_NOTHING");
                     }
-                    break;
-                case 45:
-                case 46:
-                case 47:
-                case 48:
-                case 49:
-                case 50:
-                case 51:
+                }
+                case 45, 46, 47, 48, 49, 50, 51 -> {
                     // duplicate Item stack on cursor
                     ItemStack is = view.getItem(slot);
                     ItemStack cursor = player.getItemOnCursor();
@@ -169,8 +162,8 @@ public class TARDISHandlesProgramListener implements Listener {
                     if (is != null) {
                         is.setAmount(1);
                     }
-                    break;
-                case 52:
+                }
+                case 52 -> {
                     // scroll left
                     if (scroll_category.get(uuid).getSize() > 7) {
                         int startl;
@@ -189,8 +182,8 @@ public class TARDISHandlesProgramListener implements Listener {
                             setSlot(view, (45 + i), scroll_list.get(uuid).get(startl + i));
                         }
                     }
-                    break;
-                case 53:
+                }
+                case 53 -> {
                     // scroll right
                     if (scroll_category.get(uuid).getSize() > 7) {
                         int startr;
@@ -208,14 +201,14 @@ public class TARDISHandlesProgramListener implements Listener {
                             setSlot(view, (45 + i), scroll_list.get(uuid).get(startr + i));
                         }
                     }
-                    break;
-                default:
+                }
+                default -> {
                     ItemStack item = player.getItemOnCursor();
                     if (slot > 53 && item != null && item.getType().equals(Material.PAPER)) {
                         event.setCancelled(true);
                         player.setItemOnCursor(null);
                     }
-                    break;
+                }
             }
         }
     }

@@ -6,7 +6,9 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -63,7 +65,12 @@ public class FloodgateMapForm {
     private void handleResponse(SimpleFormResponse response) {
         Player player = plugin.getServer().getPlayer(uuid);
         String label = response.clickedButton().text();
-        String mat = TARDISARS.valueOf(label).getMaterial().toString();
+        String mat;
+        if (label.equals("Console")) {
+            mat = getConsoleMaterial(id);
+        } else {
+            mat = TARDISARS.valueOf(label).getMaterial().toString();
+        }
         Location location = getTransmatLocation(mat);
         if (location != null) {
             TARDISMessage.send(player, "TRANSMAT");
@@ -147,5 +154,16 @@ public class FloodgateMapForm {
             }
         }
         return null;
+    }
+
+    private String getConsoleMaterial(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+        if (rs.resultSet()) {
+            Schematic console = rs.getTardis().getSchematic();
+            return console.getSeedMaterial().toString();
+        }
+        return "IRON_BLOCK"; // budget
     }
 }

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -30,6 +29,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class TARDISBiomeFinder {
 

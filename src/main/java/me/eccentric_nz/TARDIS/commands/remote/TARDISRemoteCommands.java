@@ -262,7 +262,12 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
                                     }
                                     // get a landing spot
-                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                    Location l;
+                                    if (rsa.getArea().isGrid()) {
+                                        l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                    } else {
+                                        l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                    }
                                     // returns null if full!
                                     if (l == null) {
                                         TARDISMessage.send(sender, "NO_MORE_SPOTS");

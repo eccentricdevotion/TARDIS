@@ -113,69 +113,69 @@ public class TARDISMalfunction {
                 int usesLeft;
                 double percent = malfunctionDamage / 100.0d;
                 switch (circuit) {
-                    case ARS:
+                    case ARS -> {
                         if (tcc.hasARS()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.ars") * percent);
                             usesLeft = tcc.getArsUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case CHAMELEON:
+                    }
+                    case CHAMELEON -> {
                         if (tcc.hasChameleon()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.chameleon") * percent);
                             usesLeft = tcc.getChameleonUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case INPUT:
+                    }
+                    case INPUT -> {
                         if (tcc.hasInput()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.input") * percent);
                             usesLeft = tcc.getInputUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case INVISIBILITY:
+                    }
+                    case INVISIBILITY -> {
                         if (tcc.hasInvisibility()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.invisibility") * percent);
                             usesLeft = tcc.getInvisibilityUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case MATERIALISATION:
+                    }
+                    case MATERIALISATION -> {
                         if (tcc.hasMaterialisation()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.materialisation") * percent);
                             usesLeft = tcc.getMaterialisationUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case MEMORY:
+                    }
+                    case MEMORY -> {
                         if (tcc.hasMemory()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.memory") * percent);
                             usesLeft = tcc.getMemoryUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case RANDOMISER:
+                    }
+                    case RANDOMISER -> {
                         if (tcc.hasRandomiser()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.randomiser") * percent);
                             usesLeft = tcc.getRandomiserUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case SCANNER:
+                    }
+                    case SCANNER -> {
                         if (tcc.hasScanner()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.scanner") * percent);
                             usesLeft = tcc.getScannerUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
-                    case TEMPORAL:
+                    }
+                    case TEMPORAL -> {
                         if (tcc.hasTemporal()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.temporal") * percent);
                             usesLeft = tcc.getTemporalUses() - damage;
                             damage(circuit, usesLeft, id, p);
                         }
-                        break;
+                    }
                 }
             }
             // get player prefs

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -30,6 +29,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 public class TARDISAutonomousGUIListener extends TARDISMenuListener implements Listener {
 

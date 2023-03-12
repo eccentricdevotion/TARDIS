@@ -60,12 +60,15 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
         } else if (args.length == 3) {
             String sub = args[1];
             switch (sub) {
-                case "player":
+                case "player" -> {
                     return null;
-                case "chameleon":
+                }
+                case "chameleon" -> {
                     return partial(lastArg, CHAM_SUBS);
-                case "biome":
+                }
+                case "biome" -> {
                     return partial(lastArg, BIOME_SUBS);
+                }
             }
         }
         return ImmutableList.of();

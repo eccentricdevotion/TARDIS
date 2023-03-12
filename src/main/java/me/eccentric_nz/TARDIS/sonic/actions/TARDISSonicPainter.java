@@ -188,200 +188,88 @@ public class TARDISSonicPainter {
             }
             // don't do anything if it is the same colour
             switch (b.getType()) {
-                case BLACK_CARPET:
-                case BLACK_CONCRETE:
-                case BLACK_CONCRETE_POWDER:
-                case BLACK_GLAZED_TERRACOTTA:
-                case BLACK_STAINED_GLASS:
-                case BLACK_STAINED_GLASS_PANE:
-                case BLACK_TERRACOTTA:
-                case BLACK_WOOL:
+                case BLACK_CARPET, BLACK_CONCRETE, BLACK_CONCRETE_POWDER, BLACK_GLAZED_TERRACOTTA, BLACK_STAINED_GLASS, BLACK_STAINED_GLASS_PANE, BLACK_TERRACOTTA, BLACK_WOOL -> {
                     if (!dye.getType().equals(Material.BLACK_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case BLUE_CARPET:
-                case BLUE_CONCRETE:
-                case BLUE_CONCRETE_POWDER:
-                case BLUE_GLAZED_TERRACOTTA:
-                case BLUE_STAINED_GLASS:
-                case BLUE_STAINED_GLASS_PANE:
-                case BLUE_TERRACOTTA:
-                case BLUE_WOOL:
+                }
+                case BLUE_CARPET, BLUE_CONCRETE, BLUE_CONCRETE_POWDER, BLUE_GLAZED_TERRACOTTA, BLUE_STAINED_GLASS, BLUE_STAINED_GLASS_PANE, BLUE_TERRACOTTA, BLUE_WOOL -> {
                     if (!dye.getType().equals(Material.BLUE_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case BROWN_CARPET:
-                case BROWN_CONCRETE:
-                case BROWN_CONCRETE_POWDER:
-                case BROWN_GLAZED_TERRACOTTA:
-                case BROWN_STAINED_GLASS:
-                case BROWN_STAINED_GLASS_PANE:
-                case BROWN_TERRACOTTA:
-                case BROWN_WOOL:
+                }
+                case BROWN_CARPET, BROWN_CONCRETE, BROWN_CONCRETE_POWDER, BROWN_GLAZED_TERRACOTTA, BROWN_STAINED_GLASS, BROWN_STAINED_GLASS_PANE, BROWN_TERRACOTTA, BROWN_WOOL -> {
                     if (!dye.getType().equals(Material.BROWN_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case CYAN_CARPET:
-                case CYAN_CONCRETE:
-                case CYAN_CONCRETE_POWDER:
-                case CYAN_GLAZED_TERRACOTTA:
-                case CYAN_STAINED_GLASS:
-                case CYAN_STAINED_GLASS_PANE:
-                case CYAN_TERRACOTTA:
-                case CYAN_WOOL:
+                }
+                case CYAN_CARPET, CYAN_CONCRETE, CYAN_CONCRETE_POWDER, CYAN_GLAZED_TERRACOTTA, CYAN_STAINED_GLASS, CYAN_STAINED_GLASS_PANE, CYAN_TERRACOTTA, CYAN_WOOL -> {
                     if (!dye.getType().equals(Material.CYAN_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case GRAY_CARPET:
-                case GRAY_CONCRETE:
-                case GRAY_CONCRETE_POWDER:
-                case GRAY_GLAZED_TERRACOTTA:
-                case GRAY_STAINED_GLASS:
-                case GRAY_STAINED_GLASS_PANE:
-                case GRAY_TERRACOTTA:
-                case GRAY_WOOL:
+                }
+                case GRAY_CARPET, GRAY_CONCRETE, GRAY_CONCRETE_POWDER, GRAY_GLAZED_TERRACOTTA, GRAY_STAINED_GLASS, GRAY_STAINED_GLASS_PANE, GRAY_TERRACOTTA, GRAY_WOOL -> {
                     if (!dye.getType().equals(Material.GRAY_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case GREEN_CARPET:
-                case GREEN_CONCRETE:
-                case GREEN_CONCRETE_POWDER:
-                case GREEN_GLAZED_TERRACOTTA:
-                case GREEN_STAINED_GLASS:
-                case GREEN_STAINED_GLASS_PANE:
-                case GREEN_TERRACOTTA:
-                case GREEN_WOOL:
+                }
+                case GREEN_CARPET, GREEN_CONCRETE, GREEN_CONCRETE_POWDER, GREEN_GLAZED_TERRACOTTA, GREEN_STAINED_GLASS, GREEN_STAINED_GLASS_PANE, GREEN_TERRACOTTA, GREEN_WOOL -> {
                     if (!dye.getType().equals(Material.GREEN_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case LIGHT_BLUE_CARPET:
-                case LIGHT_BLUE_CONCRETE:
-                case LIGHT_BLUE_CONCRETE_POWDER:
-                case LIGHT_BLUE_GLAZED_TERRACOTTA:
-                case LIGHT_BLUE_STAINED_GLASS:
-                case LIGHT_BLUE_STAINED_GLASS_PANE:
-                case LIGHT_BLUE_TERRACOTTA:
-                case LIGHT_BLUE_WOOL:
+                }
+                case LIGHT_BLUE_CARPET, LIGHT_BLUE_CONCRETE, LIGHT_BLUE_CONCRETE_POWDER, LIGHT_BLUE_GLAZED_TERRACOTTA, LIGHT_BLUE_STAINED_GLASS, LIGHT_BLUE_STAINED_GLASS_PANE, LIGHT_BLUE_TERRACOTTA, LIGHT_BLUE_WOOL -> {
                     if (!dye.getType().equals(Material.LIGHT_BLUE_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case LIGHT_GRAY_CARPET:
-                case LIGHT_GRAY_CONCRETE:
-                case LIGHT_GRAY_CONCRETE_POWDER:
-                case LIGHT_GRAY_GLAZED_TERRACOTTA:
-                case LIGHT_GRAY_STAINED_GLASS:
-                case LIGHT_GRAY_STAINED_GLASS_PANE:
-                case LIGHT_GRAY_TERRACOTTA:
-                case LIGHT_GRAY_WOOL:
+                }
+                case LIGHT_GRAY_CARPET, LIGHT_GRAY_CONCRETE, LIGHT_GRAY_CONCRETE_POWDER, LIGHT_GRAY_GLAZED_TERRACOTTA, LIGHT_GRAY_STAINED_GLASS, LIGHT_GRAY_STAINED_GLASS_PANE, LIGHT_GRAY_TERRACOTTA, LIGHT_GRAY_WOOL -> {
                     if (!dye.getType().equals(Material.LIGHT_GRAY_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case LIME_CARPET:
-                case LIME_CONCRETE:
-                case LIME_CONCRETE_POWDER:
-                case LIME_GLAZED_TERRACOTTA:
-                case LIME_STAINED_GLASS:
-                case LIME_STAINED_GLASS_PANE:
-                case LIME_TERRACOTTA:
-                case LIME_WOOL:
+                }
+                case LIME_CARPET, LIME_CONCRETE, LIME_CONCRETE_POWDER, LIME_GLAZED_TERRACOTTA, LIME_STAINED_GLASS, LIME_STAINED_GLASS_PANE, LIME_TERRACOTTA, LIME_WOOL -> {
                     if (!dye.getType().equals(Material.LIME_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case MAGENTA_CARPET:
-                case MAGENTA_CONCRETE:
-                case MAGENTA_CONCRETE_POWDER:
-                case MAGENTA_GLAZED_TERRACOTTA:
-                case MAGENTA_STAINED_GLASS:
-                case MAGENTA_STAINED_GLASS_PANE:
-                case MAGENTA_TERRACOTTA:
-                case MAGENTA_WOOL:
+                }
+                case MAGENTA_CARPET, MAGENTA_CONCRETE, MAGENTA_CONCRETE_POWDER, MAGENTA_GLAZED_TERRACOTTA, MAGENTA_STAINED_GLASS, MAGENTA_STAINED_GLASS_PANE, MAGENTA_TERRACOTTA, MAGENTA_WOOL -> {
                     if (!dye.getType().equals(Material.MAGENTA_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case ORANGE_CARPET:
-                case ORANGE_CONCRETE:
-                case ORANGE_CONCRETE_POWDER:
-                case ORANGE_GLAZED_TERRACOTTA:
-                case ORANGE_STAINED_GLASS:
-                case ORANGE_STAINED_GLASS_PANE:
-                case ORANGE_TERRACOTTA:
-                case ORANGE_WOOL:
+                }
+                case ORANGE_CARPET, ORANGE_CONCRETE, ORANGE_CONCRETE_POWDER, ORANGE_GLAZED_TERRACOTTA, ORANGE_STAINED_GLASS, ORANGE_STAINED_GLASS_PANE, ORANGE_TERRACOTTA, ORANGE_WOOL -> {
                     if (!dye.getType().equals(Material.ORANGE_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case PINK_CARPET:
-                case PINK_CONCRETE:
-                case PINK_CONCRETE_POWDER:
-                case PINK_GLAZED_TERRACOTTA:
-                case PINK_STAINED_GLASS:
-                case PINK_STAINED_GLASS_PANE:
-                case PINK_TERRACOTTA:
-                case PINK_WOOL:
+                }
+                case PINK_CARPET, PINK_CONCRETE, PINK_CONCRETE_POWDER, PINK_GLAZED_TERRACOTTA, PINK_STAINED_GLASS, PINK_STAINED_GLASS_PANE, PINK_TERRACOTTA, PINK_WOOL -> {
                     if (!dye.getType().equals(Material.PINK_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case PURPLE_CARPET:
-                case PURPLE_CONCRETE:
-                case PURPLE_CONCRETE_POWDER:
-                case PURPLE_GLAZED_TERRACOTTA:
-                case PURPLE_STAINED_GLASS:
-                case PURPLE_STAINED_GLASS_PANE:
-                case PURPLE_TERRACOTTA:
-                case PURPLE_WOOL:
+                }
+                case PURPLE_CARPET, PURPLE_CONCRETE, PURPLE_CONCRETE_POWDER, PURPLE_GLAZED_TERRACOTTA, PURPLE_STAINED_GLASS, PURPLE_STAINED_GLASS_PANE, PURPLE_TERRACOTTA, PURPLE_WOOL -> {
                     if (!dye.getType().equals(Material.PURPLE_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case RED_CARPET:
-                case RED_CONCRETE:
-                case RED_CONCRETE_POWDER:
-                case RED_GLAZED_TERRACOTTA:
-                case RED_STAINED_GLASS:
-                case RED_STAINED_GLASS_PANE:
-                case RED_TERRACOTTA:
-                case RED_WOOL:
+                }
+                case RED_CARPET, RED_CONCRETE, RED_CONCRETE_POWDER, RED_GLAZED_TERRACOTTA, RED_STAINED_GLASS, RED_STAINED_GLASS_PANE, RED_TERRACOTTA, RED_WOOL -> {
                     if (!dye.getType().equals(Material.RED_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case WHITE_CARPET:
-                case WHITE_CONCRETE:
-                case WHITE_CONCRETE_POWDER:
-                case WHITE_GLAZED_TERRACOTTA:
-                case WHITE_STAINED_GLASS:
-                case WHITE_STAINED_GLASS_PANE:
-                case WHITE_TERRACOTTA:
-                case WHITE_WOOL:
+                }
+                case WHITE_CARPET, WHITE_CONCRETE, WHITE_CONCRETE_POWDER, WHITE_GLAZED_TERRACOTTA, WHITE_STAINED_GLASS, WHITE_STAINED_GLASS_PANE, WHITE_TERRACOTTA, WHITE_WOOL -> {
                     if (!dye.getType().equals(Material.WHITE_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                case YELLOW_CARPET:
-                case YELLOW_CONCRETE:
-                case YELLOW_CONCRETE_POWDER:
-                case YELLOW_GLAZED_TERRACOTTA:
-                case YELLOW_STAINED_GLASS:
-                case YELLOW_STAINED_GLASS_PANE:
-                case YELLOW_TERRACOTTA:
-                case YELLOW_WOOL:
+                }
+                case YELLOW_CARPET, YELLOW_CONCRETE, YELLOW_CONCRETE_POWDER, YELLOW_GLAZED_TERRACOTTA, YELLOW_STAINED_GLASS, YELLOW_STAINED_GLASS_PANE, YELLOW_TERRACOTTA, YELLOW_WOOL -> {
                     if (!dye.getType().equals(Material.YELLOW_DYE)) {
                         changeColour(b, dye, inv, player);
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         } else {
             TARDISMessage.send(player, "SONIC_PROTECT");

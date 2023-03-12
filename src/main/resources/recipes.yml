@@ -971,6 +971,34 @@ shaped:
     result: LIGHT_GRAY_DYE
     amount: 1
     lore: ''
+  TARDIS Monitor:
+    easy_shape: 'MRM,RGR,MRM'
+    easy_ingredients:
+      M: MAP
+      G: GLASS_PANE
+      R: REDSTONE
+    hard_shape: 'MRM,RGR,MRM'
+    hard_ingredients:
+      M: MAP
+      G: TINTED_GLASS
+      R: REDSTONE_BLOCK
+    result: MAP
+    amount: 1
+    lore: ''
+  Monitor Frame:
+    easy_shape: 'BBB,BGB,BRB'
+    easy_ingredients:
+      B: BLACKSTONE
+      G: GLASS_PANE
+      R: REDSTONE
+    hard_shape: 'BBB,BGB,BRB'
+    hard_ingredients:
+      B: BLACKSTONE
+      G: TINTED_GLASS
+      R: REDSTONE_BLOCK
+    result: GLASS
+    amount: 1
+    lore: 'Place in an upwards~facing item frame'
   Knockback Circuit:
     easy_shape: '-K-,RSR,-R-'
     easy_ingredients:

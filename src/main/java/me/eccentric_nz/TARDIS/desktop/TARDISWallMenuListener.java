@@ -79,40 +79,39 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
             if (slot >= 0 && slot < 54) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 8:
+                    case 8 -> {
                         // scroll up
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
-                        break;
-                    case 17:
+                    }
+                    case 17 -> {
                         // scroll down
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
-                        break;
-                    case 26:
+                    }
+                    case 26 -> {
                         // default wall
                         String wall = getWallFloor(uuid, true);
                         setWallFloorBlock(p, uuid, wall, isWall);
-                        break;
-                    case 35:
+                    }
+                    case 35 -> {
                         // default floor
                         String floor = getWallFloor(uuid, false);
                         setWallFloorBlock(p, uuid, floor, isWall);
-                        break;
-                    case 53:
+                    }
+                    case 53 ->
                         // close
-                        close(p, true);
-                        break;
-                    default:
+                            close(p, true);
+                    default -> {
                         // get block type and data
                         ItemStack choice = view.getItem(slot);
                         // set the tardis wall/floor block
                         setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
-                        break;
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

@@ -90,7 +90,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                 String which = args[1].toLowerCase();
                 if (SUDOS.contains(which)) {
                     switch (which) {
-                        case "ars":
+                        case "ars" -> {
                             if (sender instanceof ConsoleCommandSender) {
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
@@ -138,50 +138,65 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 }
                             }
                             return new SudoARS(plugin).showARS((Player) sender, uuid);
-                        case "assemble":
+                        }
+                        case "assemble" -> {
                             return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
-                        case "back":
+                        }
+                        case "back" -> {
                             return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardis_id(), offlinePlayer);
-                        case "chameleon":
+                        }
+                        case "chameleon" -> {
                             return new SudoChameleon(plugin).setPreset(sender, rs.getTardis_id(), args, offlinePlayer);
-                        case "clean":
+                        }
+                        case "clean" -> {
                             return new SudoRepair(plugin, uuid, true).repair();
-                        case "comehere":
+                        }
+                        case "comehere" -> {
                             if (sender instanceof ConsoleCommandSender) {
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
                             }
                             return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
-                        case "deadlock":
+                        }
+                        case "deadlock" -> {
                             // toggle door deadlocks
                             return new SudoDeadlock(plugin).toggleDeadlock(uuid, sender);
-                        case "desiege":
+                        }
+                        case "desiege" -> {
                             if (offlinePlayer.isOnline()) {
                                 return new SudoDesiege(plugin).restore(sender, uuid, rs.getTardis_id());
                             } else {
                                 TARDISMessage.send(sender, "NOT_ONLINE");
                                 return true;
                             }
-                        case "handbrake":
+                        }
+                        case "handbrake" -> {
                             return new SudoHandbrake(plugin).toggle(sender, args, uuid);
-                        case "hide":
+                        }
+                        case "hide" -> {
                             return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardis_id());
-                        case "isomorphic":
+                        }
+                        case "isomorphic" -> {
                             // toggle isomorphic
                             return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
-                        case "rebuild":
+                        }
+                        case "rebuild" -> {
                             return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardis_id(), offlinePlayer, true);
-                        case "repair":
+                        }
+                        case "repair" -> {
                             return new SudoRepair(plugin, uuid, false).repair();
-                        case "travel":
+                        }
+                        case "travel" -> {
                             // get arguments
                             return plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
-                        default: // update
+                        }
+                        default -> { // update
                             if (sender instanceof ConsoleCommandSender) {
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
                             }
                             return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardis_id(), uuid);
+                        }
                     }
                 }
             } else {

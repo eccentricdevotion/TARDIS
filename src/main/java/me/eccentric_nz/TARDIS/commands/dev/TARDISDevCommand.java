@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
@@ -42,15 +43,17 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
- * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
- * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
+ * The Lord President was the most powerful member of the Time Lord Council and
+ * had near absolute authority, and used a link to the Matrix, a vast computer
+ * network containing the knowledge and experiences of all past generations of
+ * Time Lords, to set Time Lord policy and remain alert to potential threats
+ * from lesser civilisations.
  *
  * @author eccentric_nz
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -108,10 +111,7 @@ public class TARDISDevCommand implements CommandExecutor {
                                 Material stem = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
                                 Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
                                 Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
-                                if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() ||
-                                        !plugin.getTardisHelper().getTreeMatrials().contains(stem) ||
-                                        !plugin.getTardisHelper().getTreeMatrials().contains(hat) ||
-                                        !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
+                                if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMatrials().contains(stem) || !plugin.getTardisHelper().getTreeMatrials().contains(hat) || !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
                                     TARDISMessage.send(sender, "ARG_NOT_BLOCK");
                                     return true;
                                 }
@@ -144,6 +144,15 @@ public class TARDISDevCommand implements CommandExecutor {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
                     return true;
+                }
+                if (first.equals("snapshot")) {
+                    if (sender instanceof Player player) {
+                        if (args[1].equals("c")) {
+                            player.performCommand("minecraft:clear @s minecraft:filled_map");
+                        } else {
+                            new MonitorSnapshot(plugin).get(args[1].equals("in"), player);
+                        }
+                    }
                 }
                 return true;
             } else {

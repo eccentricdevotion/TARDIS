@@ -76,30 +76,28 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
             if (slot >= 0 && slot < 54) {
                 event.setCancelled(true);
                 switch (slot) {
-                    case 8:
+                    case 8 -> {
                         // scroll up
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
-                        break;
-                    case 26:
+                    }
+                    case 26 -> {
                         // scroll down
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
-                        break;
-                    case 44:
+                    }
+                    case 44 ->
                         // back to seeds
-                        back(p);
-                        break;
-                    case 53:
+                            back(p);
+                    case 53 ->
                         // close
-                        close(p);
-                        break;
-                    default:
-                        break;
+                            close(p);
+                    default -> {
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

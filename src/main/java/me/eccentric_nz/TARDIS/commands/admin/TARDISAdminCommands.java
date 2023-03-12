@@ -68,6 +68,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("list");
         firstsStr.add("make_preset");
         firstsStr.add("maze");
+        firstsStr.add("mvimport");
         firstsStr.add("playercount");
         firstsStr.add("prune");
         firstsStr.add("prunelist");
@@ -126,6 +127,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), l);
                             builder.build(false);
                         }
+                        return true;
+                    }
+                    if (first.equals("mvimport")) {
+                        if (!plugin.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
+                            TARDISMessage.send(sender, "MULTIVERSE_ENABLED");
+                        }
+                        plugin.getMVHelper().importWorlds(sender);
                         return true;
                     }
                 }

@@ -99,7 +99,20 @@ public class ResultSetAreas {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (!onlynames) {
-                        area = new Area(rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance"), rs.getString("invisibility"), rs.getString("direction"));
+                        area = new Area(
+                                rs.getInt("area_id"),
+                                rs.getString("area_name"),
+                                rs.getString("world"),
+                                rs.getInt("minx"),
+                                rs.getInt("minz"),
+                                rs.getInt("maxx"),
+                                rs.getInt("maxz"),
+                                rs.getInt("y"),
+                                rs.getInt("parking_distance"),
+                                rs.getString("invisibility"),
+                                rs.getString("direction"),
+                                rs.getBoolean("grid")
+                        );
                         if (multiple) {
                             data.add(area);
                         }
@@ -139,4 +152,6 @@ public class ResultSetAreas {
     public List<String> getNames() {
         return names;
     }
+
+
 }

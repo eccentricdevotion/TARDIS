@@ -143,7 +143,11 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case areas -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("area_id"), rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance"), rs.getString("invisibility"), rs.getString("direction")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("area_id"), rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance"), rs.getString("invisibility"), rs.getString("direction"), rs.getInt("grid")) + end;
+                                        bw.write(str);
+                                    }
+                                    case area_locations -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("area_location_id"), rs.getInt("area_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z")) + end;
                                         bw.write(str);
                                     }
                                     case ars -> {
