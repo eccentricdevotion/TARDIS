@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -40,7 +39,8 @@ public class TARDISFactionsChecker {
     public static boolean isInFaction(Player p, Location l) {
         try {
             Class.forName("com.massivecraft.factions.entity.MPlayer");
-            return TARDIS.plugin.getTardisHelper().isInFaction(p, l);
+            // TODO add back support for official factions? I can't find whether it is 1.19 compatible...
+            return false;
         } catch (Exception e) {
             return new TARDISFactionsUUID().isInFaction(p, l);
         }
