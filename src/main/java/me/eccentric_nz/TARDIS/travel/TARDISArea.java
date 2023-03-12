@@ -47,6 +47,58 @@ public class TARDISArea {
         this.plugin = plugin;
     }
 
+    
+     /**
+     * Checks if the TARDIS is already in this area
+     *
+     * @param id the TARDIS id to check
+     * @param area the area id to check against
+     * @return true if the TARDIS is already in the area
+     */
+    public boolean isInExistingArea(int id, int area) {
+        // get TARDIS current location
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", id);
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+        if (rsc.resultSet()) {
+            return isInExistingArea(rsc, area);
+        }
+        return false;
+    }
+    
+    /**
+     * Checks if the TARDIS is already in this area
+     *
+     * @param rsc the TARDIS's current location
+     * @param area the area id to check against
+     * @return true if the TARDIS is already in the area
+     */
+    public boolean isInExistingArea(ResultSetCurrentLocation rsc, int area) {
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("area_id", area);
+            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+            if (rsa.resultSet()) {
+                Area a = rsa.getArea();
+                if (!a.isGrid()) {
+                    // get the locations
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    if (rsal.resultSet()) {
+                        for (Location s : rsal.getLocations()) {
+                            if (s.getBlockX() == rsc.getX() && s.getBlockY() == rsc.getY() && s.getBlockZ() == rsc.getZ()) {
+                                return true;
+                            }
+                        }
+                    }
+                } else {
+                    // is clicked block within a defined TARDIS area?
+                    if (rsc.getX() <= a.getMaxX() && rsc.getZ() <= a.getMaxZ() && rsc.getX() >= a.getMinX() && rsc.getZ() >= a.getMinZ()) {
+                        return true;
+                    }
+                }
+            }
+        return false;
+    }
+
     /**
      * Checks if a location is contained within any TARDIS area.
      *
