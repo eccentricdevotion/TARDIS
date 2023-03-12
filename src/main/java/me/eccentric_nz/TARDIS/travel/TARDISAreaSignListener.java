@@ -86,7 +86,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                             return;
                         }
                         // check the player is not already in the area!
-                        if (plugin.getTardisArea().areaCheckInExisting(l)) {
+                        if (plugin.getTardisArea().isInExistingArea(l)) {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA");
                             close(player);
                             return;

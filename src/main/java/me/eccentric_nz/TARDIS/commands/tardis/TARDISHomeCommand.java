@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -33,9 +35,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -82,7 +81,7 @@ class TARDISHomeCommand {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }
-                if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
+                if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
                     TARDISMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }

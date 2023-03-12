@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -43,9 +45,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -95,7 +94,7 @@ public class TARDISCallRequestCommand {
             TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED_REQUEST", requested.getName());
             return true;
         }
-        if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
+        if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
             TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
             return true;
         }

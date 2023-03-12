@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -29,9 +31,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -85,7 +84,7 @@ class TARDISSetDestinationCommand {
                 // get location player is looking at
                 Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
                 Location l = b.getLocation();
-                if (!plugin.getTardisArea().areaCheckInExisting(l)) {
+                if (plugin.getTardisArea().isInExistingArea(l)) {
                     TARDISMessage.send(player, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }

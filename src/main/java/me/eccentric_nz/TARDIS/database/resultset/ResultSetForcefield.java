@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
@@ -84,7 +83,7 @@ public class ResultSetForcefield {
                 int z = rs.getInt("z");
                 location = new Location(world, x, y, z);
                 // check location is not in a TARDIS area
-                if (!plugin.getTardisArea().areaCheckInExisting(location)) {
+                if (plugin.getTardisArea().isInExistingArea(location)) {
                     TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
                     return false;
                 }

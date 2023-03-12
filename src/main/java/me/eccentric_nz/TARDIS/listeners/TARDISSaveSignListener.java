@@ -163,7 +163,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     close(player);
                                     return;
                                 }
-                                TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                                TARDISAreaCheck tac = plugin.getTardisArea().isSaveInArea(save_dest);
                                 if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheresave = new HashMap<>();

@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -28,14 +32,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
 /**
- * The control or console room of the Doctor's TARDIS is the space in which the operation of the craft is usually
- * effected. It is dominated by a large, hexagonal console, typically in or near the middle of the room.
+ * The control or console room of the Doctor's TARDIS is the space in which the
+ * operation of the craft is usually effected. It is dominated by a large,
+ * hexagonal console, typically in or near the middle of the room.
  *
  * @author eccentric_nz
  */
@@ -51,43 +51,66 @@ public class TARDISArea {
      * Checks if a location is contained within any TARDIS area.
      *
      * @param l a location object to check.
-     * @return true or false depending on whether the location is within an existing TARDIS area
+     * @return true or false depending on whether the location is within an
+     * existing TARDIS area
      */
-    public boolean areaCheckInExisting(Location l) {
-        boolean chk = true;
+    public boolean isInExistingArea(Location l) {
         String w = l.getWorld().getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
             for (Area a : rsa.getData()) {
-                // is clicked block within a defined TARDIS area?
-                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
-                    chk = false;
-                    break;
+                if (!a.isGrid()) {
+                    // get the locations
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    if (rsal.resultSet()) {
+                        for (Location s : rsal.getLocations()) {
+                            if (s.getBlockX() == l.getBlockX() && s.getBlockY() == l.getBlockY() && s.getBlockZ() == l.getBlockZ()) {
+                                return true;
+                            }
+                        }
+                    }
+                } else {
+                    // is clicked block within a defined TARDIS area?
+                    if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                        return true;
+                    }
                 }
             }
         }
-        return chk;
+        return false;
     }
 
     /**
-     * Checks if a location is contained within any TARDIS area.
+     * Checks if a saved location is contained within any TARDIS area.
      *
      * @param l a location object to check.
-     * @return a TARDISAreaCheck &lt;Area, Boolean&gt; with values dependent on whether the location is within an
-     * existing TARDIS area
+     * @return a TARDISAreaCheck &lt;Area, Boolean&gt; with values dependent on
+     * whether the location is within an existing TARDIS area
      */
-    public TARDISAreaCheck areaCheckInExistingArea(Location l) {
+    public TARDISAreaCheck isSaveInArea(Location l) {
         String w = l.getWorld().getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
             for (Area a : rsa.getData()) {
-                // is clicked block within a defined TARDIS area?
-                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
-                    return new TARDISAreaCheck(a, true);
+                if (!a.isGrid()) {
+                    // get the locations
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    if (rsal.resultSet()) {
+                        for (Location s : rsal.getLocations()) {
+                            if (s.getBlockX() == l.getBlockX() && s.getBlockY() == l.getBlockY() && s.getBlockZ() == l.getBlockZ()) {
+                                return new TARDISAreaCheck(a, true);
+                            }
+                        }
+                    }
+                } else {
+                    // is clicked block within a defined TARDIS area?
+                    if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                        return new TARDISAreaCheck(a, true);
+                    }
                 }
             }
         }
@@ -98,8 +121,9 @@ public class TARDISArea {
      * Checks if a location is contained within a specific TARDIS area.
      *
      * @param area the TARDIS area to check in.
-     * @param l    a location object to check.
-     * @return true or false depending on whether the location is in the specified TARDIS area
+     * @param l a location object to check.
+     * @return true or false depending on whether the location is in the
+     * specified TARDIS area
      */
     public boolean areaCheckInExile(String area, Location l) {
         boolean chk = true;
