@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -41,9 +43,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
  * @author eccentric_nz
  */
@@ -64,7 +63,7 @@ public class TARDISRemoteComehereCommand {
         if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
             return true;
         }
-        if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
+        if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
             TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
             return true;
         }

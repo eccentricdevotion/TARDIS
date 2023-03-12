@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
@@ -49,11 +53,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Command /tardistravel [arguments].
@@ -590,7 +589,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 return true;
                             }
                         }
-                        TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                        TARDISAreaCheck tac = plugin.getTardisArea().isSaveInArea(save_dest);
                         if (tac.isInArea()) {
                             // save is in a TARDIS area, so check that the spot is not occupied
                             HashMap<String, Object> wheres = new HashMap<>();
@@ -1038,7 +1037,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "TRAVEL_NETHER");
             return 1;
         }
-        if (!plugin.getTardisArea().areaCheckInExisting(location)) {
+        if (plugin.getTardisArea().isInExistingArea(location)) {
             TARDISMessage.send(player, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
             return 1;
         }

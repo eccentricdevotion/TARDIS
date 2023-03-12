@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -28,9 +30,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
@@ -65,7 +64,7 @@ public class TARDISAreaListener implements Listener {
             if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
+                if (!plugin.getTardisArea().isInExistingArea(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
                     TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
@@ -79,7 +78,7 @@ public class TARDISAreaListener implements Listener {
             } else if (plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid) && plugin.getTrackerKeeper().getAreaEndBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
+                if (!plugin.getTardisArea().isInExistingArea(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getAreaStartBlock().get(uuid).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
                         TARDISMessage.send(player, "AREA_WORLD");

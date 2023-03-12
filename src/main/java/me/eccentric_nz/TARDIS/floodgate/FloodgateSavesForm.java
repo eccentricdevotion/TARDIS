@@ -102,7 +102,7 @@ public class FloodgateSavesForm {
                     if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                         return;
                     }
-                    TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                    TARDISAreaCheck tac = plugin.getTardisArea().isSaveInArea(save_dest);
                     if (tac.isInArea()) {
                         // save is in a TARDIS area, so check that the spot is not occupied
                         HashMap<String, Object> wheresave = new HashMap<>();

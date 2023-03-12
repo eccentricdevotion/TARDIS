@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import com.google.common.collect.ImmutableList;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -45,8 +46,6 @@ import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -328,7 +327,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     z = TARDISNumberParsers.parseInt(args[args.length - 1]);
                                     Location location = new Location(w, x, y, z);
                                     // check location
-                                    if (!plugin.getTardisArea().areaCheckInExisting(location)) {
+                                    if (plugin.getTardisArea().isInExistingArea(location)) {
                                         TARDISMessage.send(sender, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
                                         return true;
                                     }

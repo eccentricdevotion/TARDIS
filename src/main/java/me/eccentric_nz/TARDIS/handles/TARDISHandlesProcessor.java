@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -50,10 +53,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Programming is a process used by Cybermen to control humans. To program a human, the person has to be dead. A control
@@ -414,7 +413,7 @@ public class TARDISHandlesProcessor {
                                                         continue;
                                                     }
                                                     Location player_loc = to.getLocation();
-                                                    if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
+                                                    if (plugin.getTardisArea().isInExistingArea(player_loc)) {
                                                         TARDISMessage.handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
                                                         continue;
                                                     }
