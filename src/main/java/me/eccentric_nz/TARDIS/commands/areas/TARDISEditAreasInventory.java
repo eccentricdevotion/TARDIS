@@ -1,5 +1,8 @@
 package me.eccentric_nz.TARDIS.commands.areas;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
@@ -7,10 +10,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class TARDISEditAreasInventory {
 
@@ -41,6 +40,7 @@ public class TARDISEditAreasInventory {
                     im.setLore(lore);
                     is.setItemMeta(im);
                     stacks[i] = is;
+                    i++;
                 }
             }
         }
