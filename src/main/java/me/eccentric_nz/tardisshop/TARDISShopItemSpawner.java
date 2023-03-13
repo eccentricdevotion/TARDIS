@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisshop;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,9 +14,9 @@ import org.bukkit.util.Vector;
 
 public class TARDISShopItemSpawner {
 
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
 
-    public TARDISShopItemSpawner(TARDISShop plugin) {
+    public TARDISShopItemSpawner(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -27,11 +28,11 @@ public class TARDISShopItemSpawner {
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(si.getCustomModelData());
             im.setDisplayName(what.getItem());
-            im.getPersistentDataContainer().set(plugin.getItemKey(), PersistentDataType.INTEGER, 10001);
+            im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             is.setItemMeta(im);
             Item item = location.getWorld().dropItem(location, is);
             item.setVelocity(new Vector(0, 0, 0));
-            item.getPersistentDataContainer().set(plugin.getItemKey(), PersistentDataType.INTEGER, 10001);
+            item.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             item.setCustomName(what.getItem());
             item.setCustomNameVisible(true);
             item.setPickupDelay(Integer.MAX_VALUE);

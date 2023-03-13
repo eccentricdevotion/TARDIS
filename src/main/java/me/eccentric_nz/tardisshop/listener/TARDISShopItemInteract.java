@@ -1,5 +1,8 @@
 package me.eccentric_nz.tardisshop.listener;
 
+import java.util.HashMap;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.*;
 import me.eccentric_nz.tardisshop.database.DeleteShopItem;
@@ -20,14 +23,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class TARDISShopItemInteract implements Listener {
 
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
 
-    public TARDISShopItemInteract(TARDISShop plugin) {
+    public TARDISShopItemInteract(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -37,22 +37,22 @@ public class TARDISShopItemInteract implements Listener {
             return;
         }
         Block block = event.getClickedBlock();
-        if (block != null && block.getType() == plugin.getBlockMaterial()) {
+        if (block != null && block.getType() == plugin.getShopSettings().getBlockMaterial()) {
             Location location = block.getLocation();
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
-                if (plugin.getSettingItem().containsKey(uuid)) {
-                    TARDISShopItem item = plugin.getSettingItem().get(uuid);
+                if (plugin.getShopSettings().getSettingItem().containsKey(uuid)) {
+                    TARDISShopItem item = plugin.getShopSettings().getSettingItem().get(uuid);
                     Location drop = location.clone().add(0.5d, 1.05d, 0.5d);
                     new TARDISShopItemSpawner(plugin).setItem(drop, item);
                     // update location in database
                     new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
                     player.sendMessage(plugin.getPluginName() + "Item location added to database!");
-                    plugin.getSettingItem().remove(uuid);
-                } else if (plugin.getRemovingItem().contains(uuid)) {
+                    plugin.getShopSettings().getSettingItem().remove(uuid);
+                } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
                     for (Entity e : block.getWorld().getNearbyEntities(location, 1.0d, 2.0d, 1.0d)) {
-                        if (e instanceof Item && e.getPersistentDataContainer().has(plugin.getItemKey(), PersistentDataType.INTEGER) || e instanceof ArmorStand) {
+                        if (e instanceof Item && e.getPersistentDataContainer().has(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER) || e instanceof ArmorStand) {
                             e.remove();
                         }
                     }
@@ -62,7 +62,7 @@ public class TARDISShopItemInteract implements Listener {
                     } else {
                         player.sendMessage(plugin.getPluginName() + "Item location not found in database!");
                     }
-                    plugin.getRemovingItem().remove(uuid);
+                    plugin.getShopSettings().getRemovingItem().remove(uuid);
                 } else {
                     // is it a shop block?
                     ResultSetShopItem rs = new ResultSetShopItem(plugin);
@@ -74,10 +74,10 @@ public class TARDISShopItemInteract implements Listener {
                             // give item
                             giveItem(item.getItem(), player);
                             message = "Freebies for admins :)";
-                        } else if (plugin.getEconomy().getBalance(player) > item.getCost()) {
+                        } else if (plugin.getShopSettings().getEconomy().getBalance(player) > item.getCost()) {
                             // give item
                             giveItem(item.getItem(), player);
-                            plugin.getEconomy().withdrawPlayer(player, item.getCost());
+                            plugin.getShopSettings().getEconomy().withdrawPlayer(player, item.getCost());
                             message = "Item purchased :)";
                         } else {
                             // no credit

@@ -22,11 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import me.eccentric_nz.tardischunkgenerator.helpers.*;
 import me.eccentric_nz.tardischunkgenerator.logging.TARDISLogFilter;
-import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.CustomTree;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
 import net.minecraft.core.BlockPos;
@@ -48,89 +48,46 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_19_R2.CraftChunk;
 import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R2.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftVillager;
 import org.bukkit.entity.*;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.map.MapView;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class TARDISHelper extends JavaPlugin implements TARDISHelperAPI {
+public class TARDISHelper implements TARDISHelperAPI {
 
-    public static final String messagePrefix = ChatColor.AQUA + "[TARDISChunkGenerator] " + ChatColor.RESET;
+    public static final String messagePrefix = ChatColor.AQUA + "[TARDIS] " + ChatColor.RESET;
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
-    public static TARDISHelper tardisHelper;
     public static boolean colourSkies;
 
-    public static TARDISHelper getTardisHelper() {
-        return tardisHelper;
-    }
-
-    @Override
-    public void onDisable() {
-    }
-
-    @Override
-    public void onEnable() {
-        tardisHelper = this;
-        saveDefaultConfig();
-        // get TARDIS plugin directory
-        String basePath = getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
-        // get the TARDIS config
-        FileConfiguration configuration = YamlConfiguration.loadConfiguration(new File(basePath + "config.yml"));
+    public void enable(TARDIS plugin) {
         // get server default world name
         String levelName = BiomeUtilities.getLevelName();
         // load custom biomes if they are enabled
-        FileConfiguration planets = YamlConfiguration.loadConfiguration(new File(basePath + "planets.yml"));
         boolean aPlanetIsEnabled = false;
-        if (planets.getBoolean("planets.gallifrey.enabled")) {
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Gallifrey...");
+        if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
+            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
-        if (planets.getBoolean("planets.skaro.enabled")) {
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Skaro...");
+        if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
+            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
-        colourSkies = (aPlanetIsEnabled && planets.getBoolean("colour_skies"));
+        colourSkies = (aPlanetIsEnabled && plugin.getPlanetsConfig().getBoolean("colour_skies"));
         // should we filter the log?
-        if (configuration.getBoolean("debug")) {
+        if (plugin.getConfig().getBoolean("debug")) {
             // yes we should!
+            String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Starting filtered logging for TARDIS plugins...");
-            getServer().getConsoleSender().sendMessage(messagePrefix + "Log file located at 'plugins/TARDIS/filtered.log'");
+            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Starting filtered logging for TARDIS plugins...");
+            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Log file located at 'plugins/TARDIS/filtered.log'");
         }
         // register disguise listener
-        getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(this), this);
-    }
-
-    @Override
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-        if (id != null) {
-            if (id.equalsIgnoreCase("flat")) {
-                return new FlatGenerator(this);
-            }
-            if (id.equalsIgnoreCase("water")) {
-                return new WaterGenerator();
-            }
-            if (id.equalsIgnoreCase("gallifrey")) {
-                return new GallifreyGenerator(this);
-            }
-            if (id.equalsIgnoreCase("siluria")) {
-                return new SiluriaGenerator(this);
-            }
-            if (id.equalsIgnoreCase("skaro")) {
-                return new SkaroGenerator(this);
-            }
-            return new TARDISChunkGenerator();
-        }
-        return new TARDISChunkGenerator();
+        plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
     }
 
     @Override

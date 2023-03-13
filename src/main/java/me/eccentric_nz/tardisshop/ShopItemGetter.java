@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class ShopItemGetter {
 
     public static ItemStack getTWAItem(ShopItem item) {
-        if (TARDISShop.isTWAEnabled()) {
+//        if (TARDIS.plugin.isTWAEnabled()) {
             // get TARDISWeepingAngels API
             TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
             if (item.getMaterial() == Material.BONE) {
@@ -23,20 +23,20 @@ public class ShopItemGetter {
                 Monster monster = Monster.valueOf(m);
                 return twa.getHead(monster);
             }
-        }
-        return null;
+//        }
+//        return null;
     }
 
     public static ItemStack getSeedItem(ShopItem item) {
         String s = item.toString().replace("_SEED", "");
-        return TARDISShop.getTardisAPI().getTARDISSeedItem(s);
+        return TARDIS.plugin.getTardisAPI().getTARDISSeedItem(s);
     }
 
     public static ItemStack getShapeItem(ShopItem item, Player player) {
-        return TARDISShop.getTardisAPI().getTARDISShapeItem(item.getDisplayName(), player);
+        return TARDIS.plugin.getTardisAPI().getTARDISShapeItem(item.getDisplayName(), player);
     }
 
     public static ItemStack getBlueprintItem(ShopItem item, Player player) {
-        return TARDISShop.getTardisAPI().getTARDISBlueprintItem(item.toString(), player);
+        return TARDIS.plugin.getTardisAPI().getTARDISBlueprintItem(item.toString(), player);
     }
 }

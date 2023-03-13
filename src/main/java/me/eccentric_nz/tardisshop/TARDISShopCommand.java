@@ -1,6 +1,11 @@
 package me.eccentric_nz.tardisshop;
 
 import com.google.common.collect.ImmutableList;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.database.InsertShopItem;
@@ -16,18 +21,13 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class TARDISShopCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "remove", "update");
     private final List<String> ITEM_SUBS;
 
-    public TARDISShopCommand(TARDISShop plugin) {
+    public TARDISShopCommand(TARDIS plugin) {
         this.plugin = plugin;
         ITEM_SUBS = new ArrayList(this.plugin.getItemsConfig().getKeys(false));
     }
@@ -50,8 +50,8 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                 return true;
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                plugin.getRemovingItem().add(player.getUniqueId());
-                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getBlockMaterial().toString() + " block to remove the database record.");
+                plugin.getShopSettings().getRemovingItem().add(player.getUniqueId());
+                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getShopSettings().getBlockMaterial().toString() + " block to remove the database record.");
                 return true;
             } else if (args[0].equalsIgnoreCase("update")) {
                 // reload items.yml
@@ -94,8 +94,8 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                 }
                 double cost = plugin.getItemsConfig().getDouble(name);
                 TARDISShopItem item = new InsertShopItem(plugin).addNamedItem(TARDISStringUtils.capitalise(args[1]), cost);
-                plugin.getSettingItem().put(player.getUniqueId(), item);
-                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getBlockMaterial().toString() + " block to update the database record.");
+                plugin.getShopSettings().getSettingItem().put(player.getUniqueId(), item);
+                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getShopSettings().getBlockMaterial().toString() + " block to update the database record.");
                 return true;
             }
             return true;

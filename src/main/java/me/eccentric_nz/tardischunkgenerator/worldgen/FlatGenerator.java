@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.util.Random;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.FlatBiomeProvider;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,22 +10,20 @@ import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 
-import java.util.Random;
-
 public class FlatGenerator extends ChunkGenerator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
     private final Material bottom;
     private final Material rock;
     private final Material middle;
     private final Material surface;
 
-    public FlatGenerator(TARDISHelper plugin) {
+    public FlatGenerator(TARDIS plugin) {
         this.plugin = plugin;
-        this.bottom = Material.valueOf(plugin.getConfig().getString("bottom"));
-        this.rock = Material.valueOf(plugin.getConfig().getString("rock"));
-        this.middle = Material.valueOf(plugin.getConfig().getString("middle"));
-        this.surface = Material.valueOf(plugin.getConfig().getString("surface"));
+        this.bottom = Material.valueOf(plugin.getGeneratorConfig().getString("bottom"));
+        this.rock = Material.valueOf(plugin.getGeneratorConfig().getString("rock"));
+        this.middle = Material.valueOf(plugin.getGeneratorConfig().getString("middle"));
+        this.surface = Material.valueOf(plugin.getGeneratorConfig().getString("surface"));
     }
 
     @Override

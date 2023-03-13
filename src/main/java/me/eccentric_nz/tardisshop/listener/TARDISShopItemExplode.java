@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardisshop.listener;
 
-import me.eccentric_nz.tardisshop.TARDISShop;
+import java.util.ArrayList;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisshop.database.ResultSetShopItem;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -8,14 +10,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TARDISShopItemExplode implements Listener {
 
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
 
-    public TARDISShopItemExplode(TARDISShop plugin) {
+    public TARDISShopItemExplode(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -26,7 +25,7 @@ public class TARDISShopItemExplode implements Listener {
         }
         List<Block> blockList = new ArrayList<>(event.blockList());
         blockList.forEach((block) -> {
-            if (block != null && block.getType() == plugin.getBlockMaterial()) {
+            if (block != null && block.getType() == plugin.getShopSettings().getBlockMaterial()) {
                 String location = block.getLocation().toString();
                 ResultSetShopItem rs = new ResultSetShopItem(plugin);
                 if (rs.itemFromBlock(location)) {

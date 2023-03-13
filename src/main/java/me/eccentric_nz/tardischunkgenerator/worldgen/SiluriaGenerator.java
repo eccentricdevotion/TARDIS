@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.SiluriaBiomeProvider;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.SiluriaStructurePopulator;
 import org.bukkit.World;
@@ -25,16 +26,14 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 
-import java.util.List;
-
 /**
  * @author eccentric_nz
  */
 public class SiluriaGenerator extends ChunkGenerator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
 
-    public SiluriaGenerator(TARDISHelper plugin) {
+    public SiluriaGenerator(TARDIS plugin) {
         this.plugin = plugin;
     }
 

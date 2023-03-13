@@ -1,21 +1,20 @@
 package me.eccentric_nz.tardisshop.database;
 
-import me.eccentric_nz.tardisshop.TARDISShop;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 public class DeleteShopItem {
 
     private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
     private final Connection connection = service.getConnection();
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
 
-    public DeleteShopItem(TARDISShop plugin) {
+    public DeleteShopItem(TARDIS plugin) {
         this.plugin = plugin;
     }
 

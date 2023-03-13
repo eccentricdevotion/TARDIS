@@ -2,7 +2,12 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.helpers.WeepingAngels;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.*;
 import net.minecraft.world.level.ChunkPos;
@@ -21,18 +26,12 @@ import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 public class SkaroStructurePopulator extends BlockPopulator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
     private final List<EntityType> animals = Arrays.asList(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
 
-    public SkaroStructurePopulator(TARDISHelper plugin) {
+    public SkaroStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
     }
 

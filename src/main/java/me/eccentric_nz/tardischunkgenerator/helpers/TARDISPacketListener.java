@@ -17,6 +17,9 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import io.netty.channel.*;
+import java.util.UUID;
+import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiser;
@@ -35,9 +38,6 @@ import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
-import java.util.logging.Level;
 
 public class TARDISPacketListener {
 
@@ -59,13 +59,13 @@ public class TARDISPacketListener {
 
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
-                if (packet instanceof ClientboundAddEntityPacket namedEntitySpawn && !TARDISHelper.tardisHelper.getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
+                if (packet instanceof ClientboundAddEntityPacket namedEntitySpawn && !TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
                     UUID uuid = namedEntitySpawn.getUUID();
                     if (TARDISDisguiseTracker.DISGUISED_AS_MOB.containsKey(uuid)) {
                         Entity entity = Bukkit.getEntity(uuid);
                         if (entity.getType().equals(EntityType.PLAYER)) {
                             Player player = (Player) entity;
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISHelper.getTardisHelper(), () -> {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                                 TARDISDisguiser.redisguise(player, entity.getWorld());
                             }, 5L);
                         }

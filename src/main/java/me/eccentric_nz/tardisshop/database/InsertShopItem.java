@@ -1,16 +1,15 @@
 package me.eccentric_nz.tardisshop.database;
 
-import me.eccentric_nz.tardisshop.TARDISShop;
-import me.eccentric_nz.tardisshop.TARDISShopItem;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardisshop.TARDISShopItem;
 
 public class InsertShopItem {
 
-    private final TARDISShop plugin;
+    private final TARDIS plugin;
     private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
     private final Connection connection = service.getConnection();
 
@@ -20,7 +19,7 @@ public class InsertShopItem {
      *
      * @param plugin an instance of the main plugin class
      */
-    public InsertShopItem(TARDISShop plugin) {
+    public InsertShopItem(TARDIS plugin) {
         this.plugin = plugin;
     }
 

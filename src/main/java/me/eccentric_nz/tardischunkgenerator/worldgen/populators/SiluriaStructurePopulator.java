@@ -2,7 +2,10 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.io.File;
+import java.io.InputStream;
+import java.util.*;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaProcessData;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtility;
@@ -21,18 +24,14 @@ import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.*;
-
 public class SiluriaStructurePopulator extends BlockPopulator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
     List<SiluriaProcessData> toProcess = new ArrayList<>();
     List<String> noStilts = Arrays.asList("east_west", "north_south", "cross");
     List<Material> buildable = Arrays.asList(Material.GRASS_BLOCK, Material.WATER, Material.PODZOL, Material.SAND);
 
-    public SiluriaStructurePopulator(TARDISHelper plugin) {
+    public SiluriaStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -29,13 +30,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import java.util.UUID;
-
 public class TARDISDisguiseListener implements Listener {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
 
-    public TARDISDisguiseListener(TARDISHelper plugin) {
+    public TARDISDisguiseListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 

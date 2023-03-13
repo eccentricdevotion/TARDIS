@@ -16,28 +16,27 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.GallifreyBiomeProvider;
-import me.eccentric_nz.tardischunkgenerator.worldgen.populators.GallifreyStructurePopulator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.populators.TARDISTreeBlockPopulator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.GallifreyGrassPopulator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.GallifreyStructurePopulator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.TARDISTreeBlockPopulator;
 import org.bukkit.World;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 
-import java.util.List;
-
 /**
  * @author eccentric_nz
  */
 public class GallifreyGenerator extends ChunkGenerator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
 
-    public GallifreyGenerator(TARDISHelper plugin) {
+    public GallifreyGenerator(TARDIS plugin) {
         this.plugin = plugin;
     }
 

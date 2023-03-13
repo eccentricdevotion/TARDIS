@@ -2,7 +2,12 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISSchematicReader;
@@ -19,18 +24,12 @@ import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 public class GallifreyStructurePopulator extends BlockPopulator {
 
-    private final TARDISHelper plugin;
+    private final TARDIS plugin;
     List<Material> buildable = Arrays.asList(Material.RED_SAND, Material.WATER, Material.TERRACOTTA, Material.BROWN_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.WHITE_TERRACOTTA);
 
-    public GallifreyStructurePopulator(TARDISHelper plugin) {
+    public GallifreyStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
     }
 

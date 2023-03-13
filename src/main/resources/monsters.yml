@@ -1,0 +1,151 @@
+config_version: 2.0
+spawn_rate:
+  how_many: 2
+  how_often: 400
+  default_max: 0
+angels:
+  worlds:
+    world: 10
+  teleport_worlds:
+    - world
+  freeze_time: 100
+  weapon: DIAMOND_PICKAXE
+  drops:
+    - COBBLESTONE
+    - STONE
+  angels_can_steal: true
+  can_build: true
+  spawn_from_chat:
+    enabled: true
+    chance: 50
+    distance_from_player: 10
+cybermen:
+  worlds:
+    world: 10
+  drops:
+    - REDSTONE
+    - STONE_BUTTON
+  can_upgrade: true
+daleks:
+  worlds:
+    world: 10
+  drops:
+    - SLIME_BALL
+    - ROTTEN_FLESH
+  dalek_sec_chance: 5
+  dalek_sec_drops:
+    - VERDANT_FROGLIGHT
+    - LEATHER_CHESTPLATE
+  davros_chance: 5
+  davros_drops:
+    - CHAIN
+    - CRIMSON_BUTTON
+empty_child:
+  worlds:
+    world: 10
+  drops:
+    - COOKED_BEEF
+    - SUGAR
+hath:
+  worlds:
+    world: 10
+  drops:
+    - SALMON
+    - STONE_PICKAXE
+headless_monks:
+  worlds:
+    world: 10
+  drops:
+    - BOOK
+    - RED_CANDLE
+  projectile: SMALL_FIREBALL
+  particles: true
+ice_warriors:
+  worlds:
+    world: 10
+  drops:
+    - ICE
+    - PACKED_ICE
+    - SNOW_BLOCK
+judoon:
+  worlds:
+    world: 10
+  guards: true
+  can_build: true
+  ammunition: 25
+  damage: 4
+k9:
+  by_taming: true
+  can_build: true
+  worlds:
+    world: true
+ood:
+  worlds:
+    world: true
+  drops:
+    - NAME_TAG
+  spawn_from_villager: 20
+  spawn_from_cured: 5
+racnoss:
+  worlds:
+    world_nether: 5
+  drops:
+    - NETHERITE_INGOT
+    - ECHO_SHARD
+sea_devils:
+  worlds:
+    world: 10
+  drops:
+    - COD
+    - KELP
+silent:
+  worlds:
+    world: 10
+  drops:
+    - INK_SAC
+    - FLOWER_POT
+silurians:
+  worlds:
+    world: 10
+  drops:
+    - GOLD_NUGGET
+    - FEATHER
+slitheen:
+  worlds:
+    world: 10
+  drops:
+    - RABBIT_HIDE
+    - PHANTOM_MEMBRANE
+sontarans:
+  worlds:
+    world: 10
+  drops:
+    - POTATO
+    - POISONOUS_POTATO
+  can_tame: true
+the_mire:
+  worlds:
+    world: 10
+  drops:
+    - POTION
+    - HONEY_BOTTLE
+toclafane:
+  worlds:
+    world: 10
+  spawn_from_bee: 5
+  destroy_blocks: true
+  drops:
+    - GUNPOWDER
+    - HONEYCOMB
+vashta_nerada:
+  worlds:
+    world: 10
+  drops:
+    - BONE
+    - LEATHER
+zygons:
+  worlds:
+    world: 10
+  drops:
+    - PAINTING
+    - SAND

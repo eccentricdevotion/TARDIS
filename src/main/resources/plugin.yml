@@ -2,10 +2,8 @@ authors: [ eccentric_nz ]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
-load: POSTWORLD
-loadbefore: [ ItemSlotMachine ]
-depend: [ TARDISChunkGenerator ]
-softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
+load: STARTUP
+softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard,Vault ]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -620,6 +618,87 @@ permissions:
     default: op
   tardis.mushroom:
     description: Allow a player to use the /tardismushroom command.
+    default: op
+  # vortex manipulator
+  vm.teleport:
+    description: Allow crafting and using of a Vortex Manipulator
+    default: op
+  vm.message:
+    description: Allow Vortex Manipulator messaging
+    default: op
+  vm.lifesigns:
+    description: Allow players to detect lifesigns and info on other players
+  vm.beacon:
+    description: Allow players to activate the Vortex Manipulator beacon
+    default: op
+  vm.lookatblock:
+    description: Allow players to teleport to the block they are looking at
+    default: op
+  # weeping angels
+  tardisweepingangels.k9:
+    description: Allow players to have a K9 companion.
+    default: op
+  tardisweepingangels.spawn:
+    description: Allow players to spawn a monster.
+    default: op
+    children:
+      tardisweepingangels.spawn.angel: true
+      tardisweepingangels.spawn.cyberman: true
+      tardisweepingangels.spawn.dalek: true
+      tardisweepingangels.spawn.empty: true
+      tardisweepingangels.spawn.ice: true
+      tardisweepingangels.spawn.judoon: true
+      tardisweepingangels.spawn.k9: true
+      tardisweepingangels.spawn.mire: true
+      tardisweepingangels.spawn.monk: true
+      tardisweepingangels.spawn.ood: true
+      tardisweepingangels.spawn.silent: true
+      tardisweepingangels.spawn.silurian: true
+      tardisweepingangels.spawn.sontaran: true
+      tardisweepingangels.spawn.strax: true
+      tardisweepingangels.spawn.toclafane: true
+      tardisweepingangels.spawn.vashta: true
+      tardisweepingangels.spawn.zygon: true
+  tardisweepingangels.follow:
+    description: Allow players to make an Ood, Judoon or K9 follow them.
+    default: op
+    children:
+      tardisweepingangels.follow.judoon: true
+      tardisweepingangels.follow.k9: true
+      tardisweepingangels.follow.ood: true
+  tardisweepingangels.remove:
+    description: Allow players to remove an Ood, Judoon or K9.
+    default: op
+    children:
+      tardisweepingangels.remove.judoon: true
+      tardisweepingangels.remove.k9: true
+      tardisweepingangels.remove.ood: true
+  tardisweepingangels.build:
+    description: Allow players to build a monster (Weeping Angel, Ood, Judoon, K9).
+    default: op
+    children:
+      tardisweepingangels.build.angel: true
+      tardisweepingangels.build.judoon: true
+      tardisweepingangels.build.k9: true
+      tardisweepingangels.build.ood: true
+  tardisweepingangels.disguise:
+    description: Allow players to disguise themselves as a monster.
+    default: op
+  tardisweepingangels.count:
+    description: Allow players to use the count command.
+    default: op
+  tardisweepingangels.kill:
+    description: Allow players to use the kill command.
+    default: op
+  tardisweepingangels.admin:
+    description: Allow players to alter plugin settings.
+    default: op
+  # shop
+  tardisshop.use:
+    description: Allow players to buy items from a TARDIS Shop.
+    default: op
+  tardisshop.admin:
+    description: Allow players to set up a TARDIS Shop.
     default: op
 commands:
   tardis:
@@ -1526,3 +1605,122 @@ commands:
       description: Remove the Handles record from the TARDIS database
       permission: tardis.handles.use
       usage: /<command> remove
+  # vortex manipulator
+  vm:
+    aliases: [vortexmainpulator,tvm,vmg,vmgo]
+    description: Cheap and nasty time travel. Very bad for you.
+    usage: /<command> [world] [x] [y] [z]
+    permission: vm.teleport
+    permission-message: You don't have the permission <permission> to use this command
+  vmm:
+    aliases: [vmmsg,vmmessage]
+    description: Message other Vortex Manipulator users.
+    usage: /<command> msg [player] [message], /<command> list [in|out] {page}, /<command> read [#], /<command> delete [#], /<command> clear [in|out]
+    permission: vm.message
+    permission-message: You don't have the permission <permission> to use this command
+  vms:
+    aliases: [vmsave]
+    description: Save Vortex Manipulator location.
+    usage: /<command> [save_name]
+    permission: vm.teleport
+    permission-message: You don't have the permission <permission> to use this command
+  vmr:
+    aliases: [vmremove]
+    description: Remove Vortex Manipulator save.
+    usage: /<command> [save_name]
+    permission: vm.teleport
+    permission-message: You don't have the permission <permission> to use this command
+  vmh:
+    aliases: [vmhelp]
+    description: Vortex Manipulator help.
+    usage: /<command> [topic]
+  vml:
+    aliases: [vmlife,vmlifesigns]
+    description: Get Vortex Manipulator entity information.
+    usage: /<command> [save_name]
+    permission: vm.lifesigns
+    permission-message: You don't have the permission <permission> to use this command
+  vmb:
+    aliases: [vmbeacon]
+    description: Send out a Vortex Manipulator beacon signal.
+    usage: /<command> [colour]
+    permission: vm.beacon
+    permission-message: You don't have the permission <permission> to use this command
+  vma:
+    aliases: [vmactivate]
+    description: Activate a Vortex Manipulator that has been given with the /tardisgive command.
+    usage: /<command> [player]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  vmg:
+    description: Give Tachyon energy to a player's Vortex Manipulator.
+    usage: /<command> [uuid] [amount]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  vmd:
+    description: Transfer SQLite database records to MySQL.
+    usage: /<command> convert_database
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  # weeping angels
+  twa:
+    aliases: [ tardisweepingangels ]
+    description: Manipulate TARDISWeepingAngels monsters with various arguments (spawn, kill, remove, count, disguise, equip, etc)..
+    usage: /<command> [subcommand] <monster type> <world> <max>
+    spawn:
+      description: Spawns a monster on the block you are targeting.
+      usage: /<command> spawn [monster type]
+      permission: tardisweepingangels.spawn
+      permission-message: You don't have the permission <permission> to use this command
+    disguise:
+      description: Sets a player's armour so that they are disguised as a monster.
+      usage: /<command> disguise [monster type] [on|off]
+      permission: tardisweepingangels.disguise
+      permission-message: You don't have the permission <permission> to use this command
+    count:
+      description: Reports the current number of the specifed monster in the specified world.
+      usage: /<command> count [monster type] [world]
+      permission: tardisweepingangels.count
+      permission-message: You don't have the permission <permission> to use this command
+    kill:
+      description: Kills all of the specifed monster in the specified world.
+      usage: /<command> kill [monster type] [world]
+      permission: tardisweepingangels.kill
+      permission-message: You don't have the permission <permission> to use this command
+    remove:
+      description: Removes an Ood, Judoon, K9.
+      usage: /<command> remove
+      permission: tardisweepingangels.remove
+      permission-message: You don't have the permission <permission> to use this command
+    equip:
+      description: Equip an armour stand with monster armour.
+      usage: /<command> equip [monster type]
+      permission: tardisweepingangels.admin
+      permission-message: You don't have the permission <permission> to use this command
+    follow:
+      description: Make an Ood, Judoon or K9 follow you.
+      usage: /<command> follow <speed from 1-50>
+      permission: tardisweepingangels.follow
+      permission-message: You don't have the permission <permission> to use this command
+    stay:
+      description: Make an Ood, Judoon or K9 stop following you.
+      usage: /<command> stay
+      permission: tardisweepingangels.follow
+      permission-message: You don't have the permission <permission> to use this command
+    set:
+      description: Set the maximum number of the specified monster allowed to spawn in the specified world.
+      usage: /<command> set [monster type|all] [world] [max number]
+      permission: tardisweepingangels.admin
+      permission-message: You don't have the permission <permission> to use this command
+    give:
+      description: Give the specified player the specified monster head.
+      usage: /<command> give [player] [monser type]
+      permission: tardisweepingangels.admin
+      permission-message: You don't have the permission <permission> to use this command
+    # shop
+    tardisshop:
+      aliases: [tshop]
+      description: Add and remove TARDISShop items.
+      usage: /<command> [add|remove|update] [item_name]
+      permission: tardisshop.admin
+      permission-message: You don't have the permission <permission> to use this command
