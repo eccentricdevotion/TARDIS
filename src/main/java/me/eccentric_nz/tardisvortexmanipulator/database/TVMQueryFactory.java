@@ -16,15 +16,12 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-
 import java.sql.*;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.
@@ -33,12 +30,12 @@ import java.util.UUID;
  */
 public class TVMQueryFactory {
 
-    private final TARDISVortexManipulator plugin;
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDIS plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final String prefix;
     Connection connection = service.getConnection();
 
-    public TVMQueryFactory(TARDISVortexManipulator plugin) {
+    public TVMQueryFactory(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -48,7 +45,7 @@ public class TVMQueryFactory {
      *
      * @param table the database table name to insert the data into.
      * @param data  a HashMap<String, Object> of table fields and values to insert.
-     */
+     *
     public void doInsert(String table, HashMap<String, Object> data) {
         TVMSQLInsert insert = new TVMSQLInsert(plugin, table, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
@@ -61,7 +58,7 @@ public class TVMQueryFactory {
      * @param table the database table name to insert the data into.
      * @param data  a HashMap<String, Object> of table fields and values to insert.
      * @return the primary key of the record that was inserted
-     */
+     *
     public int doSyncInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
         ResultSet idRS = null;
@@ -120,7 +117,7 @@ public class TVMQueryFactory {
      * @param table the database table name to update.
      * @param data  a HashMap<String, Object> of table fields and values update.
      * @param where a HashMap<String, Object> of table fields and values to select the records to update.
-     */
+     *
     public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         TVMSQLUpdate update = new TVMSQLUpdate(plugin, table, data, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, update);
@@ -131,7 +128,7 @@ public class TVMQueryFactory {
      *
      * @param table the database table name to insert the data into.
      * @param where a HashMap<String, Object> of table fields and values to select the records to delete.
-     */
+     *
     public void doDelete(String table, HashMap<String, Object> where) {
         TVMSQLDelete delete = new TVMSQLDelete(plugin, table, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
@@ -143,7 +140,7 @@ public class TVMQueryFactory {
      * @param table the database table name to insert the data into.
      * @param where a HashMap<String, Object> of table fields and values to select the records to delete.
      * @return true or false depending on whether the data was deleted successfully
-     */
+     *
     public boolean doSyncDelete(String table, HashMap<String, Object> where) {
         Statement statement = null;
         String values;
@@ -176,6 +173,7 @@ public class TVMQueryFactory {
             }
         }
     }
+    */
 
     /**
      * Save a beacon block.
@@ -185,13 +183,13 @@ public class TVMQueryFactory {
      */
     public void saveBeaconBlock(String uuid, Block b) {
         Location loc = b.getLocation();
-        plugin.getBlocks().add(loc);
+        plugin.getTvmSettings().getBlocks().add(loc);
         String data = b.getBlockData().getAsString();
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", uuid);
         set.put("location", loc.toString());
         set.put("block_type", data);
-        doSyncInsert("beacons", set);
+        plugin.getQueryFactory().doSyncInsert("beacons", set);
     }
 
     /**

@@ -3,29 +3,28 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMSave;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * @author eccentric_nz
  */
 public class TVMSavesGUI {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final int start, finish;
     private final String uuid;
     private final ItemStack[] gui;
     private final HashMap<String, Material> blocks = new HashMap<>();
 
-    public TVMSavesGUI(TARDISVortexManipulator plugin, int start, int finish, String uuid) {
+    public TVMSavesGUI(TARDIS plugin, int start, int finish, String uuid) {
         this.plugin = plugin;
         this.start = start;
         this.finish = finish;

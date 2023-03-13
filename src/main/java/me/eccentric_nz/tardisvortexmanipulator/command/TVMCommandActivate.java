@@ -1,20 +1,18 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-
 public class TVMCommandActivate implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandActivate(TARDISVortexManipulator plugin) {
+    public TVMCommandActivate(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -40,7 +38,7 @@ public class TVMCommandActivate implements CommandExecutor {
             if (!rs.resultSet()) {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", uuid);
-                new TVMQueryFactory(plugin).doInsert("manipulator", set);
+                plugin.getQueryFactory().doInsert("manipulator", set);
                 sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator activated!");
             } else {
                 sender.sendMessage(plugin.getPluginName() + "The Vortex Manipulator is already activated!");

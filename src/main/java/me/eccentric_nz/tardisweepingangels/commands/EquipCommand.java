@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
@@ -35,9 +36,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class EquipCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public EquipCommand(TARDISWeepingAngels plugin) {
+    public EquipCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -51,7 +52,7 @@ public class EquipCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
             return true;
         }
         Player player = null;
@@ -59,7 +60,7 @@ public class EquipCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Command can only be used by a player!");
+            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
             return true;
         }
         // get the armour stand player is looking at
@@ -103,7 +104,7 @@ public class EquipCommand {
                 }, 2L);
             }
         } else {
-            sender.sendMessage(plugin.pluginName + "You are not looking at an armour stand within 8 blocks!");
+            sender.sendMessage(plugin.getPluginName() + "You are not looking at an armour stand within 8 blocks!");
             return true;
         }
         return true;

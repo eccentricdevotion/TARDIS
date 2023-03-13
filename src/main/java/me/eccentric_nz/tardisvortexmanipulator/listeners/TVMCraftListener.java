@@ -3,8 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,16 +15,14 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import java.util.HashMap;
-
 /**
  * @author eccentric_nz
  */
 public class TVMCraftListener implements Listener {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCraftListener(TARDISVortexManipulator plugin) {
+    public TVMCraftListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -41,7 +39,7 @@ public class TVMCraftListener implements Listener {
                 // make a record
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", uuid);
-                new TVMQueryFactory(plugin).doInsert("manipulator", set);
+                plugin.getQueryFactory().doInsert("manipulator", set);
             }
         }
     }

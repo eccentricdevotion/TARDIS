@@ -18,7 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
 import java.util.ArrayList;
 import java.util.List;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
 import org.bukkit.Location;
@@ -34,10 +35,10 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Blink implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final List<String> message = new ArrayList<>();
 
-    public Blink(TARDISWeepingAngels plugin) {
+    public Blink(TARDIS plugin) {
         this.plugin = plugin;
         message.add("Don't blink. Blink and you're dead.");
         message.add("They are fast. Faster than you can believe.");
@@ -96,9 +97,9 @@ public class Blink implements Listener {
         }
         // freeze the closest skeleton
         if (skeleton != null) {
-            skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, plugin.getConfig().getInt("angels.freeze_time"), 30, true, false));
+            skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, plugin.getMonstersConfig().getInt("angels.freeze_time"), 30, true, false));
             if (!player.isSneaking()) {
-                player.sendMessage(plugin.pluginName + message.get(TARDISWeepingAngels.random.nextInt(4)));
+                player.sendMessage(plugin.getPluginName() + message.get(TARDISConstants.RANDOM.nextInt(4)));
             }
         }
     }

@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.*;
 import org.bukkit.OfflinePlayer;
@@ -10,13 +11,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 public class TVMCommandMessage implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandMessage(TARDISVortexManipulator plugin) {
+    public TVMCommandMessage(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -68,7 +67,7 @@ public class TVMCommandMessage implements CommandExecutor {
                             whereofp.put("uuid_from", p.getUniqueId().toString());
                             whereofp.put("message", message);
                             whereofp.put("date", System.currentTimeMillis());
-                            new TVMQueryFactory(plugin).doInsert("messages", whereofp);
+                            plugin.getQueryFactory().doInsert("messages", whereofp);
                             p.sendMessage(plugin.getPluginName() + "Message sent.");
                         }
                         case list -> {
@@ -146,7 +145,7 @@ public class TVMCommandMessage implements CommandExecutor {
                                 if (rsm.resultSet()) {
                                     HashMap<String, Object> where = new HashMap<>();
                                     where.put("message_id", delete_id);
-                                    new TVMQueryFactory(plugin).doDelete("messages", where);
+                                    plugin.getQueryFactory().doDelete("messages", where);
                                     p.sendMessage(plugin.getPluginName() + "Message deleted.");
                                 }
                             } else {
@@ -160,7 +159,6 @@ public class TVMCommandMessage implements CommandExecutor {
                                 p.sendMessage(plugin.getPluginName() + "You need to specify which mail box you want to clear (in or out)!");
                                 return true;
                             }
-                            TVMQueryFactory qf = new TVMQueryFactory(plugin);
                             HashMap<String, Object> where = new HashMap<>();
                             String which = "Outbox";
                             if (args[1].equalsIgnoreCase("out")) {
@@ -169,7 +167,7 @@ public class TVMCommandMessage implements CommandExecutor {
                                 where.put("uuid_to", p.getUniqueId().toString());
                                 which = "Inbox";
                             }
-                            qf.doDelete("messages", where);
+                            plugin.getQueryFactory().doDelete("messages", where);
                             p.sendMessage(plugin.getPluginName() + which + " cleared.");
                         }
                     }

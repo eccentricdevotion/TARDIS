@@ -16,19 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class TARDISHandlesUpdater {
 
     private final TARDIS plugin;
     private final FileConfiguration handlesConfig;
-    private final HashMap<String, String> stringOptions = new HashMap<>();
 
     public TARDISHandlesUpdater(TARDIS plugin, FileConfiguration handlesConfig) {
         this.plugin = plugin;

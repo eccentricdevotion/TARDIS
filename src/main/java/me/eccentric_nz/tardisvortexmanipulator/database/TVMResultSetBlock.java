@@ -3,33 +3,33 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.storage.TVMBlock;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardisvortexmanipulator.storage.TVMBlock;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetBlock {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final String uuid;
     private final List<TVMBlock> blocks = new ArrayList<>();
     private final String prefix;
 
-    public TVMResultSetBlock(TARDISVortexManipulator plugin, String uuid) {
+    public TVMResultSetBlock(TARDIS plugin, String uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         prefix = this.plugin.getPrefix();

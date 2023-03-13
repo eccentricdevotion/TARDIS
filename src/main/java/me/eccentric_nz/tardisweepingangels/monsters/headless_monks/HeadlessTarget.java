@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.headless_monks;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -26,9 +27,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class HeadlessTarget implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public HeadlessTarget(TARDISWeepingAngels plugin) {
+    public HeadlessTarget(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -52,7 +53,7 @@ public class HeadlessTarget implements Listener {
             if (taskID == -1) {
                 // start projectile runnable
                 HeadlessShootRunnable shooter = new HeadlessShootRunnable(attacker, target, false);
-                taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessShootRunnable(attacker, target, plugin.getConfig().getString("headless_monks.projectile").equals("SMALL_FIREBALL")), 1, 40);
+                taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessShootRunnable(attacker, target, plugin.getMonstersConfig().getString("headless_monks.projectile").equals("SMALL_FIREBALL")), 1, 40);
                 shooter.setTaskID(taskID);
                 skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.HEADLESS_TASK, PersistentDataType.INTEGER, taskID);
             }
@@ -67,7 +68,7 @@ public class HeadlessTarget implements Listener {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.HEADLESS_TASK, PersistentDataType.INTEGER, -1);
             }
-            if (plugin.getConfig().getBoolean("headless_monks.particles") && flameID == -1) {
+            if (plugin.getMonstersConfig().getBoolean("headless_monks.particles") && flameID == -1) {
                 // start flame runnable
                 flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable((LivingEntity) attacker), 1, 20);
                 skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);

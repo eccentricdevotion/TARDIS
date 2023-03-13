@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,13 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 public class TVMCommandRemove implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandRemove(TARDISVortexManipulator plugin) {
+    public TVMCommandRemove(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +48,7 @@ public class TVMCommandRemove implements CommandExecutor {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("save_name", args[0]);
-                new TVMQueryFactory(plugin).doDelete("saves", where);
+                plugin.getQueryFactory().doDelete("saves", where);
                 sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator location (" + args[0] + ") removed!");
                 return true;
             } else {

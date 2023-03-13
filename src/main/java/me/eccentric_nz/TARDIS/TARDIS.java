@@ -85,6 +85,7 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.SkaroGenerator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.WaterGenerator;
 import me.eccentric_nz.tardisshop.ShopSettings;
+import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -190,6 +191,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISBlockLogger blockLogger;
     private TARDISDynmap tardisDynmap;
     private ShopSettings shopSettings;
+    private TVMSettings tvmSettings;
 
     /**
      * Constructor
@@ -690,6 +692,7 @@ public class TARDIS extends JavaPlugin {
                 "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml",
                 "flat_world.yml", "monsters.yml", "shop.yml", "vortex_maipulator.yml", "items.yml");
         for (String f : files) {
+            debug(f);
             tardisCopier.copy(f);
         }
         planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
@@ -1787,5 +1790,13 @@ public class TARDIS extends JavaPlugin {
 
     public ShopSettings getShopSettings() {
         return shopSettings;
+    }
+
+    public TVMSettings getTvmSettings() {
+        return tvmSettings;
+    }
+
+    public void setTvmSettings(TVMSettings tvmSettings) {
+        this.tvmSettings = tvmSettings;
     }
 }

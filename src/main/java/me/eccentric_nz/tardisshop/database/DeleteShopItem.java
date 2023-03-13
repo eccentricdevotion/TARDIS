@@ -7,23 +7,27 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class DeleteShopItem {
 
-    private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public DeleteShopItem(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Deletes rows from an SQLite database table. This method builds an SQL query string from the parameters supplied
-     * and then executes the delete.
+     * Deletes rows from an SQLite database table. This method builds an SQL
+     * query string from the parameters supplied and then executes the delete.
      *
      * @param table the database table name to insert the data into.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to delete.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to delete.
      */
     public void removeRecord(String table, HashMap<String, Object> where) {
         Statement statement = null;
@@ -39,7 +43,7 @@ public class DeleteShopItem {
         });
         where.clear();
         values = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "DELETE FROM items WHERE " + values;
+        String query = "DELETE FROM " + prefix + "items WHERE " + values;
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -58,7 +62,7 @@ public class DeleteShopItem {
 
     public int removeByLocation(String location) {
         PreparedStatement ps = null;
-        final String query = "DELETE FROM items WHERE location = ?";
+        final String query = "DELETE FROM " + prefix + "items WHERE location = ?";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1, location);

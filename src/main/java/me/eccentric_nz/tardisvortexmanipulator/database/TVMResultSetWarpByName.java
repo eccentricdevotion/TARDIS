@@ -3,30 +3,30 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import org.bukkit.Location;
-import org.bukkit.World;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetWarpByName {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final String uuid;
     private final String name;
     private final String prefix;
     private int id;
     private Location warp;
 
-    public TVMResultSetWarpByName(TARDISVortexManipulator plugin, String uuid, String name) {
+    public TVMResultSetWarpByName(TARDIS plugin, String uuid, String name) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.name = name;

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import org.bukkit.Bukkit;
@@ -30,9 +31,9 @@ import org.bukkit.potion.PotionEffectType;
 
 public class MonsterTranformListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public MonsterTranformListener(TARDISWeepingAngels plugin) {
+    public MonsterTranformListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -44,7 +45,7 @@ public class MonsterTranformListener implements Listener {
             Entity zombified = event.getTransformedEntity();
             if (zombified instanceof PigZombie piglin) {
                 // make the entity invisible
-                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISWeepingAngels.plugin, () -> {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
                     piglin.addPotionEffect(invisibility);
                     piglin.setAngry(true);

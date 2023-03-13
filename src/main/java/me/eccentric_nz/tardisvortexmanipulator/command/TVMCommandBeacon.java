@@ -1,8 +1,12 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import org.bukkit.Location;
@@ -16,16 +20,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 public class TVMCommandBeacon implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandBeacon(TARDISVortexManipulator plugin) {
+    public TVMCommandBeacon(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -46,7 +45,7 @@ public class TVMCommandBeacon implements CommandExecutor {
             }
             ItemStack is = p.getInventory().getItemInMainHand();
             if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Vortex Manipulator")) {
-                int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
+                int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
                 if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
                     p.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to set a beacon signal!");
                     return true;
@@ -56,19 +55,19 @@ public class TVMCommandBeacon implements CommandExecutor {
                 Location l = p.getLocation();
                 // potential griefing, we need to check the location first!
                 List<Flag> flags = new ArrayList<>();
-                if (plugin.getConfig().getBoolean("respect.factions")) {
+                if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
                     flags.add(Flag.RESPECT_FACTIONS);
                 }
-                if (plugin.getConfig().getBoolean("respect.griefprevention")) {
+                if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
                     flags.add(Flag.RESPECT_GRIEFPREVENTION);
                 }
-                if (plugin.getConfig().getBoolean("respect.towny")) {
+                if (plugin.getConfig().getBoolean("preferences.respect_towny")) {
                     flags.add(Flag.RESPECT_TOWNY);
                 }
-                if (plugin.getConfig().getBoolean("respect.worldborder")) {
+                if (plugin.getConfig().getBoolean("preferences.respect_worldborder")) {
                     flags.add(Flag.RESPECT_WORLDBORDER);
                 }
-                if (plugin.getConfig().getBoolean("respect.worldguard")) {
+                if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
                     flags.add(Flag.RESPECT_WORLDGUARD);
                 }
                 Parameters params = new Parameters(p, flags);
@@ -89,7 +88,7 @@ public class TVMCommandBeacon implements CommandExecutor {
                     qf.saveBeaconBlock(ustr, down.getRelative(f));
                     down.getRelative(f).setBlockData(iron);
                 });
-                plugin.getBeaconSetters().add(uuid);
+                plugin.getTvmSettings().getBeaconSetters().add(uuid);
                 // remove tachyons
                 qf.alterTachyons(ustr, -required);
                 p.sendMessage(plugin.getPluginName() + "Beacon signal set, don't move!");

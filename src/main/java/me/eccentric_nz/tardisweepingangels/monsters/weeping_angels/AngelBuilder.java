@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
@@ -32,9 +32,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class AngelBuilder implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public AngelBuilder(TARDISWeepingAngels plugin) {
+    public AngelBuilder(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +57,7 @@ public class AngelBuilder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.COBBLESTONE_WALL) && west.getType().equals(Material.COBBLESTONE_WALL)) || (north.getType().equals(Material.COBBLESTONE_WALL) && south.getType().equals(Material.COBBLESTONE_WALL))) {
                 if (!event.getPlayer().hasPermission("tardisweepingangels.build.angel")) {
-                    event.getPlayer().sendMessage(plugin.pluginName + "You don't have permission to build a Weeping Angel!");
+                    event.getPlayer().sendMessage(plugin.getPluginName() + "You don't have permission to build a Weeping Angel!");
                     return;
                 }
                 // we're building an angel

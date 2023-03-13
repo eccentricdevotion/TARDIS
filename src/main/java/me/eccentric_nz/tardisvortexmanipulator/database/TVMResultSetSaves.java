@@ -3,31 +3,31 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.storage.TVMSave;
-import org.bukkit.World;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardisvortexmanipulator.storage.TVMSave;
+import org.bukkit.World;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetSaves {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final String uuid;
     private final int start, limit;
     private final List<TVMSave> saves = new ArrayList<>();
     private final String prefix;
 
-    public TVMResultSetSaves(TARDISVortexManipulator plugin, String uuid, int start, int limit) {
+    public TVMResultSetSaves(TARDIS plugin, String uuid, int start, int limit) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.start = start;

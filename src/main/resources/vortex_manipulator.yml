@@ -30,24 +30,7 @@ tachyon_use:
   lifesigns: 15
   beacon: 1000
   message: 5
-storage:
-  database: sqlite
-  mysql:
-    host: localhost
-    port: 3306
-    database: TVM
-    user: bukkit
-    password: mysecurepassword
-    prefix: ""
-    useSSL: false
 date_format: dd/MM/YY HH:mm
 lifesign_scan_distance: 16
 max_look_at_distance: 50
 block_travel_malfunction_chance: 0
-respect:
-  worldborder: true
-  worldguard: true
-  griefprevention: true
-  factions: true
-  towny: true
-debug: false

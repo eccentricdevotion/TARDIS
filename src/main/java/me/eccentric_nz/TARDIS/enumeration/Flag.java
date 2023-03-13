@@ -45,7 +45,7 @@ public enum Flag {
     }
 
     public static List<Flag> getAPIFlags() {
-        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        List<Flag> flags = new ArrayList<>();
         flags.remove(Flag.MESSAGE_PLAYER);
         flags.remove(Flag.SPACE_TARDIS);
         return flags;

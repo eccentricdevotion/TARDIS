@@ -3,10 +3,14 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,19 +21,15 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * @author eccentric_nz
  */
 public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     int selectedSlot = -1;
 
-    public TVMSavesGUIListener(TARDISVortexManipulator plugin) {
+    public TVMSavesGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -38,7 +38,7 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals("§4VM Saves")) {
+        if (name.equals(ChatColor.DARK_RED + "VM Saves")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -66,7 +66,7 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
                 ItemStack[] gui = tvms.getGUI();
-                Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
+                Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
                 vmg.setContents(gui);
                 p.openInventory(vmg);
             }, 2L);
@@ -80,7 +80,7 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
             p.openInventory(vmg);
         }, 2L);
@@ -96,7 +96,7 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
                 close(p);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("save_id", rss.getId());
-                new TVMQueryFactory(plugin).doDelete("saves", where);
+                plugin.getQueryFactory().doDelete("saves", where);
                 p.sendMessage(plugin.getPluginName() + "Save deleted.");
             }
         } else {

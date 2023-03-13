@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
+import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -32,13 +34,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Collection;
-
 public class JudoonRunnable implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public JudoonRunnable(TARDISWeepingAngels plugin) {
+    public JudoonRunnable(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -47,7 +47,7 @@ public class JudoonRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getConfig().getInt("judoon.worlds." + name) > 0) {
+            if (plugin.getMonstersConfig().getInt("judoon.worlds." + name) > 0) {
                 // get the current judoons
                 int galactic = 0;
                 Collection<ArmorStand> police = w.getEntitiesByClass(ArmorStand.class);
@@ -57,7 +57,7 @@ public class JudoonRunnable implements Runnable {
                         galactic++;
                     }
                 }
-                if (galactic < plugin.getConfig().getInt("judoon.worlds." + name)) {
+                if (galactic < plugin.getMonstersConfig().getInt("judoon.worlds." + name)) {
                     // if less than maximum, spawn some more
                     spawnJudoon(w);
                 }
@@ -68,13 +68,13 @@ public class JudoonRunnable implements Runnable {
     private void spawnJudoon(World w) {
         Chunk[] chunks = w.getLoadedChunks();
         if (chunks.length > 0) {
-            Chunk c = chunks[TARDISWeepingAngels.random.nextInt(chunks.length)];
-            int x = c.getX() * 16 + TARDISWeepingAngels.random.nextInt(16);
-            int z = c.getZ() * 16 + TARDISWeepingAngels.random.nextInt(16);
+            Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+            int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = w.getHighestBlockYAt(x, z);
             Location l = new Location(w, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 Entity e = w.spawnEntity(l, EntityType.ARMOR_STAND);

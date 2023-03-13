@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
 import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -38,12 +40,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class DalekRunnable implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final int spawn_rate;
 
-    public DalekRunnable(TARDISWeepingAngels plugin) {
+    public DalekRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        spawn_rate = plugin.getConfig().getInt("spawn_rate.how_many");
+        spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
 
     @Override
@@ -51,7 +53,7 @@ public class DalekRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getConfig().getInt("daleks.worlds." + name) > 0) {
+            if (plugin.getMonstersConfig().getInt("daleks.worlds." + name) > 0) {
                 // get the current daleks
                 int daleks = 0;
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
@@ -62,7 +64,7 @@ public class DalekRunnable implements Runnable {
                     }
                 }
                 // count the current daleks
-                if (daleks < plugin.getConfig().getInt("daleks.worlds." + name)) {
+                if (daleks < plugin.getMonstersConfig().getInt("daleks.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
                         spawnDalek(w);
@@ -75,20 +77,20 @@ public class DalekRunnable implements Runnable {
     private void spawnDalek(World w) {
         Chunk[] chunks = w.getLoadedChunks();
         if (chunks.length > 0) {
-            Chunk c = chunks[TARDISWeepingAngels.random.nextInt(chunks.length)];
-            int x = c.getX() * 16 + TARDISWeepingAngels.random.nextInt(16);
-            int z = c.getZ() * 16 + TARDISWeepingAngels.random.nextInt(16);
+            Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+            int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = w.getHighestBlockYAt(x, z);
             Location l = new Location(w, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 EntityType dalek;
                 Monster monster;
-                int chance = TARDISWeepingAngels.random.nextInt(100);
-                boolean sec = chance < plugin.getConfig().getInt("daleks.daleck_sec_chance");
-                boolean dav = chance > (100 - plugin.getConfig().getInt("daleks.davros_chance"));
+                int chance = TARDISConstants.RANDOM.nextInt(100);
+                boolean sec = chance < plugin.getMonstersConfig().getInt("daleks.daleck_sec_chance");
+                boolean dav = chance > (100 - plugin.getMonstersConfig().getInt("daleks.davros_chance"));
                 if (sec) {
                     dalek = EntityType.ZOMBIFIED_PIGLIN;
                     monster = Monster.DALEK_SEC;

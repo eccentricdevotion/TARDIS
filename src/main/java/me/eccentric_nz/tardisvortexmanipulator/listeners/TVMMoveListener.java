@@ -1,7 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import java.util.HashMap;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,21 +11,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class TVMMoveListener implements Listener {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMMoveListener(TARDISVortexManipulator plugin) {
+    public TVMMoveListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
-        if (!plugin.getBeaconSetters().contains(uuid)) {
+        if (!plugin.getTvmSettings().getBeaconSetters().contains(uuid)) {
             return;
         }
         // if only the pitch or yaw has changed
@@ -32,18 +30,18 @@ public class TVMMoveListener implements Listener {
             return;
         }
         if (!event.getTo().getBlock().getType().equals(Material.BEACON)) {
-            plugin.getBeaconSetters().remove(uuid);
+            plugin.getTvmSettings().getBeaconSetters().remove(uuid);
             // remove beacon
             TVMResultSetBlock rs = new TVMResultSetBlock(plugin, uuid.toString());
             if (rs.resultSet()) {
                 rs.getBlocks().forEach((tvmb) -> {
                     tvmb.getBlock().setBlockData(tvmb.getBlockData());
                     // remove protection
-                    plugin.getBlocks().remove(tvmb.getBlock().getLocation());
+                    plugin.getTvmSettings().getBlocks().remove(tvmb.getBlock().getLocation());
                 });
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
-                new TVMQueryFactory(plugin).doDelete("beacons", where);
+                plugin.getQueryFactory().doDelete("beacons", where);
             }
         }
     }

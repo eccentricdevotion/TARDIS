@@ -3,26 +3,26 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetMessageById {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final int id;
     private final String prefix;
     private TVMMessage message;
 
-    public TVMResultSetMessageById(TARDISVortexManipulator plugin, int id) {
+    public TVMResultSetMessageById(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();

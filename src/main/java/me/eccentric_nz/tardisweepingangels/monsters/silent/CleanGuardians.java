@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silent;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.entity.Guardian;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-
 public class CleanGuardians implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public CleanGuardians(TARDISWeepingAngels plugin) {
+    public CleanGuardians(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -36,7 +35,7 @@ public class CleanGuardians implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getConfig().getInt("silent.worlds." + name) > 0) {
+            if (plugin.getMonstersConfig().getInt("silent.worlds." + name) > 0) {
                 Collection<Guardian> guardians = w.getEntitiesByClass(Guardian.class);
                 guardians.forEach((g) -> {
                     // does it have invisibility but not riding a Skeleton

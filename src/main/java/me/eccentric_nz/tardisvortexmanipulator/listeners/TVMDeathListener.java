@@ -3,7 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -14,16 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import java.util.UUID;
-
 /**
  * @author eccentric_nz
  */
 public class TVMDeathListener implements Listener {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMDeathListener(TARDISVortexManipulator plugin) {
+    public TVMDeathListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -38,7 +37,7 @@ public class TVMDeathListener implements Listener {
         plugin.debug("Damage: " + event.getCause().toString());
         Player p = (Player) event.getEntity();
         UUID uuid = p.getUniqueId();
-        if (plugin.getTravellers().contains(uuid)) {
+        if (plugin.getTvmSettings().getTravellers().contains(uuid)) {
             Location l = p.getLocation();
             World w = l.getWorld();
             if (!w.getEnvironment().equals(Environment.NETHER)) {
@@ -50,7 +49,7 @@ public class TVMDeathListener implements Listener {
                 plugin.debug("Nether spawn location");
             }
             p.teleport(l);
-            plugin.getTravellers().remove(uuid);
+            plugin.getTvmSettings().getTravellers().remove(uuid);
         }
     }
 }

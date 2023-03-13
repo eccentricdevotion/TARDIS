@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
@@ -36,8 +38,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.UUID;
 
 public class MonsterEquipment implements TARDISWeepingAngelsAPI {
 
@@ -336,8 +336,8 @@ public class MonsterEquipment implements TARDISWeepingAngelsAPI {
 
     @Override
     public void setFollowing(ArmorStand stand, Player player) {
-        int taskId = TARDISWeepingAngels.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDISWeepingAngels.plugin, new JudoonWalkRunnable(stand, 0.15d, player), 2L, 2L);
-        TARDISWeepingAngels.plugin.getFollowTasks().put(player.getUniqueId(), taskId);
+        int taskId = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new JudoonWalkRunnable(stand, 0.15d, player), 2L, 2L);
+        TARDISWeepingAngels.getFollowTasks().put(player.getUniqueId(), taskId);
     }
 
     @Override

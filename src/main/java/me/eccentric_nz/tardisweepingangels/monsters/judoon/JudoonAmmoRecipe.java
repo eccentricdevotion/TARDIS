@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -25,9 +25,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class JudoonAmmoRecipe {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public JudoonAmmoRecipe(TARDISWeepingAngels plugin) {
+    public JudoonAmmoRecipe(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -42,5 +42,6 @@ public class JudoonAmmoRecipe {
         r.addIngredient(Material.ARROW);
         r.addIngredient(Material.GUNPOWDER);
         plugin.getServer().addRecipe(r);
+        plugin.getTardisAPI().addShapelessRecipe("Judoon Ammunition", r);
     }
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.CommandSender;
@@ -25,9 +25,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class GiveCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public GiveCommand(TARDISWeepingAngels plugin) {
+    public GiveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -38,7 +38,7 @@ public class GiveCommand {
         // get the player
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Player not found!");
+            sender.sendMessage(plugin.getPluginName() + "Player not found!");
             return true;
         }
         // check monster type
@@ -47,23 +47,23 @@ public class GiveCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
             return true;
         }
         if (monster == Monster.K9 || monster == Monster.TOCLAFANE) {
-            sender.sendMessage(plugin.pluginName + "That monster type can't be equipped as a helmet!");
+            sender.sendMessage(plugin.getPluginName() + "That monster type can't be equipped as a helmet!");
             return true;
         }
         ItemStack is = HeadBuilder.getItemStack(monster);
         player.getInventory().addItem(is);
         player.updateInventory();
-        sender.sendMessage(plugin.pluginName + "Gave " + player.getName() + " 1 " + monster.getName() + " head");
+        sender.sendMessage(plugin.getPluginName() + "Gave " + player.getName() + " 1 " + monster.getName() + " head");
         String who = "The server";
         if (sender instanceof Player) {
             who = sender.getName();
         }
         if (!who.equals(player.getName())) {
-            sender.sendMessage(plugin.pluginName + who + " gave you 1 " + monster.getName() + " head");
+            sender.sendMessage(plugin.getPluginName() + who + " gave you 1 " + monster.getName() + " head");
         }
         return true;
     }

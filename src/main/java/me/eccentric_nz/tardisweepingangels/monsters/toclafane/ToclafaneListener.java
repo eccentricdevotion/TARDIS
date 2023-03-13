@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import org.bukkit.Location;
@@ -38,12 +40,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class ToclafaneListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final List<Material> drops = new ArrayList<>();
 
-    public ToclafaneListener(TARDISWeepingAngels plugin) {
+    public ToclafaneListener(TARDIS plugin) {
         this.plugin = plugin;
-        plugin.getConfig().getStringList("toclafane.drops").forEach((d) -> {
+        plugin.getMonstersConfig().getStringList("toclafane.drops").forEach((d) -> {
             drops.add(Material.valueOf(d));
         });
     }
@@ -98,15 +100,15 @@ public class ToclafaneListener implements Listener {
                         }
                         boolean destroy;
                         if (plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
-                            destroy = (plugin.getConfig().getBoolean("toclafane.destroy_blocks")) && WorldGuardChecker.canExplode(location);
+                            destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks")) && WorldGuardChecker.canExplode(location);
                         } else {
-                            destroy = (plugin.getConfig().getBoolean("toclafane.destroy_blocks"));
+                            destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks"));
                         }
                         // explode
                         location.getWorld().createExplosion(location, 2.0f, false, destroy);
                         // give drops
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack stack = new ItemStack(drops.get(TARDISWeepingAngels.random.nextInt(drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                            ItemStack stack = new ItemStack(drops.get(TARDISConstants.RANDOM.nextInt(drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                             location.getWorld().dropItemNaturally(location, stack);
                         }, 3L);
                     } else {

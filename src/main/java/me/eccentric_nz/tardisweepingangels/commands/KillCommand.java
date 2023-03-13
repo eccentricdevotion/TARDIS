@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
@@ -28,9 +29,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class KillCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public KillCommand(TARDISWeepingAngels plugin) {
+    public KillCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -41,7 +42,7 @@ public class KillCommand {
         String which = args[1].toUpperCase();
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            sender.sendMessage(plugin.pluginName + "Could not find a world with that name!");
+            sender.sendMessage(plugin.getPluginName() + "Could not find a world with that name!");
             return true;
         }
         int count = 0;
@@ -60,9 +61,9 @@ public class KillCommand {
                         count++;
                     }
                 }
-                sender.sendMessage(plugin.pluginName + "Removed " + count + " Silent Endermen in " + w.getName());
+                sender.sendMessage(plugin.getPluginName() + "Removed " + count + " Silent Endermen in " + w.getName());
             } else {
-                sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+                sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
             }
             return true;
         }
@@ -159,7 +160,7 @@ public class KillCommand {
             default -> {
             }
         }
-        sender.sendMessage(plugin.pluginName + "Removed " + count + " " + what + " in " + w.getName());
+        sender.sendMessage(plugin.getPluginName() + "Removed " + count + " " + what + " in " + w.getName());
         return true;
     }
 }

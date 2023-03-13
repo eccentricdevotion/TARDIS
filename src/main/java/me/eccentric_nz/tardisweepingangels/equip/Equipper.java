@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -81,7 +81,7 @@ public class Equipper {
         // set the helmet to the static monster model
         ee.setHelmet(helmet);
         // make the entity invisible
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISWeepingAngels.plugin, () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             le.addPotionEffect(invisibility);
         });

@@ -3,12 +3,15 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
+import java.util.*;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,17 +23,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-
 /**
  * @author eccentric_nz
  */
 public class TVMEquipListener implements Listener {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final HashSet<Material> transparent = new HashSet<>();
 
-    public TVMEquipListener(TARDISVortexManipulator plugin) {
+    public TVMEquipListener(TARDIS plugin) {
         this.plugin = plugin;
         transparent.add(Material.AIR);
         transparent.add(Material.ALLIUM);
@@ -77,7 +78,7 @@ public class TVMEquipListener implements Listener {
                 if (action.equals(Action.RIGHT_CLICK_AIR)) {
                     // open gui
                     ItemStack[] gui = new TVMGUI(plugin, rs.getTachyonLevel()).getGUI();
-                    Inventory vmg = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
+                    Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
                     vmg.setContents(gui);
                     player.openInventory(vmg);
                 } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.look_at_block") && player.hasPermission("vm.lookatblock")) {
@@ -105,7 +106,7 @@ public class TVMEquipListener implements Listener {
                     Random rnd = new Random();
                     if (rnd.nextInt(100) < plugin.getConfig().getInt("block_travel_malfunction_chance")) {
                         plugin.debug(player.getDisplayName() + " has malfunctioned");
-                        Parameters params = new Parameters(player, TVMUtils.getProtectionFlags());
+                        Parameters params = new Parameters(player, Flag.getAPIFlags());
                         Location _bl = null;
                         // since the TARDIS api is a little funky at times, retry up to ten times if a location isn't found
                         // this will exponentially increase the accuracy of the configured chance

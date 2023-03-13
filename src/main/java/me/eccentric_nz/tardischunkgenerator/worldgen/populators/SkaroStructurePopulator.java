@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.helpers.WeepingAngels;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.*;
+import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
@@ -90,7 +90,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                         for (int i = 0; i < random.nextInt(3) + 1; i++) {
                             LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.SKELETON);
                             if (plugin.getServer().getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
-                                WeepingAngels.getAPI().setDalekEquipment(le, false);
+                                DalekEquipment.set(le, false);
                             }
                         }
                     }

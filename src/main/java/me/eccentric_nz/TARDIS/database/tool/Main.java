@@ -326,6 +326,28 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getInt("task")) + end;
                                         bw.write(str);
                                     }
+                                    // shop
+                                    case items -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("item_id"), rs.getString("item"), rs.getString("location"), rs.getFloat("cost")) + end;
+                                        bw.write(str);
+                                    }
+                                    // vortex manipulator
+                                    case beacons -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("beacon_id"), rs.getString("uuid"), rs.getString("location"), rs.getString("block_type"), rs.getInt("data")) + end;
+                                        bw.write(str);
+                                    }
+                                    case manipulator -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getInt("tachyon_level")) + end;
+                                        bw.write(str);
+                                    }
+                                    case messages -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("message_id"), rs.getString("uuid_to"), rs.getString("uuid_from"), rs.getString("message"), rs.getString("date"), rs.getInt("read")) + end;
+                                        bw.write(str);
+                                    }
+                                    case saves -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("save_id"), rs.getString("uuid"), rs.getString("save_name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch")) + end;
+                                        bw.write(str);
+                                    }
                                     default -> {
                                     }
                                 }

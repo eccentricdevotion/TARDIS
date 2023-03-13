@@ -14,28 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.daleks;
+package me.eccentric_nz.tardisvortexmanipulator;
 
-import java.util.NavigableMap;
-import java.util.TreeMap;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import org.bukkit.Location;
 
-public class WeightedChoice<E> {
+/**
+ *
+ * @author eccentric_nz
+ */
+public class TVMSettings {
 
-    private final NavigableMap<Double, E> map = new TreeMap<>();
-    private double total = 0;
+    private final List<Location> blocks = new ArrayList<>();
+    private final List<UUID> beaconSetters = new ArrayList<>();
+    private final List<UUID> travellers = new ArrayList<>();
 
-    public WeightedChoice<E> add(double weight, E result) {
-        if (weight <= 0) {
-            return this;
-        }
-        total += weight;
-        map.put(total, result);
-        return this;
+    public List<Location> getBlocks() {
+        return blocks;
     }
 
-    public E next() {
-        double value = TARDISConstants.RANDOM.nextDouble() * total;
-        return map.higherEntry(value).getValue();
+    public List<UUID> getBeaconSetters() {
+        return beaconSetters;
+    }
+
+    public List<UUID> getTravellers() {
+        return travellers;
     }
 }

@@ -42,10 +42,10 @@ public class FollowerChecker {
         if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
             UUID uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
             if (playerUUID.equals(uuid)) {
-                if (TARDISWeepingAngels.plugin.getFollowTasks().containsKey(playerUUID)) {
+                if (TARDISWeepingAngels.getFollowTasks().containsKey(playerUUID)) {
                     following = true;
                     // remove following task
-                    TARDISWeepingAngels.plugin.getFollowTasks().remove(playerUUID);
+                    TARDISWeepingAngels.getFollowTasks().remove(playerUUID);
                 }
                 if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
                     monster = Monster.JUDOON;

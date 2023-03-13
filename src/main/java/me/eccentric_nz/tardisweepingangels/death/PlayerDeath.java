@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.death;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -30,9 +31,9 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class PlayerDeath implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public PlayerDeath(TARDISWeepingAngels plugin) {
+    public PlayerDeath(TARDIS plugin) {
         this.plugin = plugin;
     }
 

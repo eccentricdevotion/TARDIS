@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -28,9 +29,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class BeeSpawnListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public BeeSpawnListener(TARDISWeepingAngels plugin) {
+    public BeeSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -41,10 +42,10 @@ public class BeeSpawnListener implements Listener {
             return;
         }
         World world = entity.getWorld();
-        if (plugin.getConfig().getInt("tocalane.worlds." + world.getName()) < 1) {
+        if (plugin.getMonstersConfig().getInt("tocalane.worlds." + world.getName()) < 1) {
             return;
         }
-        if (TARDISWeepingAngels.random.nextInt(100) < plugin.getConfig().getInt("toclafane.spawn_from_bee")) {
+        if (TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("toclafane.spawn_from_bee")) {
             Entity toclafane = world.spawnEntity(entity.getLocation(), EntityType.ARMOR_STAND);
             ToclafaneEquipment.set(toclafane, false);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(toclafane, EntityType.ARMOR_STAND, Monster.TOCLAFANE, entity.getLocation()));

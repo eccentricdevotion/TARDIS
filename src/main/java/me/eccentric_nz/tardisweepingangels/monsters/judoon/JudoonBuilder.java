@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,9 +31,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class JudoonBuilder implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public JudoonBuilder(TARDISWeepingAngels plugin) {
+    public JudoonBuilder(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -56,7 +56,7 @@ public class JudoonBuilder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.RED_NETHER_BRICK_WALL) && west.getType().equals(Material.RED_NETHER_BRICK_WALL)) || (north.getType().equals(Material.RED_NETHER_BRICK_WALL) && south.getType().equals(Material.RED_NETHER_BRICK_WALL))) {
                 if (!event.getPlayer().hasPermission("tardisweepingangels.build.judoon")) {
-                    event.getPlayer().sendMessage(plugin.pluginName + "You don't have permission to build a Judoon!");
+                    event.getPlayer().sendMessage(plugin.getPluginName() + "You don't have permission to build a Judoon!");
                     return;
                 }
                 // we're building a Judoon

@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
@@ -25,16 +26,16 @@ import org.bukkit.util.Vector;
 
 public class JudoonGuardRunnable implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public JudoonGuardRunnable(TARDISWeepingAngels plugin) {
+    public JudoonGuardRunnable(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void run() {
-        if (plugin.getGuards().size() > 0) {
-            for (UUID uuid : plugin.getGuards()) {
+        if (TARDISWeepingAngels.getGuards().size() > 0) {
+            for (UUID uuid : TARDISWeepingAngels.getGuards()) {
                 Entity entity = Bukkit.getEntity(uuid);
                 if (entity != null) {
                     for (Entity e : entity.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
@@ -44,7 +45,7 @@ public class JudoonGuardRunnable implements Runnable {
                             if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
                                 int ammo = entity.getPersistentDataContainer().get(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER);
                                 if (ammo > 0 && health > 0) {
-                                    damageable.damage(plugin.getConfig().getDouble("judoon.damage"), entity);
+                                    damageable.damage(plugin.getMonstersConfig().getDouble("judoon.damage"), entity);
                                     entity.getWorld().playSound(entity.getLocation(), "judoon_fire", 1.0f, 1.0f);
                                     Snowball snowball = ((LivingEntity) entity).launchProjectile(Snowball.class);
                                     Vector direction = damageable.getLocation().toVector().subtract(entity.getLocation().toVector());

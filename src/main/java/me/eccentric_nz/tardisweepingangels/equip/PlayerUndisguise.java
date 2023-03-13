@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,9 +29,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class PlayerUndisguise implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public PlayerUndisguise(TARDISWeepingAngels plugin) {
+    public PlayerUndisguise(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -46,7 +47,7 @@ public class PlayerUndisguise implements Listener {
                         if (!im.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
                             if (im.hasDisplayName() && (im.getDisplayName().startsWith("Weeping Angel") || im.getDisplayName().startsWith("Ice Warrior") || im.getDisplayName().startsWith("Cyberman") || im.getDisplayName().startsWith("Empty Child") || im.getDisplayName().startsWith("Hath") || im.getDisplayName().startsWith("Silurian") || im.getDisplayName().startsWith("Sontaran") || im.getDisplayName().startsWith("Strax") || im.getDisplayName().startsWith("Zygon") || im.getDisplayName().startsWith("Vashta"))) {
                                 event.setCancelled(true);
-                                (event.getWhoClicked()).sendMessage(plugin.pluginName + "You must use the '/twad [monster] off' command to remove this armour!");
+                                (event.getWhoClicked()).sendMessage(plugin.getPluginName() + "You must use the '/twad [monster] off' command to remove this armour!");
                             }
                         }
                     }

@@ -58,7 +58,6 @@ public class JudoonWalkRunnable implements Runnable {
                     Vector velocity = target.subtract(pos);
                     stand.setVelocity(velocity.normalize().multiply(speed));
                     location.setDirection(velocity);
-//                    stand.teleport(location);
                     stand.setRotation(location.getYaw(), location.getPitch());
                     i++;
                     if (i == walkCycle.length) {

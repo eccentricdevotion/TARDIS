@@ -14,33 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.move;
+package me.eccentric_nz.tardisweepingangels.utils;
 
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import java.util.HashMap;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Drowned;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Guardian;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
  * @author macgeek
  */
 public class MonsterMoveListener implements Listener {
 
-    private final HashMap<UUID, MoveSession> moveSessions = new HashMap<>();
+    private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
 
     @EventHandler
     public void onMonsterMove(EntityMoveEvent event) {
         Entity entity = event.getEntity();
         if (MonsterEquipment.isAnimatedMonster(entity)) {
             // get or create a move session
-            MoveSession tms = getMoveSession(entity);
+            TARDISMoveSession tms = getMoveSession(entity);
             tms.setStaleLocation(entity.getLocation());
             // get the entity's equipment
             EntityEquipment ee = ((LivingEntity) entity).getEquipment();
@@ -106,11 +110,11 @@ public class MonsterMoveListener implements Listener {
      * @param entity the monster to track
      * @return the session for the monster
      */
-    public MoveSession getMoveSession(Entity entity) {
+    public TARDISMoveSession getMoveSession(Entity entity) {
         if (moveSessions.containsKey(entity.getUniqueId())) {
             return moveSessions.get(entity.getUniqueId());
         }
-        MoveSession session = new MoveSession(entity);
+        TARDISMoveSession session = new TARDISMoveSession(entity);
         moveSessions.put(entity.getUniqueId(), session);
         return session;
     }

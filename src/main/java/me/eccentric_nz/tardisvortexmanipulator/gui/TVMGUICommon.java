@@ -3,8 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -15,9 +15,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TVMGUICommon {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMGUICommon(TARDISVortexManipulator plugin) {
+    public TVMGUICommon(TARDIS plugin) {
         this.plugin = plugin;
     }
 

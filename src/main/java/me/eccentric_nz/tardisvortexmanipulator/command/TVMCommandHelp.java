@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 
 public class TVMCommandHelp implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandHelp(TARDISVortexManipulator plugin) {
+    public TVMCommandHelp(TARDIS plugin) {
         this.plugin = plugin;
     }
 

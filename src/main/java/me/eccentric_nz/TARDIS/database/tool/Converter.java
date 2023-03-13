@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.tool;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.command.CommandSender;
-
 import java.io.File;
 import java.sql.*;
 import java.util.MissingFormatArgumentException;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import static me.eccentric_nz.TARDIS.database.tool.Table.items;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
@@ -43,7 +43,8 @@ public class Converter implements Runnable {
      * @param plugin an instance of the TARDIS JavaPlugin class
      * @param sender the player using the /tadmin convert_database command
      * @throws SQLException if their is an SQL error
-     **/
+     *
+     */
     public Converter(TARDIS plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
         this.sender = sender;
@@ -88,6 +89,7 @@ public class Converter implements Runnable {
                             String str;
                             try {
                                 switch (table) {
+                                    // tardis
                                     case achievements -> {
                                         String player = rs.getString("player");
                                         if (rs.wasNull()) {
@@ -286,6 +288,28 @@ public class Converter implements Runnable {
                                     }
                                     case vortex -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getInt("task")) + end;
+                                        sb.append(str);
+                                    }
+                                    // shop
+                                    case items -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("item_id"), rs.getString("item"), rs.getString("location"), rs.getFloat("cost")) + end;
+                                        sb.append(str);
+                                    }
+                                    // vortex manipulator
+                                    case beacons -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("beacon_id"), rs.getString("uuid"), rs.getString("location"), rs.getString("block_type"), rs.getInt("data")) + end;
+                                        sb.append(str);
+                                    }
+                                    case manipulator -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getInt("tachyon_level")) + end;
+                                        sb.append(str);
+                                    }
+                                    case messages -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("message_id"), rs.getString("uuid_to"), rs.getString("uuid_from"), rs.getString("message"), rs.getString("date"), rs.getInt("read")) + end;
+                                        sb.append(str);
+                                    }
+                                    case saves -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("save_id"), rs.getString("uuid"), rs.getString("save_name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch")) + end;
                                         sb.append(str);
                                     }
                                     default -> {

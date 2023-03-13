@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -33,13 +35,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.UUID;
-
 public class K9Listener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public K9Listener(TARDISWeepingAngels plugin) {
+    public K9Listener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -50,10 +50,10 @@ public class K9Listener implements Listener {
                 return;
             }
             LivingEntity ent = event.getEntity();
-            if (ent.getType().equals(EntityType.WOLF) && plugin.getConfig().getBoolean("k9.by_taming")) {
+            if (ent.getType().equals(EntityType.WOLF) && plugin.getMonstersConfig().getBoolean("k9.by_taming")) {
                 Location location = ent.getLocation();
                 World world = location.getWorld();
-                if (!plugin.getConfig().getBoolean("k9.worlds." + world.getName())) {
+                if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + world.getName())) {
                     return;
                 }
                 Entity k9 = world.spawnEntity(location, EntityType.ARMOR_STAND);
@@ -78,19 +78,19 @@ public class K9Listener implements Listener {
                 UUID k9Id = ent.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (k9Id.equals(uuid)) {
                     player.playSound(ent.getLocation(), "k9", 1.0f, 1.0f);
-                    if (plugin.getFollowTasks().containsKey(uuid)) {
+                    if (TARDISWeepingAngels.getFollowTasks().containsKey(uuid)) {
                         // stay
-                        plugin.getServer().getScheduler().cancelTask(plugin.getFollowTasks().get(uuid));
-                        plugin.getFollowTasks().remove(uuid);
+                        plugin.getServer().getScheduler().cancelTask(TARDISWeepingAngels.getFollowTasks().get(uuid));
+                        TARDISWeepingAngels.getFollowTasks().remove(uuid);
                     } else {
                         // follow
                         if (player.hasPermission("tardisweepingangels.follow.k9")) {
                             int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new K9WalkRunnable((ArmorStand) ent, 0.15d, player), 2L, 2L);
-                            plugin.getFollowTasks().put(uuid, taskId);
+                            TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);
                         }
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + "That is not your K9!");
+                    player.sendMessage(plugin.getPluginName() + "That is not your K9!");
                 }
             }
         }
@@ -107,8 +107,8 @@ public class K9Listener implements Listener {
                     Player player = event.getPlayer();
                     Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
                     World world = location.getWorld();
-                    if (!plugin.getConfig().getBoolean("k9.worlds." + world.getName())) {
-                        player.sendMessage(plugin.pluginName + "You cannot spawn a K9 in this world!");
+                    if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + world.getName())) {
+                        player.sendMessage(plugin.getPluginName() + "You cannot spawn a K9 in this world!");
                         return;
                     }
                     // remove egg form inventory

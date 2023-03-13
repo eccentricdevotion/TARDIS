@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.sontarans;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -47,9 +48,9 @@ import org.bukkit.potion.PotionType;
 public class Butler implements Listener {
 
     private final List<UUID> milkers = new ArrayList<>();
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public Butler(TARDISWeepingAngels plugin) {
+    public Butler(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -113,7 +114,7 @@ public class Butler implements Listener {
                                 milkers.remove(uuid);
                             }, 3000L);
                         } else {
-                            p.sendMessage(plugin.pluginName + "Strax is not lactating right now, try again later.");
+                            p.sendMessage(plugin.getPluginName() + "Strax is not lactating right now, try again later.");
                         }
                     } else if (event.getHand().equals(EquipmentSlot.HAND)) {
                         p.playSound(zombie.getLocation(), "strax", 1.0f, 1.0f);

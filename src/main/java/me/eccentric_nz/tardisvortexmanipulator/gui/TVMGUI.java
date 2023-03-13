@@ -3,24 +3,23 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.Arrays;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author eccentric_nz
  */
 public class TVMGUI {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final int tachyonLevel;
     private final ItemStack[] gui;
 
-    public TVMGUI(TARDISVortexManipulator plugin, int tachyonLevel) {
+    public TVMGUI(TARDIS plugin, int tachyonLevel) {
         this.plugin = plugin;
         this.tachyonLevel = tachyonLevel;
         gui = getItemStack();

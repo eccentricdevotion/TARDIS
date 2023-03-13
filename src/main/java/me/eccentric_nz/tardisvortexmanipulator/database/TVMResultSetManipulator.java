@@ -3,28 +3,28 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetManipulator {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final String u;
     private final String prefix;
     private UUID uuid;
     private int tachyonLevel;
 
-    public TVMResultSetManipulator(TARDISVortexManipulator plugin, String u) {
+    public TVMResultSetManipulator(TARDIS plugin, String u) {
         this.plugin = plugin;
         this.u = u;
         prefix = this.plugin.getPrefix();

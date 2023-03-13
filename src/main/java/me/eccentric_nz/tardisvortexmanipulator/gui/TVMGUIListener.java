@@ -3,12 +3,14 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import java.util.*;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -28,15 +30,13 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
-
 /**
  * @author eccentric_nz
  */
 public class TVMGUIListener extends TVMGUICommon implements Listener {
 
-    private final TARDISVortexManipulator plugin;
-    List<String> titles = Arrays.asList("§4Vortex Manipulator", "§4VM Messages", "§4VM Saves");
+    private final TARDIS plugin;
+    List<String> titles = Arrays.asList(ChatColor.DARK_RED + "Vortex Manipulator", ChatColor.DARK_RED + "VM Messages", ChatColor.DARK_RED + "VM Saves");
     List<String> components = Arrays.asList("", "", "", "", "", "");
     List<Integer> letters = Arrays.asList(0, 4, 5);
     char[] two = new char[]{'2', 'a', 'b', 'c'};
@@ -63,7 +63,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     int th = 0;
     TVMQueryFactory qf;
 
-    public TVMGUIListener(TARDISVortexManipulator plugin) {
+    public TVMGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
         // init string positions
@@ -78,7 +78,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals("§4Vortex Manipulator")) {
+        if (name.equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -346,7 +346,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         set.put("z", l.getZ());
         set.put("yaw", l.getYaw());
         set.put("pitch", l.getPitch());
-        qf.doInsert("saves", set);
+        plugin.getQueryFactory().doInsert("saves", set);
         close(p);
         p.sendMessage(plugin.getPluginName() + "Current location saved.");
     }
@@ -357,7 +357,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             p.sendMessage(plugin.getPluginName() + "You don't have permission to use the lifesigns scanner!");
             return;
         }
-        int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
+        int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
             p.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to use the lifesigns scanner!");
             return;
@@ -372,7 +372,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         if (pname.isEmpty()) {
             p.sendMessage(plugin.getPluginName() + "Nearby entities:");
             // scan nearby entities
-            double d = plugin.getConfig().getDouble("lifesign_scan_distance");
+            double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
             List<Entity> ents = p.getNearbyEntities(d, d, d);
             if (ents.size() > 0) {
                 // record nearby entities
@@ -439,7 +439,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMSavesGUI tvms = new TVMSavesGUI(plugin, 0, 44, p.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
             p.openInventory(vmg);
         }, 2L);
@@ -454,7 +454,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMMessageGUI tvmm = new TVMMessageGUI(plugin, 0, 44, p.getUniqueId().toString());
             ItemStack[] gui = tvmm.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Messages");
+            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Messages");
             vmg.setContents(gui);
             p.openInventory(vmg);
         }, 2L);
@@ -468,25 +468,25 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         }
         UUID uuid = p.getUniqueId();
         String message = "You don't have enough tachyons to set a beacon signal!";
-        int required = plugin.getConfig().getInt("tachyon_use.beacon");
+        int required = plugin.getVortexConfig().getInt("tachyon_use.beacon");
         if (TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
             String ustr = uuid.toString();
             Location l = p.getLocation();
             // potential griefing, we need to check the location first!
             List<Flag> flags = new ArrayList<>();
-            if (plugin.getConfig().getBoolean("respect.factions")) {
+            if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
                 flags.add(Flag.RESPECT_FACTIONS);
             }
-            if (plugin.getConfig().getBoolean("respect.griefprevention")) {
+            if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
                 flags.add(Flag.RESPECT_GRIEFPREVENTION);
             }
-            if (plugin.getConfig().getBoolean("respect.towny")) {
+            if (plugin.getConfig().getBoolean("preferences.respect_towny")) {
                 flags.add(Flag.RESPECT_TOWNY);
             }
-            if (plugin.getConfig().getBoolean("respect.worldborder")) {
+            if (plugin.getConfig().getBoolean("preferences.respect_worldborder")) {
                 flags.add(Flag.RESPECT_WORLDBORDER);
             }
-            if (plugin.getConfig().getBoolean("respect.worldguard")) {
+            if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
                 flags.add(Flag.RESPECT_WORLDGUARD);
             }
             Parameters params = new Parameters(p, flags);
@@ -507,7 +507,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 qf.saveBeaconBlock(ustr, down.getRelative(f));
                 down.getRelative(f).setBlockData(iron);
             });
-            plugin.getBeaconSetters().add(uuid);
+            plugin.getTvmSettings().getBeaconSetters().add(uuid);
             message = "Beacon signal set, don't move!";
             // remove tachyons
             qf.alterTachyons(p.getUniqueId().toString(), -required);
@@ -534,26 +534,26 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         flags.add(Flag.PERMS_NETHER);
         flags.add(Flag.PERMS_THEEND);
         flags.add(Flag.PERMS_WORLD);
-        if (plugin.getConfig().getBoolean("respect.factions")) {
+        if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
             flags.add(Flag.RESPECT_FACTIONS);
         }
-        if (plugin.getConfig().getBoolean("respect.griefprevention")) {
+        if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
             flags.add(Flag.RESPECT_GRIEFPREVENTION);
         }
-        if (plugin.getConfig().getBoolean("respect.towny")) {
+        if (plugin.getConfig().getBoolean("preferences.respect_towny")) {
             flags.add(Flag.RESPECT_TOWNY);
         }
-        if (plugin.getConfig().getBoolean("respect.worldborder")) {
+        if (plugin.getConfig().getBoolean("preferences.respect_worldborder")) {
             flags.add(Flag.RESPECT_WORLDBORDER);
         }
-        if (plugin.getConfig().getBoolean("respect.worldguard")) {
+        if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
             flags.add(Flag.RESPECT_WORLDGUARD);
         }
         Parameters params = new Parameters(p, flags);
         int required;
         switch (dest.size()) {
             case 1, 2, 3 -> {
-                required = plugin.getConfig().getInt("tachyon_use.travel.world");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
                 if (plugin.getServer().getWorld(dest.get(0)) == null) {
@@ -571,7 +571,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
             }
             case 4 -> {
-                required = plugin.getConfig().getInt("tachyon_use.travel.coords");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
                 // world, x, y, z specified
                 World w;
                 if (dest.get(0).contains("~")) {
@@ -625,7 +625,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 }
             }
             default -> {
-                required = plugin.getConfig().getInt("tachyon_use.travel.random");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.random");
                 // random
                 l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
             }
@@ -640,7 +640,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             close(p);
             List<Player> players = new ArrayList<>();
             players.add(p);
-            if (plugin.getConfig().getBoolean("allow.multiple")) {
+            if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
                 p.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
                     if (e instanceof Player && !e.getUniqueId().equals(uuid)) {
                         players.add((Player) e);

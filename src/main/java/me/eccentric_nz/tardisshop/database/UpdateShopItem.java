@@ -7,23 +7,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class UpdateShopItem {
 
     private final TARDIS plugin;
-    private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
+    private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
 
     public UpdateShopItem(TARDIS plugin) {
         this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Updates data in the items table. This method builds an SQL query string from the parameters supplied and then
-     * executes the update.
+     * Updates data in the items table. This method builds an SQL query string
+     * from the parameters supplied and then executes the update.
      *
-     * @param data  a HashMap<String, Object> of table fields and values update.
-     * @param where a HashMap<String, Object> of table fields and values to select the records to update.
+     * @param data a HashMap<String, Object> of table fields and values update.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to update.
      */
     public void alterRecord(HashMap<String, Object> data, HashMap<String, Object> where) {
         PreparedStatement ps = null;
@@ -43,8 +47,7 @@ public class UpdateShopItem {
         where.clear();
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE items SET " + updates + " WHERE " + wheres;
-//        plugin.debug(query);
+        String query = "UPDATE " + prefix + "items SET " + updates + " WHERE " + wheres;
         try {
             ps = connection.prepareStatement(query);
             int s = 1;
@@ -73,7 +76,7 @@ public class UpdateShopItem {
 
     public void addLocation(String location, int id) {
         PreparedStatement ps = null;
-        final String query = "UPDATE items SET location = ? WHERE item_id = ?";
+        final String query = "UPDATE " + prefix + "items SET location = ? WHERE item_id = ?";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1, location);
@@ -94,7 +97,7 @@ public class UpdateShopItem {
 
     public void updateCost(double cost, int id) {
         PreparedStatement ps = null;
-        final String query = "UPDATE items SET cost = ? WHERE item_id = ?";
+        final String query = "UPDATE " + prefix + "items SET cost = ? WHERE item_id = ?";
         try {
             ps = connection.prepareStatement(query);
             ps.setDouble(1, cost);

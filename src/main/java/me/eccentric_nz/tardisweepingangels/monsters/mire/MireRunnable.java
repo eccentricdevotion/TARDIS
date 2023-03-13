@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.mire;
 
+import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -26,24 +29,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-
 public class MireRunnable implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final int spawn_rate;
 
-    public MireRunnable(TARDISWeepingAngels plugin) {
+    public MireRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        spawn_rate = plugin.getConfig().getInt("spawn_rate.how_many");
+        spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
 
     @Override
@@ -51,7 +52,7 @@ public class MireRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getConfig().getInt("the_mire.worlds." + name) > 0) {
+            if (plugin.getMonstersConfig().getInt("the_mire.worlds." + name) > 0) {
                 // get the current warriors
                 int mire = 0;
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
@@ -61,7 +62,7 @@ public class MireRunnable implements Runnable {
                         mire++;
                     }
                 }
-                if (mire < plugin.getConfig().getInt("the_mire.worlds." + name)) {
+                if (mire < plugin.getMonstersConfig().getInt("the_mire.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
                         spawnMire(w);
@@ -74,12 +75,12 @@ public class MireRunnable implements Runnable {
     private void spawnMire(World world) {
         Chunk[] chunks = world.getLoadedChunks();
         if (chunks.length > 0) {
-            Chunk chunk = chunks[TARDISWeepingAngels.random.nextInt(chunks.length)];
-            int x = chunk.getX() * 16 + TARDISWeepingAngels.random.nextInt(16);
-            int z = chunk.getZ() * 16 + TARDISWeepingAngels.random.nextInt(16);
+            Chunk chunk = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+            int x = chunk.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int z = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
-            if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+            if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
             LivingEntity mire = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);

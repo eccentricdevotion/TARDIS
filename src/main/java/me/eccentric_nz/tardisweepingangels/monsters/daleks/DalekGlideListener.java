@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -29,9 +30,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class DalekGlideListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public DalekGlideListener(TARDISWeepingAngels plugin) {
+    public DalekGlideListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -7,25 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisshop.TARDISShopItem;
 
 public class ResultSetUpdateShop {
 
-    private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     private List<TARDISShopItem> shopItems;
 
     public ResultSetUpdateShop(TARDIS plugin) {
         this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
     }
 
     public boolean getAll() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        final String query = "SELECT * FROM items";
+        final String query = "SELECT * FROM " + prefix + "items";
         try {
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();

@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.Set;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -41,10 +42,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class SpawnCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final Set<Material> trans = null;
 
-    public SpawnCommand(TARDISWeepingAngels plugin) {
+    public SpawnCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -58,13 +59,13 @@ public class SpawnCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
             return true;
         }
         if (sender instanceof Player player) {
             // check player has permission for this monster
             if (!player.hasPermission("tardisweepingangels.spawn." + monster.getPermission())) {
-                sender.sendMessage(plugin.pluginName + "You don't have permission to spawn a " + monster.toString() + "!");
+                sender.sendMessage(plugin.getPluginName() + "You don't have permission to spawn a " + monster.toString() + "!");
                 return true;
             }
             Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
@@ -145,7 +146,7 @@ public class SpawnCommand {
             player.playSound(a.getLocation(), sound, 1.0f, 1.0f);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(a, monster.getEntityType(), monster, eyeLocation));
         } else {
-            sender.sendMessage(plugin.pluginName + "Command can only be used by a player!");
+            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
         }
         return true;
     }

@@ -2,7 +2,7 @@ authors: [ eccentric_nz ]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
-load: STARTUP
+load: POSTWORLD
 softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard,Vault ]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/

@@ -118,8 +118,19 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sthevoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            // shop
+            "CREATE TABLE IF NOT EXISTS %sitems (item_id int(11) NOT NULL AUTO_INCREMENT, item varchar(64) DEFAULT '', location varchar(512) DEFAULT '', cost float(5,1) DEFAULT 0), PRIMARY KEY (item_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            // vortex manipulator
+            "CREATE TABLE IF NOT EXISTS %sbeacons (beacon_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', block_type varchar(32) DEFAULT '', data int(2) DEFAULT '0', PRIMARY KEY (beacon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %smanipulator (uuid varchar(48) NOT NULL, tachyon_level int(11) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %smessages (message_id int(11) NOT NULL AUTO_INCREMENT, uuid_to varchar(48) DEFAULT '', uuid_from varchar(48) DEFAULT '', message text NULL, date bigint(20), `read` int(1) DEFAULT '0', PRIMARY KEY (message_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %ssaves (save_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', save_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float DEFAULT '0', y float DEFAULT '0', z float DEFAULT '0', yaw float DEFAULT '0', pitch float DEFAULT '0', PRIMARY KEY (save_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
     public static final List<String> VALUES = Arrays.asList(
 
@@ -215,8 +226,19 @@ public class SQL {
 
             "(%s)",
 
-            "(%s, %s)"
+            "(%s, %s)",
 
+            // shop
+            "(%s, '%s', '%s', %s)",
+
+            // vortex manipulator
+            "(%s, '%s', '%s', '%s', %s)",
+
+            "('%s', %s)",
+
+            "(%s, '%s', '%s', '%s', '%s', %s)",
+
+            "(%s, '%s', '%s', '%s', %s, %s, %s, %s, %s)"
     );
     static final List<String> INSERTS = Arrays.asList(
 
@@ -312,7 +334,19 @@ public class SQL {
 
             "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
 
-            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
+            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES ",
+
+            //shop
+            "INSERT INTO `%sitems` (`item_id`, `item`, `location`, `cost`) VALUES ",
+
+            // vortex manipulator
+            "INSERT INTO `%sbeacons` (`beacon_id`, `uuid`, `location`, `block_type`, `data`) VALUES ",
+
+            "INSERT INTO `%smanipulator` (`uuid`, `tachyon_level`) VALUES ",
+
+            "INSERT INTO `%smessages` (`message_id`, `uuid_to`, `uuid_from`, `message`, `date`, `read`) VALUES ",
+
+            "INSERT INTO `%svm_saves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES "
 
     );
     static final String COMMENT = "--";

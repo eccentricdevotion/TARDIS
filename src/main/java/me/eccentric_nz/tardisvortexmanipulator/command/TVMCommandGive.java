@@ -1,22 +1,20 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import java.util.HashMap;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class TVMCommandGive implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final int full;
 
-    public TVMCommandGive(TARDISVortexManipulator plugin) {
+    public TVMCommandGive(TARDIS plugin) {
         this.plugin = plugin;
         full = this.plugin.getConfig().getInt("tachyon_use.max");
     }
@@ -64,7 +62,7 @@ public class TVMCommandGive implements CommandExecutor {
                 set.put("tachyon_level", amount);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", args[0]);
-                new TVMQueryFactory(plugin).doUpdate("manipulator", set, where);
+                plugin.getQueryFactory().doUpdate("manipulator", set, where);
                 sender.sendMessage(plugin.getPluginName() + "Tachyon level set to " + amount);
             } else {
                 sender.sendMessage(plugin.getPluginName() + "Player does not have a Vortex Manipulator!");

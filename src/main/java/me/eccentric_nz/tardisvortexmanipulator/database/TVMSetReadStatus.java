@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * @author eccentric_nz
  */
 public class TVMSetReadStatus implements Runnable {
 
-    private final TARDISVortexManipulator plugin;
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDIS plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int id;
     private final String prefix;
@@ -40,7 +40,7 @@ public class TVMSetReadStatus implements Runnable {
      * @param plugin an instance of the main plugin class
      * @param id     the message_id to set the status of
      */
-    public TVMSetReadStatus(TARDISVortexManipulator plugin, int id) {
+    public TVMSetReadStatus(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();

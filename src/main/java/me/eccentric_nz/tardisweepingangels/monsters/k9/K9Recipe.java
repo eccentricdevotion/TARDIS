@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -24,9 +25,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class K9Recipe {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public K9Recipe(TARDISWeepingAngels plugin) {
+    public K9Recipe(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -43,5 +44,6 @@ public class K9Recipe {
         recipe.setIngredient('R', Material.REDSTONE);
         recipe.setIngredient('B', Material.BONE);
         plugin.getServer().addRecipe(recipe);
+        plugin.getTardisAPI().addShapedRecipe("K9", recipe);
     }
 }

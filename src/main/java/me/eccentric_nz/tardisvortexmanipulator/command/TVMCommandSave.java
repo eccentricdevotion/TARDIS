@@ -1,8 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import org.bukkit.Location;
@@ -12,13 +12,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 public class TVMCommandSave implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommandSave(TARDISVortexManipulator plugin) {
+    public TVMCommandSave(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -81,7 +79,7 @@ public class TVMCommandSave implements CommandExecutor {
                     set.put("z", l.getZ());
                     set.put("yaw", l.getYaw());
                     set.put("pitch", l.getPitch());
-                    new TVMQueryFactory(plugin).doInsert("saves", set);
+                    plugin.getQueryFactory().doInsert("saves", set);
                     sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator location (" + args[0] + ") saved!");
                     return true;
                 }

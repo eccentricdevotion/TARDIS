@@ -1,9 +1,7 @@
 package me.eccentric_nz.tardisshop;
 
-import java.io.File;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisshop.database.TARDISShopDatabase;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemBreak;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemDespawn;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemExplode;
@@ -14,8 +12,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class TARDISShop {
-
-    private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
 
     public void enable(TARDIS plugin) {
         if (plugin.getPM().isPluginEnabled("Vault")) {
@@ -31,13 +27,6 @@ public class TARDISShop {
             TARDISShopCommand command = new TARDISShopCommand(plugin);
             plugin.getCommand("tardisshop").setExecutor(command);
             plugin.getCommand("tardisshop").setTabCompleter(command);
-            try {
-                String path = plugin.getDataFolder() + File.separator + "TARDISShop.db";
-                service.setConnection(path);
-                service.createTables();
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "Connection and Tables Error: " + e);
-            }
         } else {
             plugin.getLogger().log(Level.WARNING, "This feature requires the Vault plugin to function, disabling...");
         }

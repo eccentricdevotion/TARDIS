@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -77,7 +78,7 @@ public enum Monster {
         this.key = key;
         this.headModelData = headModelData;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -95,7 +96,7 @@ public enum Monster {
     }
 
     public int getCustomModelData() {
-        return (this == DALEK) ? customModelData + TARDISWeepingAngels.random.nextInt(16) : customModelData;
+        return (this == DALEK) ? customModelData + TARDISConstants.RANDOM.nextInt(16) : customModelData;
     }
 
     public Material getMaterial() {
@@ -105,7 +106,7 @@ public enum Monster {
     public NamespacedKey getKey() {
         return key;
     }
-    
+
     public int getHeadModelData() {
         return headModelData;
     }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -34,7 +35,7 @@ public class OodEquipment {
 
     public static void set(Player player, Entity entity, boolean disguise) {
         int colour = 0;
-        int r = TARDISWeepingAngels.random.nextInt(100);
+        int r = TARDISConstants.RANDOM.nextInt(100);
         if (r > 70) {
             colour = (r > 85) ? 20 : 10;
         }

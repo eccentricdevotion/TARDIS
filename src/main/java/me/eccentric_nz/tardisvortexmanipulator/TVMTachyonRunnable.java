@@ -3,6 +3,7 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetTachyon;
 import org.bukkit.entity.Player;
@@ -12,12 +13,12 @@ import org.bukkit.entity.Player;
  */
 public class TVMTachyonRunnable implements Runnable {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final int recharge;
     private final int max;
     private final TVMQueryFactory qf;
 
-    public TVMTachyonRunnable(TARDISVortexManipulator plugin) {
+    public TVMTachyonRunnable(TARDIS plugin) {
         this.plugin = plugin;
         recharge = this.plugin.getConfig().getInt("tachyon_use.recharge");
         max = this.plugin.getConfig().getInt("tachyon_use.max");

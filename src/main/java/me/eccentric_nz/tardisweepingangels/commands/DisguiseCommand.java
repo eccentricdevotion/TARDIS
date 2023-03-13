@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
@@ -33,9 +33,9 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class DisguiseCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public DisguiseCommand(TARDISWeepingAngels plugin) {
+    public DisguiseCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -49,14 +49,14 @@ public class DisguiseCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
             return true;
         }
         Player player = null;
        if (sender instanceof ConsoleCommandSender) {
             // check argument length
             if (args.length < 4) {
-                sender.sendMessage(plugin.pluginName + "You must supply a player UUID when using this command from the console!");
+                sender.sendMessage(plugin.getPluginName() + "You must supply a player UUID when using this command from the console!");
                 return true;
             }
             UUID uuid = UUID.fromString(args[3]);
@@ -66,16 +66,16 @@ public class DisguiseCommand {
             player = (Player) sender;
         }
          if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Command can only be used by a player, or a player UUID must be supplied!");
+            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player, or a player UUID must be supplied!");
             return true;
         }
         if (args.length < 3 || (!args[2].equalsIgnoreCase("on") && !args[2].equalsIgnoreCase("off"))) {
-            player.sendMessage(plugin.pluginName + "You need to specify if the disguise should be on or off!");
+            player.sendMessage(plugin.getPluginName() + "You need to specify if the disguise should be on or off!");
             return true;
         }
         PlayerInventory inv = player.getInventory();
         if (args[2].equalsIgnoreCase("on") && (inv.getBoots() != null || inv.getChestplate() != null || inv.getHelmet() != null || inv.getLeggings() != null)) {
-            player.sendMessage(plugin.pluginName + "Your armour slots must be empty before using this command!");
+            player.sendMessage(plugin.getPluginName() + "Your armour slots must be empty before using this command!");
             return true;
         }
         if (args[2].equalsIgnoreCase("on")) {

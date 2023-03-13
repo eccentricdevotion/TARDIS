@@ -3,7 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
-import me.eccentric_nz.TARDIS.enumeration.Flag;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetOutbox;
@@ -12,13 +13,12 @@ import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author eccentric_nz
  */
 public class TVMUtils {
+
+    private static String pluginName = "[Vortex manipulator] ";
 
     public static void movePlayers(List<Player> players, Location l, World from) {
 
@@ -38,13 +38,13 @@ public class TVMUtils {
 
         players.stream().map((p) -> {
             Player thePlayer = p;
-            TARDISVortexManipulator.plugin.getTravellers().add(p.getUniqueId());
+            TARDIS.plugin.getTvmSettings().getTravellers().add(p.getUniqueId());
             boolean allowFlight = thePlayer.getAllowFlight();
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISVortexManipulator.plugin, () -> {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                 thePlayer.teleport(theLocation);
                 thePlayer.getWorld().playSound(theLocation, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
             }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISVortexManipulator.plugin, () -> {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                 thePlayer.teleport(theLocation);
                 thePlayer.setNoDamageTicks(200);
                 if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
@@ -53,52 +53,23 @@ public class TVMUtils {
             }, 15L);
             return thePlayer;
         }).forEachOrdered((thePlayer) -> {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDISVortexManipulator.plugin, () -> {
-                if (TARDISVortexManipulator.plugin.getTravellers().contains(thePlayer.getUniqueId())) {
-                    TARDISVortexManipulator.plugin.getTravellers().remove(thePlayer.getUniqueId());
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                if (TARDIS.plugin.getTvmSettings().getTravellers().contains(thePlayer.getUniqueId())) {
+                    TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId());
                 }
             }, 100L);
         });
     }
 
     /**
-     * Get world protection flags
-     *
-     * @return List of flags with parameters
-     */
-    public static List<Flag> getProtectionFlags() {
-        List<Flag> flags = new ArrayList<>();
-        flags.add(Flag.PERMS_AREA);
-        flags.add(Flag.PERMS_NETHER);
-        flags.add(Flag.PERMS_THEEND);
-        flags.add(Flag.PERMS_WORLD);
-        if (TARDISVortexManipulator.plugin.getConfig().getBoolean("respect.factions")) {
-            flags.add(Flag.RESPECT_FACTIONS);
-        }
-        if (TARDISVortexManipulator.plugin.getConfig().getBoolean("respect.griefprevention")) {
-            flags.add(Flag.RESPECT_GRIEFPREVENTION);
-        }
-        if (TARDISVortexManipulator.plugin.getConfig().getBoolean("respect.towny")) {
-            flags.add(Flag.RESPECT_TOWNY);
-        }
-        if (TARDISVortexManipulator.plugin.getConfig().getBoolean("respect.worldborder")) {
-            flags.add(Flag.RESPECT_WORLDBORDER);
-        }
-        if (TARDISVortexManipulator.plugin.getConfig().getBoolean("respect.worldguard")) {
-            flags.add(Flag.RESPECT_WORLDGUARD);
-        }
-        return flags;
-    }
-
-    /**
      * Check they have enough tachyons.
      *
-     * @param uuid     the String UUID of the player to check
+     * @param uuid the String UUID of the player to check
      * @param required the minimum amount of Tachyon required
      * @return true if the player has enough energy
      */
     public static boolean checkTachyonLevel(String uuid, int required) {
-        TVMResultSetManipulator rs = new TVMResultSetManipulator(TARDISVortexManipulator.plugin, uuid);
+        TVMResultSetManipulator rs = new TVMResultSetManipulator(TARDIS.plugin, uuid);
         if (!rs.resultSet()) {
             return false;
         }
@@ -108,12 +79,12 @@ public class TVMUtils {
     /**
      * Send a list of saves to a player.
      *
-     * @param p    the player to message
-     * @param rss  the ResultSet containing the save information
+     * @param p the player to message
+     * @param rss the ResultSet containing the save information
      * @param page the page number of this list
      */
     public static void sendSaveList(Player p, TVMResultSetSaves rss, int page) {
-        p.sendMessage(TARDISVortexManipulator.plugin.getPluginName() + ChatColor.AQUA + "Saves (page " + page + ":");
+        p.sendMessage(pluginName + ChatColor.AQUA + "Saves (page " + page + ":");
         rss.getSaves().forEach((s) -> {
             p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ());
         });
@@ -122,12 +93,12 @@ public class TVMUtils {
     /**
      * Send a list of received messages to a player.
      *
-     * @param p    the player to message
-     * @param rsi  the ResultSet containing the message information
+     * @param p the player to message
+     * @param rsi the ResultSet containing the message information
      * @param page the page number of this list
      */
     public static void sendInboxList(Player p, TVMResultSetInbox rsi, int page) {
-        p.sendMessage(TARDISVortexManipulator.plugin.getPluginName() + ChatColor.AQUA + "Inbox (page " + page + "):");
+        p.sendMessage(pluginName + ChatColor.AQUA + "Inbox (page " + page + "):");
         rsi.getMail().forEach((m) -> {
             ChatColor colour = (m.isRead()) ? ChatColor.DARK_GRAY : ChatColor.GRAY;
             p.sendMessage(colour + "" + m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, 12));
@@ -137,12 +108,12 @@ public class TVMUtils {
     /**
      * Send a list of sent messages to a player.
      *
-     * @param p    the player to message
-     * @param rso  the ResultSet containing the message information
+     * @param p the player to message
+     * @param rso the ResultSet containing the message information
      * @param page the page number of this list
      */
     public static void sendOutboxList(Player p, TVMResultSetOutbox rso, int page) {
-        p.sendMessage(TARDISVortexManipulator.plugin.getPluginName() + ChatColor.AQUA + "Outbox (page " + page + "):");
+        p.sendMessage(pluginName + ChatColor.AQUA + "Outbox (page " + page + "):");
         rso.getMail().forEach((m) -> {
             p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, 12));
         });
@@ -155,7 +126,7 @@ public class TVMUtils {
      * @param m the message to read
      */
     public static void readMessage(Player p, TVMMessage m) {
-        p.sendMessage(TARDISVortexManipulator.plugin.getPluginName() + ChatColor.AQUA + TARDISVortexManipulator.plugin.getServer().getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate());
+        p.sendMessage(pluginName + ChatColor.AQUA + Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate());
         p.sendMessage(m.getMessage());
     }
 

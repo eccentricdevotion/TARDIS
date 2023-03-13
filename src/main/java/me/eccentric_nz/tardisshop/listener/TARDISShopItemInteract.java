@@ -70,7 +70,7 @@ public class TARDISShopItemInteract implements Listener {
                         TARDISShopItem item = rs.getShopItem();
                         String message;
                         // do they have sufficient credit?
-                        if (player.hasPermission("tardis.admin") && plugin.getConfig().getBoolean("tardis_admin_free")) {
+                        if (player.hasPermission("tardis.admin") && plugin.getShopConfig().getBoolean("tardis_admin_free")) {
                             // give item
                             giveItem(item.getItem(), player);
                             message = "Freebies for admins :)";

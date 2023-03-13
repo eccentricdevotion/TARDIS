@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -35,9 +36,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class JudoonListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public JudoonListener(TARDISWeepingAngels plugin) {
+    public JudoonListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -64,7 +65,7 @@ public class JudoonListener implements Listener {
                             ItemStack arrows = inv.getItem(a);
                             ItemMeta aim = arrows.getItemMeta();
                             if (aim.hasCustomModelData() && aim.getCustomModelData() == 13) {
-                                int remove = plugin.getConfig().getInt("judoon.ammunition") - ammo;
+                                int remove = plugin.getMonstersConfig().getInt("judoon.ammunition") - ammo;
                                 if (arrows.getAmount() > remove) {
                                     arrows.setAmount(arrows.getAmount() - remove);
                                 } else {
@@ -77,7 +78,7 @@ public class JudoonListener implements Listener {
                                 box.setItemMeta(bsm);
                                 stand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, (ammo + remove));
                                 stand.setCustomName("Ammunition: " + (ammo + remove));
-                                player.sendMessage(plugin.pluginName + "You reloaded " + remove + " Judoon ammunition.");
+                                player.sendMessage(plugin.getPluginName() + "You reloaded " + remove + " Judoon ammunition.");
                             }
                         }
                     } else {
@@ -85,13 +86,13 @@ public class JudoonListener implements Listener {
                         ItemMeta im = arm.getItemMeta();
                         int cmd = im.getCustomModelData();
                         if (cmd == 4 && ammo > 0) {
-                            if (!plugin.getPlayersWithGuards().contains(player.getUniqueId())) {
-                                player.sendMessage(plugin.pluginName + "Judoon ready for action.");
+                            if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {
+                                player.sendMessage(plugin.getPluginName() + "Judoon ready for action.");
                                 // add to repeating task
-                                plugin.getGuards().add(stand.getUniqueId());
-                                plugin.getPlayersWithGuards().add(player.getUniqueId());
+                                TARDISWeepingAngels.getGuards().add(stand.getUniqueId());
+                                TARDISWeepingAngels.getPlayersWithGuards().add(player.getUniqueId());
                             } else {
-                                player.sendMessage(plugin.pluginName + "You already have a Judoon guard!");
+                                player.sendMessage(plugin.getPluginName() + "You already have a Judoon guard!");
                             }
                             // point weapon
                             cmd = 9;
@@ -101,10 +102,10 @@ public class JudoonListener implements Listener {
                             // stand easy
                             cmd = 4;
                             stand.setCustomNameVisible(false);
-                            player.sendMessage(plugin.pluginName + "Judoon standing at ease.");
+                            player.sendMessage(plugin.getPluginName() + "Judoon standing at ease.");
                             // end guarding task
-                            plugin.getGuards().remove(stand.getUniqueId());
-                            plugin.getPlayersWithGuards().remove(player.getUniqueId());
+                            TARDISWeepingAngels.getGuards().remove(stand.getUniqueId());
+                            TARDISWeepingAngels.getPlayersWithGuards().remove(player.getUniqueId());
                         }
                         im.setCustomModelData(cmd);
                         arm.setItemMeta(im);
@@ -113,7 +114,7 @@ public class JudoonListener implements Listener {
                 } else if (judoonId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Judoon
                     stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
-                    player.sendMessage(TARDISWeepingAngels.plugin.pluginName + "You have claimed this Judoon!");
+                    player.sendMessage(plugin.getPluginName() + "You have claimed this Judoon!");
                 }
             }
         }

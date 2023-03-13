@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class TARDISWeepingAngelsCommand implements CommandExecutor {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public TARDISWeepingAngelsCommand(TARDISWeepingAngels plugin) {
+    public TARDISWeepingAngelsCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -69,7 +69,7 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                 }
                 default -> {
                     // unknown command
-                    sender.sendMessage(plugin.pluginName + "Invalid command! Try using tab completion.");
+                    sender.sendMessage(plugin.getPluginName() + "Invalid command! Try using tab completion.");
                     return true;
                 }
             }

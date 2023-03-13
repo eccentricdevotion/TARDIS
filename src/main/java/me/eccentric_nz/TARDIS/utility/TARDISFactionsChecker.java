@@ -41,7 +41,7 @@ public class TARDISFactionsChecker {
             Class.forName("com.massivecraft.factions.entity.MPlayer");
             // TODO add back support for official factions? I can't find whether it is 1.19 compatible...
             return false;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             return new TARDISFactionsUUID().isInFaction(p, l);
         }
     }

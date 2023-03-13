@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,13 +30,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.UUID;
-
 public class GasMask implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public GasMask(TARDISWeepingAngels plugin) {
+    public GasMask(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -42,7 +42,7 @@ public class GasMask implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!plugin.getEmpty().contains(uuid)) {
+        if (!TARDISWeepingAngels.getEmpty().contains(uuid)) {
             return;
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -67,8 +67,8 @@ public class GasMask implements Listener {
             player.updateInventory();
             // schedule delayed task
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getEmpty().remove(uuid);
-                plugin.getTimesUp().add(uuid);
+                TARDISWeepingAngels.getEmpty().remove(uuid);
+                TARDISWeepingAngels.getTimesUp().add(uuid);
             }, 600L);
         }, 5L);
     }
@@ -77,14 +77,14 @@ public class GasMask implements Listener {
     public void onHelmetClick(InventoryClickEvent event) {
         if (event.getInventory().getType().equals(InventoryType.CRAFTING) && event.getRawSlot() == 5) {
             Player player = (Player) event.getWhoClicked();
-            if (plugin.getEmpty().contains(player.getUniqueId())) {
+            if (TARDISWeepingAngels.getEmpty().contains(player.getUniqueId())) {
                 event.setCancelled(true);
             }
-            if (plugin.getTimesUp().contains(player.getUniqueId())) {
+            if (TARDISWeepingAngels.getTimesUp().contains(player.getUniqueId())) {
                 event.setCancelled(true);
                 player.getInventory().setHelmet(null);
                 player.updateInventory();
-                plugin.getTimesUp().remove(player.getUniqueId());
+                TARDISWeepingAngels.getTimesUp().remove(player.getUniqueId());
             }
         }
     }

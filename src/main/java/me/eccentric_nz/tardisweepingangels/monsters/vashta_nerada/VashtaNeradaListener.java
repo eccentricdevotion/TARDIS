@@ -19,8 +19,9 @@ package me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
@@ -41,10 +42,10 @@ import org.bukkit.potion.PotionEffectType;
 
 public class VashtaNeradaListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final List<BlockFace> faces = new ArrayList<>();
 
-    public VashtaNeradaListener(TARDISWeepingAngels plugin) {
+    public VashtaNeradaListener(TARDIS plugin) {
         this.plugin = plugin;
         faces.add(BlockFace.EAST);
         faces.add(BlockFace.NORTH);
@@ -57,7 +58,7 @@ public class VashtaNeradaListener implements Listener {
         Block b = event.getBlock();
         if (b != null && b.getType().equals(Material.BOOKSHELF)) {
             String name = WorldProcessor.sanitiseName(b.getWorld().getName());
-            if (plugin.getConfig().getInt("vashta_nerada.worlds." + name) > 0 && TARDISWeepingAngels.random.nextInt(100) < plugin.getConfig().getInt("vashta_nerada.worlds." + name)) {
+            if (plugin.getMonstersConfig().getInt("vashta_nerada.worlds." + name) > 0 && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("vashta_nerada.worlds." + name)) {
                 Location l = getClearLocation(event.getPlayer());
                 if (l != null) {
                     // spawn Vashta Nerada at location
@@ -71,7 +72,7 @@ public class VashtaNeradaListener implements Listener {
         Location ret = null;
         Block l = p.getLocation().getBlock();
         World w = l.getWorld();
-        Collections.shuffle(faces, TARDISWeepingAngels.random);
+        Collections.shuffle(faces, TARDISConstants.RANDOM);
         for (BlockFace f : faces) {
             Block b = l.getRelative(f, 3);
             if (b.getType().equals(Material.AIR) && b.getRelative(BlockFace.UP).getType().equals(Material.AIR)) {

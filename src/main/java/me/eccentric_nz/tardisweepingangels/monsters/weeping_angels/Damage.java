@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
+import java.util.ArrayList;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.MonsterTargetListener;
 import org.bukkit.Chunk;
@@ -34,19 +38,16 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Damage implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final Material mat;
     private final List<World> angel_tp_worlds = new ArrayList<>();
 
-    public Damage(TARDISWeepingAngels plugin) {
+    public Damage(TARDIS plugin) {
         this.plugin = plugin;
-        mat = Material.valueOf(plugin.getConfig().getString("angels.weapon"));
-        plugin.getConfig().getStringList("angels.teleport_worlds").forEach((w) -> {
+        mat = Material.valueOf(plugin.getMonstersConfig().getString("angels.weapon"));
+        plugin.getMonstersConfig().getStringList("angels.teleport_worlds").forEach((w) -> {
             World world = plugin.getServer().getWorld(w);
             if (w != null) {
                 angel_tp_worlds.add(world);
@@ -93,7 +94,7 @@ public class Damage implements Listener {
                         }, 1L);
                     }
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 300, 5, true, false));
-                    if (plugin.angelsCanSteal()) {
+                    if (TARDISWeepingAngels.angelsCanSteal()) {
                         stealKey(p);
                     }
                 }
@@ -105,12 +106,12 @@ public class Damage implements Listener {
         // is this world an allowable world? - we don't want Nether or TARDIS worlds
         if (!angel_tp_worlds.contains(w)) {
             // get a random teleport world
-            w = angel_tp_worlds.get(TARDISWeepingAngels.random.nextInt(angel_tp_worlds.size()));
+            w = angel_tp_worlds.get(TARDISConstants.RANDOM.nextInt(angel_tp_worlds.size()));
         }
         Chunk[] chunks = w.getLoadedChunks();
-        Chunk c = chunks[TARDISWeepingAngels.random.nextInt(chunks.length)];
-        int x = c.getX() * 16 + TARDISWeepingAngels.random.nextInt(16);
-        int z = c.getZ() * 16 + TARDISWeepingAngels.random.nextInt(16);
+        Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+        int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+        int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
         int y = w.getHighestBlockYAt(x, z);
         return new Location(w, x, y + 1, z);
     }
@@ -131,7 +132,7 @@ public class Damage implements Listener {
                             inv.setItem(slot, new ItemStack(Material.AIR));
                         }
                         p.updateInventory();
-                        p.sendMessage(plugin.pluginName + "The Weeping Angels stole your TARDIS Key");
+                        p.sendMessage(plugin.getPluginName() + "The Weeping Angels stole your TARDIS Key");
                         break;
                     }
                 }

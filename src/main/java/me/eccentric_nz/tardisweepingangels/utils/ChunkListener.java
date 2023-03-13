@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
@@ -35,9 +36,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ChunkListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public ChunkListener(TARDISWeepingAngels plugin) {
+    public ChunkListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -77,7 +78,7 @@ public class ChunkListener implements Listener {
                         if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SEA_DEVIL, drowned, false, false, true).setHelmetAndInvisibilty();
                         } else {
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISWeepingAngels.plugin, () -> drowned.remove(), 2L);
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> drowned.remove(), 2L);
                         }
                     }
                 }

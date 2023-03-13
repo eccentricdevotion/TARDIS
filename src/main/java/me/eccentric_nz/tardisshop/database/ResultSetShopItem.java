@@ -5,25 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisshop.TARDISShopItem;
 
 public class ResultSetShopItem {
 
-    private final TARDISShopDatabase service = TARDISShopDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     private TARDISShopItem shopItem;
 
     public ResultSetShopItem(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public boolean itemFromBlock(String location) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        final String query = "SELECT * FROM items WHERE location = ?";
+        final String query = "SELECT * FROM " + prefix + "items WHERE location = ?";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, location);

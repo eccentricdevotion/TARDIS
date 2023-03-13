@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -28,9 +29,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class MonsterHeadEquipListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public MonsterHeadEquipListener(TARDISWeepingAngels plugin) {
+    public MonsterHeadEquipListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 

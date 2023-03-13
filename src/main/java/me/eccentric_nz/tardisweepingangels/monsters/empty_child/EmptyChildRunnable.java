@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
 import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -37,12 +39,12 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class EmptyChildRunnable implements Runnable {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final int spawn_rate;
 
-    public EmptyChildRunnable(TARDISWeepingAngels plugin) {
+    public EmptyChildRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        spawn_rate = plugin.getConfig().getInt("spawn_rate.how_many");
+        spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
 
     @Override
@@ -50,7 +52,7 @@ public class EmptyChildRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getConfig().getInt("empty_child.worlds." + name) > 0) {
+            if (plugin.getMonstersConfig().getInt("empty_child.worlds." + name) > 0) {
                 // get the current warriors
                 int wheresmymummy = 0;
                 Collection<Zombie> children = w.getEntitiesByClass(Zombie.class);
@@ -61,7 +63,7 @@ public class EmptyChildRunnable implements Runnable {
                     }
                 }
                 // count the current empty children
-                if (wheresmymummy < plugin.getConfig().getInt("empty_child.worlds." + name)) {
+                if (wheresmymummy < plugin.getMonstersConfig().getInt("empty_child.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
                         spawnEmptyChild(w);
@@ -74,13 +76,13 @@ public class EmptyChildRunnable implements Runnable {
     private void spawnEmptyChild(World world) {
         Chunk[] chunks = world.getLoadedChunks();
         if (chunks.length > 0) {
-            Chunk chunk = chunks[TARDISWeepingAngels.random.nextInt(chunks.length)];
-            int x = chunk.getX() * 16 + TARDISWeepingAngels.random.nextInt(16);
-            int z = chunk.getZ() * 16 + TARDISWeepingAngels.random.nextInt(16);
+            Chunk chunk = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+            int x = chunk.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int z = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 LivingEntity e = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);

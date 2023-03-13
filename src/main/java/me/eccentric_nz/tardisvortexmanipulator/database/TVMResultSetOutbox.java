@@ -3,29 +3,29 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 
 /**
  * @author eccentric_nz
  */
 public class TVMResultSetOutbox {
 
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
     private final String where;
     private final int start, limit;
     private final List<TVMMessage> mail = new ArrayList<>();
     private final String prefix;
 
-    public TVMResultSetOutbox(TARDISVortexManipulator plugin, String where, int start, int limit) {
+    public TVMResultSetOutbox(TARDIS plugin, String where, int start, int limit) {
         this.plugin = plugin;
         this.where = where;
         this.start = start;

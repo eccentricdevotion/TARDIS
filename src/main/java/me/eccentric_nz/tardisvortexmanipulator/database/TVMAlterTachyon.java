@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * @author eccentric_nz
  */
 public class TVMAlterTachyon implements Runnable {
 
-    private final TARDISVortexManipulator plugin;
-    private final TVMDatabase service = TVMDatabase.getInstance();
+    private final TARDIS plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int amount;
     private final String uuid;
@@ -42,7 +42,7 @@ public class TVMAlterTachyon implements Runnable {
      * @param amount the amount of energy to add or remove (use a negative value)
      * @param uuid   a player's UUID.
      */
-    public TVMAlterTachyon(TARDISVortexManipulator plugin, int amount, String uuid) {
+    public TVMAlterTachyon(TARDIS plugin, int amount, String uuid) {
         this.plugin = plugin;
         this.amount = amount;
         this.uuid = uuid;

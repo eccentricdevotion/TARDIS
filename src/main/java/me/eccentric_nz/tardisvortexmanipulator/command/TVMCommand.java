@@ -1,12 +1,16 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import java.util.ArrayList;
+import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -18,14 +22,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TVMCommand implements CommandExecutor {
 
-    private final TARDISVortexManipulator plugin;
+    private final TARDIS plugin;
 
-    public TVMCommand(TARDISVortexManipulator plugin) {
+    public TVMCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +58,7 @@ public class TVMCommand implements CommandExecutor {
                     if (rs.resultSet()) {
                         // open gui
                         ItemStack[] gui = new TVMGUI(plugin, rs.getTachyonLevel()).getGUI();
-                        Inventory vmg = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
+                        Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
                         vmg.setContents(gui);
                         player.openInventory(vmg);
                         return true;
@@ -99,7 +100,7 @@ public class TVMCommand implements CommandExecutor {
                     return true;
                 }
 
-                Parameters params = new Parameters(player, TVMUtils.getProtectionFlags());
+                Parameters params = new Parameters(player, Flag.getAPIFlags());
                 int required;
                 List<String> worlds = new ArrayList<>();
                 Location l;

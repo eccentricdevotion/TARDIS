@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.death;
 
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -43,7 +45,7 @@ import org.bukkit.potion.PotionType;
 
 public class Death implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final List<Material> angel_drops = new ArrayList<>();
     private final List<Material> cyber_drops = new ArrayList<>();
     private final List<Material> dalek_drops = new ArrayList<>();
@@ -62,25 +64,25 @@ public class Death implements Listener {
     private final List<Material> vashta_drops = new ArrayList<>();
     private final List<Material> zygon_drops = new ArrayList<>();
 
-    public Death(TARDISWeepingAngels plugin) {
+    public Death(TARDIS plugin) {
         this.plugin = plugin;
-        plugin.getConfig().getStringList("angels.drops").forEach((a) -> angel_drops.add(Material.valueOf(a)));
-        plugin.getConfig().getStringList("cybermen.drops").forEach((c) -> cyber_drops.add(Material.valueOf(c)));
-        plugin.getConfig().getStringList("daleks.drops").forEach((d) -> dalek_drops.add(Material.valueOf(d)));
-        plugin.getConfig().getStringList("daleks.dalek_sec_drops").forEach((d) -> dalek_sec_drops.add(Material.valueOf(d)));
-        plugin.getConfig().getStringList("daleks.davros_drops").forEach((d) -> davros_drops.add(Material.valueOf(d)));
-        plugin.getConfig().getStringList("sea_devils.drops").forEach((d) -> devil_drops.add(Material.valueOf(d)));
-        plugin.getConfig().getStringList("empty_child.drops").forEach((e) -> empty_drops.add(Material.valueOf(e)));
-        plugin.getConfig().getStringList("hath.drops").forEach((e) -> hath_drops.add(Material.valueOf(e)));
-        plugin.getConfig().getStringList("headless_monks.drops").forEach((e) -> headless_drops.add(Material.valueOf(e)));
-        plugin.getConfig().getStringList("ice_warriors.drops").forEach((i) -> ice_drops.add(Material.valueOf(i)));
-        plugin.getConfig().getStringList("silent.drops").forEach((m) -> silent_drops.add(Material.valueOf(m)));
-        plugin.getConfig().getStringList("silurians.drops").forEach((s) -> silurian_drops.add(Material.valueOf(s)));
-        plugin.getConfig().getStringList("slitheen.drops").forEach((s) -> slitheen_drops.add(Material.valueOf(s)));
-        plugin.getConfig().getStringList("sontarans.drops").forEach((o) -> sontaran_drops.add(Material.valueOf(o)));
-        plugin.getConfig().getStringList("the_mire.drops").forEach((e) -> mire_drops.add(Material.valueOf(e)));
-        plugin.getConfig().getStringList("vashta_nerada.drops").forEach((v) -> vashta_drops.add(Material.valueOf(v)));
-        plugin.getConfig().getStringList("zygons.drops").forEach((z) -> zygon_drops.add(Material.valueOf(z)));
+        plugin.getMonstersConfig().getStringList("angels.drops").forEach((a) -> angel_drops.add(Material.valueOf(a)));
+        plugin.getMonstersConfig().getStringList("cybermen.drops").forEach((c) -> cyber_drops.add(Material.valueOf(c)));
+        plugin.getMonstersConfig().getStringList("daleks.drops").forEach((d) -> dalek_drops.add(Material.valueOf(d)));
+        plugin.getMonstersConfig().getStringList("daleks.dalek_sec_drops").forEach((d) -> dalek_sec_drops.add(Material.valueOf(d)));
+        plugin.getMonstersConfig().getStringList("daleks.davros_drops").forEach((d) -> davros_drops.add(Material.valueOf(d)));
+        plugin.getMonstersConfig().getStringList("sea_devils.drops").forEach((d) -> devil_drops.add(Material.valueOf(d)));
+        plugin.getMonstersConfig().getStringList("empty_child.drops").forEach((e) -> empty_drops.add(Material.valueOf(e)));
+        plugin.getMonstersConfig().getStringList("hath.drops").forEach((e) -> hath_drops.add(Material.valueOf(e)));
+        plugin.getMonstersConfig().getStringList("headless_monks.drops").forEach((e) -> headless_drops.add(Material.valueOf(e)));
+        plugin.getMonstersConfig().getStringList("ice_warriors.drops").forEach((i) -> ice_drops.add(Material.valueOf(i)));
+        plugin.getMonstersConfig().getStringList("silent.drops").forEach((m) -> silent_drops.add(Material.valueOf(m)));
+        plugin.getMonstersConfig().getStringList("silurians.drops").forEach((s) -> silurian_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("slitheen.drops").forEach((s) -> slitheen_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("sontarans.drops").forEach((o) -> sontaran_drops.add(Material.valueOf(o)));
+        plugin.getMonstersConfig().getStringList("the_mire.drops").forEach((e) -> mire_drops.add(Material.valueOf(e)));
+        plugin.getMonstersConfig().getStringList("vashta_nerada.drops").forEach((v) -> vashta_drops.add(Material.valueOf(v)));
+        plugin.getMonstersConfig().getStringList("zygons.drops").forEach((z) -> zygon_drops.add(Material.valueOf(z)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -90,10 +92,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.ANGEL, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.WEEPING_ANGEL);
                 } else {
-                    stack = new ItemStack(angel_drops.get(TARDISWeepingAngels.random.nextInt(angel_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(angel_drops.get(TARDISConstants.RANDOM.nextInt(angel_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -101,10 +103,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.SILURIAN);
                 } else {
-                    stack = new ItemStack(silurian_drops.get(TARDISWeepingAngels.random.nextInt(silurian_drops.size())), TARDISWeepingAngels.random.nextInt(2) + 1);
+                    stack = new ItemStack(silurian_drops.get(TARDISConstants.RANDOM.nextInt(silurian_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -112,12 +114,12 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.HEADLESS_MONK);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.IRON_SWORD, 1);
                 } else {
-                    stack = new ItemStack(headless_drops.get(TARDISWeepingAngels.random.nextInt(headless_drops.size())), TARDISWeepingAngels.random.nextInt(2) + 1);
+                    stack = new ItemStack(headless_drops.get(TARDISConstants.RANDOM.nextInt(headless_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -125,12 +127,12 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.MIRE);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.NETHERITE_SCRAP, 2);
                 } else {
-                    stack = new ItemStack(mire_drops.get(TARDISWeepingAngels.random.nextInt(mire_drops.size())), TARDISWeepingAngels.random.nextInt(2) + 1);
+                    stack = new ItemStack(mire_drops.get(TARDISConstants.RANDOM.nextInt(mire_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
                     if (stack.getType() == Material.POTION) {
                         // make it a strength potion
                         PotionMeta potionMeta = (PotionMeta)stack.getItemMeta();
@@ -144,10 +146,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.DALEK);
                 } else {
-                    stack = new ItemStack(dalek_drops.get(TARDISWeepingAngels.random.nextInt(dalek_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(dalek_drops.get(TARDISConstants.RANDOM.nextInt(dalek_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -155,10 +157,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.DALEK_SEC, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.DALEK_SEC);
                 } else {
-                    stack = new ItemStack(dalek_sec_drops.get(TARDISWeepingAngels.random.nextInt(dalek_sec_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(dalek_sec_drops.get(TARDISConstants.RANDOM.nextInt(dalek_sec_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -166,10 +168,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.DAVROS, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.DAVROS);
                 } else {
-                    stack = new ItemStack(davros_drops.get(TARDISWeepingAngels.random.nextInt(davros_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(davros_drops.get(TARDISConstants.RANDOM.nextInt(davros_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -177,12 +179,12 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.SEA_DEVIL);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.TRIDENT, 1);
                 } else {
-                    stack = new ItemStack(devil_drops.get(TARDISWeepingAngels.random.nextInt(devil_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(devil_drops.get(TARDISConstants.RANDOM.nextInt(devil_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -190,10 +192,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.SLITHEEN);
                 } else {
-                    stack = new ItemStack(slitheen_drops.get(TARDISWeepingAngels.random.nextInt(slitheen_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(slitheen_drops.get(TARDISConstants.RANDOM.nextInt(slitheen_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -206,10 +208,10 @@ public class Death implements Listener {
                 }
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.SILENT);
                 } else {
-                    stack = new ItemStack(silent_drops.get(TARDISWeepingAngels.random.nextInt(silent_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(silent_drops.get(TARDISConstants.RANDOM.nextInt(silent_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
             }
@@ -218,10 +220,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.WARRIOR, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.ICE_WARRIOR);
                 } else {
-                    stack = new ItemStack(ice_drops.get(TARDISWeepingAngels.random.nextInt(ice_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(ice_drops.get(TARDISConstants.RANDOM.nextInt(ice_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -229,10 +231,10 @@ public class Death implements Listener {
             if (pdc.has(TARDISWeepingAngels.HATH, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
                 ItemStack stack;
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.HATH);
                 } else {
-                    stack = new ItemStack(hath_drops.get(TARDISWeepingAngels.random.nextInt(hath_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(hath_drops.get(TARDISConstants.RANDOM.nextInt(hath_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
@@ -242,68 +244,68 @@ public class Death implements Listener {
             ItemStack stack;
             if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.CYBERMAN);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.IRON_INGOT, 1);
                 } else {
-                    stack = new ItemStack(cyber_drops.get(TARDISWeepingAngels.random.nextInt(cyber_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(cyber_drops.get(TARDISConstants.RANDOM.nextInt(cyber_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
             }
             if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.EMPTY_CHILD);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.POTION);
                     PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
                     potionMeta.setBasePotionData(new PotionData(PotionType.REGEN));
                     stack.setItemMeta(potionMeta);
                 } else {
-                    stack = new ItemStack(empty_drops.get(TARDISWeepingAngels.random.nextInt(empty_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(empty_drops.get(TARDISConstants.RANDOM.nextInt(empty_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
             }
             if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.SONTARAN);
-                } else if (TARDISWeepingAngels.random.nextInt(100) < 6) {
+                } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                     stack = new ItemStack(Material.MILK_BUCKET, 1);
                 } else {
-                    stack = new ItemStack(sontaran_drops.get(TARDISWeepingAngels.random.nextInt(sontaran_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(sontaran_drops.get(TARDISConstants.RANDOM.nextInt(sontaran_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
             }
             if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.VASHTA_NERADA);
                 } else {
-                    stack = new ItemStack(vashta_drops.get(TARDISWeepingAngels.random.nextInt(vashta_drops.size())), TARDISWeepingAngels.random.nextInt(2) + 1);
+                    stack = new ItemStack(vashta_drops.get(TARDISConstants.RANDOM.nextInt(vashta_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
             }
             if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
                 event.getDrops().clear();
-                if (TARDISWeepingAngels.random.nextInt(100) < 3) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     stack = HeadBuilder.getItemStack(Monster.ZYGON);
                 } else {
-                    stack = new ItemStack(zygon_drops.get(TARDISWeepingAngels.random.nextInt(zygon_drops.size())), TARDISWeepingAngels.random.nextInt(1) + 1);
+                    stack = new ItemStack(zygon_drops.get(TARDISConstants.RANDOM.nextInt(zygon_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                 }
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 return;
             }
         }
         if (event.getEntityType().equals(EntityType.VILLAGER) || event.getEntityType().equals(EntityType.PLAYER)) {
-            if (!plugin.getConfig().getBoolean("cybermen.can_upgrade")) {
+            if (!plugin.getMonstersConfig().getBoolean("cybermen.can_upgrade")) {
                 return;
             }
-            if (plugin.isCitizensEnabled() && CitizensAPI.getNPCRegistry().isNPC(event.getEntity())) {
+            if (TARDISWeepingAngels.isCitizensEnabled() && CitizensAPI.getNPCRegistry().isNPC(event.getEntity())) {
                 return;
             }
             EntityDamageEvent damage = event.getEntity().getLastDamageCause();
@@ -325,7 +327,7 @@ public class Death implements Listener {
                 }
                 if (apdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                     if (event.getEntity() instanceof Player player) {
-                        plugin.getEmpty().add(player.getUniqueId());
+                        TARDISWeepingAngels.getEmpty().add(player.getUniqueId());
                     }
                 }
             }

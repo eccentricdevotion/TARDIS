@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
@@ -46,7 +47,7 @@ public class DalekEquipment {
         ee.setChestplate(null);
         ee.setLeggings(null);
         ee.setBoots(null);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISWeepingAngels.plugin, () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             le.addPotionEffect(invisibility);
         });
@@ -58,7 +59,7 @@ public class DalekEquipment {
             bow.setItemMeta(bim);
             ee.setItemInMainHand(bow);
             ee.setItemInMainHandDropChance(0);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISWeepingAngels.plugin, () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                 PotionEffect resistance = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 360000, 1, true, false);
                 le.addPotionEffect(resistance);
                 AttributeInstance attribute = le.getAttribute(Attribute.GENERIC_MAX_HEALTH);

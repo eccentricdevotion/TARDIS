@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -40,12 +41,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class SilurianSpawnerListener implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final int spawn_rate;
 
-    public SilurianSpawnerListener(TARDISWeepingAngels plugin) {
+    public SilurianSpawnerListener(TARDIS plugin) {
         this.plugin = plugin;
-        spawn_rate = plugin.getConfig().getInt("spawn_rate.how_many");
+        spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
 
     @EventHandler
@@ -54,7 +55,7 @@ public class SilurianSpawnerListener implements Listener {
         if (spawner.getSpawnedType().equals(EntityType.CAVE_SPIDER)) {
             Location cave = event.getLocation();
             String name = WorldProcessor.sanitiseName(cave.getWorld().getName());
-            if (plugin.getConfig().getInt("silurians.worlds." + name) <= 0) {
+            if (plugin.getMonstersConfig().getInt("silurians.worlds." + name) <= 0) {
                 return;
             }
             if (plugin.getServer().getPluginManager().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(cave)) {
@@ -69,7 +70,7 @@ public class SilurianSpawnerListener implements Listener {
                     silurians.add(s);
                 }
             });
-            if (silurians.size() < plugin.getConfig().getInt("silurians.worlds." + name)) {
+            if (silurians.size() < plugin.getMonstersConfig().getInt("silurians.worlds." + name)) {
                 // if less than maximum, spawn another
                 for (int i = 0; i < spawn_rate; i++) {
                     LivingEntity e = (LivingEntity) cave.getWorld().spawnEntity(cave, EntityType.SKELETON);

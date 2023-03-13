@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import java.io.*;
+import java.util.Locale;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import org.bukkit.Bukkit;
 
-import java.io.*;
-import java.util.Locale;
-import java.util.logging.Level;
-
 /**
- * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly in design, with different factions
- * throughout time and space.
+ * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly
+ * in design, with different factions throughout time and space.
  *
  * @author eccentric_nz
  */
@@ -42,8 +41,8 @@ public class TARDISFileCopier {
     /**
      * Copies a file to the TARDIS plugin directory if it is not present.
      *
-     * @param filepath  the path to the file to write to
-     * @param in        the input file to read from
+     * @param filepath the path to the file to write to
+     * @param in the input file to read from
      * @param overwrite whether to overwrite the file
      * @return a File
      */
@@ -146,6 +145,11 @@ public class TARDISFileCopier {
     public File copy(String filename) {
         String filepath = plugin.getDataFolder() + File.separator + filename;
         InputStream in = plugin.getResource(filename);
-        return copy(filepath, in, false);
+        if (in != null) {
+            return copy(filepath, in, false);
+        } else {
+            plugin.debug(filename);
+            return null;
+        }
     }
 }

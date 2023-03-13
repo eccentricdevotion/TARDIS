@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * SQLite database creator and updater.
@@ -251,6 +250,26 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'vortex'
             String queryVortex = "CREATE TABLE IF NOT EXISTS " + prefix + "vortex (tardis_id INTEGER PRIMARY KEY NOT NULL, task INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVortex);
+
+            // Table structure for shop items
+            String queryItems = "CREATE TABLE IF NOT EXISTS " + prefix + "items (item_id INTEGER PRIMARY KEY NOT NULL, item TEXT DEFAULT '', location TEXT DEFAULT '', cost REAL DEFAULT 0)";
+            statement.executeUpdate(queryItems);
+
+            // Table structure for table 'saves'
+            String querySaves = "CREATE TABLE IF NOT EXISTS " + prefix + "saves (save_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', save_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0)";
+            statement.executeUpdate(querySaves);
+
+            // Table structure for table 'saves'
+            String queryMessages = "CREATE TABLE IF NOT EXISTS " + prefix + "messages (message_id INTEGER PRIMARY KEY NOT NULL, uuid_to TEXT DEFAULT '', uuid_from TEXT DEFAULT '', message TEXT DEFAULT '', date INTEGER DEFAULT (strftime('%s', 'now')), read INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryMessages);
+
+            //  Table structure for table 'beacon'
+            String queryBeacons = "CREATE TABLE IF NOT EXISTS " + prefix + "beacons (beacon_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '', block_type TEXT DEFAULT '', data INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryBeacons);
+
+            //  Table structure for table 'manipulator'
+            String queryManipulator = "CREATE TABLE IF NOT EXISTS " + prefix + "manipulator (uuid TEXT PRIMARY KEY NOT NULL, tachyon_level INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryManipulator);
 
             // delete old submerged, gravity and levers tables
             String dropSubmerged = "DROP TABLE IF EXISTS submerged";

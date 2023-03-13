@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import java.util.Collection;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -24,13 +25,11 @@ import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-
 public class CountCommand {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
 
-    public CountCommand(TARDISWeepingAngels plugin) {
+    public CountCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -43,7 +42,7 @@ public class CountCommand {
         int count = 0;
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            sender.sendMessage(plugin.pluginName + "Could not find a world with that name!");
+            sender.sendMessage(plugin.getPluginName() + "Could not find a world with that name!");
             return true;
         }
         if (which.equals("g")) {
@@ -59,7 +58,7 @@ public class CountCommand {
             try {
                 monster = Monster.valueOf(which);
             } catch (IllegalArgumentException e) {
-                sender.sendMessage(plugin.pluginName + "Invalid monster type!");
+                sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
                 return true;
             }
             switch (monster) {
@@ -122,7 +121,7 @@ public class CountCommand {
                 }
             }
         }
-        sender.sendMessage(plugin.pluginName + "There are " + count + " " + what + " in " + w.getName());
+        sender.sendMessage(plugin.getPluginName() + "There are " + count + " " + what + " in " + w.getName());
         return true;
     }
 }

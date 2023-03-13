@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -33,13 +33,13 @@ import org.bukkit.util.StringUtil;
  */
 public class TabComplete implements TabCompleter {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> MONSTER_SUBS;
     ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give");
 
-    public TabComplete(TARDISWeepingAngels plugin) {
+    public TabComplete(TARDIS plugin) {
         this.plugin = plugin;
         List<String> tmp = new ArrayList<>();
         for (Monster m : Monster.values()) {

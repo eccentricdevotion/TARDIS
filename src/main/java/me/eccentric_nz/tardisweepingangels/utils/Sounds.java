@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import org.bukkit.entity.Entity;
@@ -33,10 +34,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class Sounds implements Listener {
 
-    private final TARDISWeepingAngels plugin;
+    private final TARDIS plugin;
     private final List<UUID> tracker = new ArrayList<>();
 
-    public Sounds(TARDISWeepingAngels plugin) {
+    public Sounds(TARDIS plugin) {
         this.plugin = plugin;
     }
 
