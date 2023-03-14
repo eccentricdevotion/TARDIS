@@ -1,5 +1,13 @@
 # config file
 debug: false
+# modules
+# https://eccentricdevotion.github.io/TARDIS/modules.html
+modules:
+  weepinng_angels: true
+  vortex_manipulator: true
+  dynmap: true
+  shop: true
+  blueprints: false
 # how the plugin persists data
 # https://eccentricdevotion.github.io/TARDIS/configuration-storage.html
 storage:
@@ -238,3 +246,4 @@ conversions:
   datapacks: true
   datapacks_1_18: true
   restore_biomes: true
+  all_in_one: true

@@ -1,6 +1,5 @@
 package me.eccentric_nz.tardisshop;
 
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemBreak;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemDespawn;
@@ -11,9 +10,17 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.logging.Level;
+
 public class TARDISShop {
 
-    public void enable(TARDIS plugin) {
+    private final TARDIS plugin;
+
+    public TARDISShop(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void enable() {
         if (plugin.getPM().isPluginEnabled("Vault")) {
             plugin.getPM().registerEvents(new TARDISShopItemInteract(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISShopItemDespawn(plugin), plugin);
@@ -22,7 +29,7 @@ public class TARDISShop {
             ShopSettings settings = new ShopSettings();
             settings.setItemKey(new NamespacedKey(plugin, "tardis_shop_item"));
             settings.setBlockMaterial(Material.valueOf(plugin.getShopConfig().getString("block")));
-            setupEconomy(settings, plugin);
+            setupEconomy(settings);
             plugin.setShopSettings(settings);
             TARDISShopCommand command = new TARDISShopCommand(plugin);
             plugin.getCommand("tardisshop").setExecutor(command);
@@ -33,7 +40,7 @@ public class TARDISShop {
     }
 
     // load economy API from Vault
-    private void setupEconomy(ShopSettings settings, TARDIS plugin) {
+    private void setupEconomy(ShopSettings settings) {
         if (plugin.getPM().getPlugin("Vault") == null) {
             return;
         }

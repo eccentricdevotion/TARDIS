@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -78,14 +71,12 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
-import me.eccentric_nz.tardischunkgenerator.worldgen.FlatGenerator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.GallifreyGenerator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaGenerator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.SkaroGenerator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
-import me.eccentric_nz.tardischunkgenerator.worldgen.WaterGenerator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisshop.ShopSettings;
+import me.eccentric_nz.tardisshop.TARDISShop;
+import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -99,6 +90,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -450,9 +449,22 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             startZeroHealing();
             startSiegeTicks();
-            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("dynmap.enabled")) {
+            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("modules.dynmap")) {
+                console.sendMessage(pluginName + "Loading DynMap Module");
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
+            }
+            if (getConfig().getBoolean("modules.weeping_angels")) {
+                console.sendMessage(pluginName + "Loading Weeping Angels Module");
+                new TARDISWeepingAngels(this).enable();
+            }
+            if (getConfig().getBoolean("modules.vortex_manipulator")) {
+                console.sendMessage(pluginName + "Loading Vortex Manipulator Module");
+                new TARDISVortexManipulator(this).enable();
+            }
+            if (getConfig().getBoolean("modules.shop")) {
+                console.sendMessage(pluginName + "Loading Shop Module");
+                new TARDISShop(this).enable();
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
@@ -856,11 +868,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Checks if the TARDISChunkGenerator plugin is available, and loads support
-     * if it is.
-     *
-     * @return true if the plugin is enabled, if false the TARDIS plugin will
-     * disable itself
+     * Loads the TARDISChunkGenerator support module
      */
     private void loadHelper() {
         tardisHelper = new TARDISHelper();
@@ -1784,12 +1792,12 @@ public class TARDIS extends JavaPlugin {
         this.tardisDynmap = tardisDynmap;
     }
 
-    public void setShopSettings(ShopSettings settings) {
-        this.shopSettings = settings;
-    }
-
     public ShopSettings getShopSettings() {
         return shopSettings;
+    }
+
+    public void setShopSettings(ShopSettings settings) {
+        this.shopSettings = settings;
     }
 
     public TVMSettings getTvmSettings() {
