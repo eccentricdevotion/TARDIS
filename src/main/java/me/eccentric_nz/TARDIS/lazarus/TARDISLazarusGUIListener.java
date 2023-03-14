@@ -71,7 +71,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
     private final List<String> twaMonsters = Arrays.asList("CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "MIRE", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "WEEPING ANGEL", "ZYGON");
     private final List<String> twaHelmets = Arrays.asList("Cyberman Head", "Dalek Head", "Dalek Sec Head", "Davros Head", "Empty Child Head", "Hath Head", "Headless Monk Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Mire Head", "Ood Head", "Racnoss Head", "Silent Head", "Silurian Head", "Slitheen Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Weeping Angel Head", "Zygon Head");
-    private Set<UUID> pagers = new HashSet<>();
+    private final Set<UUID> pagers = new HashSet<>();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
