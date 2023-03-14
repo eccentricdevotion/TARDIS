@@ -61,16 +61,6 @@ public class FloodgateGeneticManipulatorForm {
         int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
         runnable.setTaskID(taskId);
         TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
-        // undisguise the player
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            if (plugin.isDisguisesOnServer()) {
-                TARDISLazarusLibs.removeDisguise(player);
-            } else {
-                TARDISLazarusDisguise.removeDisguise(player);
-            }
-            TARDISMessage.send(player, "GENETICS_RESTORED");
-            plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
-        }, 80L);
         // open the door
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             openDoor(block);
@@ -104,7 +94,16 @@ public class FloodgateGeneticManipulatorForm {
                 }
             }
             case "Restore original" -> {
-                // do nothing else
+                // undisguise the player
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (plugin.isDisguisesOnServer()) {
+                        TARDISLazarusLibs.removeDisguise(player);
+                    } else {
+                        TARDISLazarusDisguise.removeDisguise(player);
+                    }
+                    TARDISMessage.send(player, "GENETICS_RESTORED");
+                    plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                }, 80L);
             }
             default -> {
                 EntityType dt = EntityType.valueOf(label);
