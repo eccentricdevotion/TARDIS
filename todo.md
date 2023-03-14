@@ -10,11 +10,11 @@
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Copy all config values from previous plugins to new files
-   - Change generator settings in _planets.yml_ from `TARDISChunkGenerator:xxx` to `TARDIS:xxx`
+   - Remove config options `dynmap.enable` and `blueprints.enable` from config
+   - Test copying all config values from previous plugins to new files
+   - Update generator settings in _planets.yml_ from `TARDISChunkGenerator:xxx` to `TARDIS:xxx`
    - Change messaging to `TARDISMessage.send()`, but configured with module prefix
    - Add all messages to _en.yml_
-   - Add config options to enable/disable modules (include TARDISDynmap)
    - Read schematic files from JAR file
    - Update shop _items.yml_ with new TARDIS items
 
@@ -29,8 +29,10 @@
 
 ## Wiki Documentation
 
+* Add updating to v5.0.0 from legacy plugins
 * Semi-random assigned parking - add GUI
 * Add other area sub-commands
+* Add/update all module documentation (config/commands etc)
 
 ## Resource Pack / TARDISWeepingAngels
 
