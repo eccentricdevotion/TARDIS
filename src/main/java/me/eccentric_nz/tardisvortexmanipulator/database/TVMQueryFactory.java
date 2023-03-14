@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import java.sql.Connection;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+
+import java.util.HashMap;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.
@@ -31,13 +30,9 @@ import org.bukkit.block.Block;
 public class TVMQueryFactory {
 
     private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final String prefix;
-    Connection connection = service.getConnection();
 
     public TVMQueryFactory(TARDIS plugin) {
         this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
     }
 
     /**

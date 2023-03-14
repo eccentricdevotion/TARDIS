@@ -7,6 +7,8 @@ modules:
   vortex_manipulator: true
   dynmap: true
   shop: true
+  # blueprints
+  # https://eccentricdevotion.github.io/TARDIS/blueprints.html
   blueprints: false
 # how the plugin persists data
 # https://eccentricdevotion.github.io/TARDIS/configuration-storage.html
@@ -219,10 +221,6 @@ abandon:
 archive:
   enabled: true
   limit: 3
-# blueprints
-# https://eccentricdevotion.github.io/TARDIS/blueprints.html
-blueprints:
-  enabled: false
 # recharger list
 rechargers: { }
 # list areas TARDISes can automatically travel to when their time lords die

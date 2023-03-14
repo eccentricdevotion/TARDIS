@@ -1,12 +1,13 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
-import java.io.File;
-import java.sql.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.sql.*;
+import java.util.logging.Level;
 
 public class TARDISVortexManipulatorTransfer {
 
@@ -116,7 +117,6 @@ public class TARDISVortexManipulatorTransfer {
                 if (i > 0) {
                     ps.executeBatch();
                     plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex messages to database");
-                    i = 0;
                 }
                 connection.commit();
                 return true;
