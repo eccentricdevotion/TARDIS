@@ -124,7 +124,7 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %sitems (item_id int(11) NOT NULL AUTO_INCREMENT, item varchar(64) DEFAULT '', location varchar(512) DEFAULT '', cost float(5,1) DEFAULT 0), PRIMARY KEY (item_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             // vortex manipulator
-            "CREATE TABLE IF NOT EXISTS %sbeacons (beacon_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', block_type varchar(32) DEFAULT '', data int(2) DEFAULT '0', PRIMARY KEY (beacon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sbeacons (beacon_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', block_data varchar(32) DEFAULT '', PRIMARY KEY (beacon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %smanipulator (uuid varchar(48) NOT NULL, tachyon_level int(11) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -232,7 +232,7 @@ public class SQL {
             "(%s, '%s', '%s', %s)",
 
             // vortex manipulator
-            "(%s, '%s', '%s', '%s', %s)",
+            "(%s, '%s', '%s', '%s')",
 
             "('%s', %s)",
 
@@ -340,13 +340,13 @@ public class SQL {
             "INSERT INTO `%sitems` (`item_id`, `item`, `location`, `cost`) VALUES ",
 
             // vortex manipulator
-            "INSERT INTO `%sbeacons` (`beacon_id`, `uuid`, `location`, `block_type`, `data`) VALUES ",
+            "INSERT INTO `%sbeacons` (`beacon_id`, `uuid`, `location`, `block_data`) VALUES ",
 
             "INSERT INTO `%smanipulator` (`uuid`, `tachyon_level`) VALUES ",
 
             "INSERT INTO `%smessages` (`message_id`, `uuid_to`, `uuid_from`, `message`, `date`, `read`) VALUES ",
 
-            "INSERT INTO `%svm_saves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES "
+            "INSERT INTO `%ssaves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES "
 
     );
     static final String COMMENT = "--";

@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
+import java.sql.Connection;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-
-import java.sql.Connection;
-import java.util.HashMap;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.
@@ -54,7 +53,7 @@ public class TVMQueryFactory {
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", uuid);
         set.put("location", loc.toString());
-        set.put("block_type", data);
+        set.put("block_data", data);
         plugin.getQueryFactory().doSyncInsert("beacons", set);
     }
 

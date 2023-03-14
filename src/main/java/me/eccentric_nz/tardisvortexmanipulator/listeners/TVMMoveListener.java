@@ -3,7 +3,7 @@ package me.eccentric_nz.tardisvortexmanipulator.listeners;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetBlock;
+import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetBeacon;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -32,7 +32,7 @@ public class TVMMoveListener implements Listener {
         if (!event.getTo().getBlock().getType().equals(Material.BEACON)) {
             plugin.getTvmSettings().getBeaconSetters().remove(uuid);
             // remove beacon
-            TVMResultSetBlock rs = new TVMResultSetBlock(plugin, uuid.toString());
+            TVMResultSetBeacon rs = new TVMResultSetBeacon(plugin, uuid.toString());
             if (rs.resultSet()) {
                 rs.getBlocks().forEach((tvmb) -> {
                     tvmb.getBlock().setBlockData(tvmb.getBlockData());

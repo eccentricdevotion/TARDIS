@@ -20,7 +20,7 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author eccentric_nz
  */
-public class TVMResultSetBlock {
+public class TVMResultSetBeacon {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -29,7 +29,7 @@ public class TVMResultSetBlock {
     private final List<TVMBlock> blocks = new ArrayList<>();
     private final String prefix;
 
-    public TVMResultSetBlock(TARDIS plugin, String uuid) {
+    public TVMResultSetBeacon(TARDIS plugin, String uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         prefix = this.plugin.getPrefix();
@@ -54,7 +54,7 @@ public class TVMResultSetBlock {
                 while (rs.next()) {
                     TVMBlock tvmb = new TVMBlock();
                     Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                    BlockData blockData = plugin.getServer().createBlockData(rs.getString("block_type"));
+                    BlockData blockData = plugin.getServer().createBlockData(rs.getString("block_data"));
                     Block b = l.getBlock();
                     tvmb.setBlock(b);
                     tvmb.setBlockData(blockData);

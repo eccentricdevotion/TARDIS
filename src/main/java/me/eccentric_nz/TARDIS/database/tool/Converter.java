@@ -297,7 +297,7 @@ public class Converter implements Runnable {
                                     }
                                     // vortex manipulator
                                     case beacons -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("beacon_id"), rs.getString("uuid"), rs.getString("location"), rs.getString("block_type"), rs.getInt("data")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("beacon_id"), rs.getString("uuid"), rs.getString("location"), rs.getString("block_data")) + end;
                                         sb.append(str);
                                     }
                                     case manipulator -> {

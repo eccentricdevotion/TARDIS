@@ -259,12 +259,12 @@ public class TARDISSQLiteDatabase {
             String querySaves = "CREATE TABLE IF NOT EXISTS " + prefix + "saves (save_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', save_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0)";
             statement.executeUpdate(querySaves);
 
-            // Table structure for table 'saves'
+            // Table structure for table 'messages'
             String queryMessages = "CREATE TABLE IF NOT EXISTS " + prefix + "messages (message_id INTEGER PRIMARY KEY NOT NULL, uuid_to TEXT DEFAULT '', uuid_from TEXT DEFAULT '', message TEXT DEFAULT '', date INTEGER DEFAULT (strftime('%s', 'now')), read INTEGER DEFAULT 0)";
             statement.executeUpdate(queryMessages);
 
-            //  Table structure for table 'beacon'
-            String queryBeacons = "CREATE TABLE IF NOT EXISTS " + prefix + "beacons (beacon_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '', block_type TEXT DEFAULT '', data INTEGER DEFAULT 0)";
+            //  Table structure for table 'beacons'
+            String queryBeacons = "CREATE TABLE IF NOT EXISTS " + prefix + "beacons (beacon_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '', block_data TEXT DEFAULT '')";
             statement.executeUpdate(queryBeacons);
 
             //  Table structure for table 'manipulator'
