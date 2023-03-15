@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischunkgenerator.disguise;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
@@ -89,7 +89,7 @@ public class TARDISChameleonArchDisguiser {
         }
         TARDISDisguiseTracker.ProfileData map = TARDISDisguiseTracker.ARCHED.get(player.getUniqueId());
         if (map == null) {
-            Bukkit.getLogger().log(Level.INFO, TARDISHelper.messagePrefix + "Could not get backed up profile data from tracker!");
+            Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Could not get backed up profile data from tracker!");
             return;
         }
         PropertyMap properties = map.getProperties();

@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import com.mojang.datafixers.util.Pair;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -38,15 +39,15 @@ public class BiomeUtilities {
         }
     }
 
-    public static void addBiomes(String basePath, String messagePrefix) {
+    public static void addBiomes(String basePath) {
         // get the TARDIS planets config
         FileConfiguration planets = YamlConfiguration.loadConfiguration(new File(basePath + "planets.yml"));
         if (planets.getBoolean("planets.gallifrey.enabled")) {
-            Bukkit.getConsoleSender().sendMessage(messagePrefix + "Adding custom biomes for planet Gallifrey...");
+            Bukkit.getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Adding custom biomes for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
         }
         if (planets.getBoolean("planets.skaro.enabled")) {
-            Bukkit.getConsoleSender().sendMessage(messagePrefix + "Adding custom biomes for planet Skaro...");
+            Bukkit.getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Adding custom biomes for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
         }
     }

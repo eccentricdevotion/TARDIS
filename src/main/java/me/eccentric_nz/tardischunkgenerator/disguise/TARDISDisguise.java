@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.LiteralContents;
@@ -329,7 +329,6 @@ public class TARDISDisguise {
                     }
                     if (disguise.getEntityType().equals(EntityType.TROPICAL_FISH) && o instanceof org.bukkit.entity.TropicalFish.Pattern pattern) {
                         TropicalFish fish = (TropicalFish) entity;
-//                        int var5 = ThreadLocalRandom.current().nextInt(2); // shape
                         int patternType = pattern.ordinal(); // pattern
                         int baseColour = ThreadLocalRandom.current().nextInt(15); // base colour
                         int patternColour = ThreadLocalRandom.current().nextInt(15); // pattern colour
@@ -347,7 +346,7 @@ public class TARDISDisguise {
             return entity;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
                  InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.SEVERE, TARDISHelper.messagePrefix + "~TARDISDisguise~ " + e.getMessage());
+            Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + "~TARDISDisguise~ " + e.getMessage());
             e.printStackTrace();
         }
         return null;

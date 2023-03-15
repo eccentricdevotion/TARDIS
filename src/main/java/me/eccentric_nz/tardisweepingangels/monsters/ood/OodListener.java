@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -29,6 +28,8 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class OodListener implements Listener {
 
@@ -64,7 +65,7 @@ public class OodListener implements Listener {
                 } else if (oodId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Ood
                     stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
-                    player.sendMessage(TARDIS.plugin.getPluginName() + "You have claimed this Ood!");
+                    player.sendMessage(MODULE.MONSTERS.getName() + "You have claimed this Ood!");
                 }
             }
         }

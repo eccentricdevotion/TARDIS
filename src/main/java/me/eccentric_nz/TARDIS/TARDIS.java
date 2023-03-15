@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -48,10 +41,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.enumeration.Language;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
@@ -84,7 +74,6 @@ import me.eccentric_nz.tardisshop.TARDISShop;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
@@ -97,6 +86,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -152,7 +149,6 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration itemsConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
-    private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
     private TARDISPerceptionFilter filter;
@@ -330,7 +326,6 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
-        pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
@@ -1133,7 +1128,7 @@ public class TARDIS extends JavaPlugin {
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            console.sendMessage(pluginName + "Debug: " + o);
+            console.sendMessage(MODULE.DEBUG.getName() + "Debug: " + o);
         }
     }
 
@@ -1521,7 +1516,7 @@ public class TARDIS extends JavaPlugin {
      * @return the formatted TARDIS plugin name
      */
     public String getPluginName() {
-        return pluginName;
+        return MODULE.TARDIS.getName();
     }
 
     /**

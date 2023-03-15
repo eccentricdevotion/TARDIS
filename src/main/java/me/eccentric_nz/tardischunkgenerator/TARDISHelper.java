@@ -16,16 +16,14 @@
  */
 package me.eccentric_nz.tardischunkgenerator;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
-import me.eccentric_nz.tardischunkgenerator.helpers.*;
+import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISItemFrameFaker;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISMapUpdater;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import me.eccentric_nz.tardischunkgenerator.logging.TARDISLogFilter;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.CustomTree;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
@@ -56,9 +54,15 @@ import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+
 public class TARDISHelper implements TARDISHelperAPI {
 
-    public static final String messagePrefix = ChatColor.AQUA + "[TARDIS] " + ChatColor.RESET;
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
     public static boolean colourSkies;
 
@@ -68,12 +72,12 @@ public class TARDISHelper implements TARDISHelperAPI {
         // load custom biomes if they are enabled
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
-            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Gallifrey...");
+            plugin.getConsole().sendMessage(MODULE.HELPER.getName() + "Adding custom biome for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Adding custom biome for planet Skaro...");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Adding custom biome for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
@@ -83,8 +87,8 @@ public class TARDISHelper implements TARDISHelperAPI {
             // yes we should!
             String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
-            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Starting filtered logging for TARDIS plugins...");
-            plugin.getServer().getConsoleSender().sendMessage(messagePrefix + "Log file located at 'plugins/TARDIS/filtered.log'");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
         }
         // register disguise listener
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
@@ -143,7 +147,7 @@ public class TARDISHelper implements TARDISHelperAPI {
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -163,15 +167,15 @@ public class TARDISHelper implements TARDISHelperAPI {
                 FileOutputStream fileoutputstream = new FileOutputStream(file);
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
-                Bukkit.getLogger().log(Level.INFO, messagePrefix + "Renamed level to " + newName);
+                Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Renamed level to " + newName);
                 // rename the directory
                 File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
                 File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
                 if (directory.renameTo(folder)) {
-                    Bukkit.getLogger().log(Level.INFO, messagePrefix + "Renamed directory to " + newName);
+                    Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Renamed directory to " + newName);
                 }
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -198,7 +202,7 @@ public class TARDISHelper implements TARDISHelperAPI {
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -241,11 +245,11 @@ public class TARDISHelper implements TARDISHelperAPI {
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType);
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, messagePrefix + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
                 return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
             }
         }
-        Bukkit.getLogger().log(Level.INFO, messagePrefix + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
+        Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
         return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
     }
 
@@ -351,7 +355,7 @@ public class TARDISHelper implements TARDISHelperAPI {
             TARDISTree type = TARDISTree.valueOf(tree.toUpperCase(Locale.ROOT));
             CustomTree.grow(type, location);
         } catch (IllegalArgumentException e) {
-            Bukkit.getLogger().log(Level.WARNING, messagePrefix + "Invalid TARDISTree type specified!");
+            Bukkit.getLogger().log(Level.WARNING, MODULE.HELPER.getName() + "Invalid TARDISTree type specified!");
         }
     }
 
