@@ -60,7 +60,7 @@ public class TARDISPlanetsUpdater {
                     planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
                     planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
                     if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                        planets_config.set("planets." + w + ".generator", "TARDISChunkGenerator");
+                        planets_config.set("planets." + w + ".generator", "TARDIS:void");
                     } else {
                         planets_config.set("planets." + w + ".generator", "DEFAULT");
                     }
@@ -75,7 +75,7 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
                 planets_config.set("planets.TARDIS_Zero_Room.world_type", "FLAT");
                 planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
-                planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDISChunkGenerator");
+                planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
                 planets_config.set("planets.TARDIS_Zero_Room.void", true);
                 planets_config.set("planets.TARDIS_Zero_Room.keep_spawn_in_memory", false);
             }
@@ -85,7 +85,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
             planets_config.set("planets." + dn + ".world_type", "FLAT");
             planets_config.set("planets." + dn + ".environment", "NORMAL");
-            planets_config.set("planets." + dn + ".generator", "TARDISChunkGenerator");
+            planets_config.set("planets." + dn + ".generator", "TARDIS:void");
             planets_config.set("planets." + dn + ".void", true);
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
             planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
@@ -153,7 +153,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.time_travel", true);
             planets_config.set("planets.skaro.world_type", "NORMAL");
             planets_config.set("planets.skaro.environment", "NORMAL");
-            planets_config.set("planets.skaro.generator", "TARDISChunkGenerator:skaro");
+            planets_config.set("planets.skaro.generator", "TARDIS:skaro");
             planets_config.set("planets.skaro.keep_spawn_in_memory", false);
             planets_config.set("planets.skaro.spawn_other_mobs", true);
             planets_config.set("planets.skaro.gamerules.doTraderSpawning", false);
@@ -167,7 +167,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.siluria.time_travel", true);
             planets_config.set("planets.siluria.world_type", "NORMAL");
             planets_config.set("planets.siluria.environment", "NORMAL");
-            planets_config.set("planets.siluria.generator", "TARDISChunkGenerator:siluria");
+            planets_config.set("planets.siluria.generator", "TARDIS:siluria");
             planets_config.set("planets.siluria.keep_spawn_in_memory", false);
             planets_config.set("planets.siluria.spawn_other_mobs", true);
             planets_config.set("planets.siluria.gamerules.doTraderSpawning", false);
@@ -181,7 +181,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.gallifrey.time_travel", true);
             planets_config.set("planets.gallifrey.world_type", "NORMAL");
             planets_config.set("planets.gallifrey.environment", "NORMAL");
-            planets_config.set("planets.gallifrey.generator", "TARDISChunkGenerator:gallifrey");
+            planets_config.set("planets.gallifrey.generator", "TARDIS:gallifrey");
             planets_config.set("planets.gallifrey.keep_spawn_in_memory", false);
             planets_config.set("planets.gallifrey.spawn_other_mobs", true);
             planets_config.set("planets.gallifrey.gamerules.doTraderSpawning", false);
@@ -191,14 +191,25 @@ public class TARDISPlanetsUpdater {
             save++;
         }
         if (planets_config.getString("planets.skaro.generator").equalsIgnoreCase("DEFAULT")) {
-            planets_config.set("planets.gallifrey.generator", "TARDISChunkGenerator:gallifrey");
-            planets_config.set("planets.siluria.generator", "TARDISChunkGenerator:siluria");
-            planets_config.set("planets.skaro.generator", "TARDISChunkGenerator:skaro");
+            planets_config.set("planets.gallifrey.generator", "TARDIS:gallifrey");
+            planets_config.set("planets.siluria.generator", "TARDIS:siluria");
+            planets_config.set("planets.skaro.generator", "TARDIS:skaro");
             save++;
         }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator")) {
-            planets_config.set("planets.TARDIS_TimeVortex.generator", "TARDISChunkGenerator:void");
-            planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDISChunkGenerator:void");
+            planets_config.set("planets.TARDIS_TimeVortex.generator", "TARDIS:void");
+            planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
+            save++;
+        }
+        if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
+            for (String key : planets_config.getConfigurationSection("planets").getKeys(false)) {
+                if (planets_config.getString("planets." + key + ".generator").contains("TARDISChunkGenerator")) {
+                    String[] split = planets_config.getString("planets." + key + ".generator").split(":");
+                    if (split.length > 1) {
+                        planets_config.set("planets." + key + ".generator", "TARDIS:" + split[1]);
+                    }
+                }
+            }
             save++;
         }
         // remove datapack dimension worlds
