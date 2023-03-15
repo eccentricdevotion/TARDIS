@@ -75,7 +75,6 @@ public class TARDISConfiguration {
         booleanOptions.put("arch.enabled", true);
         booleanOptions.put("arch.switch_inventory", true);
         booleanOptions.put("archive.enabled", true);
-//        booleanOptions.put("blueprints.enabled", false);
         booleanOptions.put("circuits.damage", false);
         booleanOptions.put("conversions.all_in_one", false);
         booleanOptions.put("conversions.archive_wall_data", false);
@@ -100,16 +99,15 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
-//        booleanOptions.put("dynmap.enabled", true);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("modules.blueprints", false);
-        booleanOptions.put("modules.dynmap", true);
-        booleanOptions.put("modules.weeping_angels", true);
-        booleanOptions.put("modules.vortex_manipulator", true);
-        booleanOptions.put("modules.shop", true);
+        booleanOptions.put("modules.dynmap", false);
+        booleanOptions.put("modules.weeping_angels", false);
+        booleanOptions.put("modules.vortex_manipulator", false);
+        booleanOptions.put("modules.shop", false);
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);
@@ -331,11 +329,20 @@ public class TARDISConfiguration {
         }
         // check / transfer dynmap settings
         if (config.contains("preferences.enable_dynmap")) {
-            plugin.getConfig().set("dynmap.enabled", config.getBoolean("preferences.enable_dynmap"));
+            plugin.getConfig().set("modules.dynmap", config.getBoolean("preferences.enable_dynmap"));
             plugin.getConfig().set("preferences.enable_dynmap", null);
         }
         if (config.contains("dynmap.update_period") && config.getInt("dynmap.update_period") == 10) {
             plugin.getConfig().set("dynmap.update_period", 30);
+        }
+        if (config.contains("dynmap.enabled")) {
+            plugin.getConfig().set("modules.dynmap", config.getBoolean("dynmap.enabled"));
+            plugin.getConfig().set("dynmap.enabled", null);
+        }
+        if (config.contains("blueprints.enabled")) {
+            plugin.getConfig().set("modules.blueprints", config.getBoolean("blueprints.enabled"));
+            plugin.getConfig().set("blueprints.enabled", null);
+            plugin.getConfig().set("blueprints", null);
         }
         // remove handles
         if (config.contains("handles")) {

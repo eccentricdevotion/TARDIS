@@ -1,12 +1,13 @@
 # config file
 debug: false
 # modules
+# are disabled by default
 # https://eccentricdevotion.github.io/TARDIS/modules.html
 modules:
-  weepinng_angels: true
-  vortex_manipulator: true
-  dynmap: true
-  shop: true
+  weeping_angels: false
+  vortex_manipulator: false
+  dynmap: false
+  shop: false
   # blueprints
   # https://eccentricdevotion.github.io/TARDIS/blueprints.html
   blueprints: false
@@ -126,7 +127,6 @@ preferences:
 # dynmap
 # https://eccentricdevotion.github.io/TARDIS/dynmap-tardis.html#configuration-options
 dynmap:
-  enabled: true
   update_period: 30
   updates_per_tick: 10
 # desktop theme
