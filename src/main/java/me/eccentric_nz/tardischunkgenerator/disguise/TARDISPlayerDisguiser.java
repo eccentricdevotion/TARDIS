@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ import com.mojang.util.UUIDTypeAdapter;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import javax.net.ssl.HttpsURLConnection;

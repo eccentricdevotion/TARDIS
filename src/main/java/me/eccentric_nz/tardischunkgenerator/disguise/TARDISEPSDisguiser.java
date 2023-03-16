@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -28,14 +27,15 @@ import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
+import net.minecraft.server.network.ServerPlayerConnection;
 
 public class TARDISEPSDisguiser {
 
@@ -63,9 +63,8 @@ public class TARDISEPSDisguiser {
                 ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc); // a = ADD_PLAYER
                 ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc);
                 ClientboundRotateHeadPacket packetPlayOutEntityHeadRotation = new ClientboundRotateHeadPacket(npc, (byte) npc.getYRot());
-//                ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(npc.getId(), (byte) npc.getYRot(), (byte) npc.getXRot(), true);
                 ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(EntityAnchorArgument.Anchor.FEET, npc.blockPosition().getX(), npc.blockPosition().getY(), npc.blockPosition().getZ());
-                Connection connection = ((CraftPlayer) player).getHandle().connection.connection;
+                ServerPlayerConnection connection = ((CraftPlayer) player).getHandle().connection;
                 connection.send(packetPlayOutPlayerInfo);
                 connection.send(packetPlayOutNamedEntitySpawn);
                 connection.send(packetPlayOutEntityHeadRotation);
@@ -92,7 +91,7 @@ public class TARDISEPSDisguiser {
         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(id);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (world == p.getWorld()) {
-                Connection connection = ((CraftPlayer) p).getHandle().connection.connection;
+                ServerPlayerConnection connection = ((CraftPlayer) p).getHandle().connection;
                 connection.send(packetPlayOutEntityDestroy);
             }
         }
@@ -127,11 +126,10 @@ public class TARDISEPSDisguiser {
         ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc); // a = ADD_PLAYER
         ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc);
         ClientboundRotateHeadPacket packetPlayOutEntityHeadRotation = new ClientboundRotateHeadPacket(npc, (byte) npc.getYRot());
-//        PacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new PacketPlayOutEntity.PacketPlayOutEntityLook(npc.getId(), (byte) npc.getYRot(), (byte) npc.getXRot(), true);
         ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(EntityAnchorArgument.Anchor.FEET, npc.blockPosition().getX(), npc.blockPosition().getY(), npc.blockPosition().getZ());
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getWorld() == location.getWorld()) {
-                Connection connection = ((CraftPlayer) p).getHandle().connection.connection;
+                ServerPlayerConnection connection = ((CraftPlayer) p).getHandle().connection;
                 connection.send(packetPlayOutPlayerInfo);
                 connection.send(packetPlayOutNamedEntitySpawn);
                 connection.send(packetPlayOutEntityHeadRotation);

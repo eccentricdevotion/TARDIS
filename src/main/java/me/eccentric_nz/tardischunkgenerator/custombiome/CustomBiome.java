@@ -1,6 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import com.mojang.serialization.Lifecycle;
+import java.lang.reflect.Field;
+import java.util.IdentityHashMap;
+import java.util.logging.Level;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.WritableRegistry;
@@ -13,11 +16,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
-
-import java.lang.reflect.Field;
-import java.util.IdentityHashMap;
-import java.util.logging.Level;
+import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
 
 public class CustomBiome {
 
@@ -28,7 +27,7 @@ public class CustomBiome {
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registryOrThrow(Registries.BIOME);
         Biome minecraftbiome = registrywritable.get(minecraftKey);
         Biome.BiomeBuilder newBiome = new Biome.BiomeBuilder();
-        newBiome.precipitation(minecraftbiome.getPrecipitation());
+        newBiome.downfall(minecraftbiome.climateSettings.downfall());
         MobSpawnSettings biomeSettingMobs = minecraftbiome.getMobSettings();
         newBiome.mobSpawnSettings(biomeSettingMobs);
         BiomeGenerationSettings biomeSettingGen = minecraftbiome.getGenerationSettings();

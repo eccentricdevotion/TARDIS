@@ -8,7 +8,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.DiskFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.DiskConfiguration;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_19_R2.CraftRegionAccessor;
+import org.bukkit.craftbukkit.v1_19_R3.CraftRegionAccessor;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;

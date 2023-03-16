@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import io.netty.channel.*;
+import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -24,8 +25,10 @@ import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiser;
 import net.minecraft.core.Holder;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -33,20 +36,35 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R2.CraftChunk;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.CraftChunk;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class TARDISPacketListener {
 
+    private static Field connectionField;
+
     public static void removePlayer(Player player) {
-        Channel channel = ((CraftPlayer) player).getHandle().connection.connection.channel;
+        Connection connection = getConnection(((CraftPlayer) player).getHandle().connection);
+        Channel channel = connection.channel;
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove(player.getName());
             return null;
         });
+    }
+
+    private static Connection getConnection(final ServerPlayerConnection playerConnection) {
+        try {
+            if (connectionField == null) {
+                connectionField = ServerPlayerConnection.class.getDeclaredField("h");
+                connectionField.setAccessible(true);
+            }
+            return (Connection) connectionField.get(playerConnection);
+        } catch (final NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void injectPlayer(Player player) {
@@ -96,7 +114,8 @@ public class TARDISPacketListener {
                 super.write(channelHandlerContext, packet, channelPromise);
             }
         };
-        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().connection.connection.channel.pipeline();
+        Connection connection = getConnection(((CraftPlayer) player).getHandle().connection);
+        ChannelPipeline pipeline = connection.channel.pipeline();
         pipeline.addBefore("packet_handler", player.getName() + "_tcg", channelDuplexHandler);
     }
 

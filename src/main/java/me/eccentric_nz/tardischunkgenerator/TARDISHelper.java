@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.tardischunkgenerator;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
@@ -46,20 +52,13 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_19_R2.CraftChunk;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_19_R3.CraftChunk;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
 
 public class TARDISHelper implements TARDISHelperAPI {
 
@@ -332,7 +331,7 @@ public class TARDISHelper implements TARDISHelperAPI {
     @Override
     public void removeTileEntity(org.bukkit.block.BlockState tile) {
         net.minecraft.world.level.chunk.ChunkAccess chunk = ((CraftChunk) tile.getChunk()).getHandle();
-        BlockPos position = new BlockPos(tile.getLocation().getX(), tile.getLocation().getY(), tile.getLocation().getZ());
+        BlockPos position = new BlockPos(tile.getLocation().getBlockX(), tile.getLocation().getBlockY(), tile.getLocation().getBlockZ());
         chunk.removeBlockEntity(position);
         tile.getBlock().setType(Material.AIR);
     }

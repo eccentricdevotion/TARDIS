@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2023 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ public class TARDISChameleonArchDisguiser {
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.connection.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
+                ep.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
             }
         }
         TARDISDisguiseTracker.ARCHED.put(player.getUniqueId(), new TARDISDisguiseTracker.ProfileData(entityPlayer.getGameProfile().getProperties(), player.getName()));
@@ -71,9 +71,9 @@ public class TARDISChameleonArchDisguiser {
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.connection.connection.send(packetPlayOutPlayerInfo);
-                ep.connection.connection.send(packetPlayOutEntityDestroy);
-                ep.connection.connection.send(packetPlayOutNamedEntitySpawn);
+                ep.connection.send(packetPlayOutPlayerInfo);
+                ep.connection.send(packetPlayOutEntityDestroy);
+                ep.connection.send(packetPlayOutNamedEntitySpawn);
             }
         }
     }
@@ -84,7 +84,7 @@ public class TARDISChameleonArchDisguiser {
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.connection.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
+                ep.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
             }
         }
         TARDISDisguiseTracker.ProfileData map = TARDISDisguiseTracker.ARCHED.get(player.getUniqueId());
@@ -116,9 +116,9 @@ public class TARDISChameleonArchDisguiser {
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.connection.connection.send(packetPlayOutPlayerInfo);
-                ep.connection.connection.send(packetPlayOutEntityDestroy);
-                ep.connection.connection.send(packetPlayOutNamedEntitySpawn);
+                ep.connection.send(packetPlayOutPlayerInfo);
+                ep.connection.send(packetPlayOutEntityDestroy);
+                ep.connection.send(packetPlayOutNamedEntitySpawn);
             }
         }
         TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
