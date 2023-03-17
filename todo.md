@@ -11,11 +11,11 @@
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test copying all config values from previous plugins to new files
-   - Change messaging to `TARDISMessage.send()`, but configured with module prefix
-   - Add all messages to _en.yml_
    - Read schematic files from JAR file
    - Switch chameleon arch to using API instead of NMS
    - Use new Display entities for TARDIS Shop items
+   - Update data (12) & resource (13) pack_format
+   - Vortex Manipulator scan should use TARDIS player scanner?
 
 ## Future versions
 

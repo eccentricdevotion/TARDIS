@@ -70,8 +70,7 @@ public class MonsterMoveListener implements Listener {
                                 hasChanged = true;
                             }
                         }
-                        // the entity is actually moving
-                    } else {
+                    } else { // the entity is actually moving
                         Monster monster = (Monster) entity;
                         // is the entity in water
                         if (monster instanceof Drowned && monster.getEyeLocation().getBlock().isLiquid()) {
