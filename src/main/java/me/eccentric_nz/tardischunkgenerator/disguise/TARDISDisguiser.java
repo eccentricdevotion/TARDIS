@@ -21,7 +21,7 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
-import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -72,7 +72,7 @@ public class TARDISDisguiser {
                         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(p.getEntityId());
                         ClientboundAddEntityPacket packetPlayOutSpawnLivingEntity = new ClientboundAddEntityPacket((LivingEntity) mob);
                         ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(mob.getId(), mob.getEntityData().getNonDefaultValues());
-                        ServerPlayerConnection connection = ((CraftPlayer) to).getHandle().connection;
+                        ServerGamePacketListenerImpl connection = ((CraftPlayer) to).getHandle().connection;
                         connection.send(packetPlayOutEntityDestroy);
                         connection.send(packetPlayOutSpawnLivingEntity);
                         connection.send(packetPlayOutEntityMetadata);
@@ -94,7 +94,7 @@ public class TARDISDisguiser {
             ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(mob.getId(), mob.getEntityData().getNonDefaultValues());
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p != player && player.getWorld() == p.getWorld()) {
-                    ServerPlayerConnection connection = ((CraftPlayer) p).getHandle().connection;
+                    ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
                     connection.send(packetPlayOutEntityDestroy);
                     connection.send(packetPlayOutSpawnLivingEntity);
                     connection.send(packetPlayOutEntityMetadata);
@@ -141,7 +141,7 @@ public class TARDISDisguiser {
             ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(((CraftPlayer) player).getHandle());
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p != player && player.getWorld() == p.getWorld()) {
-                    ServerPlayerConnection connection = ((CraftPlayer) p).getHandle().connection;
+                    ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
                     connection.send(packetPlayOutEntityDestroy);
                     connection.send(packetPlayOutNamedEntitySpawn);
                 }
@@ -156,7 +156,7 @@ public class TARDISDisguiser {
         ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(entity.getId(), entity.getEntityData().getNonDefaultValues());
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p != player && player.getWorld() == p.getWorld()) {
-                ServerPlayerConnection connection = ((CraftPlayer) p).getHandle().connection;
+                ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
                 connection.send(packetPlayOutEntityDestroy);
                 connection.send(packetPlayOutSpawnLivingEntity);
                 connection.send(packetPlayOutEntityMetadata);

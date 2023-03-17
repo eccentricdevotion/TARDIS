@@ -28,7 +28,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
-import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -55,10 +55,10 @@ public class TARDISPacketListener {
         });
     }
 
-    private static Connection getConnection(final ServerPlayerConnection playerConnection) {
+    private static Connection getConnection(final ServerGamePacketListenerImpl playerConnection) {
         try {
             if (connectionField == null) {
-                connectionField = ServerPlayerConnection.class.getDeclaredField("h");
+                connectionField = ServerGamePacketListenerImpl.class.getDeclaredField("h");
                 connectionField.setAccessible(true);
             }
             return (Connection) connectionField.get(playerConnection);
