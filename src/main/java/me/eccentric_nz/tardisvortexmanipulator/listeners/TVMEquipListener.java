@@ -7,6 +7,8 @@ import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
@@ -98,10 +100,10 @@ public class TVMEquipListener implements Listener {
                     int required = plugin.getConfig().getInt("tachyon_use.travel.to_block");
                     int actual = required * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                        player.sendMessage(plugin.getPluginName() + "You need at least " + actual + " tachyons to travel!");
+                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                         return;
                     }
-                    player.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
                     // Random malfunction
                     Random rnd = new Random();
                     if (rnd.nextInt(100) < plugin.getConfig().getInt("block_travel_malfunction_chance")) {
@@ -121,7 +123,7 @@ public class TVMEquipListener implements Listener {
                         // check to ensure we have a valid alternate location before triggering the malfunction
                         // for this reason the actual malfunction rate may be lower than configured
                         if (_bl != null) {
-                            player.sendMessage(plugin.getPluginName() + "Vortex travel malfunction. Attempting to land in safe location..");
+                            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MALFUNCTION");
                             bl = _bl;
                         }
                     }

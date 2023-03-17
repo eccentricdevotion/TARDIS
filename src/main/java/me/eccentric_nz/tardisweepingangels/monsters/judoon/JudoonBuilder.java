@@ -56,7 +56,7 @@ public class JudoonBuilder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.RED_NETHER_BRICK_WALL) && west.getType().equals(Material.RED_NETHER_BRICK_WALL)) || (north.getType().equals(Material.RED_NETHER_BRICK_WALL) && south.getType().equals(Material.RED_NETHER_BRICK_WALL))) {
                 if (!event.getPlayer().hasPermission("tardisweepingangels.build.judoon")) {
-                    event.getPlayer().sendMessage(plugin.getPluginName() + "You don't have permission to build a Judoon!");
+                    event.getPlayer().sendMessage(plugin.getPluginName() + "WA_PERM_BUILD", "a Judoon!");
                     return;
                 }
                 // we're building a Judoon

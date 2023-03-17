@@ -3,6 +3,8 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,17 +25,17 @@ public class TVMCommandGive implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("vmg")) {
             if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                 return true;
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.getPluginName() + "You need to specify a player uuid and amount!");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_UUID");
                 return true;
             }
             UUID uuid = UUID.fromString(args[0]);
             Player p = plugin.getServer().getPlayer(uuid);
             if (p == null || !p.isOnline()) {
-                sender.sendMessage(plugin.getPluginName() + "Could not find player! Are they online?");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "NOT_ONLINE");
                 return true;
             }
             // check for existing record
@@ -49,7 +51,7 @@ public class TVMCommandGive implements CommandExecutor {
                     try {
                         amount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(plugin.getPluginName() + "The last argument must be a number, 'full' or 'empty'");
+                        TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_LAST_ARG");
                         return true;
                     }
                     if (tachyon_level + amount > full) {
@@ -63,9 +65,9 @@ public class TVMCommandGive implements CommandExecutor {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", args[0]);
                 plugin.getQueryFactory().doUpdate("manipulator", set, where);
-                sender.sendMessage(plugin.getPluginName() + "Tachyon level set to " + amount);
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_TACHYON_SET", "" + amount);
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Player does not have a Vortex Manipulator!");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_NONE", p.getName());
             }
             return true;
         }

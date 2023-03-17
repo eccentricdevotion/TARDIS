@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -93,7 +94,7 @@ public class TVMConfig {
             }
         }
         if (i > 0) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         try {
             String handlesPath = plugin.getDataFolder() + File.separator + "monsters.yml";

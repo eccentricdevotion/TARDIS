@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -26,7 +28,7 @@ public class OodFollow {
 
     public static boolean run(TARDIS plugin, Player player, ArmorStand stand, String[] args) {
         if (!player.hasPermission("tardisweepingangels.follow.ood")) {
-            player.sendMessage(plugin.getPluginName() + "You don't have permission to make an Ood follow you!");
+            TARDISMessage.send(player, MODULE.MONSTERS, "WA_PERM_FOLLOW", "Ood");
             return true;
         }
         if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
@@ -37,10 +39,10 @@ public class OodFollow {
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new OodWalkRunnable(stand, speed, player), 2L, 2L);
                 TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);
             } else {
-                player.sendMessage(plugin.getPluginName() + "That is not your Ood!");
+                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_YOURS", "Ood");
             }
         } else {
-            player.sendMessage(plugin.getPluginName() + "That is a broken Ood :(");
+            TARDISMessage.send(player, MODULE.MONSTERS, "WA_BROKEN", "Ood");
         }
         return true;
     }

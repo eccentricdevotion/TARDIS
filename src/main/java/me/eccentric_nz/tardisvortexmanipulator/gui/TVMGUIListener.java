@@ -8,6 +8,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import org.bukkit.ChatColor;
@@ -327,18 +329,18 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         th = 0;
     }
 
-    private void saveCurrentLocation(Player p, InventoryView view) {
+    private void saveCurrentLocation(Player player, InventoryView view) {
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
         String name = lore.get(0);
         if (name.isEmpty()) {
-            p.sendMessage(plugin.getPluginName() + "You need to enter a save name!");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED");
             return;
         }
-        Location l = p.getLocation();
+        Location l = player.getLocation();
         HashMap<String, Object> set = new HashMap<>();
-        set.put("uuid", p.getUniqueId().toString());
+        set.put("uuid", player.getUniqueId().toString());
         set.put("save_name", lore.get(0));
         set.put("world", l.getWorld().getName());
         set.put("x", l.getX());
@@ -347,33 +349,33 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         set.put("yaw", l.getYaw());
         set.put("pitch", l.getPitch());
         plugin.getQueryFactory().doInsert("saves", set);
-        close(p);
-        p.sendMessage(plugin.getPluginName() + "Current location saved.");
+        close(player);
+        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_CURRENT");
     }
 
-    private void scanLifesigns(Player p, InventoryView view) {
-        close(p);
-        if (!p.hasPermission("vm.lifesigns")) {
-            p.sendMessage(plugin.getPluginName() + "You don't have permission to use the lifesigns scanner!");
+    private void scanLifesigns(Player player, InventoryView view) {
+        close(player);
+        if (!player.hasPermission("vm.lifesigns")) {
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_LIFESIGNS");
             return;
         }
         int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
-        if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
-            p.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to use the lifesigns scanner!");
+        if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_LIFESIGNS_TACHYON");
             return;
         }
         // remove tachyons
-        qf.alterTachyons(p.getUniqueId().toString(), -required);
+        qf.alterTachyons(player.getUniqueId().toString(), -required);
         // process GUI
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
         String pname = lore.get(0).trim();
         if (pname.isEmpty()) {
-            p.sendMessage(plugin.getPluginName() + "Nearby entities:");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
             double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
-            List<Entity> ents = p.getNearbyEntities(d, d, d);
+            List<Entity> ents = player.getNearbyEntities(d, d, d);
             if (ents.size() > 0) {
                 // record nearby entities
                 HashMap<EntityType, Integer> scannedentities = new HashMap<>();
@@ -385,7 +387,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                         boolean visible = true;
                         if (et.equals(EntityType.PLAYER)) {
                             Player entPlayer = (Player) k;
-                            if (p.canSee(entPlayer)) {
+                            if (player.canSee(entPlayer)) {
                                 playernames.add(entPlayer.getName());
                             } else {
                                 visible = false;
@@ -405,20 +407,20 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                         });
                         message = " (" + buf.toString().substring(2) + ")";
                     }
-                    p.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                 });
                 scannedentities.clear();
             } else {
-                p.sendMessage("No nearby entities.");
+                player.sendMessage("SCAN_NONE");
             }
         } else {
             Player scanned = plugin.getServer().getPlayer(pname);
             if (scanned == null) {
-                p.sendMessage(plugin.getPluginName() + "Could not find a player with that name!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
                 return;
             }
             if (!scanned.isOnline()) {
-                p.sendMessage(plugin.getPluginName() + pname + " is not online!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NOT_ONLINE", pname);
                 return;
             }
             // getHealth() / getMaxHealth() * getHealthScale()
@@ -426,52 +428,52 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             double health = scanned.getHealth() / mh * scanned.getHealthScale();
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();
-            p.sendMessage(plugin.getPluginName() + pname + "'s lifesigns:");
-            p.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
-            p.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
-            p.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
-            p.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_LIFESIGNS", pname);
+            player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
+            player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
+            player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
+            player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
         }
     }
 
-    private void loadSaves(Player p) {
-        close(p);
+    private void loadSaves(Player player) {
+        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMSavesGUI tvms = new TVMSavesGUI(plugin, 0, 44, p.getUniqueId().toString());
+            TVMSavesGUI tvms = new TVMSavesGUI(plugin, 0, 44, player.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
-            p.openInventory(vmg);
+            player.openInventory(vmg);
         }, 2L);
     }
 
-    private void message(Player p) {
-        close(p);
-        if (!p.hasPermission("vm.message")) {
-            p.sendMessage(plugin.getPluginName() + "You don't have permission to use Vortex messages!");
+    private void message(Player player) {
+        close(player);
+        if (!player.hasPermission("vm.message")) {
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_MSGS");
             return;
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMMessageGUI tvmm = new TVMMessageGUI(plugin, 0, 44, p.getUniqueId().toString());
+            TVMMessageGUI tvmm = new TVMMessageGUI(plugin, 0, 44, player.getUniqueId().toString());
             ItemStack[] gui = tvmm.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Messages");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
             vmg.setContents(gui);
-            p.openInventory(vmg);
+            player.openInventory(vmg);
         }, 2L);
     }
 
-    private void setBeacon(Player p) {
-        if (!p.hasPermission("vm.beacon")) {
-            close(p);
-            p.sendMessage(plugin.getPluginName() + "You don't have permission to set a beacon signal!");
+    private void setBeacon(Player player) {
+        if (!player.hasPermission("vm.beacon")) {
+            close(player);
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_BEACON");
             return;
         }
-        UUID uuid = p.getUniqueId();
-        String message = "You don't have enough tachyons to set a beacon signal!";
+        UUID uuid = player.getUniqueId();
+        String message = "VM_BEACON_TACHYON";
         int required = plugin.getVortexConfig().getInt("tachyon_use.beacon");
         if (TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
             String ustr = uuid.toString();
-            Location l = p.getLocation();
+            Location l = player.getLocation();
             // potential griefing, we need to check the location first!
             List<Flag> flags = new ArrayList<>();
             if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
@@ -489,10 +491,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
                 flags.add(Flag.RESPECT_WORLDGUARD);
             }
-            Parameters params = new Parameters(p, flags);
+            Parameters params = new Parameters(player, flags);
             if (!plugin.getTardisAPI().getRespect().getRespect(l, params)) {
-                close(p);
-                p.sendMessage(plugin.getPluginName() + "You are not permitted to set a beacon signal here!");
+                close(player);
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_PERMIT");
                 return;
             }
             Block b = l.getBlock().getRelative(BlockFace.DOWN);
@@ -508,15 +510,15 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 down.getRelative(f).setBlockData(iron);
             });
             plugin.getTvmSettings().getBeaconSetters().add(uuid);
-            message = "Beacon signal set, don't move!";
+            message = "VM_BEACON_MOVE";
             // remove tachyons
-            qf.alterTachyons(p.getUniqueId().toString(), -required);
+            qf.alterTachyons(player.getUniqueId().toString(), -required);
         }
-        close(p);
-        p.sendMessage(plugin.getPluginName() + message);
+        close(player);
+        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, message);
     }
 
-    private void doWarp(Player p, InventoryView view) {
+    private void doWarp(Player player, InventoryView view) {
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
@@ -549,7 +551,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
             flags.add(Flag.RESPECT_WORLDGUARD);
         }
-        Parameters params = new Parameters(p, flags);
+        Parameters params = new Parameters(player, flags);
         int required;
         switch (dest.size()) {
             case 1, 2, 3 -> {
@@ -557,14 +559,14 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 // only world specified (or incomplete setting)
                 // check world is an actual world
                 if (plugin.getServer().getWorld(dest.get(0)) == null) {
-                    close(p);
-                    p.sendMessage(plugin.getPluginName() + "World does not exist!");
+                    close(player);
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return;
                 }
                 // check world is enabled for travel
                 if (!plugin.getTardisAPI().getWorlds().contains(dest.get(0))) {
-                    close(p);
-                    p.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                    close(player);
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                     return;
                 }
                 worlds.add(dest.get(0));
@@ -576,18 +578,18 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 World w;
                 if (dest.get(0).contains("~")) {
                     // relative location
-                    w = p.getLocation().getWorld();
+                    w = player.getLocation().getWorld();
                 } else {
                     w = plugin.getServer().getWorld(dest.get(0));
                     if (w == null) {
-                        close(p);
-                        p.sendMessage(plugin.getPluginName() + "World does not exist!");
+                        close(player);
+                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                         return;
                     }
                     // check world is enabled for travel
                     if (!plugin.getTardisAPI().getWorlds().contains(dest.get(0))) {
-                        close(p);
-                        p.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                        close(player);
+                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                         return;
                     }
                 }
@@ -597,7 +599,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 try {
                     if (dest.get(1).startsWith("~")) {
                         // get players current location
-                        Location tl = p.getLocation();
+                        Location tl = player.getLocation();
                         double tx = tl.getX();
                         double ty = tl.getY();
                         double tz = tl.getZ();
@@ -611,14 +613,14 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                         z = Double.parseDouble(dest.get(3));
                     }
                 } catch (NumberFormatException e) {
-                    close(p);
-                    p.sendMessage(plugin.getPluginName() + "Could not parse coordinates!");
+                    close(player);
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_COORDS");
                     return;
                 }
                 l = new Location(w, x, y, z);
                 // check block has space for player
                 if (!l.getBlock().getType().equals(Material.AIR)) {
-                    p.sendMessage(plugin.getPluginName() + "Destination block is not AIR! Adjusting...");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_ADJUST");
                     // get highest block at these coords
                     int highest = l.getWorld().getHighestBlockYAt(l);
                     l.setY(highest);
@@ -630,18 +632,18 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
             }
         }
-        UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
         if (!TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
-            close(p);
-            p.sendMessage(plugin.getPluginName() + "You need at least " + required + " tachyons to travel!");
+            close(player);
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", required);
             return;
         }
         if (l != null) {
-            close(p);
+            close(player);
             List<Player> players = new ArrayList<>();
-            players.add(p);
+            players.add(player);
             if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
-                p.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
+                player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
                     if (e instanceof Player && !e.getUniqueId().equals(uuid)) {
                         players.add((Player) e);
                     }
@@ -649,19 +651,19 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             }
             int actual = required * players.size();
             if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                p.sendMessage(plugin.getPluginName() + "You need at least " + actual + " tachyons to travel!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                 return;
             }
-            p.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
-            TVMUtils.movePlayers(players, l, p.getLocation().getWorld());
+            TVMUtils.movePlayers(players, l, player.getLocation().getWorld());
             // remove tachyons
             qf.alterTachyons(uuid.toString(), -actual);
         } else {
             //close(p);
-            p.sendMessage(plugin.getPluginName() + "No location could be found within those parameters.");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PARAMETERS");
         }
     }
 

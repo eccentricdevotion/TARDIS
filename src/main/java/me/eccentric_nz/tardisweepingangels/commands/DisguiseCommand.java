@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
@@ -49,14 +51,14 @@ public class DisguiseCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
             return true;
         }
         Player player = null;
        if (sender instanceof ConsoleCommandSender) {
             // check argument length
             if (args.length < 4) {
-                sender.sendMessage(plugin.getPluginName() + "You must supply a player UUID when using this command from the console!");
+                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_UUID");
                 return true;
             }
             UUID uuid = UUID.fromString(args[3]);
@@ -66,16 +68,16 @@ public class DisguiseCommand {
             player = (Player) sender;
         }
          if (player == null) {
-            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player, or a player UUID must be supplied!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_UUID");
             return true;
         }
         if (args.length < 3 || (!args[2].equalsIgnoreCase("on") && !args[2].equalsIgnoreCase("off"))) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify if the disguise should be on or off!");
+            TARDISMessage.send(player, MODULE.MONSTERS, "TWA_ON_OFF");
             return true;
         }
         PlayerInventory inv = player.getInventory();
         if (args[2].equalsIgnoreCase("on") && (inv.getBoots() != null || inv.getChestplate() != null || inv.getHelmet() != null || inv.getLeggings() != null)) {
-            player.sendMessage(plugin.getPluginName() + "Your armour slots must be empty before using this command!");
+            TARDISMessage.send(player,MODULE.MONSTERS, "WA_ARMOUR");
             return true;
         }
         if (args[2].equalsIgnoreCase("on")) {

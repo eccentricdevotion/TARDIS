@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,10 +39,10 @@ public class StayCommand {
                 plugin.getServer().getScheduler().cancelTask(TARDISWeepingAngels.getFollowTasks().get(uuid));
                 TARDISWeepingAngels.getFollowTasks().remove(uuid);
             } else {
-                player.sendMessage(plugin.getPluginName() + "A entity is not following you!");
+                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_FOLLOWING");
             }
         } else {
-            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "CMD_PLAYER");
         }
         return true;
     }

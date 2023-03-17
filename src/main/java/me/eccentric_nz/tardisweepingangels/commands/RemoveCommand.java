@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.ArmourStandFinder;
 import org.bukkit.command.CommandSender;
@@ -37,33 +39,33 @@ public class RemoveCommand {
         if (sender instanceof Player player) {
             UUID uuid = player.getUniqueId();
             if (TARDISWeepingAngels.getFollowTasks().containsKey(uuid)) {
-                player.sendMessage(plugin.getPluginName() + "Please tell your follower to stay before removing it! /twa stay");
+                TARDISMessage.send(player, MODULE.MONSTERS, "WA_STAY");
                 return true;
             }
             ArmorStand stand = ArmourStandFinder.getStand(player);
             if (stand == null || (!stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && !stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER))) {
-                player.sendMessage(plugin.getPluginName() + "You are not looking at a TARDISWeepingAngels entity!");
+                TARDISMessage.send(player, MODULE.MONSTERS, "WA_ENTITY");
                 return true;
             } else {
                 if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.judoon")) {
-                    player.sendMessage(plugin.getPluginName() + "You don't have permission to remove a Judoon!");
+                    TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "Judoon");
                     return true;
                 } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.k9")) {
-                    player.sendMessage(plugin.getPluginName() + "You don't have permission to remove K9!");
+                    TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "K9");
                     return true;
                 } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.ood")) {
-                    player.sendMessage(plugin.getPluginName() + "You don't have permission to remove an Ood!");
+                    TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "Ood");
                     return true;
                 }
                 UUID storedUuid = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if ((storedUuid != null && storedUuid.equals(uuid)) || stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
                     stand.remove();
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "That is not your TARDISWeepingAngels entity!");
+                    TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_OWNER");
                 }
             }
         } else {
-            sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "CMD_PLAYER");
         }
         return true;
     }

@@ -6,6 +6,8 @@ package me.eccentric_nz.tardisvortexmanipulator.gui;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
@@ -55,35 +57,35 @@ public class TVMMessageGUIListener extends TVMGUICommon implements Listener {
         }
     }
 
-    private void doPrev(InventoryView view, Player p) {
+    private void doPrev(InventoryView view, Player player) {
         int page = getPageNumber(view);
         if (page > 1) {
             int start = (page * 44) - 44;
-            close(p);
+            close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, p.getUniqueId().toString());
+                TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, player.getUniqueId().toString());
                 ItemStack[] gui = tvmm.getGUI();
-                Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Messages");
+                Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
                 vmg.setContents(gui);
-                p.openInventory(vmg);
+                player.openInventory(vmg);
             }, 2L);
         }
     }
 
-    private void doNext(InventoryView view, Player p) {
+    private void doNext(InventoryView view, Player player) {
         int page = getPageNumber(view);
         int start = (page * 44) + 44;
-        close(p);
+        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, p.getUniqueId().toString());
+            TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, player.getUniqueId().toString());
             ItemStack[] gui = tvmm.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Messages");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
             vmg.setContents(gui);
-            p.openInventory(vmg);
+            player.openInventory(vmg);
         }, 2L);
     }
 
-    private void doRead(InventoryView view, Player p) {
+    private void doRead(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
@@ -91,17 +93,17 @@ public class TVMMessageGUIListener extends TVMGUICommon implements Listener {
             int message_id = TARDISNumberParsers.parseInt(lore.get(2));
             TVMResultSetMessageById rsm = new TVMResultSetMessageById(plugin, message_id);
             if (rsm.resultSet()) {
-                close(p);
-                TVMUtils.readMessage(p, rsm.getMessage());
+                close(player);
+                TVMUtils.readMessage(player, rsm.getMessage());
                 // update read status
                 new TVMQueryFactory(plugin).setReadStatus(message_id);
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a message!");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
         }
     }
 
-    private void doDelete(InventoryView view, Player p) {
+    private void doDelete(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
@@ -109,14 +111,14 @@ public class TVMMessageGUIListener extends TVMGUICommon implements Listener {
             int message_id = TARDISNumberParsers.parseInt(lore.get(2));
             TVMResultSetMessageById rsm = new TVMResultSetMessageById(plugin, message_id);
             if (rsm.resultSet()) {
-                close(p);
+                close(player);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("message_id", message_id);
                 plugin.getQueryFactory().doDelete("messages", where);
-                p.sendMessage(plugin.getPluginName() + "Message deleted.");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MSG_DELETED");
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a message!");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
         }
     }
 }

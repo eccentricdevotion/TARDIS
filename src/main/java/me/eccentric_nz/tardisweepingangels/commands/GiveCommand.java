@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.CommandSender;
@@ -38,7 +40,7 @@ public class GiveCommand {
         // get the player
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
-            sender.sendMessage(plugin.getPluginName() + "Player not found!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "PLAYER_NOT_FOUND");
             return true;
         }
         // check monster type
@@ -47,23 +49,23 @@ public class GiveCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
             return true;
         }
         if (monster == Monster.K9 || monster == Monster.TOCLAFANE) {
-            sender.sendMessage(plugin.getPluginName() + "That monster type can't be equipped as a helmet!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_HELMET");
             return true;
         }
         ItemStack is = HeadBuilder.getItemStack(monster);
         player.getInventory().addItem(is);
         player.updateInventory();
-        sender.sendMessage(plugin.getPluginName() + "Gave " + player.getName() + " 1 " + monster.getName() + " head");
+        TARDISMessage.send(sender, MODULE.MONSTERS, "WA_GIVE", player.getName(), monster.getName());
         String who = "The server";
         if (sender instanceof Player) {
             who = sender.getName();
         }
         if (!who.equals(player.getName())) {
-            sender.sendMessage(plugin.getPluginName() + who + " gave you 1 " + monster.getName() + " head");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_GIVE_WHO", who, monster.getName());
         }
         return true;
     }

@@ -7,6 +7,8 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import org.bukkit.Location;
@@ -31,28 +33,28 @@ public class TVMCommandBeacon implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("vmb")) {
-            Player p = null;
+            Player player = null;
             if (sender instanceof Player) {
-                p = (Player) sender;
+                player = (Player) sender;
             }
-            if (p == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+            if (player == null) {
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "CMD_PLAYER!");
                 return true;
             }
-            if (!p.hasPermission("vm.beacon")) {
-                p.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+            if (!player.hasPermission("vm.beacon")) {
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                 return true;
             }
-            ItemStack is = p.getInventory().getItemInMainHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Vortex Manipulator")) {
                 int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
-                if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
-                    p.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to set a beacon signal!");
+                if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_TACHYON");
                     return true;
                 }
-                UUID uuid = p.getUniqueId();
+                UUID uuid = player.getUniqueId();
                 String ustr = uuid.toString();
-                Location l = p.getLocation();
+                Location l = player.getLocation();
                 // potential griefing, we need to check the location first!
                 List<Flag> flags = new ArrayList<>();
                 if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
@@ -70,9 +72,9 @@ public class TVMCommandBeacon implements CommandExecutor {
                 if (plugin.getConfig().getBoolean("preferences.respect_worldguard")) {
                     flags.add(Flag.RESPECT_WORLDGUARD);
                 }
-                Parameters params = new Parameters(p, flags);
+                Parameters params = new Parameters(player, flags);
                 if (!plugin.getTardisAPI().getRespect().getRespect(l, params)) {
-                    p.sendMessage(plugin.getPluginName() + "You are not permitted to set a beacon signal here!");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_PERMIT");
                     return true;
                 }
                 Block b = l.getBlock().getRelative(BlockFace.DOWN);
@@ -91,10 +93,10 @@ public class TVMCommandBeacon implements CommandExecutor {
                 plugin.getTvmSettings().getBeaconSetters().add(uuid);
                 // remove tachyons
                 qf.alterTachyons(ustr, -required);
-                p.sendMessage(plugin.getPluginName() + "Beacon signal set, don't move!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_MOVE");
                 return true;
             } else {
-                p.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_HAND");
                 return true;
             }
         }

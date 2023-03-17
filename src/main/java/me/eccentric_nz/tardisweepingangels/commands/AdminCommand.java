@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -56,14 +58,14 @@ public class AdminCommand {
         }
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            sender.sendMessage(plugin.getPluginName() + "Could not find a world with that name!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         int m;
         try {
             m = Integer.parseInt(args[3]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(plugin.getPluginName() + "Last argument must be a number!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "ARG_LAST_NUMBER");
             return false;
         }
         String which = args[1].toUpperCase();
@@ -93,12 +95,12 @@ public class AdminCommand {
                 plugin.getMonstersConfig().set("vashta_nerada.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("zygons.worlds." + args[2], m);
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
+                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
                 return true;
             }
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + "Monsters config updated!");
+        TARDISMessage.send(sender,MODULE.MONSTERS, "WA_CONFIG");
         return true;
     }
 }

@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -26,7 +28,7 @@ public class K9Follow {
 
     public static boolean run(TARDIS plugin, Player player, ArmorStand stand, String[] args) {
         if (!player.hasPermission("tardisweepingangels.follow.k9")) {
-            player.sendMessage(plugin.getPluginName() + "You don't have permission to make K9 follow you!");
+            TARDISMessage.send(player, MODULE.MONSTERS, "WA_PERM_FOLLOW", "K9");
             return true;
         }
         if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
@@ -37,10 +39,10 @@ public class K9Follow {
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new K9WalkRunnable(stand, speed, player), 2L, 2L);
                 TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);
             } else {
-                player.sendMessage(plugin.getPluginName() + "That is not your K9!");
+                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_YOURS", "K9");
             }
         } else {
-            player.sendMessage(plugin.getPluginName() + "That is a broken K9 :(");
+            TARDISMessage.send(player, MODULE.MONSTERS, "WA_BROKEN", "K9");
         }
         return true;
     }

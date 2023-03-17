@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -144,7 +145,7 @@ public class Config {
             plugin.debug("Could not save monsters.yml, " + io.getMessage());
         }
         if (i > 0) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.MONSTERS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
         }
     }
 }

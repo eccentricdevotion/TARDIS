@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
@@ -58,86 +60,86 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
         }
     }
 
-    private void doPrev(InventoryView view, Player p) {
+    private void doPrev(InventoryView view, Player player) {
         int page = getPageNumber(view);
         if (page > 1) {
             int start = (page * 44) - 44;
-            close(p);
+            close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
+                TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
                 ItemStack[] gui = tvms.getGUI();
-                Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
+                Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
                 vmg.setContents(gui);
-                p.openInventory(vmg);
+                player.openInventory(vmg);
             }, 2L);
         }
     }
 
-    private void doNext(InventoryView view, Player p) {
+    private void doNext(InventoryView view, Player player) {
         int page = getPageNumber(view);
         int start = (page * 44) + 44;
-        close(p);
+        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
+            TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
-            p.openInventory(vmg);
+            player.openInventory(vmg);
         }, 2L);
     }
 
-    private void delete(InventoryView view, Player p) {
+    private void delete(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
             String save_name = im.getDisplayName();
-            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, p.getUniqueId().toString(), save_name);
+            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
-                close(p);
+                close(player);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("save_id", rss.getId());
                 plugin.getQueryFactory().doDelete("saves", where);
-                p.sendMessage(plugin.getPluginName() + "Save deleted.");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_DELETED");
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a save!");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 
-    private void doWarp(InventoryView view, Player p) {
+    private void doWarp(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
             String save_name = im.getDisplayName();
-            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, p.getUniqueId().toString(), save_name);
+            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
-                close(p);
+                close(player);
                 List<Player> players = new ArrayList<>();
-                players.add(p);
+                players.add(player);
                 if (plugin.getConfig().getBoolean("allow.multiple")) {
-                    p.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
-                        if (e instanceof Player && !e.getUniqueId().equals(p.getUniqueId())) {
+                    player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
+                        if (e instanceof Player && !e.getUniqueId().equals(player.getUniqueId())) {
                             players.add((Player) e);
                         }
                     });
                 }
                 int required = plugin.getConfig().getInt("tachyon_use.travel.saved") * players.size();
-                if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
-                    close(p);
-                    p.sendMessage(plugin.getPluginName() + "You need at least " + required + " tachyons to travel!");
+                if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
+                    close(player);
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_REQUIRED", required);
                     return;
                 }
                 Location l = rss.getWarp();
-                p.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
                 while (!l.getChunk().isLoaded()) {
                     l.getChunk().load();
                 }
-                TVMUtils.movePlayers(players, l, p.getLocation().getWorld());
+                TVMUtils.movePlayers(players, l, player.getLocation().getWorld());
                 // remove tachyons
-                new TVMQueryFactory(plugin).alterTachyons(p.getUniqueId().toString(), -required);
+                new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a save!");
+            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 }

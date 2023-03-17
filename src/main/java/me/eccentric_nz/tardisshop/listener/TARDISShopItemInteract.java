@@ -3,6 +3,8 @@ package me.eccentric_nz.tardisshop.listener;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.*;
 import me.eccentric_nz.tardisshop.database.DeleteShopItem;
@@ -48,7 +50,7 @@ public class TARDISShopItemInteract implements Listener {
                     new TARDISShopItemSpawner(plugin).setItem(drop, item);
                     // update location in database
                     new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
-                    player.sendMessage(plugin.getPluginName() + "Item location added to database!");
+                    TARDISMessage.send(player, MODULE.SHOP, "SHOP_LOCATION_ADDED");
                     plugin.getShopSettings().getSettingItem().remove(uuid);
                 } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
                     for (Entity e : block.getWorld().getNearbyEntities(location, 1.0d, 2.0d, 1.0d)) {
@@ -58,9 +60,9 @@ public class TARDISShopItemInteract implements Listener {
                     }
                     // remove database record
                     if (new DeleteShopItem(plugin).removeByLocation(location.toString()) > 0) {
-                        player.sendMessage(plugin.getPluginName() + "Item removed from database");
+                        TARDISMessage.send(player, MODULE.SHOP, "SHOP_ITEM_REMOVED");
                     } else {
-                        player.sendMessage(plugin.getPluginName() + "Item location not found in database!");
+                        TARDISMessage.send(player, MODULE.SHOP, "SHOP_NOT_FOUND");
                     }
                     plugin.getShopSettings().getRemovingItem().remove(uuid);
                 } else {
@@ -73,17 +75,17 @@ public class TARDISShopItemInteract implements Listener {
                         if (player.hasPermission("tardis.admin") && plugin.getShopConfig().getBoolean("tardis_admin_free")) {
                             // give item
                             giveItem(item.getItem(), player);
-                            message = "Freebies for admins :)";
+                            message = "SHOP_FREE";
                         } else if (plugin.getShopSettings().getEconomy().getBalance(player) > item.getCost()) {
                             // give item
                             giveItem(item.getItem(), player);
                             plugin.getShopSettings().getEconomy().withdrawPlayer(player, item.getCost());
-                            message = "Item purchased :)";
+                            message = "SHOP_PURCHASED";
                         } else {
                             // no credit
-                            message = "You have insufficient credit available to purchase this item!";
+                            message = "SHOP_NO_FUNDS";
                         }
-                        player.sendMessage(plugin.getPluginName() + message);
+                        TARDISMessage.send(player, MODULE.SHOP, message);
                     }
                 }
             } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {

@@ -50,6 +50,18 @@ public class TARDISMessage {
             }
         }
     }
+    
+    public static void message(Player p, MODULE module, String message) {
+        if (p != null) {
+            String concat = module.getName() + message;
+            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+                String[] multiline = TARDISChatPaginator.wordWrap(concat);
+                p.sendMessage(multiline);
+            } else {
+                p.sendMessage(concat);
+            }
+        }
+    }
 
     public static void message(CommandSender cs, String message) {
         if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
@@ -89,6 +101,16 @@ public class TARDISMessage {
         message(p, module.getName() + String.format(local, sub));
     }
 
+    public static void send(Player p, MODULE module, String key, int sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, module.getName() + String.format(local, sub));
+    }
+
+    public static void send(CommandSender cs, MODULE module, String key, String sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, module.getName() + String.format(local, sub));
+    }
+
     public static void handlesSend(Player p, String key, String sub) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + String.format(local, sub)), 2L);
@@ -97,6 +119,11 @@ public class TARDISMessage {
     public static void send(CommandSender cs, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, MODULE.TARDIS.getName() + local);
+    }
+    
+    public static void send(CommandSender cs, MODULE module, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, module.getName() + local);
     }
 
     public static void send(CommandSender cs, String key, String sub) {
@@ -132,6 +159,11 @@ public class TARDISMessage {
         message(p, module.getName() + String.format(local, one, two));
     }
 
+    public static void send(CommandSender cs, MODULE module, String key, String one, String two) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, module.getName() + String.format(local, one, two));
+    }
+
     public static void send(CommandSender cs, String key, String one, String two) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, MODULE.TARDIS.getName() + String.format(local, one, two));
@@ -143,6 +175,11 @@ public class TARDISMessage {
     }
 
     public static void send(Player p, MODULE module, String key, String one, String two, String three) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, module.getName() + String.format(local, one, two, three));
+    }
+
+    public static void send(CommandSender p, MODULE module, String key, int one, String two, String three) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(p, module.getName() + String.format(local, one, two, three));
     }

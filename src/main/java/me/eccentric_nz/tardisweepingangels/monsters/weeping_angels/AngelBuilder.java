@@ -57,7 +57,7 @@ public class AngelBuilder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.COBBLESTONE_WALL) && west.getType().equals(Material.COBBLESTONE_WALL)) || (north.getType().equals(Material.COBBLESTONE_WALL) && south.getType().equals(Material.COBBLESTONE_WALL))) {
                 if (!event.getPlayer().hasPermission("tardisweepingangels.build.angel")) {
-                    event.getPlayer().sendMessage(plugin.getPluginName() + "You don't have permission to build a Weeping Angel!");
+                    event.getPlayer().sendMessage(plugin.getPluginName() + "WA_PERM_BUILD", "Weeping Angel!");
                     return;
                 }
                 // we're building an angel

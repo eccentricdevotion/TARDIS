@@ -60,7 +60,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaListener;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
-import me.eccentric_nz.tardisweepingangels.utils.MonsterMoveListener;
 import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -141,7 +140,7 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new VashtaNeradaListener(plugin), plugin);
         plugin.getPM().registerEvents(new Death(plugin), plugin);
         plugin.getPM().registerEvents(new PlayerDeath(plugin), plugin);
-        plugin.getPM().registerEvents(new PlayerUndisguise(plugin), plugin);
+        plugin.getPM().registerEvents(new PlayerUndisguise(), plugin);
         plugin.getPM().registerEvents(new Sounds(plugin), plugin);
         plugin.getPM().registerEvents(new GasMask(plugin), plugin);
         plugin.getPM().registerEvents(new Butler(plugin), plugin);

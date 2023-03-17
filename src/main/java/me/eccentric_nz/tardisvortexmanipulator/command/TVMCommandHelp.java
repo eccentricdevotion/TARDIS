@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,11 +20,11 @@ public class TVMCommandHelp implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("vmh")) {
             if (!sender.hasPermission("vm.teleport")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                 return true;
             }
             if (args.length == 0) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Vortex Manipulator help:");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");
                 sender.sendMessage(ChatColor.GREEN + "Crafting");
                 sender.sendMessage(ChatColor.GRAY + "/tardisrecipe vortex" + ChatColor.RESET + " - show the crafting recipe for the Vortex Manipulator.");
                 sender.sendMessage(ChatColor.GREEN + "------------");
@@ -34,7 +36,7 @@ public class TVMCommandHelp implements CommandExecutor {
             }
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("command")) {
-                    sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Vortex Manipulator help:");
+                    TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");
                     sender.sendMessage(ChatColor.GREEN + "Commands");
                     sender.sendMessage("All commands must be run while holding the Vortex Manipulator in your hand.");
                     sender.sendMessage("You must have enough Tachyon energy to perform most Vortex Manipulator commands.");
@@ -59,7 +61,7 @@ public class TVMCommandHelp implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + "/vma [player]" + ChatColor.RESET + " - activate a Vortex Manipulator if it was given with the /tardisgive command (admin only).");
                 }
                 if (args[0].equalsIgnoreCase("gui")) {
-                    sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Vortex Manipulator help:");
+                    TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");
                     sender.sendMessage(ChatColor.GREEN + "GUI");
                     sender.sendMessage("Open the GUI by right-clicking AIR with the Vortex Manipulator.");
                     sender.sendMessage("You must have enough Tachyon energy to perform most Vortex Manipulator functions - check the Tachyon Level item.");
@@ -81,7 +83,7 @@ public class TVMCommandHelp implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + "Set a beacon signal" + ChatColor.RESET + " - click the 'beacon' button.");
                 }
                 if (args[0].equalsIgnoreCase("tachyon")) {
-                    sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Vortex Manipulator help:");
+                    TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");
                     sender.sendMessage(ChatColor.GREEN + "Tachyon energy");
                     sender.sendMessage("You must have enough Tachyon energy to perform most functions - check the Tachyon Level in the Vortex Manipulator GUI.");
                     sender.sendMessage(ChatColor.GREEN + "------------");
@@ -97,7 +99,7 @@ public class TVMCommandHelp implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + "Send a message" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.message"));
                 }
                 if (args[0].equalsIgnoreCase("message")) {
-                    sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Vortex Manipulator help:");
+                    TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");
                     sender.sendMessage(ChatColor.GREEN + "Messaging");
                     sender.sendMessage("You can only message players who have a Vortex Manipulator.");
                     sender.sendMessage(ChatColor.GREEN + "------------");

@@ -2,6 +2,8 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,39 +22,39 @@ public class TVMCommandRemove implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("vmr")) {
-            Player p = null;
+            Player player = null;
             if (sender instanceof Player) {
-                p = (Player) sender;
+                player = (Player) sender;
             }
-            if (p == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+            if (player == null) {
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "CMD_PLAYER");
                 return true;
             }
-            if (!p.hasPermission("vm.teleport")) {
-                p.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+            if (!player.hasPermission("vm.teleport")) {
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                 return true;
             }
-            ItemStack is = p.getInventory().getItemInMainHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Vortex Manipulator")) {
                 if (args.length < 1) {
-                    p.sendMessage(plugin.getPluginName() + "You need to specify a save name!");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_NAME");
                     return true;
                 }
-                String uuid = p.getUniqueId().toString();
+                String uuid = player.getUniqueId().toString();
                 // check for existing save
                 TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, args[0]);
                 if (rs.resultSet()) {
-                    p.sendMessage(plugin.getPluginName() + "No save with that name exists! Try using /vms to list saves.");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_NONE");
                     return true;
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("save_name", args[0]);
                 plugin.getQueryFactory().doDelete("saves", where);
-                sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator location (" + args[0] + ") removed!");
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_REMOVED", args[0]);
                 return true;
             } else {
-                p.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_HAND");
                 return true;
             }
         }

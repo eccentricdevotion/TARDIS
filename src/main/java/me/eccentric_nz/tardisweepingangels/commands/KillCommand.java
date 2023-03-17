@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
@@ -42,7 +44,7 @@ public class KillCommand {
         String which = args[1].toUpperCase();
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            sender.sendMessage(plugin.getPluginName() + "Could not find a world with that name!");
+            TARDISMessage.send(sender, MODULE.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         int count = 0;
@@ -61,9 +63,9 @@ public class KillCommand {
                         count++;
                     }
                 }
-                sender.sendMessage(plugin.getPluginName() + "Removed " + count + " Silent Endermen in " + w.getName());
+                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_SILENT", count,"Silent Endermen", w.getName());
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Invalid monster type!");
+                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
             }
             return true;
         }
@@ -160,7 +162,7 @@ public class KillCommand {
             default -> {
             }
         }
-        sender.sendMessage(plugin.getPluginName() + "Removed " + count + " " + what + " in " + w.getName());
+        TARDISMessage.send(sender, MODULE.MONSTERS, "WA_REMOVED", count, what, w.getName());
         return true;
     }
 }

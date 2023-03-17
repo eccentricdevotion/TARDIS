@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -114,7 +116,7 @@ public class Butler implements Listener {
                                 milkers.remove(uuid);
                             }, 3000L);
                         } else {
-                            p.sendMessage(plugin.getPluginName() + "Strax is not lactating right now, try again later.");
+                            TARDISMessage.send(p, MODULE.MONSTERS, "WA_STRAX");
                         }
                     } else if (event.getHand().equals(EquipmentSlot.HAND)) {
                         p.playSound(zombie.getLocation(), "strax", 1.0f, 1.0f);

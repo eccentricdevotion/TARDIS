@@ -6,6 +6,7 @@ package me.eccentric_nz.tardisvortexmanipulator;
 import java.util.Arrays;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -28,13 +29,7 @@ public class TVMRecipe {
         String[] result_iddata = plugin.getVortexConfig().getString("recipe.result").split(":");
         Material mat = Material.valueOf(result_iddata[0]);
         int amount = plugin.getVortexConfig().getInt("recipe.amount");
-        ItemStack is;
-        if (result_iddata.length == 2) {
-            short result_data = Short.parseShort(result_iddata[1]);
-            is = new ItemStack(mat, amount, result_data);
-        } else {
-            is = new ItemStack(mat, amount);
-        }
+        ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Vortex Manipulator");
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
@@ -59,7 +54,7 @@ public class TVMRecipe {
                 r.setIngredient(c, m);
             });
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getTardisAPI().getShapedRecipes().put("Vortex Manipulator", r);

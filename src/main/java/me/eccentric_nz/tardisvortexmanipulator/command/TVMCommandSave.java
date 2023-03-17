@@ -2,6 +2,8 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
@@ -23,53 +25,53 @@ public class TVMCommandSave implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("vms")) {
-            Player p = null;
+            Player player = null;
             if (sender instanceof Player) {
-                p = (Player) sender;
+                player = (Player) sender;
             }
-            if (p == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+            if (player == null) {
+                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "CMD_PLAYER");
                 return true;
             }
-            if (!p.hasPermission("vm.teleport")) {
-                p.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+            if (!player.hasPermission("vm.teleport")) {
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                 return true;
             }
-            ItemStack is = p.getInventory().getItemInMainHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Vortex Manipulator")) {
-                String uuid = p.getUniqueId().toString();
+                String uuid = player.getUniqueId().toString();
                 if (args.length == 0) {
                     // list saves
                     TVMResultSetSaves rss = new TVMResultSetSaves(plugin, uuid, 0, 10);
                     if (rss.resultSet()) {
-                        TVMUtils.sendSaveList(p, rss, 1);
+                        TVMUtils.sendSaveList(player, rss, 1);
                     }
                 }
                 if (args.length < 1) {
-                    p.sendMessage(plugin.getPluginName() + "You need to specify a save name or page number!");
+                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PAGE_NUM");
                     return true;
                 }
                 try {
                     int page = Integer.parseInt(args[0]);
                     if (page <= 0) {
-                        p.sendMessage(plugin.getPluginName() + "Invalid page number!");
+                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
                         return true;
                     }
                     int start = (page * 10) - 10;
                     int limit = page * 10;
                     TVMResultSetSaves rss = new TVMResultSetSaves(plugin, uuid, start, limit);
                     if (rss.resultSet()) {
-                        TVMUtils.sendSaveList(p, rss, page);
+                        TVMUtils.sendSaveList(player, rss, page);
                     }
                 } catch (NumberFormatException e) {
                     plugin.debug("Wasn't a page number...");
                     // check for existing save
                     TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, args[0]);
                     if (rs.resultSet()) {
-                        p.sendMessage(plugin.getPluginName() + "You already have a save with that name!");
+                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_EXISTS");
                         return true;
                     }
-                    Location l = p.getLocation();
+                    Location l = player.getLocation();
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", uuid);
                     set.put("save_name", args[0]);
@@ -80,11 +82,11 @@ public class TVMCommandSave implements CommandExecutor {
                     set.put("yaw", l.getYaw());
                     set.put("pitch", l.getPitch());
                     plugin.getQueryFactory().doInsert("saves", set);
-                    sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator location (" + args[0] + ") saved!");
+                    TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_ADDED", args[0]);
                     return true;
                 }
             } else {
-                p.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_HAND");
                 return true;
             }
         }

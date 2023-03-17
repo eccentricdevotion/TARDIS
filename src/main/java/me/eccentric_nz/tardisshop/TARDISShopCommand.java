@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.database.InsertShopItem;
 import me.eccentric_nz.tardisshop.database.ResultSetUpdateShop;
@@ -35,70 +37,68 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisshop")) {
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
             // must be a player
-            if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
-                return true;
-            }
-            // return if no arguments
-            if (args.length < 1) {
-                player.sendMessage(plugin.getPluginName() + "Too few command arguments!");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("remove")) {
-                plugin.getShopSettings().getRemovingItem().add(player.getUniqueId());
-                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getShopSettings().getBlockMaterial().toString() + " block to remove the database record.");
-                return true;
-            } else if (args[0].equalsIgnoreCase("update")) {
-                // reload items.yml
-                File file = new File(plugin.getDataFolder(), "items.yml");
-                try {
-                    plugin.getItemsConfig().load(file);
-                } catch (InvalidConfigurationException | IOException e) {
-                    plugin.debug("Failed to reload items.yml" + e.getMessage());
+            if (sender instanceof Player player) {
+
+                // return if no arguments
+                if (args.length < 1) {
+                    TARDISMessage.send(player, MODULE.SHOP, "TOO_FEW_ARGS");
+                    return true;
                 }
-                // get shop items
-                ResultSetUpdateShop rs = new ResultSetUpdateShop(plugin);
-                if (rs.getAll()) {
-                    for (TARDISShopItem item : rs.getShopItems()) {
-                        String lookup = item.getItem().replace(" ", "_").toLowerCase();
-                        double cost = plugin.getItemsConfig().getDouble(lookup);
-                        if (cost != item.getCost()) {
-                            // update database
-                            new UpdateShopItem(plugin).updateCost(cost, item.getId());
-                            // find armor stand and update display name
-                            for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation(), 0.5d, 1.0d, 0.5d)) {
-                                if (e instanceof ArmorStand) {
-                                    e.setCustomName(ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
+                if (args[0].equalsIgnoreCase("remove")) {
+                    plugin.getShopSettings().getRemovingItem().add(player.getUniqueId());
+                    TARDISMessage.send(player, MODULE.SHOP, "SHOP_REMOVE", plugin.getShopSettings().getBlockMaterial().toString());
+                    return true;
+                } else if (args[0].equalsIgnoreCase("update")) {
+                    // reload items.yml
+                    File file = new File(plugin.getDataFolder(), "items.yml");
+                    try {
+                        plugin.getItemsConfig().load(file);
+                    } catch (InvalidConfigurationException | IOException e) {
+                        plugin.debug("Failed to reload items.yml" + e.getMessage());
+                    }
+                    // get shop items
+                    ResultSetUpdateShop rs = new ResultSetUpdateShop(plugin);
+                    if (rs.getAll()) {
+                        for (TARDISShopItem item : rs.getShopItems()) {
+                            String lookup = item.getItem().replace(" ", "_").toLowerCase();
+                            double cost = plugin.getItemsConfig().getDouble(lookup);
+                            if (cost != item.getCost()) {
+                                // update database
+                                new UpdateShopItem(plugin).updateCost(cost, item.getId());
+                                // find armor stand and update display name
+                                for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation(), 0.5d, 1.0d, 0.5d)) {
+                                    if (e instanceof ArmorStand) {
+                                        e.setCustomName(ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                return true;
-            }
-            // need at least 2 arguments from here on
-            if (args.length < 2) {
-                player.sendMessage(plugin.getPluginName() + "Too few command arguments!");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("add")) {
-                String name = args[1].toLowerCase();
-                if (!plugin.getItemsConfig().contains(name)) {
-                    player.sendMessage(plugin.getPluginName() + "Too few command arguments!");
                     return true;
                 }
-                double cost = plugin.getItemsConfig().getDouble(name);
-                TARDISShopItem item = new InsertShopItem(plugin).addNamedItem(TARDISStringUtils.capitalise(args[1]), cost);
-                plugin.getShopSettings().getSettingItem().put(player.getUniqueId(), item);
-                player.sendMessage(plugin.getPluginName() + "Click the " + plugin.getShopSettings().getBlockMaterial().toString() + " block to update the database record.");
+                // need at least 2 arguments from here on
+                if (args.length < 2) {
+                    TARDISMessage.send(player, MODULE.SHOP, "TOO_FEW_ARGS");
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("add")) {
+                    String name = args[1].toLowerCase();
+                    if (!plugin.getItemsConfig().contains(name)) {
+                    TARDISMessage.send(player, MODULE.SHOP, "TOO_FEW_ARGS");
+                        return true;
+                    }
+                    double cost = plugin.getItemsConfig().getDouble(name);
+                    TARDISShopItem item = new InsertShopItem(plugin).addNamedItem(TARDISStringUtils.capitalise(args[1]), cost);
+                    plugin.getShopSettings().getSettingItem().put(player.getUniqueId(), item);
+                    TARDISMessage.send(player, MODULE.SHOP, "SHOP_ADD", plugin.getShopSettings().getBlockMaterial().toString());
+                    return true;
+                }
+                return true;
+            } else {
+                TARDISMessage.send(sender, MODULE.SHOP, "CMD_NO_CONSOLE");
                 return true;
             }
-            return true;
         }
         return false;
     }

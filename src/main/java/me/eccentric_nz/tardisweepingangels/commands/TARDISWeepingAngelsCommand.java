@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -69,7 +71,7 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                 }
                 default -> {
                     // unknown command
-                    sender.sendMessage(plugin.getPluginName() + "Invalid command! Try using tab completion.");
+                    TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID_CMD");
                     return true;
                 }
             }
