@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.File;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
@@ -97,6 +96,7 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
+        booleanOptions.put("creation.seed_block_crafting", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
         booleanOptions.put("dynmap.enabled", true);
