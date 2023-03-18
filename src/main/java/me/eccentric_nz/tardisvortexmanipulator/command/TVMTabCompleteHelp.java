@@ -20,16 +20,13 @@ import com.google.common.collect.ImmutableList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 
 /**
  * TabCompleter for /vmh
  */
-public class TVMTabCompleteHelp implements TabCompleter {
+public class TVMTabCompleteHelp extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("command", "gui", "message", "tachyon");
 
@@ -39,9 +36,5 @@ public class TVMTabCompleteHelp implements TabCompleter {
             return partial(args[0], ROOT_SUBS);
         }
         return ImmutableList.of();
-    }
-
-    public List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<>(from.size()));
     }
 }

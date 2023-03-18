@@ -18,20 +18,19 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter
  */
-public class TabComplete implements TabCompleter {
+public class TabComplete  extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
@@ -67,23 +66,16 @@ public class TabComplete implements TabCompleter {
                 }
             }
             case 3 -> {
-                if (args[0].equals("disguise")) {
-                    return partial(args[2], ONOFF_SUBS);
-                } else if (args[0].equals("give")) {
-                    return partial(args[2], MONSTER_SUBS);
-                } else if (args[0].equals("follow")) {
-                    return Collections.singletonList("15");
-                } else {
-                    return partial(args[2], WORLD_SUBS);
-                }
+                return switch (args[0]) {
+                    case "disguise" -> partial(args[2], ONOFF_SUBS);
+                    case "give" -> partial(args[2], MONSTER_SUBS);
+                    case "follow" -> Collections.singletonList("15");
+                    default -> partial(args[2], WORLD_SUBS);
+                };
             }
             default -> {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<>(from.size()));
     }
 }
