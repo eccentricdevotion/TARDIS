@@ -42,6 +42,7 @@ creation:
   count: 0
   area: none
   check_for_home: true
+  seed_block_crafting: true
 # outer TARDIS
 # https://eccentricdevotion.github.io/TARDIS/configuration-preset.html
 police_box:

@@ -439,8 +439,10 @@ public class TARDIS extends JavaPlugin {
                 difficulty = Difficulty.EASY;
             }
             // register recipes
-            obstructionum = new TARDISSeedRecipe(this);
-            obstructionum.addSeedRecipes();
+            if (getConfig().getBoolean("creation.seed_block_crafting")) {
+                obstructionum = new TARDISSeedRecipe(this);
+                obstructionum.addSeedRecipes();
+            }
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);

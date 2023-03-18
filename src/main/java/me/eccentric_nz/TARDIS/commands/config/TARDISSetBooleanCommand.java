@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
@@ -28,19 +33,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.RegisteredListener;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
 /**
  * @author eccentric_nz
  */
 class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
-    private final List<String> require_restart = Arrays.asList("use_default_condensables", "use_worldguard", "walk_in_tardis", "open_door_policy", "handles", "weather_set", "chemistry");
+    private final List<String> require_restart = Arrays.asList("use_default_condensables", "use_worldguard", "walk_in_tardis", "open_door_policy", "handles", "weather_set", "chemistry", "seed_block_crafting");
     private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "dynmap");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
