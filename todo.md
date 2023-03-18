@@ -16,6 +16,7 @@
    - Use new Display entities for TARDIS Shop items
    - Update data (12) & resource (13) pack_format
    - Vortex Manipulator scan should use TARDIS player scanner?
+   - Add config option to disable seed block crafting (but still retain `/tgive`/TARDIS creation functionality...)
 
 ## Future versions
 
