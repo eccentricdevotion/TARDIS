@@ -123,7 +123,7 @@ public class TARDISSchematicGZip {
             obj = TARDISSchematicGZip.unzip(path);
         } else {
             // just get the schematic from the plugin JAR
-            path = folder + File.separator + File.separator + which + ".tschm";
+            path = folder + File.separator + which + ".tschm";
             InputStream stream = plugin.getResource(path);
             if (stream != null) {
                 obj = TARDISSchematicGZip.unzip(stream);

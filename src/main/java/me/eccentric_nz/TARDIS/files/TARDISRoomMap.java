@@ -24,14 +24,17 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 
 /**
- * The Unified Intelligence Taskforce — formerly known as the United Nations Intelligence Taskforce, and more usually
- * called UNIT — was a military organisation which operated under the auspices of the United Nations. Its remit was to
- * investigate and combat paranormal and extraterrestrial threats to the Earth. UNIT was not the only alien defence
- * organisation, but it was the one with which the Doctor had the closest personal involvement.
+ * The Unified Intelligence Taskforce — formerly known as the United Nations
+ * Intelligence Taskforce, and more usually called UNIT — was a military
+ * organisation which operated under the auspices of the United Nations. Its
+ * remit was to investigate and combat paranormal and extraterrestrial threats
+ * to the Earth. UNIT was not the only alien defence organisation, but it was
+ * the one with which the Doctor had the closest personal involvement.
  *
  * @author eccentric_nz
  */
@@ -44,21 +47,14 @@ public class TARDISRoomMap {
     }
 
     /**
-     * Loads schematic data into a Map. This allows the rooms_require_blocks option to check the room block counts.
+     * Loads schematic data into a Map. This allows the rooms_require_blocks
+     * option to check the room block counts.
      */
     public void load() {
-        String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
-                String basepath = (user) ? userbasepath : defaultbasepath;
-                String lower = r.toLowerCase(Locale.ENGLISH);
-                File sch = new File(basepath + lower + ".tschm");
-                if (sch.exists()) {
-                    makeRoomMap(lower, r, user);
-                } else {
-                    plugin.getLogger().log(Level.INFO, ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
+                boolean success = makeRoomMap(r.toLowerCase(Locale.ENGLISH), r, plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+                if (!success) {
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                     try {
                         plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -73,7 +69,7 @@ public class TARDISRoomMap {
      * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
      *
      * @param fileName the schematic file name to read
-     * @param s       the schematic name
+     * @param s the schematic name
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileName, String s, boolean user) {
@@ -81,7 +77,7 @@ public class TARDISRoomMap {
         // get JSON
         JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", fileName, user);
         if (obj == null) {
-            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getConsole().sendMessage(MODULE.TARDIS.getName() + ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
