@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import org.bukkit.ChatColor;
@@ -137,15 +136,14 @@ public class MonstersConfig {
                 i++;
             }
         }
-        try {
-            String handlesPath = plugin.getDataFolder() + File.separator + "monsters.yml";
-            config.save(new File(handlesPath));
-            plugin.getLogger().log(Level.INFO, "Updated monsters.yml");
-        } catch (IOException io) {
-            plugin.debug("Could not save monsters.yml, " + io.getMessage());
-        }
         if (i > 0) {
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.MONSTERS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
+            try {
+                String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
+                config.save(new File(monstersPath));
+                plugin.getServer().getConsoleSender().sendMessage(MODULE.MONSTERS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
+            } catch (IOException io) {
+                plugin.debug("Could not save monsters.yml, " + io.getMessage());
+            }
         }
     }
 }

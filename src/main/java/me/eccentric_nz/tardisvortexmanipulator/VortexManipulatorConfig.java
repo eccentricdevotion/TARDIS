@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import org.bukkit.ChatColor;
@@ -67,8 +66,8 @@ public class VortexManipulatorConfig {
     }
 
     /**
-     * Checks that the configuration file contains all the required entries. If entries are missing, then they are added
-     * with default values.
+     * Checks that the configuration file contains all the required entries. If
+     * entries are missing, then they are added with default values.
      */
     public void checkConfig() {
         int i = 0;
@@ -94,14 +93,13 @@ public class VortexManipulatorConfig {
             }
         }
         if (i > 0) {
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
-        }
-        try {
-            String handlesPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
-            config.save(new File(handlesPath));
-            plugin.getLogger().log(Level.INFO, "Updated vortex_manipulator.yml");
-        } catch (IOException io) {
-            plugin.debug("Could not save monsters.yml, " + io.getMessage());
+            try {
+                String handlesPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
+                config.save(new File(handlesPath));
+                plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            } catch (IOException io) {
+                plugin.debug("Could not save vortex_manipulator.yml, " + io.getMessage());
+            }
         }
     }
 }

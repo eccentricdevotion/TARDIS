@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.util.FileUtil;
@@ -36,6 +37,7 @@ public class WorldProcessor implements Runnable {
 
     @Override
     public void run() {
+        int i = 0;
         if (!config.contains("config_version", true)) {
             // back up the old config
             File oldFile = new File(plugin.getDataFolder() + File.separator + "config.yml");
@@ -51,79 +53,102 @@ public class WorldProcessor implements Runnable {
             plugin.getMonstersConfig().set("sontarans.worlds", null);
             plugin.getMonstersConfig().set("vashta_nerada.worlds", null);
             plugin.getMonstersConfig().set("zygons.worlds", null);
+            i++;
         }
         // add new world settings
-        plugin.getServer().getWorlds().forEach((w) -> {
+        for (World w : plugin.getServer().getWorlds()) {
             String n = sanitiseName(w.getName());
             // set TARDIS worlds, nether and end worlds to zero by default
             int m = (config.contains("spawn_rate.default_max", true)) ? config.getInt("spawn_rate.default_max") : 0;
             if (!config.contains("angels.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("angels.worlds." + n, m);
+                i++;
             }
             if (!config.contains("cybermen.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("cybermen.worlds." + n, m);
+                i++;
             }
             if (!config.contains("daleks.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("daleks.worlds." + n, m);
+                i++;
             }
             if (!config.contains("empty_child.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("empty_child.worlds." + n, m);
+                i++;
             }
             if (!config.contains("hath.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("hath.worlds." + n, m);
+                i++;
             }
             if (!config.contains("headless_monks.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("headless_monks.worlds." + n, m);
+                i++;
             }
             if (!config.contains("ice_warriors.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("ice_warriors.worlds." + n, m);
+                i++;
             }
             if (!config.contains("judoon.worlds." + n, true) || (config.contains("judoon.worlds." + n, true) && config.getString("judoon.worlds." + n).equals("true"))) {
                 plugin.getMonstersConfig().set("judoon.worlds." + n, m);
+                i++;
             }
             if (!config.contains("k9.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("k9.worlds." + n, true);
+                i++;
             }
             if (!config.contains("ood.worlds." + n, true) || (config.contains("ood.worlds." + n, true) && config.getInt("ood.worlds." + n) == 20)) {
                 plugin.getMonstersConfig().set("ood.worlds." + n, true);
+                i++;
             }
             if (!config.contains("racnoss.worlds." + n, true) && w.getEnvironment() == Environment.NETHER) {
                 plugin.getMonstersConfig().set("racnoss.worlds." + n, m);
+                i++;
             }
             if (!config.contains("sea_devils.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("sea_devils.worlds." + n, m);
+                i++;
             }
             if (!config.contains("silent.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("silent.worlds." + n, m);
+                i++;
             }
             if (!config.contains("silurians.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("silurians.worlds." + n, m);
+                i++;
             }
             if (!config.contains("slitheen.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("slitheen.worlds." + n, m);
+                i++;
             }
             if (!config.contains("sontarans.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("sontarans.worlds." + n, m);
+                i++;
             }
             if (!config.contains("the_mire.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("the_mire.worlds." + n, m);
+                i++;
             }
             if (!config.contains("toclafane.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("toclafane.worlds." + n, m);
+                i++;
             }
             if (!config.contains("vashta_nerada.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("vashta_nerada.worlds." + n, m);
+                i++;
             }
             if (!config.contains("zygons.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("zygons.worlds." + n, m);
+                i++;
             }
-        });
-        try {
-            String handlesPath = plugin.getDataFolder() + File.separator + "monsters.yml";
-            config.save(new File(handlesPath));
-            plugin.getLogger().log(Level.INFO, "Updated monsters.yml");
-        } catch (IOException io) {
-            plugin.debug("Could not save monsters.yml, " + io.getMessage());
+        }
+        if (i > 0) {
+            try {
+                String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
+                config.save(new File(monstersPath));
+                plugin.getLogger().log(Level.INFO, "Updated monsters.yml");
+            } catch (IOException io) {
+                plugin.debug("Could not save monsters.yml, " + io.getMessage());
+            }
         }
     }
 
