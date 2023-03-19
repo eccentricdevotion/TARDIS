@@ -921,10 +921,10 @@ public class TARDIS extends JavaPlugin {
      * bPermissions (as they have per world config files).
      */
     private void loadPerms() {
-        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
             // copy default permissions file if not present
-            tardisCopier.copy("permissions.txt");
             if (getConfig().getBoolean("creation.create_worlds")) {
+                tardisCopier.copy("permissions.txt");
                 getLogger().log(Level.INFO, "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
             }
         }

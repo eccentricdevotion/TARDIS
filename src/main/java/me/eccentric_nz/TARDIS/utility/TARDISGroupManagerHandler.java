@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.perms;
+package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -26,23 +26,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * The Sex Gas was an intelligent cloud of gas. It inhabited the body of Carys Fletcher to have sex with other humans,
- * killing them in the process. In its natural form, the sex gas was a thick pink-purple gas with high concentrations of
- * vorax and ceranium, which could move about at will. It could not survive in the atmosphere of Earth for very long and
- * would quickly become a pink powder.
+ * The Manager was a secret member of the rebels who pretended to be serving the Daleks in an alternate 22nd century
+ * England. While pretending to be interrogating the Third Doctor, he whispered to him that he was on his side.
  *
  * @author eccentric_nz
  */
-public class TARDISPermissionsExHandler {
+public class TARDISGroupManagerHandler {
 
     private final TARDIS plugin;
     private final File permissionsFile;
     private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
     private String group;
 
-    public TARDISPermissionsExHandler(TARDIS plugin) {
+    public TARDISGroupManagerHandler(TARDIS plugin) {
         this.plugin = plugin;
         permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
     }
@@ -73,14 +72,22 @@ public class TARDISPermissionsExHandler {
                 }
             }
         }
-        // get the default world
-        String w = plugin.getServer().getWorlds().get(0).getName();
-        // pex world <world> inherit <parentWorld> - make the TARDIS world inherit the main worlds permissions
         if (TARDISFloodgate.shouldReplacePrefix(player)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + TARDISFloodgate.getPlayerWorldName(player) + " inherit " + w);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect " + TARDISFloodgate.getPlayerWorldName(player));
         } else {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect TARDIS_WORLD_" + player);
         }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
+        int i = 0;
+        for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
+            String grpstr = entry.getKey();
+            List<String> perms = entry.getValue();
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mangadd " + grpstr);
+            perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(), "mangaddp " + grpstr + " " + p));
+            if (i == 0) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "manuadd " + player + " " + grpstr);
+            }
+            i++;
+        }
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "mansave");
     }
 }

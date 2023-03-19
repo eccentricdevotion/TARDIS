@@ -20,9 +20,7 @@ import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
-import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
-import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
+import me.eccentric_nz.TARDIS.utility.TARDISGroupManagerHandler;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -81,16 +79,6 @@ public class TARDISSpace {
                     TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
                     String player = name.substring(13);
                     tgmh.addPerms(player);
-                }
-                if (plugin.getPM().isPluginEnabled("bPermissions")) {
-                    TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
-                    String player = name.substring(13);
-                    tbph.addPerms(player);
-                }
-                if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
-                    TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
-                    String player = name.substring(13);
-                    tpesxh.addPerms(player);
                 }
             }
         }
