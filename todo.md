@@ -6,8 +6,11 @@
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test copying all config values from previous plugins to new files
+   - Redo vortex manipulator commands as sub-commands of `/vm`
    - Use new Display entities for TARDIS Shop items
    - Add 1.19.4 blocks
+   - Animate models for player disguises
+   - Fix laggy Silurian cave finder
 
 ## Next version `5.1.0`
 
@@ -32,7 +35,6 @@
 ## Resource Pack / TARDISWeepingAngels
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
-    * Davros
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
@@ -40,8 +42,6 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-2. Animate models for player disguises (could be done in TARDIS instead?)
-3. Fix laggy Silurian cave finder
 
 ## Minecraft Bedrock Edition?
 

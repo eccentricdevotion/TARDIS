@@ -706,7 +706,7 @@ public class TARDIS extends JavaPlugin {
     private void loadCustomConfigs() {
         List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blocks.yml", "rooms.yml",
                 "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml",
-                "flat_world.yml", "monsters.yml", "shop.yml", "vortex_maipulator.yml", "items.yml");
+                "flat_world.yml", "monsters.yml", "shop.yml", "vortex_manipulator.yml", "items.yml");
         for (String f : files) {
             debug(f);
             tardisCopier.copy(f);
@@ -733,7 +733,7 @@ public class TARDIS extends JavaPlugin {
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
         monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
         shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
-        vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_maipulator.yml"));
+        vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
         itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
     }
 

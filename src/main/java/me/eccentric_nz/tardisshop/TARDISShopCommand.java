@@ -39,7 +39,6 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
         if (cmd.getName().equalsIgnoreCase("tardisshop")) {
             // must be a player
             if (sender instanceof Player player) {
-
                 // return if no arguments
                 if (args.length < 1) {
                     TARDISMessage.send(player, MODULE.SHOP, "TOO_FEW_ARGS");
