@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.io.File;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -48,9 +50,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -466,7 +465,7 @@ public class TARDISBuilderInner implements Runnable {
             if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && schm.getPermission().equals("division")) {
                 // replace with gray concrete
                 data = Material.GRAY_CONCRETE.createBlockData();
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     // remember the block to spawn an Ood on
                     postOod = new Location(world, x, y + 1, z);
                 }

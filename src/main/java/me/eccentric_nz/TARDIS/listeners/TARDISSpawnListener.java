@@ -96,7 +96,7 @@ public class TARDISSpawnListener implements Listener {
             if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
             }
-            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);

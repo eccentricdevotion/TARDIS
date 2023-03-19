@@ -89,7 +89,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                     if (plugin.getServer().getPluginManager().getPlugin("TARDISWeepingAngels") != null && plugin.getServer().getPluginManager().getPlugin("TARDISWeepingAngels").isEnabled()) {
                         for (int i = 0; i < random.nextInt(3) + 1; i++) {
                             LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.SKELETON);
-                            if (plugin.getServer().getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
+                            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                 DalekEquipment.set(le, false);
                             }
                         }

@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -47,9 +49,6 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
@@ -454,7 +453,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
                     // replace with gray concrete
                     data = Material.GRAY_CONCRETE.createBlockData();
-                    if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         // remember the block to spawn an Ood on
                         postOod = new Location(world, x, y + 1, z);
                     }

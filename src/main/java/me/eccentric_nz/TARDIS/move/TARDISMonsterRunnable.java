@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -34,8 +35,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
-
-import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -112,7 +111,7 @@ public class TARDISMonsterRunnable implements Runnable {
             if (!take_action) {
                 continue;
             }
-            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
+            boolean twa = plugin.getConfig().getBoolean("modules.weeping_angels");
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 TARDISMonster tm = new TARDISMonster();
@@ -354,7 +353,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (m.getEquipment() != null) {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
-                        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && skeleton instanceof Skeleton skelly) {
+                        if (plugin.getConfig().getBoolean("modules.weeping_angels") && skeleton instanceof Skeleton skelly) {
                             if (TARDISAngelsAPI.isDalek(skelly)) {
                                 TARDISDalekDisguiser.dalekanium(skelly);
                             }
@@ -421,7 +420,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 ent.setCustomName(m.getName());
             }
             if (m.getPassenger() != null) {
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
+                if (plugin.getConfig().getBoolean("modules.weeping_angels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
                     TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent, false);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());

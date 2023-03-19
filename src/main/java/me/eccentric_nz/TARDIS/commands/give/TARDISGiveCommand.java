@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -42,8 +43,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -225,7 +224,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         String item_to_give = items.get(item);
         ItemStack result;
-        if (item.equals("vortex-manipulator") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+        if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
@@ -429,7 +428,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
-        if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+        if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
