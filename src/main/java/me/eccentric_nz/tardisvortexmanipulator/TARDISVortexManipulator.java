@@ -20,7 +20,7 @@ public class TARDISVortexManipulator {
         plugin.setTvmSettings(new TVMSettings());
         new VortexManipulatorConfig(plugin).checkConfig();
         registerListeners();
-        registerCommands();
+        registerCommand();
         ShapedRecipe recipe = new TVMRecipe(plugin).makeRecipe();
         plugin.getServer().addRecipe(recipe);
         plugin.getTardisAPI().addShapedRecipe("vortex-manipulator", recipe);
@@ -38,18 +38,9 @@ public class TARDISVortexManipulator {
         plugin.getPM().registerEvents(new TVMSavesGUIListener(plugin), plugin);
     }
 
-    private void registerCommands() {
+    private void registerCommand() {
         plugin.getCommand("vm").setExecutor(new TVMCommand(plugin));
-        plugin.getCommand("vma").setExecutor(new TVMCommandActivate(plugin));
-        plugin.getCommand("vmb").setExecutor(new TVMCommandBeacon(plugin));
-        plugin.getCommand("vmh").setExecutor(new TVMCommandHelp(plugin));
-        plugin.getCommand("vmh").setTabCompleter(new TVMTabCompleteHelp());
-        plugin.getCommand("vml").setExecutor(new TVMCommandLifesigns(plugin));
-        plugin.getCommand("vmm").setExecutor(new TVMCommandMessage(plugin));
-        plugin.getCommand("vmm").setTabCompleter(new TVMTabCompleteMessage());
-        plugin.getCommand("vmr").setExecutor(new TVMCommandRemove(plugin));
-        plugin.getCommand("vms").setExecutor(new TVMCommandSave(plugin));
-        plugin.getCommand("vmg").setExecutor(new TVMCommandGive(plugin));
+        plugin.getCommand("vm").setTabCompleter(new TVMTabComplete());
     }
 
     private void startRecharger() {

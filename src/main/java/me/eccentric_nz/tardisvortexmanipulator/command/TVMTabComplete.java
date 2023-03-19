@@ -17,20 +17,21 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.List;
-
 /**
- * TabCompleter for /vmm
+ * TabCompleter for /vm
  */
-public class TVMTabCompleteMessage extends TARDISCompleter implements TabCompleter {
+public class TVMTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("msg", "list", "read", "delete", "clear");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("go", "gui", "help", "message", "save", "remove", "lifesigns", "beacon", "activate", "give");
+    private final ImmutableList<String> MSG_SUBS = ImmutableList.of("msg", "list", "read", "delete", "clear");
     private final ImmutableList<String> INOUT_SUBS = ImmutableList.of("in", "out");
+    private final ImmutableList<String> HELP_SUBS = ImmutableList.of("command", "gui", "message", "tachyon");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -38,10 +39,18 @@ public class TVMTabCompleteMessage extends TARDISCompleter implements TabComplet
             return partial(args[0], ROOT_SUBS);
         }
         if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("msg")) {
-                return null;
+            if (args[0].equalsIgnoreCase("message")) {
+                return partial(args[0], MSG_SUBS);
             }
-            if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("clear")) {
+            if (args[0].equalsIgnoreCase("help")) {
+                return partial(args[0], HELP_SUBS);
+            }
+        }
+        if (args.length == 3) {
+            if (args[1].equalsIgnoreCase("msg")) {
+                return null; // online player names
+            }
+            if (args[1].equalsIgnoreCase("list") || args[1].equalsIgnoreCase("clear")) {
                 return partial(args[1], INOUT_SUBS);
             }
         }
