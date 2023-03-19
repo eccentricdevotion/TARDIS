@@ -13,7 +13,6 @@
    - Test copying all config values from previous plugins to new files
    - Read schematic files from JAR file
    - Use new Display entities for TARDIS Shop items
-   - Update data (12) & resource (13) pack_format
    - Add 1.19.4 blocks
 
 ## Future versions

@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -103,12 +103,27 @@ public class TARDISChecker {
             // it's a json file, so load it and check the value
             Gson gson = new GsonBuilder().create();
             try {
-                FileReader reader = new FileReader(mcmeta);
-                JsonReader jsonReader = gson.newJsonReader(reader);
                 // convert JSON file to map
-                Map<?, ?> map = gson.fromJson(reader, Map.class);
+                Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
                 // print map entries
                 for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
+                        for (Map.Entry<?, ?> data : values.entrySet()) {
+                            if (data.getKey().equals("pack_format")) {
+                                Double d = (Double) data.getValue();
+                                if (d < 12.0D) {
+                                    Map<String, Map<String, Object>> mcmap = new HashMap<>();
+                                    Map<String, Object> pack = new HashMap<>();
+                                    pack.put("description", "Data pack for the TARDIS plugin");
+                                    pack.put("pack_format", 12);
+                                    mcmap.put("pack", pack);
+                                    FileWriter writer = new FileWriter(mcmeta);
+                                    gson.toJson(mcmap, writer);
+                                    writer.close();
+                                }
+                            }
+                        }
+                    }
                     plugin.getLogger().log(Level.INFO, entry.getKey() + "=" + entry.getValue());
                 }
             } catch (IOException e) {
@@ -116,4 +131,14 @@ public class TARDISChecker {
             }
         }
     }
+    
+    /*
+    * pack.mcmeta contents
+    {
+        "pack": {
+            "description": "Data pack for the TARDIS plugin",
+            "pack_format": 12
+        }
+    }
+    */
 }
