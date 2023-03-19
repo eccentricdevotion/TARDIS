@@ -877,7 +877,7 @@ public class TARDIS extends JavaPlugin {
     private void loadHelper() {
         tardisHelper = new TARDISHelper();
         tardisHelper.enable(this);
-        debug("Loading TARDISChunkGenerator!");
+        debug("Loading Helper module!");
     }
 
     /**
