@@ -64,7 +64,7 @@ public class TVMResultSetBeacon {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("Block error for beacons table! " + e.getMessage());
+            plugin.debug("Block error for beacons table resultset! " + e.getMessage());
             return false;
         } finally {
             try {

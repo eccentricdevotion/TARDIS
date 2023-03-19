@@ -24,11 +24,16 @@ public enum Config {
     chameleon_guis,
     condensables,
     custom_consoles,
+    flat_world,
     handles,
+    items,
     kits,
     planets,
     recipes,
     rooms,
+    shop,
     signs,
-    tag
+    tag,
+    vortex_manipulator,
+    weeping_angels
 }

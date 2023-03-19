@@ -5,7 +5,6 @@
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Test copying all config values from previous plugins to new files
    - Redo vortex manipulator commands as sub-commands of `/vm`
    - Use new Display entities for TARDIS Shop items
    - Add 1.19.4 blocks

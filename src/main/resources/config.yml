@@ -242,7 +242,9 @@ conversions:
   controls: true
   bind: true
   icons: true
-  datapacks: true
-  datapacks_1_18: true
   restore_biomes: true
-  all_in_one: true
+  all_in_one:
+    helper: true
+    shop: true
+    vortex_manipulator: true
+    weeping_angels: true

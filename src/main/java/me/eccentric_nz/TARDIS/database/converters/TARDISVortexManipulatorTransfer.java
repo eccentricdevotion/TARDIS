@@ -1,13 +1,12 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
+import java.io.File;
+import java.sql.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.File;
-import java.sql.*;
-import java.util.logging.Level;
 
 public class TARDISVortexManipulatorTransfer {
 
@@ -59,6 +58,7 @@ public class TARDISVortexManipulatorTransfer {
                 }
                 if (i > 0) {
                     ps.executeBatch();
+                    connection.commit();
                     plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex beacons to database");
                     i = 0;
                 }
@@ -81,6 +81,7 @@ public class TARDISVortexManipulatorTransfer {
                 }
                 if (i > 0) {
                     ps.executeBatch();
+                    connection.commit();
                     plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex saves to database");
                     i = 0;
                 }
@@ -97,6 +98,7 @@ public class TARDISVortexManipulatorTransfer {
                 }
                 if (i > 0) {
                     ps.executeBatch();
+                    connection.commit();
                     plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex manipulators to database");
                     i = 0;
                 }
@@ -116,12 +118,12 @@ public class TARDISVortexManipulatorTransfer {
                 }
                 if (i > 0) {
                     ps.executeBatch();
+                    connection.commit();
                     plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex messages to database");
                 }
-                connection.commit();
                 return true;
             } catch (SQLException e) {
-                plugin.debug("Block error for beacons table! " + e.getMessage());
+                plugin.debug("Transfer error for beacons table! " + e.getMessage());
                 return false;
             } finally {
                 try {
@@ -134,12 +136,15 @@ public class TARDISVortexManipulatorTransfer {
                     if (statement != null) {
                         statement.close();
                     }
+                    // reset auto commit
+                    connection.setAutoCommit(true);
                 } catch (SQLException e) {
-                    plugin.debug("Error closing beacons table! " + e.getMessage());
+                    plugin.debug("Error closing vortex manipulator transfer! " + e.getMessage());
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     /**

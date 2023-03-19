@@ -50,7 +50,7 @@ public class TARDISShopTransfer {
                 connection.commit();
                 return true;
             } catch (SQLException e) {
-                plugin.debug("Block error for items table! " + e.getMessage());
+                plugin.debug("Transfer error for items table! " + e.getMessage());
                 return false;
             } finally {
                 try {
@@ -63,12 +63,15 @@ public class TARDISShopTransfer {
                     if (statement != null) {
                         statement.close();
                     }
+                    // reset auto commit
+                    connection.setAutoCommit(true);
                 } catch (SQLException e) {
-                    plugin.debug("Error closing items table! " + e.getMessage());
+                    plugin.debug("Error closing items transfer! " + e.getMessage());
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     public Connection getSQLiteConnection() {

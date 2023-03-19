@@ -398,16 +398,32 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.archive_wall_data", true);
                 conversions++;
             }
-            if (!getConfig().getBoolean("conversions.all_in_one")) {
-                // configs
-                boolean all = new TARDISAllInOneConfigConverter(this).transferConfigs();
-                // database
-                boolean tran = new TARDISVortexManipulatorTransfer(this).transferData();
-                boolean sfer = new TARDISShopTransfer(this).transferData();
-                if (all && tran && sfer) {
-                    getConfig().set("conversions.all_in_one", true);
+            if (!getConfig().getBoolean("conversions.all_in_one.helper")) {
+                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.HELPER)) {
+                    getConfig().set("conversions.all_in_one.helper", true);
                     conversions++;
-                    getLogger().log(Level.INFO, "All in one conversion complete :)");
+                }
+            }
+            if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
+                boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.SHOP);
+                boolean ds = new TARDISShopTransfer(this).transferData();
+                if (cs && ds) {
+                    getConfig().set("conversions.all_in_one.shop", true);
+                    conversions++;
+                }
+            }
+            if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
+                boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.VORTEX_MANIPULATOR);
+                boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
+                if (cvm && dvm) {
+                    getConfig().set("conversions.all_in_one.vortex_manipulator", true);
+                    conversions++;
+                }
+            }
+            if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
+                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.MONSTERS)) {
+                    getConfig().set("conversions.all_in_one.weeping_angels", true);
+                    conversions++;
                 }
             }
             loadMultiverse();
@@ -595,7 +611,7 @@ public class TARDIS extends JavaPlugin {
     /**
      * Gets the MySQL database prefix for TARDIS tables
      *
-     * @return the prefix from the config
+     * @return the prefix from the TARDIS configuration
      */
     public String getPrefix() {
         return prefix;

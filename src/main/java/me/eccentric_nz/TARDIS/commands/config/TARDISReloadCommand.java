@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.io.File;
+import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Config;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author eccentric_nz
@@ -57,10 +56,15 @@ class TARDISReloadCommand {
                 case blocks -> plugin.getBlocksConfig().load(file);
                 case chameleon_guis -> plugin.getChameleonGuis().load(file);
                 case condensables -> plugin.getCondensablesConfig().load(file);
+                case flat_world -> plugin.getGeneratorConfig().load(file);
                 case handles -> plugin.getHandlesConfig().load(file);
+                case items -> plugin.getItemsConfig().load(file);
                 case kits -> plugin.getKitsConfig().load(file);
                 case rooms -> plugin.getRoomsConfig().load(file);
+                case shop -> plugin.getShopConfig().load(file);
                 case signs -> plugin.getSigns().load(file);
+                case vortex_manipulator -> plugin.getVortexConfig().load(file);
+                case weeping_angels -> plugin.getMonstersConfig().load(file);
                 default -> {
                     TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
                     return true;

@@ -75,7 +75,10 @@ public class TARDISConfiguration {
         booleanOptions.put("arch.switch_inventory", true);
         booleanOptions.put("archive.enabled", true);
         booleanOptions.put("circuits.damage", false);
-        booleanOptions.put("conversions.all_in_one", false);
+        booleanOptions.put("conversions.all_in_one.helper", false);
+        booleanOptions.put("conversions.all_in_one.shop", false);
+        booleanOptions.put("conversions.all_in_one.vortex_manipulator", false);
+        booleanOptions.put("conversions.all_in_one.weeping_angels", false);
         booleanOptions.put("conversions.archive_wall_data", false);
         booleanOptions.put("conversions.ars_materials", false);
         booleanOptions.put("conversions.bind", false);
