@@ -124,7 +124,6 @@ public class TARDISChecker {
                             }
                         }
                     }
-                    plugin.getLogger().log(Level.INFO, entry.getKey() + "=" + entry.getValue());
                 }
             } catch (IOException e) {
 

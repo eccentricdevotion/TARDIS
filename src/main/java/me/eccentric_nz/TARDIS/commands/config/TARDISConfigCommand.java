@@ -89,7 +89,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("any_key", "preferences");
         firstsBool.put("archive", "");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("blueprints", "");
+        firstsBool.put("blueprints", "modules");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("check_for_home", "creation");
@@ -99,8 +99,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
+        firstsBool.put("dynmap", "modules");
         firstsBool.put("emergency_npc", "allow");
-        firstsBool.put("dynmap", "");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
@@ -135,6 +135,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("seed_block_crafting", "creation");
         firstsBool.put("sfx", "allow");
+        firstsBool.put("shop", "modules");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
@@ -147,8 +148,10 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("view_interior", "police_box");
         firstsBool.put("view_interior_uses_console_size", "police_box");
         firstsBool.put("village_travel", "allow");
+        firstsBool.put("vortex_manipulator", "modules");
         firstsBool.put("walk_in_tardis", "preferences");
         firstsBool.put("weather_set", "allow");
+        firstsBool.put("weeping_angels", "modules");
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
