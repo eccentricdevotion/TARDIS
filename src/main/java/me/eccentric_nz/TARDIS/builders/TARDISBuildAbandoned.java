@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -44,9 +45,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -127,64 +125,59 @@ class TARDISBuildAbandoned implements Runnable {
             } else {
                 starty = 64;
             }
-            String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
-                return;
-            }
             // get JSON
-            obj = TARDISSchematicGZip.unzip(path);
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            h = dimensions.get("height").getAsInt() - 1;
-            w = dimensions.get("width").getAsInt();
-            d = dimensions.get("length").getAsInt() - 1;
-            div = (h + 1.0d) * w * (d + 1.0d);
-            // calculate startx, starty, startz
-            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-            int slot = tintpos.getFreeSlot();
-            pos = tintpos.getTIPSData(slot);
-            // save the slot
-            set.put("tips", slot);
-            startx = pos.getCentreX();
-            resetx = pos.getCentreX();
-            startz = pos.getCentreZ();
-            resetz = pos.getCentreZ();
-            // get the correct chunk for ARS
-            cl = new Location(world, startx, starty, startz);
-            Chunk cars = world.getChunkAt(cl);
-            String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
-            set.put("chunk", chun);
-            // get list of used chunks
-            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
-            // update chunks list in DB
-            chunkList.forEach((ch) -> {
-                HashMap<String, Object> setc = new HashMap<>();
-                setc.put("tardis_id", dbID);
-                setc.put("world", world.getName());
-                setc.put("x", ch.getX());
-                setc.put("z", ch.getZ());
-                plugin.getQueryFactory().doInsert("chunks", setc);
-            });
-            where.put("tardis_id", dbID);
-            // determine 'use_clay' material
-            try {
-                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
-            } catch (IllegalArgumentException e) {
-                use_clay = UseClay.WOOL;
+            obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+            if (obj != null) {
+                // get dimensions
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                h = dimensions.get("height").getAsInt() - 1;
+                w = dimensions.get("width").getAsInt();
+                d = dimensions.get("length").getAsInt() - 1;
+                div = (h + 1.0d) * w * (d + 1.0d);
+                // calculate startx, starty, startz
+                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                int slot = tintpos.getFreeSlot();
+                pos = tintpos.getTIPSData(slot);
+                // save the slot
+                set.put("tips", slot);
+                startx = pos.getCentreX();
+                resetx = pos.getCentreX();
+                startz = pos.getCentreZ();
+                resetz = pos.getCentreZ();
+                // get the correct chunk for ARS
+                cl = new Location(world, startx, starty, startz);
+                Chunk cars = world.getChunkAt(cl);
+                String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
+                set.put("chunk", chun);
+                // get list of used chunks
+                List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
+                // update chunks list in DB
+                chunkList.forEach((ch) -> {
+                    HashMap<String, Object> setc = new HashMap<>();
+                    setc.put("tardis_id", dbID);
+                    setc.put("world", world.getName());
+                    setc.put("x", ch.getX());
+                    setc.put("z", ch.getZ());
+                    plugin.getQueryFactory().doInsert("chunks", setc);
+                });
+                where.put("tardis_id", dbID);
+                // determine 'use_clay' material
+                try {
+                    use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                } catch (IllegalArgumentException e) {
+                    use_clay = UseClay.WOOL;
+                }
+                // get input array
+                arr = obj.get("input").getAsJsonArray();
+                if (player != null) {
+                    // start progress bar
+                    bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+                    bb.setProgress(0);
+                    bb.addPlayer(player);
+                    bb.setVisible(true);
+                }
+                running = true;
             }
-            // get input array
-            arr = obj.get("input").getAsJsonArray();
-            if (player != null) {
-                // start progress bar
-                bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
-                bb.setProgress(0);
-                bb.addPlayer(player);
-                bb.setVisible(true);
-            }
-            running = true;
         }
         if (level == h && row == w - 1) {
             // put on the door, redstone torches, signs, and the repeaters
@@ -335,9 +328,12 @@ class TARDISBuildAbandoned implements Runnable {
                     }
                     case BLUE_WOOL -> {
                         switch (use_clay) {
-                            case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
-                            case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
-                            default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                            case TERRACOTTA ->
+                                data = Material.BLUE_TERRACOTTA.createBlockData();
+                            case CONCRETE ->
+                                data = Material.BLUE_CONCRETE.createBlockData();
+                            default ->
+                                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                         }
                     }
                     default -> {

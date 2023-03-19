@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -27,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -41,10 +43,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
-
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the Doctor's tenth regeneration, the pool's water -
  * or perhaps the pool itself - fell into the library. After the TARDIS had fixed itself, the swimming pool was restored
@@ -56,7 +54,7 @@ public class TARDISRoomRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location l;
-    private final JsonObject s;
+    private final JsonObject obj;
     private final int tardis_id;
     private final int progressLevel;
     private final int progressRow;
@@ -105,7 +103,7 @@ public class TARDISRoomRunnable implements Runnable {
         this.isLastTask = isLastTask;
         player = plugin.getServer().getPlayer(uuid);
         l = roomData.getLocation();
-        s = roomData.getSchematic();
+        obj = roomData.getSchematic();
         wall_type = roomData.getMiddleType();
         floor_type = roomData.getFloorType();
         room = roomData.getRoom();
@@ -167,8 +165,8 @@ public class TARDISRoomRunnable implements Runnable {
                 level = progressLevel;
                 row = progressRow;
                 col = progressColumn;
-                JsonObject dim = s.get("dimensions").getAsJsonObject();
-                arr = s.get("input").getAsJsonArray();
+                JsonObject dim = obj.get("dimensions").getAsJsonObject();
+                arr = obj.get("input").getAsJsonArray();
                 h = dim.get("height").getAsInt() - 1;
                 w = dim.get("width").getAsInt() - 1;
                 c = dim.get("length").getAsInt();
@@ -372,9 +370,9 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                 }
-                if (s.has("paintings")) {
+                if (obj.has("paintings")) {
                     // place paintings
-                    JsonArray paintings = (JsonArray) s.get("paintings");
+                    JsonArray paintings = (JsonArray) obj.get("paintings");
                     for (int i = 0; i < paintings.size(); i++) {
                         JsonObject painting = paintings.get(i).getAsJsonObject();
                         JsonObject rel = painting.get("rel_location").getAsJsonObject();

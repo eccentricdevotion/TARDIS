@@ -105,7 +105,7 @@ public class TARDISChecker {
             try {
                 // convert JSON file to map
                 Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
-                // print map entries
+                // loop map entries
                 for (Map.Entry<?, ?> entry : map.entrySet()) {
                     if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
                         for (Map.Entry<?, ?> data : values.entrySet()) {
@@ -131,14 +131,4 @@ public class TARDISChecker {
             }
         }
     }
-    
-    /*
-    * pack.mcmeta contents
-    {
-        "pack": {
-            "description": "Data pack for the TARDIS plugin",
-            "pack_format": 12
-        }
-    }
-    */
 }

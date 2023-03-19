@@ -37,7 +37,6 @@ import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -97,99 +96,100 @@ public class TARDISJunkBuilder implements Runnable {
                     BlockData data;
                     Block postTerminalBlock = null;
                     // get JSON
-                    String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
-                    JsonObject obj = TARDISSchematicGZip.unzip(path);
-                    // get dimensions
-                    JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-                    int h = dimensions.get("height").getAsInt();
-                    int w = dimensions.get("width").getAsInt();
-                    int l = dimensions.get("length").getAsInt();
-                    // get input array
-                    JsonArray arr = obj.get("input").getAsJsonArray();
-                    // loop like crazy
-                    for (int level = 0; level < h; level++) {
-                        JsonArray floor = arr.get(level).getAsJsonArray();
-                        for (int row = 0; row < w; row++) {
-                            JsonArray r = (JsonArray) floor.get(row);
-                            for (int col = 0; col < l; col++) {
-                                JsonObject c = r.get(col).getAsJsonObject();
-                                int x = sx + row;
-                                int y = sy + level;
-                                int z = sz + col;
-                                data = plugin.getServer().createBlockData(c.get("data").getAsString());
-                                type = data.getMaterial();
-                                if (type.equals(Material.CAKE)) {
-                                    /*
+                    JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", "junk", false);
+                    if (obj != null) {
+                        // get dimensions
+                        JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                        int h = dimensions.get("height").getAsInt();
+                        int w = dimensions.get("width").getAsInt();
+                        int l = dimensions.get("length").getAsInt();
+                        // get input array
+                        JsonArray arr = obj.get("input").getAsJsonArray();
+                        // loop like crazy
+                        for (int level = 0; level < h; level++) {
+                            JsonArray floor = arr.get(level).getAsJsonArray();
+                            for (int row = 0; row < w; row++) {
+                                JsonArray r = (JsonArray) floor.get(row);
+                                for (int col = 0; col < l; col++) {
+                                    JsonObject c = r.get(col).getAsJsonObject();
+                                    int x = sx + row;
+                                    int y = sy + level;
+                                    int z = sz + col;
+                                    data = plugin.getServer().createBlockData(c.get("data").getAsString());
+                                    type = data.getMaterial();
+                                    if (type.equals(Material.CAKE)) {
+                                        /*
                                      * This block will be converted to a lever
                                      * by setBlockAndRemember(), but remember it
                                      * so we can use it as the handbrake!
-                                     */
-                                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
-                                }
-                                if (type.equals(Material.STONE_BUTTON)) {
-                                    // remember location 1
-                                    String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
-                                }
-                                if (type.equals(Material.OAK_BUTTON)) {
-                                    // remember location 6
-                                    String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
-                                }
-                                if (type.equals(Material.REPEATER)) {
-                                    // remember location 3
-                                    String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 2, repeater, 0);
-                                }
-                                if (type.equals(Material.COMPARATOR)) {
-                                    // remember location 2
-                                    String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 3, comparator, 0);
-                                }
-                                if (TARDISMaterials.infested.contains(type)) {
-                                    // insert / update control 9
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
-                                    // remember block
-                                    postTerminalBlock = world.getBlockAt(x, y, z);
-                                }
-                                if (type.equals(Material.TRIPWIRE_HOOK)) {
-                                    // remember location 4
-                                    String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                                    plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
-                                }
-                                switch (type) {
-                                    case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
-                                    case CAKE -> {
-                                        BlockData handbrake = Material.LEVER.createBlockData();
-                                        Switch lever = (Switch) handbrake;
-                                        lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-                                        lever.setFacing(BlockFace.SOUTH);
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
+                                         */
+                                        String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
                                     }
-                                    case ORANGE_WOOL -> {
-                                        BlockData stem;
-                                        if (wall_type.equals(Material.ORANGE_WOOL)) {
-                                            stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
-                                        } else {
-                                            stem = wall_type.createBlockData();
+                                    if (type.equals(Material.STONE_BUTTON)) {
+                                        // remember location 1
+                                        String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
+                                    }
+                                    if (type.equals(Material.OAK_BUTTON)) {
+                                        // remember location 6
+                                        String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
+                                    }
+                                    if (type.equals(Material.REPEATER)) {
+                                        // remember location 3
+                                        String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 2, repeater, 0);
+                                    }
+                                    if (type.equals(Material.COMPARATOR)) {
+                                        // remember location 2
+                                        String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 3, comparator, 0);
+                                    }
+                                    if (TARDISMaterials.infested.contains(type)) {
+                                        // insert / update control 9
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
+                                        // remember block
+                                        postTerminalBlock = world.getBlockAt(x, y, z);
+                                    }
+                                    if (type.equals(Material.TRIPWIRE_HOOK)) {
+                                        // remember location 4
+                                        String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
+                                    }
+                                    switch (type) {
+                                        case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                                        case CAKE -> {
+                                            BlockData handbrake = Material.LEVER.createBlockData();
+                                            Switch lever = (Switch) handbrake;
+                                            lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
+                                            lever.setFacing(BlockFace.SOUTH);
+                                            TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
                                         }
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
+                                        case ORANGE_WOOL -> {
+                                            BlockData stem;
+                                            if (wall_type.equals(Material.ORANGE_WOOL)) {
+                                                stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                            } else {
+                                                stem = wall_type.createBlockData();
+                                            }
+                                            TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
+                                        }
+                                        case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+                                        default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                     }
-                                    case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-                                    default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                 }
                             }
                         }
-                    }
-                    if (postTerminalBlock != null) {
-                        Directional sign = (Directional) Material.OAK_WALL_SIGN.createBlockData();
-                        sign.setFacing(BlockFace.EAST);
-                        postTerminalBlock.setBlockData(sign);
-                        if (Tag.WALL_SIGNS.isTagged(postTerminalBlock.getType())) {
-                            Sign ts = (Sign) postTerminalBlock.getState();
-                            ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
-                            ts.update();
+                        if (postTerminalBlock != null) {
+                            Directional sign = (Directional) Material.OAK_WALL_SIGN.createBlockData();
+                            sign.setFacing(BlockFace.EAST);
+                            postTerminalBlock.setBlockData(sign);
+                            if (Tag.WALL_SIGNS.isTagged(postTerminalBlock.getType())) {
+                                Sign ts = (Sign) postTerminalBlock.getState();
+                                ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
+                                ts.update();
+                            }
                         }
                     }
                 } else if (plugin.getConfig().getBoolean("junk.particles")) {

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
-import java.io.File;
 import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
@@ -53,8 +52,9 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
- * the deleted room, depositing them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted,
+ * automatically relocating any living beings in the deleted room, depositing
+ * them in the control room.
  *
  * @author eccentric_nz
  */
@@ -152,17 +152,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             set = new HashMap<>();
             where = new HashMap<>();
             if (archive_next == null) {
-                String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-                File file = new File(path);
-                if (!file.exists()) {
-                    plugin.debug("Could not find a schematic with that name!");
+                // get JSON
+                obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+                if (obj == null) {
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
-                // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
                 size_next = tud.getSchematic().getConsoleSize();
             } else {
                 obj = archive_next.getJSON();
@@ -170,17 +166,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             // get previous schematic dimensions
             if (archive_prev == null) {
-                String prevDirirectory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
-                String prevPath = plugin.getDataFolder() + File.separator + prevDirirectory + File.separator + tud.getPrevious().getPermission() + ".tschm";
-                File prevFile = new File(prevPath);
-                if (!prevFile.exists()) {
-                    plugin.debug("Could not find a schematic with that name!");
+                // get JSON
+                JsonObject prevObj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+                if (prevObj == null) {
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
-                // get JSON
-                JsonObject prevObj = TARDISSchematicGZip.unzip(prevPath);
                 JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
                 ph = prevDimensions.get("height").getAsInt();
                 pw = prevDimensions.get("width").getAsInt();

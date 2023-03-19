@@ -1,19 +1,17 @@
 # TODO
 
-
 ## Current version `4.14.0`
-
-## Next version `4.15.0`
-
-1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test copying all config values from previous plugins to new files
-   - Read schematic files from JAR file
    - Use new Display entities for TARDIS Shop items
    - Add 1.19.4 blocks
+
+## Next version `5.1.0`
+
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Future versions
 

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
@@ -51,8 +50,9 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
- * the deleted room, depositing them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted,
+ * automatically relocating any living beings in the deleted room, depositing
+ * them in the control room.
  *
  * @author eccentric_nz
  */
@@ -131,17 +131,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             set = new HashMap<>();
             where = new HashMap<>();
             if (archive == null) {
-                String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-                File file = new File(path);
-                if (!file.exists()) {
-                    plugin.debug("Could not find a schematic with that name!");
-                    // cancel task
-                    plugin.getServer().getScheduler().cancelTask(taskID);
+                // get JSON
+                obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+                if (obj == null) {
                     return;
                 }
-                // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
             } else {
                 obj = archive.getJSON();
             }
@@ -621,7 +615,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else if (type.equals(Material.PLAYER_HEAD) || type.equals(Material.PLAYER_WALL_HEAD)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
                     if (bb.has("head")) {
-                        JsonObject head =  bb.get("head").getAsJsonObject();
+                        JsonObject head = bb.get("head").getAsJsonObject();
                         if (head.has("uuid")) {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                             if (uuid != null) {

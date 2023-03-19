@@ -742,7 +742,7 @@ public class TARDIS extends JavaPlugin {
      * quotes from the quotes file.
      */
     private void loadFiles() {
-        tardisCopier.copyFiles();
+        tardisCopier.copyRoomTemplateFile();
         new TARDISRoomMap(this).load();
         quotesfile = tardisCopier.copy("quotes.txt");
     }

@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaProcessData;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISSchematicReader;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
@@ -91,7 +91,7 @@ public class SiluriaStructurePopulator extends BlockPopulator {
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicReader.unzip(plugin.getResource(path));
+            JsonObject obj = TARDISSchematicGZip.unzip(plugin.getResource(path));
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

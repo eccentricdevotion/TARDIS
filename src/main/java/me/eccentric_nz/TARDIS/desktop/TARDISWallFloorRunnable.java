@@ -35,7 +35,6 @@ import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -76,15 +75,11 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     public void run() {
         // initialise
         if (!running) {
-            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            if (obj == null) {
                 return;
             }
-            // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();

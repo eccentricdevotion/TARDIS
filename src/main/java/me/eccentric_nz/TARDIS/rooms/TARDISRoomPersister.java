@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,43 +94,43 @@ public class TARDISRoomPersister {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     String whichroom = rs.getString("room");
-                    String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
-                    String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
                     // get JSON
-                    JsonObject obj = TARDISSchematicGZip.unzip(path);
-                    TARDISRoomData rd = new TARDISRoomData();
-                    rd.setSchematic(obj);
-                    rd.setRoom(whichroom);
-                    Location location = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
-                    rd.setLocation(location);
-                    int id = rs.getInt("tardis_id");
-                    rd.setTardis_id(id);
-                    rd.setRow(rs.getInt("progress_row"));
-                    rd.setColumn(rs.getInt("progress_column"));
-                    rd.setLevel(rs.getInt("progress_level"));
-                    rd.setDirection(COMPASS.valueOf(rs.getString("direction")));
-                    rd.setMiddleType(Material.valueOf(rs.getString("middle_type")));
-                    rd.setFloorType(Material.valueOf(rs.getString("floor_type")));
-                    List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
-                    rd.setPostBlocks(postBlocks);
-                    long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-                    // get the player who's tardis this is
-                    ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
-                    if (rst.fromID(id)) {
-                        // resume the room growing
-                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid(), true);
-                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
-                        runnable.setTask(taskID);
-                        // resume tracking progress
-                        plugin.getTrackerKeeper().getRoomTasks().put(taskID, rd);
-                        // delete record
-                        delete.setInt(1, rs.getInt("progress_id"));
-                        delete.executeUpdate();
+                    JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
+                    if (obj != null) {
+                        TARDISRoomData rd = new TARDISRoomData();
+                        rd.setSchematic(obj);
+                        rd.setRoom(whichroom);
+                        Location location = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
+                        rd.setLocation(location);
+                        int id = rs.getInt("tardis_id");
+                        rd.setTardis_id(id);
+                        rd.setRow(rs.getInt("progress_row"));
+                        rd.setColumn(rs.getInt("progress_column"));
+                        rd.setLevel(rs.getInt("progress_level"));
+                        rd.setDirection(COMPASS.valueOf(rs.getString("direction")));
+                        rd.setMiddleType(Material.valueOf(rs.getString("middle_type")));
+                        rd.setFloorType(Material.valueOf(rs.getString("floor_type")));
+                        List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
+                        rd.setPostBlocks(postBlocks);
+                        long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+                        // get the player who's tardis this is
+                        ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
+                        if (rst.fromID(id)) {
+                            // resume the room growing
+                            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid(), true);
+                            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
+                            runnable.setTask(taskID);
+                            // resume tracking progress
+                            plugin.getTrackerKeeper().getRoomTasks().put(taskID, rd);
+                            // delete record
+                            delete.setInt(1, rs.getInt("progress_id"));
+                            delete.executeUpdate();
+                        }
                     }
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            plugin.debug("Error reading resume room_progress data: " + e.getMessage());
         } finally {
             try {
                 if (delete != null) {

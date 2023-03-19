@@ -38,7 +38,6 @@ import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -294,10 +293,8 @@ public class TARDISRepair {
                     }
                 }
             } else {
-                String directory = (tardis.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + perm + ".tschm";
                 // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
+                obj = TARDISSchematicGZip.getObject(plugin, "consoles", tardis.getSchematic().getPermission(), tardis.getSchematic().isCustom());
             }
         }
         return obj;

@@ -17,11 +17,8 @@
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.*;
-import java.util.Locale;
 import java.util.logging.Level;
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import org.bukkit.Bukkit;
 
 /**
@@ -84,17 +81,8 @@ public class TARDISFileCopier {
     /**
      * Copies files for use by the TARDIS builder classes.
      */
-    public void copyFiles() {
-        // make directories if they don't exist
-        File schematicDir = new File(plugin.getDataFolder() + File.separator + "schematics");
-        if (!schematicDir.exists()) {
-            boolean result = schematicDir.mkdir();
-            if (result) {
-                schematicDir.setWritable(true);
-                schematicDir.setExecutable(true);
-                Bukkit.getLogger().log(Level.INFO, "Created schematics directory.");
-            }
-        }
+    public void copyRoomTemplateFile() {
+        // make user_schematics directory if they doesn't exist
         File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
         if (!userDir.exists()) {
             boolean useResult = userDir.mkdir();
@@ -104,36 +92,9 @@ public class TARDISFileCopier {
                 Bukkit.getLogger().log(Level.INFO, "Created user_schematics directory.");
             }
         }
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
-        // THIRTEENTH schematic designed by Razihel
-        // The COPPER & CORAL schematic designed by vistaero
-        // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
-        // The ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-        // The MASTER's schematic designed by ShadowAssociate
-        // The FUGITIVE schematic based on a design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
-        // The MECHANICAL schematic adapted from a design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
-        // load schematic files - copy the default files if they don't exist
-        String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        Consoles.getBY_NAMES().values().forEach((ts) -> {
-            if (!ts.isCustom()) {
-                String str = basepath + ts.getPermission() + ".tschm";
-                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
-            }
-        });
-        // copy default room files as well
-        for (TARDISARS ta : TARDISARS.values()) {
-            if (ta.getOffset() != 0) {
-                String str = basepath + ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm";
-                copy(str, plugin.getResource(ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm"), true);
-            }
-        }
-        String zeronstr = basepath + "zero.tschm";
-        copy(zeronstr, plugin.getResource("zero.tschm"), true);
-        String junknstr = basepath + "junk.tschm";
-        copy(junknstr, plugin.getResource("junk.tschm"), true);
-        String tmpnstr = userbasepath + "template.tschm";
-        copy(tmpnstr, plugin.getResource("template.tschm"), true);
+        // copy the template file if it doesn't exist
+        String tmpnstr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "template.tschm";
+        copy(tmpnstr, plugin.getResource("rooms" + File.separator +"template.tschm"), true);
     }
 
     /**

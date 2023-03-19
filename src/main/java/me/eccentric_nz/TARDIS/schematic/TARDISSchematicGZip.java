@@ -18,19 +18,18 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISSchematicGZip {
 
-    static void zip(String instr, String outstr) {
+    public static void zip(String instr, String outstr) {
         try {
             FileInputStream fis = new FileInputStream(instr);
             FileOutputStream fos = new FileOutputStream(outstr);
@@ -77,5 +76,59 @@ public class TARDISSchematicGZip {
             }
         }
         return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;
+    }
+
+    public static JsonObject unzip(InputStream stream) {
+        InputStreamReader isr = null;
+        StringWriter sw = null;
+        String s = "";
+        try {
+            GZIPInputStream gzis = new GZIPInputStream(stream);
+            isr = new InputStreamReader(gzis, StandardCharsets.UTF_8);
+            sw = new StringWriter();
+            char[] buffer = new char[1024 * 16];
+            int len;
+            while ((len = isr.read(buffer)) > 0) {
+                sw.write(buffer, 0, len);
+            }
+            s = sw.toString();
+        } catch (IOException ex) {
+            TARDIS.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
+        } finally {
+            try {
+                if (sw != null) {
+                    sw.close();
+                }
+                if (isr != null) {
+                    isr.close();
+                }
+            } catch (IOException ex) {
+                TARDIS.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
+            }
+        }
+        return (s.startsWith("{")) ? new JsonParser().parse(s).getAsJsonObject() : null;
+    }
+
+    public static JsonObject getObject(TARDIS plugin, String folder, String which, boolean user) {
+        JsonObject obj = null;
+        String path;
+        if (user) {
+            // get the schematic from the plugin folder
+            path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + which + ".tschm";
+            File file = new File(path);
+            if (!file.exists()) {
+                plugin.debug("Could not find a schematic with that name!");
+                return null;
+            }
+            obj = TARDISSchematicGZip.unzip(path);
+        } else {
+            // just get the schematic from the plugin JAR
+            path = folder + File.separator + File.separator + which + ".tschm";
+            InputStream stream = plugin.getResource(path);
+            if (stream != null) {
+                obj = TARDISSchematicGZip.unzip(stream);
+            }
+        }
+        return obj;
     }
 }

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -34,10 +36,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to
@@ -96,43 +94,43 @@ class TARDISLampsCommand {
                 if (rsp.resultSet() && rsp.isLanternsOn()) {
                     lampon = Material.SEA_LANTERN;
                 }
-                String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
-                JsonObject obj = TARDISSchematicGZip.unzip(path);
-                // get dimensions
-                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-                int h = dimensions.get("height").getAsInt();
-                if (schm.getPermission().equals("mechanical")) {
-                    starty = 62;
-                } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                    starty = 65;
-                } else {
-                    starty = 64;
-                }
-                endy = starty + h;
-                ArrayList<HashMap<String, String>> data = rsc.getData();
-                // loop through the chunks
-                for (HashMap<String, String> map : data) {
-                    String w = map.get("world");
-                    World world = TARDISAliasResolver.getWorldFromAlias(w);
-                    int x = TARDISNumberParsers.parseInt(map.get("x"));
-                    int z = TARDISNumberParsers.parseInt(map.get("z"));
-                    Chunk chunk = world.getChunkAt(x, z);
-                    // find the lamps in the chunks
-                    int bx = chunk.getX() << 4;
-                    int bz = chunk.getZ() << 4;
-                    for (int xx = bx; xx < bx + 16; xx++) {
-                        for (int zz = bz; zz < bz + 16; zz++) {
-                            for (int yy = starty; yy < endy; yy++) {
-                                Material mat = world.getBlockAt(xx, yy, zz).getType();
-                                if (mat.equals(lampon)) {
-                                    String lamp = w + ":" + xx + ":" + yy + ":" + zz;
-                                    HashMap<String, Object> set = new HashMap<>();
-                                    set.put("tardis_id", id);
-                                    set.put("location", lamp);
-                                    plugin.getQueryFactory().doInsert("lamps", set);
-                                    TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
+                JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+                if (obj != null) {
+                    // get dimensions
+                    JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                    int h = dimensions.get("height").getAsInt();
+                    if (schm.getPermission().equals("mechanical")) {
+                        starty = 62;
+                    } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
+                        starty = 65;
+                    } else {
+                        starty = 64;
+                    }
+                    endy = starty + h;
+                    ArrayList<HashMap<String, String>> data = rsc.getData();
+                    // loop through the chunks
+                    for (HashMap<String, String> map : data) {
+                        String w = map.get("world");
+                        World world = TARDISAliasResolver.getWorldFromAlias(w);
+                        int x = TARDISNumberParsers.parseInt(map.get("x"));
+                        int z = TARDISNumberParsers.parseInt(map.get("z"));
+                        Chunk chunk = world.getChunkAt(x, z);
+                        // find the lamps in the chunks
+                        int bx = chunk.getX() << 4;
+                        int bz = chunk.getZ() << 4;
+                        for (int xx = bx; xx < bx + 16; xx++) {
+                            for (int zz = bz; zz < bz + 16; zz++) {
+                                for (int yy = starty; yy < endy; yy++) {
+                                    Material mat = world.getBlockAt(xx, yy, zz).getType();
+                                    if (mat.equals(lampon)) {
+                                        String lamp = w + ":" + xx + ":" + yy + ":" + zz;
+                                        HashMap<String, Object> set = new HashMap<>();
+                                        set.put("tardis_id", id);
+                                        set.put("location", lamp);
+                                        plugin.getQueryFactory().doInsert("lamps", set);
+                                        TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
+                                    }
                                 }
                             }
                         }

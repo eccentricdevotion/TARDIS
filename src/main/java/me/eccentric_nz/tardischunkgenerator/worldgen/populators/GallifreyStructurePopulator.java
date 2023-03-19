@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISSchematicReader;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
@@ -78,7 +78,7 @@ public class GallifreyStructurePopulator extends BlockPopulator {
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicReader.unzip(stream);
+            JsonObject obj = TARDISSchematicGZip.unzip(stream);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -27,13 +29,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-
 /**
- * When the Eleventh Doctor was trying to get out of his universe, he said he was deleting the scullery room and squash
- * court seven to give the TARDIS an extra boost.
+ * When the Eleventh Doctor was trying to get out of his universe, he said he
+ * was deleting the scullery room and squash court seven to give the TARDIS an
+ * extra boost.
  *
  * @author eccentric_nz
  */
@@ -54,8 +53,9 @@ class TARDISRoomRemover {
     }
 
     /**
-     * Jettison a TARDIS room, leaving just the walls behind. We will probably need to get the dimensions of the room
-     * from the schematic, if user supplied room schematics will be allowed.
+     * Jettison a TARDIS room, leaving just the walls behind. We will probably
+     * need to get the dimensions of the room from the schematic, if user
+     * supplied room schematics will be allowed.
      *
      * @return false if the room has already been jettisoned
      */
@@ -67,10 +67,11 @@ class TARDISRoomRemover {
         // get start locations
         int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
-        String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(path);
+        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+        if (obj != null) {
+            return false;
+        }
         // get dimensions
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
         int h = dimensions.get("height").getAsInt();

@@ -35,7 +35,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -100,18 +99,14 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 }
             }
             JsonObject obj;
+            // get JSON
             if (archive == null) {
-                String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-                File file = new File(path);
-                if (!file.exists()) {
-                    plugin.debug("Could not find a schematic with that name!");
+                obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+                if (obj == null) {
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
-                // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
             } else {
                 obj = archive.getJSON();
             }

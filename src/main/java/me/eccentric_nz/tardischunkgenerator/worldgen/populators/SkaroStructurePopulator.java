@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.*;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import net.minecraft.world.level.ChunkPos;
@@ -130,7 +131,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicReader.unzip(plugin.getResource(path));
+            JsonObject obj = TARDISSchematicGZip.unzip(plugin.getResource(path));
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

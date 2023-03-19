@@ -35,7 +35,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -56,15 +55,11 @@ public class TARDISUpgradeBlockScanner {
     }
 
     public TARDISBlockScannerData check() {
-        String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
-        File file = new File(path);
-        if (!file.exists()) {
-            plugin.debug("Could not find a schematic with that name!");
+        // get JSON
+        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+        if (obj == null) {
             return null;
         }
-        // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
         int h = dimensions.get("height").getAsInt();
