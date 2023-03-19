@@ -18,7 +18,7 @@ public class TARDISVortexManipulator {
 
     public void enable() {
         plugin.setTvmSettings(new TVMSettings());
-        new TVMConfig(plugin).checkConfig();
+        new VortexManipulatorConfig(plugin).checkConfig();
         registerListeners();
         registerCommands();
         ShapedRecipe recipe = new TVMRecipe(plugin).makeRecipe();

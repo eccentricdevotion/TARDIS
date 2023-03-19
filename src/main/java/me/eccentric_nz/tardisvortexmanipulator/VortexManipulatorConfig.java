@@ -17,7 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 /**
  * @author eccentric_nz
  */
-public class TVMConfig {
+public class VortexManipulatorConfig {
 
     private final TARDIS plugin;
     HashMap<String, String> strOptions = new HashMap<>();
@@ -26,7 +26,7 @@ public class TVMConfig {
     private final FileConfiguration config;
     private final File configFile;
 
-    public TVMConfig(TARDIS plugin) {
+    public VortexManipulatorConfig(TARDIS plugin) {
         this.plugin = plugin;
         configFile = new File(plugin.getDataFolder(), "vortex_manipulator.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
@@ -97,9 +97,9 @@ public class TVMConfig {
             plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         try {
-            String handlesPath = plugin.getDataFolder() + File.separator + "monsters.yml";
+            String handlesPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
             config.save(new File(handlesPath));
-            plugin.getLogger().log(Level.INFO, "Updated monsters.yml");
+            plugin.getLogger().log(Level.INFO, "Updated vortex_manipulator.yml");
         } catch (IOException io) {
             plugin.debug("Could not save monsters.yml, " + io.getMessage());
         }

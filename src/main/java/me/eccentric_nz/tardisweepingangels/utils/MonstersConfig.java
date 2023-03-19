@@ -29,7 +29,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class Config {
+public class MonstersConfig {
 
     private final double min_version = 2.0d;
     private final TARDIS plugin;
@@ -41,7 +41,7 @@ public class Config {
     private final FileConfiguration config;
     private final File monstersFile;
 
-    public Config(TARDIS plugin) {
+    public MonstersConfig(TARDIS plugin) {
         this.plugin = plugin;
         monstersFile = new File(plugin.getDataFolder(), "monsters.yml");
         config = YamlConfiguration.loadConfiguration(monstersFile);

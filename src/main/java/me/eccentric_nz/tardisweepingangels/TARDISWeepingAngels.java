@@ -117,7 +117,7 @@ public class TARDISWeepingAngels {
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
         api = new MonsterEquipment();
         // update the config
-        new Config(plugin).updateConfig();
+        new MonstersConfig(plugin).updateConfig();
         // initialise namespaced keys
         initKeys(plugin);
         // register listeners
