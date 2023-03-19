@@ -48,7 +48,7 @@ public class TARDISAllInOneConfigConverter {
             File twaFile = new File(twaPath);
             if (twaFile.exists()) {
                 FileConfiguration twa = YamlConfiguration.loadConfiguration(twaFile);
-                FileConfiguration monsters = plugin.getVortexConfig();
+                FileConfiguration monsters = plugin.getMonstersConfig();
                 for (String key : monsters.getKeys(true)) {
                     monsters.set(key, twa.get(key));
                 }
@@ -60,7 +60,7 @@ public class TARDISAllInOneConfigConverter {
             File tsFile = new File(tsPath);
             if (tsFile.exists()) {
                 FileConfiguration ts = YamlConfiguration.loadConfiguration(tsFile);
-                FileConfiguration shop = plugin.getVortexConfig();
+                FileConfiguration shop = plugin.getShopConfig();
                 for (String key : shop.getKeys(true)) {
                     shop.set(key, ts.get(key));
                 }
