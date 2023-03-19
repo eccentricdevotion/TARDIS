@@ -28,7 +28,7 @@ public class TARDISAllInOneConfigConverter {
                 for (String key : flat.getKeys(false)) {
                     flat.set(key, tcg.get(key));
                 }
-                String flatPath = plugin.getDataFolder() + File.separator + "shop.yml";
+                String flatPath = plugin.getDataFolder() + File.separator + "flat_world.yml";
                 flat.save(new File(flatPath));
             }
             // Vortex manipulator
@@ -64,7 +64,7 @@ public class TARDISAllInOneConfigConverter {
                 for (String key : shop.getKeys(true)) {
                     shop.set(key, ts.get(key));
                 }
-                String shopPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
+                String shopPath = plugin.getDataFolder() + File.separator + "shop.yml";
                 shop.save(new File(shopPath));
             }
             return true;
