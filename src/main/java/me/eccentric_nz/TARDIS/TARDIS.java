@@ -393,13 +393,6 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.icons", true);
                 conversions++;
             }
-            if (!getConfig().getBoolean("conversions.datapacks_1_18")) {
-                TARDISChecker.updateDimension("gallifrey");
-                TARDISChecker.updateDimension("siluria");
-                TARDISChecker.updateDimension("skaro");
-                getConfig().set("conversions.datapacks_1_18", true);
-                conversions++;
-            }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
                 new TARDISWallConverter(this).processArchives();
                 getConfig().set("conversions.archive_wall_data", true);
