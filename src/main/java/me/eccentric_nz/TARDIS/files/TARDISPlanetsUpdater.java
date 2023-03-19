@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -30,6 +25,10 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -203,8 +202,9 @@ public class TARDISPlanetsUpdater {
         }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
             for (String key : planets_config.getConfigurationSection("planets").getKeys(false)) {
-                if (planets_config.getString("planets." + key + ".generator").contains("TARDISChunkGenerator")) {
-                    String[] split = planets_config.getString("planets." + key + ".generator").split(":");
+                String gen = planets_config.getString("planets." + key + ".generator");
+                if (gen != null && gen.contains("TARDISChunkGenerator")) {
+                    String[] split = gen.split(":");
                     if (split.length > 1) {
                         planets_config.set("planets." + key + ".generator", "TARDIS:" + split[1]);
                     }
