@@ -39,7 +39,7 @@ public class TARDISAllInOneConfigConverter {
                     }
                 }
                 case VORTEX_MANIPULATOR -> {
-                    // Vortex manipulator
+                    // vortex manipulator
                     String vmPath = basePath + "TARDISVortexManipulator" + File.separator + "config.yml";
                     File vmFile = new File(vmPath);
                     if (vmFile.exists()) {
@@ -55,7 +55,7 @@ public class TARDISAllInOneConfigConverter {
                     }
                 }
                 case DYNMAP -> {
-                    // Weeping angels
+                    // weeping angels
                     String twaPath = basePath + "TARDISWeepingAngels" + File.separator + "config.yml";
                     File twaFile = new File(twaPath);
                     if (twaFile.exists()) {
@@ -71,7 +71,7 @@ public class TARDISAllInOneConfigConverter {
                     }
                 }
                 case SHOP -> {
-                    // Shop config
+                    // shop config
                     String tsPath = basePath + "TARDISShop" + File.separator + "config.yml";
                     File tsFile = new File(tsPath);
                     if (tsFile.exists()) {
@@ -85,7 +85,7 @@ public class TARDISAllInOneConfigConverter {
                         shop.save(sf);
                         plugin.getShopConfig().load(sf);
                     }
-                    // Shop items
+                    // shop items
                     String tsiPath = basePath + "TARDISShop" + File.separator + "items.yml";
                     File tsiFile = new File(tsiPath);
                     if (tsiFile.exists()) {
@@ -100,7 +100,34 @@ public class TARDISAllInOneConfigConverter {
                         plugin.getItemsConfig().load(itf);
                     }
                 }
-                default -> { }
+                case BLASTER -> {
+                    // blaster config
+                    String tbPath = basePath + "TARDISSonicBlaster" + File.separator + "config.yml";
+                    File tbFile = new File(tbPath);
+                    if (tbFile.exists()) {
+                        FileConfiguration ts = YamlConfiguration.loadConfiguration(tbFile);
+                        FileConfiguration blaster = plugin.getBlasterConfig();
+                        blaster.set("max_blocks", ts.get("max_blocks"));
+                        for (String key : blaster.getConfigurationSection("tachyon_use").getKeys(false)) {
+                            blaster.set("tachyon_use." + key, ts.get("tachyon_use." + key));
+                        }
+                        //add recipes
+                        String rbPath = basePath + "TARDISSonicBlaster" + File.separator + "recipes.yml";
+                        File rbFile = new File(rbPath);
+                        if (rbFile.exists()) {
+                            FileConfiguration rs = YamlConfiguration.loadConfiguration(rbFile);
+                            for (String key : blaster.getConfigurationSection("recipes").getKeys(true)) {
+                                blaster.set("recipes." + key, rs.get(key));
+                            }
+                        }
+                        String blasterPath = plugin.getDataFolder() + File.separator + "blaster.yml";
+                        File bf = new File(blasterPath);
+                        blaster.save(bf);
+                        plugin.getBlasterConfig().load(bf);
+                    }
+                }
+                default -> {
+                }
             }
             return true;
         } catch (IOException | InvalidConfigurationException e) {

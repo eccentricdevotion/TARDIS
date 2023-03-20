@@ -78,6 +78,8 @@ import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisshop.ShopSettings;
 import me.eccentric_nz.tardisshop.TARDISShop;
+import me.eccentric_nz.tardissonicblaster.BlasterSettings;
+import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -146,6 +148,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration monstersConfig;
     private FileConfiguration vortexConfig;
     private FileConfiguration itemsConfig;
+    private FileConfiguration blasterConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private String resourcePack;
@@ -185,6 +188,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISDynmap tardisDynmap;
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
+    private BlasterSettings blasterSettings;
 
     /**
      * Constructor
@@ -426,6 +430,12 @@ public class TARDIS extends JavaPlugin {
                     conversions++;
                 }
             }
+            if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
+                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.BLASTER)) {
+                    getConfig().set("conversions.all_in_one.sonic_blaster", true);
+                    conversions++;
+                }
+            }
             loadMultiverse();
             loadInventoryManager();
             checkTCG();
@@ -485,6 +495,10 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("modules.shop")) {
                 getLogger().log(Level.INFO, "Loading Shop Module");
                 new TARDISShop(this).enable();
+            }
+            if (getConfig().getBoolean("modules.sonic_blaster")) {
+                getLogger().log(Level.INFO, "Loading Sonic Blaster Module");
+                new TARDISSonicBlaster(this).enable();
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
@@ -720,11 +734,12 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blocks.yml", "rooms.yml",
-                "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml",
-                "flat_world.yml", "monsters.yml", "shop.yml", "vortex_manipulator.yml", "items.yml");
+        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
+                "blocks.yml", "condensables.yml", "custom_consoles.yml", "flat_world.yml", "handles.yml",
+                "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
+                "shop.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
-            debug(f);
+//            debug(f);
             tardisCopier.copy(f);
         }
         planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
@@ -747,10 +762,19 @@ public class TARDIS extends JavaPlugin {
         new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
-        monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
-        shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
-        vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
-        itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
+        if (getConfig().getBoolean("modules.weeping_angels")) {
+            monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
+        }
+        if (getConfig().getBoolean("modules.shop")) {
+            shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
+            itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
+        }
+        if (getConfig().getBoolean("modules.vortex_manipulator")) {
+            vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
+        }
+        if (getConfig().getBoolean("modules.sonic_blaster")) {
+            blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
+        }
     }
 
     /**
@@ -1279,6 +1303,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getItemsConfig() {
         return itemsConfig;
+    }
+
+    /**
+     * Gets the shop items configuration
+     *
+     * @return the shop items configuration
+     */
+    public FileConfiguration getBlasterConfig() {
+        return blasterConfig;
     }
 
     /**
@@ -1826,5 +1859,13 @@ public class TARDIS extends JavaPlugin {
 
     public void setTvmSettings(TVMSettings tvmSettings) {
         this.tvmSettings = tvmSettings;
+    }
+
+    public BlasterSettings getBlasterSettings() {
+        return blasterSettings;
+    }
+
+    public void setBlasterSettings(BlasterSettings blasterSettings) {
+        this.blasterSettings = blasterSettings;
     }
 }

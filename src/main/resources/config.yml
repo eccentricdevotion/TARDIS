@@ -8,6 +8,7 @@ modules:
   vortex_manipulator: false
   dynmap: false
   shop: false
+  sonic_blaster: false
   # blueprints
   # https://eccentricdevotion.github.io/TARDIS/blueprints.html
   blueprints: false
@@ -246,5 +247,6 @@ conversions:
   all_in_one:
     helper: true
     shop: true
+    sonic_blaster: true
     vortex_manipulator: true
     weeping_angels: true

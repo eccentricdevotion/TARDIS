@@ -77,6 +77,7 @@ public class TARDISConfiguration {
         booleanOptions.put("circuits.damage", false);
         booleanOptions.put("conversions.all_in_one.helper", false);
         booleanOptions.put("conversions.all_in_one.shop", false);
+        booleanOptions.put("conversions.all_in_one.sonic_blaster", false);
         booleanOptions.put("conversions.all_in_one.vortex_manipulator", false);
         booleanOptions.put("conversions.all_in_one.weeping_angels", false);
         booleanOptions.put("conversions.archive_wall_data", false);
@@ -111,6 +112,7 @@ public class TARDISConfiguration {
         booleanOptions.put("modules.weeping_angels", false);
         booleanOptions.put("modules.vortex_manipulator", false);
         booleanOptions.put("modules.shop", false);
+        booleanOptions.put("modules.sonic_blaster", false);
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);

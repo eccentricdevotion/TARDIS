@@ -3,12 +3,14 @@ package me.eccentric_nz.TARDIS.enumeration;
 import org.bukkit.ChatColor;
 
 public enum MODULE {
+
+    BLASTER("Sonic Blaster", ChatColor.DARK_GREEN),
     BLUEPRINTS("TARDIS Blueprints", ChatColor.BLUE),
     DEBUG("TARDIS", ChatColor.LIGHT_PURPLE),
     DYNMAP("TARDIS Dynmap", ChatColor.GREEN),
     HANDLES("HANDLES", ChatColor.DARK_AQUA),
     HELPER("TARDIS Helper", ChatColor.AQUA),
-    MONSTERS("TARDIS Weeping Angels", ChatColor.RED),
+    MONSTERS("Weeping Angels", ChatColor.RED),
     SHOP("TARDIS Shop", ChatColor.YELLOW),
     TARDIS("TARDIS", ChatColor.GOLD),
     VORTEX_MANIPULATOR("Vortex Manipulator", ChatColor.DARK_PURPLE);
