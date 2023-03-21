@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -36,6 +36,8 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.UUID;
+
 public class JudoonListener implements Listener {
 
     private final TARDIS plugin;
@@ -50,7 +52,7 @@ public class JudoonListener implements Listener {
             if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
                 event.setCancelled(true);
                 player.playSound(stand.getLocation(), "judoon", 1.0f, 1.0f);
-                if (!player.hasPermission("tardisweepingangels.judoon")) {
+                if (!TARDISPermission.hasPermission(player, "tardisweepingangels.judoon")) {
                     return;
                 }
                 UUID judoonId = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);

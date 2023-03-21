@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -41,6 +41,8 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Set;
 
 public class SpawnCommand {
 
@@ -66,7 +68,7 @@ public class SpawnCommand {
         }
         if (sender instanceof Player player) {
             // check player has permission for this monster
-            if (!player.hasPermission("tardisweepingangels.spawn." + monster.getPermission())) {
+            if (!TARDISPermission.hasPermission(player, "tardisweepingangels.spawn." + monster.getPermission())) {
                 TARDISMessage.send(sender, MODULE.MONSTERS, "WA_PERM_SPAWN", monster.toString());
                 return true;
             }

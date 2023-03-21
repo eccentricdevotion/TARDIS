@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
@@ -34,7 +35,7 @@ public class TVMCommand implements CommandExecutor {
             }
             // must be a player
             if (sender instanceof Player player) {
-                if (!player.hasPermission("vm.teleport")) {
+                if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
                     TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                     return true;
                 }

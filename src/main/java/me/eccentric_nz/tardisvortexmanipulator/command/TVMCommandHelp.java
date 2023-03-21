@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ public class TVMCommandHelp {
     }
 
     public boolean display(final CommandSender sender, String[] args) {
-        if (!sender.hasPermission("vm.teleport")) {
+        if (!TARDISPermission.hasPermission(sender, "vm.teleport")) {
             TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }

@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -9,6 +9,8 @@ import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.*;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class TVMCommandMessage {
 
@@ -19,7 +21,7 @@ public class TVMCommandMessage {
     }
 
     public boolean process(Player player, String[] args) {
-        if (!player.hasPermission("vm.message")) {
+        if (!TARDISPermission.hasPermission(player, "vm.message")) {
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }

@@ -1,11 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -18,6 +15,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 public class TVMCommandBeacon {
 
     private final TARDIS plugin;
@@ -27,7 +29,7 @@ public class TVMCommandBeacon {
     }
 
     public boolean process(Player player) {
-        if (!player.hasPermission("vm.beacon")) {
+        if (!TARDISPermission.hasPermission(player, "vm.beacon")) {
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }

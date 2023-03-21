@@ -1,12 +1,14 @@
 package me.eccentric_nz.tardisshop.listener;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardisshop.*;
+import me.eccentric_nz.tardisshop.ShopItem;
+import me.eccentric_nz.tardisshop.ShopItemGetter;
+import me.eccentric_nz.tardisshop.TARDISShopItem;
+import me.eccentric_nz.tardisshop.TARDISShopItemSpawner;
 import me.eccentric_nz.tardisshop.database.DeleteShopItem;
 import me.eccentric_nz.tardisshop.database.ResultSetShopItem;
 import me.eccentric_nz.tardisshop.database.UpdateShopItem;
@@ -24,6 +26,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISShopItemInteract implements Listener {
 
@@ -72,7 +77,7 @@ public class TARDISShopItemInteract implements Listener {
                         TARDISShopItem item = rs.getShopItem();
                         String message;
                         // do they have sufficient credit?
-                        if (player.hasPermission("tardis.admin") && plugin.getShopConfig().getBoolean("tardis_admin_free")) {
+                        if (TARDISPermission.hasPermission(player, "tardis.admin") && plugin.getShopConfig().getBoolean("tardis_admin_free")) {
                             // give item
                             giveItem(item.getItem(), player);
                             message = "SHOP_FREE";

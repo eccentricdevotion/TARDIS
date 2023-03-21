@@ -16,18 +16,20 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class K9Follow {
 
     public static boolean run(TARDIS plugin, Player player, ArmorStand stand, String[] args) {
-        if (!player.hasPermission("tardisweepingangels.follow.k9")) {
+        if (!TARDISPermission.hasPermission(player, "tardisweepingangels.follow.k9")) {
             TARDISMessage.send(player, MODULE.MONSTERS, "WA_PERM_FOLLOW", "K9");
             return true;
         }

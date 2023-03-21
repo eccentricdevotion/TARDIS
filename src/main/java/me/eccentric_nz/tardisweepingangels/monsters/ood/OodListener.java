@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import java.util.UUID;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
@@ -30,6 +30,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.UUID;
+
 public class OodListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -38,7 +40,7 @@ public class OodListener implements Listener {
             if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(true);
                 player.playSound(stand.getLocation(), "ood", 1.0f, 1.0f);
-                if (!player.hasPermission("tardisweepingangels.ood")) {
+                if (!TARDISPermission.hasPermission(player, "tardisweepingangels.ood")) {
                     return;
                 }
                 UUID oodId = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);

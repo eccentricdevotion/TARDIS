@@ -3,9 +3,9 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -24,6 +24,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -69,7 +71,7 @@ public class TVMEquipListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        if (!player.hasPermission("vm.teleport")) {
+        if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
             return;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
@@ -83,7 +85,7 @@ public class TVMEquipListener implements Listener {
                     Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
                     vmg.setContents(gui);
                     player.openInventory(vmg);
-                } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.look_at_block") && player.hasPermission("vm.lookatblock")) {
+                } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.look_at_block") && TARDISPermission.hasPermission(player, "vm.lookatblock")) {
                     UUID uuid = player.getUniqueId();
                     int maxDistance = plugin.getConfig().getInt("max_look_at_distance");
                     Location bl = player.getTargetBlock(transparent, maxDistance).getLocation();

@@ -5,7 +5,6 @@
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Use blueprint permissions checks for all modules
    - Use new Display entities for TARDIS Shop items
    - Animate models for player disguises
    - Fix laggy Silurian cave finder

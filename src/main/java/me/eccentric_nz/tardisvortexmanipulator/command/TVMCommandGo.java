@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
@@ -27,6 +26,9 @@ import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,7 +43,7 @@ public class TVMCommandGo {
     }
 
     public boolean execute(Player player, String[] args) {
-        if (!player.hasPermission("vm.teleport")) {
+        if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }

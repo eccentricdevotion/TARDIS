@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -26,6 +26,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class RemoveCommand {
 
@@ -47,13 +49,13 @@ public class RemoveCommand {
                 TARDISMessage.send(player, MODULE.MONSTERS, "WA_ENTITY");
                 return true;
             } else {
-                if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.judoon")) {
+                if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.judoon")) {
                     TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "Judoon");
                     return true;
-                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.k9")) {
+                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.k9")) {
                     TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "K9");
                     return true;
-                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !player.hasPermission("tardisweepingangels.remove.ood")) {
+                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.ood")) {
                     TARDISMessage.send(player, MODULE.MONSTERS, "WA_NO_PERM", "Ood");
                     return true;
                 }

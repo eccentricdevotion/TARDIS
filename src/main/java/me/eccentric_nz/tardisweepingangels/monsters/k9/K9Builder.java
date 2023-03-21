@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -54,7 +55,7 @@ public class K9Builder implements Listener {
             Block north = below.getRelative(BlockFace.NORTH);
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.LEVER) && west.getType().equals(Material.TRIPWIRE_HOOK)) || (east.getType().equals(Material.TRIPWIRE_HOOK) && west.getType().equals(Material.LEVER)) || (north.getType().equals(Material.LEVER) && south.getType().equals(Material.TRIPWIRE_HOOK)) || (north.getType().equals(Material.TRIPWIRE_HOOK) && south.getType().equals(Material.LEVER))) {
-                if (!event.getPlayer().hasPermission("tardisweepingangels.build.k9")) {
+                if (!TARDISPermission.hasPermission(event.getPlayer(), "tardisweepingangels.build.k9")) {
                     event.getPlayer().sendMessage(plugin.getPluginName() + "WA_PERM_BUILD", "K9");
                     return;
                 }

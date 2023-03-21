@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -37,6 +37,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.UUID;
+
 public class K9Listener implements Listener {
 
     private final TARDIS plugin;
@@ -48,7 +50,7 @@ public class K9Listener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onWolfTame(EntityTameEvent event) {
         if (event.getOwner() instanceof Player player) {
-            if (!((Player) event.getOwner()).hasPermission("tardisweepingangels.k9")) {
+            if (!TARDISPermission.hasPermission(((Player) event.getOwner()), "tardisweepingangels.k9")) {
                 return;
             }
             LivingEntity ent = event.getEntity();
@@ -70,7 +72,7 @@ public class K9Listener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onK9Interact(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
-        if (!player.hasPermission("tardisweepingangels.k9")) {
+        if (!TARDISPermission.hasPermission(player, "tardisweepingangels.k9")) {
             return;
         }
         Entity ent = event.getRightClicked();
@@ -86,7 +88,7 @@ public class K9Listener implements Listener {
                         TARDISWeepingAngels.getFollowTasks().remove(uuid);
                     } else {
                         // follow
-                        if (player.hasPermission("tardisweepingangels.follow.k9")) {
+                        if (TARDISPermission.hasPermission(player, "tardisweepingangels.follow.k9")) {
                             int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new K9WalkRunnable((ArmorStand) ent, 0.15d, player), 2L, 2L);
                             TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);
                         }

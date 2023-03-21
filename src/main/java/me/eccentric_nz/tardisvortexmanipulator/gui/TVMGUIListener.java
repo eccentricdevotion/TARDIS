@@ -3,10 +3,10 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -31,6 +31,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -355,7 +357,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
 
     private void scanLifesigns(Player player, InventoryView view) {
         close(player);
-        if (!player.hasPermission("vm.lifesigns")) {
+        if (!TARDISPermission.hasPermission(player, "vm.lifesigns")) {
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_LIFESIGNS");
             return;
         }
@@ -449,7 +451,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
 
     private void message(Player player) {
         close(player);
-        if (!player.hasPermission("vm.message")) {
+        if (!TARDISPermission.hasPermission(player, "vm.message")) {
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_MSGS");
             return;
         }
@@ -463,7 +465,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     }
 
     private void setBeacon(Player player) {
-        if (!player.hasPermission("vm.beacon")) {
+        if (!TARDISPermission.hasPermission(player, "vm.beacon")) {
             close(player);
             TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_BEACON");
             return;
