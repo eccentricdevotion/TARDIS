@@ -18,18 +18,16 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import org.bukkit.ChatColor;
+import org.bukkit.block.data.BlockData;
 
 /**
  * The Unified Intelligence Taskforce — formerly known as the United Nations
@@ -73,6 +71,7 @@ public class TARDISRoomMap {
      *
      * @param fileName the schematic file name to read
      * @param s        the schematic name
+     * @param user     whether the room has been added by a user
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileName, String s, boolean user) {
@@ -125,15 +124,11 @@ public class TARDISRoomMap {
     }
 
     private String getMaterialAsString(String data) {
-        plugin.debug("Before: " + data);
         BlockData block = plugin.getServer().createBlockData(data);
-        Material placed = block.getPlacementMaterial();
-        String bid = placed.toString();
-        plugin.debug("To string: " + bid);
+        String bid = block.getMaterial().toString();
         if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
             bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
         }
-        plugin.debug("After: " + bid);
         return bid;
     }
 }
