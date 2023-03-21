@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +23,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -423,6 +422,54 @@ public class TARDISBlocksUpdater {
             under.add("WARPED_HANGING_SIGN");
             blocks_config.set("under_door_blocks", under);
             blocks_config.set("version", 12);
+            i += 3;
+        }
+        if (!tbs.contains("CHERRY_LOG")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("CHERRY_LOG");
+            blocks.add("CHERRY_PLANKS");
+            blocks.add("STRIPPED_CHERRY_LOG");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            // chameleon blocks
+            List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
+            blocks.add("CHERRY_LEAVES");
+            chameleon.addAll(blocks);
+            chameleon.sort(Comparator.naturalOrder());
+            blocks_config.set("chameleon_blocks", chameleon);
+            // under door blocks
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("ACACIA_WALL_HANGING_SIGN");
+            under.add("BAMBOO_WALL_HANGING_SIGN");
+            under.add("BIRCH_WALL_HANGING_SIGN");
+            under.add("CHERRY_BUTTON");
+            under.add("CHERRY_DOOR");
+            under.add("CHERRY_FENCE");
+            under.add("CHERRY_FENCE_GATE");
+            under.add("CHERRY_HANGING_SIGN");
+            under.add("CHERRY_LEAVES");
+            under.add("CHERRY_PRESSURE_PLATE");
+            under.add("CHERRY_SAPLING");
+            under.add("CHERRY_SIGN");
+            under.add("CHERRY_SLAB");
+            under.add("CHERRY_STAIRS");
+            under.add("CHERRY_TRAPDOOR");
+            under.add("CHERRY_WALL_HANGING_SIGN");
+            under.add("CHERRY_WALL_SIGN");
+            under.add("CRIMSON_WALL_HANGING_SIGN");
+            under.add("DARK_OAK_WALL_HANGING_SIGN");
+            under.add("JUNGLE_WALL_HANGING_SIGN");
+            under.add("MANGROVE_WALL_HANGING_SIGN");
+            under.add("OAK_WALL_HANGING_SIGN");
+            under.add("SPRUCE_WALL_HANGING_SIGN");
+            under.add("TORCHFLOWER");
+            under.add("TORCHFLOWER_CROP");
+            under.add("WARPED_WALL_HANGING_SIGN");
+            under.sort(Comparator.naturalOrder());
+            blocks_config.set("under_door_blocks", under);
+            blocks_config.set("version", 13);
             i += 3;
         }
         try {

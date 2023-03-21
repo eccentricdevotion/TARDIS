@@ -42,7 +42,28 @@ public class TARDISConstants {
     /**
      * GUI materials
      */
-    public static final List<Material> GUI_IDS = Arrays.asList(Material.STONE, Material.GRANITE, Material.DIORITE, Material.ANDESITE, Material.GRASS_BLOCK, Material.DIRT, Material.PODZOL, Material.CRIMSON_NYLIUM, Material.WARPED_NYLIUM, Material.COBBLESTONE, Material.OAK_PLANKS, Material.CRIMSON_PLANKS, Material.WARPED_PLANKS, Material.BEDROCK, Material.SAND, Material.RED_SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.NETHER_GOLD_ORE, Material.ACACIA_LOG, Material.CRIMSON_STEM, Material.WARPED_STEM, Material.SPRUCE_WOOD, Material.BIRCH_LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.DISPENSER, Material.SANDSTONE, Material.NOTE_BLOCK, Material.STICKY_PISTON, Material.COBWEB, Material.GOLD_BLOCK, Material.BRICKS, Material.TNT, Material.BOOKSHELF, Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.PURPUR_BLOCK, Material.SPAWNER, Material.CHEST, Material.DIAMOND_ORE, Material.DIAMOND_BLOCK, Material.CRAFTING_TABLE, Material.FURNACE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CACTUS, Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.SOUL_SOIL, Material.BASALT, Material.GLOWSTONE, Material.JACK_O_LANTERN, Material.STONE_BRICKS, Material.CHISELED_STONE_BRICKS, Material.BROWN_MUSHROOM_BLOCK, Material.RED_MUSHROOM_BLOCK, Material.MUSHROOM_STEM, Material.MELON, Material.MYCELIUM, Material.NETHER_BRICKS, Material.ENCHANTING_TABLE, Material.END_PORTAL_FRAME, Material.END_STONE, Material.END_STONE_BRICKS, Material.REDSTONE_LAMP, Material.EMERALD_ORE, Material.ENDER_CHEST, Material.EMERALD_BLOCK, Material.COMMAND_BLOCK, Material.BEACON, Material.TRAPPED_CHEST, Material.REDSTONE_BLOCK, Material.NETHER_QUARTZ_ORE, Material.HOPPER, Material.QUARTZ_BLOCK, Material.QUARTZ_BRICKS, Material.DROPPER, Material.PINK_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.RED_TERRACOTTA, Material.HAY_BLOCK, Material.TERRACOTTA, Material.COAL_BLOCK, Material.SLIME_BLOCK, Material.YELLOW_STAINED_GLASS, Material.BLACK_STAINED_GLASS, Material.PRISMARINE, Material.DARK_PRISMARINE, Material.SEA_LANTERN, Material.RED_SANDSTONE, Material.MAGMA_BLOCK, Material.NETHER_WART_BLOCK, Material.RED_NETHER_BRICKS, Material.BONE_BLOCK, Material.OBSERVER, Material.WHITE_GLAZED_TERRACOTTA, Material.ORANGE_GLAZED_TERRACOTTA, Material.BLUE_GLAZED_TERRACOTTA, Material.MAGENTA_CONCRETE, Material.LIGHT_BLUE_CONCRETE, Material.TUBE_CORAL_BLOCK, Material.BRAIN_CORAL_BLOCK, Material.BUBBLE_CORAL_BLOCK, Material.FIRE_CORAL_BLOCK, Material.HORN_CORAL_BLOCK, Material.BLUE_ICE);
+    public static final List<Material> GUI_IDS = Arrays.asList(
+            Material.STONE, Material.GRANITE, Material.DIORITE, Material.ANDESITE, Material.GRASS_BLOCK, Material.DIRT, Material.PODZOL,
+            Material.CRIMSON_NYLIUM, Material.WARPED_NYLIUM, Material.COBBLESTONE, Material.OAK_PLANKS, Material.CRIMSON_PLANKS,
+            Material.WARPED_PLANKS, Material.BEDROCK, Material.SAND, Material.RED_SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE,
+            Material.COAL_ORE, Material.NETHER_GOLD_ORE, Material.ACACIA_LOG, Material.CRIMSON_STEM, Material.WARPED_STEM, Material.SPRUCE_WOOD,
+            Material.BIRCH_LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.DISPENSER, Material.SANDSTONE,
+            Material.NOTE_BLOCK, Material.STICKY_PISTON, Material.COBWEB, Material.GOLD_BLOCK, Material.BRICKS, Material.TNT, Material.BOOKSHELF,
+            Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.PURPUR_BLOCK, Material.SPAWNER, Material.CHEST, Material.DIAMOND_ORE,
+            Material.DIAMOND_BLOCK, Material.CRAFTING_TABLE, Material.FURNACE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CACTUS,
+            Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.SOUL_SOIL, Material.BASALT,
+            Material.GLOWSTONE, Material.JACK_O_LANTERN, Material.STONE_BRICKS, Material.CHISELED_STONE_BRICKS, Material.BROWN_MUSHROOM_BLOCK,
+            Material.RED_MUSHROOM_BLOCK, Material.MUSHROOM_STEM, Material.MELON, Material.MYCELIUM, Material.NETHER_BRICKS,
+            Material.ENCHANTING_TABLE, Material.END_PORTAL_FRAME, Material.END_STONE, Material.END_STONE_BRICKS, Material.REDSTONE_LAMP,
+            Material.EMERALD_ORE, Material.ENDER_CHEST, Material.EMERALD_BLOCK, Material.COMMAND_BLOCK, Material.BEACON, Material.TRAPPED_CHEST,
+            Material.REDSTONE_BLOCK, Material.NETHER_QUARTZ_ORE, Material.HOPPER, Material.QUARTZ_BLOCK, Material.QUARTZ_BRICKS, Material.DROPPER,
+            Material.PINK_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.RED_TERRACOTTA, Material.HAY_BLOCK, Material.TERRACOTTA, Material.COAL_BLOCK,
+            Material.SLIME_BLOCK, Material.YELLOW_STAINED_GLASS, Material.BLACK_STAINED_GLASS, Material.PRISMARINE, Material.DARK_PRISMARINE,
+            Material.SEA_LANTERN, Material.RED_SANDSTONE, Material.MAGMA_BLOCK, Material.NETHER_WART_BLOCK, Material.RED_NETHER_BRICKS,
+            Material.BONE_BLOCK, Material.OBSERVER, Material.WHITE_GLAZED_TERRACOTTA, Material.ORANGE_GLAZED_TERRACOTTA,
+            Material.BLUE_GLAZED_TERRACOTTA, Material.MAGENTA_CONCRETE, Material.LIGHT_BLUE_CONCRETE, Material.TUBE_CORAL_BLOCK,
+            Material.BRAIN_CORAL_BLOCK, Material.BUBBLE_CORAL_BLOCK, Material.FIRE_CORAL_BLOCK, Material.HORN_CORAL_BLOCK, Material.BLUE_ICE
+    );
 
     /**
      * Valid Chameleon blocks
@@ -57,18 +78,39 @@ public class TARDISConstants {
     /**
      * Chameleon blocks that need to be changed to a full block
      */
-    public static final List<Material> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM, Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK, Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS, Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS, Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS, Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE);
+    public static final List<Material> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(
+            Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM,
+            Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.CHERRY_SLAB,
+            Material.CHERRY_STAIRS, Material.CHERRY_TRAPDOOR, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB,
+            Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK,
+            Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS,
+            Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB,
+            Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS,
+            Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS,
+            Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS,
+            Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS,
+            Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE
+    );
 
     /**
      * Chameleon blocks to check the surrounding blocks for a valid block to
      * change to
      */
-    public static final List<Material> CHAMELEON_BLOCKS_NEXT = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.POWERED_RAIL, Material.DETECTOR_RAIL, Material.COBWEB, Material.TALL_GRASS, Material.DEAD_BUSH, Material.DANDELION, Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.FERN, Material.GRASS, Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.WHITE_TULIP, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM, Material.RAIL, Material.DAYLIGHT_DETECTOR);
+    public static final List<Material> CHAMELEON_BLOCKS_NEXT = Arrays.asList(
+            Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.POWERED_RAIL, Material.DETECTOR_RAIL, Material.COBWEB, Material.TALL_GRASS,
+            Material.DEAD_BUSH, Material.DANDELION, Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.FERN, Material.GRASS,
+            Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY,
+            Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.WHITE_TULIP, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM,
+            Material.RAIL, Material.DAYLIGHT_DETECTOR, Material.TORCHFLOWER
+    );
 
     /**
      * Precious Chameleon blocks
      */
-    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.TNT, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK);
+    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(
+            Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.TNT, Material.DIAMOND_BLOCK,
+            Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.NETHERITE_BLOCK
+    );
 
     /**
      * A list of vowels
@@ -78,12 +120,33 @@ public class TARDISConstants {
     /**
      * A list of living entity types that can be reported in scanner results
      */
-    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BLAZE, EntityType.CAT, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.CREEPER, EntityType.DOLPHIN, EntityType.DONKEY, EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.EVOKER, EntityType.GHAST, EntityType.GIANT, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.GUARDIAN, EntityType.HORSE, EntityType.HUSK, EntityType.ILLUSIONER, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MAGMA_CUBE, EntityType.MULE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PARROT, EntityType.PHANTOM, EntityType.ZOMBIFIED_PIGLIN, EntityType.PIG, EntityType.PLAYER, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT, EntityType.SALMON, EntityType.SHEEP, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON_HORSE, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.STRAY, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VEX, EntityType.VILLAGER, EntityType.VINDICATOR, EntityType.WITCH, EntityType.WITHER, EntityType.WOLF, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIE);
+    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(
+            EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CAMEL, EntityType.CAT,
+            EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.CREEPER, EntityType.DOLPHIN, EntityType.DONKEY,
+            EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.EVOKER, EntityType.FOX, EntityType.FROG,
+            EntityType.GHAST, EntityType.GIANT, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.GUARDIAN, EntityType.HOGLIN, EntityType.HORSE,
+            EntityType.HUSK, EntityType.ILLUSIONER, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MAGMA_CUBE, EntityType.MULE,
+            EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PHANTOM, EntityType.PIG, EntityType.PIGLIN,
+            EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.PLAYER, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT,
+            EntityType.RAVAGER, EntityType.SALMON, EntityType.SHEEP, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON,
+            EntityType.SKELETON_HORSE, EntityType.SLIME, EntityType.SNIFFER, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.STRAY,
+            EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VEX, EntityType.VILLAGER,
+            EntityType.VINDICATOR, EntityType.WANDERING_TRADER, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER, EntityType.WITHER_SKELETON,
+            EntityType.WOLF, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN
+    );
 
     /**
      * A list of materials that can be replaced when the TARDIS lands
      */
-    public static final List<Material> GOOD_MATERIALS = Arrays.asList(Material.LIGHT, Material.ACACIA_LEAVES, Material.ACACIA_SAPLING, Material.AIR, Material.ALLIUM, Material.AZURE_BLUET, Material.BAMBOO_SAPLING, Material.BIRCH_LEAVES, Material.BIRCH_SAPLING, Material.BLUE_ORCHID, Material.BROWN_MUSHROOM, Material.CAVE_AIR, Material.CORNFLOWER, Material.DANDELION, Material.DARK_OAK_LEAVES, Material.DARK_OAK_SAPLING, Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.JUNGLE_LEAVES, Material.JUNGLE_SAPLING, Material.LARGE_FERN, Material.LILAC, Material.LILY_OF_THE_VALLEY, Material.LILY_PAD, Material.NETHER_WART, Material.OAK_LEAVES, Material.OAK_SAPLING, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_MUSHROOM, Material.RED_TULIP, Material.ROSE_BUSH, Material.SNOW, Material.SPRUCE_LEAVES, Material.SPRUCE_SAPLING, Material.SUNFLOWER, Material.TALL_GRASS, Material.VOID_AIR, Material.WHITE_TULIP, Material.WITHER_ROSE);
+    public static final List<Material> GOOD_MATERIALS = Arrays.asList(
+            Material.BIRCH_LEAVES, Material.BIRCH_SAPLING, Material.BLUE_ORCHID, Material.BROWN_MUSHROOM, Material.CAVE_AIR, Material.CHERRY_LEAVES,
+            Material.CHERRY_SAPLING, Material.CORNFLOWER, Material.DANDELION, Material.DARK_OAK_LEAVES, Material.DARK_OAK_SAPLING,
+            Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.JUNGLE_LEAVES, Material.JUNGLE_SAPLING, Material.LARGE_FERN, Material.LILAC,
+            Material.LILY_OF_THE_VALLEY, Material.LILY_PAD, Material.NETHER_WART, Material.OAK_LEAVES, Material.OAK_SAPLING, Material.ORANGE_TULIP,
+            Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_MUSHROOM, Material.RED_TULIP, Material.ROSE_BUSH,
+            Material.SNOW, Material.SPRUCE_LEAVES, Material.SPRUCE_SAPLING, Material.SUNFLOWER, Material.TALL_GRASS, Material.TORCHFLOWER,
+            Material.VOID_AIR, Material.WHITE_TULIP, Material.WITHER_ROSE
+    );
 
     /**
      * A list of water materials types that can be replaced when the TARDIS

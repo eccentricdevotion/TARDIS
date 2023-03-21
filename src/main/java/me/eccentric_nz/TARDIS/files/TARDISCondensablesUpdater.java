@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
@@ -36,7 +35,7 @@ public class TARDISCondensablesUpdater {
     }
 
     public void checkCondensables() {
-        if (!plugin.getConfig().getBoolean("preferences.use_default_condensables")) {
+        if (!plugin.getConfig().getBoolean("preferences.use_default_list")) {
             HashMap<String, Object> list = new HashMap<>();
             // 1.13
             list.put("ACACIA_BARK", null);
@@ -437,15 +436,39 @@ public class TARDISCondensablesUpdater {
             list.put("BAMBOO_STAIRS", 1);
             list.put("BAMBOO_TRAPDOOR", 6);
             list.put("BIRCH_HANGING_SIGN", 2);
+            list.put("CHERRY_BOAT", 3);
+            list.put("CHERRY_BUTTON", 1);
+            list.put("CHERRY_DOOR", 3);
+            list.put("CHERRY_FENCE", 1);
+            list.put("CHERRY_FENCE_GATE", 5);
+            list.put("CRHERRY_HANGING_SIGN", 2);
+            list.put("CHERRY_LEAVES", 1);
+            list.put("CHERRY_LOG", 2);
+            list.put("CHERRY_PLANKS", 2);
+            list.put("CHERRY_PRESSURE_PLATE", 1);
+            list.put("CHERRY_SAPLING", 2);
+            list.put("CHERRY_SIGN", 2);
+            list.put("CHERRY_SLAB", 2);
+            list.put("CHERRY_STAIRS", 1);
+            list.put("CHERRY_TRAPDOOR", 6);
+            list.put("CHERRY_WOOD", 2);
             list.put("CHISELED_BOOKSHELF", 20);
             list.put("CRIMSON_HANGING_SIGN", 2);
             list.put("DARK_OAK_HANGING_SIGN", 2);
+            list.put("DECORATED_POT", 80);
             list.put("JUNGLE_HANGING_SIGN", 2);
             list.put("MANGROVE_HANGING_SIGN", 2);
             list.put("OAK_HANGING_SIGN", 2);
             list.put("PIGLIN_HEAD", 200);
+            list.put("POTTERY_SHARD_ARCHER", 20);
+            list.put("POTTERY_SHARD_PRIZE", 20);
+            list.put("POTTERY_SHARD_ARMS_UP", 20);
+            list.put("POTTERY_SHARD_SKULL", 20);
             list.put("SPRUCE_HANGING_SIGN", 2);
             list.put("STRIPPED_BAMBOO_BLOCK", 2);
+            list.put("STRIPPED_CHERRY_LOG", 2);
+            list.put("STRIPPED_CHERRY_WOOD", 2);
+            list.put("TORCHFLOWER", 20);
             list.put("WARPED_HANGING_SIGN", 2);
 
             for (Map.Entry<String, Object> entry : list.entrySet()) {
@@ -491,11 +514,11 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("ECHO_SHARD", 20);
             }
             try {
-                String condensablesPath = plugin.getDataFolder() + File.separator + "condensables.yml";
-                plugin.getCondensablesConfig().save(new File(condensablesPath));
-                plugin.getLogger().log(Level.INFO, "Updated condensables.yml");
+                String listPath = plugin.getDataFolder() + File.separator + "list.yml";
+                plugin.getCondensablesConfig().save(new File(listPath));
+                plugin.getLogger().log(Level.INFO, "Updated list.yml");
             } catch (IOException io) {
-                plugin.debug("Could not save condensables.yml, " + io.getMessage());
+                plugin.debug("Could not save list.yml, " + io.getMessage());
             }
         }
     }

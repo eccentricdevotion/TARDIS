@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.util.HashMap;
 import java.util.Set;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * A TARDIS has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
@@ -1087,15 +1086,39 @@ public class TARDISCondensables {
             condensables.put("BAMBOO_STAIRS", 1);
             condensables.put("BAMBOO_TRAPDOOR", 6);
             condensables.put("BIRCH_HANGING_SIGN", 2);
+            condensables.put("CHERRY_BOAT", 3);
+            condensables.put("CHERRY_BUTTON", 1);
+            condensables.put("CHERRY_DOOR", 3);
+            condensables.put("CHERRY_FENCE", 1);
+            condensables.put("CHERRY_FENCE_GATE", 5);
+            condensables.put("CHERRY_HANGING_SIGN", 2);
+            condensables.put("CHERRY_LEAVES", 1);
+            condensables.put("CHERRY_LOG", 2);
+            condensables.put("CHERRY_PLANKS", 2);
+            condensables.put("CHERRY_PRESSURE_PLATE", 1);
+            condensables.put("CHERRY_SAPLING", 2);
+            condensables.put("CHERRY_SIGN", 2);
+            condensables.put("CHERRY_SLAB", 2);
+            condensables.put("CHERRY_STAIRS", 1);
+            condensables.put("CHERRY_TRAPDOOR", 6);
+            condensables.put("CHERRY_WOOD", 2);
             condensables.put("CHISELED_BOOKSHELF", 20);
             condensables.put("CRIMSON_HANGING_SIGN", 2);
             condensables.put("DARK_OAK_HANGING_SIGN", 2);
+            condensables.put("DECORATED_POT", 80);
             condensables.put("JUNGLE_HANGING_SIGN", 2);
             condensables.put("MANGROVE_HANGING_SIGN", 2);
             condensables.put("OAK_HANGING_SIGN", 2);
             condensables.put("PIGLIN_HEAD", 200);
+            condensables.put("POTTERY_SHARD_ARCHER", 20);
+            condensables.put("POTTERY_SHARD_ARMS_UP", 20);
+            condensables.put("POTTERY_SHARD_PRIZE", 20);
+            condensables.put("POTTERY_SHARD_SKULL", 20);
             condensables.put("SPRUCE_HANGING_SIGN", 2);
             condensables.put("STRIPPED_BAMBOO_BLOCK", 2);
+            condensables.put("STRIPPED_CHERRY_LOG", 2);
+            condensables.put("STRIPPED_CHERRY_WOOD", 2);
+            condensables.put("TORCHFLOWER", 20);
             condensables.put("WARPED_HANGING_SIGN", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
