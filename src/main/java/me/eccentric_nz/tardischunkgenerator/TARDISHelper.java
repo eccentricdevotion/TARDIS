@@ -60,7 +60,7 @@ import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
 
-public class TARDISHelper implements TARDISHelperAPI {
+public class TARDISHelper {
 
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
     public static boolean colourSkies;
@@ -93,7 +93,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
     }
 
-    @Override
     public void nameFurnaceGUI(Block block, String name) {
         if (block != null) {
             ServerLevel ws = ((CraftWorld) block.getWorld()).getHandle();
@@ -105,7 +104,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         }
     }
 
-    @Override
     public boolean isArtronFurnace(Block block) {
         if (block != null) {
             ServerLevel ws = ((CraftWorld) block.getWorld()).getHandle();
@@ -118,18 +116,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         return false;
     }
 
-//    @Override
-//    public void setFallFlyingTag(org.bukkit.entity.Entity e) {
-//        Entity nmsEntity = ((CraftEntity) e).getHandle();
-//        CompoundTag tag = new CompoundTag();
-//        // writes the entity's NBT data to the `tag` object
-//        nmsEntity.save(tag);
-//        tag.putBoolean("FallFlying", true);
-//        // sets the entity's tag to the altered `tag`
-//        nmsEntity.load(tag);
-//    }
-
-    @Override
     public void setRandomSeed(String world) {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
@@ -151,7 +137,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         }
     }
 
-    @Override
     public void setLevelName(String oldName, String newName) {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName + File.separator + "level.dat");
         if (file.exists()) {
@@ -179,7 +164,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         }
     }
 
-    @Override
     public void setWorldGameMode(String world, GameMode gm) {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
@@ -189,10 +173,14 @@ public class TARDISHelper implements TARDISHelperAPI {
                 CompoundTag data = tagCompound.getCompound("Data");
                 fileinputstream.close();
                 int mode = switch (gm) {
-                    case CREATIVE -> 1;
-                    case ADVENTURE -> 2;
-                    case SPECTATOR -> 3;
-                    default -> 0; // SURVIVAL
+                    case CREATIVE ->
+                        1;
+                    case ADVENTURE ->
+                        2;
+                    case SPECTATOR ->
+                        3;
+                    default ->
+                        0; // SURVIVAL
                 };
                 // set GameType tag
                 data.putInt("GameType", mode);
@@ -206,7 +194,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         }
     }
 
-    @Override
     public TARDISPlanetData getLevelData(String world) {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
@@ -219,19 +206,27 @@ public class TARDISHelper implements TARDISHelperAPI {
                 GameMode gameMode;
                 int gm = data.getInt("GameType");
                 gameMode = switch (gm) {
-                    case 1 -> GameMode.CREATIVE;
-                    case 2 -> GameMode.ADVENTURE;
-                    case 3 -> GameMode.SPECTATOR;
-                    default -> GameMode.SURVIVAL;
+                    case 1 ->
+                        GameMode.CREATIVE;
+                    case 2 ->
+                        GameMode.ADVENTURE;
+                    case 3 ->
+                        GameMode.SPECTATOR;
+                    default ->
+                        GameMode.SURVIVAL;
                 };
                 // get generatorName tag
                 WorldType worldType;
                 String wt = data.getString("generatorName");
                 worldType = switch (wt.toLowerCase(Locale.ROOT)) {
-                    case "flat" -> WorldType.FLAT;
-                    case "largebiomes" -> WorldType.LARGE_BIOMES;
-                    case "amplified" -> WorldType.AMPLIFIED;
-                    default -> WorldType.NORMAL; // default or unknown
+                    case "flat" ->
+                        WorldType.FLAT;
+                    case "largebiomes" ->
+                        WorldType.LARGE_BIOMES;
+                    case "amplified" ->
+                        WorldType.AMPLIFIED;
+                    default ->
+                        WorldType.NORMAL; // default or unknown
                 };
                 World.Environment environment = World.Environment.NORMAL;
                 File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
@@ -252,67 +247,54 @@ public class TARDISHelper implements TARDISHelperAPI {
         return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
     }
 
-    @Override
     public void disguise(EntityType entityType, Player player) {
         new TARDISDisguiser(entityType, player).disguiseToAll();
     }
 
-    @Override
     public void disguise(EntityType entityType, Player player, Object[] options) {
         new TARDISDisguiser(entityType, player, options).disguiseToAll();
     }
 
-    @Override
     public void disguise(Player player, String name) {
         new TARDISChameleonArchDisguiser(player).changeSkin(name);
     }
 
-    @Override
     public void disguise(Player player, UUID uuid) {
         new TARDISPlayerDisguiser(player, uuid).disguiseToAll();
     }
 
-    @Override
     public void undisguise(Player player) {
         new TARDISDisguiser(player).removeDisguise();
     }
 
-    @Override
     public void reset(Player player) {
         new TARDISChameleonArchDisguiser(player).resetSkin();
     }
 
-    @Override
     public int spawnEmergencyProgrammeOne(Player player, Location location) {
         return new TARDISEPSDisguiser(player, location).showToAll();
     }
 
-    @Override
     public void removeNPC(int id, World world) {
         TARDISEPSDisguiser.removeNPC(id, world);
     }
 
-    @Override
     public void disguiseArmourStand(ArmorStand stand, EntityType entityType, Object[] options) {
         new TARDISArmourStandDisguiser(stand, entityType, options).disguiseToAll();
     }
 
-    @Override
     public void undisguiseArmourStand(ArmorStand stand) {
         TARDISArmourStandDisguiser.removeDisguise(stand);
     }
 
-    @Override
     public void updateMap(World world, MapView mapView) {
         new TARDISMapUpdater(world, mapView.getCenterX(), mapView.getCenterZ()).update(mapView);
     }
 
-    @Override
     public Location searchBiome(World world, Biome biome, Location policeBox) {
         return BiomeUtilities.searchBiome(world, biome, policeBox);
     }
 
-    @Override
     public void addCustomBiome(String biome) {
         CustomBiomeData data;
         if (biome.equalsIgnoreCase("gallifrey")) {
@@ -323,12 +305,10 @@ public class TARDISHelper implements TARDISHelperAPI {
         CustomBiome.addCustomBiome(data);
     }
 
-    @Override
     public void setCustomBiome(String biome, Chunk chunk) {
         new BiomeHelper().setCustomBiome(biome, chunk);
     }
 
-    @Override
     public void removeTileEntity(org.bukkit.block.BlockState tile) {
         net.minecraft.world.level.chunk.ChunkAccess chunk = ((CraftChunk) tile.getChunk()).getHandle();
         BlockPos position = new BlockPos(tile.getLocation().getBlockX(), tile.getLocation().getBlockY(), tile.getLocation().getBlockZ());
@@ -336,7 +316,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         tile.getBlock().setType(Material.AIR);
     }
 
-    @Override
     public void setPowerableBlockInteract(Block block) {
         Direction direction = Direction.NORTH;
         if (block.getBlockData() instanceof Directional directional) {
@@ -348,7 +327,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         data.use(world, null, null, BlockHitResult.miss(data.getOffset(world, position), direction, position));
     }
 
-    @Override
     public void growTree(String tree, Location location) {
         try {
             TARDISTree type = TARDISTree.valueOf(tree.toUpperCase(Locale.ROOT));
@@ -358,17 +336,14 @@ public class TARDISHelper implements TARDISHelperAPI {
         }
     }
 
-    @Override
     public void growTree(Location location, Material base, Material hat, Material stem, Material decor) {
         CustomTree.grow(location, base, hat, stem, decor);
     }
 
-    @Override
     public List<Material> getTreeMatrials() {
         return CubicMaterial.cubes;
     }
 
-    @Override
     public int[] getReputation(Villager villager, UUID uuid) {
         net.minecraft.world.entity.npc.Villager v = ((CraftVillager) villager).getHandle();
         GossipContainer entries = v.getGossips();
@@ -381,7 +356,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         return reputation;
     }
 
-    @Override
     public void setReputation(Villager villager, UUID uuid, int[] reputation) {
         net.minecraft.world.entity.npc.Villager v = ((CraftVillager) villager).getHandle();
         GossipContainer entries = v.getGossips();
@@ -392,12 +366,10 @@ public class TARDISHelper implements TARDISHelperAPI {
         entries.add(uuid, GossipType.TRADING, reputation[GossipType.TRADING.ordinal()]);
     }
 
-    @Override
     public int castFakeItemFrame(ItemFrame frame, Player player, Vector location) {
         return TARDISItemFrameFaker.cast(frame, player, location);
     }
 
-    @Override
     public void removeFakeItemFrame(int id, Player player) {
         TARDISItemFrameFaker.remove(id, player);
     }
@@ -411,7 +383,6 @@ public class TARDISHelper implements TARDISHelperAPI {
         ((Logger) LogManager.getRootLogger()).addFilter(new TARDISLogFilter(path));
     }
 
-    @Override
     public void listBlockColours() {
         GetBlockColours.list();
     }
