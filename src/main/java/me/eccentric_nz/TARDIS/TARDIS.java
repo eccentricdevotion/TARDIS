@@ -1145,21 +1145,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Gets whether TARDISWeepingAngels is the correct version
-     *
-     * @return true if TWA is the correct version
-     */
-    public boolean checkTWA() {
-        if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
-            ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(twa.getDescription().getVersion());
-            return (version.compareTo(ModuleDescriptor.Version.parse("3.3.1")) >= 0);
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
      * @param o the Object to print to the console

@@ -117,7 +117,7 @@ class TARDISLazarusInventory {
         page.setItemMeta(two);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled add TARDIS monsters
-        if (plugin.checkTWA()) {
+        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             ItemStack weep = new ItemStack(Material.BOWL, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("TARDIS Monsters");

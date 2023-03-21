@@ -128,7 +128,7 @@ public class TARDISFarmer {
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
                         case ARMOR_STAND -> {
-                            if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                 TARDISFollower follower = new TARDISFollower(entity, p.getUniqueId());
                                 if (follower.isValid()) {
                                     followers.add(follower);

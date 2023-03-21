@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
@@ -42,8 +43,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
-
 /**
  * @author eccentric_nz
  */
@@ -69,8 +68,21 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "MIRE", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "WEEPING ANGEL", "ZYGON");
-    private final List<String> twaHelmets = Arrays.asList("Cyberman Head", "Dalek Head", "Dalek Sec Head", "Davros Head", "Empty Child Head", "Hath Head", "Headless Monk Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Mire Head", "Ood Head", "Racnoss Head", "Silent Head", "Silurian Head", "Slitheen Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Weeping Angel Head", "Zygon Head");
+    private final List<String> twaMonsters = Arrays.asList(
+            "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY CHILD",
+            "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9",
+            "MIRE", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN",
+            "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA",
+            "WEEPING ANGEL", "ZYGON"
+    );
+    private final List<String> twaHelmets = Arrays.asList(
+            "Cyberman Head", "Dalek Head", "Dalek Sec Head", "Davros Head",
+            "Empty Child Head", "Hath Head", "Headless Monk Head",
+            "Ice Warrior Head", "Judoon Head", "K9 Head", "Mire Head",
+            "Ood Head", "Racnoss Head", "Silent Head", "Silurian Head",
+            "Slitheen Head", "Sontaran Head", "Strax Head", "Toclafane",
+            "Vashta Nerada Head", "Weeping Angel Head", "Zygon Head"
+    );
     private final Set<UUID> pagers = new HashSet<>();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -79,8 +91,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
-     * accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a
+     * TARDIS GUI, then the click is processed accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -105,7 +117,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     ItemMeta im = is.getItemMeta();
                     // remember selection
                     String display = im.getDisplayName();
-                    if (twaMonsters.contains(display) && !plugin.checkTWA()) {
+                    if (twaMonsters.contains(display) && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         im.setLore(Collections.singletonList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
@@ -134,17 +146,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         player.openInventory(inv);
                     }
                     case 44 -> {
-                        pagers.add(uuid);
-                        ItemStack is = view.getItem(slot);
-                        ItemMeta im = is.getItemMeta();
-                        // go to monsters or page two
-                        Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                        if (im.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
-                            inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
-                        } else {
-                            inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
+                        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                            pagers.add(uuid);
+                            ItemStack is = view.getItem(slot);
+                            ItemMeta im = is.getItemMeta();
+                            // go to monsters or page two
+                            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                            if (im.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
+                                inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
+                            } else {
+                                inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
+                            }
+                            player.openInventory(inv);
                         }
-                        player.openInventory(inv);
                     }
                     case 45 -> { // The Master Switch : ON | OFF
                         ItemStack is = view.getItem(slot);
