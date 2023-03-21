@@ -1,4 +1,4 @@
-max_blocks: 5
+max_blocks: 10
 cooldown: 5
 tachyon_use:
     # maximum charge the blaster can hold
