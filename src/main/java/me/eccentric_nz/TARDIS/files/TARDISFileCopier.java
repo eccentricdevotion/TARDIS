@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import java.io.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
+
+import java.io.*;
+import java.util.logging.Level;
 
 /**
  * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly
@@ -94,7 +95,13 @@ public class TARDISFileCopier {
         }
         // copy the template file if it doesn't exist
         String tmpnstr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "template.tschm";
-        copy(tmpnstr, plugin.getResource("rooms" + File.separator +"template.tschm"), true);
+        String path = "rooms" + File.separator +"template.tschm";
+        InputStream in = plugin.getResource(path);
+        if (in != null) {
+            copy(tmpnstr, in, true);
+        } else {
+            plugin.debug("Input stream for "+path+ " was null");
+        }
     }
 
     /**

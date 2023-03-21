@@ -5,11 +5,13 @@
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
+   - Use new `Material#getPlacementMaterial()` API for `rooms_require_blocks` etc, _check what leaves convert to..._
    - Use blueprint permissions checks for all modules
    - Use new Display entities for TARDIS Shop items
    - Add 1.19.4 blocks
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
+   - Test TARDIS creation / room building
 
 ## Next version `5.1.0`
 

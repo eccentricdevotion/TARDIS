@@ -18,15 +18,18 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.ChatColor;
 
 /**
  * The Unified Intelligence Taskforce — formerly known as the United Nations
@@ -69,7 +72,7 @@ public class TARDISRoomMap {
      * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
      *
      * @param fileName the schematic file name to read
-     * @param s the schematic name
+     * @param s        the schematic name
      * @return true if the schematic was loaded successfully
      */
     public boolean makeRoomMap(String fileName, String s, boolean user) {
@@ -107,9 +110,6 @@ public class TARDISRoomMap {
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
                         }
-                        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
-                            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
-                        }
                         if (blockTypes.containsKey(bid)) {
                             Integer count = blockTypes.get(bid) + 1;
                             blockTypes.put(bid, count);
@@ -125,8 +125,15 @@ public class TARDISRoomMap {
     }
 
     private String getMaterialAsString(String data) {
-        String[] square = data.split("\\[");
-        String[] keyed = square[0].split(":");
-        return keyed[1].toUpperCase();
+        plugin.debug("Before: " + data);
+        BlockData block = plugin.getServer().createBlockData(data);
+        Material placed = block.getPlacementMaterial();
+        String bid = placed.toString();
+        plugin.debug("To string: " + bid);
+        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
+            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
+        }
+        plugin.debug("After: " + bid);
+        return bid;
     }
 }
