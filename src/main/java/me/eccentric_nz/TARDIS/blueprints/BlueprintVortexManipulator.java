@@ -16,17 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.blueprints;
 
-public enum BlueprintType {
+public enum BlueprintVortexManipulator {
 
-    BASE,
-    BLASTER,
-    CONSOLE,
-    FEATURE,
-    PRESET,
-    ROOM,
-    SHOP,
-    SONIC,
-    TRAVEL,
-    VORTEX_MANIPULATOR,
-    WEEPING_ANGELS
+    TELEPORT("vm.teleport"),
+    MESSAGE("vm.message"),
+    LIFESIGNS("vm.lifesigns"),
+    BEACON("vm.beacon"),
+    LOOKATBLOCK("vm.lookatblock");
+
+    private final String permission;
+
+    BlueprintVortexManipulator(String permission) {
+        this.permission = permission;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
 }

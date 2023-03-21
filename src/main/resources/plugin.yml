@@ -645,6 +645,8 @@ permissions:
       tardisweepingangels.spawn.angel: true
       tardisweepingangels.spawn.cyberman: true
       tardisweepingangels.spawn.dalek: true
+      tardisweepingangels.spawn.dalek_sec: true
+      tardisweepingangels.spawn.davros: true
       tardisweepingangels.spawn.empty: true
       tardisweepingangels.spawn.ice: true
       tardisweepingangels.spawn.judoon: true
@@ -652,8 +654,11 @@ permissions:
       tardisweepingangels.spawn.mire: true
       tardisweepingangels.spawn.monk: true
       tardisweepingangels.spawn.ood: true
+      tardisweepingangels.spawn.racnoss: true
+      tardisweepingangels.spawn.sea_devil: true
       tardisweepingangels.spawn.silent: true
       tardisweepingangels.spawn.silurian: true
+      tardisweepingangels.spawn.slitheen: true
       tardisweepingangels.spawn.sontaran: true
       tardisweepingangels.spawn.strax: true
       tardisweepingangels.spawn.toclafane: true
@@ -690,15 +695,9 @@ permissions:
   tardisweepingangels.kill:
     description: Allow players to use the kill command.
     default: op
-  tardisweepingangels.admin:
-    description: Allow players to alter plugin settings.
-    default: op
   # shop
   tardisshop.use:
     description: Allow players to buy items from a TARDIS Shop.
-    default: op
-  tardisshop.admin:
-    description: Allow players to set up a TARDIS Shop.
     default: op
 commands:
   tardis:
@@ -1707,7 +1706,7 @@ commands:
     equip:
       description: Equip an armour stand with monster armour.
       usage: /<command> equip [monster type]
-      permission: tardisweepingangels.admin
+      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
     follow:
       description: Make an Ood, Judoon or K9 follow you.
@@ -1722,17 +1721,17 @@ commands:
     set:
       description: Set the maximum number of the specified monster allowed to spawn in the specified world.
       usage: /<command> set [monster type|all] [world] [max number]
-      permission: tardisweepingangels.admin
+      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
     give:
       description: Give the specified player the specified monster head.
       usage: /<command> give [player] [monser type]
-      permission: tardisweepingangels.admin
+      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   # shop
   tardisshop:
     aliases: [tshop]
     description: Add and remove TARDISShop items.
     usage: /<command> [add|remove|update] [item_name]
-    permission: tardisshop.admin
+    permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command

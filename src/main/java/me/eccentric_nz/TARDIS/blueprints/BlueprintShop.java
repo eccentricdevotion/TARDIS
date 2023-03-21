@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.blueprints;
 
-public enum BlueprintType {
+public enum BlueprintShop {
 
-    BASE,
-    BLASTER,
-    CONSOLE,
-    FEATURE,
-    PRESET,
-    ROOM,
-    SHOP,
-    SONIC,
-    TRAVEL,
-    VORTEX_MANIPULATOR,
-    WEEPING_ANGELS
+    USE("shop.use");
+
+    private final String permission;
+
+    BlueprintShop(String permission) {
+        this.permission = permission;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
 }
