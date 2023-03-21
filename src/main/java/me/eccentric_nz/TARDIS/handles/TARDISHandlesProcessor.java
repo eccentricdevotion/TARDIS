@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -365,7 +366,7 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 TARDISMessage.handlesSend(player, "BIOME_SEARCH");
 //                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                                Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
+                                                Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                                 if (nsob == null) {
                                                     TARDISMessage.handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;

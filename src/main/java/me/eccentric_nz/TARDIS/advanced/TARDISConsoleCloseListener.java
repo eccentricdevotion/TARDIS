@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -33,6 +37,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,11 +51,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -197,7 +197,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             }
                                             TARDISMessage.send(p, "BIOME_SEARCH");
 //                                            Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                            Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
+                                            Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                             if (nsob == null) {
                                                 TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                 continue;
