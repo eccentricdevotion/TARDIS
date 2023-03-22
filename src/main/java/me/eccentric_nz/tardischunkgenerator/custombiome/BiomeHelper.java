@@ -7,14 +7,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+
+import java.util.List;
 
 public class BiomeHelper {
 
@@ -50,7 +54,7 @@ public class BiomeHelper {
                 }
             }
         }
-        chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
+        refreshChunk(chunk);
     }
 
     /**
@@ -77,7 +81,7 @@ public class BiomeHelper {
             }
         }
         setCustomBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), ((CraftWorld) location.getWorld()).getHandle(), Holder.direct(base));
-        location.getWorld().refreshChunk(location.getChunk().getX(), location.getChunk().getZ());
+        refreshChunk(location.getChunk());
         return true;
     }
 
@@ -89,5 +93,11 @@ public class BiomeHelper {
                 chunk.setBiome(x >> 2, y >> 2, z >> 2, bb);
             }
         }
+    }
+
+    private void refreshChunk(Chunk chunk) {
+        CraftChunk craftChunk = (CraftChunk) chunk;
+        ServerLevel level = craftChunk.getCraftWorld().getHandle();
+        level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle()));
     }
 }
