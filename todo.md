@@ -6,6 +6,7 @@
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Use new Display entities for TARDIS Shop items
+   - Use new DisplayItems for custom blocks?
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building

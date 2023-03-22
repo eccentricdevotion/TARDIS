@@ -2,14 +2,12 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.*;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.WaterCircle;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
@@ -26,6 +24,11 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class SkaroStructurePopulator extends BlockPopulator {
 
@@ -126,12 +129,12 @@ public class SkaroStructurePopulator extends BlockPopulator {
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random, String which) {
-        String path = "schematics" + File.separator + "dalek_" + which + ".tschm";
+        String path = "schematics/dalek_" + which + ".tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(plugin.getResource(path));
+            JsonObject obj = TARDISSchematicGZip.unzip(stream);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

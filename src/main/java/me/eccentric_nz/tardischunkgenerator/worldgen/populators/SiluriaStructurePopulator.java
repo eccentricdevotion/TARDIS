@@ -2,9 +2,6 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.InputStream;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaProcessData;
@@ -23,6 +20,9 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
+
+import java.io.InputStream;
+import java.util.*;
 
 public class SiluriaStructurePopulator extends BlockPopulator {
 
@@ -86,12 +86,12 @@ public class SiluriaStructurePopulator extends BlockPopulator {
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random, String which) {
-        String path = "schematics" + File.separator + "siluria_" + which + ".tschm";
+        String path = "schematics/siluria_" + which + ".tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(plugin.getResource(path));
+            JsonObject obj = TARDISSchematicGZip.unzip(stream);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

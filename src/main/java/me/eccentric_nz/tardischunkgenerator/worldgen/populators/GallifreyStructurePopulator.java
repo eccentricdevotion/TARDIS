@@ -2,11 +2,6 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
@@ -23,6 +18,11 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class GallifreyStructurePopulator extends BlockPopulator {
 
@@ -73,7 +73,7 @@ public class GallifreyStructurePopulator extends BlockPopulator {
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random, String which) {
-        String path = "schematics" + File.separator + "gallifrey_" + which + ".tschm";
+        String path = "schematics/gallifrey_" + which + ".tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
         if (stream != null) {

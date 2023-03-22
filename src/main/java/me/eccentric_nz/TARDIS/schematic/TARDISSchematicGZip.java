@@ -18,11 +18,12 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
@@ -123,7 +124,7 @@ public class TARDISSchematicGZip {
             obj = TARDISSchematicGZip.unzip(path);
         } else {
             // just get the schematic from the plugin JAR
-            path = folder + File.separator + which + ".tschm";
+            path = folder + "/" + which + ".tschm";
             InputStream stream = plugin.getResource(path);
             if (stream != null) {
                 obj = TARDISSchematicGZip.unzip(stream);

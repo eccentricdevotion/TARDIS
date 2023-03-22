@@ -95,12 +95,11 @@ public class TARDISFileCopier {
         }
         // copy the template file if it doesn't exist
         String tmpnstr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "template.tschm";
-        String path = "rooms" + File.separator +"template.tschm";
-        InputStream in = plugin.getResource(path);
+        InputStream in = plugin.getResource("rooms/template.tschm");
         if (in != null) {
             copy(tmpnstr, in, true);
         } else {
-            plugin.debug("Input stream for "+path+ " was null");
+            plugin.debug("Input stream for template.tschm was null");
         }
     }
 
