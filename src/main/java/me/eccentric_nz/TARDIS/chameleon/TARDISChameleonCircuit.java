@@ -50,7 +50,7 @@ public class TARDISChameleonCircuit {
             TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
-            wall_block = swapMaterial(chameleonType);
+            wall_block = TARDISConstants.changeToMaterial(chameleonType);
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
             // try the surrounding blocks
@@ -62,7 +62,7 @@ public class TARDISChameleonCircuit {
                     break;
                 }
                 if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
-                    wall_block = swapMaterial(emat);
+                    wall_block = TARDISConstants.changeToMaterial(emat);
                     break;
                 }
             }
@@ -70,19 +70,16 @@ public class TARDISChameleonCircuit {
         // if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
         if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             wall_block = switch (chameleonType) {
-                case IRON_BLOCK -> Material.YELLOW_WOOL;
+                case IRON_BLOCK, GOLD_BLOCK -> Material.YELLOW_WOOL;
                 case DIAMOND_BLOCK -> Material.LIGHT_BLUE_WOOL;
                 case EMERALD_BLOCK -> Material.LIME_WOOL;
                 case REDSTONE_BLOCK, TNT -> Material.RED_WOOL;
                 case COAL_BLOCK -> Material.BLACK_WOOL;
-                default -> // GOLD_BLOCK and any others
+                case NETHERITE_BLOCK -> Material.BROWN_WOOL;
+                default -> // any others
                         Material.BLUE_WOOL;
             };
         }
         return wall_block;
-    }
-
-    private Material swapMaterial(Material material) {
-        return TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
     }
 }

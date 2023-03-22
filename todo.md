@@ -9,7 +9,6 @@
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building
-   - Add new blocks to TARDISConstants
 
 ## Next version `5.1.0`
 

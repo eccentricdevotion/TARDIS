@@ -68,41 +68,270 @@ public class TARDISConstants {
     /**
      * Valid Chameleon blocks
      */
-    public static final List<Material> CHAMELEON_BLOCKS_VALID = Arrays.asList(Material.STONE, Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.COBBLESTONE, Material.OAK_PLANKS, Material.DARK_OAK_PLANKS, Material.BIRCH_PLANKS, Material.SPRUCE_PLANKS, Material.JUNGLE_PLANKS, Material.ACACIA_PLANKS, Material.BEDROCK, Material.GOLD_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.OAK_LOG, Material.DARK_OAK_LOG, Material.BIRCH_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG, Material.ACACIA_LOG, Material.OAK_LEAVES, Material.DARK_OAK_LEAVES, Material.BIRCH_LEAVES, Material.SPRUCE_LEAVES, Material.JUNGLE_LEAVES, Material.ACACIA_LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.SANDSTONE, Material.NOTE_BLOCK, Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.LIGHT_BLUE_WOOL, Material.MAGENTA_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL, Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.BRICK, Material.TNT, Material.BOOKSHELF, Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.DIAMOND_ORE, Material.DIAMOND_BLOCK, Material.CRAFTING_TABLE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.JACK_O_LANTERN, Material.STONE_BRICKS, Material.RED_MUSHROOM, Material.BROWN_MUSHROOM, Material.MELON, Material.MYCELIUM, Material.NETHER_BRICKS, Material.END_STONE, Material.REDSTONE_LAMP, Material.EMERALD_ORE, Material.EMERALD_BLOCK, Material.QUARTZ_BLOCK, Material.WHITE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.PINK_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.BLACK_TERRACOTTA, Material.HAY_BLOCK, Material.TERRACOTTA, Material.COAL_BLOCK, Material.PACKED_ICE);
+    public static final Set<Material> CHAMELEON_BLOCKS_VALID = getValidMaterials();
+
+    private static Set<Material> getValidMaterials() {
+        Set<Material> set = new HashSet<>();
+        set.add(Material.BOOKSHELF);
+        set.add(Material.BROWN_MUSHROOM);
+        set.add(Material.COAL_BLOCK);
+        set.add(Material.COBBLESTONE);
+        set.add(Material.CRAFTING_TABLE);
+        set.add(Material.DIAMOND_BLOCK);
+        set.add(Material.EMERALD_BLOCK);
+        set.add(Material.END_STONE);
+        set.add(Material.GLOWSTONE);
+        set.add(Material.GOLD_BLOCK);
+        set.add(Material.IRON_BLOCK);
+        set.add(Material.JUKEBOX);
+        set.add(Material.LAPIS_BLOCK);
+        set.add(Material.MELON);
+        set.add(Material.MOSSY_COBBLESTONE);
+        set.add(Material.NETHERRACK);
+        set.add(Material.NETHER_BRICKS);
+        set.add(Material.NOTE_BLOCK);
+        set.add(Material.OBSIDIAN);
+        set.add(Material.PUMPKIN);
+        set.add(Material.QUARTZ_BLOCK);
+        set.add(Material.REDSTONE_LAMP);
+        set.add(Material.RED_MUSHROOM);
+        set.add(Material.TNT);
+        set.addAll(Tag.BEACON_BASE_BLOCKS.getValues());
+        set.addAll(Tag.COAL_ORES.getValues());
+        set.addAll(Tag.DIAMOND_ORES.getValues());
+        set.addAll(Tag.EMERALD_ORES.getValues());
+        set.addAll(Tag.GOLD_ORES.getValues());
+        set.addAll(Tag.ICE.getValues());
+        set.addAll(Tag.IMPERMEABLE.getValues());
+        set.addAll(Tag.INFINIBURN_END.getValues());
+        set.addAll(Tag.LAPIS_ORES.getValues());
+        set.addAll(Tag.LEAVES.getValues());
+        set.addAll(Tag.LOGS.getValues());
+        set.addAll(Tag.MINEABLE_HOE.getValues());
+        set.addAll(Tag.MINEABLE_SHOVEL.getValues());
+        set.addAll(Tag.NETHER_CARVER_REPLACEABLES.getValues());
+        set.addAll(Tag.OVERWORLD_CARVER_REPLACEABLES.getValues());
+        set.addAll(Tag.PLANKS.getValues());
+        set.addAll(Tag.REDSTONE_ORES.getValues());
+        set.addAll(Tag.STONE_BRICKS.getValues());
+        set.addAll(Tag.WOOL.getValues());
+        set.remove(Material.SNOW);
+        set.remove(Material.WATER);
+        set.remove(Material.MOSS_CARPET);
+        set.remove(Material.SCULK_SENSOR);
+        set.remove(Material.SCULK_VEIN);
+        set.remove(Material.SCULK_SHRIEKER);
+        set.remove(Material.PINK_PETALS);
+        set.removeAll(Tag.SAND.getValues());
+        return set;
+    }
 
     /**
      * Bad Chameleon blocks that shouldn't be changed to
      */
-    public static final List<Material> CHAMELEON_BLOCKS_BAD = Arrays.asList(Material.OAK_SAPLING, Material.DARK_OAK_SAPLING, Material.BIRCH_SAPLING, Material.SPRUCE_SAPLING, Material.JUNGLE_SAPLING, Material.ACACIA_SAPLING, Material.WATER, Material.LAVA, Material.DISPENSER, Material.WHITE_BED, Material.ORANGE_BED, Material.LIGHT_BLUE_BED, Material.MAGENTA_BED, Material.YELLOW_BED, Material.LIME_BED, Material.PINK_BED, Material.CYAN_BED, Material.GRAY_BED, Material.LIGHT_GRAY_BED, Material.PURPLE_BED, Material.BLUE_BED, Material.BROWN_BED, Material.GREEN_BED, Material.RED_BED, Material.BLACK_BED, Material.STICKY_PISTON, Material.PISTON, Material.PISTON_HEAD, Material.TORCH, Material.FIRE, Material.SPAWNER, Material.CHEST, Material.REDSTONE_WIRE, Material.WHEAT, Material.FURNACE, Material.OAK_SIGN, Material.DARK_OAK_SIGN, Material.SPRUCE_SIGN, Material.BIRCH_SIGN, Material.JUNGLE_SIGN, Material.ACACIA_SIGN, Material.OAK_DOOR, Material.DARK_OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.LADDER, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.JUNGLE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.STONE_PRESSURE_PLATE, Material.IRON_DOOR, Material.OAK_PRESSURE_PLATE, Material.DARK_OAK_PRESSURE_PLATE, Material.BIRCH_PRESSURE_PLATE, Material.SPRUCE_PRESSURE_PLATE, Material.JUNGLE_PRESSURE_PLATE, Material.ACACIA_PRESSURE_PLATE, Material.REDSTONE_TORCH, Material.STONE_BUTTON, Material.SUGAR_CANE, Material.OAK_FENCE, Material.DARK_OAK_FENCE, Material.BIRCH_FENCE, Material.SPRUCE_FENCE, Material.JUNGLE_FENCE, Material.ACACIA_FENCE, Material.NETHER_PORTAL, Material.CAKE, Material.REPEATER, Material.IRON_BARS, Material.OAK_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.SPRUCE_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.ACACIA_FENCE_GATE, Material.LILY_PAD, Material.NETHER_WART, Material.ENCHANTING_TABLE, Material.BREWING_STAND, Material.CAULDRON, Material.POWDER_SNOW_CAULDRON, Material.LAVA_CAULDRON, Material.WATER_CAULDRON, Material.END_PORTAL, Material.DRAGON_EGG, Material.COCOA, Material.TRIPWIRE_HOOK, Material.TRIPWIRE);
+    public static final Set<Material> CHAMELEON_BLOCKS_BAD = getBadMaterials();
 
+    private static Set<Material> getBadMaterials() {
+        Set<Material> set = new HashSet<>();
+        set.add(Material.BREWING_STAND);
+        set.add(Material.CAKE);
+        set.add(Material.COCOA);
+        set.add(Material.DISPENSER);
+        set.add(Material.DRAGON_EGG);
+        set.add(Material.ENCHANTING_TABLE);
+        set.add(Material.END_PORTAL);
+        set.add(Material.FIRE);
+        set.add(Material.FURNACE);
+        set.add(Material.IRON_BARS);
+        set.add(Material.LAVA);
+        set.add(Material.LILY_PAD);
+        set.add(Material.NETHER_PORTAL);
+        set.add(Material.NETHER_WART);
+        set.add(Material.PISTON);
+        set.add(Material.PISTON_HEAD);
+        set.add(Material.REDSTONE_TORCH);
+        set.add(Material.REDSTONE_WIRE);
+        set.add(Material.REPEATER);
+        set.add(Material.SPAWNER);
+        set.add(Material.STICKY_PISTON);
+        set.add(Material.SUGAR_CANE);
+        set.add(Material.TRIPWIRE);
+        set.add(Material.TRIPWIRE_HOOK);
+        set.add(Material.WATER);
+        set.addAll(Tag.ALL_SIGNS.getValues());
+        set.addAll(Tag.BEDS.getValues());
+        set.addAll(Tag.BUTTONS.getValues());
+        set.addAll(Tag.CANDLE_CAKES.getValues());
+        set.addAll(Tag.CAULDRONS.getValues());
+        set.addAll(Tag.CLIMBABLE.getValues());
+        set.addAll(Tag.CROPS.getValues());
+        set.addAll(Tag.DOORS.getValues());
+        set.addAll(Tag.FEATURES_CANNOT_REPLACE.getValues());
+        set.addAll(Tag.FENCES.getValues());
+        set.addAll(Tag.FENCE_GATES.getValues());
+        set.addAll(Tag.PIGLIN_REPELLENTS.getValues());
+        set.addAll(Tag.SAPLINGS.getValues());
+        set.addAll(Tag.WALL_POST_OVERRIDE.getValues());
+        return set;
+    }
+
+    public static final List<Tag> CHAMELEON_TAGS_CHANGE = Arrays.asList(
+            Tag.SLABS, Tag.STAIRS, Tag.TRAPDOORS, Tag.CLIMBABLE, Tag.WALLS, Tag.FLOWER_POTS
+    );
     /**
      * Chameleon blocks that need to be changed to a full block
      */
-    public static final List<Material> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(
-            Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM,
-            Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.CHERRY_SLAB,
-            Material.CHERRY_STAIRS, Material.CHERRY_TRAPDOOR, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB,
-            Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK,
-            Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS,
-            Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB,
-            Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS,
-            Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS,
-            Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS,
-            Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS,
-            Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE
-    );
+    public static final Set<Material> CHAMELEON_BLOCKS_CHANGE = getChangeBlocks();
+
+    private static Set<Material> getChangeBlocks() {
+        Set<Material> set = new HashSet<>();
+        set.add(Material.ATTACHED_MELON_STEM);
+        set.add(Material.ATTACHED_PUMPKIN_STEM);
+        set.add(Material.BLACK_CONCRETE_POWDER);
+        set.add(Material.BLUE_CONCRETE_POWDER);
+        set.add(Material.BROWN_CONCRETE_POWDER);
+        set.add(Material.CYAN_CONCRETE_POWDER);
+        set.add(Material.END_PORTAL_FRAME);
+        set.add(Material.FARMLAND);
+        set.add(Material.GRASS_BLOCK);
+        set.add(Material.GRAVEL);
+        set.add(Material.GRAY_CONCRETE_POWDER);
+        set.add(Material.GREEN_CONCRETE_POWDER);
+        set.add(Material.INFESTED_CHISELED_STONE_BRICKS);
+        set.add(Material.INFESTED_COBBLESTONE);
+        set.add(Material.INFESTED_CRACKED_STONE_BRICKS);
+        set.add(Material.INFESTED_MOSSY_STONE_BRICKS);
+        set.add(Material.INFESTED_STONE);
+        set.add(Material.INFESTED_STONE_BRICKS);
+        set.add(Material.IRON_BARS);
+        set.add(Material.LIGHT_BLUE_CONCRETE_POWDER);
+        set.add(Material.LIGHT_GRAY_CONCRETE_POWDER);
+        set.add(Material.LIME_CONCRETE_POWDER);
+        set.add(Material.MAGENTA_CONCRETE_POWDER);
+        set.add(Material.MELON_STEM);
+        set.add(Material.ORANGE_CONCRETE_POWDER);
+        set.add(Material.PINK_CONCRETE_POWDER);
+        set.add(Material.PUMPKIN_STEM);
+        set.add(Material.PURPLE_CONCRETE_POWDER);
+        set.add(Material.RED_CONCRETE_POWDER);
+        set.add(Material.RED_SAND);
+        set.add(Material.SAND);
+        set.add(Material.SNOW);
+        set.add(Material.WHITE_CONCRETE_POWDER);
+        set.add(Material.YELLOW_CONCRETE_POWDER);
+        set.addAll(Tag.CLIMBABLE.getValues());
+        set.addAll(Tag.SLABS.getValues());
+        set.addAll(Tag.STAIRS.getValues());
+        set.addAll(Tag.TRAPDOORS.getValues());
+        set.addAll(Tag.WALLS.getValues());
+        return set;
+    }
+
+    public static Material changeToMaterial(Material material) {
+        String original = material.toString();
+        String[] split = original.split("_");
+        String changed = "";
+        switch (split[0]) {
+            case "CACTUS" -> changed = "SANDSTONE";
+            case "CAVE", "TWISTING", "WEEPING" -> changed = "MOSS_BLOCK";
+            case "END" -> changed = "END_STONE";
+            case "FARMLAND" -> changed = "DIRT";
+            case "GRASS" -> changed = "DIRT";
+            case "GRAVEL" -> changed = "COARSE_DIRT";
+            case "IRON" -> changed = "STONE";
+            case "LADDER" -> changed = "BIRCH_PLANKS";
+            case "PETRIFIED" -> changed = "OAK_PLANKS";
+            case "SCAFFOLDING" -> changed = "BAMBOO_BLOCK";
+            case "SNOW" -> changed = "SNOW_BLOCK";
+            case "VINE" -> changed = "OAK_LEAVES";
+            case "INFESTED" -> {
+                changed = original.replace("INFESTED_", "");
+            }
+            default -> {
+                String end = split[split.length - 1];
+                switch (end) {
+                    case "GATE" -> {
+                        String tmp = original.replace("_FENCE_GATE", "");
+                        if (tmp.endsWith("BRICK")) {
+                            changed = tmp + "S";
+                        } else if (tmp.endsWith("STONE")) {
+                            changed = tmp;
+                        } else if (isWood(tmp)) {
+                            changed = tmp + "_PLANKS";
+                        } else {
+                            changed = tmp + "_BLOCK";
+                        }
+                    }
+                    case "FENCE", "SLAB", "STAIRS", "WALL" -> {
+                        String tmp = original.replace("_" + end, "");
+                        if (tmp.endsWith("BRICK") || tmp.endsWith("TILE")) {
+                            changed = tmp + "S";
+                        } else if (tmp.startsWith("POLISHED")
+                                || tmp.endsWith("ANDESITE")
+                                || tmp.endsWith("COPPER")
+                                || tmp.endsWith("DEEPSLATE")
+                                || tmp.endsWith("DIORITE")
+                                || tmp.endsWith("GRANITE")
+                                || tmp.endsWith("PRISMARINE")
+                                || tmp.endsWith("QUARTZ")
+                                || tmp.endsWith("STONE")) {
+                            changed = tmp;
+                        } else if (isWood(tmp)) {
+                            changed = tmp + "_PLANKS";
+                        } else {
+                            changed = tmp + "_BLOCK";
+                        }
+                    }
+                    case "TRAPDOOR" -> {
+                        if (split[0].equals("IRON")) {
+                            changed = "STONE";
+                        } else {
+                            changed = original.replace("TRAPDOOR", "PLANKS");
+                        }
+                    }
+                    case "POWDER" -> changed = original.replace("_POWDER", "");
+                    case "SAND" -> changed = original + "STONE";
+                    case "STEM" -> changed = (split[0].equals("ATTACHED")) ? split[1] : split[0];
+                }
+            }
+        }
+        try {
+            return Material.valueOf(changed);
+        } catch (IllegalArgumentException e) {
+            TARDIS.plugin.debug(ChatColor.RED + "changeToMaterial() failed with the string: " + changed + " from " + original);
+            return Material.BLUE_WOOL;
+        }
+    }
+
+    private static boolean isWood(String tmp) {
+        for (Material plank : Tag.PLANKS.getValues()) {
+            if (plank.toString().startsWith(tmp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Chameleon blocks to check the surrounding blocks for a valid block to
      * change to
      */
-    public static final List<Material> CHAMELEON_BLOCKS_NEXT = Arrays.asList(
-            Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.POWERED_RAIL, Material.DETECTOR_RAIL, Material.COBWEB, Material.TALL_GRASS,
-            Material.DEAD_BUSH, Material.DANDELION, Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.FERN, Material.GRASS,
-            Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY,
-            Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.WHITE_TULIP, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM,
-            Material.RAIL, Material.DAYLIGHT_DETECTOR, Material.TORCHFLOWER
-    );
+    public static final Set<Material> CHAMELEON_BLOCKS_NEXT = makeNextMaterials();
+
+    private static Set<Material> makeNextMaterials() {
+        Set<Material> set = new HashSet<>();
+        set.add(Material.AIR);
+        set.add(Material.CAVE_AIR);
+        set.add(Material.COBWEB);
+        set.add(Material.DAYLIGHT_DETECTOR);
+        set.add(Material.VOID_AIR);
+        set.addAll(Tag.CROPS.getValues());
+        set.addAll(Tag.FLOWERS.getValues());
+        set.addAll(Tag.RAILS.getValues());
+        set.addAll(Tag.REPLACEABLE_PLANTS.getValues());
+        return set;
+    }
 
     /**
      * Precious Chameleon blocks
@@ -138,26 +367,45 @@ public class TARDISConstants {
     /**
      * A list of materials that can be replaced when the TARDIS lands
      */
-    public static final List<Material> GOOD_MATERIALS = Arrays.asList(
-            Material.BIRCH_LEAVES, Material.BIRCH_SAPLING, Material.BLUE_ORCHID, Material.BROWN_MUSHROOM, Material.CAVE_AIR, Material.CHERRY_LEAVES,
-            Material.CHERRY_SAPLING, Material.CORNFLOWER, Material.DANDELION, Material.DARK_OAK_LEAVES, Material.DARK_OAK_SAPLING,
-            Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.JUNGLE_LEAVES, Material.JUNGLE_SAPLING, Material.LARGE_FERN, Material.LILAC,
-            Material.LILY_OF_THE_VALLEY, Material.LILY_PAD, Material.NETHER_WART, Material.OAK_LEAVES, Material.OAK_SAPLING, Material.ORANGE_TULIP,
-            Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_MUSHROOM, Material.RED_TULIP, Material.ROSE_BUSH,
-            Material.SNOW, Material.SPRUCE_LEAVES, Material.SPRUCE_SAPLING, Material.SUNFLOWER, Material.TALL_GRASS, Material.TORCHFLOWER,
-            Material.VOID_AIR, Material.WHITE_TULIP, Material.WITHER_ROSE
-    );
+    public static final Set<Material> GOOD_MATERIALS = getReplaceableMaterials();
+
+    private static Set<Material> getReplaceableMaterials() {
+        Set<Material> set = new HashSet<>();
+        set.add(Material.BROWN_MUSHROOM);
+        set.add(Material.CAVE_AIR);
+        set.add(Material.RED_MUSHROOM);
+        set.add(Material.VOID_AIR);
+        set.addAll(Tag.FLOWERS.getValues());
+        set.addAll(Tag.LEAVES.getValues());
+        set.addAll(Tag.REPLACEABLE_PLANTS.getValues());
+        set.addAll(Tag.SAPLINGS.getValues());
+        return set;
+    }
 
     /**
      * A list of water materials types that can be replaced when the TARDIS
      * lands
      */
-    public static final List<Material> GOOD_WATER = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE);
+    public static final List<Material> GOOD_WATER = Arrays.asList(
+            Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER,
+            Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE
+    );
 
     /**
      * A list of titles to display when a TARDIS Seed block is growing
      */
-    public static final List<String> GROWTH_STATES = Arrays.asList("Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty", "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone", "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle", "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry", "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems", "Choosing XX or XY gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles", "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators", "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit", "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator", "Polishing telepathic induction circuits", "Preparing TARDIS factory exterior");
+    public static final List<String> GROWTH_STATES = Arrays.asList(
+            "Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty",
+            "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone",
+            "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle",
+            "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry",
+            "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems",
+            "Choosing gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles",
+            "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators",
+            "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit",
+            "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator",
+            "Polishing telepathic induction circuits", "Preparing TARDIS factory exterior"
+    );
 
     /**
      * BlockData for AIR
@@ -232,7 +480,17 @@ public class TARDISConstants {
     /**
      * A list of loot tables to populate TARDIS planet chests
      */
-    public static final List<LootTable> LOOT = Arrays.asList(LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(), LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(), LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(), LootTables.VILLAGE_ARMORER.getLootTable(), LootTables.VILLAGE_BUTCHER.getLootTable(), LootTables.VILLAGE_CARTOGRAPHER.getLootTable(), LootTables.VILLAGE_DESERT_HOUSE.getLootTable(), LootTables.VILLAGE_FISHER.getLootTable(), LootTables.VILLAGE_FLETCHER.getLootTable(), LootTables.VILLAGE_MASON.getLootTable(), LootTables.VILLAGE_PLAINS_HOUSE.getLootTable(), LootTables.VILLAGE_SAVANNA_HOUSE.getLootTable(), LootTables.VILLAGE_SHEPHERD.getLootTable(), LootTables.VILLAGE_SNOWY_HOUSE.getLootTable(), LootTables.VILLAGE_TAIGA_HOUSE.getLootTable(), LootTables.VILLAGE_TANNERY.getLootTable(), LootTables.VILLAGE_TEMPLE.getLootTable(), LootTables.VILLAGE_TOOLSMITH.getLootTable(), LootTables.VILLAGE_WEAPONSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable(), LootTables.PILLAGER_OUTPOST.getLootTable());
+    public static final List<LootTable> LOOT = Arrays.asList(
+            LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(),
+            LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(),
+            LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(),
+            LootTables.VILLAGE_ARMORER.getLootTable(), LootTables.VILLAGE_BUTCHER.getLootTable(), LootTables.VILLAGE_CARTOGRAPHER.getLootTable(),
+            LootTables.VILLAGE_DESERT_HOUSE.getLootTable(), LootTables.VILLAGE_FISHER.getLootTable(), LootTables.VILLAGE_FLETCHER.getLootTable(),
+            LootTables.VILLAGE_MASON.getLootTable(), LootTables.VILLAGE_PLAINS_HOUSE.getLootTable(), LootTables.VILLAGE_SAVANNA_HOUSE.getLootTable(),
+            LootTables.VILLAGE_SHEPHERD.getLootTable(), LootTables.VILLAGE_SNOWY_HOUSE.getLootTable(), LootTables.VILLAGE_TAIGA_HOUSE.getLootTable(),
+            LootTables.VILLAGE_TANNERY.getLootTable(), LootTables.VILLAGE_TEMPLE.getLootTable(), LootTables.VILLAGE_TOOLSMITH.getLootTable(),
+            LootTables.VILLAGE_WEAPONSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable(), LootTables.PILLAGER_OUTPOST.getLootTable()
+    );
 
     /**
      * A random number generator for reuse
@@ -242,7 +500,14 @@ public class TARDISConstants {
     /**
      * A list of particle dust options for use in TARDIS forcefields
      */
-    public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1));
+    public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(
+            new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1)
+    );
 
     /**
      * An empty BarFlag array for use with TARDIS boss bars
@@ -252,19 +517,11 @@ public class TARDISConstants {
     /**
      * A list of materials used in ItemFrame Chameleon presets
      */
-    public static final List<Material> DYES = Arrays.asList(Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE, Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE, Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE);
-
-    /**
-     * Prefix for Universal Translation
-     */
-    public static final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
-    private static final Material[] CHAMELEON_BLOCKS_CHANGE_ARR = {Material.ACACIA_SLAB, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ATTACHED_MELON_STEM, Material.ATTACHED_PUMPKIN_STEM, Material.BIRCH_SLAB, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BRICK_STAIRS, Material.CACTUS, Material.COBBLESTONE_SLAB, Material.COBBLESTONE_STAIRS, Material.DARK_OAK_SLAB, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.END_PORTAL_FRAME, Material.FARMLAND, Material.GRASS_BLOCK, Material.GRAVEL, Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS, Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE_BRICKS, Material.INFESTED_STONE, Material.IRON_BARS, Material.JUNGLE_SLAB, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.MELON_STEM, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_SLAB, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.PUMPKIN_STEM, Material.PURPUR_SLAB, Material.PURPUR_STAIRS, Material.QUARTZ_SLAB, Material.QUARTZ_STAIRS, Material.RED_SAND, Material.RED_SANDSTONE_SLAB, Material.RED_SANDSTONE_STAIRS, Material.SAND, Material.SANDSTONE_SLAB, Material.SANDSTONE_STAIRS, Material.SNOW, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.STONE_BRICK_SLAB, Material.STONE_BRICK_STAIRS, Material.VINE};
-    private static final Material[] CHAMELEON_BLOCKS_CHANGE_TO_ARR = {Material.ACACIA_PLANKS, Material.ACACIA_PLANKS, Material.ACACIA_PLANKS, Material.MELON, Material.PUMPKIN, Material.BIRCH_PLANKS, Material.BIRCH_PLANKS, Material.BIRCH_PLANKS, Material.BRICKS, Material.SANDSTONE, Material.COBBLESTONE, Material.COBBLESTONE, Material.DARK_OAK_PLANKS, Material.DARK_OAK_PLANKS, Material.DARK_OAK_PLANKS, Material.END_STONE, Material.DIRT, Material.DIRT, Material.STONE, Material.CHISELED_STONE_BRICKS, Material.COBBLESTONE, Material.CRACKED_STONE_BRICKS, Material.MOSSY_STONE_BRICKS, Material.STONE_BRICKS, Material.STONE, Material.GLASS, Material.JUNGLE_PLANKS, Material.JUNGLE_PLANKS, Material.JUNGLE_PLANKS, Material.MELON, Material.NETHER_BRICKS, Material.NETHER_BRICKS, Material.OAK_PLANKS, Material.OAK_PLANKS, Material.OAK_PLANKS, Material.PUMPKIN, Material.PURPUR_BLOCK, Material.PURPUR_BLOCK, Material.QUARTZ_BLOCK, Material.QUARTZ_BLOCK, Material.RED_SANDSTONE, Material.RED_SANDSTONE, Material.RED_SANDSTONE, Material.SANDSTONE, Material.SANDSTONE, Material.SANDSTONE, Material.SNOW_BLOCK, Material.SPRUCE_PLANKS, Material.SPRUCE_PLANKS, Material.SPRUCE_PLANKS, Material.STONE_BRICKS, Material.STONE_BRICKS, Material.OAK_LEAVES};
-
-    /**
-     * A map of blocks to change to their full block counterparts
-     */
-    public static final HashMap<Material, Material> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
+    public static final List<Material> DYES = Arrays.asList(
+            Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE,
+            Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE,
+            Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE
+    );
 
     /**
      * Checks whether a world name is a TARDIS planet
@@ -295,30 +552,5 @@ public class TARDISConstants {
         Levelled levelled = (Levelled) Material.LIGHT.createBlockData();
         levelled.setLevel(level);
         return levelled;
-    }
-
-    /**
-     * Creates a HashMap from two arrays. The resulting map is used by the
-     * chameleon circuit to change unsuitable blocks into more aesthetically
-     * pleasing or robust ones i.e. GRASS_BLOCK -> DIRT, SAND -> SANDSTONE
-     *
-     * @param keys an array of block types to change
-     * @param values an array of block types to change to
-     * @return the combined arrays as a HashMap
-     */
-    private static HashMap<Material, Material> toMap(Material[] keys, Material[] values) {
-        int keysSize = (keys != null) ? keys.length : 0;
-        int valuesSize = (values != null) ? values.length : 0;
-        if (keysSize == 0 && valuesSize == 0) {
-            return new HashMap<>();
-        }
-        if (keysSize != valuesSize) {
-            throw new IllegalArgumentException("The number of keys doesn't match the number of values.");
-        }
-        HashMap<Material, Material> map = new HashMap<>();
-        for (int i = 0; i < keysSize; i++) {
-            map.put(keys[i], values[i]);
-        }
-        return map;
     }
 }
