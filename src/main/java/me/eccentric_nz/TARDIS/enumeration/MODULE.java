@@ -13,6 +13,7 @@ public enum MODULE {
     MONSTERS("Weeping Angels", ChatColor.RED),
     SHOP("TARDIS Shop", ChatColor.YELLOW),
     TARDIS("TARDIS", ChatColor.GOLD),
+    TRANSLATOR("Universal Translator", ChatColor.DARK_BLUE),
     VORTEX_MANIPULATOR("Vortex Manipulator", ChatColor.DARK_PURPLE);
 
     private String name;
