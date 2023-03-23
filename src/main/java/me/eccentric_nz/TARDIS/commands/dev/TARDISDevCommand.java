@@ -17,10 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.common.collect.Sets;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
@@ -37,8 +33,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * Command /tardisadmin [arguments].
@@ -53,7 +59,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -153,6 +159,33 @@ public class TARDISDevCommand implements CommandExecutor {
                             new MonitorSnapshot(plugin).get(args[1].equals("in"), player);
                         }
                     }
+                }
+                if (first.equals("displayitem")) {
+                    if (sender instanceof Player player) {
+                        // spawn display entities
+                        Block block = player.getTargetBlock(null, 8);
+                        if (args[1].equals("add")) {
+                            ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
+                            display.setItemStack(new ItemStack(Material.DIAMOND_AXE));
+                            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+                            display.setBillboard(Display.Billboard.VERTICAL);
+                            display.setInvulnerable(true);
+                            TextDisplay text = (TextDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.75d, 0.5d), EntityType.TEXT_DISPLAY);
+                            text.setAlignment(TextDisplay.TextAligment.CENTER);
+                            text.setText("TARDIS Axe, Cost: 25.00");
+                            text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
+                            text.setBillboard(Display.Billboard.VERTICAL);
+                        } else {
+                            BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
+                            for (Entity e : block.getWorld().getNearbyEntities(box)) {
+                                if (e instanceof ItemDisplay || e instanceof TextDisplay) {
+                                    e.remove();
+                                    plugin.debug("Removed - " + e.getType());
+                                }
+                            }
+                        }
+                    }
+                    return true;
                 }
                 return true;
             } else {

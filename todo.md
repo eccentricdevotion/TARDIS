@@ -10,6 +10,7 @@
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building
+   - Custom Item Frame exterior models via config
 
 ## Next version `5.1.0`
 
