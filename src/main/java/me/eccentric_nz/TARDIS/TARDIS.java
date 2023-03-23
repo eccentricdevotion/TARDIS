@@ -78,6 +78,7 @@ import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisshop.ShopSettings;
 import me.eccentric_nz.tardisshop.TARDISShop;
+import me.eccentric_nz.tardisshop.TARDISShopDisplayConverter;
 import me.eccentric_nz.tardissonicblaster.BlasterSettings;
 import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
@@ -408,34 +409,6 @@ public class TARDIS extends JavaPlugin {
                     conversions++;
                 }
             }
-            if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
-                boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.SHOP);
-                boolean ds = new TARDISShopTransfer(this).transferData();
-                if (cs && ds) {
-                    getConfig().set("conversions.all_in_one.shop", true);
-                    conversions++;
-                }
-            }
-            if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
-                boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.VORTEX_MANIPULATOR);
-                boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
-                if (cvm && dvm) {
-                    getConfig().set("conversions.all_in_one.vortex_manipulator", true);
-                    conversions++;
-                }
-            }
-            if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
-                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.MONSTERS)) {
-                    getConfig().set("conversions.all_in_one.weeping_angels", true);
-                    conversions++;
-                }
-            }
-            if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
-                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.BLASTER)) {
-                    getConfig().set("conversions.all_in_one.sonic_blaster", true);
-                    conversions++;
-                }
-            }
             loadMultiverse();
             loadInventoryManager();
             checkTCG();
@@ -484,6 +457,12 @@ public class TARDIS extends JavaPlugin {
                 if (PaperLib.isPaper()) {
                     getLogger().log(Level.INFO, "Loading Weeping Angels Module");
                     new TARDISWeepingAngels(this).enable();
+                    if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
+                        if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.MONSTERS)) {
+                            getConfig().set("conversions.all_in_one.weeping_angels", true);
+                            conversions++;
+                        }
+                    }
                 } else {
                     getLogger().log(Level.INFO, "The Weeping Angels Module requires Paper server or a suitable variant!");
                 }
@@ -491,14 +470,37 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("modules.vortex_manipulator")) {
                 getLogger().log(Level.INFO, "Loading Vortex Manipulator Module");
                 new TARDISVortexManipulator(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
+                    boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.VORTEX_MANIPULATOR);
+                    boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
+                    if (cvm && dvm) {
+                        getConfig().set("conversions.all_in_one.vortex_manipulator", true);
+                        conversions++;
+                    }
+                }
             }
             if (getConfig().getBoolean("modules.shop")) {
                 getLogger().log(Level.INFO, "Loading Shop Module");
                 new TARDISShop(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
+                    boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.SHOP);
+                    boolean ds = new TARDISShopTransfer(this).transferData();
+                    getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISShopDisplayConverter(this), 300L);
+                    if (cs && ds) {
+                        getConfig().set("conversions.all_in_one.shop", true);
+                        conversions++;
+                    }
+                }
             }
             if (getConfig().getBoolean("modules.sonic_blaster")) {
                 getLogger().log(Level.INFO, "Loading Sonic Blaster Module");
                 new TARDISSonicBlaster(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
+                    if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.BLASTER)) {
+                        getConfig().set("conversions.all_in_one.sonic_blaster", true);
+                        conversions++;
+                    }
+                }
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);

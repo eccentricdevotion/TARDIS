@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisshop;
 
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemBreak;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemDespawn;
@@ -9,8 +10,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.RegisteredServiceProvider;
-
-import java.util.logging.Level;
 
 public class TARDISShop {
 
