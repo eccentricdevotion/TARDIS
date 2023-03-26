@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -32,9 +34,6 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class TARDISInstantPoliceBox {
 
@@ -91,7 +90,7 @@ public class TARDISInstantPoliceBox {
         }
         frame.setFacingDirection(BlockFace.UP);
         frame.setRotation(bd.getDirection().getRotation());
-        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(1001);

@@ -280,13 +280,24 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("direction", lore.get(6));
                                                 boolean sub = Boolean.parseBoolean(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
-                                                try {
-                                                    PRESET.valueOf(lore.get(5));
-                                                    set_tardis.put("chameleon_preset", lore.get(5));
-                                                    // set chameleon adaption to OFF
-                                                    set_tardis.put("adapti_on", 0);
-                                                } catch (IllegalArgumentException e) {
-                                                    plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                if (lore.get(5).startsWith("ITEM")) {
+                                                    String[] split = lore.get(5).split(":");
+                                                    if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(split[1])) {
+                                                        set_tardis.put("chameleon_preset", lore.get(5));
+                                                        // set chameleon adaption to OFF
+                                                        set_tardis.put("adapti_on", 0);
+                                                    } else {
+                                                        plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                    }
+                                                } else {
+                                                    try {
+                                                        PRESET.valueOf(lore.get(5));
+                                                        set_tardis.put("chameleon_preset", lore.get(5));
+                                                        // set chameleon adaption to OFF
+                                                        set_tardis.put("adapti_on", 0);
+                                                    } catch (IllegalArgumentException e) {
+                                                        plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                    }
                                                 }
                                                 TARDISMessage.send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                                 travelType = TravelType.SAVE;
@@ -298,13 +309,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                         default -> {
                                         }
                                     }
-                                    if (set_next.size() > 0) {
+                                    if (!set_next.isEmpty()) {
                                         // update next
                                         where_next.put("tardis_id", id);
                                         plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
                                     }
-                                    if (set_tardis.size() > 0) {
+                                    if (!set_tardis.isEmpty()) {
                                         // update tardis
                                         where_tardis.put("tardis_id", id);
                                         plugin.getQueryFactory().doUpdate("tardis", set_tardis, where_tardis);

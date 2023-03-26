@@ -35,9 +35,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
- * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
- * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
+ * The Lord President was the most powerful member of the Time Lord Council and
+ * had near absolute authority, and used a link to the Matrix, a vast computer
+ * network containing the knowledge and experiences of all past generations of
+ * Time Lords, to set Time Lord policy and remain alert to potential threats
+ * from lesser civilisations.
  *
  * @author eccentric_nz
  */
@@ -314,13 +316,17 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.setDifficulty(Difficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
                 }
                 if (first.equals("default_preset")) {
-                    try {
-                        PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-                    } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "ARG_PRESET");
-                        return true;
+                    if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[1])) {
+                        plugin.getConfig().set("police_box.default_preset", "ITEM:" + args[1]);
+                    } else {
+                        try {
+                            PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(sender, "ARG_PRESET");
+                            return true;
+                        }
+                        plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
                     }
-                    plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
                 }
                 if (first.equals("use_clay")) {
                     try {

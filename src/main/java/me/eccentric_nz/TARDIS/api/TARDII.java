@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -48,13 +54,6 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -724,6 +723,9 @@ public class TARDII implements TardisAPI {
         if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid Console type");
         }
+        if (preset == PRESET.ITEM) {
+            throw new TARDISException("Preset must not be custom item model");
+        }
         if (!TARDIS.plugin.getConfig().getBoolean("abandon.enabled")) {
             throw new TARDISException("Abandoned TARDISes are not allowed on this server");
         }
@@ -731,7 +733,7 @@ public class TARDII implements TardisAPI {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
         Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
-        new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, direction, null);
+        new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
     }
 
     @Override

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -42,8 +43,6 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -267,7 +266,7 @@ public class TARDISAbandonCommand {
                                 }
                             }
                             if (found) {
-                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, id, true);
                                 ItemStack is = new ItemStack(dye, 1);
                                 ItemMeta im = is.getItemMeta();
                                 im.setCustomModelData(1001);

@@ -5,16 +5,17 @@
 ## Version 5.0.0
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Use new Display entities for TARDIS Shop items
-   - Use new DisplayItems for custom blocks?
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building
    - Custom Item Frame exterior models via config
+   - `/tgive` weeping angels heads should be just heads...
 
 ## Next version `5.1.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+2. Vortex Manipulator predictive text
+3. Use new DisplayItems for custom blocks?
 
 ## Future versions
 
@@ -32,7 +33,7 @@
 * Add other area sub-commands
 * Add/update all module documentation (config/commands etc)
 
-## Resource Pack / TARDISWeepingAngels
+## Resource Pack / Monsters
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
     * Whispermen

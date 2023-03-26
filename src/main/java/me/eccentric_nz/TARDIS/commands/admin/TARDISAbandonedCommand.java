@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -30,8 +31,6 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -66,11 +65,15 @@ class TARDISAbandonedCommand {
         }
         Schematic s = Consoles.getBY_NAMES().get(schm);
         PRESET preset;
-        try {
-            preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "ABANDONED_PRESET");
-            return true;
+        if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
+            preset = PRESET.ITEM;
+        } else {
+            try {
+                preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(sender, "ABANDONED_PRESET");
+                return true;
+            }
         }
         COMPASS d;
         try {
@@ -102,7 +105,7 @@ class TARDISAbandonedCommand {
             }
             l = new Location(w, x, y, z);
         }
-        new TARDISAbandoned(plugin).spawn(l, s, preset, d, (sender instanceof Player) ? (Player) sender : null);
+        new TARDISAbandoned(plugin).spawn(l, s, preset, args[2], d, (sender instanceof Player) ? (Player) sender : null);
         return true;
     }
 }

@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -40,6 +39,8 @@ public class Tardis {
     private final String companions;
     private final PRESET preset;
     private final PRESET demat;
+    private final String itemPreset;
+    private final String itemDemat;
     private final Adaption adaption;
     private final int artron_level;
     private final String creeper;
@@ -60,7 +61,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, String itemPreset, String itemDemat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -72,6 +73,8 @@ public class Tardis {
         this.companions = companions;
         this.preset = preset;
         this.demat = demat;
+        this.itemPreset = itemPreset;
+        this.itemDemat = itemDemat;
         adaption = Adaption.values()[adapt];
         this.artron_level = artron_level;
         this.creeper = creeper;
@@ -199,6 +202,22 @@ public class Tardis {
      */
     public PRESET getDemat() {
         return demat;
+    }
+
+    /**
+     * Returns the custom item model key for the ITEM preset if used
+     * @return the model key or an empty string
+     */
+    public String getItemPreset() {
+        return itemPreset;
+    }
+
+    /**
+     * Returns the custom item model key for the ITEM demat if used
+     * @return the model key or an empty string
+     */
+    public String getItemDemat() {
+        return itemDemat;
     }
 
     /**

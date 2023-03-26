@@ -4,24 +4,26 @@ models:
   early:
     # the item that is placed in the item frame
     item: CLAY_BALL
-    # whether to use the custom model data values below (true) or the default plugin values 1001-1004 (false)
-    use_custom_model_data: false
-    # custom model data values for each TARDIS visual, open/closed door, 2 stages of materialisation (coloured/clear)
-    door_closed: 1001
-    door_open: 1002
-    transparent_coloured: 1003
-    transparent_clear: 1004
   bad_wolf:
     item: WOLF_SPAWN_EGG
-    door_closed: 1001
-    door_open: 1002
-    transparent_coloured: 1003
-    transparent_clear: 1004
 
-# example model overrides
-# this would go in minecraft/models/clay_ball.json:
+# CUSTOM MODEL DATA VALUES for each TARDIS visual
+# open/closed door + 2 stages of materialisation (coloured/clear)
+# you must use these values!
+#
+# door_closed: 1001
+# door_open: 1002
+# transparent_coloured: 1003
+# transparent_clear: 1004
+#
+# EXAMPLE MODEL OVERRIDES
+#
+# This would go in assets/minecraft/models/item/clay_ball.json:
 #  {
 #    "parent": "minecraft:item/generated",
+#    "textures": {
+#      "layer0": "minecraft:item/clay_ball"
+#    },
 #    "overrides": [
 #      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/early_closed"},
 #      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/early_open"},
@@ -30,9 +32,9 @@ models:
 #    ]
 #  }
 #
-# this would go in minecraft/models/wolf_spawn_egg.json:
+# This would go in assets/minecraft/models/item/wolf_spawn_egg.json:
 #  {
-#    "parent": "minecraft:item/generated",
+#    "parent": "minecraft:item/template_spawn_egg",
 #    "overrides": [
 #      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/bad_wolf_closed"},
 #      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/bad_wolf_open"},

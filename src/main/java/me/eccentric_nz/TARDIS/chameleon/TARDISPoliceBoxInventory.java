@@ -16,20 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
- * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
- * non-linear direction. In the 26th century individuals who time travel are sometimes known as persons of meta-temporal
+ * Time travel is, as the name suggests, the (usually controlled) process of
+ * travelling through time, even in a non-linear direction. In the 26th century
+ * individuals who time travel are sometimes known as persons of meta-temporal
  * displacement.
  *
  * @author eccentric_nz
@@ -84,27 +86,44 @@ class TARDISPoliceBoxInventory {
         im.setCustomModelData(1001);
         is.setItemMeta(im);
         boxes[i] = is;
+        for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (i < 50) {
+                try {
+                    Material cm = Material.valueOf(plugin.getCustomModelConfig().getString("models." + custom + ".item"));
+                    ItemStack cis = new ItemStack(cm);
+                    ItemMeta cim = is.getItemMeta();
+                    cim.setDisplayName(TARDISStringUtils.capitalise(custom));
+                    cim.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, custom);
+                    cim.setCustomModelData(1001);
+                    is.setItemMeta(im);
+                    boxes[i] = is;
+                    i++;
+                } catch (IllegalArgumentException e) {
+                    plugin.debug("Invalid material specified for custom model preset: " + custom + "!");
+                }
+            }
+        }
         // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
         page.setItemMeta(one);
-        boxes[24] = page;
+        boxes[51] = page;
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
         but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
         back.setItemMeta(but);
-        boxes[25] = back;
+        boxes[52] = back;
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
         close.setItemMeta(can);
-        boxes[26] = close;
+        boxes[53] = close;
 
         return boxes;
     }

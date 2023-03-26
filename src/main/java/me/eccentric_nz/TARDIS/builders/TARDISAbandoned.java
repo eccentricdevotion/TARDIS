@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -28,10 +31,6 @@ import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
-
 /**
  * @author eccentric_nz
  */
@@ -43,7 +42,7 @@ public class TARDISAbandoned {
         this.plugin = plugin;
     }
 
-    public void spawn(Location l, Schematic schm, PRESET preset, COMPASS d, Player player) {
+    public void spawn(Location l, Schematic schm, PRESET preset, String item, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name");
@@ -60,8 +59,13 @@ public class TARDISAbandoned {
         set.put("abandoned", 1);
         set.put("powered_on", 0);
         set.put("lastuse", Long.MAX_VALUE);
-        set.put("chameleon_preset", preset.toString());
-        set.put("chameleon_demat", preset.toString());
+        if (preset == PRESET.ITEM) {
+            set.put("chameleon_preset", "ITEM:"+item);
+            set.put("chameleon_demat", "ITEM:"+item);
+        } else {
+            set.put("chameleon_preset", preset.toString());
+            set.put("chameleon_demat", preset.toString());
+        }
         int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();

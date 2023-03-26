@@ -22,45 +22,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
- * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
- * environment-repeater 6 = artron button
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... the name of the custom exterior model.
  *
  * @author eccentric_nz
  */
-public class ResultSetTardisPreset {
+public class ResultSetTardisModel {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private PRESET preset;
+    private String itemPreset = "";
+    private String itemDemat = "";
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the tardis table.
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisPreset(TARDIS plugin) {
+    public ResultSetTardisModel(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Gets to the chameleon_preset of a TARDIS. This method builds an SQL query string from the parameters supplied and
-     * then executes the query.
+     * Gets to the chameleon preset and demat keys of a TARDIS to determine the
+     * material to use for the associated custom exterior model. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
      *
-     * @param id the Tardis ID to check
+     * @param id the TARDIS id to check
      * @return true or false depending on whether the TARDIS is powered on
      */
     public boolean fromID(int id) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT chameleon_preset FROM " + prefix + "tardis WHERE tardis_id = ?";
+        String query = "SELECT chameleon_preset, chamelon_demat FROM " + prefix + "tardis WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -68,21 +69,17 @@ public class ResultSetTardisPreset {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                String p = rs.getString("chameleon_preset");
-                if (p.startsWith("ITEM:")) {
-                    preset = PRESET.ITEM;
-                } else {
-                    try {
-                        preset = PRESET.valueOf(p);
-                    } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
-                    }
+                if (rs.getString("chameleon_preset").startsWith("ITEM:")) {
+                    itemPreset = rs.getString("chameleon_preset").split(":")[1];
+                }
+                if (rs.getString("chameleon_demat").startsWith("ITEM:")) {
+                    itemDemat = rs.getString("chameleon_demat").split(":")[1];
                 }
                 return true;
             }
             return false;
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [chameleon_preset fromID] table! " + e.getMessage());
+            plugin.debug("ResultSet error for tardis [custom model keys fromID] table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -93,12 +90,16 @@ public class ResultSetTardisPreset {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis [chameleon_preset fromID] table! " + e.getMessage());
+                plugin.debug("Error closing tardis [custom model keys fromID] table! " + e.getMessage());
             }
         }
     }
 
-    public PRESET getPreset() {
-        return preset;
+    public String getItemPreset() {
+        return itemPreset;
+    }
+
+    public String getItemDemat() {
+        return itemDemat;
     }
 }

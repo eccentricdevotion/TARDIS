@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
 import org.bukkit.World;
-
-import java.util.HashMap;
 
 public class TARDISBuilderUtility {
 
@@ -54,8 +54,16 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getMaterialForItemFrame(PRESET preset) {
-        if (preset.equals(PRESET.WEEPING_ANGEL)) {
+    public static Material getMaterialForItemFrame(PRESET preset, int id, boolean isMaterialisation) {
+        if (preset.equals(PRESET.ITEM)) {
+            ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);
+            if (rstm.fromID(id)) {
+                String item = (isMaterialisation) ? rstm.getItemPreset() : rstm.getItemDemat();
+                return Material.valueOf(TARDIS.plugin.getCustomModelConfig().getString("models." + item + ".item"));
+            } else {
+                return Material.BLUE_DYE;
+            }
+        } else if (preset.equals(PRESET.WEEPING_ANGEL)) {
             return Material.GRAY_STAINED_GLASS_PANE;
         } else if (preset.equals(PRESET.POLICE_BOX_TENNANT)) {
             return Material.CYAN_STAINED_GLASS_PANE;

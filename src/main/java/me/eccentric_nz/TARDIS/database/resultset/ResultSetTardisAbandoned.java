@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
-
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... non-abandoned TARDISes.
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... non-abandoned TARDISes.
  *
  * @author eccentric_nz
  */
@@ -50,7 +50,8 @@ public class ResultSetTardisAbandoned {
     private boolean lights_on;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the vaults table.
      *
      * @param plugin an instance of the main class.
      */
@@ -60,8 +61,9 @@ public class ResultSetTardisAbandoned {
     }
 
     /**
-     * Gets to the TARDIS data required to claim abandon a TARDIS. This method builds an SQL query string from the
-     * parameters supplied and then executes the query.
+     * Gets to the TARDIS data required to claim abandon a TARDIS. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
      *
      * @param uuid the Time Lord uuid to check
      * @return true if the TARDIS is not yet abandoned
@@ -80,10 +82,15 @@ public class ResultSetTardisAbandoned {
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
                 schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
-                try {
-                    preset = PRESET.valueOf(rs.getString("chameleon_preset"));
-                } catch (IllegalArgumentException e) {
-                    preset = PRESET.FACTORY;
+                String p = rs.getString("chameleon_preset");
+                if (p.startsWith("ITEM:")) {
+                    preset = PRESET.ITEM;
+                } else {
+                    try {
+                        preset = PRESET.valueOf(p);
+                    } catch (IllegalArgumentException e) {
+                        preset = PRESET.FACTORY;
+                    }
                 }
                 handbrake_on = rs.getBoolean("handbrake_on");
                 hidden = rs.getBoolean("hidden");

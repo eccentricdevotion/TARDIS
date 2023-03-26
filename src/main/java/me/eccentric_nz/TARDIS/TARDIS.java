@@ -150,6 +150,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration vortexConfig;
     private FileConfiguration itemsConfig;
     private FileConfiguration blasterConfig;
+    private FileConfiguration customModelConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private String resourcePack;
@@ -737,7 +738,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadCustomConfigs() {
         List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
-                "blocks.yml", "condensables.yml", "custom_consoles.yml", "flat_world.yml", "handles.yml",
+                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "flat_world.yml", "handles.yml",
                 "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
                 "shop.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
@@ -777,6 +778,7 @@ public class TARDIS extends JavaPlugin {
         if (getConfig().getBoolean("modules.sonic_blaster")) {
             blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
         }
+        customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
     }
 
     /**
@@ -1299,6 +1301,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getBlasterConfig() {
         return blasterConfig;
+    }
+
+    /**
+     * Gets the custom exterior preset models configuration
+     *
+     * @return the custom models configuration
+     */
+    public FileConfiguration getCustomModelConfig() {
+        return customModelConfig;
     }
 
     /**

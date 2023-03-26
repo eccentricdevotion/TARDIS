@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -23,12 +24,11 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-import java.util.HashMap;
-
 /**
- * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
- * once said that the reason the TARDIS' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
- * before the chameleon conversion was completed.
+ * A chameleon conversion is a repair procedure that technicians perform on
+ * TARDIS chameleon circuits. The Fourth Doctor once said that the reason the
+ * TARDIS' chameleon circuit was stuck was because he had "borrowed" it from
+ * Gallifrey before the chameleon conversion was completed.
  *
  * @author eccentric_nz
  */
@@ -41,22 +41,31 @@ public class SudoChameleon {
     }
 
     public boolean setPreset(CommandSender sender, int id, String[] args, OfflinePlayer offlinePlayer) {
-        try {
-            PRESET preset = PRESET.valueOf(args[2].toUpperCase());
-            if (preset.getSlot() == -1) {
-                TARDISMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
-            } else {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("chameleon_preset", preset.toString());
-                plugin.getQueryFactory().doUpdate("tardis", set, where);
-                TARDISMessage.send(sender, "CHAM_SET", preset.toString());
-                // perform rebuild
-                return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
+        String chameleon = "";
+        if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[1])) {
+            chameleon = "ITEM:" + args[1];
+        } else {
+            try {
+                PRESET preset = PRESET.valueOf(args[2].toUpperCase());
+                if (preset.getSlot() == -1) {
+                    TARDISMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
+                } else {
+                    chameleon = preset.toString();
+                }
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(sender, "ABANDONED_PRESET");
+                return true;
             }
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "ABANDONED_PRESET");
+        }
+        if (!chameleon.isEmpty()) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("chameleon_preset", chameleon);
+            plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISMessage.send(sender, "CHAM_SET", chameleon);
+            // perform rebuild
+            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
         }
         return true;
     }
