@@ -3,12 +3,14 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
@@ -32,12 +34,10 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
-
 /**
  * @author eccentric_nz
  */
-public class TVMGUIListener extends TVMGUICommon implements Listener {
+public class TVMGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     List<String> titles = Arrays.asList(ChatColor.DARK_RED + "Vortex Manipulator", ChatColor.DARK_RED + "VM Messages", ChatColor.DARK_RED + "VM Saves");
