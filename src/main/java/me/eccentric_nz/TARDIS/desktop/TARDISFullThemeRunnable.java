@@ -434,15 +434,23 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
+                if (tud.getPrevious().getPermission().equals("mechanical")) {
+                    // remove the blocks at y = 62 & y = 63 directly under the console
+                    int x = chunk.getBlock(0, 63, 0).getX();
+                    int z = chunk.getBlock(0, 63, 0).getZ();
+                    setAir(x, 63, z, chunk.getWorld(), 0, 1);
+                    setAir(x, 62, z, chunk.getWorld(), 0, 1);
+                }
+                int minusy = (tud.getPrevious().getPermission().equals("mechanical")) ? 2 : 0;
                 List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
                     // remove the room
-                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
+                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), minusy, 16);
                 });
                 // also tidy up the space directly above the ARS centre slot
                 int tidy = starty + h;
                 int plus = 16 - h;
-                setAir(chunk.getBlock(0, 64, 0).getX(), tidy, chunk.getBlock(0, 64, 0).getZ(), chunk.getWorld(), plus);
+                setAir(chunk.getBlock(0, 64, 0).getX(), tidy, chunk.getBlock(0, 64, 0).getZ(), chunk.getWorld(), 0, plus);
                 // remove dropped items
                 for (Entity e : chunk.getEntities()) {
                     if (e instanceof Item) {
@@ -463,7 +471,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 // clean up space above coral console
                 int tidy = starty + h;
                 int plus = 32 - h;
-                chunks.forEach((chk) -> setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus));
+                chunks.forEach((chk) -> setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), 0, plus));
             }
             // add / remove chunks from the chunks table
             HashMap<String, Object> wherec = new HashMap<>();
@@ -995,8 +1003,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         return list;
     }
 
-    private void setAir(int jx, int jy, int jz, World jw, int plusy) {
-        for (int yy = jy; yy < (jy + plusy); yy++) {
+    private void setAir(int jx, int jy, int jz, World jw, int minusy, int plusy) {
+        for (int yy = jy - minusy; yy < (jy + plusy); yy++) {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
