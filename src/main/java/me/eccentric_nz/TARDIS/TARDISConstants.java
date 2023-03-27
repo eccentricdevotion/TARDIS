@@ -371,9 +371,11 @@ public class TARDISConstants {
 
     private static Set<Material> getReplaceableMaterials() {
         Set<Material> set = new HashSet<>();
+        set.add(Material.AIR);
         set.add(Material.BROWN_MUSHROOM);
         set.add(Material.CAVE_AIR);
         set.add(Material.RED_MUSHROOM);
+        set.add(Material.SNOW);
         set.add(Material.VOID_AIR);
         set.addAll(Tag.FLOWERS.getValues());
         set.addAll(Tag.LEAVES.getValues());
