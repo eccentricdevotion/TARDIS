@@ -61,7 +61,7 @@ public class ResultSetTardisModel {
     public boolean fromID(int id) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT chameleon_preset, chamelon_demat FROM " + prefix + "tardis WHERE tardis_id = ?";
+        String query = "SELECT chameleon_preset, chameleon_demat FROM " + prefix + "tardis WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

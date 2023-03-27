@@ -55,22 +55,23 @@ public class TARDISBuilderUtility {
     }
 
     public static Material getMaterialForItemFrame(PRESET preset, int id, boolean isMaterialisation) {
-        if (preset.equals(PRESET.ITEM)) {
-            ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);
-            if (rstm.fromID(id)) {
-                String item = (isMaterialisation) ? rstm.getItemPreset() : rstm.getItemDemat();
-                return Material.valueOf(TARDIS.plugin.getCustomModelConfig().getString("models." + item + ".item"));
-            } else {
-                return Material.BLUE_DYE;
+        switch (preset) {
+            case ITEM -> {
+                ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);
+                if (rstm.fromID(id)) {
+                    String item = (isMaterialisation) ? rstm.getItemPreset() : rstm.getItemDemat();
+                    return Material.valueOf(TARDIS.plugin.getCustomModelConfig().getString("models." + item + ".item"));
+                } else {
+                    return Material.BLUE_DYE;
+                }
             }
-        } else if (preset.equals(PRESET.WEEPING_ANGEL)) {
-            return Material.GRAY_STAINED_GLASS_PANE;
-        } else if (preset.equals(PRESET.POLICE_BOX_TENNANT)) {
-            return Material.CYAN_STAINED_GLASS_PANE;
-        } else {
-            String split = preset.toString().replace("POLICE_BOX_", "");
-            String dye = split + "_DYE";
-            return Material.valueOf(dye);
+            case WEEPING_ANGEL -> { return Material.GRAY_STAINED_GLASS_PANE; }
+            case POLICE_BOX_TENNANT -> { return Material.CYAN_STAINED_GLASS_PANE; }
+            default -> {
+                String split = preset.toString().replace("POLICE_BOX_", "");
+                String dye = split + "_DYE";
+                return Material.valueOf(dye);
+            }
         }
     }
 

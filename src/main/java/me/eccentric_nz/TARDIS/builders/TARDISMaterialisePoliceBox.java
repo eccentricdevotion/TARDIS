@@ -51,6 +51,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private int i;
     private ItemFrame frame;
     private ItemStack is;
+    private Material dye;
+    private String pb;
 
     TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
         this.plugin = plugin;
@@ -105,7 +107,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     }
                     frame.setFacingDirection(BlockFace.UP);
                     frame.setRotation(bd.getDirection().getRotation());
-                    Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
+                    dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
@@ -123,11 +125,24 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
                     }
+                    switch (preset) {
+                        case WEEPING_ANGEL -> pb = "Weeping Angel";
+                        case ITEM -> {
+                            for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                                plugin.debug(k);
+                                plugin.debug(dye.toString());
+                                if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
+                                    pb = k;
+                                    break;
+                                }
+                            }
+                        }
+                        default -> pb = "Police Box";
+                    }
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(cmd);
                 if (bd.shouldAddSign()) {
-                    String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
                     im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
                 }
                 is.setItemMeta(im);
@@ -189,7 +204,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     // tardis has moved so remove HADS damage count
                     plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
                     // update demat field in database
-                    TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
+                    String update = preset.toString();
+                    if (preset == PRESET.ITEM) {
+                        update = "ITEM:" + pb;
+                    }
+                    TARDISBuilderUtility.updateChameleonDemat(update, bd.getTardisID());
                 }
             }
         }

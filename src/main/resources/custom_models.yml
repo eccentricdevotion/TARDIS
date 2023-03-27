@@ -1,10 +1,10 @@
 # a list of the custom models you want to use
 models:
   # model name
-  early:
+  Early:
     # the item that is placed in the item frame
     item: CLAY_BALL
-  bad_wolf:
+  Bad Wolf:
     item: WOLF_SPAWN_EGG
 
 # CUSTOM MODEL DATA VALUES for each TARDIS visual

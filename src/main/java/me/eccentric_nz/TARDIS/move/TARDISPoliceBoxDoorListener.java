@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -46,9 +48,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
 
     public TARDISPoliceBoxDoorListener(TARDIS plugin) {
@@ -61,7 +60,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             ItemStack dye = frame.getItem();
-            if (dye != null && TARDISConstants.DYES.contains(dye.getType()) && dye.hasItemMeta()) {
+            if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || isCustomModel(dye)) && dye.hasItemMeta()) {
                 ItemMeta dim = dye.getItemMeta();
                 if (dim.hasCustomModelData()) {
                     int cmd = dim.getCustomModelData();
@@ -212,7 +211,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
      * Plays a door sound when the blue police box oak trapdoor is clicked.
      *
      * @param open which sound to play, open (true), close (false)
-     * @param l    a location to play the sound at
+     * @param l a location to play the sound at
      */
     private void playDoorSound(boolean open, Location l) {
         if (open) {
@@ -220,5 +219,14 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         } else {
             TARDISSounds.playTARDISSound(l, "tardis_door_close");
         }
+    }
+
+    private boolean isCustomModel(ItemStack is) {
+        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(is.getType().toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

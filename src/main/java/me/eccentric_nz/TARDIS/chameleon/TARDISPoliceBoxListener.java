@@ -36,7 +36,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
 /**
  * @author eccentric_nz
@@ -123,18 +122,15 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                 case 53 -> close(player);
                                 default -> {
                                     // custom model exterior
-                                    if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
-                                        String custom = is.getItemMeta().getDisplayName();
-                                        String item = is.getItemMeta().getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
-                                        set.put("chameleon_preset", "ITEM:" + item);
-                                        if (hasSign) {
-                                            updateChameleonSign(rsc.getData(), custom, player);
-                                        }
-                                        if (hasFrame) {
-                                            new TARDISChameleonFrame().updateChameleonFrame(PRESET.ITEM, rsf.getLocation());
-                                        }
-                                        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + custom);
+                                    String custom = is.getItemMeta().getDisplayName();
+                                    set.put("chameleon_preset", "ITEM:" + custom);
+                                    if (hasSign) {
+                                        updateChameleonSign(rsc.getData(), custom, player);
                                     }
+                                    if (hasFrame) {
+                                        new TARDISChameleonFrame().updateChameleonFrame(PRESET.ITEM, rsf.getLocation());
+                                    }
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + custom);
                                 }
                             }
                             if (set.size() > 0) {

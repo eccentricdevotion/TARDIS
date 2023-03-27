@@ -8,7 +8,6 @@
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building
-   - Custom Item Frame exterior models via config
    - `/tgive` weeping angels heads should be just heads...
 
 ## Next version `5.1.0`
@@ -16,6 +15,7 @@
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 2. Vortex Manipulator predictive text
 3. Use new DisplayItems for custom blocks?
+4. Pandorica
 
 ## Future versions
 

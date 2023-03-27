@@ -95,7 +95,19 @@ public class TARDISInstantPoliceBox {
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
-            String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+            String pb = "";
+            switch (preset) {
+                case WEEPING_ANGEL -> pb = "Weeping Angel";
+                case ITEM -> {
+                    for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                        if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
+                            pb = k;
+                            break;
+                        }
+                    }
+                }
+                default -> pb = "Police Box";
+            }
             im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
         }
         is.setItemMeta(im);

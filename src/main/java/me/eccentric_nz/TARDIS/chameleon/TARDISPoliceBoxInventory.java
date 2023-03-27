@@ -21,12 +21,10 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of
@@ -55,7 +53,7 @@ class TARDISPoliceBoxInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] boxes = new ItemStack[27];
+        ItemStack[] boxes = new ItemStack[54];
         int i = 0;
         // coloured police boxes
         for (String s : colours) {
@@ -86,17 +84,17 @@ class TARDISPoliceBoxInventory {
         im.setCustomModelData(1001);
         is.setItemMeta(im);
         boxes[i] = is;
+        i++;
         for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             if (i < 50) {
                 try {
                     Material cm = Material.valueOf(plugin.getCustomModelConfig().getString("models." + custom + ".item"));
                     ItemStack cis = new ItemStack(cm);
                     ItemMeta cim = is.getItemMeta();
-                    cim.setDisplayName(TARDISStringUtils.capitalise(custom));
-                    cim.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, custom);
+                    cim.setDisplayName(custom);
                     cim.setCustomModelData(1001);
-                    is.setItemMeta(im);
-                    boxes[i] = is;
+                    cis.setItemMeta(cim);
+                    boxes[i] = cis;
                     i++;
                 } catch (IllegalArgumentException e) {
                     plugin.debug("Invalid material specified for custom model preset: " + custom + "!");
