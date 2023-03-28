@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
@@ -29,6 +32,8 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,10 +45,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -57,8 +58,8 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
-     * the block if broken.
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS
+     * key to activate growing, or to return the block if broken.
      *
      * @param event The TARDIS Seed block placement event
      */
@@ -156,8 +157,8 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();
+            Player player = event.getPlayer();
             if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
-                Player player = event.getPlayer();
                 String key;
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (rsp.resultSet()) {
@@ -186,6 +187,15 @@ public class TARDISSeedBlockListener implements Listener {
                         // replace seed block with animated grow block
                         MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
                         event.getClickedBlock().setBlockData(multipleFacing);
+                    }
+                }
+            } else if (event.getClickedBlock().getType().equals(Material.BARRIER) && Tag.ITEMS_PICKAXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
+                for (Entity e : l.getWorld().getNearbyEntities(event.getClickedBlock().getBoundingBox().expand(0.1d))) {
+                    if (e instanceof ItemDisplay display) {
+                        if (display.getItemStack().hasItemMeta() && display.getItemStack().getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                            e.remove();
+                            event.getClickedBlock().setType(Material.AIR);
+                        }
                     }
                 }
             }
