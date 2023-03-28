@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.give.TARDISMushroomCommand;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISStoneDisplay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Light;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,6 +30,8 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
@@ -77,10 +80,22 @@ public class TARDISDisplayItemCommand {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return true;
                 }
-                ItemStack is = new TARDISMushroomCommand(plugin).getStack(args[2]);
-                if (is != null) {
+                int cmd = TARDISStoneDisplay.BY_NAME.getOrDefault(args[2], -1);
+                if (cmd != -1) {
+                    ItemStack is = new ItemStack(Material.STONE);
+                    ItemMeta im = is.getItemMeta();
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+                    im.setCustomModelData(cmd);
+                    is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    up.setType(Material.BARRIER);
+                    if (TARDISStoneDisplay.isLight(args[2])) {
+                        Light light = (Light)Material.LIGHT.createBlockData();
+                        int level = (TARDISStoneDisplay.isLit(args[2])) ? 15 : 0;
+                        light.setLevel(level);
+                        up.setBlockData(light);
+                    } else {
+                        up.setType(Material.BARRIER);
+                    }
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);

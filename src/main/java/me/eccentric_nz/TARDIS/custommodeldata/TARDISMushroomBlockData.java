@@ -35,65 +35,65 @@ public class TARDISMushroomBlockData {
 
     public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<>() {
         {
-            // mechanical
+            // mechanical seed block
             put(10, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=true]");
-            // fugitive
+            // fugitive seed block
             put(11, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=true]");
-            // ancient
+            // ancient seed block
             put(12, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=false]");
-            // division
+            // division seed block
             put(13, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=false,west=true]");
-            // ars
+            // ars seed block
             put(14, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=false]");
-            // bigger
+            // bigger seed block
             put(15, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=true]");
-            // budget
+            // budget seed block
             put(16, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=false,up=false,west=false]");
-            // coral
+            // coral seed block
             put(17, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=false,up=false,west=true]");
-            // deluxe
+            // deluxe seed block
             put(18, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=false,up=true,west=false]");
-            // eleventh
+            // eleventh seed block
             put(19, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=false,up=true,west=true]");
-            // ender
+            // ender seed block
             put(20, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=true,up=false,west=false]");
-            // plank
+            // plank seed block
             put(21, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=true,up=false,west=true]");
-            // pyramid
+            // pyramid seed block
             put(22, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=true,up=true,west=false]");
-            // redstone
+            // redstone seed block
             put(23, "minecraft:red_mushroom_block[down=true,east=false,north=false,south=true,up=true,west=true]");
-            // steampunk
+            // steampunk seed block
             put(24, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=false,up=false,west=false]");
-            // thirteenth
+            // thirteenth seed block
             put(25, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=false,up=false,west=true]");
-            // factory
+            // factory seed block
             put(26, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=false,up=true,west=false]");
-            // tom
+            // tom seed block
             put(27, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=false,up=true,west=true]");
-            // twelfth
+            // twelfth seed block
             put(28, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=true,up=false,west=false]");
-            // war
+            // war seed block
             put(29, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=true,up=false,west=true]");
-            // small
+            // small seed block
             put(30, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=true,up=true,west=false]");
-            // medium
+            // medium seed block
             put(31, "minecraft:red_mushroom_block[down=true,east=false,north=true,south=true,up=true,west=true]");
-            // tall
+            // tall seed block
             put(32, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=false,up=false,west=false]");
-            // legacy_bigger
+            // legacy_bigger seed block
             put(33, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=false,up=false,west=true]");
-            // legacy_budget
+            // legacy_budget seed block
             put(34, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=false,up=true,west=false]");
-            // legacy_deluxe
+            // legacy_deluxe seed block
             put(35, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=false,up=true,west=true]");
-            // legacy_eleventh
+            // legacy_eleventh seed block
             put(36, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
-            // legacy_redstone
+            // legacy_redstone seed block
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
-            // master
+            // master seed block
             put(39, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=true]");
             // creative (atomic elements)
             put(40, "minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]");

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.custommodeldata.TARDISStoneDisplay;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,11 +36,12 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break");
-    private final ImmutableList<String> MUSHROOM_SUBS = ImmutableList.of("advanced_console", "ancient", "ars", "bigger", "blue_box", "blue_lamp_on", "blue_lamp", "budget", "cave", "cog", "compound", "constructor", "copper", "coral", "creative", "custom", "delta", "deluxe", "disk_storage", "division", "eleventh", "ender", "factory", "fugitive", "green_lamp_on", "green_lamp", "grow", "heat_block", "hexagon", "lab", "lamp_off", "lantern_off", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "master", "mechanical", "medium", "original", "pandorica", "plank", "product", "purple_lamp_on", "purple_lamp", "pyramid", "red_lamp_on", "red_lamp", "redstone", "reducer", "rotor", "roundel_offset", "roundel", "siege_cube", "small", "steampunk", "tall", "the_moment", "thirteenth", "tom", "twelfth", "war", "weathered");
+    private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
+        STONE_SUBS.addAll(TARDISStoneDisplay.BY_NAME.keySet());
     }
 
     @Override
@@ -63,7 +65,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             }
             default -> {
                 if (args[1].equals("place")) {
-                    return partial(lastArg, MUSHROOM_SUBS);
+                    return partial(lastArg, STONE_SUBS);
                 } else {
                     return partial(lastArg, MAT_SUBS);
                 }
