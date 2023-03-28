@@ -16,43 +16,42 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class TARDISMushroomCommand {
 
     private final TARDIS plugin;
     private final List<String> brownBlockNames = Arrays.asList("", "The Moment", "Siege Cube");
     private final List<String> brownSubs = Arrays.asList("", "the_moment", "siege_cube");
-    private final List<String> redBlockNames = Arrays.asList("", "Ancient", "Ars", "Bigger", "Budget", "Coral", "Deluxe", "Division", "Eleventh", "Ender", "Plank", "Pyramid", "Redstone", "Steampunk", "Thirteenth", "Factory", "Fugitive", "Tom", "Twelfth", "War", "Small", "Medium", "Tall", "Legacy Bigger", "Legacy Budget", "Legacy Deluxe", "Legacy Eleventh", "Legacy Redstone", "Original", "Pandorica", "Master", "Mechanical", "Atomic elements", "Chemical compounds", "Material reducer", "Element constructor", "Lab table", "Product crafting");
-    private final List<String> redSubs = Arrays.asList("", "ancient", "ars", "bigger", "budget", "coral", "deluxe", "division", "eleventh", "ender", "plank", "pyramid", "redstone", "steampunk", "thirteenth", "factory", "fugitive", "tom", "twelfth", "war", "small", "medium", "tall", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "original", "pandorica", "master", "mechanical", "creative", "compound", "reducer", "constructor", "lab", "product");
-    private final List<String> stemBlockNames = Arrays.asList("", "Blue Lamp", "Red Lamp", "Purple Lamp", "Green Lamp", "Blue Lamp On", "Red Lamp On", "Purple Lamp On", "Green Lamp On", "Heat Block", "Delta", "Copper", "Cave", "Weathered", "Rotor", "Custom", "Hexagon", "Roundel", "Roundel Offset", "Cog", "Advanced Console", "Disk Storage", "Lamp Off", "Lantern Off", "Blue Police Box", "Seed Block Grow");
-    private final List<String> stemSubs = Arrays.asList("", "blue_lamp", "red_lamp", "purple_lamp", "green_lamp", "blue_lamp_on", "red_lamp_on", "purple_lamp_on", "green_lamp_on", "heat_block", "delta", "copper", "cave", "weathered", "rotor", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box");
+    private final List<String> redBlockNames = Arrays.asList("", "Mechanical", "Fugitive", "Ancient", "Division", "Ars", "Bigger", "Budget", "Coral", "Deluxe", "Eleventh", "Ender", "Plank", "Pyramid", "Redstone", "Steampunk", "Thirteenth", "Factory", "Tom", "Twelfth", "War", "Small", "Medium", "Tall", "Legacy Bigger", "Legacy Budget", "Legacy Deluxe", "Legacy Eleventh", "Legacy Redstone", "Pandorica", "Master", "Atomic elements", "Chemical compounds", "Material reducer", "Element constructor", "Lab table", "Product crafting");
+    private final List<String> redSubs = Arrays.asList("", "mechanical", "fugitive", "ancient", "division", "ars", "bigger", "budget", "coral", "deluxe", "eleventh", "ender", "plank", "pyramid", "redstone", "steampunk", "thirteenth", "factory", "tom", "twelfth", "war", "small", "medium", "tall", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "pandorica", "master", "creative", "compound", "reducer", "constructor", "lab", "product");
+    private final List<String> stemBlockNames = Arrays.asList("", "Blue Lamp", "Green Lamp", "Purple Lamp", "Red Lamp", "Blue Lamp On", "Green Lamp On", "Purple Lamp On", "Red Lamp On", "Heat Block", "Copper", "Delta", "Rotor", "Custom", "Hexagon", "Roundel", "Roundel Offset", "Cog", "Advanced Console", "Disk Storage", "Lamp Off", "Lantern Off", "Blue Police Box", "Seed Block Grow", "Cave", "Weathered", "Original");
+    private final List<String> stemSubs = Arrays.asList("", "blue_lamp", "green_lamp", "purple_lamp", "red_lamp", "blue lamp on", "green lamp on", "purple lamp on", "red lamp on", "heat_block", "copper", "delta", "rotor", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box", "grow", "cave", "weathered", "original");
 
-    TARDISMushroomCommand(TARDIS plugin) {
+    public TARDISMushroomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public ItemStack getStack(String[] args) {
+    public ItemStack getStack(String arg) {
         int which = 0;
         Material mushroom = Material.RED_MUSHROOM_BLOCK;
         String displayName = "";
-        if (redSubs.contains(args[3])) {
-            which = redSubs.indexOf(args[3]) + 13;
+        if (redSubs.contains(arg)) {
+            which = redSubs.indexOf(arg) + 9;
             mushroom = Material.RED_MUSHROOM_BLOCK;
             displayName = redBlockNames.get(which);
-        } else if (brownSubs.contains(args[3])) {
-            which = brownSubs.indexOf(args[3]);
+        } else if (brownSubs.contains(arg)) {
+            which = brownSubs.indexOf(arg);
             mushroom = Material.BROWN_MUSHROOM_BLOCK;
             displayName = brownBlockNames.get(which);
-        } else if (stemSubs.contains(args[3])) {
-            which = stemSubs.indexOf(args[3]);
+        } else if (stemSubs.contains(arg)) {
+            which = stemSubs.indexOf(arg);
             mushroom = Material.MUSHROOM_STEM;
             displayName = stemBlockNames.get(which);
             if (which > 4 && which < 9) {
@@ -60,7 +59,7 @@ public class TARDISMushroomCommand {
             } else if (which == 9) {
                 which = 5;
             } else if (which > 9) {
-                which += 34;
+                which += 32;
             }
         }
         if (which != 0) {

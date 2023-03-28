@@ -165,7 +165,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    ItemStack mushroom = new TARDISMushroomCommand(plugin).getStack(args);
+                    ItemStack mushroom = new TARDISMushroomCommand(plugin).getStack(args[3]);
                     p.getInventory().addItem(mushroom);
                     p.updateInventory();
                     TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " " + args[3]);
