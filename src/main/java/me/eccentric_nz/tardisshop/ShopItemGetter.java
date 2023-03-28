@@ -1,8 +1,7 @@
 package me.eccentric_nz.tardisshop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
+import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,20 +10,15 @@ import org.bukkit.inventory.ItemStack;
 public class ShopItemGetter {
 
     public static ItemStack getTWAItem(ShopItem item) {
-//        if (TARDIS.plugin.isTWAEnabled()) {
-            // get TARDISWeepingAngels API
-            TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
             if (item.getMaterial() == Material.BONE) {
                 // K9
-                return twa.getK9();
+                return HeadBuilder.getK9();
             } else {
                 // Monster head
                 String m = item.toString().replace("_HEAD", "");
                 Monster monster = Monster.valueOf(m);
-                return twa.getHead(monster);
+                return HeadBuilder.getItemStack(monster);
             }
-//        }
-//        return null;
     }
 
     public static ItemStack getSeedItem(ShopItem item) {

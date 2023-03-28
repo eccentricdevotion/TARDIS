@@ -8,7 +8,6 @@
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
    - Test TARDIS creation / room building
-   - `/tgive` weeping angels heads should be just heads...
 
 ## Next version `5.1.0`
 

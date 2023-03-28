@@ -36,7 +36,7 @@ public enum Monster {
     K9("K9", EntityType.ARMOR_STAND, "k9", 15, 1, Material.BONE, TARDISWeepingAngels.K9),
     MIRE("Mire", EntityType.SKELETON, "mire", 18, 4, Material.NETHERITE_SCRAP, TARDISWeepingAngels.MIRE),
     OOD("Ood", EntityType.ARMOR_STAND, "ood", 12, 29, Material.ROTTEN_FLESH, TARDISWeepingAngels.OOD, 30),
-    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, TARDISWeepingAngels.RACNOSS),
+    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, TARDISWeepingAngels.RACNOSS, 4),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, 4, Material.KELP, TARDISWeepingAngels.DEVIL),
     SILENT("Silent", EntityType.SKELETON, "silent", 6, 11, Material.END_STONE, TARDISWeepingAngels.SILENT, 5),
     SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, 4, Material.FEATHER, TARDISWeepingAngels.SILURIAN),

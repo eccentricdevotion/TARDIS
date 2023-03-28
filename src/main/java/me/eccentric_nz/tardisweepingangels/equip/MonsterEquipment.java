@@ -32,10 +32,8 @@ import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment
 import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -347,11 +345,6 @@ public class MonsterEquipment implements TARDISWeepingAngelsAPI {
 
     @Override
     public ItemStack getK9() {
-        ItemStack is = new ItemStack(Material.BONE);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName("K9");
-        im.setCustomModelData(1);
-        is.setItemMeta(im);
-        return is;
+        return HeadBuilder.getK9();
     }
 }

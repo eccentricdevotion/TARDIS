@@ -47,4 +47,13 @@ public class HeadBuilder {
         is.setItemMeta(im);
         return is;
     }
+
+    public static ItemStack getK9() {
+        ItemStack is = new ItemStack(Material.BONE);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("K9");
+        im.setCustomModelData(1);
+        is.setItemMeta(im);
+        return is;
+    }
 }

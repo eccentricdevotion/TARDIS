@@ -24,6 +24,8 @@ custom_seed: 250.00
 cyan_bow_tie: 2.00
 cyberman_head: 75.00
 dalek_head: 75.00
+dalek_sec_head: 75.00
+davros_head: 75.00
 delta_seed: 250.00
 deluxe_seed: 250.00
 diamond_disruptor_circuit: 100.00
@@ -42,6 +44,7 @@ green_bow_tie: 2.00
 grey_bow_tie: 2.00
 handles: 5.00
 hath_head: 75.00
+headless_monk_head: 75.00
 ice_warrior_head: 75.00
 ignite_circuit: 100.00
 island_punch_jelly_baby: 0.50
@@ -63,6 +66,7 @@ lime_jelly_baby: 0.50
 magenta_bow_tie: 2.00
 master_seed: 250.00
 mechanical_seed: 250.00
+mire_head: 75.00
 monitor_frame: 125.00
 ood_head: 75.00
 orange_bow_tie: 2.00
@@ -79,6 +83,7 @@ player_storage_disk: 5.00
 preset_storage_disk: 5.00
 purple_bow_tie: 2.00
 pyramid_seed: 250.00
+racnoss_head: 75.00
 raspberry_jelly_baby: 0.50
 red_bow_tie: 2.00
 redstone_activator_circuit: 100.00
@@ -88,8 +93,10 @@ rift_manipulator: 500.00
 rotor_seed: 250.00
 rust_plague_sword: 25.00
 save_storage_disk: 5.00
+sea_devil_head: 75.00
 silent_head: 75.00
 silurian_head: 75.00
+slitheen_head: 75.00
 sonic_generator: 300.00
 sonic_oscillator: 100.00
 sonic_screwdriver: 150.00

@@ -1,5 +1,7 @@
 package me.eccentric_nz.tardisshop.listener;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
@@ -17,7 +19,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,9 +30,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.HashMap;
-import java.util.UUID;
+import org.bukkit.util.BoundingBox;
 
 public class TARDISShopItemInteract implements Listener {
 
@@ -51,15 +53,18 @@ public class TARDISShopItemInteract implements Listener {
                 UUID uuid = player.getUniqueId();
                 if (plugin.getShopSettings().getSettingItem().containsKey(uuid)) {
                     TARDISShopItem item = plugin.getShopSettings().getSettingItem().get(uuid);
-                    Location drop = location.clone().add(0.5d, 1.05d, 0.5d);
-                    new TARDISShopItemSpawner(plugin).setItem(drop, item);
+                    new TARDISShopItemSpawner(plugin).setItem(location, item);
                     // update location in database
                     new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
                     TARDISMessage.send(player, MODULE.SHOP, "SHOP_LOCATION_ADDED");
                     plugin.getShopSettings().getSettingItem().remove(uuid);
                 } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
-                    for (Entity e : block.getWorld().getNearbyEntities(location, 1.0d, 2.0d, 1.0d)) {
-                        if (e instanceof Item && e.getPersistentDataContainer().has(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER) || e instanceof ArmorStand) {
+                    BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
+                    for (Entity e : block.getWorld().getNearbyEntities(box)) {
+                        if (e instanceof ItemDisplay
+                                || e instanceof TextDisplay
+                                || e instanceof Item && e.getPersistentDataContainer().has(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER)
+                                || e instanceof ArmorStand) {
                             e.remove();
                         }
                     }
