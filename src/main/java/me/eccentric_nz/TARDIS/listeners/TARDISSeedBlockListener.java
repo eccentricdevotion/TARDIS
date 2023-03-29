@@ -32,8 +32,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.data.MultipleFacing;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -106,7 +104,6 @@ public class TARDISSeedBlockListener implements Listener {
      * @param event a block break event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         Player p = event.getPlayer();
@@ -157,8 +154,8 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();
-            Player player = event.getPlayer();
             if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
+                Player player = event.getPlayer();
                 String key;
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (rsp.resultSet()) {
@@ -187,15 +184,6 @@ public class TARDISSeedBlockListener implements Listener {
                         // replace seed block with animated grow block
                         MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
                         event.getClickedBlock().setBlockData(multipleFacing);
-                    }
-                }
-            } else if (event.getClickedBlock().getType().equals(Material.BARRIER) && Tag.ITEMS_PICKAXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
-                for (Entity e : l.getWorld().getNearbyEntities(event.getClickedBlock().getBoundingBox().expand(0.1d))) {
-                    if (e instanceof ItemDisplay display) {
-                        if (display.getItemStack().hasItemMeta() && display.getItemStack().getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                            e.remove();
-                            event.getClickedBlock().setType(Material.AIR);
-                        }
                     }
                 }
             }

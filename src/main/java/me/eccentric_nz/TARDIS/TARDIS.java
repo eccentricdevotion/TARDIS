@@ -178,6 +178,7 @@ public class TARDIS extends JavaPlugin {
     private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
+    private NamespacedKey destroyKey;
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
@@ -334,6 +335,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
+        destroyKey = new NamespacedKey(this, "destroy");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
@@ -1713,6 +1715,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getCustomBlockKey() {
         return customBlockKey;
+    }
+
+    /**
+     * Gets the TARDIS Destroy NamespacedKey
+     *
+     * @return the TARDIS Destroy NamespacedKey
+     */
+    public NamespacedKey getDestroyKey() {
+        return destroyKey;
     }
 
     /**

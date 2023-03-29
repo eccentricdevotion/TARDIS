@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISStoneDisplay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -86,6 +87,7 @@ public class TARDISDisplayItemCommand {
                     ItemMeta im = is.getItemMeta();
                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
                     im.setCustomModelData(cmd);
+                    im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
                     if (TARDISStoneDisplay.isLight(args[2])) {
@@ -105,7 +107,9 @@ public class TARDISDisplayItemCommand {
             case "break" -> {
                 if (block.getType().equals(Material.BARRIER)) {
                     for (Entity e : block.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d))) {
-                        if (e instanceof ItemDisplay) {
+                        if (e instanceof ItemDisplay display) {
+                            ItemStack is = display.getItemStack();
+                            block.getWorld().dropItemNaturally(block.getLocation(), is);
                             e.remove();
                         }
                     }

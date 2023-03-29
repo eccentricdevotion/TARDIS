@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.block;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -43,8 +44,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.HashMap;
 
 public class ChemistryBlockListener implements Listener {
 
@@ -96,7 +95,7 @@ public class ChemistryBlockListener implements Listener {
                 ItemStack[] menu;
                 Inventory inventory;
                 switch (name) {
-                    case "Atomic elements":
+                    case "Atomic elements" -> {
                         // elements
                         if (TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
                             menu = new ElementInventory(plugin).getMenu();
@@ -104,8 +103,8 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
-                    case "Chemical compounds":
+                    }
+                    case "Chemical compounds" -> {
                         // compound
                         if (TARDISPermission.hasPermission(player, "tardis.compound.create")) {
                             menu = new CompoundInventory(plugin).getMenu();
@@ -113,8 +112,8 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
-                    case "Material reducer":
+                    }
+                    case "Material reducer" -> {
                         // reducer
                         if (TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
                             menu = new ReducerInventory(plugin).getMenu();
@@ -122,8 +121,8 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
-                    case "Element constructor":
+                    }
+                    case "Element constructor" -> {
                         // constructor
                         if (TARDISPermission.hasPermission(player, "tardis.construct.build")) {
                             menu = new ConstructorInventory().getMenu();
@@ -131,8 +130,8 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
-                    case "Lab table":
+                    }
+                    case "Lab table" -> {
                         // lab
                         if (TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
                             menu = new LabInventory(plugin).getMenu();
@@ -140,8 +139,8 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
-                    default:
+                    }
+                    default -> {
                         // product
                         if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
                             menu = new ProductInventory(plugin).getMenu();
@@ -149,7 +148,7 @@ public class ChemistryBlockListener implements Listener {
                             TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
-                        break;
+                    }
                 }
                 inventory = plugin.getServer().createInventory(player, (name.equals("Atomic elements") ? 54 : 27), ChatColor.DARK_RED + name);
                 inventory.setContents(menu);
@@ -196,7 +195,7 @@ public class ChemistryBlockListener implements Listener {
 
     private boolean isMushroomBlock(Material material) {
         return switch (material) {
-            case MUSHROOM_STEM, RED_MUSHROOM_BLOCK, BROWN_MUSHROOM_BLOCK -> true;
+            case MUSHROOM_STEM, RED_MUSHROOM_BLOCK, BROWN_MUSHROOM_BLOCK, STONE -> true;
             default -> false;
         };
     }

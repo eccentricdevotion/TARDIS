@@ -175,6 +175,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISCraftListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCreeperDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDiskCraftListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISDisplayBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDisplayListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);

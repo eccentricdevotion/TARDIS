@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -37,8 +38,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.HashMap;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
@@ -105,13 +104,11 @@ public class TARDISBlockPlaceListener implements Listener {
                 }
             } else {
                 BlockData data;
-                if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
-                } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA_ALL);
-                } else {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
-                }
+                data = switch (is.getType()) {
+                    case BROWN_MUSHROOM_BLOCK -> plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
+                    case RED_MUSHROOM_BLOCK -> plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA_ALL);
+                    default -> plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
+                };
                 event.getBlockPlaced().setBlockData(data, false);
                 setNextToMushroomBlock(player, event.getBlockPlaced());
                 return;
