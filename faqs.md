@@ -41,7 +41,8 @@ a stick if you have configured it to be one. Check the ‘[Creating a TARDIS](cr
 #### The plugin says ‘You cannot grow rooms unless your TARDIS was created in its own world’ {#rooms}
 
 You need to set up the plugin to so that when you create a TARDIS, it is created in its own world, or in a special world
-called _TARDIS\_TimeVortex_. To do this you need follow the instructions for “My TARDIS is not generating its own world!”
+called _TARDIS\_TimeVortex_. To do this you need follow the instructions for “My TARDIS is not generating its own
+world!”
 below, or go to the [Time Vortex](time-vortex.html) page.
 
 #### I made a room and it grew inside the TARDIS! {#grew}
@@ -85,7 +86,8 @@ You should never do this. The TARDIS plugin can mange its own worlds.
 
 #### Non-op players can’t break the blocks inside the TARDIS to grow rooms {#spawn}
 
-This is probably because of Minecraft’s built-in spawn protection. The server admin will need to set `spawn-protection=0`
+This is probably because of Minecraft’s built-in spawn protection. The server admin will need to
+set `spawn-protection=0`
 in _server.properties_ (and set up their normal world spawn with another form of protection instead e.g. WorldGuard).
 
 [Back to top](#top)
@@ -94,7 +96,8 @@ in _server.properties_ (and set up their normal world spawn with another form of
 
 To re-engage the handbrake you must **LEFT** -click the lever.
 
-If you are stuck in the Time Vortex, use the `/tardistravel stop` command to rebuild your TARDIS before trying to travel again.
+If you are stuck in the Time Vortex, use the `/tardistravel stop` command to rebuild your TARDIS before trying to travel
+again.
 
 [Back to top](#top)
 
@@ -131,7 +134,8 @@ position with the `/tardis comehere` command.
 
 #### I can’t hear the custom sound effects {#sfx}
 
-The custom TARDIS sound effects require you to have the **TARDIS Sound Resource Pack** installed in the Minecraft client,
+The custom TARDIS sound effects require you to have the **TARDIS Sound Resource Pack** installed in the Minecraft
+client,
 and that you are running Minecraft 1.7.x or higher.
 
 You can download the resource pack from GitHub:
@@ -143,7 +147,8 @@ You can download the resource pack from GitHub:
 
 #### It says I’m still inside the TARDIS, but I’m not {#inside}
 
-This happens if you have exited the TARDIS by some other way than the TARDIS door — this could be because of death, call,
+This happens if you have exited the TARDIS by some other way than the TARDIS door — this could be because of death,
+call,
 teleport, Multiverse teleport, or server crash.
 
 To fix this, type the command:
@@ -163,8 +168,10 @@ Please read the first part of the [Permissions](permissions.html) page.
 If you manually edit the TARDIS config file while the server is running, you will need to use the `/tardisconfig reload`
 command (DO NOT use `/reload` as the plugin saves the current settings when it is disabled).
 
-The better option is to set the config options in game with the `/tardisconfig [config option] [value]` command — changes
-take effect immediately, no server restart required. See the [Config Commands](config-commands.html) page for more details.
+The better option is to set the config options in game with the `/tardisconfig [config option] [value]` command —
+changes
+take effect immediately, no server restart required. See the [Config Commands](config-commands.html) page for more
+details.
 
 [Back to top](#top)
 
@@ -177,15 +184,18 @@ room you want to jettison** , otherwise you are likely to be removing parts of y
 
 #### I edited the config file, but when I reload the changes don’t save! {#reload}
 
-This is fairly standard behaviour for plugins. The **currently loaded** config options are saved when you restart the server,
+This is fairly standard behaviour for plugins. The **currently loaded** config options are saved when you restart the
+server,
 and the new ones you put in are overwritten.
 
 You have three options:
 
 1. Use the the TARDIS config commands to change the options i.e. `/tardisconfig [config option] [value]` for example
-   `/tardisconfig key CARROT` — the benefit is that changes take effect immediately, you don’t need to restart the server.
+   `/tardisconfig key CARROT` — the benefit is that changes take effect immediately, you don’t need to restart the
+   server.
    Refer to the [config commands](config-commands.html) page.
-2. Manually edit the file, save it, and use the `/tardisconfig reload` command to load your changes into the server’ memory.
+2. Manually edit the file, save it, and use the `/tardisconfig reload` command to load your changes into the server’
+   memory.
 3. **STOP** the server. Edit the config file, save it, then start the server.
 
 **Note:** It is generally not good practice to use the `/reload` command.
@@ -194,7 +204,8 @@ You have three options:
 
 #### The perception filter has gone completely invisible! {#filter}
 
-When travelling between worlds, the Perception Filter may sometimes go completely invisible — if this happens, just press
+When travelling between worlds, the Perception Filter may sometimes go completely invisible — if this happens, just
+press
 your “sneak” key (usually LEFT-SHIFT) to make the player skin update.
 
 [Back to top](#top)
@@ -204,9 +215,11 @@ your “sneak” key (usually LEFT-SHIFT) to make the player skin update.
 This is due to a residual temporal flux causing the immediate TARDIS environment to be out of sync with the rest of the
 multiverse — nothing the TARDIS perception filter can’t handle!
 
-In reality, you have `police_box.set_biome: true` in the config. This sets the biome of the TARDIS location to DEEP\_OCEAN,
+In reality, you have `police_box.set_biome: true` in the config. This sets the biome of the TARDIS location to
+DEEP\_OCEAN,
 so that players with [Optifine](https://optifine.net/home) modded clients and the
-[TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) will see a groovy looking TARDIS — the
+[TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) will see a groovy looking
+TARDIS — the
 result is that it sometimes rains on the Police Box.
 
 ![Another lonely TARDIS](images/docs/another_lonely_tardis.jpg)
@@ -233,6 +246,8 @@ Maybe, one day he will finish it. It’s [128X], and is compatible with Minecraf
 
 ![Bromley Massive Vector Texture Pack](images/docs/bmv.jpg)
 
-If you _\*\*really\*\*_ need it, the pack is available here: [https://github.com/eccentricdevotion/Bromley-Massive-Vector](https://github.com/eccentricdevotion/Bromley-Massive-Vector) — take note of installation instructions on that page.
+If you _\*\*really\*\*_ need it, the pack is available
+here: [https://github.com/eccentricdevotion/Bromley-Massive-Vector](https://github.com/eccentricdevotion/Bromley-Massive-Vector) —
+take note of installation instructions on that page.
 
 [Back to top](#top)

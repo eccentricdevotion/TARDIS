@@ -5,15 +5,16 @@ title: The Control Menu
 
 # The TARDIS Control Menu
 
-From TARDIS version 3.6 and higher, the TARDIS Control Menu is the main way to access the TARDIS’s functions. Previously 
-the TARDIS had multiple signs scattered throughout the console to access its various GUIs. The TARDIS Control Menu brings 
+From TARDIS version 3.6 and higher, the TARDIS Control Menu is the main way to access the TARDIS’s functions. Previously
+the TARDIS had multiple signs scattered throughout the console to access its various GUIs. The TARDIS Control Menu
+brings
 them all together in one place.
 
 The TARDIS Control Menu sign displays information about the TARDIS’s location and Artron Energy levels.
 
 ![TARDIS Control Menu sign](images/docs/control_menu_sign.jpg)
 
-If you have an existing TARDIS without the Control Menu, you can add it by placing a sign where you want the Control 
+If you have an existing TARDIS without the Control Menu, you can add it by placing a sign where you want the Control
 Menu to be, and running the command:
 
     /tardis update control
@@ -26,7 +27,7 @@ To use the TARDIS Control Menu, right-click on the Control Menu sign.
 
 ![TARDIS Control Menu](images/docs/control_menu.jpg)
 
-The Control Menu opens, giving you a range of buttons grouped by type / colour. Hover over each button to see what it 
+The Control Menu opens, giving you a range of buttons grouped by type / colour. Hover over each button to see what it
 does. The button functions are explained below:
 
 | Button                               | Icon                                                                                                                                          | Action                                                                                                   |

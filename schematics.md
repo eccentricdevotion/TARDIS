@@ -21,10 +21,12 @@ basically the same, with the following differences:
 
 ## Guidelines for custom TARDIS schematics
 
-You can create multiple custom schematics for the inner TARDIS, but there are a few things you need to know before you jump
+You can create multiple custom schematics for the inner TARDIS, but there are a few things you need to know before you
+jump
 right in!
 
-1. In order to be loaded by the plugin, the schematic file must be located in the _plugins/TARDIS/user\_schematics_ folder.
+1. In order to be loaded by the plugin, the schematic file must be located in the _plugins/TARDIS/user\_schematics_
+   folder.
 2. There must be an entry for the console in _custom_consoles.yml_ and _artron.yml_ — see
    [Custom Consoles](custom_consoles.html) for more information.
 3. The custom TARDIS can only have 1 iron door, 1 stone button, and 1 wood button in its initial design (in addition to

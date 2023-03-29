@@ -5,7 +5,8 @@ title: Writing Save and Player Disks
 
 # Writing Save and Player Disks
 
-Save Storage Disks and Player Storage Disks can have data written to them using a command while holding the appropriate disk in hand.
+Save Storage Disks and Player Storage Disks can have data written to them using a command while holding the appropriate
+disk in hand.
 
 ### Crafting the blank disks
 

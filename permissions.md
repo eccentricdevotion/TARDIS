@@ -6,20 +6,21 @@ title: Permissions
 # Permissions
 
 > **Quote from eccentric\_nz:**
-> 
+>
 > If you are getting the error:
-> 
+>
 > > `Your exile status does not allow you to bring the TARDIS to this...`
-> 
+>
 > or
-> 
+>
 > > `Your travel has been restricted to the [] area!`
-> 
+>
 > Update the plugin!
 
 ## Setting permissions for TARDIS worlds
 
-To automatically set permissions for TARDIS worlds when they are created go read the [Add permissions page](add-permissions.html).
+To automatically set permissions for TARDIS worlds when they are created go read
+the [Add permissions page](add-permissions.html).
 
 * * *
 
@@ -39,7 +40,8 @@ Allow players to use a TARDIS
 
     tardis.use
 
-There are a number of (probably unnecessary and self explanatory) child nodes. This means that if you have given players `tardis.use` you _DON’T_ need to give any of the permissions below.
+There are a number of (probably unnecessary and self explanatory) child nodes. This means that if you have given
+players `tardis.use` you _DON’T_ need to give any of the permissions below.
 
     tardis.create
     tardis.exterminate
@@ -61,7 +63,8 @@ There are a number of (probably unnecessary and self explanatory) child nodes. T
 
 ## TARDIS build sizes
 
-In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘twelfth’, ‘redstone’, ‘steampunk’, ‘ARS’, ‘tom’, ‘plank’, ‘war’, ‘master’, ‘pyramid’, ‘custom’ TARDIS, or any of the other consoles players will need:
+In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘twelfth’, ‘redstone’, ‘steampunk’, ‘ARS’, ‘tom’,
+‘plank’, ‘war’, ‘master’, ‘pyramid’, ‘custom’ TARDIS, or any of the other consoles players will need:
 
     tardis.ancient
     tardis.ars
@@ -97,19 +100,22 @@ In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘t
 
 ## TARDIS world creation
 
-If a server is set up to use a default world (and `create_worlds_with_perms: true` is set on the config), players can be allowed to create a TARDIS in its own world if they have:
+If a server is set up to use a default world (and `create_worlds_with_perms: true` is set on the config), players can be
+allowed to create a TARDIS in its own world if they have:
 
     tardis.create_world
 
 ## Junk TARDIS
 
-If a server is set up to allow a Junk TARDIS (both `junk.enabled: true` and `creation.default_world: true` are set on the config), players can use the Junk TARDIS if they have:
+If a server is set up to allow a Junk TARDIS (both `junk.enabled: true` and `creation.default_world: true` are set on
+the config), players can use the Junk TARDIS if they have:
 
     tardis.junk
 
 ## TARDIS rooms
 
-To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room types (including custom ones), use:
+To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room
+types (including custom ones), use:
 
     tardis.room
 
@@ -174,7 +180,8 @@ Allow travel to villages
 
 ## Per world travel
 
-If the TARDIS config option `per_world_perms` is `true`, then players will need the appropriate permission to time travel to a world. The permission format is:
+If the TARDIS config option `per_world_perms` is `true`, then players will need the appropriate permission to time
+travel to a world. The permission format is:
 
     tardis.travel.[world]
 
@@ -260,7 +267,8 @@ To allow players to eject entities (players and mobs — except horses):
 
 ## Lazarus device / Genetic manipulator / Immortality Gate
 
-To allow players to use the TARDIS Genetic Manipulator and reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate:
+To allow players to use the TARDIS Genetic Manipulator and reverse the polarity of the TARDIS Genetic Manipulator
+turning it into the Immortality Gate:
 
     tardis.lazarus
     tardis.themaster
@@ -307,7 +315,8 @@ The Bio-scanner Sonic has an extra permission to allow player freezing:
 
     tardis.sonic.freeze
 
-The Emerald Environment Sonic has an extra permission to allow automatic replanting of crops (if the player has the correct seed item in their inventory):
+The Emerald Environment Sonic has an extra permission to allow automatic replanting of crops (if the player has the
+correct seed item in their inventory):
 
     tardis.sonic.plant
 
@@ -390,7 +399,8 @@ Allow players to do administration stuff
 
 ### Deleting any TARDIS
 
-The node `tardis.delete` will allow admin users to remove any TARDIS by breaking the sign on the front of the Police Box, or using the `/tardisadmin delete [player]` command.
+The node `tardis.delete` will allow admin users to remove any TARDIS by breaking the sign on the front of the Police
+Box, or using the `/tardisadmin delete [player]` command.
 
 When breaking the sign, the TARDIS must not be occupied (including offline players).
 
@@ -398,7 +408,8 @@ The permission is set to **false** by default, so will have to explicitly given!
 
 ### Entering any TARDIS
 
-The node `tardis.skeletonkey` will allow admin users to enter and use any TARDIS (either via the door, or via the `/tardisadmin enter [player]` command.
+The node `tardis.skeletonkey` will allow admin users to enter and use any TARDIS (either via the door, or via
+the `/tardisadmin enter [player]` command.
 
 The permission is set to **false** by default, so will have to explicitly given!
 

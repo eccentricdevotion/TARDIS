@@ -1,26 +1,38 @@
 # TODO
 
-## Current version `4.13.0`
+## Current version `4.14.0`
 
-1. Add CAVE Chameleon preset
-2. Update mushroom block states in SHROOM, EXTREME_HILLS presets during/after materialisation
+## Version 5.0.0
 
-## Next version `4.14.0`
+1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
+    - Animate models for player disguises
+    - Fix laggy Silurian cave finder
+    - Test TARDIS creation / room building
+
+## Next version `5.1.0`
 
 1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
-2. Cache TARDIS data to speed lookups and reduce database queries
+2. Vortex Manipulator predictive text
+3. Use new DisplayItems for custom blocks?
+4. Pandorica
+
+## Future versions
+
+1. Cache TARDIS data to speed lookups and reduce database queries
 2. Use the Vortex Manipulator to teleport past force fields
-4. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-5. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-6. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-7. All the things...
+3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+6. All the things...
 
 ## Wiki Documentation
 
-* Screenshot images for Bedrock / floodgate forms
-* Add images to Genetic Manipulator
+* Add updating to v5.0.0 from legacy plugins
+* Semi-random assigned parking - add GUI
+* Add other area sub-commands
+* Add/update all module documentation (config/commands etc)
 
-## Resource Pack / TARDISWeepingAngels
+## Resource Pack / Monsters
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
     * Whispermen
@@ -30,10 +42,6 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-2. Animate models for player disguises (could be done in TARDIS instead?)
-   - make player invisible
-   - store player uuid in set
-   - check player move event - switch to animated model when moving
 
 ## Minecraft Bedrock Edition?
 

@@ -5,11 +5,14 @@ title: Recipes
 
 # Recipes
 
-Each of the TARDIS items has a configurable recipe. There are both shaped and shapeless recipes — generally the shapeless ones are used when turning (or upgrading) one TARDIS item into another.
+Each of the TARDIS items has a configurable recipe. There are both shaped and shapeless recipes — generally the
+shapeless ones are used when turning (or upgrading) one TARDIS item into another.
 
-The plugin relies on the items having a certain name, so you shouldn’t change the recipe names, but the ingredients, amount and sometimes the result can be configured.
+The plugin relies on the items having a certain name, so you shouldn’t change the recipe names, but the ingredients,
+amount and sometimes the result can be configured.
 
-If after editing the recipes, things stop working, you will need to delete the edited file to revert it to the default recipes on the next server restart.
+If after editing the recipes, things stop working, you will need to delete the edited file to revert it to the default
+recipes on the next server restart.
 
 ### Shaped recipes
 

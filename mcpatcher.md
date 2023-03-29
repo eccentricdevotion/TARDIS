@@ -88,19 +88,19 @@ Here’s a quick run down on doing that:
 
 1. Download and install the GitHub client for your operating system:
 
-   - [GitHub for Mac](https://mac.github.com/)
-   - [GitHub for Windows](https://windows.github.com/)
+    - [GitHub for Mac](https://mac.github.com/)
+    - [GitHub for Windows](https://windows.github.com/)
 
 2. Start GitHub client and create a free GitHub account (if you don’t have one)
 3. In your web browser, naviagte to the TARDIS resource pack repositories
 
-   - [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP)
-   - [TARDIS-Sounds](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
+    - [TARDIS-MCP](https://github.com/eccentricdevotion/TARDIS-MCP)
+    - [TARDIS-Sounds](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
 
 4. Click the **Clone in Desktop** button
 5. Save the repository clone in the _minecraft/resourcepacks_ folder
 6. Repeat steps 4 and 5 for each resource pack
 7. To update the resource pack, use the desktop client to ‘Pull’ in any changes.
 
-   - `Command-Shift-P` on a Mac
-   - `Control-Shift-P` on Windows
+    - `Command-Shift-P` on a Mac
+    - `Control-Shift-P` on Windows

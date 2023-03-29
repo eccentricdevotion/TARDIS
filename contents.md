@@ -111,7 +111,8 @@ To get started choose a page:
 
 [Schematic Commands](schematic-commands.html) — Make TARDIS schematics
 
-[Area Commands](area-commands.html) — Set up areas that players can travel to (such as recharge stations and parking lots)
+[Area Commands](area-commands.html) — Set up areas that players can travel to (such as recharge stations and parking
+lots)
 
 ## Admin stuff
 
@@ -139,10 +140,13 @@ To get started choose a page:
 
 [TARDIS Java Docs](http://thenosefairy.duckdns.org/TARDIS_java_docs/index.html) — Get the low down on the code
 
-[Player submitted schematics](http://tardis.thatsnotacreeper.com/) — Browse and upload room and TARDIS schematics contributed by the community.
+[Player submitted schematics](http://tardis.thatsnotacreeper.com/) — Browse and upload room and TARDIS schematics
+contributed by the community.
 
-[Minecraft data values](data-values.html) — Find the id/data values, recipes and Bukkit enums for Minecraft blocks and items.
+[Minecraft data values](data-values.html) — Find the id/data values, recipes and Bukkit enums for Minecraft blocks and
+items.
 
 [Minecraft name generator](name-generator.html) — Currently a work in progress, but give a whirl anyway!
 
-[Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) — Generate the required files to start writing a Bukkit plugin in NetBeans.
+[Bukkit plugin starter](http://thenosefairy.duckdns.org/plugin_starter.php) — Generate the required files to start
+writing a Bukkit plugin in NetBeans.

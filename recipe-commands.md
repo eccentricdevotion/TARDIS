@@ -13,7 +13,8 @@ This command works the same way as the Essentials plugin `/recipe` command.
 
 ### Recipe command reference
 
-Listed below is a selection of TARDIS items that you can craft. You can use the `/tardisrecipe list` command to see a categorised list of all items.
+Listed below is a selection of TARDIS items that you can craft. You can use the `/tardisrecipe list` command to see a
+categorised list of all items.
 
 **Tip:** You can also use tab key completion to see a full list in-game.
 

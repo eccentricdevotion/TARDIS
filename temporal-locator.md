@@ -5,7 +5,8 @@ title: Temporal Locator
 
 # Temporal Locator
 
-The Temporal Locator lets players set their time relative to the server time. The Temporal Locator is automatically added to new TARDISes. You can destroy and place it at a new location by using the `/tardis update temporal` command.
+The Temporal Locator lets players set their time relative to the server time. The Temporal Locator is automatically
+added to new TARDISes. You can destroy and place it at a new location by using the `/tardis update temporal` command.
 
 To use the Temporal Locator, right-click it to open the inventory based GUI. You will see a screen like the one below.
 

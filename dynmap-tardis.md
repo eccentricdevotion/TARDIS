@@ -5,9 +5,12 @@ title: Dynmap-TARDIS
 
 # Dynmap-TARDIS
 
-If you have Dynmap installed on your server, you can use the Dynmap-TARDIS add-on to display the real-time locations of all TARDISes.
+If you have Dynmap installed on your server, you can use the Dynmap-TARDIS add-on to display the real-time locations of
+all TARDISes.
 
-As of TARDIS v4.6.2 the Dynmap-TARDIS add-on has been integrated into the main TARDIS plugin. To enable/disable TARDISes in dynmap, set `dynmap.enabled: [true\false]` in the TARDIS config or run the command `/tardisconfig dynmap [true|false]`.
+As of TARDIS v4.6.2 the Dynmap-TARDIS add-on has been integrated into the main TARDIS plugin. To enable/disable TARDISes
+in dynmap, set `dynmap.enabled: [true\false]` in the TARDIS config or run the
+command `/tardisconfig dynmap [true|false]`.
 
 ### Configuration options
 
@@ -24,7 +27,8 @@ As of TARDIS v4.6.2 the Dynmap-TARDIS add-on has been integrated into the main T
 
 ## Dynmap-TARDIS plugin (for TARDIS version below 4.6.2)
 
-You can download the Dynmap-TARDIS plugin from here: [http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/)
+You can download the Dynmap-TARDIS plugin from
+here: [http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/)
 
 ### Requirements
 
@@ -33,9 +37,12 @@ You can download the Dynmap-TARDIS plugin from here: [http://dev.bukkit.org/bukk
 
 ### Installation
 
-1. Install Dynmap as per the instructions found on the [Dynmap](http://dev.bukkit.org/bukkit-plugins/dynmap/) page. Run the server once to generate the default Dynmap files and folders.
+1. Install Dynmap as per the instructions found on the [Dynmap](http://dev.bukkit.org/bukkit-plugins/dynmap/) page. Run
+   the server once to generate the default Dynmap files and folders.
 2. Drop the _Dynmap-TARDIS.jar_ file in the server plugins folder.
-3. Put the [tardis.png](https://github.com/eccentricdevotion/Dynmap-Tardis/blob/master/tardis.png?raw=true%0A) icon file ( ![tardis icon](https://github.com/eccentricdevotion/Dynmap-Tardis/blob/master/tardis.png?raw=true)) into the _plugins/dynmap/web/tiles/\_markers\_/_ folder.
+3. Put the [tardis.png](https://github.com/eccentricdevotion/Dynmap-Tardis/blob/master/tardis.png?raw=true%0A) icon
+   file ( ![tardis icon](https://github.com/eccentricdevotion/Dynmap-Tardis/blob/master/tardis.png?raw=true)) into the
+   _plugins/dynmap/web/tiles/\_markers\_/_ folder.
 4. Run the command `/dmarker addicon id:tardis newlabel:tardis file:plugins/dynmap/web/tiles/_markers_/tardis.png`
 5. Stop and start the server.
 6. Render the map.

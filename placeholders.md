@@ -29,6 +29,9 @@ _Current Location placeholders have been added in build #2049_
 | `%tardis_current_location_world%`     | Gets your TARDIS's Current Location's World Name                            |
 | `%tardis_current_location_direction%` | Gets your TARDIS's Current Direction                                        |
 
-These are located in the [TARDISPlaceholderExpansion.java](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/java/me/eccentric_nz/TARDIS/placeholders/TARDISPlaceholderExpansion.java#L60-L180) file.
+These are located in
+the [TARDISPlaceholderExpansion.java](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/java/me/eccentric_nz/TARDIS/placeholders/TARDISPlaceholderExpansion.java#L60-L180)
+file.
 
-Got suggestions for more? Feel free to [create an issue about it on GitHub](<https://github.com/eccentricdevotion/TARDIS/issues/new?assignees=&labels=&template=feature_request.md&title=Add more placeholders>)!
+Got suggestions for more? Feel free
+to [create an issue about it on GitHub](<https://github.com/eccentricdevotion/TARDIS/issues/new?assignees=&labels=&template=feature_request.md&title=Add more placeholders>)!

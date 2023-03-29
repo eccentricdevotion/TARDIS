@@ -17,7 +17,8 @@ Requires TARDISChunkGenerator 4.1.0 (included in ZIP file)
 
 - Added new biomes to Biome disks
 - Added new items and blocks to condenser
-- Added world management features to support Whovian worlds. Multiverse (or other world managers) are no longer required (but still compatible). Please let TARDIS manage its own worlds!
+- Added world management features to support Whovian worlds. Multiverse (or other world managers) are no longer
+  required (but still compatible). Please let TARDIS manage its own worlds!
 - Added a `/tardisworld [load|unload] [world] [type] [environment][generator]`command
 - Added a command to change the gamemode of a world `/tardisworld gm [gamemode]`
 - Added a command to rename a world `/tardisworld rename [old name] [new name]`
@@ -39,7 +40,8 @@ Lots of code changes made to support Spigot 1.14.x!
 - Tamed cats can be farmed, but not wild ocelots
 - MushroomCow variants are now saved when mob farming and ejecting
 - Updated to the latest WorldGuard / WorldEdit APIs
-- The plugin no longer relies on the TerrainControl / OpenTerrainGenerator plugin to generate custom Whovian worlds (Skaro, Gallifrey, Siluria)
+- The plugin no longer relies on the TerrainControl / OpenTerrainGenerator plugin to generate custom Whovian worlds (
+  Skaro, Gallifrey, Siluria)
 - Moved all planet / world configuration to _planets.yml_
 - Removed the WorldEdit version check so servers can use FAWE instead
 - Now checking for Handles when changing the Desktop Theme (and cancelling if he is found so he can be removed)
@@ -63,7 +65,8 @@ Lots of code changes made to support Spigot 1.14.x!
 
 - Added API to get door open/closed status for Dynmap-TARDIS
 - Now rotating Directional blocks in Chameleon Constructs for MCDW Models
-- Implemented a TARDIS Chameleon item frame — /tardis update frame — will show the associated Chameleon preset block in the item frame
+- Implemented a TARDIS Chameleon item frame — /tardis update frame — will show the associated Chameleon preset block in
+  the item frame
 
 #### Changes
 
@@ -120,7 +123,8 @@ If using WorldGuard 7 you need build #1755 or higher. If using WorldEdit 7 you n
 
 #### Changes
 
-- Changed the TARDIS police telephone block from QUARTZ\_PILLAR to OBSERVER — you’ll need to update the TARDIS-MCP resource pack
+- Changed the TARDIS police telephone block from QUARTZ\_PILLAR to OBSERVER — you’ll need to update the TARDIS-MCP
+  resource pack
 - The TARDIS is now set to hidden if the world the TARDIS is currently in no longer exists
 - Old Chameleon Construct data is now converted to the new BlockData format
 
@@ -145,7 +149,8 @@ Requires TARDISChunkGenerator 4.0.3 and Spigot 1.13.1-R0.1-SNAPSHOT
 #### Changes
 
 - Updated for CraftBukkit/Spigot 1.13.1
-- The ‘back’ destination is now always set when dematerialising (instead of just for `/tardis comehere` and the Stattenheim Remote)
+- The ‘back’ destination is now always set when dematerialising (instead of just for `/tardis comehere` and the
+  Stattenheim Remote)
 - You can no longer land on the end portal in The End when using the Destination Terminal GUI
 
 #### Bug fixes
@@ -155,9 +160,12 @@ Requires TARDISChunkGenerator 4.0.3 and Spigot 1.13.1-R0.1-SNAPSHOT
 - Fixed BEDS not being set properly in Chameleon presets
 - Fixed the wall and floor block from the TARDIS seed not being set correctly on TARDIS creation
 - Fixed a NPE loading protected blocks from the database
-- Fixed mob farming not working (you’ll need to regrow the farm room if you have an existing one that was created in 1.13)
-- Fixed the renderer room not working (you’ll need to regrow the room if you have an existing one that was created in 1.13)
-- Fixed the greenhouse room losing crops and levers, and missing sugar cane (probably best to grow a new one of these too)
+- Fixed mob farming not working (you’ll need to regrow the farm room if you have an existing one that was created in
+  1.13)
+- Fixed the renderer room not working (you’ll need to regrow the room if you have an existing one that was created in
+  1.13)
+- Fixed the greenhouse room losing crops and levers, and missing sugar cane (probably best to grow a new one of these
+  too)
 - Fixed Chamelon constructs and the stained glass cycle when dematerialising
 - Prevented some items dropping when materialising
 - Sonic Screwdriver upgrades work again
@@ -166,7 +174,8 @@ Requires TARDISChunkGenerator 4.0.3 and Spigot 1.13.1-R0.1-SNAPSHOT
 - Added two missing room permissions — `tardis.room.aquarium` and `tardis.room.shell`
 - Fixed the TARDIS exterior lamp not being lit
 - Fixed the /tardisrecipe cell command
-- Fixed players still being killed when falling into the void in the Time Vortex world and `preferences.vortex_fall` is set to teleport
+- Fixed players still being killed when falling into the void in the Time Vortex world and `preferences.vortex_fall` is
+  set to teleport
 - Fixed TARDIS farmed Villager trades being overwritten when their career is set
 - Fixed Villager careers being randomly set for their profession e.g. librarians sometimes becoming cartographers
 - Fixed case sensitive getWorld() method in TARDISMultiverseHelper
@@ -178,8 +187,10 @@ Requires TARDISChunkGenerator v4.0.2
 
 #### Changes
 
-- Custom room schematics are now disabled if they contain bogus data — old custom rooms will need their schematics updated
-- The TARDIS Schematic Wand is now a TARDIS recipe (you can edit the recipe result and therefore the tool it uses in recipes.yml)
+- Custom room schematics are now disabled if they contain bogus data — old custom rooms will need their schematics
+  updated
+- The TARDIS Schematic Wand is now a TARDIS recipe (you can edit the recipe result and therefore the tool it uses in
+  recipes.yml)
 - The TARDIS cave finder command (/tardistravel cave) uses a new method to find caves
 - Updated to the latest WorldGuard v7.0.0 API changes
 - Bow Tie and Jelly Baby recipe variants are now grouped together
@@ -193,7 +204,8 @@ Requires TARDISChunkGenerator v4.0.2
 - Fixed a bug where the Rift Circuit & Manipulator recipes didn’t get added properly
 - Fixed the default config being cleared on first run
 - Fixed a typo in default config that led to two options for the default TARDIS lamp block
-- Fixed a bug where using the /tardisadmin command to set Artron values could overwrite the config file instead of artron.yml
+- Fixed a bug where using the /tardisadmin command to set Artron values could overwrite the config file instead of
+  artron.yml
 
 ### TARDIS v4.0.1
 
@@ -201,15 +213,18 @@ Requires TARDISChunkGenerator v4.0.1
 
 #### Additions
 
-- Now includes a world loader — if a multi-world plugin is not installed on the server, TARDIS will load any worlds found in its config
-- Added a Paper Bag to hold Jelly Babies — [https://github.com/eccentricdevotion/TARDIS/issues/74](https://github.com/eccentricdevotion/TARDIS/issues/74)
+- Now includes a world loader — if a multi-world plugin is not installed on the server, TARDIS will load any worlds
+  found in its config
+- Added a Paper Bag to hold Jelly
+  Babies — [https://github.com/eccentricdevotion/TARDIS/issues/74](https://github.com/eccentricdevotion/TARDIS/issues/74)
 - /tardisrecipe paper-bag
 - SHIFT-click the bag in inventory to store up to 4 stacks of Jelly Babies in it
 - RIGHT-click the bag in inventory to get a random Jelly Baby out of the bag
 
 #### Changes
 
- Updated WorldGuard and WorldEdit dependencies to v7.0.0 
+Updated WorldGuard and WorldEdit dependencies to v7.0.0
+
 #### Bug fixes
 
 - Fixed data conversion errors when using MySQL database or updating from an early version of the plugin
@@ -221,7 +236,9 @@ For Spigot 1.13
 
 This release is not recommended for production servers — use at your own risk!
 
-Initial update to 1.13. While most TARDIS functions are working, we are still waiting for some dependent plugins to update (LibsDisguises, WorldGuard, TerrainControl/OpenTerrainGenerator etc). There may also be changes to the Spigot API, so thorough testing is impossible at this stage...
+Initial update to 1.13. While most TARDIS functions are working, we are still waiting for some dependent plugins to
+update (LibsDisguises, WorldGuard, TerrainControl/OpenTerrainGenerator etc). There may also be changes to the Spigot
+API, so thorough testing is impossible at this stage...
 
 ### TARDIS v3.8.3
 
@@ -229,7 +246,8 @@ For Spigot 1.12.2
 
 #### Additions
 
-- Added Handles — [https://dev.bukkit.org/projects/tardis/issues/1549](https://dev.bukkit.org/projects/tardis/issues/1549)
+- Added
+  Handles — [https://dev.bukkit.org/projects/tardis/issues/1549](https://dev.bukkit.org/projects/tardis/issues/1549)
 - Add an Artron energy event to the TARDIS API
 
 #### Changes
@@ -268,7 +286,8 @@ For Spigot 1.12.2
 #### Additions
 
 - Added a config option for `preferences.no_coords`
-- Defaults to false — when set to true, will not display the random destination coordinates in chat when the random button is pressed
+- Defaults to false — when set to true, will not display the random destination coordinates in chat when the random
+  button is pressed
 - Added a false\_nether key to planets.yml
 - Added support for LockettePro
 - Added the vault chest to the `/tardis update` lister
@@ -310,7 +329,8 @@ For Spigot 1.12.2
 - Fixed a bug on PaperSpigot where commands were being run from an async thread
 - Fixed the WorldGuard version check when it had an odd version number string e.g. `6.2.1;84bc322`
 - Fixed checking the creeper location throwing an error in custom consoles
-- Fixed the looping time rotor sfx when in the time vortex not stopping when the TARDIS materialises and the player left the TARDIS by non-standard means e.g. not by the door
+- Fixed the looping time rotor sfx when in the time vortex not stopping when the TARDIS materialises and the player left
+  the TARDIS by non-standard means e.g. not by the door
 
 ### TARDIS v3.8
 
@@ -320,13 +340,22 @@ For Spigot 1.12.2
 - Added BIRDCAGE room — permission: `tardis.room.birdcage`
 - Added the ability to enter the TARDIS with a parrot on your shoulder(s)
 - Added Parrots to Genetic Manipulation (Lazarus) Device
-- Added Atmospheric Excitation — use the command `/tardis excite` or right-click the exterior TARDIS sign with your Sonic Screwdriver — permission: `tardis.atmospheric` — [https://www.youtube.com/watch?v=vFGJkrnTTfI](https://www.youtube.com/watch?v=vFGJkrnTTfI)
-- Added the ability to give Knowledge books with TARDIS recipes — doesn’t do anything yet... you get a knowledge book, but the recipe doesn’t display in the recipe book so pretty useless... waiting for Minecraft 1.13... — `/tardis give [tardis item] knowledge`
+- Added Atmospheric Excitation — use the command `/tardis excite` or right-click the exterior TARDIS sign with your
+  Sonic Screwdriver —
+  permission: `tardis.atmospheric` — [https://www.youtube.com/watch?v=vFGJkrnTTfI](https://www.youtube.com/watch?v=vFGJkrnTTfI)
+- Added the ability to give Knowledge books with TARDIS recipes — doesn’t do anything yet... you get a knowledge book,
+  but the recipe doesn’t display in the recipe book so pretty useless... waiting for Minecraft
+  1.13... — `/tardis give [tardis item] knowledge`
 - (Re)added the original old consoles to desktop themes / seed blocks
-- Added a Silurian Underworld and Gallifrey — home world of the Time Lords 
-  - as with the Skaro world it requires TerrainControl to be enabled on the server.
-  - enable it in planets.yml and restart the server (might need to run the plugin once to update the planets config file).
-  - Gallifrey has a world specific resource pack to change a few colours for a more Whovian look (according to the [TARDIS Wikia](http://tardis.wikia.com/wiki/Gallifrey) _"From the planet’s surface, it boasted an orange sky at night, snow-capped mountains, fields of red grass, and trees with bright silver leaves."_) — enable resource pack switching in planets.yml (or check it out here: [https://github.com/eccentricdevotion/Gallifrey](https://github.com/eccentricdevotion/Gallifrey))
+- Added a Silurian Underworld and Gallifrey — home world of the Time Lords
+    - as with the Skaro world it requires TerrainControl to be enabled on the server.
+    - enable it in planets.yml and restart the server (might need to run the plugin once to update the planets config
+      file).
+    - Gallifrey has a world specific resource pack to change a few colours for a more Whovian look (according to
+      the [TARDIS Wikia](http://tardis.wikia.com/wiki/Gallifrey) _"From the planet’s surface, it boasted an orange sky
+      at night, snow-capped mountains, fields of red grass, and trees with bright silver leaves."_) — enable resource
+      pack switching in planets.yml (or check it out
+      here: [https://github.com/eccentricdevotion/Gallifrey](https://github.com/eccentricdevotion/Gallifrey))
 
 #### Changes
 
@@ -349,18 +378,21 @@ For Spigot 1.12.2
 
 #### Additions
 
-- Updated for Spigot 1.11 
-  - Added new blocks
-  - Added new mobs
+- Updated for Spigot 1.11
+    - Added new blocks
+    - Added new mobs
 - Added more biome adaptive presets
-- Added new Chameleon Circuit GUI — see [http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html](http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html)
-- Added the ability to archive a TARDIS console 
-  - `/tardis archive` command
-  - TARDIS Archive GUI (can be accessed from the Desktop Theme GUI)
-  - Added 3 different sized cobblestone template consoles
-  - See [http://eccentricdevotion.github.io/TARDIS/archive.html](http://eccentricdevotion.github.io/TARDIS/archive.html)
+- Added new Chameleon Circuit GUI —
+  see [http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html](http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html)
+- Added the ability to archive a TARDIS console
+    - `/tardis archive` command
+    - TARDIS Archive GUI (can be accessed from the Desktop Theme GUI)
+    - Added 3 different sized cobblestone template consoles
+    -
+    See [http://eccentricdevotion.github.io/TARDIS/archive.html](http://eccentricdevotion.github.io/TARDIS/archive.html)
 - Added room costs to the ARS GUI
-- Added a `/tardis construct [line] [text with colour codes]` command to set the text on the TARDIS’ exterior sign (when using the CONSTRUCT preset)
+- Added a `/tardis construct [line] [text with colour codes]` command to set the text on the TARDIS’ exterior sign (when
+  using the CONSTRUCT preset)
 - Added a SMELTER room
 - Added a Llama STALL room
 - Added a `/tardisadmin repair [player] [number]` command
@@ -372,7 +404,8 @@ For Spigot 1.12.2
 #### Changes
 
 - Removed the `/tardis chameleon` commands
-- Converted NEW / OLD preset TARDISes with non blue wool walls to CONSTRUCT presets (due to new Chameleon Circuit GUI functionality)
+- Converted NEW / OLD preset TARDISes with non blue wool walls to CONSTRUCT presets (due to new Chameleon Circuit GUI
+  functionality)
 - The default preset for new installs is now set to FACTORY on TARDIS creation
 - TARDIS seed blocks no longer have a Chameleon or lamp block (use the Chameleon Construct GUI)
 - Use save-disks when in Junk Mode on `hard` difficulty
@@ -430,11 +463,13 @@ For Spigot 1.12.2
 
 #### Additions
 
-- Added a config option to _planets.yml_ to set whether the world is an empty “void” world — `void: [true|false]` — if not set, will default to `false`. This will speed up random location finding considerably.
+- Added a config option to _planets.yml_ to set whether the world is an empty “void” world — `void: [true|false]` — if
+  not set, will default to `false`. This will speed up random location finding considerably.
 
 #### Changes
 
-- Falling in to the Time Vortex in TARDIS worlds now uses the `preferences.vortex_fall` config option regardless of whether the player was kicked.
+- Falling in to the Time Vortex in TARDIS worlds now uses the `preferences.vortex_fall` config option regardless of
+  whether the player was kicked.
 - The plugin now allows the `/tardis make_her_blue` command to turn off Junk Mode
 - When claiming an abandoned TARDIS the WorldGuard region is updated with the the claiming player’s UUID
 - When the plugin difficulty is set to hard, you can now use Save Storage Disks to set the Junk Mode destination
@@ -444,17 +479,18 @@ For Spigot 1.12.2
 - Fixed blocks required for IGLOO room when `growth.rooms_require_blocks` is `true`
 - Made sure Junk Mode is ON before allowing it to be OFF (and vice versa)
 - Fixed a `NullPointerException` related to the perception filter when disabling the plugin
-- Added more world checks to cave finder top prevent server crashes when running the `/tardistravel cave` command in empty “void” worlds
+- Added more world checks to cave finder top prevent server crashes when running the `/tardistravel cave` command in
+  empty “void” worlds
 - Fixed the ENDER console entry in TARDIS Information System
 
 ### TARDIS v3.6
 
 #### Additions
 
-- Updated for Minecraft 1.10 
-  - Added new blocks
-  - Added new mobs
-  - Fixed spawn eggs due Minecraft changes
+- Updated for Minecraft 1.10
+    - Added new blocks
+    - Added new mobs
+    - Fixed spawn eggs due Minecraft changes
 - Added the ability to create a Skaro world — see more details here: [Skaro](skaro.html)
 - Added the ability to have per-world resource packs — see [Planet configuration](configuration-planets.html)
 - Added beetroot to the Sonic replanter feature
@@ -465,37 +501,47 @@ For Spigot 1.12.2
 - Added a 3% chance a Dalek will form when building a snowman in the TARDIS
 - Added `auto_powerup_on` to player prefs to make the TARDIS power up when entering
 - Added the ability to dematerialise without setting a destination
-- If a player tries to toggle the handbrake when the door is open, closing the door within 30 seconds now starts dematerialisation
-- Added the ability to abandon a TARDIS 
-  - config — `abandon.enabled: [true|false]`, `abandon.reduce_count: [true|false]`
-  - permission — `tardis.abandon`
-  - commands — `/tardis abandon`, `/tardisadmin list abandoned` — TARDIS admins can click an entry in the abandoned list to enter or delete that TARDIS (requires ProtocolLib)
-  - players can claim an abandoned TARDIS by being the first person to power it up
-  - the config option `allow.power_down` must be `true`
-- Added `hum` player preference and GUI to set the TARDIS interior hum sound effect preference — use the Sonic Preferences GUI or the `/tardisprefs hum [sound name]` command
-- Added Acid Batteries, the Rift Circuit, [Rift Manipulator](rift-manipulator.html) and the Rust Plague Sword 
-  - `/tardisrecipe [acid-battery|rift-circuit|rift-manipulator|rust-plague-sword]`
-  - Acid Batteries and the Rift Circuit are ingredients in crafting the Rift Manipulator
-  - The Rift Manipulator allows players to create personal TARDIS rechargers — permission `tardis.rift`
+- If a player tries to toggle the handbrake when the door is open, closing the door within 30 seconds now starts
+  dematerialisation
+- Added the ability to abandon a TARDIS
+    - config — `abandon.enabled: [true|false]`, `abandon.reduce_count: [true|false]`
+    - permission — `tardis.abandon`
+    - commands — `/tardis abandon`, `/tardisadmin list abandoned` — TARDIS admins can click an entry in the abandoned
+      list to enter or delete that TARDIS (requires ProtocolLib)
+    - players can claim an abandoned TARDIS by being the first person to power it up
+    - the config option `allow.power_down` must be `true`
+- Added `hum` player preference and GUI to set the TARDIS interior hum sound effect preference — use the Sonic
+  Preferences GUI or the `/tardisprefs hum [sound name]` command
+- Added Acid Batteries, the Rift Circuit, [Rift Manipulator](rift-manipulator.html) and the Rust Plague Sword
+    - `/tardisrecipe [acid-battery|rift-circuit|rift-manipulator|rust-plague-sword]`
+    - Acid Batteries and the Rift Circuit are ingredients in crafting the Rift Manipulator
+    - The Rift Manipulator allows players to create personal TARDIS rechargers — permission `tardis.rift`
 
 #### Changes
 
 - New sound effects for quick materialisations (hide/rebuild)
-- Lots of other sound effect changes — update the [TARDIS-Sounds resource pack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)!
+- Lots of other sound effect changes — update
+  the [TARDIS-Sounds resource pack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)!
 - The interior hum when entering TARDIS now only plays if player has SFX pref ON
 - The remote key hide and rebuild feature now has a cooldown period
 - The remote key no longer functions if the TARDIS is powered down
 - Sound effects now play for TARDIS autonomous homing
 - Companions can now perform rescues via the telepathic circuit
 - The language localisation files are now easier to translate
-- Refresh the chunk after changing the biome — `world.refeshChunk()` is now deprecated because it doesn’t work reliably. TARDISChunkGenerator now has a method to send a `PacketPlayOutMapChunk` packet to the client to achieve this
-- Use the new VOID biome for the TARDIS interior — update the [TARDIS-MCP resource pack](https://github.com/eccentricdevotion/TARDIS-MCP)! — existing TARDIS interior biomes will be updated to use VOID instead of SKY, this should stop pesky Endermen spawning
-- The control Centre has been updated with all TARDIS functions, and now displays relevant TARDIS information. Clicking the Control Centre sign while sneaking will open the keyboard
-- If TARDISWeepingAngels is enabled Whovian monsters now show in the scanner results and the messages when they enter the TARDIS
+- Refresh the chunk after changing the biome — `world.refeshChunk()` is now deprecated because it doesn’t work reliably.
+  TARDISChunkGenerator now has a method to send a `PacketPlayOutMapChunk` packet to the client to achieve this
+- Use the new VOID biome for the TARDIS interior — update
+  the [TARDIS-MCP resource pack](https://github.com/eccentricdevotion/TARDIS-MCP)! — existing TARDIS interior biomes
+  will be updated to use VOID instead of SKY, this should stop pesky Endermen spawning
+- The control Centre has been updated with all TARDIS functions, and now displays relevant TARDIS information. Clicking
+  the Control Centre sign while sneaking will open the keyboard
+- If TARDISWeepingAngels is enabled Whovian monsters now show in the scanner results and the messages when they enter
+  the TARDIS
 - Zombie Villagers that enter the TARDIS now keep their profession
 - The TARDIS beacon will now turn red if there is a malfunction
 - Removed the `police_box.materialise` config option
-- New TARDISes will only have the new Control Centre sign and not all the others (they can still be added if desired using the `/tardis update` command)
+- New TARDISes will only have the new Control Centre sign and not all the others (they can still be added if desired
+  using the `/tardis update` command)
 - Added more opportunity for `no_destination_malfunctions`
 - Toggling Junk Mode now respects the rebuild cooldown period
 
@@ -509,7 +555,8 @@ For Spigot 1.12.2
 - Fixed a null message when the TARDIS malfunctions
 - Update the player’s inventory after they try (and are denied) placing a siege cube in the render room
 - Fixed the database `prefix` option on first run
-- Only transmat a player to the Renderer room if they are still in the TARDIS world — they may have disconnected from the server or exited the TARDIS
+- Only transmat a player to the Renderer room if they are still in the TARDIS world — they may have disconnected from
+  the server or exited the TARDIS
 - Revert Siege mode wall/floor changes when disengaging from outside the TARDIS
 - Change the SQLite siege wall & floor defaults to be the same as MySQL
 - Add missing 1.9 attributes to inventory saving
@@ -517,7 +564,8 @@ For Spigot 1.12.2
 - Fixed the MySQL database converter
 - Added missing \[help\|tab completion\] entries for commands
 - Fixed spelling mistakes in some TARDIS messages
-- Fixed the Junk Mode save sign not working after a new TARDIS was created, and persist Junk Mode players between server restarts
+- Fixed the Junk Mode save sign not working after a new TARDIS was created, and persist Junk Mode players between server
+  restarts
 - Fixed the INVISIBLE chameleon preset not updating the exterior door location
 
 [Older releases](change-log-not-so-older.html)

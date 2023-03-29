@@ -7,7 +7,8 @@ title: Creating a TARDIS
 
 [Jump to video](#video)
 
-To create a TARDIS, you first need to craft a TARDIS seed block. The crafting recipe depends on which version of the plugin you have installed.
+To create a TARDIS, you first need to craft a TARDIS seed block. The crafting recipe depends on which version of the
+plugin you have installed.
 
 To see the crafting recipes, use the command:
 
@@ -17,23 +18,30 @@ or just type "how do I make a TARDIS?" into chat.
 
 ## TARDIS Seed Blocks
 
-A seed block requires five different components as explained below. You can mix and match your own combination of blocks (20,000+ different combinations with the default plugin configuration) to customise the appearance of your TARDIS.
+A seed block requires five different components as explained below. You can mix and match your own combination of
+blocks (20,000+ different combinations with the default plugin configuration) to customise the appearance of your
+TARDIS.
 
 ![Crafting a TARDIS seed block](images/docs/craftdefaultseed-v3.7.jpg)
 
-The crafting grid above shows how to craft the default ‘budget’ TARDIS that starts off with the FACTORY chameleon preset **(TARDIS v3.7 and higher)**:
+The crafting grid above shows how to craft the default ‘budget’ TARDIS that starts off with the FACTORY chameleon preset
+**(TARDIS v3.7 and higher)**:
 
-- **IRON block** = TARDIS type, can be any of the current TARDIS ‘type’ blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc ([see list below](#tardis-types))
+- **IRON block** = TARDIS type, can be any of the current TARDIS ‘type’ blocks e.g. IRON, GOLD, DIAMOND, EMERALD
+  etc ([see list below](#tardis-types))
 - **LAPIS block** = required block
 - **REDSTONE TORCH** = required block
-- **LIGHT GREY WOOL** = TARDIS interior floor block, can be any valid [TARDIS block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
-- **ORANGE WOOL** = TARDIS interior wall block, can be any valid [TARDIS block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
+- **LIGHT GREY WOOL** = TARDIS interior floor block, can be any
+  valid [TARDIS block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
+- **ORANGE WOOL** = TARDIS interior wall block, can be any
+  valid [TARDIS block](https://github.com/eccentricdevotion/TARDIS/blob/v4.0/src/main/resources/blocks.yml#L4-L127)
 
 Once the required and chosen blocks are placed in the crafting grid, a TARDIS seed block is automatically generated.
 
 Seed blocks can be placed, broken and dropped and still remain as a valid seed block.
 
-**Seed block not crafting?** You might be using an ancient version of the plugin - check out the instructions here: [the old way of crafting](creating-a-tardis-old)
+**Seed block not crafting?** You might be using an ancient version of the plugin - check out the instructions
+here: [the old way of crafting](creating-a-tardis-old)
 
 ## TARDIS types
 
@@ -84,11 +92,13 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 
 ## Growing the TARDIS from the seed
 
-Your TARDIS Police Box requires a 3 x 4 x 4 (w x d x h) cuboid region. Where you place the TARDIS seed block will be the centre of the Police Box, and will be saved as the TARDIS’s ‘Home’ location.
+Your TARDIS Police Box requires a 3 x 4 x 4 (w x d x h) cuboid region. Where you place the TARDIS seed block will be the
+centre of the Police Box, and will be saved as the TARDIS’s ‘Home’ location.
 
 To create your TARDIS, right-click a placed seed block with the TARDIS key.
 
-Once clicked, the seed block will change into a TARDIS builder block and the TARDIS creation will be displayed as a progress bar with informative text.
+Once clicked, the seed block will change into a TARDIS builder block and the TARDIS creation will be displayed as a
+progress bar with informative text.
 
 ## Entering the TARDIS
 

@@ -37,7 +37,8 @@ Enter the TARDIS as usual, and the following will happen:
 - If you have already grown an **igloo** room, then polar bears will be teleported into the igloo room
 - If you have already grown an **geode** room, then axolotls will be teleported into the geode room
 - If you have already grown an **mangrove** room, then frogs will be teleported into the mangrove room
-- If you have already grown a **pool** room and the `allow.guardians` config option is set to `true`, then guardians will
+- If you have already grown a **pool** room and the `allow.guardians` config option is set to `true`, then guardians
+  will
   be teleported into the pool
 - If no appropriate room is available (and if allowed in the TARDIS config), then the spawn eggs for the mobs are placed
   in the player’s inventory. **Note:** In order to use the spawn eggs, you may need to remove `mob_spawning: deny` from

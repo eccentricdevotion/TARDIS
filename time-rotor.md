@@ -5,7 +5,8 @@ title: Time Rotor
 
 # Time Rotor
 
-If you are using the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) you can add an animated time rotor to your console (or grow a ROTOR console from a TARDIS seed block).
+If you are using the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) you can add
+an animated time rotor to your console (or grow a ROTOR console from a TARDIS seed block).
 
 There are 4 time rotor types.
 
@@ -37,7 +38,7 @@ To add a time rotor to an existing console:
 
 ### To change a Time Rotor
 
-Time rotors are locked (and the item frame made invisible) when you update them. In order to make changes to the time 
+Time rotors are locked (and the item frame made invisible) when you update them. In order to make changes to the time
 rotor you need to unlock it.
 
 1. Run the command `/tardis update rotor unlock`
@@ -49,11 +50,13 @@ rotor you need to unlock it.
 The crafting recipes for the four time rotors are:
 
 ![Time Rotor Recipes](images/docs/time_rotor_recipes.gif)
+
 ```
 DYE       | REDSTONE | DYE
 GLASSPANE | CLOCK    | GLASSPANE
 GLASSPANE | REDSTONE | GLASSPANE
 ```
+
 Change the dye colours for each rotor:
 
 * Early &mdash; Gray ![#666](https://via.placeholder.com/15/666/000000?text=+)
@@ -62,7 +65,9 @@ Change the dye colours for each rotor:
 * Twelfth &mdash; Orange ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+)
 
 Use the command:
+
 ```
 /tardisrecipe time-rotor-[early|tenth|eleventh|twelfth]
 ```
+
 to see the recipes in game.

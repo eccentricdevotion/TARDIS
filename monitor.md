@@ -14,7 +14,7 @@ To refresh the view click the keyboard and levers.
 The monitor requires two item frames to be placed adjacent to each other.
 
 - Craft a TARDIS Monitor - `/tardisrecipe monitor`
-  
+
   ![Monitor recipe](images/docs/monitor_recipe.jpg)
 
 - Place an item frame against a wall or other block and put the monitor in the frame

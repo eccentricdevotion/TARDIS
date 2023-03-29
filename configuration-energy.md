@@ -33,7 +33,9 @@ The default is `25`.
 
 ## Time travel energy costs
 
-Set the amount of energy the different forms of time travel / vortex manipulation / room use consume. The options are: random locations, any `/tardistravel`, `/tardis comehere`, `/tardis hide` commands, autonomous homing and using the renderer or zero rooms
+Set the amount of energy the different forms of time travel / vortex manipulation / room use consume. The options are:
+random locations, any `/tardistravel`, `/tardis comehere`, `/tardis hide` commands, autonomous homing and using the
+renderer or zero rooms
 
     player: [amount] - default: 25
     random: [amount] - default: 75
@@ -46,7 +48,8 @@ Set the amount of energy the different forms of time travel / vortex manipulatio
 
 ## Inter-dimensional travel
 
-Set the minimum amount of energy the TARDIS Artron Energy Capacitor must have before players can time travel to the Nether or The End.
+Set the minimum amount of energy the TARDIS Artron Energy Capacitor must have before players can time travel to the
+Nether or The End.
 
     nether_min: [amount] - default: 4250
     the_end_min: [amount] - default: 5500
@@ -106,17 +109,21 @@ Set siege mode related values.
     siege_creeper: [amount]
     siege_ticks: [ticks]
 
-`siege_transfer` — the minimum amount of Time Lord energy needed to transfer to the Siege block. This is a percentage of `full_charge`. Default is 10% (500).
+`siege_transfer` — the minimum amount of Time Lord energy needed to transfer to the Siege block. This is a percentage
+of `full_charge`. Default is 10% (500).
 
 `siege_deplete` — the amount of energy needed Siege mode uses every cycle. Default is `100`.
 
-`siege_creeper` — the amount of energy gained when the Artron Creeper is sacrificed. The default is `150`. Only relevant if the main config option `siege.creeper` is set to true.
+`siege_creeper` — the amount of energy gained when the Artron Creeper is sacrificed. The default is `150`. Only relevant
+if the main config option `siege.creeper` is set to true.
 
-`siege_ticks` — the amount of time in server ticks that the energy depletion / siege mode healing cycle takes. The default is `1500` (or every 1.25 minutes).
+`siege_ticks` — the amount of time in server ticks that the energy depletion / siege mode healing cycle takes. The
+default is `1500` (or every 1.25 minutes).
 
 ## TARDIS Upgrades
 
-Set the energy cost to upgrade / crossgrade to a different console when using the Desktop Theme changer. If a player is just changing the walls and floor, then `just_wall_floor` sets the percentage the cost is reduced.
+Set the energy cost to upgrade / crossgrade to a different console when using the Desktop Theme changer. If a player is
+just changing the walls and floor, then `just_wall_floor` sets the percentage the cost is reduced.
 
     upgrades:
         ars: [amount] - default: 5000
@@ -189,7 +196,8 @@ The format is:
           y: [co-ordinate]
           z: [co-ordinate]
 
-Entries are added automatically by the `/tardisadmin recharger [name]` command, you should only need to edit this section if you want to remove a recharge point.
+Entries are added automatically by the `/tardisadmin recharger [name]` command, you should only need to edit this
+section if you want to remove a recharge point.
 
 [Back to main configuration page](configuration.html)
 

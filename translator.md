@@ -5,7 +5,8 @@ title: Universal Translator
 
 # TARDIS Universal Translator
 
-The translation circuit is a part of the TARDIS that allows instantaneous translation of most languages spoken or written in the universe.
+The translation circuit is a part of the TARDIS that allows instantaneous translation of most languages spoken or
+written in the universe.
 
 You can send translated text in chat using the `/tardissay [language] [message]`, for example:
 
@@ -16,9 +17,10 @@ You can send translated text in chat using the `/tardissay [language] [message]`
 The command uses the free Bing translation API to translate your message — see the list of supported languages below.
 
 - `[language]` — You need to specify the language you want to translate into
-- `[message]` — The plugin tries to auto-detect the language that you are typing in, however you can force the language it uses by setting a player preference:
+- `[message]` — The plugin tries to auto-detect the language that you are typing in, however you can force the language
+  it uses by setting a player preference:
 
-    /tardisprefs language [language]
+  /tardisprefs language [language]
 
 ### Supported languages
 

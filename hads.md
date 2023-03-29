@@ -7,7 +7,8 @@ title: Hostile Action Displacement/Dispersal System
 
 # Hostile Action Displacement/Dispersal System
 
-You can set the TARDIS to move away from hostile actions automatically (DISPLACEMENT) or disperse its particles into the air (DISPERSAL) with HADS.
+You can set the TARDIS to move away from hostile actions automatically (DISPLACEMENT) or disperse its particles into the
+air (DISPERSAL) with HADS.
 
 To enable HADS, use the `/tardisprefs` command:
 
@@ -17,15 +18,21 @@ To set the HADS type, use the `/tardisprefs` command:
 
     /tardisprefs hads_type [DISPLACEMENT|DISPERSAL]
 
-You can configure how many hits it takes to trigger HADS. See the [TARDIS Preferences Configuration](configuration-prefs.html) page.
+You can configure how many hits it takes to trigger HADS. See
+the [TARDIS Preferences Configuration](configuration-prefs.html) page.
 
-When HADS (DISPLACEMENT) has been activated, the TARDIS finds a random spot to travel to within a configurable radius (default 10 blocks).
+When HADS (DISPLACEMENT) has been activated, the TARDIS finds a random spot to travel to within a configurable radius (
+default 10 blocks).
 
-When HADS (DISPERSAL) has been activated, the TARDIS scatters its particles and then creates a carpet floor of coloured wool.
+When HADS (DISPERSAL) has been activated, the TARDIS scatters its particles and then creates a carpet floor of coloured
+wool.
 
-Once dispersed, the Time Lord of the TARDIS must stand in the centre of the carpet and RIGHT-CLICK-AIR with their Sonic Screwdriver to rebuild the Police Box.
+Once dispersed, the Time Lord of the TARDIS must stand in the centre of the carpet and RIGHT-CLICK-AIR with their Sonic
+Screwdriver to rebuild the Police Box.
 
-If there are issues with un-dispersing, a server admin can run the command `/tardissudo [player] assemble`, then the player can rebuild the TARDIS.
+If there are issues with un-dispersing, a server admin can run the command `/tardissudo [player] assemble`, then the
+player can rebuild the TARDIS.
 
 ### Video
+
 <iframe src="https://player.vimeo.com/video/66992762" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

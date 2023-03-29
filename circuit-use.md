@@ -5,7 +5,8 @@ title: Circuit use and repair
 
 # Circuit use and repair
 
-If configured (`difficulty: hard` and `damage: true`), circuits can become damaged after use. When the tardis malfunctions 
+If configured (`difficulty: hard` and `damage: true`), circuits can become damaged after use. When the tardis
+malfunctions
 there is a 50% chance that a circuit will become damaged even more than usual.
 
 ![circuit uses](images/docs/circuit_uses.jpg)
@@ -53,8 +54,8 @@ The defaults are shown below:
             scanner: 20
             temporal: 20
 
-`damage: [true|false]` — whether circuits get damaged after each use. Setting this to false (the default) means circuits 
+`damage: [true|false]` — whether circuits get damaged after each use. Setting this to false (the default) means circuits
 have unlimited uses.
 
-`uses: <circuit>: [amount]` — set the maximum number of uses a circuit has before it is vapourised. Setting this to `0` 
+`uses: <circuit>: [amount]` — set the maximum number of uses a circuit has before it is vapourised. Setting this to `0`
 gives unlimited uses for that circuit.

@@ -18,19 +18,24 @@ Localising TARDIS is a two step process:
 
 ### Translations
 
-Language translations require their own file. Make a copy of `en.yml` and translate it. For example; if the language is set to Spanish (code: **es** ), then a file called `es.yml` needs to placed in the `plugins/TARDIS/language/` folder.
+Language translations require their own file. Make a copy of `en.yml` and translate it. For example; if the language is
+set to Spanish (code: **es** ), then a file called `es.yml` needs to placed in the `plugins/TARDIS/language/` folder.
 
-Vistaero (a helpful TARDIS plugin user) has written a useful tool for editing language files, you can get it here: [TARDIS Language File Translator](images/docs/tlTranslator.zip).
+Vistaero (a helpful TARDIS plugin user) has written a useful tool for editing language files, you can get it
+here: [TARDIS Language File Translator](images/docs/tlTranslator.zip).
 
 ![TARDIS Language File Translator](images/docs/tltranslator.png)
 
 ### Set the language
 
-The config option to change is: `preferences.language: [language code]` — you can set the language with the command: `/tardisconfig language [code]` — use tab completion to see a list of valid language codes.
+The config option to change is: `preferences.language: [language code]` — you can set the language with the
+command: `/tardisconfig language [code]` — use tab completion to see a list of valid language codes.
 
 ### Updates
 
-As messages are added for new TARDIS features, the preferred language file will be updated (in English) for you to translate.
+As messages are added for new TARDIS features, the preferred language file will be updated (in English) for you to
+translate.
 
 ### Video
+
 <iframe width="600" height="354" src="https://www.youtube.com/embed/Zx_i66YKIgQ?rel=0" frameborder="0" allowfullscreen></iframe>

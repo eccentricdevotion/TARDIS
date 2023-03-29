@@ -5,8 +5,8 @@ title: Chameleon Presets
 
 # Chameleon Presets
 
-Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 64 
-presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up 
+Chameleon Presets can be selected and applied in the [Chameleon Circuit](chameleon-circuit.html) GUI. There are 64
+presets in total on two pages, plus one special hidden preset, and one custom preset that server admins can set up
 themselves — see the [Custom preset page.](custom-preset.html)
 
 There are also some adaptive presets that are selected by biome when th Chameleon Circuit is set to Adaptive Biome mode.
@@ -14,7 +14,7 @@ You can view those on the [Adaptive Presets page](adaptive-presets.html).
 
 ## Page one
 
-These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for 
+These presets use regular Minecraft blocks. When materialising they cycle through stained glass and regular glass for
 their animation.
 
 ![Stained glass materialisation preset](images/presets/stained_block.jpg)
@@ -23,7 +23,8 @@ their animation.
 
 ![presets gui](images/chameleon/presets_gui_1.jpg)
 
-**ANGEL** — A weeping angel. Each time it materialises it wings can be either up or down, and its head faces a random direction.
+**ANGEL** — A weeping angel. Each time it materialises it wings can be either up or down, and its head faces a random
+direction.
 
 ![Angel](images/presets/angel.jpg)
 
@@ -107,14 +108,14 @@ their animation.
 
 ![nether](images/presets/nether.jpg)
 
-**NEW** — The new taller style Police Box. This is the default preset. If the Chameleon Circuit is ON, this will blend 
+**NEW** — The new taller style Police Box. This is the default preset. If the Chameleon Circuit is ON, this will blend
 in with its surroundings.
 
 ![new police box](images/presets/new.jpg)
 
 ![chameleon circuit on](images/presets/chameleonON.jpg)
 
-**OLD** — The old style Police Box from the early days of the plugin. If the Chameleon Circuit is ON, this will blend in 
+**OLD** — The old style Police Box from the early days of the plugin. If the Chameleon Circuit is ON, this will blend in
 with its surroundings.
 
 ![old police box](images/presets/old.jpg)
@@ -201,7 +202,7 @@ with its surroundings.
 
 ## Page two
 
-Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an 
+Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an
 Item Frame. They have custom block models for the materialisation animation as well.
 
 ![presets gui](images/presets/stained.jpg)

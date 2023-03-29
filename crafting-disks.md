@@ -5,7 +5,8 @@ title: Crafting Biome and Preset Disks
 
 # Crafting Biome and Preset Disks
 
-Biome and Preset Storage Disks have data crafted into them by combining a Blank Biome or Preset disk with the appropriate item.
+Biome and Preset Storage Disks have data crafted into them by combining a Blank Biome or Preset disk with the
+appropriate item.
 
 ### Crafting the blank disks
 
@@ -18,9 +19,12 @@ Check the recipes using the `/tardisrecipe [biome-storage-disk|preset-storage-di
 
 ## Biome Storage Disks
 
-There are two levels of Biome Storage Disk — regular biomes and ‘higher’ biomes, for example: a regular biome would be DESERT, and a ‘higher’ biome would be DESERT\_HILLS. ‘higher’ biomes are crafted the same way as for regular biomes, but with the addition to the recipe of a LADDER.
+There are two levels of Biome Storage Disk — regular biomes and ‘higher’ biomes, for example: a regular biome would be
+DESERT, and a ‘higher’ biome would be DESERT\_HILLS. ‘higher’ biomes are crafted the same way as for regular biomes, but
+with the addition to the recipe of a LADDER.
 
-To craft the disk combine a Blank Biome Storage Disk with the correct item. Currently the only Biome Storage Disks you can craft are shown in the table below:
+To craft the disk combine a Blank Biome Storage Disk with the correct item. Currently the only Biome Storage Disks you
+can craft are shown in the table below:
 
 | Craft Item   | Regular Biome    | ‘Higher‘ biome (Item + LADDER) |
 |--------------|------------------|--------------------------------|
@@ -45,7 +49,8 @@ To craft the disk combine a Blank Biome Storage Disk with the correct item. Curr
 
 ## Preset Storage Disks
 
-To craft the disk combine a Blank Preset Storage Disk with the correct item. The preset and craft items are shown in the table below:
+To craft the disk combine a Blank Preset Storage Disk with the correct item. The preset and craft items are shown in the
+table below:
 
 | Preset           | Craft Item        |
 |------------------|-------------------|

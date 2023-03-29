@@ -7,7 +7,9 @@ title: Chemistry Lab Products
 
 The [Chemistry Lab](chemistry-lab) can produce some useful products for you!
 
-_This page only shows products of the chemistry lab, to view compounds, go to [chemistry lab compounds](chemistry-lab-compounds), to view how to use the chemistry lab, go to the [chemistry lab page](chemistry-lab). To view elements, go to the [elements page](elements)_
+_This page only shows products of the chemistry lab, to view compounds, go
+to [chemistry lab compounds](chemistry-lab-compounds), to view how to use the chemistry lab, go to
+the [chemistry lab page](chemistry-lab). To view elements, go to the [elements page](elements)_
 
 ## Resource Pack
 
@@ -40,9 +42,14 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 
 ## Balloons
 
-Balloons are decorative items that you can hold. Holding one gives you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost), holding one in your main and off hand will give [Jump Boost II](https://minecraft.gamepedia.com/Jump_Boost). Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
+Balloons are decorative items that you can hold. Holding one gives
+you [Jump Boost I](https://minecraft.gamepedia.com/Jump_Boost), holding one in your main and off hand will
+give [Jump Boost II](https://minecraft.gamepedia.com/Jump_Boost).
+Unlike [Education Edition balloons](https://minecraft.gamepedia.com/Balloon), you cannot place them on fences or attach
+them to mobs. However, the recipe is the same, with the exception of requiring a String instead of a Lead.
 
-They come in the following colours: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pink, Cyan, Lime, Gray, Light Gray, Black, Brown, and White.
+They come in the following colours: Red, Orange, Yellow, Green, Blue, Purple, Light Blue, Magenta, Pink, Cyan, Lime,
+Gray, Light Gray, Black, Brown, and White.
 
 ![balloon](images/chemistry/products/balloon.png)
 
@@ -58,7 +65,9 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Bleach
 
-Bleach is used to remove the colour from objects. They work just like [Education Edition Bleach](https://minecraft.gamepedia.com/Bleach), however they can also make Leather Armour completely white and turn concrete powder white.
+Bleach is used to remove the colour from objects. They work just
+like [Education Edition Bleach](https://minecraft.gamepedia.com/Bleach), however they can also make Leather Armour
+completely white and turn concrete powder white.
 
 ![bleach](images/chemistry/products/bleach.gif)
 
@@ -68,7 +77,7 @@ Recipe must be crafted in a [Lab table](chemistry-lab#lab-table)
 
 Recipe is the same as it is in Education Edition
 
-Recipe command: `/tchemistry formula Bleach` 
+Recipe command: `/tchemistry formula Bleach`
 
 | Result                                               | Materials Needed                                                                                                |
 |------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
@@ -77,16 +86,19 @@ Recipe command: `/tchemistry formula Bleach`
 
 ## Glow Sticks
 
-Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colours.
+Glow sticks are cosmetic items that don't really do much on their own. They don't provide light, however holding one and
+right clicking into the air will give it an enchanting effect. Unlike [Balloons](#balloons), there are only 14 colours.
 
-The following colours are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple, Blue, Brown, Green, and Red.
+The following colours are available: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Light Gray, Cyan, Purple,
+Blue, Brown, Green, and Red.
 
 ![glow sticks](images/chemistry/products/glow-sticks.png)
 _All 14 colours of glow sticks. The first 2 on the top row are activated._
 
 ### Recipes
 
-The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes (which is all dyes except Gray and Black).
+The recipe is generally the same for each glow stick. The dye in the middle can be any of the above listed dyes (which
+is all dyes except Gray and Black).
 
 All recipes must be crafted in the [Product crafter](chemistry-lab#product-crafter)
 
@@ -113,7 +125,8 @@ Recipe command: `/tchemistry formula Heat_Block`
 
 ## Ice Bomb
 
-Ice Bombs are simply ice in a ball! Throwing an ice bomb into a body of water will make a 3x3 of [ice](https://minecraft.gamepedia.com/Ice)
+Ice Bombs are simply ice in a ball! Throwing an ice bomb into a body of water will make a 3x3
+of [ice](https://minecraft.gamepedia.com/Ice)
 
 ![ice bomb](images/chemistry/products/ice-bomb.gif)
 
@@ -132,10 +145,10 @@ Recipe command: `/tchemistry forumla Ice_Bomb`
 
 Lamps are simple light source blocks.
 
--   You can craft 4 different colours of Lamps: blue, red, purple, and green lamps.
--   Each lamp produces a light level of 15, the highest light level possible.
--   If the block is updated (e.g. a block is placed next to it) it loses its light until it is placed again.
--   The Lamp can be toggled with a Redstone-enabled [Sonic Screwdriver](sonic-screwdriver)
+- You can craft 4 different colours of Lamps: blue, red, purple, and green lamps.
+- Each lamp produces a light level of 15, the highest light level possible.
+- If the block is updated (e.g. a block is placed next to it) it loses its light until it is placed again.
+- The Lamp can be toggled with a Redstone-enabled [Sonic Screwdriver](sonic-screwdriver)
 
 ![lamps](images/chemistry/products/lamps.png)
 _(left to right) Blue Lamp, Red Lamp, Purple Lamp, Green Lamp_
@@ -153,7 +166,9 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Sparklers
 
-Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle for 30 seconds! Once it's done, it will consume 1 sparkler. If you are not holding the Sparkler when the time is up, it will only take it once you hold it again.
+Sparklers work similar to how they do in real life. Right clicking one on air makes it sparkle for 30 seconds! Once it's
+done, it will consume 1 sparkler. If you are not holding the Sparkler when the time is up, it will only take it once you
+hold it again.
 
 Sparklers only come in 5 colours: Orange, Blue, Green, Purple, and Red.
 
@@ -174,7 +189,8 @@ All recipes must be crafted in the [Product crafter](chemistry-lab#product-craft
 
 ## Super Fertiliser
 
-Super fertiliser is a "super" version of the typical bone meal. It instantly fully-grows crops, restoring old bone meal mechanics.
+Super fertiliser is a "super" version of the typical bone meal. It instantly fully-grows crops, restoring old bone meal
+mechanics.
 
 ![super fertiliser](images/chemistry/products/super-fertiliser.gif)
 

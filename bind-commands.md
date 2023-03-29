@@ -5,8 +5,8 @@ title: Bind command
 
 # The Bind command
 
-To make travelling to saved destinations, TARDIS areas, biomes, players and 
-internal transmat locations easier you can &lsquo;bind&rsquo; them to buttons, 
+To make travelling to saved destinations, TARDIS areas, biomes, players and
+internal transmat locations easier you can &lsquo;bind&rsquo; them to buttons,
 levers and signs.
 
 You can also bind the following commands:

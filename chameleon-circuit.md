@@ -34,13 +34,16 @@ are explained below:
 | Construct         | ![build](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/construct_button.png) | Create your own custom preset using the [Chameleon construction GUI](chameleon-construction.html).                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | Close             | ![close](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/close.png)                      | Close the Chameleon Circuit GUI.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
-Underneath the buttons are indicators for the current Chameleon settings, hover the mouse over the items to view details.
+Underneath the buttons are indicators for the current Chameleon settings, hover the mouse over the items to view
+details.
 A lime green wool block indicates the currently selected setting.
 
 ### Locking the Chameleon Circuit
 
-If you have been using the Chameleon Circuit in _Adaptive BIOME_ mode, you can lock in the currently used preset by pressing the **Lock** button in the Chameleon GUI. The button will only appear if you are in the correct mode.
+If you have been using the Chameleon Circuit in _Adaptive BIOME_ mode, you can lock in the currently used preset by
+pressing the **Lock** button in the Chameleon GUI. The button will only appear if you are in the correct mode.
 
-Clicking the button will switch the settings to _Shorted out_ and apply the biome preset on a more permanent basis (it won't change when you go yto a differnet biome).
+Clicking the button will switch the settings to _Shorted out_ and apply the biome preset on a more permanent basis (it
+won't change when you go yto a differnet biome).
 
 ![Chameleon lock](images/docs/chameleon_lock.jpg)

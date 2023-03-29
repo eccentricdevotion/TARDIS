@@ -20,9 +20,12 @@ To use the command to link portals:
 5. Build another portal at those coordinates and light it
 6. Go back to the portal that you stepped out of in the nether, and destroy the portal
 
-Your nether portal is now permanently linked to the portal you created in the overworld and you won’t have to worry about which random portal you will step out of.
+Your nether portal is now permanently linked to the portal you created in the overworld and you won’t have to worry
+about which random portal you will step out of.
 
-Now you can start creating a hub system in the nether to travel to the over world coordinates — it is much faster travelling through the Nether as each block in the Nether you travel is 8 blocks in the overworld. It’s a shortcut, sort of like a wormhole in space!
+Now you can start creating a hub system in the nether to travel to the over world coordinates — it is much faster
+travelling through the Nether as each block in the Nether you travel is 8 blocks in the overworld. It’s a shortcut, sort
+of like a wormhole in space!
 
 ![Nether Portal](images/docs/tardisnp.jpg)
 

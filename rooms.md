@@ -13,13 +13,15 @@ title: Rooms
 
 - `create_worlds: true` in the config, and a multi-world plugin
 - OR
-- a special world called _TARDIS\_TimeVortex_ — to learn how to set this up visit the [Time Vortex](time-vortex.html) page
+- a special world called _TARDIS\_TimeVortex_ — to learn how to set this up visit the [Time Vortex](time-vortex.html)
+  page
 
 ## Growing rooms
 
 As of TARDIS v2.6 it is **recommended** that you use the [Architectural Reconfiguration System](ars.html) to grow rooms.
 
-You can create rooms in your TARDIS. Each room costs a varying amount of Artron Energy. All rooms and the main TARDIS console have automatic piston doors. **If your TARDIS doesn’t have these:**
+You can create rooms in your TARDIS. Each room costs a varying amount of Artron Energy. All rooms and the main TARDIS
+console have automatic piston doors. **If your TARDIS doesn’t have these:**
 
 - make sure the plugin is up to date
 - read **all** the [change logs](change-log.html) for the various 2.6 versions
@@ -29,7 +31,8 @@ You can create rooms in your TARDIS. Each room costs a varying amount of Artron 
 - delete your old TARDIS
 - make a new TARDIS
 
-To create a room, you place the required material (the seed) in front of the stone pressure plate that triggers the opeining of the piston door — refer to the diagram below (seed blocks are marked in red):
+To create a room, you place the required material (the seed) in front of the stone pressure plate that triggers the
+opeining of the piston door — refer to the diagram below (seed blocks are marked in red):
 
 ![sedd block positions](images/docs/seedblockpositions.png)
 
@@ -89,7 +92,8 @@ Once the room is finished generating, a confirmation message will be shown.
 
 ### Changing the room wall block
 
-By default (most) room walls are ORANGE wool. If you would like to replace all the ORANGE wool blocks with another material, you can set a wall player preference **before** growing the room.
+By default (most) room walls are ORANGE wool. If you would like to replace all the ORANGE wool blocks with another
+material, you can set a wall player preference **before** growing the room.
 
 To see a list of available wall materials, see the [walls page](walls.html), or type:
 
@@ -109,7 +113,9 @@ The next room you grow (if it normally contains ORANGE wool) will have the block
 
 ### Changing the floor block
 
-Similar to the wall player preference, there is also a floor player preference. If you would like to replace all the LIGHT GREY wool blocks (the default for room floors) with another material, you can set the floor player preference **before** growing the room. Use:
+Similar to the wall player preference, there is also a floor player preference. If you would like to replace all the
+LIGHT GREY wool blocks (the default for room floors) with another material, you can set the floor player preference *
+*before** growing the room. Use:
 
     /tardisprefs floor [material]
 
@@ -127,7 +133,9 @@ Then follow the onscreen instructions.
 
 ## Gravity wells
 
-TARDIS gravity wells let you travel in any direction without having to walk. You can grow a gravity well that goes down, and an anti-gravity well that goes up. This allows you to expand the TARDIS interior over as many levels as you desire. Using the `/tardisgravity` command you can also create ‘sideways’ gravity wells.
+TARDIS gravity wells let you travel in any direction without having to walk. You can grow a gravity well that goes down,
+and an anti-gravity well that goes up. This allows you to expand the TARDIS interior over as many levels as you desire.
+Using the `/tardisgravity` command you can also create ‘sideways’ gravity wells.
 
 Visit the [gravity wells page](gravity-wells.html) for more specific information.
 
@@ -138,4 +146,5 @@ As of TARDIS v3.1-beta-1 the Vault room will automatically sort items into the c
 For more information see: [Vault room](vault.html)
 
 ### Videos
+
 <iframe src="https://player.vimeo.com/video/57807692" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><iframe src="https://player.vimeo.com/video/59827634" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

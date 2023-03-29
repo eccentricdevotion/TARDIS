@@ -7,9 +7,12 @@ title: Chemistry Lab
 
 The TARDIS comes with a Chemistry lab room!
 
-*This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check out [Chemistry Lab Products](chemistry-lab-products) or their [compounds](chemistry-lab-compounds), or the [elements themselves](elements).*
+*This page shows how to use the chemistry lab equipment, to see a list of items you can craft with the equipment, check
+out [Chemistry Lab Products](chemistry-lab-products) or their [compounds](chemistry-lab-compounds), or
+the [elements themselves](elements).*
 
 ## Table of Contents
+
 * [Resource Pack](#resource-pack)
 * [Permissions](#permissions)
 * [Element Constructor](#element-constructor)
@@ -30,7 +33,8 @@ How does it work?
 
 ## Permissions
 
-**TARDIS Chemistry Lab equipment is not given to users by default or with `tardis.use`, they must be given via the table below**
+**TARDIS Chemistry Lab equipment is not given to users by default or with `tardis.use`, they must be given via the table
+below**
 
 | Permission Node             | Description                                                            |
 |-----------------------------|------------------------------------------------------------------------|
@@ -56,11 +60,13 @@ In-game description: Add or subtract protons, neutrons and electrons to construc
 
 ![element constructor block](images/chemistry/element-constructor-block.png)
 
-Right clicking this block or running `/tardischemistry gui construct` will open up a GUI to create Elements for you to mess around with.
+Right clicking this block or running `/tardischemistry gui construct` will open up a GUI to create Elements for you to
+mess around with.
 
 ![element constructor gui](images/chemistry/element-constructor-gui.png)
 
-From here, you can use the plus or minus items to decrease or increase the amount of protons, neutrons, and electrons in your element. For example, 1 Proton and 1 Electron => 1 Hydrogen atom.
+From here, you can use the plus or minus items to decrease or increase the amount of protons, neutrons, and electrons in
+your element. For example, 1 Proton and 1 Electron => 1 Hydrogen atom.
 
 ![hydrogen crafted](images/chemistry/element-constructor-hydrogen.png)
 
@@ -72,15 +78,18 @@ Click the newly created atom to add it to your inventory. Every click adds one t
 
 [Click to view all the compounds!](chemistry-lab-compounds)
 
-In-game description: Combine elements to create chemical compounds. To see a compound formula use the `/tardischemistry forumla` command. Place items in the bottom row from left to right.
+In-game description: Combine elements to create chemical compounds. To see a compound formula use
+the `/tardischemistry forumla` command. Place items in the bottom row from left to right.
 
 ![chemical-compounding block](images/chemistry/chemical-compounder-block.png)
 
-Once you have elements, you can compound them into different items. For example, if you run `/tardischemistry forumla Water`, you can figure out how to craft water! (Note, the formula is case-sensitive!)
+Once you have elements, you can compound them into different items. For example, if you
+run `/tardischemistry forumla Water`, you can figure out how to craft water! (Note, the formula is case-sensitive!)
 
 ![water forumla](images/chemistry/formula-water.png)
 
-As you can see, we need 2 Hydrogen and 1 Oxygen atom. If we put this into the Chemical compounder, then click this check...
+As you can see, we need 2 Hydrogen and 1 Oxygen atom. If we put this into the Chemical compounder, then click this
+check...
 
 ![putting hydrogen and oxygen into the chemical compounder](images/chemistry/chemical-compounder-water-example.png)
 
@@ -96,7 +105,8 @@ With the material reducer, you can reduce a substance to its component elements.
 
 ![material reducer block](images/chemistry/material-reducer-block.png)
 
-Remember our Chemical compounder? With this machine, we can reduce it back to its atoms used to created it. You can access this by right clicking the block above or by running `/tardischemistry gui reduce`
+Remember our Chemical compounder? With this machine, we can reduce it back to its atoms used to created it. You can
+access this by right clicking the block above or by running `/tardischemistry gui reduce`
 
 ![material reducer gui](images/chemistry/material-reducer-gui.png)
 
@@ -112,7 +122,8 @@ Clicking reduce gets us our Hydrogen and Oxygen back!
 
 ## The Lab Table & Product Crafter
 
-These blocks do the same thing, however they craft different items with elements and compounds and the process to craft them differs slightly.
+These blocks do the same thing, however they craft different items with elements and compounds and the process to craft
+them differs slightly.
 
 [Click to view all possible products made from these machines!](chemistry-lab-products)
 
@@ -124,7 +135,9 @@ Lab Table (left) and Product Crafter (right).
 
 In-game description: Combine elements and compounds to create bleach, ice bombs, heat blocks, and fertiliser.
 
-As the description implies, you can craft those 4 items, just like you would with the [chemical compounder](#chemical-compounding). Place items in the bottom row from left to right, then click Check product.
+As the description implies, you can craft those 4 items, just like you would with
+the [chemical compounder](#chemical-compounding). Place items in the bottom row from left to right, then click Check
+product.
 
 ![example heat block](images/chemistry/lab-table-gui-heat-block.png)
 
@@ -136,7 +149,8 @@ Clicking check product gets our product!
 
 In-game description: Combine elements and compounds to create sparklers, balloons, lamps, and glow sticks.
 
-Much like the Lab table, you can craft the above 4 items. However, instead these items must be arranged like a 3x3 crafting grid, instead of putting them in the bottom row.
+Much like the Lab table, you can craft the above 4 items. However, instead these items must be arranged like a 3x3
+crafting grid, instead of putting them in the bottom row.
 
 ![example balloon recipe](images/chemistry/product-crafting-balloon-example.png)
 

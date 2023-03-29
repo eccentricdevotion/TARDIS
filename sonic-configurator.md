@@ -7,7 +7,8 @@ title: Sonic Configurator
 
 Once upgraded, you can configure your Sonic Screwdriver and turn on and off the upgrades at any time.
 
-To open the Sonic Configurator, right-click AIR with the Sonic Screwdriver to open the Player Pref Menu GUI. Click on the Config button to access the configuation GUI.
+To open the Sonic Configurator, right-click AIR with the Sonic Screwdriver to open the Player Pref Menu GUI. Click on
+the Config button to access the configuation GUI.
 
 ![sonic in hand](images/docs/sonic-configurator.jpg)
 
