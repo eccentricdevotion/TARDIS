@@ -26,9 +26,20 @@ area with parking spots, where:
 - the first `[material]` is the block you want to use as the floor of the area
   — defaults to COBBLESTONE if not specified
 - the second `[material]` is the block you want to use to mark the parking spot
-  — defaults to BRICK if not specified\<
+  — defaults to BRICK if not specified
 
 ![TARDIS parking yard](images/docs/yard.jpg)
+
+`/tardisarea invisibility [name] [ALLOW|DENY|preset]` - type this to set how TARDISes using invisibility will be treated
+when landing in this area
+
+- `[name]` is the area name that you want to change
+- `ALLOW` will allow invisible TARDISes
+- `DENY` will prevent invisible TARDISes from landing
+- `preset` force a TARDIS to use the specified Chameleon preset when landing in this area
+
+`/tardisarea direction [name] [NORTH|EAST|SOUTH|WEST]` - type this to set the direction that TARDISes will face when
+landing in this area
 
 ## Semi-random parking areas
 
@@ -44,6 +55,17 @@ To create a non-grid type area, type:
 To assign parking spots to the area, stand at the location you want a TARDIS to park and use the command:
 
 `tardisarea add [name]` - where `name` is the area the parking spot should belong to.
+
+To edit parking spots in a non-grid area, use the command:
+
+`tardisarea edit [name]` - where `name` is the area to edit.
+
+A chest GUI will open, allowing you to remove existing parking spots, or add the location where you are currently
+standing.
+
+![](images/docs/area-edit-gui.jpg)
+
+![](images/docs/area-edit-gui-info.jpg)
 
 ### Video
 
