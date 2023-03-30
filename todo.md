@@ -11,9 +11,9 @@
 
 ## Next version `5.1.0`
 
-1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
+1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS (use display items)
 2. Vortex Manipulator predictive text
-3. Use new DisplayItems for custom blocks?
+3. Use new Display Items for custom blocks
 4. Pandorica
 
 ## Future versions
@@ -27,9 +27,6 @@
 
 ## Wiki Documentation
 
-* Add updating to v5.0.0 from legacy plugins
-* Semi-random assigned parking - add GUI
-* Add other area sub-commands
 * Add/update all module documentation (config/commands etc)
 
 ## Resource Pack / Monsters
