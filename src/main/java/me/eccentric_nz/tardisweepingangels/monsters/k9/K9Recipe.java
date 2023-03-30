@@ -44,6 +44,6 @@ public class K9Recipe {
         recipe.setIngredient('R', Material.REDSTONE);
         recipe.setIngredient('B', Material.BONE);
         plugin.getServer().addRecipe(recipe);
-        plugin.getTardisAPI().addShapedRecipe("K9", recipe);
+        plugin.getFigura().getShapedRecipes().put("K9", recipe);
     }
 }

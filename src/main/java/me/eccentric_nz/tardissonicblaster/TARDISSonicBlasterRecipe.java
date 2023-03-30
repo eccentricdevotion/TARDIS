@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MODULE;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -30,6 +26,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  *
@@ -98,7 +99,7 @@ public class TARDISSonicBlasterRecipe {
             plugin.getServer().getConsoleSender().sendMessage(MODULE.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
-        plugin.getTardisAPI().getShapedRecipes().put(s, r);
+        plugin.getFigura().getShapedRecipes().put(s, r);
         // return the recipe
         return r;
     }

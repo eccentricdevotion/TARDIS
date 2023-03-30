@@ -18,9 +18,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -55,29 +53,27 @@ public class TARDISFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
         for (TARDISFollower follower : followers) {
             plugin.setTardisSpawn(true);
             ArmorStand stand = (ArmorStand) w.spawnEntity(pl, EntityType.ARMOR_STAND);
             if (follower.getMonster().equals(Monster.JUDOON)) {
-                twa.setJudoonEquipment(player, stand, follower.getPersist());
+                plugin.getTardisAPI().setJudoonEquipment(player, stand, follower.getPersist());
             } else if (follower.getMonster().equals(Monster.K9)) {
-                twa.setK9Equipment(player, stand, false);
+                plugin.getTardisAPI().setK9Equipment(player, stand, false);
             } else if (follower.getMonster().equals(Monster.OOD)) {
-                twa.setOodEquipment(player, stand, false);
+                plugin.getTardisAPI().setOodEquipment(player, stand, false);
             }
             if (follower.isFollowing()) {
-                twa.setFollowing(stand, player);
+                plugin.getTardisAPI().setFollowing(stand, player);
             }
         }
         followers.clear();
     }
 
     public void spawnDivisionOod(Location location) {
-        TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
         plugin.setTardisSpawn(true);
         ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        twa.setOodEquipment(null, stand, false);
+        plugin.getTardisAPI().setOodEquipment(null, stand, false);
     }
 
     public void removeDivisionOod(Location location) {

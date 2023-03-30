@@ -42,6 +42,6 @@ public class JudoonAmmoRecipe {
         r.addIngredient(Material.ARROW);
         r.addIngredient(Material.GUNPOWDER);
         plugin.getServer().addRecipe(r);
-        plugin.getTardisAPI().addShapelessRecipe("Judoon Ammunition", r);
+        plugin.getIncomposita().getShapelessRecipes().put("Judoon Ammunition", r);
     }
 }

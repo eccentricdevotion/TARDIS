@@ -7,7 +7,6 @@
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Animate models for player disguises
    - Fix laggy Silurian cave finder
-   - Test TARDIS creation / room building
 
 ## Next version `5.1.0`
 
@@ -27,9 +26,6 @@
 
 ## Wiki Documentation
 
-* Add updating to v5.0.0 from legacy plugins
-* Semi-random assigned parking - add GUI
-* Add other area sub-commands
 * Add/update all module documentation (config/commands etc)
 
 ## Resource Pack / Monsters

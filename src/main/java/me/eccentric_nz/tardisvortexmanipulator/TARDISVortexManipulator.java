@@ -1,7 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisvortexmanipulator.command.*;
+import me.eccentric_nz.tardisvortexmanipulator.command.TVMCommand;
+import me.eccentric_nz.tardisvortexmanipulator.command.TVMTabComplete;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMMessageGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMSavesGUIListener;
@@ -23,7 +24,7 @@ public class TARDISVortexManipulator {
         registerCommand();
         ShapedRecipe recipe = new TVMRecipe(plugin).makeRecipe();
         plugin.getServer().addRecipe(recipe);
-        plugin.getTardisAPI().addShapedRecipe("vortex-manipulator", recipe);
+        plugin.getFigura().getShapedRecipes().put("vortex-manipulator", recipe);
         startRecharger();
     }
 

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -24,17 +23,20 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -354,7 +356,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
                         if (plugin.getConfig().getBoolean("modules.weeping_angels") && skeleton instanceof Skeleton skelly) {
-                            if (TARDISAngelsAPI.isDalek(skelly)) {
+                            if (isDalek(skelly)) {
                                 TARDISDalekDisguiser.dalekanium(skelly);
                             }
                         }
@@ -421,7 +423,7 @@ public class TARDISMonsterRunnable implements Runnable {
             }
             if (m.getPassenger() != null) {
                 if (plugin.getConfig().getBoolean("modules.weeping_angels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
-                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent, false);
+                    plugin.getTardisAPI().setSilentEquipment((LivingEntity) ent, false);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
                     ent.addPassenger(passenger);
@@ -433,5 +435,9 @@ public class TARDISMonsterRunnable implements Runnable {
     private boolean isTimelord(TARDISTeleportLocation tpl, Player player) {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
         return (rsc.getCompanions().contains(player.getUniqueId()));
+    }
+
+    private boolean isDalek(Skeleton skeleton) {
+        return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
     }
 }
