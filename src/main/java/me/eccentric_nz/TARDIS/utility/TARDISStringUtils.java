@@ -20,6 +20,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TARDISStringUtils {
 
@@ -247,5 +249,20 @@ public class TARDISStringUtils {
             return "";
         }
         return new String(newChars, 0, count - (whitespacesCount > 0 ? 1 : 0)).trim();
+    }
+
+    public static String getQuotedString(String[] args) {
+        StringBuilder buf = new StringBuilder();
+        String w_str = "";
+        for (String s : args) {
+            buf.append(s).append(" ");
+        }
+        String tmp = buf.toString();
+        Pattern p = Pattern.compile("'([^']*)'");
+        Matcher m = p.matcher(tmp);
+        while (m.find()) {
+            w_str = m.group(1);
+        }
+        return w_str;
     }
 }

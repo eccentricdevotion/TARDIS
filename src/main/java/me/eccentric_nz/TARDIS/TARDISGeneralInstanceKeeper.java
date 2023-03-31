@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
