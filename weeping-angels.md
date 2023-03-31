@@ -7,11 +7,21 @@ title: Weeping Angels
 
 # Weeping Angels
 
-TARDISWeepingAngels is a complementary add-on plugin that transforms Minecraft mobs into terrifying
+TARDISWeepingAngels is a TARDIS plugin module that transforms Minecraft mobs into terrifying
 Whovian [monsters](https://www.bbc.co.uk/programmes/articles/4tDN85fyxYXTtVPrCql8jB/monsters).
 
-You can download the TARDISWeepingAngels JAR from
-here: [http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/](http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/)
+> __Note__ For TARDIS version 4.13.0 and below you can download the separate TARDISWeepingAngels plugin JAR from
+>
+here: [http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/](http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/) -
+_The instructions below are for the TARDIS module, but are pretty much the same, with some extra configuration options (
+database / plugin respect), and separate commands instead of sub-commands._
+
+## Enabling the module
+
+To use the Weeping Angels module, it must be enabled in the TARDIS config.
+
+- Type `/tardisconfig weeping_angels [true|false]` to enable or disable the feature.
+- A server restart is required when changing the config value.
 
 The TARDISWeepingAngel models and textures are part of
 the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/)
@@ -226,9 +236,9 @@ Zygons don't do much yet (except try to kill you), but they look pretty cool.
 | Command | Arguments                             | Description                                                                 |
 |---------|---------------------------------------|-----------------------------------------------------------------------------|
 | `/twa`  | `spawn [monster type]`                | Spawn a monster on the block you are looking at                             |  
-| `       | `disguise [monster type] [on:off]`    | Disguise yourself as a TWA monster                                          |
+|         | `disguise [monster type] [on:off]`    | Disguise yourself as a TWA monster                                          |
 |         | `equip [monster type]`                | Equip an armor stand with a TWA monster                                     |
-| `       | `count [monster type] [world]`        | Reports the current number of monsters in the specified world               |
+|         | `count [monster type] [world]`        | Reports the current number of monsters in the specified world               |
 |         | `kill [monster type] [world]`         | Kills all of the monsters in the specified world                            |
 |         | `set [monster type] [world] [amount]` | Sets the maximum number of the monsters that are allowed to spawn the world |
 |         | `follow`                              | Makes the Ood/Judoon/K9 you are targeting follow you                        |

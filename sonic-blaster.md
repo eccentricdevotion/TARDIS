@@ -22,7 +22,7 @@ cooldown: 5
 tachyon_use:
   # maximum charge the blaster can hold
   max: 1000
-  # amoutn the blaster recharges when close to a TARDIS recharger
+  # amount the blaster recharges when close to a TARDIS recharger
   recharge: 25
   # the time in ticks between adding recharge amount - 1200 = 60 seconds
   recharge_interval: 1200
