@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
@@ -27,11 +31,6 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -74,12 +73,14 @@ public class TARDISDoorCloser {
             block.setBlockData(closeable, true);
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            PRESET preset = null;
             // get all companion UUIDs
             List<UUID> uuids = new ArrayList<>();
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
+                preset = rs.getTardis().getPreset();
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                     if (rs.getTardis().getCompanions().equalsIgnoreCase("everyone")) {
                         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
@@ -114,7 +115,7 @@ public class TARDISDoorCloser {
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);
-            if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+            if (plugin.getConfig().getBoolean("police_box.view_interior") && (preset != null && !preset.usesItemFrame())) {
                 plugin.getTrackerKeeper().getCasters().remove(uuid);
                 // remove fake blocks
                 if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {

@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -37,11 +41,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -204,7 +203,7 @@ public class TARDISDoorOpener {
                         }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
-                    if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+                    if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesItemFrame()) {
                         ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
                         plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
                         // get distance from door

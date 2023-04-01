@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
@@ -50,14 +53,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
- * During TARDIS operation, a distinctive grinding and whirring sound is usually heard. River Song once demonstrated a
- * TARDIS was capable of materialising silently, teasing the Doctor that the noise was actually caused by him leaving
- * the brakes on.
+ * During TARDIS operation, a distinctive grinding and whirring sound is usually
+ * heard. River Song once demonstrated a TARDIS was capable of materialising
+ * silently, teasing the Doctor that the noise was actually caused by him
+ * leaving the brakes on.
  *
  * @author eccentric_nz
  */
@@ -68,8 +68,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
     }
 
     /**
-     * Listens for player interaction with TARDIS doors. If the door is right-clicked with the TARDIS key (configurable)
-     * it will teleport the player either into or out of the TARDIS.
+     * Listens for player interaction with TARDIS doors. If the door is
+     * right-clicked with the TARDIS key (configurable) it will teleport the
+     * player either into or out of the TARDIS.
      *
      * @param event a player clicking a block
      */
@@ -251,13 +252,15 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 // toggle the door
                                                 if (isPoliceBox) {
                                                     new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
-                                                } else {
-                                                    if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
-                                                        new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
-                                                    } else {
-                                                        new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
-                                                    }
+                                                    // should toggle inner door too!
                                                 }
+//                                                else {
+                                                if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
+                                                    new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                } else {
+                                                    new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
+                                                }
+//                                                }
                                             }
                                         } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                             TrapDoor door_data = (TrapDoor) block.getBlockData();

@@ -1,7 +1,7 @@
 # a list of the custom models you want to use
 models:
   # model name
-  Early:
+  Type 40:
     # the item that is placed in the item frame
     item: CLAY_BALL
   Bad Wolf:
@@ -25,10 +25,10 @@ models:
 #      "layer0": "minecraft:item/clay_ball"
 #    },
 #    "overrides": [
-#      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/early_closed"},
-#      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/early_open"},
-#      {"predicate": {"custom_model_data": 1003}, "model": "tardis:block/police_box/early_stained"},
-#      {"predicate": {"custom_model_data": 1004}, "model": "tardis:block/police_box/early_glass"}
+#      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/type_40_closed"},
+#      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/type_40_open"},
+#      {"predicate": {"custom_model_data": 1003}, "model": "tardis:block/police_box/type_40_stained"},
+#      {"predicate": {"custom_model_data": 1004}, "model": "tardis:block/police_box/type_40_glass"}
 #    ]
 #  }
 #
