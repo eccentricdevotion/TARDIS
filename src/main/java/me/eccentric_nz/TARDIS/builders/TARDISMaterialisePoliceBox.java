@@ -129,8 +129,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         case WEEPING_ANGEL -> pb = "Weeping Angel";
                         case ITEM -> {
                             for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-                                plugin.debug(k);
-                                plugin.debug(dye.toString());
                                 if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
                                     pb = k;
                                     break;
