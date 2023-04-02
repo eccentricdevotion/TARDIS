@@ -6,7 +6,9 @@
 
 1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Animate models for player disguises
-   - Fix laggy Silurian cave finder
+   - Fix laggy Silurian cave finder - perhaps the new `World#getChunkAt(int x, int z, boolean generate)` might help?
+   - Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
+   - `Player#sendBlockDamage()` for display item custom blocks?
 
 ## Next version `5.1.0`
 
