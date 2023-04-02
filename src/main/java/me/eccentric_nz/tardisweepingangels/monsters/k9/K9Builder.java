@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -61,7 +61,7 @@ public class K9Builder implements Listener {
                 }
                 Player player = event.getPlayer();
                 if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + placed.getWorld().getName())) {
-                    TARDISMessage.send(player, MODULE.MONSTERS, "WA_BUILD");
+                    TARDISMessage.send(player, TardisModule.MONSTERS, "WA_BUILD");
                     return;
                 }
                 // we're building K9

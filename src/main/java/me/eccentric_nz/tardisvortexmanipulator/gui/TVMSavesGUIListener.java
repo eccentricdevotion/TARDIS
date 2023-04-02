@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
@@ -100,10 +100,10 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("save_id", rss.getId());
                 plugin.getQueryFactory().doDelete("saves", where);
-                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_DELETED");
+                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_DELETED");
             }
         } else {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 
@@ -127,11 +127,11 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 int required = plugin.getConfig().getInt("tachyon_use.travel.saved") * players.size();
                 if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
                     close(player);
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_REQUIRED", required);
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_REQUIRED", required);
                     return;
                 }
                 Location l = rss.getWarp();
-                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
+                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                 while (!l.getChunk().isLoaded()) {
                     l.getChunk().load();
                 }
@@ -140,7 +140,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
             }
         } else {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 }

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
@@ -47,7 +47,7 @@ public class TVMCommandCoords {
 
     public boolean execute(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         Parameters params = new Parameters(player, Flag.getAPIFlags());
@@ -58,12 +58,12 @@ public class TVMCommandCoords {
             case 1, 2, 3 -> {
                 // check world is an actual world
                 if (plugin.getServer().getWorld(args[0]) == null) {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_WORLD");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return true;
                 }
                 // check world is enabled for travel
                 if (!containsIgnoreCase(args[0], plugin.getTardisAPI().getWorlds())) {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                     return true;
                 }
                 required = plugin.getConfig().getInt("tachyon_use.travel.world");
@@ -81,12 +81,12 @@ public class TVMCommandCoords {
                 } else {
                     w = plugin.getServer().getWorld(args[0]);
                     if (w == null) {
-                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_WORLD");
+                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                         return true;
                     }
                     // check world is enabled for travel
                     if (!containsIgnoreCase(args[0], plugin.getTardisAPI().getWorlds())) {
-                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
+                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                         return true;
                     }
                 }
@@ -110,13 +110,13 @@ public class TVMCommandCoords {
                         z = Double.parseDouble(args[3]);
                     }
                 } catch (NumberFormatException e) {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_COORDS");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_COORDS");
                     return true;
                 }
                 l = new Location(w, x, y, z);
                 // check block has space for player
                 if (!l.getBlock().getType().equals(Material.AIR)) {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_ADJUST");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_ADJUST");
                     // get highest block at these coords
                     int highest = l.getWorld().getHighestBlockYAt(l);
                     l.setY(highest);
@@ -140,11 +140,11 @@ public class TVMCommandCoords {
         String uuid = player.getUniqueId().toString();
         int actual = required * players.size();
         if (!TVMUtils.checkTachyonLevel(uuid, actual)) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
             return true;
         }
         if (l != null) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
@@ -153,7 +153,7 @@ public class TVMCommandCoords {
             new TVMQueryFactory(plugin).alterTachyons(uuid, -actual);
         } else {
             //close(player);
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PARAMETERS");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PARAMETERS");
         }
         return true;
     }

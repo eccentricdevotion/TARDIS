@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
@@ -102,10 +102,10 @@ public class TVMEquipListener implements Listener {
                     int required = plugin.getConfig().getInt("tachyon_use.travel.to_block");
                     int actual = required * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
+                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                         return;
                     }
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_STANDY");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                     // Random malfunction
                     Random rnd = new Random();
                     if (rnd.nextInt(100) < plugin.getConfig().getInt("block_travel_malfunction_chance")) {
@@ -125,7 +125,7 @@ public class TVMEquipListener implements Listener {
                         // check to ensure we have a valid alternate location before triggering the malfunction
                         // for this reason the actual malfunction rate may be lower than configured
                         if (_bl != null) {
-                            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MALFUNCTION");
+                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MALFUNCTION");
                             bl = _bl;
                         }
                     }

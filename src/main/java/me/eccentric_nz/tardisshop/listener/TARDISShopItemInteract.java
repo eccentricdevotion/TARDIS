@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.ShopItem;
@@ -56,7 +56,7 @@ public class TARDISShopItemInteract implements Listener {
                     new TARDISShopItemSpawner(plugin).setItem(location, item);
                     // update location in database
                     new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
-                    TARDISMessage.send(player, MODULE.SHOP, "SHOP_LOCATION_ADDED");
+                    TARDISMessage.send(player, TardisModule.SHOP, "SHOP_LOCATION_ADDED");
                     plugin.getShopSettings().getSettingItem().remove(uuid);
                 } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
                     BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
@@ -70,9 +70,9 @@ public class TARDISShopItemInteract implements Listener {
                     }
                     // remove database record
                     if (new DeleteShopItem(plugin).removeByLocation(location.toString()) > 0) {
-                        TARDISMessage.send(player, MODULE.SHOP, "SHOP_ITEM_REMOVED");
+                        TARDISMessage.send(player, TardisModule.SHOP, "SHOP_ITEM_REMOVED");
                     } else {
-                        TARDISMessage.send(player, MODULE.SHOP, "SHOP_NOT_FOUND");
+                        TARDISMessage.send(player, TardisModule.SHOP, "SHOP_NOT_FOUND");
                     }
                     plugin.getShopSettings().getRemovingItem().remove(uuid);
                 } else {
@@ -95,7 +95,7 @@ public class TARDISShopItemInteract implements Listener {
                             // no credit
                             message = "SHOP_NO_FUNDS";
                         }
-                        TARDISMessage.send(player, MODULE.SHOP, message);
+                        TARDISMessage.send(player, TardisModule.SHOP, message);
                     }
                 }
             } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {

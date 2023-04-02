@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
@@ -44,7 +44,7 @@ public class CountCommand {
         int count = 0;
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "COULD_NOT_FIND_WORLD");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         if (which.equals("g")) {
@@ -60,7 +60,7 @@ public class CountCommand {
             try {
                 monster = Monster.valueOf(which);
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
+                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
                 return true;
             }
             switch (monster) {
@@ -123,7 +123,7 @@ public class CountCommand {
                 }
             }
         }
-        TARDISMessage.send(sender, MODULE.MONSTERS, "WA_COUNT", count, what, w.getName());
+        TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getName());
         return true;
     }
 }

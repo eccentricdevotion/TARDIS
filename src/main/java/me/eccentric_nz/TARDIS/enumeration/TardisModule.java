@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import org.bukkit.ChatColor;
 
-public enum MODULE {
+public enum TardisModule {
 
     BLASTER("Sonic Blaster", ChatColor.DARK_GREEN),
     BLUEPRINTS("TARDIS Blueprints", ChatColor.BLUE),
@@ -19,7 +19,7 @@ public enum MODULE {
     private String name;
     private ChatColor colour;
 
-    MODULE(String name, ChatColor colour) {
+    TardisModule(String name, ChatColor colour) {
         this.name = name;
         this.colour = colour;
     }

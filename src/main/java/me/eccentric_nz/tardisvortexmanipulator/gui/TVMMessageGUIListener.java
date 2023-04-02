@@ -6,7 +6,7 @@ package me.eccentric_nz.tardisvortexmanipulator.gui;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -100,7 +100,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener implements Listene
                 new TVMQueryFactory(plugin).setReadStatus(message_id);
             }
         } else {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
         }
     }
 
@@ -116,10 +116,10 @@ public class TVMMessageGUIListener extends TARDISMenuListener implements Listene
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("message_id", message_id);
                 plugin.getQueryFactory().doDelete("messages", where);
-                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MSG_DELETED");
+                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_DELETED");
             }
         } else {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT_MSG");
         }
     }
 }

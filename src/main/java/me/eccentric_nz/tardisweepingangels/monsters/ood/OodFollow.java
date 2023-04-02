@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
@@ -30,7 +30,7 @@ public class OodFollow {
 
     public static boolean run(TARDIS plugin, Player player, ArmorStand stand, String[] args) {
         if (!TARDISPermission.hasPermission(player, "tardisweepingangels.follow.ood")) {
-            TARDISMessage.send(player, MODULE.MONSTERS, "WA_PERM_FOLLOW", "Ood");
+            TARDISMessage.send(player, TardisModule.MONSTERS, "WA_PERM_FOLLOW", "Ood");
             return true;
         }
         if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
@@ -41,10 +41,10 @@ public class OodFollow {
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new OodWalkRunnable(stand, speed, player), 2L, 2L);
                 TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);
             } else {
-                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_YOURS", "Ood");
+                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", "Ood");
             }
         } else {
-            TARDISMessage.send(player, MODULE.MONSTERS, "WA_BROKEN", "Ood");
+            TARDISMessage.send(player, TardisModule.MONSTERS, "WA_BROKEN", "Ood");
         }
         return true;
     }

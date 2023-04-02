@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardissonicblaster;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -96,7 +96,7 @@ public class TARDISSonicBlasterRecipe {
                 }
             }
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getServer().getConsoleSender().sendMessage(TardisModule.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put(s, r);

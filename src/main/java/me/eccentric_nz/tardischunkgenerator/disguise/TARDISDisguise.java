@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.LiteralContents;
@@ -346,7 +346,7 @@ public class TARDISDisguise {
             return entity;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
                  InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + "~TARDISDisguise~ " + e.getMessage());
+            Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + "~TARDISDisguise~ " + e.getMessage());
             e.printStackTrace();
         }
         return null;

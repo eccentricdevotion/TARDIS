@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +36,7 @@ public class TVMCommand implements CommandExecutor {
             // must be a player
             if (sender instanceof Player player) {
                 if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
                     return true;
                 }
                 ItemStack is = player.getInventory().getItemInMainHand();
@@ -69,11 +69,11 @@ public class TVMCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_HAND");
+                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_HAND");
                     return true;
                 }
             } else {
-                TARDISMessage.send(sender, MODULE.VORTEX_MANIPULATOR, "CMD_PLAYER");
+                TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "CMD_PLAYER");
                 return true;
             }
         }

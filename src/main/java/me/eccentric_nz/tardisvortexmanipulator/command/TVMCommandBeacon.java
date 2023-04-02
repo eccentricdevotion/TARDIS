@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
@@ -30,12 +30,12 @@ public class TVMCommandBeacon {
 
     public boolean process(Player player) {
         if (!TARDISPermission.hasPermission(player, "vm.beacon")) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_TACHYON");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_TACHYON");
             return true;
         }
         UUID uuid = player.getUniqueId();
@@ -60,7 +60,7 @@ public class TVMCommandBeacon {
         }
         Parameters params = new Parameters(player, flags);
         if (!plugin.getTardisAPI().getRespect().getRespect(l, params)) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_PERMIT");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_PERMIT");
             return true;
         }
         Block b = l.getBlock().getRelative(BlockFace.DOWN);
@@ -79,7 +79,7 @@ public class TVMCommandBeacon {
         plugin.getTvmSettings().getBeaconSetters().add(uuid);
         // remove tachyons
         qf.alterTachyons(ustr, -required);
-        TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_BEACON_MOVE");
+        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_MOVE");
         return true;
     }
 }

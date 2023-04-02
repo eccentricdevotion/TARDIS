@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
@@ -51,14 +51,14 @@ public class DisguiseCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
             return true;
         }
         Player player = null;
        if (sender instanceof ConsoleCommandSender) {
             // check argument length
             if (args.length < 4) {
-                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_UUID");
+                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_UUID");
                 return true;
             }
             UUID uuid = UUID.fromString(args[3]);
@@ -68,16 +68,16 @@ public class DisguiseCommand {
             player = (Player) sender;
         }
          if (player == null) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_UUID");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_UUID");
             return true;
         }
         if (args.length < 3 || (!args[2].equalsIgnoreCase("on") && !args[2].equalsIgnoreCase("off"))) {
-            TARDISMessage.send(player, MODULE.MONSTERS, "TWA_ON_OFF");
+            TARDISMessage.send(player, TardisModule.MONSTERS, "TWA_ON_OFF");
             return true;
         }
         PlayerInventory inv = player.getInventory();
         if (args[2].equalsIgnoreCase("on") && (inv.getBoots() != null || inv.getChestplate() != null || inv.getHelmet() != null || inv.getLeggings() != null)) {
-            TARDISMessage.send(player,MODULE.MONSTERS, "WA_ARMOUR");
+            TARDISMessage.send(player,TardisModule.MONSTERS, "WA_ARMOUR");
             return true;
         }
         if (args[2].equalsIgnoreCase("on")) {

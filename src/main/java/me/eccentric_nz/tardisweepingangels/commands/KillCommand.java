@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -44,7 +44,7 @@ public class KillCommand {
         String which = args[1].toUpperCase();
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "COULD_NOT_FIND_WORLD");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         int count = 0;
@@ -63,9 +63,9 @@ public class KillCommand {
                         count++;
                     }
                 }
-                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_SILENT", count,"Silent Endermen", w.getName());
+                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_SILENT", count,"Silent Endermen", w.getName());
             } else {
-                TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
+                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
             }
             return true;
         }
@@ -162,7 +162,7 @@ public class KillCommand {
             default -> {
             }
         }
-        TARDISMessage.send(sender, MODULE.MONSTERS, "WA_REMOVED", count, what, w.getName());
+        TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_REMOVED", count, what, w.getName());
         return true;
     }
 }

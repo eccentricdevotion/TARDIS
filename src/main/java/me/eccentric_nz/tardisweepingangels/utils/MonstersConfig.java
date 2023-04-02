@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -140,7 +140,7 @@ public class MonstersConfig {
             try {
                 String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
                 config.save(new File(monstersPath));
-                plugin.getServer().getConsoleSender().sendMessage(MODULE.MONSTERS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
+                plugin.getServer().getConsoleSender().sendMessage(TardisModule.MONSTERS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to monsters.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save monsters.yml, " + io.getMessage());
             }

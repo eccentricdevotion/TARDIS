@@ -21,7 +21,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
@@ -74,7 +74,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language to = Language.valueOf(lang);
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
-                    plugin.getServer().dispatchCommand(sender, "say " + MODULE.TRANSLATOR.getName() + translatedText);
+                    plugin.getServer().dispatchCommand(sender, "say " + TardisModule.TRANSLATOR.getName() + translatedText);
                     return true;
                 } catch (CommandException ex) {
                     plugin.debug("Could not get translation! " + ex.getMessage());

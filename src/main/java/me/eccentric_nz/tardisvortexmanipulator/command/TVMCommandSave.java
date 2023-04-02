@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
@@ -22,7 +22,7 @@ public class TVMCommandSave {
 
     public boolean process(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         String uuid = player.getUniqueId().toString();
@@ -35,13 +35,13 @@ public class TVMCommandSave {
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_PAGE_NUM");
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PAGE_NUM");
             return true;
         }
         try {
             int page = Integer.parseInt(args[1]);
             if (page <= 0) {
-                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
+                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
                 return true;
             }
             int start = (page * 10) - 10;
@@ -56,7 +56,7 @@ public class TVMCommandSave {
             // check for existing save
             TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, args[1]);
             if (rs.resultSet()) {
-                TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_EXISTS");
+                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_EXISTS");
                 return true;
             }
             Location l = player.getLocation();
@@ -70,7 +70,7 @@ public class TVMCommandSave {
             set.put("yaw", l.getYaw());
             set.put("pitch", l.getPitch());
             plugin.getQueryFactory().doInsert("saves", set);
-            TARDISMessage.send(player, MODULE.VORTEX_MANIPULATOR, "VM_SAVE_ADDED", args[1]);
+            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_ADDED", args[1]);
             return true;
         }
     }

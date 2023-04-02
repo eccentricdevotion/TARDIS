@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 import org.bukkit.block.data.BlockData;
@@ -79,7 +79,7 @@ public class TARDISRoomMap {
         // get JSON
         JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", fileName, user);
         if (obj == null) {
-            plugin.getConsole().sendMessage(MODULE.TARDIS.getName() + ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getConsole().sendMessage(TardisModule.TARDIS.getName() + ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions

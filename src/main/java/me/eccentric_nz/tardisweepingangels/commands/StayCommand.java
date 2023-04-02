@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.command.CommandSender;
@@ -39,10 +39,10 @@ public class StayCommand {
                 plugin.getServer().getScheduler().cancelTask(TARDISWeepingAngels.getFollowTasks().get(uuid));
                 TARDISWeepingAngels.getFollowTasks().remove(uuid);
             } else {
-                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_FOLLOWING");
+                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_NOT_FOLLOWING");
             }
         } else {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "CMD_PLAYER");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
         return true;
     }

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +19,7 @@ public class TARDISAllInOneConfigConverter {
         this.basePath = this.plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator;
     }
 
-    public boolean transferConfig(MODULE module) {
+    public boolean transferConfig(TardisModule module) {
         try {
             switch (module) {
                 case HELPER -> {

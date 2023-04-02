@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonFollow;
@@ -41,13 +41,13 @@ public class FollowCommand {
     public boolean follow(CommandSender sender, String[] args) {
         if (sender instanceof Player player) {
             if (TARDISWeepingAngels.getFollowTasks().containsKey(player.getUniqueId())) {
-                TARDISMessage.send(player, MODULE.MONSTERS, "WA_FOLLOWING");
+                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_FOLLOWING");
                 return true;
             }
             // get the armour stand
             ArmorStand stand = ArmourStandFinder.getStand(player);
             if (stand == null) {
-                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_LOOKING");
+                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_NOT_LOOKING");
                 return true;
             }
             PersistentDataContainer pdc = stand.getPersistentDataContainer();
@@ -58,10 +58,10 @@ public class FollowCommand {
             } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
                 K9Follow.run(plugin, player, stand, args);
             } else {
-                TARDISMessage.send(player, MODULE.MONSTERS, "WA_NOT_LOOKING");
+                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_NOT_LOOKING");
             }
         } else {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "CMD_PLAYER");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
         return true;
     }

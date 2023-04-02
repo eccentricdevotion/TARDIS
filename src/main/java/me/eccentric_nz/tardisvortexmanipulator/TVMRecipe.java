@@ -4,7 +4,7 @@
 package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -55,7 +55,7 @@ public class TVMRecipe {
                 r.setIngredient(c, m);
             });
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getServer().getConsoleSender().sendMessage(TardisModule.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put("Vortex Manipulator", r);

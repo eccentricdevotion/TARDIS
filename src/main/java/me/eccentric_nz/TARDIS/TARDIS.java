@@ -407,7 +407,7 @@ public class TARDIS extends JavaPlugin {
                 conversions++;
             }
             if (!getConfig().getBoolean("conversions.all_in_one.helper")) {
-                if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.HELPER)) {
+                if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.HELPER)) {
                     getConfig().set("conversions.all_in_one.helper", true);
                     conversions++;
                 }
@@ -461,7 +461,7 @@ public class TARDIS extends JavaPlugin {
                     getLogger().log(Level.INFO, "Loading Weeping Angels Module");
                     new TARDISWeepingAngels(this).enable();
                     if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
-                        if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.MONSTERS)) {
+                        if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.MONSTERS)) {
                             getConfig().set("conversions.all_in_one.weeping_angels", true);
                             conversions++;
                         }
@@ -474,7 +474,7 @@ public class TARDIS extends JavaPlugin {
                 getLogger().log(Level.INFO, "Loading Vortex Manipulator Module");
                 new TARDISVortexManipulator(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
-                    boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.VORTEX_MANIPULATOR);
+                    boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.VORTEX_MANIPULATOR);
                     boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
                     if (cvm && dvm) {
                         getConfig().set("conversions.all_in_one.vortex_manipulator", true);
@@ -486,7 +486,7 @@ public class TARDIS extends JavaPlugin {
                 getLogger().log(Level.INFO, "Loading Shop Module");
                 new TARDISShop(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
-                    boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.SHOP);
+                    boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.SHOP);
                     boolean ds = new TARDISShopTransfer(this).transferData();
                     getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISShopDisplayConverter(this), 300L);
                     if (cs && ds) {
@@ -499,7 +499,7 @@ public class TARDIS extends JavaPlugin {
                 getLogger().log(Level.INFO, "Loading Sonic Blaster Module");
                 new TARDISSonicBlaster(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
-                    if (new TARDISAllInOneConfigConverter(this).transferConfig(MODULE.BLASTER)) {
+                    if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.BLASTER)) {
                         getConfig().set("conversions.all_in_one.sonic_blaster", true);
                         conversions++;
                     }
@@ -1157,7 +1157,7 @@ public class TARDIS extends JavaPlugin {
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            console.sendMessage(MODULE.DEBUG.getName() + "Debug: " + o);
+            console.sendMessage(TardisModule.DEBUG.getName() + "Debug: " + o);
         }
     }
 
@@ -1563,7 +1563,7 @@ public class TARDIS extends JavaPlugin {
      * @return the formatted TARDIS plugin name
      */
     public String getPluginName() {
-        return MODULE.TARDIS.getName();
+        return TardisModule.TARDIS.getName();
     }
 
     /**

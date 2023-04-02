@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
@@ -71,12 +71,12 @@ public class TARDISHelper {
         // load custom biomes if they are enabled
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
-            plugin.getConsole().sendMessage(MODULE.HELPER.getName() + "Adding custom biome for planet Gallifrey...");
+            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Adding custom biome for planet Skaro...");
+            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
@@ -86,8 +86,8 @@ public class TARDISHelper {
             // yes we should!
             String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
-            plugin.getServer().getConsoleSender().sendMessage(MODULE.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
+            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
+            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
         }
         // register disguise listener
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
@@ -132,7 +132,7 @@ public class TARDISHelper {
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -151,15 +151,15 @@ public class TARDISHelper {
                 FileOutputStream fileoutputstream = new FileOutputStream(file);
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
-                Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Renamed level to " + newName);
+                Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Renamed level to " + newName);
                 // rename the directory
                 File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
                 File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
                 if (directory.renameTo(folder)) {
-                    Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Renamed directory to " + newName);
+                    Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Renamed directory to " + newName);
                 }
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -189,7 +189,7 @@ public class TARDISHelper {
                 NbtIo.writeCompressed(tagCompound, fileoutputstream);
                 fileoutputstream.close();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
             }
         }
     }
@@ -239,11 +239,11 @@ public class TARDISHelper {
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType);
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, MODULE.HELPER.getName() + ex.getMessage());
+                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
                 return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
             }
         }
-        Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
+        Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
         return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
     }
 
@@ -332,7 +332,7 @@ public class TARDISHelper {
             TARDISTree type = TARDISTree.valueOf(tree.toUpperCase(Locale.ROOT));
             CustomTree.grow(type, location);
         } catch (IllegalArgumentException e) {
-            Bukkit.getLogger().log(Level.WARNING, MODULE.HELPER.getName() + "Invalid TARDISTree type specified!");
+            Bukkit.getLogger().log(Level.WARNING, TardisModule.HELPER.getName() + "Invalid TARDISTree type specified!");
         }
     }
 

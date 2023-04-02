@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisshop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisshop.database.ResultSetUpdateShop;
 import org.bukkit.Chunk;
 import org.bukkit.entity.ArmorStand;
@@ -40,10 +40,10 @@ public class TARDISShopDisplayConverter implements Runnable {
     @Override
     public void run() {
         if (findAndReplace()) {
-            plugin.getConsole().sendMessage(MODULE.SHOP.getName() + "Converted " + count + " shop display items");
+            plugin.getConsole().sendMessage(TardisModule.SHOP.getName() + "Converted " + count + " shop display items");
         } else {
             String message = (count > 0) ? "Converting shop display items failed!" : "There were no shop display items to convert";
-            plugin.getConsole().sendMessage(MODULE.SHOP.getName() + message);
+            plugin.getConsole().sendMessage(TardisModule.SHOP.getName() + message);
         }
     }
 

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -40,7 +40,7 @@ public class GiveCommand {
         // get the player
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "PLAYER_NOT_FOUND");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "PLAYER_NOT_FOUND");
             return true;
         }
         // check monster type
@@ -49,23 +49,23 @@ public class GiveCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_INVALID");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
             return true;
         }
         if (monster == Monster.K9 || monster == Monster.TOCLAFANE) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_HELMET");
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_HELMET");
             return true;
         }
         ItemStack is = HeadBuilder.getItemStack(monster);
         player.getInventory().addItem(is);
         player.updateInventory();
-        TARDISMessage.send(sender, MODULE.MONSTERS, "WA_GIVE", player.getName(), monster.getName());
+        TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_GIVE", player.getName(), monster.getName());
         String who = "The server";
         if (sender instanceof Player) {
             who = sender.getName();
         }
         if (!who.equals(player.getName())) {
-            TARDISMessage.send(sender, MODULE.MONSTERS, "WA_GIVE_WHO", who, monster.getName());
+            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_GIVE_WHO", who, monster.getName());
         }
         return true;
     }

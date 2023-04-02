@@ -23,7 +23,7 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
-import me.eccentric_nz.TARDIS.enumeration.MODULE;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
@@ -77,7 +77,7 @@ public class TARDISPlayerDisguiser {
                 profile.getProperties().removeAll("textures");
                 return profile.getProperties().put("textures", new Property("textures", skin, signature));
             } else {
-                Bukkit.getLogger().log(Level.INFO, MODULE.HELPER.getName() + "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
+                Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
                 return false;
             }
         } catch (IOException e) {
