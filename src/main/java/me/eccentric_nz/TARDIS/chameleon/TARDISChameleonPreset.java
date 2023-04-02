@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISDirectionalRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMultipleFacingRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRailRecalculator;
@@ -360,7 +360,7 @@ public class TARDISChameleonPreset {
         cave.makePresets();
     }
 
-    public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
+    public TARDISChameleonColumn getColumn(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getBlueprint().get(d);
@@ -561,7 +561,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
+    public TARDISChameleonColumn getGlass(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getGlass().get(d);
@@ -762,7 +762,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
+    public TARDISChameleonColumn getStained(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getStained().get(d);

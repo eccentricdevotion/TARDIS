@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -95,7 +95,7 @@ public class TARDISPrefsMenuInventory {
         boolean hasTARDIS = rst.resultSet();
         if (hasTARDIS) {
             tardis = rst.getTardis();
-            values.add(rst.getTardis().getPreset().equals(PRESET.JUNK_MODE)); // junk mode
+            values.add(rst.getTardis().getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode
         } else {
             values.add(false);
         }
@@ -122,7 +122,7 @@ public class TARDISPrefsMenuInventory {
                 int cmd = pref.getCustomModelData();
                 boolean v;
                 if (pref == GUIPlayerPreferences.JUNK_TARDIS) {
-                    v = (tardis != null && tardis.getPreset().equals(PRESET.JUNK_MODE));
+                    v = (tardis != null && tardis.getPreset().equals(ChameleonPreset.JUNK_MODE));
                 } else {
                     v = values.get(pref.getSlot());
                 }

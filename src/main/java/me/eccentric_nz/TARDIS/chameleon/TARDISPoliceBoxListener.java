@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -92,7 +92,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             switch (slot) {
                                 case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 -> {
                                     // item frame preset
-                                    PRESET selected = PRESET.getItemFramePresetBySlot(slot);
+                                    ChameleonPreset selected = ChameleonPreset.getItemFramePresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
                                     if (hasSign) {
                                         updateChameleonSign(rsc.getData(), selected.toString(), player);
@@ -128,10 +128,11 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                         updateChameleonSign(rsc.getData(), custom, player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame().updateChameleonFrame(PRESET.ITEM, rsf.getLocation());
+                                        new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.ITEM, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + custom);
                                 }
+
                             }
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);

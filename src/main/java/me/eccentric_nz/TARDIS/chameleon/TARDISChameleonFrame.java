@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISChameleonFrame {
 
-    public void updateChameleonFrame(PRESET preset, String loc) {
+    public void updateChameleonFrame(ChameleonPreset preset, String loc) {
         // get location of Chameleon frame
         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
         if (location != null) {

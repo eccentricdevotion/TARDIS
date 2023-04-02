@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
@@ -62,7 +62,7 @@ class TARDISHandlesLandCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            if (tardis.getPreset().equals(PRESET.JUNK)) {
+            if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 TARDISMessage.handlesSend(player, "HANDLES_JUNK");
                 return true;
             }

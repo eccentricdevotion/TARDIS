@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -48,7 +48,7 @@ public class TARDISTravelSave {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id, PRESET preset) {
+    public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
         // we're thinking this is a saved destination name
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             HashMap<String, Object> whered = new HashMap<>();
@@ -87,7 +87,7 @@ public class TARDISTravelSave {
                         return true;
                     }
                     String invisibility = tac.getArea().getInvisibility();
-                    if (invisibility.equals("DENY") && preset.equals(PRESET.INVISIBLE)) {
+                    if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
                         // check preset
                         TARDISMessage.send(player, "AREA_NO_INVISIBLE");
                         return true;

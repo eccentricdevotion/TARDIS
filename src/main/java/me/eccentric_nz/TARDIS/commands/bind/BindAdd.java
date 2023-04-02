@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -116,12 +116,12 @@ class BindAdd {
                     set.put("name", which.toUpperCase(Locale.ENGLISH));
                 } else {
                     // check valid preset
-                    PRESET preset;
+                    ChameleonPreset preset;
                     if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(which)) {
                         set.put("name", "ITEM:" + which);
                     } else {
                         try {
-                            preset = PRESET.valueOf(which.toUpperCase(Locale.ENGLISH));
+                            preset = ChameleonPreset.valueOf(which.toUpperCase(Locale.ENGLISH));
                         } catch (IllegalArgumentException e) {
                             // abort
                             TARDISMessage.send(player, "ARG_PRESET");

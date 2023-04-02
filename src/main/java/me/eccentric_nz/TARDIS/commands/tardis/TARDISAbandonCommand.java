@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Location;
@@ -55,7 +55,7 @@ public class TARDISAbandonCommand {
         this.plugin = plugin;
     }
 
-    public static Sign getSign(Location l, COMPASS d, PRESET p) {
+    public static Sign getSign(Location l, COMPASS d, ChameleonPreset p) {
         Sign sign = null;
         World w = l.getWorld();
         int signx, signz, signy;
@@ -204,7 +204,7 @@ public class TARDISAbandonCommand {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
-                    PRESET preset = rs.getPreset();
+                    ChameleonPreset preset = rs.getPreset();
                     // need to be in tardis
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
@@ -213,7 +213,7 @@ public class TARDISAbandonCommand {
                         TARDISMessage.send(player, "NOT_IN_TARDIS");
                         return true;
                     }
-                    if (preset.equals(PRESET.JUNK_MODE)) {
+                    if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                         TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
                         return true;
                     }

@@ -23,7 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
@@ -320,7 +320,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                         plugin.getConfig().set("police_box.default_preset", "ITEM:" + args[1]);
                     } else {
                         try {
-                            PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                            ChameleonPreset.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                         } catch (IllegalArgumentException e) {
                             TARDISMessage.send(sender, "ARG_PRESET");
                             return true;

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -90,7 +90,7 @@ public class TARDISQuitListener implements Listener {
                         return;
                     }
                     // power off
-                    PRESET preset = tardis.getPreset();
+                    ChameleonPreset preset = tardis.getPreset();
                     boolean hidden = tardis.isHidden();
                     boolean lights = tardis.isLights_on();
                     // police box lamp, delay it incase the TARDIS needs rebuilding
@@ -100,7 +100,7 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(PRESET.ADAPTIVE) || preset.usesItemFrame()) {
+                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off

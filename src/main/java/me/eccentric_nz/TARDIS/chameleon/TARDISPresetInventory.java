@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -52,8 +52,8 @@ class TARDISPresetInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
 
-        for (PRESET preset : PRESET.values()) {
-            if (!PRESET.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
+        for (ChameleonPreset preset : ChameleonPreset.values()) {
+            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();

@@ -24,7 +24,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 /**
@@ -42,7 +42,7 @@ public class ResultSetTardisAbandoned {
     private int tardis_id;
     private int artron_level;
     private Schematic schematic;
-    private PRESET preset;
+    private ChameleonPreset preset;
     private boolean handbrake_on;
     private boolean hidden;
     private boolean tardis_init;
@@ -84,12 +84,12 @@ public class ResultSetTardisAbandoned {
                 schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
                 String p = rs.getString("chameleon_preset");
                 if (p.startsWith("ITEM:")) {
-                    preset = PRESET.ITEM;
+                    preset = ChameleonPreset.ITEM;
                 } else {
                     try {
-                        preset = PRESET.valueOf(p);
+                        preset = ChameleonPreset.valueOf(p);
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                 }
                 handbrake_on = rs.getBoolean("handbrake_on");
@@ -129,7 +129,7 @@ public class ResultSetTardisAbandoned {
         return schematic;
     }
 
-    public PRESET getPreset() {
+    public ChameleonPreset getPreset() {
         return preset;
     }
 

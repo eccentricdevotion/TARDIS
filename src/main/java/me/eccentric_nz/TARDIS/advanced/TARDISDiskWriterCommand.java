@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -86,7 +86,7 @@ public class TARDISDiskWriterCommand {
                 } else {
                     Tardis tardis = rs.getTardis();
                     int id = tardis.getTardis_id();
-                    PRESET preset = tardis.getPreset();
+                    ChameleonPreset preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     // TODO check for disk lore if MEDIUM difficulty
                     HashMap<String, Object> wherename = new HashMap<>();

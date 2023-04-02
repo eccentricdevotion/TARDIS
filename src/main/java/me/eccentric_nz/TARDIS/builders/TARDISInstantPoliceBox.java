@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Location;
@@ -39,9 +39,9 @@ public class TARDISInstantPoliceBox {
 
     private final TARDIS plugin;
     private final BuildData bd;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
 
-    public TARDISInstantPoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
+    public TARDISInstantPoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;

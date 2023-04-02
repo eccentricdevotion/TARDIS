@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -87,7 +87,7 @@ public class TARDISRemoteKeyListener implements Listener {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
             boolean powered = tardis.isPowered_on();
-            PRESET preset = tardis.getPreset();
+            ChameleonPreset preset = tardis.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                 return;
@@ -125,7 +125,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     tpblt.toggleLamp(id, !powered, preset);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
                 }
-            } else if (preset.equals(PRESET.INVISIBLE)) {
+            } else if (preset.equals(ChameleonPreset.INVISIBLE)) {
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 whered.put("door_type", 1);

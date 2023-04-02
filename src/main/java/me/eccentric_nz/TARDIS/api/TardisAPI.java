@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.api;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -444,7 +444,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(int id, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(int id, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
@@ -454,7 +454,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(UUID uuid, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
@@ -464,7 +464,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(Player player, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Spawn an abandoned TARDIS at the specified Bukkit Location.
@@ -476,7 +476,7 @@ public interface TardisAPI {
      *                  at the door)
      * @throws TARDISException if the console type is not valid or TARDIS abandonment is disabled on the server
      */
-    void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException;
+    void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException;
 
     /**
      * Convenience method to spawn an abandoned TARDIS at the specified Bukkit Location. The interior will default to

@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellInventory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -133,7 +133,7 @@ public class TARDISControlListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        if (tardis.getPreset().equals(PRESET.JUNK)) {
+                        if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                             return;
                         }
                         // check they initialised

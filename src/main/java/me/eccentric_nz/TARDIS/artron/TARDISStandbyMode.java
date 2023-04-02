@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetStandby;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -81,7 +81,7 @@ public class TARDISStandbyMode implements Runnable {
                         delay = 20L;
                     }
                     // police box lamp, delay it incase the TARDIS needs rebuilding
-                    if (standbyData.getPreset().equals(PRESET.ADAPTIVE) || standbyData.getPreset().usesItemFrame()) {
+                    if (standbyData.getPreset().equals(ChameleonPreset.ADAPTIVE) || standbyData.getPreset().usesItemFrame()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.getPreset()), delay);
                     }
                     // if lights are on, turn them off

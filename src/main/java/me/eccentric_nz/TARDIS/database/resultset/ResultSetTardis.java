@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -128,31 +128,31 @@ public class ResultSetTardis {
                     if (!rs.wasNull() && !rotor.isEmpty()) {
                         frame = UUID.fromString(rotor);
                     }
-                    PRESET preset;
-                    PRESET demat;
+                    ChameleonPreset preset;
+                    ChameleonPreset demat;
                     String itemPreset = "";
                     String itemDemat = "";
                     try {
                         String p = rs.getString("chameleon_preset");
                         if (p.startsWith("ITEM:")) {
-                            preset = PRESET.ITEM;
+                            preset = ChameleonPreset.ITEM;
                             itemPreset = p.split(":")[1];
                         } else {
-                            preset = PRESET.valueOf(p);
+                            preset = ChameleonPreset.valueOf(p);
                         }
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                     try {
                         String d = rs.getString("chameleon_demat");
                         if (d.startsWith("ITEM:")) {
-                            demat = PRESET.ITEM;
+                            demat = ChameleonPreset.ITEM;
                             itemPreset = d.split(":")[1];
                         } else {
-                            demat = PRESET.valueOf(d);
+                            demat = ChameleonPreset.valueOf(d);
                         }
                     } catch (IllegalArgumentException e) {
-                        demat = PRESET.FACTORY;
+                        demat = ChameleonPreset.FACTORY;
                     }
                     tardis = new Tardis(
                             rs.getInt("tardis_id"),

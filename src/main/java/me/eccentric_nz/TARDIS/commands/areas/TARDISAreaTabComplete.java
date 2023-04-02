@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.areas;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -40,7 +40,7 @@ public class TARDISAreaTabComplete extends TARDISCompleter implements TabComplet
     public TARDISAreaTabComplete() {
         INVISIBILTY_SUBS.add("ALLOW");
         INVISIBILTY_SUBS.add("DENY");
-        for (PRESET preset : PRESET.values()) {
+        for (ChameleonPreset preset : ChameleonPreset.values()) {
             INVISIBILTY_SUBS.add(preset.toString());
         }
         for (COMPASS compass : COMPASS.values()) {

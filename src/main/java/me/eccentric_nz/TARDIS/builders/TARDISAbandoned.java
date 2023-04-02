@@ -42,7 +42,7 @@ public class TARDISAbandoned {
         this.plugin = plugin;
     }
 
-    public void spawn(Location l, Schematic schm, PRESET preset, String item, COMPASS d, Player player) {
+    public void spawn(Location l, Schematic schm, ChameleonPreset preset, String item, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name");
@@ -59,7 +59,7 @@ public class TARDISAbandoned {
         set.put("abandoned", 1);
         set.put("powered_on", 0);
         set.put("lastuse", Long.MAX_VALUE);
-        if (preset == PRESET.ITEM) {
+        if (preset == ChameleonPreset.ITEM) {
             set.put("chameleon_preset", "ITEM:"+item);
             set.put("chameleon_demat", "ITEM:"+item);
         } else {
@@ -99,7 +99,7 @@ public class TARDISAbandoned {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                BlockData data = (preset.equals(PRESET.FACTORY)) ? Material.LIGHT_GRAY_TERRACOTTA.createBlockData() : Material.BLUE_WOOL.createBlockData();
+                BlockData data = (preset.equals(ChameleonPreset.FACTORY)) ? Material.LIGHT_GRAY_TERRACOTTA.createBlockData() : Material.BLUE_WOOL.createBlockData();
                 TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, data, Adaption.OFF);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);

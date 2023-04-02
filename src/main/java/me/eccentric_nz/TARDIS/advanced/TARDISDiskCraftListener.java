@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -137,8 +137,8 @@ public class TARDISDiskCraftListener implements Listener {
                                     if (items.size() > 0) {
                                         Material m = items.get(0).getType();
                                         String preset = "";
-                                        if (PRESET.getPreset(m) != null) {
-                                            preset = PRESET.getPreset(m).toString();
+                                        if (ChameleonPreset.getPreset(m) != null) {
+                                            preset = ChameleonPreset.getPreset(m).toString();
                                         }
                                         if (!preset.isEmpty()) {
                                             List<String> disk_lore = Collections.singletonList(preset);

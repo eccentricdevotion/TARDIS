@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
@@ -87,7 +87,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                 close(player);
                             } else {
                                 TARDISChameleonColumn chameleonColumn = null;
-                                PRESET preset;
+                                ChameleonPreset preset;
                                 if (slot == 50) {
                                     // load current preset
                                     preset = rs.getTardis().getPreset();
@@ -99,7 +99,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                     }
                                 } else if (slot == 51) {
                                     // load shell
-                                    preset = PRESET.CONSTRUCT;
+                                    preset = ChameleonPreset.CONSTRUCT;
                                     // load saved construct
                                     HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);
@@ -122,7 +122,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener implements Lis
                                     }
                                 } else {
                                     // load preset
-                                    preset = PRESET.getPresetBySlot(slot);
+                                    preset = ChameleonPreset.getPresetBySlot(slot);
                                     chameleonColumn = plugin.getPresets().getColumn(preset, COMPASS.EAST);
                                 }
                                 if (chameleonColumn != null) {

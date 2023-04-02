@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -326,7 +326,7 @@ public class TARDISGeneralInstanceKeeper {
 
     private HashMap<String, String> buildSignLookup() {
         HashMap<String, String> lookup = new HashMap<>();
-        for (PRESET p : PRESET.values()) {
+        for (ChameleonPreset p : ChameleonPreset.values()) {
             if (!p.getFirstLine().isEmpty() && !lookup.containsKey(p.getFirstLine())) {
                 lookup.put(p.getFirstLine(), p.getSecondLine());
             }

@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -38,7 +38,7 @@ public class ResultSetTardisPreset {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private PRESET preset;
+    private ChameleonPreset preset;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
@@ -70,12 +70,12 @@ public class ResultSetTardisPreset {
                 rs.next();
                 String p = rs.getString("chameleon_preset");
                 if (p.startsWith("ITEM:")) {
-                    preset = PRESET.ITEM;
+                    preset = ChameleonPreset.ITEM;
                 } else {
                     try {
-                        preset = PRESET.valueOf(p);
+                        preset = ChameleonPreset.valueOf(p);
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                 }
                 return true;
@@ -98,7 +98,7 @@ public class ResultSetTardisPreset {
         }
     }
 
-    public PRESET getPreset() {
+    public ChameleonPreset getPreset() {
         return preset;
     }
 }

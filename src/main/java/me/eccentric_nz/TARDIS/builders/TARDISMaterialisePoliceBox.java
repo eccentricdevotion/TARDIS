@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -46,7 +46,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private final TARDIS plugin;
     private final BuildData bd;
     private final int loops;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private int task;
     private int i;
     private ItemFrame frame;
@@ -54,7 +54,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private Material dye;
     private String pb;
 
-    TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
+    TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();
@@ -112,7 +112,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound;
-                            if (preset.equals(PRESET.JUNK_MODE)) {
+                            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
@@ -203,7 +203,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
                     // update demat field in database
                     String update = preset.toString();
-                    if (preset == PRESET.ITEM) {
+                    if (preset == ChameleonPreset.ITEM) {
                         update = "ITEM:" + pb;
                     }
                     TARDISBuilderUtility.updateChameleonDemat(update, bd.getTardisID());

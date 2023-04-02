@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -182,7 +182,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheret.put("tardis_id", id);
                                     ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
                                     if (resultSetTardis.resultSet()) {
-                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
+                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                             // check preset
                                             TARDISMessage.send(player, "AREA_NO_INVISIBLE");
                                             return;

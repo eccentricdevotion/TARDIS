@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -63,7 +63,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             ROOT_SUBS.add(tc.toString());
         }
         RECHARGER_SUBS = getPublicRechargers();
-        for (PRESET preset : PRESET.values()) {
+        for (ChameleonPreset preset : ChameleonPreset.values()) {
             PRESET_SUBS.add(preset.toString());
         }
         for (Updateable u : Updateable.values()) {

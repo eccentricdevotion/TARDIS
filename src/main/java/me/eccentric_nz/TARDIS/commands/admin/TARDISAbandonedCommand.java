@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -64,12 +64,12 @@ class TARDISAbandonedCommand {
             return true;
         }
         Schematic s = Consoles.getBY_NAMES().get(schm);
-        PRESET preset;
+        ChameleonPreset preset;
         if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
-            preset = PRESET.ITEM;
+            preset = ChameleonPreset.ITEM;
         } else {
             try {
-                preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 TARDISMessage.send(sender, "ABANDONED_PRESET");
                 return true;

@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -137,8 +137,8 @@ public class TARDISHandbrakeListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        PRESET preset = tardis.getPreset();
-                        if (preset.equals(PRESET.JUNK)) {
+                        ChameleonPreset preset = tardis.getPreset();
+                        if (preset.equals(ChameleonPreset.JUNK)) {
                             return;
                         }
                         UUID ownerUUID = tardis.getUuid();
@@ -168,7 +168,7 @@ public class TARDISHandbrakeListener implements Listener {
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
-                                    if (preset.equals(PRESET.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                    if (preset.equals(ChameleonPreset.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         TARDISMessage.send(player, "TRAVEL_NEED_DEST");
                                         return;
                                     }

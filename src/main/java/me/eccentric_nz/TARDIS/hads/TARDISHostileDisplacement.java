@@ -53,7 +53,7 @@ class TARDISHostileDisplacement {
         this.plugin = plugin;
     }
 
-    void moveTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void moveTARDIS(int id, UUID uuid, Player hostile, ChameleonPreset preset) {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");

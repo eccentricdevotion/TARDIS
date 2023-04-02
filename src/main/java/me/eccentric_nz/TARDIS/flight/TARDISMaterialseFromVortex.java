@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -144,7 +144,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                         exit.getWorld().loadChunk(exit.getChunk());
                     }
-                    PRESET preset = tardis.getPreset();
+                    ChameleonPreset preset = tardis.getPreset();
                     COMPASS sd = rsn.getDirection();
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     boolean minecart = false;
@@ -223,7 +223,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         }
                     }, materialisation_delay - 140L);
                     boolean mine_sound = minecart;
-                    Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake;
+                    Location sound_loc = (preset.equals(ChameleonPreset.JUNK_MODE)) ? exit : handbrake;
                     Location external_sound_loc = exit;
                     boolean malchk = malfunction;
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
@@ -232,7 +232,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         plugin.getPM().callEvent(new TARDISMaterialisationEvent(player, tardis, final_location));
                         plugin.getPresetBuilder().buildPreset(bd);
                         if (!mine_sound) {
-                            if (!preset.equals(PRESET.JUNK_MODE)) {
+                            if (!preset.equals(ChameleonPreset.JUNK_MODE)) {
                                 if (!malchk) {
                                     TARDISSounds.playTARDISSound(sound_loc, landSFX);
                                     TARDISSounds.playTARDISSound(external_sound_loc, landSFX);

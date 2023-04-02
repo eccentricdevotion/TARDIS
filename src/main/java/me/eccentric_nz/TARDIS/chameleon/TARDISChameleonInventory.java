@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -42,11 +42,11 @@ public class TARDISChameleonInventory {
     private final ItemStack[] terminal;
     private final TARDIS plugin;
     private final Adaption adapt;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final ItemStack on;
     private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, PRESET preset) {
+    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, ChameleonPreset preset) {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
@@ -125,7 +125,7 @@ public class TARDISChameleonInventory {
             lock.setItemMeta(circuit);
         }
         // Disabled radio button
-        boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
+        boolean isFactoryOff = preset.equals(ChameleonPreset.FACTORY) && adapt.equals(Adaption.OFF);
         ItemStack fac = isFactoryOff ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
         String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
@@ -139,25 +139,25 @@ public class TARDISChameleonInventory {
         // Invisible radio button
         ItemStack not;
         if (plugin.getConfig().getBoolean("allow.invisibility")) {
-            not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
+            not = (preset.equals(ChameleonPreset.INVISIBLE)) ? on.clone() : off.clone();
             ItemMeta blue = not.getItemMeta();
-            String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+            String ionoff = (preset.equals(ChameleonPreset.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
             blue.setDisplayName(ionoff);
             not.setItemMeta(blue);
         } else {
             not = null;
         }
         // Shorted out radio button
-        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
+        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(ChameleonPreset.INVISIBLE) && !preset.equals(ChameleonPreset.FACTORY) && !preset.equals(ChameleonPreset.CONSTRUCT);
         ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         ItemMeta set = pre.getItemMeta();
         String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
         set.setDisplayName(sonoff);
         pre.setItemMeta(set);
         // Construct radio button
-        ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
+        ItemStack bui = (preset.equals(ChameleonPreset.CONSTRUCT)) ? on.clone() : off.clone();
         ItemMeta lder = bui.getItemMeta();
-        String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String conoff = (preset.equals(ChameleonPreset.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
         lder.setDisplayName(conoff);
         bui.setItemMeta(lder);
         // Cancel / close

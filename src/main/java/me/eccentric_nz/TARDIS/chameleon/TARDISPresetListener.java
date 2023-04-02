@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -101,7 +101,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         updateChameleonSign(rsf.getData(), "CUSTOM", player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame().updateChameleonFrame(PRESET.CUSTOM, rsf.getLocation());
+                                        new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CUSTOM, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                 }
@@ -127,7 +127,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                 }
                                 case 53 -> close(player);
                                 default -> {
-                                    PRESET selected = PRESET.getPresetBySlot(slot);
+                                    ChameleonPreset selected = ChameleonPreset.getPresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
                                     if (hasSign) {
                                         updateChameleonSign(rsf.getData(), selected.toString(), player);
@@ -137,6 +137,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                 }
+
                             }
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);

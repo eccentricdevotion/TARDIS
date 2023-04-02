@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -44,7 +44,7 @@ public class TARDISTravelArea {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id, PRESET preset) {
+    public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("area_name", args[1]);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
@@ -62,7 +62,7 @@ public class TARDISTravelArea {
         }
         // check whether this is a no invisibility area
         String invisibility = rsa.getArea().getInvisibility();
-        if (invisibility.equals("DENY") && preset.equals(PRESET.INVISIBLE)) {
+        if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
             // check preset
             TARDISMessage.send(player, "AREA_NO_INVISIBLE");
             return true;

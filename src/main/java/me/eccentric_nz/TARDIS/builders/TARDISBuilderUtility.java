@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.World;
 
@@ -54,7 +54,7 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getMaterialForItemFrame(PRESET preset, int id, boolean isMaterialisation) {
+    public static Material getMaterialForItemFrame(ChameleonPreset preset, int id, boolean isMaterialisation) {
         switch (preset) {
             case ITEM -> {
                 ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);

@@ -112,7 +112,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             UUID uuid = player.getUniqueId();
-                            PRESET preset = tardis.getPreset();
+                            ChameleonPreset preset = tardis.getPreset();
                             Adaption adapt = tardis.getAdaption();
                             switch (slot) {
                                 case 0 ->
@@ -332,7 +332,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         where.put("type", Control.FRAME.getId());
         ResultSetControls rsf = new ResultSetControls(plugin, where, false);
         if (rsf.resultSet()) {
-            new TARDISChameleonFrame().updateChameleonFrame(PRESET.CONSTRUCT, rsf.getLocation());
+            new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CONSTRUCT, rsf.getLocation());
         }
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild

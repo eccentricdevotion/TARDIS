@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -61,15 +61,15 @@ public class TARDISPresetDestroyerFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            PRESET demat = tardis.getDemat();
-            PRESET preset = tardis.getPreset();
+            ChameleonPreset demat = tardis.getDemat();
+            ChameleonPreset preset = tardis.getPreset();
             // load the chunk if unloaded
             if (!dd.getLocation().getWorld().isChunkLoaded(dd.getLocation().getChunk())) {
                 dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
             }
-            if (!demat.equals(PRESET.INVISIBLE)) {
+            if (!demat.equals(ChameleonPreset.INVISIBLE)) {
                 Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
-                if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
+                if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(ChameleonPreset.FACTORY)) || demat.equals(ChameleonPreset.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
                     if (dd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -88,16 +88,16 @@ public class TARDISPresetDestroyerFactory {
                         TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
                     }
                 }
-                if (preset.equals(PRESET.JUNK_MODE)) {
+                if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                     dd.setThrottle(SpaceTimeThrottle.JUNK);
                 }
-                if (demat.equals(PRESET.JUNK)) {
+                if (demat.equals(ChameleonPreset.JUNK)) {
                     TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
-                    if (demat.equals(PRESET.SWAMP)) {
+                    if (demat.equals(ChameleonPreset.SWAMP)) {
                         // remove door
                         destroyDoor(dd.getTardisID());
                     }
@@ -136,7 +136,7 @@ public class TARDISPresetDestroyerFactory {
         }
     }
 
-    public void destroySign(Location l, COMPASS d, PRESET p) {
+    public void destroySign(Location l, COMPASS d, ChameleonPreset p) {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
@@ -248,7 +248,7 @@ public class TARDISPresetDestroyerFactory {
             default -> 2;
         };
         TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
-        if (p.equals(PRESET.SWAMP)) {
+        if (p.equals(ChameleonPreset.SWAMP)) {
             TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
         }
     }
@@ -281,12 +281,12 @@ public class TARDISPresetDestroyerFactory {
         TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
     }
 
-    public void destroyLamp(Location l, PRESET p) {
+    public void destroyLamp(Location l, ChameleonPreset p) {
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
-        if (p.equals(PRESET.CAKE)) {
+        if (p.equals(ChameleonPreset.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
                     TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);

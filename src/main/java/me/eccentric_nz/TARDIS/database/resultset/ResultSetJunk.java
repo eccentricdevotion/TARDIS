@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +49,7 @@ public class ResultSetJunk {
     private String handbrake;
     private String wall;
     private String floor;
-    private PRESET preset;
+    private ChameleonPreset preset;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the junk table.
@@ -105,9 +105,9 @@ public class ResultSetJunk {
                     wall = rs.getString("wall");
                     floor = rs.getString("floor");
                     try {
-                        preset = PRESET.valueOf(rs.getString("preset"));
+                        preset = ChameleonPreset.valueOf(rs.getString("preset"));
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                 }
             } else {
@@ -159,7 +159,7 @@ public class ResultSetJunk {
         return floor;
     }
 
-    public PRESET getPreset() {
+    public ChameleonPreset getPreset() {
         return preset;
     }
 }

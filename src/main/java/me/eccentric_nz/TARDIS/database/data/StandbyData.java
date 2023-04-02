@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 
 import java.util.UUID;
 
@@ -26,10 +26,10 @@ public class StandbyData {
     private final UUID uuid;
     private final boolean hidden;
     private final boolean lights;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final boolean lanterns;
 
-    public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
+    public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, ChameleonPreset preset, boolean lanterns) {
         this.level = level;
         this.uuid = uuid;
         this.hidden = hidden;
@@ -54,7 +54,7 @@ public class StandbyData {
         return lights;
     }
 
-    public PRESET getPreset() {
+    public ChameleonPreset getPreset() {
         return preset;
     }
 

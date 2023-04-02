@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -248,7 +248,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     int artron = tardis.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     UUID tlUUID = tardis.getUuid();
-                                    PRESET preset = tardis.getPreset();
+                                    ChameleonPreset preset = tardis.getPreset();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = tardis.getCompanions();
@@ -444,7 +444,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 TARDISMessage.send(player, "SIEGE_NO_ENTER");
                                                 return;
                                             }
-                                            if (preset.equals(PRESET.JUNK_MODE)) {
+                                            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                                                 TARDISMessage.send(player, "JUNK_NO_ENTRY");
                                                 return;
                                             }

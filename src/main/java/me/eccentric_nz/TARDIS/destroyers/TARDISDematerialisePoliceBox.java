@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -39,13 +39,13 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     private final TARDIS plugin;
     private final DestroyData dd;
     private final int loops;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private int task;
     private int i;
     private ItemFrame frame;
     private ItemStack is;
 
-    TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, PRESET preset) {
+    TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.dd = dd;
         loops = dd.getThrottle().getLoops();

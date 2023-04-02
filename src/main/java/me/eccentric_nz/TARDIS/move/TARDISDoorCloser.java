@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -73,7 +73,7 @@ public class TARDISDoorCloser {
             block.setBlockData(closeable, true);
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            PRESET preset = null;
+            ChameleonPreset preset = null;
             // get all companion UUIDs
             List<UUID> uuids = new ArrayList<>();
             HashMap<String, Object> where = new HashMap<>();
@@ -104,7 +104,7 @@ public class TARDISDoorCloser {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            if (rs.getTardis().getPreset().equals(PRESET.SWAMP)) {
+            if (rs.getTardis().getPreset().equals(ChameleonPreset.SWAMP)) {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
             // unset trackers

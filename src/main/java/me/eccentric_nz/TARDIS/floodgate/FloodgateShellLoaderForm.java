@@ -13,7 +13,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -46,8 +46,8 @@ public class FloodgateShellLoaderForm {
         builder.title("TARDIS Shell Loader");
         builder.button("Current preset", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/chameleon_button.png");
         builder.button("Saved construct", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/construct_button.png");
-        for (PRESET preset : PRESET.values()) {
-            if (!PRESET.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
+        for (ChameleonPreset preset : ChameleonPreset.values()) {
+            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     String path = String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT));
                     builder.button(preset.getDisplayName(), FormImage.Type.PATH, path);
@@ -73,7 +73,7 @@ public class FloodgateShellLoaderForm {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 TARDISChameleonColumn chameleonColumn = null;
-                PRESET preset;
+                ChameleonPreset preset;
                 if (label.equals("Current preset")) {
                     // load current preset
                     preset = rs.getTardis().getPreset();
@@ -85,7 +85,7 @@ public class FloodgateShellLoaderForm {
                     }
                 } else if (label.equals("Saved construct")) {
                     // load shell
-                    preset = PRESET.CONSTRUCT;
+                    preset = ChameleonPreset.CONSTRUCT;
                     // load saved construct
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
@@ -108,7 +108,7 @@ public class FloodgateShellLoaderForm {
                     }
                 } else {
                     // load preset
-                    preset = PRESET.valueOf(label);
+                    preset = ChameleonPreset.valueOf(label);
                     chameleonColumn = plugin.getPresets().getColumn(preset, COMPASS.EAST);
                 }
                 if (chameleonColumn != null) {

@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -38,7 +38,7 @@ public class FloodgateChameleonPresetForm {
     public void send() {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Chameleon Circuit");
-        for (PRESET preset : PRESET.values()) {
+        for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (preset.isBlockPreset() && TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                 String path = String.format("textures/%s.png", FloodgateTextures.lookup.get(preset.getGuiDisplay().toString()));
                 builder.button(preset.toString(), FormImage.Type.PATH, path);
@@ -81,7 +81,7 @@ public class FloodgateChameleonPresetForm {
                 boolean hasFrame = rsf.resultSet();
                 // set the Chameleon Circuit sign(s)
                 HashMap<String, Object> set = new HashMap<>();
-                PRESET selected = PRESET.valueOf(label);
+                ChameleonPreset selected = ChameleonPreset.valueOf(label);
                 set.put("chameleon_preset", selected.toString());
                 if (hasSign) {
                     updateChameleonSign(rsf.getData(), selected.toString(), player);

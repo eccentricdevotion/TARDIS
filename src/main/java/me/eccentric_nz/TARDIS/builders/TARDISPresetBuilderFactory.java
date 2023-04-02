@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -46,10 +46,10 @@ import org.bukkit.block.BlockFace;
  */
 public class TARDISPresetBuilderFactory {
 
-    final List<PRESET> no_block_under_door;
+    final List<ChameleonPreset> no_block_under_door;
     private final TARDIS plugin;
     private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
-    private final List<PRESET> notSubmarinePresets;
+    private final List<ChameleonPreset> notSubmarinePresets;
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
         this.plugin = plugin;
@@ -58,19 +58,19 @@ public class TARDISPresetBuilderFactory {
         face_map.put(COMPASS.NORTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
         face_map.put(COMPASS.WEST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
         no_block_under_door = new ArrayList<>();
-        no_block_under_door.add(PRESET.ANGEL);
-        no_block_under_door.add(PRESET.DUCK);
-        no_block_under_door.add(PRESET.GAZEBO);
-        no_block_under_door.add(PRESET.HELIX);
-        no_block_under_door.add(PRESET.LIBRARY);
-        no_block_under_door.add(PRESET.PANDORICA);
-        no_block_under_door.add(PRESET.ROBOT);
-        no_block_under_door.add(PRESET.SWAMP);
-        no_block_under_door.add(PRESET.TORCH);
-        no_block_under_door.add(PRESET.WELL);
+        no_block_under_door.add(ChameleonPreset.ANGEL);
+        no_block_under_door.add(ChameleonPreset.DUCK);
+        no_block_under_door.add(ChameleonPreset.GAZEBO);
+        no_block_under_door.add(ChameleonPreset.HELIX);
+        no_block_under_door.add(ChameleonPreset.LIBRARY);
+        no_block_under_door.add(ChameleonPreset.PANDORICA);
+        no_block_under_door.add(ChameleonPreset.ROBOT);
+        no_block_under_door.add(ChameleonPreset.SWAMP);
+        no_block_under_door.add(ChameleonPreset.TORCH);
+        no_block_under_door.add(ChameleonPreset.WELL);
         notSubmarinePresets = new ArrayList<>();
-        notSubmarinePresets.add(PRESET.LAMP);
-        notSubmarinePresets.add(PRESET.MINESHAFT);
+        notSubmarinePresets.add(ChameleonPreset.LAMP);
+        notSubmarinePresets.add(ChameleonPreset.MINESHAFT);
     }
 
     /**
@@ -84,7 +84,7 @@ public class TARDISPresetBuilderFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            PRESET preset = tardis.getPreset();
+            ChameleonPreset preset = tardis.getPreset();
             Biome biome;
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = bd.getLocation().getChunk();
@@ -104,9 +104,9 @@ public class TARDISPresetBuilderFactory {
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
             }
-            PRESET demat = tardis.getDemat();
+            ChameleonPreset demat = tardis.getDemat();
             Material chameleonMaterial = Material.LIGHT_GRAY_TERRACOTTA;
-            if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
+            if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(ChameleonPreset.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(ChameleonPreset.SUBMERGED)) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
                 if (bd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -121,7 +121,7 @@ public class TARDISPresetBuilderFactory {
             boolean hidden = tardis.isHidden();
             // get submarine preferences
             if (bd.isSubmarine() && notSubmarinePresets.contains(preset)) {
-                preset = PRESET.YELLOW;
+                preset = ChameleonPreset.YELLOW;
                 TARDISMessage.send(bd.getPlayer().getPlayer(), "SUB_UNSUITED");
             }
             /*
@@ -157,9 +157,9 @@ public class TARDISPresetBuilderFactory {
                 if (bd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
                     TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
-            } else if (!preset.equals(PRESET.INVISIBLE)) {
+            } else if (!preset.equals(ChameleonPreset.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                if (preset.equals(PRESET.JUNK)) {
+                if (preset.equals(ChameleonPreset.JUNK)) {
                     TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, bd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
@@ -180,7 +180,7 @@ public class TARDISPresetBuilderFactory {
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-                    new TARDISInstantPreset(plugin, bd, PRESET.INVISIBLE, material.createBlockData(), false).buildPreset();
+                    new TARDISInstantPreset(plugin, bd, ChameleonPreset.INVISIBLE, material.createBlockData(), false).buildPreset();
                 }, 375L);
             }
             // update demat so it knows about the current preset after it has changed
@@ -192,14 +192,14 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    private PRESET adapt(Biome biome, Adaption adaption) {
+    private ChameleonPreset adapt(Biome biome, Adaption adaption) {
         if (adaption.equals(Adaption.BLOCK)) {
-            return PRESET.ADAPTIVE;
+            return ChameleonPreset.ADAPTIVE;
         } else {
             try {
-                return PRESET.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+                return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
             } catch (IllegalArgumentException e) {
-                return PRESET.FACTORY;
+                return ChameleonPreset.FACTORY;
             }
         }
     }

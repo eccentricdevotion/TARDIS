@@ -132,14 +132,14 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                             updateChameleonSign(rsc.getData(), "FACTORY", player);
                                         }
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(PRESET.FACTORY, rsf.getLocation());
+                                            tcf.updateChameleonFrame(ChameleonPreset.FACTORY, rsf.getLocation());
                                         }
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
                                         set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(PRESET.POLICE_BOX_BLUE, rsf.getLocation());
+                                            tcf.updateChameleonFrame(ChameleonPreset.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     }
@@ -156,12 +156,12 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(PRESET.POLICE_BOX_BLUE, rsf.getLocation());
+                                            tcf.updateChameleonFrame(ChameleonPreset.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     } else {
                                         toggleOthers(ChameleonOption.ADAPTIVE, view);
-                                        PRESET adaptive = (tardis.getPreset().equals(PRESET.SUBMERGED)) ? PRESET.SUBMERGED : PRESET.FACTORY;
+                                        ChameleonPreset adaptive = (tardis.getPreset().equals(ChameleonPreset.SUBMERGED)) ? ChameleonPreset.SUBMERGED : ChameleonPreset.FACTORY;
                                         if (hasFrame) {
                                             tcf.updateChameleonFrame(adaptive, rsf.getLocation());
                                         }
@@ -201,7 +201,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                             updateChameleonSign(rsc.getData(), "INVISIBLE", player);
                                         }
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(PRESET.INVISIBLE, rsf.getLocation());
+                                            tcf.updateChameleonFrame(ChameleonPreset.INVISIBLE, rsf.getLocation());
                                         }
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     } else {
@@ -209,7 +209,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(PRESET.POLICE_BOX_BLUE, rsf.getLocation());
+                                            tcf.updateChameleonFrame(ChameleonPreset.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     }
@@ -246,7 +246,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                             Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
                                             Biome biome = current.getBlock().getBiome();
                                             // get which preset
-                                            PRESET which = getAdaption(biome);
+                                            ChameleonPreset which = getAdaption(biome);
                                             if (which != null) {
                                                 set.put("adapti_on", 0);
                                                 set.put("chameleon_preset", which.toString());
@@ -324,9 +324,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         return (ChatColor.stripColor(im.getDisplayName()).equals("BIOME"));
     }
 
-    private PRESET getAdaption(Biome biome) {
+    private ChameleonPreset getAdaption(Biome biome) {
         try {
-            return PRESET.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
         } catch (IllegalArgumentException e) {
             return null;
         }

@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -101,7 +101,7 @@ public class TARDISDirectionCommand {
                 return true;
             }
             boolean hid = tardis.isHidden();
-            PRESET demat = tardis.getDemat();
+            ChameleonPreset demat = tardis.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
@@ -128,16 +128,16 @@ public class TARDISDirectionCommand {
             COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
-                if (demat.equals(PRESET.DUCK)) {
+                if (demat.equals(ChameleonPreset.DUCK)) {
                     plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
                 }
-                if (demat.equals(PRESET.MINESHAFT)) {
+                if (demat.equals(ChameleonPreset.MINESHAFT)) {
                     plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
                 }
-                if (demat.equals(PRESET.LAMP)) {
+                if (demat.equals(ChameleonPreset.LAMP)) {
                     plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
                 }
-                if (demat.equals(PRESET.JUNK_MODE)) {
+                if (demat.equals(ChameleonPreset.JUNK_MODE)) {
                     plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.sudo;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -46,7 +46,7 @@ public class SudoChameleon {
             chameleon = "ITEM:" + args[1];
         } else {
             try {
-                PRESET preset = PRESET.valueOf(args[2].toUpperCase());
+                ChameleonPreset preset = ChameleonPreset.valueOf(args[2].toUpperCase());
                 if (preset.getSlot() == -1) {
                     TARDISMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
                 } else {

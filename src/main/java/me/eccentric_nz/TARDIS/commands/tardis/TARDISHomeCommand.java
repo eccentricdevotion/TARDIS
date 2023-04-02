@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -63,7 +63,7 @@ class TARDISHomeCommand {
                 } else {
                     try {
                         which = args[2].toUpperCase(Locale.ENGLISH);
-                        PRESET.valueOf(which);
+                        ChameleonPreset.valueOf(which);
                     } catch (IllegalArgumentException e) {
                         // abort
                         TARDISMessage.send(player, "ARG_PRESET");

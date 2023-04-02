@@ -140,7 +140,7 @@ public class ChemistryBlockListener implements Listener {
                             return;
                         }
                     }
-                    default -> {
+                    default -> { // Product crafting
                         // product
                         if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
                             menu = new ProductInventory(plugin).getMenu();

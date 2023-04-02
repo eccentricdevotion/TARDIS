@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,11 +44,11 @@ public class TARDISShellBuilder {
     private final TARDIS plugin;
     private final TARDISChameleonColumn column;
     private final Location centre;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final Material random_colour;
     private final List<TARDISInstantPreset.ProblemBlock> do_at_end = new ArrayList<>();
 
-    public TARDISShellBuilder(TARDIS plugin, PRESET preset, TARDISChameleonColumn column, Location centre) {
+    public TARDISShellBuilder(TARDIS plugin, ChameleonPreset preset, TARDISChameleonColumn column, Location centre) {
         this.plugin = plugin;
         this.preset = preset;
         this.column = column;
@@ -123,7 +123,7 @@ public class TARDISShellBuilder {
                 Material mat = colData[yy].getMaterial();
                 switch (mat) {
                     case WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL, PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL -> {
-                        if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
+                        if (preset.equals(ChameleonPreset.PARTY) || (preset.equals(ChameleonPreset.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, random_colour);
                         }
                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);

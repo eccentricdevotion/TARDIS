@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 
 /**
@@ -58,18 +58,18 @@ public class ResultSetStandby {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     StandbyData sd;
-                    PRESET preset;
+                    ChameleonPreset preset;
                     try {
                         if (rs.getString("chameleon_preset").startsWith("ITEM")) {
-                            preset = PRESET.ITEM;
+                            preset = ChameleonPreset.ITEM;
                         } else {
-                            preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                            preset = ChameleonPreset.valueOf(rs.getString("chameleon_preset"));
                         }
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                     switch (rs.getString("size")) {
-                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, ChameleonPreset.JUNK, false);
                         case "ARCHIVE" -> {
                             HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", rs.getString("uuid"));

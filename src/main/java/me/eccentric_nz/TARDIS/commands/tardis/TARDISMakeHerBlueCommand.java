@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -71,7 +71,7 @@ class TARDISMakeHerBlueCommand {
             TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
             return true;
         }
-        if (!tardis.getPreset().equals(PRESET.INVISIBLE) && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
+        if (!tardis.getPreset().equals(ChameleonPreset.INVISIBLE) && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
             return true;
         }
@@ -82,7 +82,7 @@ class TARDISMakeHerBlueCommand {
             tcc.getCircuits();
         }
         if (tcc != null) {
-            if (!tcc.hasInvisibility() && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
+            if (!tcc.hasInvisibility() && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_MISSING");
                 return true;
             }
@@ -132,7 +132,7 @@ class TARDISMakeHerBlueCommand {
         bd.setTardisID(id);
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
-        String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
+        String message = (tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
         TARDISMessage.send(player.getPlayer(), message);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
