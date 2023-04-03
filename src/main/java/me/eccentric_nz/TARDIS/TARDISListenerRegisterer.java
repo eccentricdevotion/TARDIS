@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
 import me.eccentric_nz.TARDIS.advanced.*;

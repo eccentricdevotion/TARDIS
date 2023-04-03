@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.TARDIS.customblocks;
 
 import java.util.HashMap;
+import org.bukkit.block.data.BlockData;
 
 public class TARDISMushroomBlockData {
 
@@ -166,4 +167,35 @@ public class TARDISMushroomBlockData {
             put(58, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=true,west=true]");
         }
     };
+
+    static TARDISDisplayItem getTARDISBlock(BlockData data) {
+        String s = data.getAsString();
+        switch (data.getMaterial()) {
+            case MUSHROOM_STEM -> {
+                for (HashMap.Entry<Integer, String> stem : MUSHROOM_STEM_DATA.entrySet()) {
+                    if (s.equals(stem.getValue())) {
+                        return TARDISDisplayItem.getBY_MUSHROOM_STEM().get(stem.getKey());
+                    }
+                }
+            }
+            case BROWN_MUSHROOM_BLOCK -> {
+                if (s.equals("minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]")) {
+                    return TARDISDisplayItem.THE_MOMENT;
+                }
+                if (s.equals("minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=false]")) {
+                    return TARDISDisplayItem.SIEGE_CUBE;
+                }
+            }
+            default -> {
+                // RED_MUSHROOM_BLOCK
+                for (HashMap.Entry<Integer, String> red : RED_MUSHROOM_DATA.entrySet()) {
+                    if (s.equals(red.getValue())) {
+                        return TARDISDisplayItem.getBY_RED_MUSHROOM().get(red.getKey());
+                    }
+                }
+            }
+
+        }
+        return null;
+    }
 }

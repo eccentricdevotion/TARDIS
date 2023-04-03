@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
-
-import org.bukkit.Bukkit;
-import org.bukkit.block.data.MultipleFacing;
+package me.eccentric_nz.TARDIS.customblocks;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.MultipleFacing;
 
 public class TARDISMushroomBlock {
 
@@ -115,5 +116,10 @@ public class TARDISMushroomBlock {
 
     public static boolean isChemistryStemOff(MultipleFacing multipleFacing) {
         return (chemistryStemOff.containsKey(multipleFacing.getAsString()));
+    }
+
+    public static boolean isTardisMushroom(Block block) {
+        Material material = block.getType();
+        return (material == Material.BROWN_MUSHROOM_BLOCK || material == Material.RED_MUSHROOM_BLOCK || material == Material.MUSHROOM_STEM);
     }
 }
