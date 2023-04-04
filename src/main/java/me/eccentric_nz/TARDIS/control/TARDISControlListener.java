@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.io.IOException;
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
@@ -26,7 +29,8 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellInventory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -49,7 +53,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,9 +64,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * The various systems of the console room are fairly well-understood. According to one account, each of the six panels
@@ -85,6 +85,7 @@ public class TARDISControlListener implements Listener {
         validBlocks.add(Material.DISPENSER);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.MUSHROOM_STEM);
+        validBlocks.add(Material.BARRIER); // new Item Display custom blocks
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
@@ -350,10 +351,10 @@ public class TARDISControlListener implements Listener {
                                     Inventory inv = plugin.getServer().createInventory(player, 54, Storage.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
-                                    // update note block if it's not MUSHROOM_STEM
-                                    if (blockType.equals(Material.NOTE_BLOCK)) {
-                                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
-                                        block.setBlockData(mushroom, true);
+                                    // update note block if it's not BARRIER + Item Display
+                                    if (blockType.equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                                        block.setBlockData(TARDISConstants.BARRIER, true);
+                                        TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
                                     }
                                 }
                                 case 16 -> // enter zero room

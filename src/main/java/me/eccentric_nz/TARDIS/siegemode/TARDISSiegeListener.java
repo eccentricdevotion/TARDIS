@@ -16,9 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -37,6 +43,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,11 +57,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -124,11 +126,11 @@ public class TARDISSiegeListener implements Listener {
             }
         }
         String tl = tardis.getOwner();
-        ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
+        ItemStack is = new ItemStack(TARDISDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
-        im.setCustomModelData(10000002);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 2);
+        im.setCustomModelData(TARDISDisplayItem.SIEGE_CUBE.getCustomModelData());
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISDisplayItem.SIEGE_CUBE.getCustomModelData());
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);
@@ -204,7 +206,7 @@ public class TARDISSiegeListener implements Listener {
             // turn the drop into a block
             item.remove();
             Block siege = loc.getBlock();
-            siege.setBlockData(plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2)));
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
@@ -380,23 +382,30 @@ public class TARDISSiegeListener implements Listener {
     }
 
     private boolean isSiegeCube(ItemStack is) {
-        if (!is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
+        Material m = is.getType();
+        if (!m.equals(Material.BROWN_MUSHROOM_BLOCK) && !m.equals(Material.CYAN_CONCRETE)) {
             return false;
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            return im.hasCustomModelData() && im.getCustomModelData() == 10000002;
+            int cmd = (m.equals(Material.BROWN_MUSHROOM_BLOCK)) ? 10000002 : 10001;
+            return im.hasCustomModelData() && im.getCustomModelData() == cmd;
         }
         return false;
     }
 
     private boolean isSiegeCube(Block b) {
-        boolean faced = b.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
-        BlockData blockData = b.getBlockData();
-        if (blockData instanceof MultipleFacing mf) {
-            return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+        Material m = b.getType();
+        if (m.equals(Material.BROWN_MUSHROOM_BLOCK) || m.equals(Material.BARRIER)) {
+            BlockData blockData = b.getBlockData();
+            if (blockData instanceof MultipleFacing mf) {
+                return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+            } else {
+                ItemDisplay tdi = TARDISDisplayItemUtils.get(b);
+                return (tdi.getItemStack() != null && tdi.getItemStack().getType() == Material.CYAN_CONCRETE);
+            }
         }
-        return faced;
+        return false;
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {

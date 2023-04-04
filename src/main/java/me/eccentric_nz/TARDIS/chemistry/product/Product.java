@@ -20,10 +20,10 @@ import org.bukkit.Material;
 
 public enum Product {
 
-    Blue_Lamp("-,Cerium Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.MUSHROOM_STEM),
-    Red_Lamp("-,Mercuric Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.MUSHROOM_STEM),
-    Purple_Lamp("-,Potassium Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.MUSHROOM_STEM),
-    Green_Lamp("-,Tungsten Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.MUSHROOM_STEM),
+    Blue_Lamp("-,Cerium Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.REDSTONE_LAMP),
+    Red_Lamp("-,Mercuric Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.REDSTONE_LAMP),
+    Purple_Lamp("-,Potassium Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.REDSTONE_LAMP),
+    Green_Lamp("-,Tungsten Chloride,-|-,REDSTONE_LAMP,-|-,-,-", Material.REDSTONE_LAMP),
     White_Glow_Stick("Polyethylene,Luminol,Polyethylene|Polyethylene,WHITE_DYE,Polyethylene|Polyethylene,Hydrogen Peroxide,Polyethylene", Material.WHITE_STAINED_GLASS_PANE),
     Orange_Glow_Stick("Polyethylene,Luminol,Polyethylene|Polyethylene,ORANGE_DYE,Polyethylene|Polyethylene,Hydrogen Peroxide,Polyethylene", Material.ORANGE_STAINED_GLASS_PANE),
     Magenta_Glow_Stick("Polyethylene,Luminol,Polyethylene|Polyethylene,MAGENTA_DYE,Polyethylene|Polyethylene,Hydrogen Peroxide,Polyethylene", Material.MAGENTA_STAINED_GLASS_PANE),

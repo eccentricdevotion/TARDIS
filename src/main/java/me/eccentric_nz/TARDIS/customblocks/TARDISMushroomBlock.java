@@ -122,4 +122,21 @@ public class TARDISMushroomBlock {
         Material material = block.getType();
         return (material == Material.BROWN_MUSHROOM_BLOCK || material == Material.RED_MUSHROOM_BLOCK || material == Material.MUSHROOM_STEM);
     }
+
+    /**
+     * Gets the toggled state from the current state's blockdata
+     */
+    public static HashMap<String, TARDISDisplayItem> conversionMap = new HashMap<>() {
+        {
+            put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]", TARDISDisplayItem.BLUE_LAMP);
+            put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]", TARDISDisplayItem.GREEN_LAMP);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]", TARDISDisplayItem.PURPLE_LAMP);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]", TARDISDisplayItem.RED_LAMP);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]", TARDISDisplayItem.BLUE_LAMP_ON);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]", TARDISDisplayItem.GREEN_LAMP_ON);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]", TARDISDisplayItem.PURPLE_LAMP_ON);
+            put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]", TARDISDisplayItem.RED_LAMP_ON);
+            put("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]", TARDISDisplayItem.HEAT_BLOCK);
+        }
+    };
 }

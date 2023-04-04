@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -48,11 +47,15 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
- * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
- * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
+ * A police box is a telephone kiosk that can be used by members of the public
+ * wishing to get help from the police. Early in the First Doctor's travels, the
+ * TARDIS assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
+ * TARDIS became locked into that shape.
  *
  * @author eccentric_nz
  */
@@ -235,7 +238,8 @@ public class TARDISInstantPreset {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
                         if ((preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, TARDISConstants.BARRIER, bd.getTardisID());
+                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
                         }
                     }
                     case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches

@@ -24,7 +24,7 @@ import org.bukkit.inventory.RecipeChoice;
 
 public enum Updateable {
 
-    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX), TARDISUpdateableCategory.INTERFACES, "TARDIS Advanced Console"),
+    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX, Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "TARDIS Advanced Console"),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
     ARTRON(true, true, TARDISUpdateableCategory.CONTROLS, "Artron Energy Capacitor button"),
     BACK(true, true, TARDISUpdateableCategory.CONTROLS, "Previous Location button"),
@@ -63,7 +63,7 @@ public enum Updateable {
     SMELT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Smelter room drop chest"),
     STABLE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Horse Stable room"),
     STALL(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Llama Stall room"),
-    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK), TARDISUpdateableCategory.INTERFACES, "Disk Storage Container"),
+    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK, Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "Disk Storage Container"),
     TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR), TARDISUpdateableCategory.INTERFACES, "Telepathic Circuit"),
     TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Temporal Relocation"),
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Destination Terminal"),

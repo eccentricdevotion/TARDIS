@@ -168,7 +168,7 @@ public class TARDISMushroomBlockData {
         }
     };
 
-    static TARDISDisplayItem getTARDISBlock(BlockData data) {
+    public static TARDISDisplayItem getTARDISBlock(BlockData data) {
         String s = data.getAsString();
         switch (data.getMaterial()) {
             case MUSHROOM_STEM -> {

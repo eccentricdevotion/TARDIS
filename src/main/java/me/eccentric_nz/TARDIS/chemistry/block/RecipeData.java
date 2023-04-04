@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.block;
 
-import org.bukkit.Material;
-
 import java.util.List;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import org.bukkit.Material;
 
 public class RecipeData {
 
@@ -26,14 +26,14 @@ public class RecipeData {
     private final String nameSpacedKey;
     private final List<String> lore;
     private final Material craftMaterial;
-    private final int customModelData;
+    private final TARDISDisplayItem displayItem;
 
-    public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, int customModelData) {
+    public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, TARDISDisplayItem displayItem) {
         this.displayName = displayName;
         this.nameSpacedKey = nameSpacedKey;
         this.lore = lore;
         this.craftMaterial = craftMaterial;
-        this.customModelData = customModelData;
+        this.displayItem = displayItem;
     }
 
     public String getDisplayName() {
@@ -52,7 +52,7 @@ public class RecipeData {
         return craftMaterial;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public TARDISDisplayItem getDisplayItem() {
+        return displayItem;
     }
 }

@@ -19,17 +19,18 @@ package me.eccentric_nz.TARDIS.enumeration;
 import java.util.HashMap;
 
 /**
- * The Space Time Throttle controls the effective "speed" of the TARDIS by altering the "length" of the route (and thus
- * shorten the perceived travel time) through the Time Vortex.
+ * The Space Time Throttle controls the effective "speed" of the TARDIS by
+ * altering the "length" of the route (and thus shorten the perceived travel
+ * time) through the Time Vortex.
  */
 public enum SpaceTimeThrottle {
 
-    NORMAL(4, 500, 18, 1.0f),
-    FASTER(3, 375, 12, 1.5f),
-    RAPID(2, 250, 9, 2.0f),
-    WARP(1, 125, 6, 3.0f),
-    REBUILD(0, 80, 3, 1.0f),
-    JUNK(-1, 600, 25, 1.0f);
+    NORMAL(4, 500, 18, 10, 1.0f),
+    FASTER(3, 375, 12, 7, 1.5f),
+    RAPID(2, 250, 9, 5, 2.0f),
+    WARP(1, 125, 6, 4, 3.0f),
+    REBUILD(0, 80, 3, -1, 1.0f),
+    JUNK(-1, 600, 25, -1, 1.0f);
 
     private static final HashMap<Integer, SpaceTimeThrottle> BY_DELAY = new HashMap<>();
 
@@ -42,12 +43,14 @@ public enum SpaceTimeThrottle {
     private final int delay;
     private final long flightTime;
     private final int loops;
+    private final int rescue;
     private final float artronMultiplier;
 
-    SpaceTimeThrottle(int delay, long flightTime, int loops, float artronMultiplier) {
+    SpaceTimeThrottle(int delay, long flightTime, int loops, int rescue, float artronMultiplier) {
         this.delay = delay;
         this.flightTime = flightTime;
         this.loops = loops;
+        this.rescue = rescue;
         this.artronMultiplier = artronMultiplier;
     }
 
@@ -65,6 +68,10 @@ public enum SpaceTimeThrottle {
 
     public int getLoops() {
         return loops;
+    }
+
+    public int getRescue() {
+        return rescue;
     }
 
     public float getArtronMultiplier() {

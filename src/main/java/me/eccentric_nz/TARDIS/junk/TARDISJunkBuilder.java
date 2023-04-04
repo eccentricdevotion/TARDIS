@@ -20,7 +20,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -38,6 +37,9 @@ import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * @author eccentric_nz
@@ -169,7 +171,8 @@ public class TARDISJunkBuilder implements Runnable {
                                         case ORANGE_WOOL -> {
                                             BlockData stem;
                                             if (wall_type.equals(Material.ORANGE_WOOL)) {
-                                                stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                                stem = TARDISConstants.BARRIER;
+                                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
                                             } else {
                                                 stem = wall_type.createBlockData();
                                             }

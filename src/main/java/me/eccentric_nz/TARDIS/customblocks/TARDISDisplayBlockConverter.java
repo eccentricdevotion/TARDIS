@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -110,9 +111,11 @@ public class TARDISDisplayBlockConverter implements Runnable {
                 if (TARDISMushroomBlock.isTardisMushroom(block)) {
                     BlockData data = block.getBlockData();
                     // get which TARDIS block
-                    TARDISDisplayItem tsd = TARDISMushroomBlockData.getTARDISBlock(data);
-                    if (tsd != null) {
-                        plugin.debug(tsd.getName());
+                    TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(data);
+                    if (tdi != null) {
+                        plugin.debug(tdi.getName());
+                        block.setType(Material.BARRIER);
+                        TARDISDisplayItemUtils.set(tdi, block);
                     }
                 }
             }

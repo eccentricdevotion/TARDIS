@@ -17,10 +17,14 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import com.google.common.collect.Sets;
+import java.util.HashMap;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -32,9 +36,6 @@ import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Set;
 
 public class TARDISSonicRedstone {
 
@@ -152,19 +153,26 @@ public class TARDISSonicRedstone {
                     }
                     block.setBlockData(wire, true);
                 }
+                // lamps should now be light blocks with an interaction entity
                 case MUSHROOM_STEM -> {
                     // check the block is a chemistry lamp block
                     MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
+                    TARDISDisplayItem tdi = null;
                     if (TARDISMushroomBlock.isChemistryStemOn(multipleFacing)) {
-                        multipleFacing = TARDISMushroomBlock.getChemistryStemOff(multipleFacing);
+                        // convert to display item lamp OFF
+                        tdi = TARDISMushroomBlock.conversionMap.get(multipleFacing.getAsString());
                         // delete light source
-                        LampToggler.deleteLight(block);
+                        LampToggler.deleteLight(block); // should eventually get rid of this...
                     } else if (TARDISMushroomBlock.isChemistryStemOff(multipleFacing)) {
-                        multipleFacing = TARDISMushroomBlock.getChemistryStemOn(multipleFacing);
-                        // create light source
-                        LampToggler.createLight(block);
+                        // convert to display item lamp ON
+                        tdi = TARDISMushroomBlock.conversionMap.get(multipleFacing.getAsString());
                     }
-                    block.setBlockData(multipleFacing, true);
+                    // convert mushroom blocks to item display entities
+                    if (tdi != null) {
+                        int level = (tdi.isLit()) ? 15 : 0;
+                        LampToggler.setLightlevel(block, level);
+                        TARDISDisplayItemUtils.set(tdi, block);
+                    }
                 }
                 default -> {
                 }

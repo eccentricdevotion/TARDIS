@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
@@ -27,7 +26,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * @author eccentric_nz
@@ -75,19 +75,19 @@ public class TARDISConsoleListener implements Listener {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            Block b = event.getClickedBlock();
-            if (b != null && (b.getType().equals(Material.JUKEBOX) || b.getType().equals(Material.MUSHROOM_STEM))) {
+            Block block = event.getClickedBlock();
+            if (block != null && (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM) || block.getType().equals(Material.BARRIER))) {
                 // is it a TARDIS console?
                 HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("location", b.getLocation().toString());
+                wherec.put("location", block.getLocation().toString());
                 wherec.put("type", 15);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (rsc.resultSet()) {
                     event.setCancelled(true);
-                    // update block if it's not MUSHROOM_STEM
-                    if (b.getType().equals(Material.JUKEBOX)) {
-                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
-                        b.setBlockData(mushroom);
+                    // update block if it's not a display item entity
+                    if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                        block.setType(Material.BARRIER);
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block);
                     }
                     int id = rsc.getTardis_id();
                     // determine key item

@@ -16,11 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -40,11 +45,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -151,7 +151,7 @@ class TARDISMaterialisePreset implements Runnable {
                     };
                 }
                 // rescue player?
-                if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
+                if (i == bd.getThrottle().getRescue() && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
                     UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
                     Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
@@ -486,11 +486,11 @@ class TARDISMaterialisePreset implements Runnable {
                                 }
                                 default -> { // everything else
                                     if (change) {
-                                        if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
-                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
-                                        } else {
-                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                                        }
+//                                        if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
+//                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, mat, bd.getTardisID());
+//                                        } else {
+                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+//                                        }
                                     }
                                 }
                             }
@@ -669,8 +669,9 @@ class TARDISMaterialisePreset implements Runnable {
                             // everything else
                             default -> {
                                 if (change) {
-                                    if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)));
+                                    if (isJunk && mat.equals(Material.ORANGE_WOOL) && i == loops) {
+                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, TARDISConstants.BARRIER);
+                                        TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
                                     } else {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     }

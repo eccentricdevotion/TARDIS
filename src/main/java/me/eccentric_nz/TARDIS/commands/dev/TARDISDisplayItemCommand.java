@@ -131,6 +131,8 @@ public class TARDISDisplayItemCommand {
                 TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
                 converter.setTaskId(taskId);
+                // TODO also find any chemistry rooms and convert the mushroom blocks there, then implement both as player command
+
                 return true;
             }
             default -> {

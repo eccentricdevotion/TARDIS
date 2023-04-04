@@ -16,12 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -67,13 +73,6 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -489,12 +488,20 @@ public class TARDII implements TardisAPI {
     @Override
     public ItemStack getTARDISSeedItem(String schematic) {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
+            Schematic s = Consoles.getBY_NAMES().get(schematic);
             ItemStack is;
-            int model = TARDISSeedModel.modelByString(schematic);
-            if (Consoles.getBY_NAMES().get(schematic).isCustom() || schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER") || schematic.equalsIgnoreCase("CAVE") || schematic.equalsIgnoreCase("WEATHERED") || schematic.equalsIgnoreCase("ORIGINAL")) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            int model = 10001;
+            if (s.isCustom()) {
+                is = new ItemStack(s.getSeedMaterial(), 1);
             } else {
-                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+                try {
+                    TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase());
+                    model = tdi.getCustomModelData();
+                    is = new ItemStack(tdi.getMaterial(), 1);
+                } catch (IllegalArgumentException e) {
+                    TARDIS.plugin.debug("Could not get display item for console! " + e.getMessage());
+                    is = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+                }
             }
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(10000000 + model);
@@ -673,7 +680,7 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public boolean setChameleonPreset(int id, PRESET preset, boolean rebuild) {
+    public boolean setChameleonPreset(int id, ChameleonPreset preset, boolean rebuild) {
         // check not travelling
         TARDISTrackerInstanceKeeper keeper = TARDIS.plugin.getTrackerKeeper();
         if (keeper.getDematerialising().contains(id) || keeper.getMaterialising().contains(id) || keeper.getDestinationVortex().containsKey(id) || keeper.getInVortex().contains(id)) {
@@ -723,7 +730,7 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild) {
+    public boolean setChameleonPreset(UUID uuid, ChameleonPreset preset, boolean rebuild) {
         // get tardis_id
         ResultSetTardisID rst = new ResultSetTardisID(TARDIS.plugin);
         if (rst.fromUUID(uuid.toString())) {
@@ -734,16 +741,16 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild) {
+    public boolean setChameleonPreset(Player player, ChameleonPreset preset, boolean rebuild) {
         return setChameleonPreset(player.getUniqueId(), preset, rebuild);
     }
 
     @Override
-    public void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException {
+    public void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException {
         if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid Console type");
         }
-        if (preset == PRESET.ITEM) {
+        if (preset == ChameleonPreset.ITEM) {
             throw new TARDISException("Preset must not be custom item model");
         }
         if (!TARDIS.plugin.getConfig().getBoolean("abandon.enabled")) {
@@ -759,7 +766,7 @@ public class TARDII implements TardisAPI {
     @Override
     public void spawnAbandonedTARDIS(Location location) {
         try {
-            spawnAbandonedTARDIS(location, "BUDGET", PRESET.FACTORY, COMPASS.SOUTH);
+            spawnAbandonedTARDIS(location, "BUDGET", ChameleonPreset.FACTORY, COMPASS.SOUTH);
         } catch (TARDISException ex) {
             Bukkit.getLogger().log(Level.SEVERE, null, ex);
         }

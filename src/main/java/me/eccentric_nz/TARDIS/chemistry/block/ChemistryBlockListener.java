@@ -26,18 +26,21 @@ import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabInventory;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductInventory;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerInventory;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlock;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
@@ -48,37 +51,16 @@ import org.bukkit.persistence.PersistentDataType;
 public class ChemistryBlockListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> blocks = new HashMap<>();
-    private final HashMap<String, Integer> models = new HashMap<>();
+    private final HashMap<Material, String> blocks = new HashMap<>();
 
     public ChemistryBlockListener(TARDIS plugin) {
         this.plugin = plugin;
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]", "Atomic elements");
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=true]", "Chemical compounds");
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=false]", "Material reducer");
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=true,west=true]", "Element constructor");
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=false]", "Lab table");
-        blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=false,west=true]", "Product crafting");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]", "Blue Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=true]", "Green Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=false]", "Purple Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]", "Red Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]", "Blue Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=true]", "Green Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]", "Purple Lamp");
-        blocks.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]", "Red Lamp");
-        blocks.put("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]", "Heat Block");
-        models.put("Atomic elements", 40);
-        models.put("Chemical compounds", 41);
-        models.put("Material reducer", 42);
-        models.put("Element constructor", 43);
-        models.put("Lab table", 44);
-        models.put("Product crafting", 45);
-        models.put("Blue Lamp", 1);
-        models.put("Red Lamp", 2);
-        models.put("Purple Lamp", 3);
-        models.put("Green Lamp", 4);
-        models.put("Heat Block", 5);
+        blocks.put(Material.LIGHT_GRAY_CONCRETE, "Atomic elements");
+        blocks.put(Material.ORANGE_CONCRETE, "Chemical compounds");
+        blocks.put(Material.MAGENTA_CONCRETE, "Material reducer");
+        blocks.put(Material.LIGHT_BLUE_CONCRETE, "Element constructor");
+        blocks.put(Material.YELLOW_CONCRETE, "Lab table");
+        blocks.put(Material.LIME_CONCRETE, "Product crafting");
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -86,73 +68,78 @@ public class ChemistryBlockListener implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
             Block block = event.getClickedBlock();
             Material material = block.getType();
-            if (!material.equals(Material.RED_MUSHROOM_BLOCK)) {
+            if (!material.equals(Material.BARRIER)) {
                 return;
             }
-            String name = blocks.get(block.getBlockData().getAsString());
-            if (name != null) {
-                Player player = event.getPlayer();
-                ItemStack[] menu;
-                Inventory inventory;
-                switch (name) {
-                    case "Atomic elements" -> {
-                        // elements
-                        if (TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
-                            menu = new ElementInventory(plugin).getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
+            // get the display item entity
+            ItemDisplay display = TARDISDisplayItemUtils.get(block);
+            if (display != null) {
+                ItemStack is = display.getItemStack();
+                if (is != null) {
+                    String name = blocks.get(is.getType());
+                    Player player = event.getPlayer();
+                    ItemStack[] menu;
+                    Inventory inventory;
+                    switch (is.getType()) {
+                        case LIGHT_GRAY_CONCRETE -> {
+                            // atomic elements
+                            if (TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
+                                menu = new ElementInventory(plugin).getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Atomic elements");
+                                return;
+                            }
+                        }
+                        case ORANGE_CONCRETE -> {
+                            // chemical compounds
+                            if (TARDISPermission.hasPermission(player, "tardis.compound.create")) {
+                                menu = new CompoundInventory(plugin).getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Chemical compounds");
+                                return;
+                            }
+                        }
+                        case MAGENTA_CONCRETE -> {
+                            // reducer
+                            if (TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
+                                menu = new ReducerInventory(plugin).getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Material reducer");
+                                return;
+                            }
+                        }
+                        case LIGHT_BLUE_CONCRETE -> {
+                            // constructor
+                            if (TARDISPermission.hasPermission(player, "tardis.construct.build")) {
+                                menu = new ConstructorInventory().getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Element constructor");
+                                return;
+                            }
+                        }
+                        case YELLOW_CONCRETE -> {
+                            // lab
+                            if (TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
+                                menu = new LabInventory(plugin).getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab table");
+                                return;
+                            }
+                        }
+                        default -> { // Product crafting
+                            // product
+                            if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
+                                menu = new ProductInventory(plugin).getMenu();
+                            } else {
+                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product crafting");
+                                return;
+                            }
                         }
                     }
-                    case "Chemical compounds" -> {
-                        // compound
-                        if (TARDISPermission.hasPermission(player, "tardis.compound.create")) {
-                            menu = new CompoundInventory(plugin).getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
-                        }
-                    }
-                    case "Material reducer" -> {
-                        // reducer
-                        if (TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
-                            menu = new ReducerInventory(plugin).getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
-                        }
-                    }
-                    case "Element constructor" -> {
-                        // constructor
-                        if (TARDISPermission.hasPermission(player, "tardis.construct.build")) {
-                            menu = new ConstructorInventory().getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
-                        }
-                    }
-                    case "Lab table" -> {
-                        // lab
-                        if (TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
-                            menu = new LabInventory(plugin).getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
-                        }
-                    }
-                    default -> { // Product crafting
-                        // product
-                        if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
-                            menu = new ProductInventory(plugin).getMenu();
-                        } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
-                            return;
-                        }
-                    }
+                    inventory = plugin.getServer().createInventory(player, (is.getType().equals(Material.LIGHT_GRAY_CONCRETE) ? 54 : 27), ChatColor.DARK_RED + name);
+                    inventory.setContents(menu);
+                    player.openInventory(inventory);
                 }
-                inventory = plugin.getServer().createInventory(player, (name.equals("Atomic elements") ? 54 : 27), ChatColor.DARK_RED + name);
-                inventory.setContents(menu);
-                player.openInventory(inventory);
             }
         }
     }
@@ -166,37 +153,29 @@ public class ChemistryBlockListener implements Listener {
         Block block = event.getBlock();
         Material mush = event.getBlock().getType();
         if (mush.equals(Material.RED_MUSHROOM_BLOCK) || mush.equals(Material.MUSHROOM_STEM)) {
-            String name = blocks.get(block.getBlockData().getAsString());
-            if (name != null) {
-                ItemStack is = new ItemStack(mush, 1);
+            TARDISDisplayItem tdi = TARDISMushroomBlock.conversionMap.get(block.getBlockData().getAsString());
+            if (tdi != null) {
+                ItemStack is = new ItemStack(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(name);
-                int cmd = models.get(name);
-                im.setCustomModelData(10000000 + cmd);
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+                im.setDisplayName(tdi.getDisplayName());
+                im.setCustomModelData(tdi.getCustomModelData());
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
                 is.setItemMeta(im);
                 block.setBlockData(TARDISConstants.AIR);
                 block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
-                if (cmd == 5) {
+                if (tdi == TARDISDisplayItem.HEAT_BLOCK) {
                     plugin.getTrackerKeeper().getHeatBlocks().remove(block.getLocation().toString());
                 }
             }
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onChemistryBlockPlace(BlockPlaceEvent event) {
-        ItemStack is = event.getItemInHand();
-        Material material = event.getBlock().getType();
-        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
-            event.setCancelled(true);
-        }
-    }
-
-    private boolean isMushroomBlock(Material material) {
-        return switch (material) {
-            case MUSHROOM_STEM, RED_MUSHROOM_BLOCK, BROWN_MUSHROOM_BLOCK, STONE -> true;
-            default -> false;
-        };
-    }
+//    @EventHandler(ignoreCancelled = true)
+//    public void onChemistryBlockPlace(BlockPlaceEvent event) {
+//        ItemStack is = event.getItemInHand();
+//        Material material = event.getBlock().getType();
+//        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
+//            event.setCancelled(true);
+//        }
+//    }
 }

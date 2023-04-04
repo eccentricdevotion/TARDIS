@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -29,11 +33,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class TARDISSeedRecipe {
 
@@ -56,22 +55,23 @@ public class TARDISSeedRecipe {
     private ShapedRecipe makeSeedRecipe(Schematic s) {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
-        int model;
-        if (TARDISSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
-            model = TARDISSeedModel.modelByMaterial(s.getSeedMaterial());
-            if (s.getPermission().equals("copper") || s.getPermission().equals("delta") || s.getPermission().equals("rotor") || s.getPermission().equals("cave") || s.getPermission().equals("weathered")) {
-                is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else {
-                is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
-            }
+        int model = 10001;
+        if (s.isCustom()) {
+            is = new ItemStack(s.getSeedMaterial(), 1);
         } else {
-            model = 45;
-            is = new ItemStack(Material.MUSHROOM_STEM, 1);
+            try {
+                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase());
+                model = tdi.getCustomModelData();
+                is = new ItemStack(tdi.getMaterial(), 1);
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Could not get display item for console! "+e.getMessage());
+                is = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+            }
         }
         ItemMeta im = is.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
         im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-        im.setCustomModelData(10000000 + model);
+        im.setCustomModelData(model);
         List<String> lore = new ArrayList<>();
         lore.add(s.getPermission().toUpperCase(Locale.ENGLISH));
         im.setLore(lore);

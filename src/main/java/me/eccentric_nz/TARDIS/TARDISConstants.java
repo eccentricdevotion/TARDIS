@@ -480,6 +480,11 @@ public class TARDISConstants {
     public static final Levelled LIGHT_DIV = setLight(15);
 
     /**
+     * BlockData for Item Display barrier blocks
+     */
+    public static final BlockData BARRIER = Material.BARRIER.createBlockData();
+
+    /**
      * A list of loot tables to populate TARDIS planet chests
      */
     public static final List<LootTable> LOOT = Arrays.asList(

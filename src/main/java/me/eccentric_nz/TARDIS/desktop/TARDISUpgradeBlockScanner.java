@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -34,9 +36,6 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -193,7 +192,7 @@ public class TARDISUpgradeBlockScanner {
                                         type = Material.getMaterial(m);
                                     }
                                 }
-                                case BLUE_WOOL -> type = Material.MUSHROOM_STEM;
+                                case BLUE_WOOL -> type = Material.BARRIER;
                                 default -> {
                                     String[] tsplit = type.toString().split("_");
                                     String m;

@@ -22,6 +22,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 public class ChemistryBlockRecipes {
 
@@ -33,11 +34,12 @@ public class ChemistryBlockRecipes {
 
     public void addRecipes() {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
-            ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+            ItemStack is = new ItemStack(data.getDisplayItem().getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(data.getDisplayName());
             im.setLore(data.getLore());
-            im.setCustomModelData(data.getCustomModelData());
+            im.setCustomModelData(data.getDisplayItem().getCustomModelData());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, data.getDisplayItem().getCustomModelData());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, data.getNameSpacedKey());
             ShapedRecipe recipe = new ShapedRecipe(key, is);

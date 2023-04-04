@@ -21,7 +21,8 @@ import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -288,8 +289,10 @@ class TARDISBuildAbandoned implements Runnable {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
-                // set block data to correct MUSHROOM_STEM
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                // set block data to correct BARRIER
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
             }
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
@@ -298,7 +301,11 @@ class TARDISBuildAbandoned implements Runnable {
                             switch (use_clay) {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
-                                default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                default -> {
+                                    data = TARDISConstants.BARRIER;
+                                    // spawn an item display entity
+                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                                }
                             }
                         } else {
                             data = wall_type.createBlockData();
@@ -328,12 +335,13 @@ class TARDISBuildAbandoned implements Runnable {
                     }
                     case BLUE_WOOL -> {
                         switch (use_clay) {
-                            case TERRACOTTA ->
-                                data = Material.BLUE_TERRACOTTA.createBlockData();
-                            case CONCRETE ->
-                                data = Material.BLUE_CONCRETE.createBlockData();
-                            default ->
-                                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                            case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
+                            case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
+                            default -> {
+                                data = TARDISConstants.BARRIER;
+                                // spawn an item display entity
+                                TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                            }
                         }
                     }
                     default -> {
@@ -349,10 +357,12 @@ class TARDISBuildAbandoned implements Runnable {
                 }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                data = TARDISConstants.BARRIER;
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
+                data = TARDISConstants.BARRIER;
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }
             if (type.equals(Material.SPAWNER)) { // scanner button
                 /*
@@ -388,8 +398,10 @@ class TARDISBuildAbandoned implements Runnable {
                 // remember the location of this Advanced Console
                 String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
-                // set block data to correct MUSHROOM_STEM
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                // set block data to correct BARRIER + Item Display
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
             }
             if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                 /*
@@ -483,15 +495,12 @@ class TARDISBuildAbandoned implements Runnable {
                 String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeploc);
                 if (type.equals(Material.COMMAND_BLOCK)) {
-                    if (schm.getPermission().equals("ender")) {
-                        data = Material.END_STONE_BRICKS.createBlockData();
-                    } else if (schm.getPermission().equals("delta")) {
-                        data = Material.BLACKSTONE.createBlockData();
-                    } else if (schm.getPermission().equals("ancient") || schm.getPermission().equals("fugitive")) {
-                        data = Material.GRAY_WOOL.createBlockData();
-                    } else {
-                        data = Material.STONE_BRICKS.createBlockData();
-                    }
+                    data = switch (schm.getPermission()) {
+                        case "ender" -> Material.END_STONE_BRICKS.createBlockData();
+                        case "delta" -> Material.BLACKSTONE.createBlockData();
+                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        default -> Material.STONE_BRICKS.createBlockData();
+                    };
                 }
             }
             if (Tag.BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
@@ -526,7 +535,7 @@ class TARDISBuildAbandoned implements Runnable {
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
-            // if it's the door, don't set it just remember its block then do it at the end
+            // TODO add time rotor item frames to the delta and rotor schenatics, then delete this section of code...
             if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
                 /*
                  * spawn an item frame and place the time rotor in it
@@ -534,6 +543,7 @@ class TARDISBuildAbandoned implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
                 TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
             } else if (type.equals(Material.IRON_DOOR)) { // doors
+                // if it's the door, don't set it just remember its block then do it at the end
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
                 postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);

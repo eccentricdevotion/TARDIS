@@ -9,6 +9,7 @@
    - Fix laggy Silurian cave finder - perhaps the new `World#getChunkAt(int x, int z, boolean generate)` might help?
    - Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
    - `Player#sendBlockDamage()` for display item custom blocks?
+   - Test display item custom blocks!
 
 ## Next version `5.1.0`
 
