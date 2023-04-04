@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISStoneDisplay;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,13 +35,15 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
-    private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break");
+    private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break", "convert");
     private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
-        STONE_SUBS.addAll(TARDISStoneDisplay.BY_NAME.keySet());
+        for (TARDISDisplayItem d : TARDISDisplayItem.values()) {
+            STONE_SUBS.add(d.getName());
+        }
     }
 
     @Override
@@ -55,11 +57,14 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 String sub = args[0];
                 if (sub.equals("list")) {
                     return partial(lastArg, LIST_SUBS);
-                }   if (sub.equals("tree")) {
+                }
+                if (sub.equals("tree")) {
                     return partial(lastArg, MAT_SUBS);
-                }   if (sub.equals("snapshot")) {
+                }
+                if (sub.equals("snapshot")) {
                     return partial(lastArg, SNAPSHOT_SUBS);
-                }   if (sub.equals("displayitem")) {
+                }
+                if (sub.equals("displayitem")) {
                     return partial(lastArg, DISPLAY_SUBS);
                 }
             }

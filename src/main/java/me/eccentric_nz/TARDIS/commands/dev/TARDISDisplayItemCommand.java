@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISStoneDisplay;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -27,6 +28,7 @@ import org.bukkit.block.data.type.Light;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
@@ -81,20 +83,26 @@ public class TARDISDisplayItemCommand {
                     TARDISMessage.send(player, "TOO_FEW_ARGS");
                     return true;
                 }
-                int cmd = TARDISStoneDisplay.BY_NAME.getOrDefault(args[2], -1);
-                if (cmd != -1) {
-                    ItemStack is = new ItemStack(Material.STONE);
+                TARDISDisplayItem tdi = TARDISDisplayItem.getBY_NAME().get(args[2]);
+                if (tdi != null) {
+                    ItemStack is = new ItemStack(tdi.getMaterial());
                     ItemMeta im = is.getItemMeta();
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
-                    im.setCustomModelData(cmd);
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                    im.setCustomModelData(tdi.getCustomModelData());
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (TARDISStoneDisplay.isLight(args[2])) {
-                        Light light = (Light)Material.LIGHT.createBlockData();
-                        int level = (TARDISStoneDisplay.isLit(args[2])) ? 15 : 0;
+                    if (tdi.isLight()) {
+                        Light light = (Light) Material.LIGHT.createBlockData();
+                        int level = (tdi.isLit()) ? 15 : 0;
                         light.setLevel(level);
                         up.setBlockData(light);
+                        // also set an interaction entity
+                        Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation(), EntityType.INTERACTION);
+                        interaction.setResponsive(true);
+                        interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                        interaction.setPersistent(true);
+                        interaction.setInvulnerable(true);
                     } else {
                         up.setType(Material.BARRIER);
                     }
@@ -112,9 +120,18 @@ public class TARDISDisplayItemCommand {
                             block.getWorld().dropItemNaturally(block.getLocation(), is);
                             e.remove();
                         }
+                        if (e instanceof Interaction) {
+                            e.remove();
+                        }
                     }
                     block.setType(Material.AIR);
                 }
+            }
+            case "convert" -> {
+                TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
+                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
+                converter.setTaskId(taskId);
+                return true;
             }
             default -> {
                 return false;
