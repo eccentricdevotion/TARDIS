@@ -1,0 +1,47 @@
+/*
+ * Copyright (C) 2023 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.commands.give;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+
+public class TARDISDisplayBlockCommand {
+
+    private final TARDIS plugin;
+
+    public TARDISDisplayBlockCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public ItemStack getStack(String arg) {
+        try {
+            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(arg.toUpperCase());
+            ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName(tdi.getDisplayName());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+            im.setCustomModelData(tdi.getCustomModelData());
+            is.setItemMeta(im);
+            return is;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+}
