@@ -472,7 +472,7 @@ public class TARDISConstants {
     /**
      * BlockData for police box LIGHT
      */
-    public static final Levelled LIGHT = setLight(7);
+    public static final Levelled LIGHT = (Levelled) Material.LIGHT.createBlockData();
 
     /**
      * BlockData for Division LIGHT

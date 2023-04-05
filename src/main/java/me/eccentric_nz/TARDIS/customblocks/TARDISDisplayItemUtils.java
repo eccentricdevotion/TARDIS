@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
@@ -96,11 +97,19 @@ public class TARDISDisplayItemUtils {
      */
     public static void set(TARDISDisplayItem tdi, Block block) {
         // spawn an item display entity
-        block.setType(Material.BARRIER);
+        if (tdi.isLight()) {
+            Levelled light = TARDISConstants.LIGHT;
+            light.setLevel(tdi.isLit() ? 15 : 0);
+            block.setBlockData(light);
+        } else {
+            block.setBlockData(TARDISConstants.BARRIER);
+        }
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
-        im.setCustomModelData(tdi.getCustomModelData());
+        if (tdi.getCustomModelData() != -1) {
+            im.setCustomModelData(tdi.getCustomModelData());
+        }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);

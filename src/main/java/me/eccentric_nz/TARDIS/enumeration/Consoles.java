@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.Material;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import org.bukkit.Material;
 
 /**
  * @author eccentric_nz
@@ -65,8 +64,8 @@ public class Consoles {
                 NO_BEACON.add(ts);
             }
         }
-        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
-        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
+        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false));
+        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, true);
         BY_PERMS.put("archive", archive);
         BY_MATERIALS.put("BONE_BLOCK", archive);
     }

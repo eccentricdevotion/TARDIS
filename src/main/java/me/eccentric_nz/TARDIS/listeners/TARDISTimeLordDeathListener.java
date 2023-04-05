@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
@@ -48,11 +52,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
@@ -305,7 +304,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, tardis.getPreset()), 1L);
                                             }
                                             // if lights are on, turn them off
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().getLights());
                                             // if beacon is on turn it off
                                             new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
                                             plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

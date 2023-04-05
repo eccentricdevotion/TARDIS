@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
@@ -37,13 +43,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TARDISHandlesRequest {
 
@@ -211,7 +210,7 @@ public class TARDISHandlesRequest {
                             if (rst.resultSet()) {
                                 Tardis tardis = rst.getTardis();
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
                                 }
                             }
                         }
@@ -227,7 +226,7 @@ public class TARDISHandlesRequest {
                                 Tardis tardis = rst.getTardis();
                                 if ((onoff && tardis.isPowered_on()) || (!onoff && !tardis.isPowered_on())) {
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton(), 1L);
                                     }
                                 }
                             }

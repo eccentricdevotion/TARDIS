@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -25,8 +26,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -86,7 +85,7 @@ public class TARDISStandbyMode implements Runnable {
                     }
                     // if lights are on, turn them off
                     if (standbyData.isLights()) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.isLanterns());
+                        new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.getLightType());
                     }
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(standbyData.getUuid(), id, false);

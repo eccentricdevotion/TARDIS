@@ -16,9 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
+import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -49,12 +53,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 
 /**
  * The Ninth Doctor used the Cardiff rift to "re-charge" his TARDIS. The process took 2 days.
@@ -247,7 +245,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             pu = claimAbandoned(player, id, block, tardis);
                                         }
                                         if (pu) {
-                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
                                         }
                                     }
                                 }

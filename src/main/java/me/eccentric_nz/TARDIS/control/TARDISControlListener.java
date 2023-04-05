@@ -279,7 +279,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 case 12 -> // Control room light switch
-                                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                                 case 13 -> // TIS
                                         new TARDISInfoMenuButton(plugin, player).clickButton();
                                 case 14 -> { // Disk Storage

@@ -168,7 +168,7 @@ public class TARDISThemeProcessor {
         HashMap<String, Object> setp = new HashMap<>();
         setp.put("wall", tud.getWall());
         setp.put("floor", tud.getFloor());
-        setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
+        setp.put("lights", tud.getSchematic().getLights().toString());
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);

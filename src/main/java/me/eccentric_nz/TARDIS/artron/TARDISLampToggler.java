@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -27,9 +30,10 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import java.util.HashMap;
-import java.util.UUID;
+import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -70,17 +74,33 @@ public class TARDISLampToggler {
                     }
                 }
             }
-            BlockData onlamp = TARDISConstants.LANTERN;
             for (Block b : rsl.getData()) {
                 while (!b.getChunk().isLoaded()) {
                     b.getChunk().load();
                 }
+                Levelled levelled = TARDISConstants.LIGHT;
                 if (on) {
+                    levelled.setLevel(0);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
-                        b.setBlockData(light.getMaterial().createBlockData());
+                        // convert to light display item
+                        TARDISDisplayItemUtils.set(light.getOff(), b);
+                    } else {
+                        // switch the itemstack
+                        ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                        if (display != null) {
+                            ItemStack is = display.getItemStack();
+                            ItemMeta im = is.getItemMeta();
+                            is.setType(light.getOff().getMaterial());
+                            is.setItemMeta(im);
+                            display.setItemStack(is);
+                        }
                     }
-                } else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
-                    b.setBlockData(onlamp);
+                    b.setBlockData(levelled);
+                } else {
+                    if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
+                        levelled.setLevel(15);
+                    }
+                    b.setBlockData(levelled);
                 }
             }
         }

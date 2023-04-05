@@ -28,6 +28,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -70,7 +71,9 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 default -> { // preset
                     cmd = 1001;
-                    light.setBlockData(TARDISConstants.LIGHT);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(7);
+                    light.setBlockData(levelled);
                 }
             }
             // first run - play sound
@@ -101,9 +104,10 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                     if (!minecart) {
                         String sound = switch (spaceTimeThrottle) {
-                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            case WARP, RAPID, FASTER ->
+                                "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
                             default -> // NORMAL
-                                    "tardis_takeoff";
+                                "tardis_takeoff";
                         };
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {

@@ -241,7 +241,7 @@ public class TARDISAbandonCommand {
                     new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered_on()) {
                         // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
+                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();
                     }
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();

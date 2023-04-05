@@ -34,6 +34,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -83,7 +84,9 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     default -> { // preset
                         cmd = 1001;
                         // set a light block
-                        light.setBlockData(TARDISConstants.LIGHT);
+                        Levelled levelled = TARDISConstants.LIGHT;
+                        levelled.setLevel(7);
+                        light.setBlockData(levelled);
                     }
                 }
                 // first run

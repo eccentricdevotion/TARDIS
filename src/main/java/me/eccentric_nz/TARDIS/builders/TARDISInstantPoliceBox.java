@@ -28,6 +28,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -115,6 +116,8 @@ public class TARDISInstantPoliceBox {
         frame.setFixed(true);
         frame.setVisible(false);
         // set a light block
-        block.getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.LIGHT);
+        Levelled levelled = TARDISConstants.LIGHT;
+        levelled.setLevel(7);
+        block.getRelative(BlockFace.UP, 2).setBlockData(levelled);
     }
 }

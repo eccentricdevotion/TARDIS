@@ -87,7 +87,24 @@ public enum TARDISDisplayItem {
     PRODUCT(10001, Material.LIME_CONCRETE),
     REDUCER(10001, Material.MAGENTA_CONCRETE),
     SIEGE_CUBE(10001, Material.CYAN_CONCRETE),
-    THE_MOMENT(10001, Material.BROWN_WOOL);
+    THE_MOMENT(10001, Material.BROWN_WOOL),
+    LIGHT_CLASSIC(10005, Material.SEA_LANTERN, true),
+    LIGHT_TENTH(10006, Material.SEA_LANTERN, true),
+    LIGHT_ELEVENTH_1(10007, Material.SEA_LANTERN, true),
+    LIGHT_ELEVENTH_2(10008, Material.SEA_LANTERN, true),
+    LIGHT_TWELFTH(10009, Material.SEA_LANTERN, true),
+    LIGHT_THIRTEENTH(10010, Material.SEA_LANTERN, true),
+    LIGHT_LAMP(-1, Material.REDSTONE_LAMP, true),
+    LIGHT_LANTERN(10011, Material.SEA_LANTERN, true),
+    LIGHT_WOOL(-1, Material.BLACK_WOOL, true),
+    LIGHT_CLASSIC_ON(10005, Material.SEA_LANTERN, true, true),
+    LIGHT_TENTH_ON(10006, Material.SEA_LANTERN, true, true),
+    LIGHT_ELEVENTH_1_ON(10007, Material.SEA_LANTERN, true, true),
+    LIGHT_ELEVENTH_2_ON(10008, Material.SEA_LANTERN, true, true),
+    LIGHT_TWELFTH_ON(10009, Material.SEA_LANTERN, true, true),
+    LIGHT_THIRTEENTH_ON(10010, Material.SEA_LANTERN, true, true),
+    LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, true, true),
+    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, true, true);
 
     private int customModelData;
     private final Material material;

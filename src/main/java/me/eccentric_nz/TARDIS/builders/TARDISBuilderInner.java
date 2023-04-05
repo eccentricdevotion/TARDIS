@@ -45,7 +45,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -279,19 +279,14 @@ public class TARDISBuilderInner implements Runnable {
                 spawner.spawnDivisionOod(postOod);
             }
             lampBlocks.forEach((lamp) -> {
-                BlockData lantern;
-                if (schm.hasLanterns()) {
-                    lantern = TARDISConstants.LANTERN;
-                } else {
-                    lantern = TARDISConstants.LAMP;
-                    ((Lightable) lantern).setLit(true);
-                }
-                lamp.setBlockData(lantern);
+                TARDISDisplayItemUtils.set(schm.getLights().getOn(), lamp);
             });
             lampBlocks.clear();
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
-                    block.setBlockData(TARDISConstants.LIGHT_DIV);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(15);
+                    block.setBlockData(levelled);
                 }
             });
             if (schm.getPermission().equals("cave")) {

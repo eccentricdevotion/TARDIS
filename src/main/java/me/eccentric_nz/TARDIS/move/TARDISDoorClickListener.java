@@ -421,7 +421,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 if (canPowerUp && po) {
                                                     // power up the TARDIS
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().hasLanterns()).clickButton(), 20L);
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().getLights()).clickButton(), 20L);
                                                 }
 
                                                 // put player into travellers table

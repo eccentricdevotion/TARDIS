@@ -228,8 +228,9 @@ class TARDISBuildAbandoned implements Runnable {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
             lampBlocks.forEach((lamp) -> {
-                BlockData lantern = (schm.hasLanterns()) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
-                lamp.setBlockData(lantern);
+                // spawn an item display light
+                TARDISDisplayItemUtils.set(schm.getLights().getOn(), lamp);
+//                lamp.setBlockData(TARDISConstants.LIGHT);
             });
             lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);

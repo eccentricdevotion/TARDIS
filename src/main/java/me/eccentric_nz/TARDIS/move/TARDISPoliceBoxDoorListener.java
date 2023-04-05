@@ -163,7 +163,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     }
                                                     if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {
                                                         // power up the TARDIS
-                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton(), 20L);
                                                     }
                                                     // put player into travellers table
                                                     // remove them first as they may have exited incorrectly and we only want them listed once

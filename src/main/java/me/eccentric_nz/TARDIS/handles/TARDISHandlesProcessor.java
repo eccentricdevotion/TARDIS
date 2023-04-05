@@ -147,7 +147,7 @@ public class TARDISHandlesProcessor {
                             case LIGHTS -> {
                                 boolean onoff = next.equals(TARDISHandlesBlock.ON);
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().hasLanterns());
+                                    new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().getLights());
                                 }
                             }
                             case POWER -> {
@@ -155,14 +155,14 @@ public class TARDISHandlesProcessor {
                                     case ON -> {
                                         if (!tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }
                                     case OFF -> {
                                         if (tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }

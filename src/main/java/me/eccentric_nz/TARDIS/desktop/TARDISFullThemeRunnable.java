@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -50,6 +51,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 
 /**
@@ -368,14 +370,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             lampBlocks.forEach((lamp) -> {
-                BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
-                lamp.setBlockData(l);
+                TardisLight light = tud.getSchematic().getLights();
+                if (archive_next != null) {
+                    light = archive_next.getLight();
+                }
+                TARDISDisplayItemUtils.set(light.getOn(), lamp);
             });
             lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
-                    block.setBlockData(TARDISConstants.LIGHT_DIV);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(15);
+                    block.setBlockData(levelled);
                 }
             });
             if (tud.getSchematic().getPermission().equals("cave")) {

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -33,9 +35,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -61,7 +60,7 @@ public class TARDISQuitListener implements Listener {
             }
             plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
         }
-        // if 
+        // if
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
@@ -105,7 +104,7 @@ public class TARDISQuitListener implements Listener {
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
+                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
                     }
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);

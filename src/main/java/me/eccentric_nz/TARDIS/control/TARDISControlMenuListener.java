@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -55,9 +57,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -279,7 +278,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     // power up/down
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         close(player, true);
-                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
+                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
                                     } else {
                                         TARDISMessage.send(player, "POWER_DOWN_DISABLED");
                                     }
@@ -339,7 +338,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     close(player, true);
-                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                                 }
                                 case 31 -> {
                                     // rebuild
