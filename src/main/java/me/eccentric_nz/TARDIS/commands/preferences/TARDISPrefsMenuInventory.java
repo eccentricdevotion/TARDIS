@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -82,7 +82,6 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isSubmarineOn());
         values.add(rsp.isTextureOn());
         values.add(rsp.isBuildOn());
-        values.add(rsp.isWoolLightsOn());
         values.add(rsp.isSignOn());
         values.add(rsp.isTravelbarOn());
         values.add(rsp.isFarmOn());
@@ -101,7 +100,6 @@ public class TARDISPrefsMenuInventory {
         }
         values.add(rsp.isAutoPowerUp());
         values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
-        values.add(rsp.isLanternsOn());
         values.add(rsp.isMinecartOn());
         values.add(rsp.isEasyDifficulty());
         if (plugin.isWorldGuardOnServer()) {

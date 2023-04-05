@@ -28,16 +28,16 @@ public class Schematic {
     private final String description;
     private final ConsoleSize consoleSize;
     private final boolean beacon;
-    private final boolean lanterns;
+    private final TardisLight light;
     private final boolean custom;
 
-    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, boolean lanterns, boolean custom) {
+    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, TardisLight light, boolean custom) {
         this.seed = seed;
         this.permission = permission;
         this.description = description;
         this.consoleSize = consoleSize;
         this.beacon = beacon;
-        this.lanterns = lanterns;
+        this.light = light;
         this.custom = custom;
     }
 
@@ -96,12 +96,12 @@ public class Schematic {
     }
 
     /**
-     * Checks if this Schematic has a sea lanterns.
+     * Gets which type of light this Schematic uses.
      *
      * @return true if this Schematic has a sea lanterns.
      */
-    public boolean hasLanterns() {
-        return lanterns;
+    public TardisLight getLights() {
+        return light;
     }
 
     /**

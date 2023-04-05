@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -36,6 +34,9 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to
@@ -88,11 +89,11 @@ class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 Schematic schm = tardis.getSchematic();
-                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
+                Material lampon = schm.getLights().getMaterial();
                 // player preference
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner.getUniqueId().toString());
-                if (rsp.resultSet() && rsp.isLanternsOn()) {
-                    lampon = Material.SEA_LANTERN;
+                if (rsp.resultSet()) {
+                    lampon = rsp.getLights().getMaterial();
                 }
                 // get JSON
                 JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
