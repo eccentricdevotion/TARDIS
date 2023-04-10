@@ -32,13 +32,13 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISPresetInventory {
+public class TARDISPresetInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
     private final Player player;
 
-    TARDISPresetInventory(TARDIS plugin, Player player) {
+    public TARDISPresetInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         terminal = getItemStack();

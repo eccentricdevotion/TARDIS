@@ -14,17 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.TARDIS.chameleon.itemframe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.chameleon.TARDISPresetInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;

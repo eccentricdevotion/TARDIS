@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.TARDIS.chameleon.itemframe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,14 +34,14 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISPoliceBoxInventory {
+public class TARDISPoliceBoxInventory {
 
     private final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
     private final ItemStack[] boxes;
     private final TARDIS plugin;
     private final Player player;
 
-    TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
+    public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         boxes = getItemStack();
@@ -126,7 +126,7 @@ class TARDISPoliceBoxInventory {
         return boxes;
     }
 
-    ItemStack[] getBoxes() {
+    public ItemStack[] getBoxes() {
         return boxes;
     }
 }
