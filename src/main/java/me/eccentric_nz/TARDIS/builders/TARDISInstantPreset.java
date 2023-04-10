@@ -20,8 +20,10 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -47,8 +49,6 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public

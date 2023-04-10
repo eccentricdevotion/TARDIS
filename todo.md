@@ -16,6 +16,7 @@
 
 1. Vortex Manipulator predictive text
 2. Pandorica custom model
+3. Tinted police box model using leather armour - any colour you like!
 
 ## Future versions
 

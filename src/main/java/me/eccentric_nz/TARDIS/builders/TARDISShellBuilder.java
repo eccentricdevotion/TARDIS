@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;

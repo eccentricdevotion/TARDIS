@@ -16,13 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
@@ -32,6 +27,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.RegisteredListener;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz

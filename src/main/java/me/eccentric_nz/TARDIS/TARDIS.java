@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -34,8 +27,8 @@ import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
-import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
@@ -96,6 +89,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.

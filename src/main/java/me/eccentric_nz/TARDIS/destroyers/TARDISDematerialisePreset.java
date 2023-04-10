@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;

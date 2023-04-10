@@ -2,12 +2,12 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;

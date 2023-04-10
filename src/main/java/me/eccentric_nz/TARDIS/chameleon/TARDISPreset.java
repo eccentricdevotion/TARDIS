@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 import java.util.EnumMap;
@@ -27,7 +28,7 @@ import java.util.EnumMap;
  *
  * @author eccentric_nz
  */
-class TARDISPreset {
+public class TARDISPreset {
 
     private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
@@ -35,9 +36,6 @@ class TARDISPreset {
     private String[][] blueprintData;
     private String[][] stainedData;
     private String[][] glassData;
-
-    TARDISPreset() {
-    }
 
     public void makePresets() {
         for (COMPASS d : COMPASS.values()) {
@@ -59,15 +57,15 @@ class TARDISPreset {
         return glass;
     }
 
-    void setBlueprintData(String[][] blueprintData) {
+    public void setBlueprintData(String[][] blueprintData) {
         this.blueprintData = blueprintData;
     }
 
-    void setStainedData(String[][] stainedData) {
+    public void setStainedData(String[][] stainedData) {
         this.stainedData = stainedData;
     }
 
-    void setGlassData(String[][] glassData) {
+    public void setGlassData(String[][] glassData) {
         this.glassData = glassData;
     }
 }

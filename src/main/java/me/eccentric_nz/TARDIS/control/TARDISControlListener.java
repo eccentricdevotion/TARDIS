@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.io.IOException;
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -26,8 +24,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellInventory;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -64,6 +62,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * The various systems of the console room are fairly well-understood. According to one account, each of the six panels

@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
-import java.util.*;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
+
+import java.util.*;
 
 /**
  * Keeps track of various building related lookups. these include: Room block counts, Room seed blocks and Stained Glass

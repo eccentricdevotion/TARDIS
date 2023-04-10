@@ -16,15 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
@@ -57,6 +55,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz

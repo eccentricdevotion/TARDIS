@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;

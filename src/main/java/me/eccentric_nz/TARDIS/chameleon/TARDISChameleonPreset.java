@@ -18,6 +18,11 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.chameleon.preset.*;
+import me.eccentric_nz.TARDIS.chameleon.preset.biome.*;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISRenderPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISDirectionalRecalculator;
@@ -183,7 +188,7 @@ public class TARDISChameleonPreset {
         return tcc;
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json) {
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json) {
         TARDISChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
