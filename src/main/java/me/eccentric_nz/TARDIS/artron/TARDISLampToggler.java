@@ -21,7 +21,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -29,7 +28,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
@@ -41,13 +39,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISLampToggler {
 
     private final TARDIS plugin;
-    private final BlockData lamp;
-    private final BlockData sea;
 
     public TARDISLampToggler(TARDIS plugin) {
         this.plugin = plugin;
-        lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
-        sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
     }
 
     public void flickSwitch(int id, UUID uuid, boolean on, TardisLight light) {
