@@ -16,19 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -41,6 +39,12 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
 
@@ -53,6 +57,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private ItemFrame frame;
     private ItemStack is;
     private Material dye;
+    private Color colour = null;
     private String pb;
 
     TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
@@ -119,7 +124,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    case WARP, RAPID, FASTER ->
+                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
                                     default -> "tardis_land"; // NORMAL
                                 };
                             }
@@ -140,13 +146,27 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         }
                         default -> pb = "Police Box";
                     }
+                    if (preset == ChameleonPreset.COLOURED) {
+                        // get the colour
+                        ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+                        if (rsc.resultSet()) {
+                            colour = Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue());
+                        }
+                    }
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(cmd);
                 if (bd.shouldAddSign()) {
                     im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
                 }
-                is.setItemMeta(im);
+                if (cmd == 1001 && preset == ChameleonPreset.COLOURED && colour != null) {
+                    // set the colour
+                    LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                    leatherArmorMeta.setColor(colour);
+                    is.setItemMeta(leatherArmorMeta);
+                } else {
+                    is.setItemMeta(im);
+                }
                 frame.setItem(is, false);
                 frame.setFixed(true);
                 frame.setVisible(false);

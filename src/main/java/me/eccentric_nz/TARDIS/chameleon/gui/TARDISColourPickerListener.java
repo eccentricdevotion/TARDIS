@@ -1,8 +1,11 @@
-package me.eccentric_nz.TARDIS.chameleon.itemframe;
+package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,11 +16,14 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-public class ColourPickerListener extends TARDISMenuListener implements Listener {
+import java.util.HashMap;
+import java.util.List;
+
+public class TARDISColourPickerListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
-    public ColourPickerListener(TARDIS plugin) {
+    public TARDISColourPickerListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -26,7 +32,7 @@ public class ColourPickerListener extends TARDISMenuListener implements Listener
     public void onInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals("Colour Picker")) {
+        if (name.equals(ChatColor.DARK_RED + "Colour Picker")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
@@ -63,9 +69,29 @@ public class ColourPickerListener extends TARDISMenuListener implements Listener
                         setBlue(view);
                     }
                     case 35 -> {
-                        // select
+                        // get the player's tardis_id
+                        ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                        if (rst.fromUUID(player.getUniqueId().toString())) {
+                            int id = rst.getTardis_id();
+                            // save the colour
+                            Color color = getColour(view);
+                            HashMap<String, Object> set = new HashMap<>();
+                            set.put("red", color.getRed());
+                            set.put("green", color.getGreen());
+                            set.put("blue", color.getBlue());
+                            // do they have an existing record?
+                            ResultSetColour rsc = new ResultSetColour(plugin, id);
+                            if (rsc.resultSet()) {
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("tardis_id", id);
+                                plugin.getQueryFactory().doUpdate("colour", set, where);
+                            } else {
+                                set.put("tardis_id", id);
+                                plugin.getQueryFactory().doInsert("colour", set);
+                            }
+                            TARDISMessage.send(player, "COLOUR_SET");
+                        }
                         close(player);
-                        player.sendMessage("Colour " + getColour(view));
                     }
                     case 53 -> {
                         // close

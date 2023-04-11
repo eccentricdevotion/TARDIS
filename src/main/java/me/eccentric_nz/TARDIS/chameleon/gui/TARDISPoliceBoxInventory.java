@@ -14,10 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon.itemframe;
+package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
@@ -25,6 +23,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of
@@ -84,6 +85,14 @@ public class TARDISPoliceBoxInventory {
         im.setCustomModelData(1001);
         is.setItemMeta(im);
         boxes[i] = is;
+        i++;
+        // any colour
+        ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
+        ItemMeta colour = any.getItemMeta();
+        colour.setDisplayName("Pick a colour Police Box");
+        colour.setCustomModelData(1);
+        any.setItemMeta(colour);
+        boxes[i] = any;
         i++;
         for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             if (i < 50) {

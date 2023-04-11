@@ -142,6 +142,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
                                         sb.append(str);
                                     }
+                                    case colour -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("colour_id"), rs.getInt("tardis_id"), rs.getInt("red"), rs.getInt("green"), rs.getInt("blue")) + end;
+                                        sb.append(str);
+                                    }
                                     case chunks -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chunk_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("z")) + end;
                                         sb.append(str);

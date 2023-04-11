@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -35,6 +35,10 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISInstantPoliceBox {
 
@@ -111,7 +115,17 @@ public class TARDISInstantPoliceBox {
             }
             im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
         }
-        is.setItemMeta(im);
+        if (preset == ChameleonPreset.COLOURED) {
+            // get the colour
+            ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+            if (rsc.resultSet()) {
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
+                is.setItemMeta(leatherArmorMeta);
+            }
+        } else {
+            is.setItemMeta(im);
+        }
         frame.setItem(is, false);
         frame.setFixed(true);
         frame.setVisible(false);

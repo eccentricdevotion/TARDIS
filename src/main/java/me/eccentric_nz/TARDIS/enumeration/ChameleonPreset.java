@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
 
 /**
  * @author eccentric_nz
@@ -114,6 +115,7 @@ public enum ChameleonPreset {
     POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
     POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, false, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
+    COLOURED(Material.LEATHER_HORSE_ARMOR, 18, "", "", false, false, "Pick a colour"),
 
     ITEM(Material.BARRIER, -1, "", "", false, false, "Item");
 
@@ -237,7 +239,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE, 
                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, 
                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, 
-                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, ITEM -> true;
+                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, ITEM -> true;
             default -> false;
         };
     }

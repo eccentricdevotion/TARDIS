@@ -30,6 +30,7 @@ public enum Table {
     blocks,
     blueprint,
     chameleon,
+    colour,
     chunks,
     condenser,
     controls,

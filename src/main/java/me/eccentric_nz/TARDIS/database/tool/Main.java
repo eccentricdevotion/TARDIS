@@ -178,6 +178,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
                                         bw.write(str);
                                     }
+                                    case colour -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("colour_id"), rs.getInt("tardis_id"), rs.getInt("red"), rs.getInt("green"), rs.getInt("blue")) + end;
+                                        bw.write(str);
+                                    }
                                     case chunks -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chunk_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("z")) + end;
                                         bw.write(str);

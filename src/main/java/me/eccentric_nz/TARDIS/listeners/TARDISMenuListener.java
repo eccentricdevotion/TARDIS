@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -31,6 +29,9 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -99,6 +100,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Chameleon Presets", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
+        map.put(ChatColor.DARK_RED + "Colour Picker", 54);
         map.put(ChatColor.DARK_RED + "Companions", 54);
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
         map.put(ChatColor.DARK_RED + "Chemical compounds", 27);
