@@ -45,6 +45,7 @@ import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -52,7 +53,6 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_19_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftVillager;
@@ -66,8 +66,6 @@ public class TARDISHelper {
     public static boolean colourSkies;
 
     public void enable(TARDIS plugin) {
-        // get server default world name
-        String levelName = BiomeUtilities.getLevelName();
         // load custom biomes if they are enabled
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
@@ -310,8 +308,9 @@ public class TARDISHelper {
     }
 
     public void removeTileEntity(org.bukkit.block.BlockState tile) {
-        net.minecraft.world.level.chunk.ChunkAccess chunk = ((CraftChunk) tile.getChunk()).getHandle();
         BlockPos position = new BlockPos(tile.getLocation().getBlockX(), tile.getLocation().getBlockY(), tile.getLocation().getBlockZ());
+        ServerLevel level = ((CraftWorld) tile.getLocation().getWorld()).getHandle();
+        ChunkAccess chunk = level.getChunk(position);
         chunk.removeBlockEntity(position);
         tile.getBlock().setType(Material.AIR);
     }

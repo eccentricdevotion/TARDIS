@@ -31,6 +31,7 @@ import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.material.Fluid;
@@ -92,7 +93,7 @@ public class TARDISPacketListener {
                 if (TARDISHelper.colourSkies && packet instanceof ClientboundLevelChunkWithLightPacket chunkPacket) {
                     String world = player.getWorld().getName();
                     if (world.equals("gallifrey") || world.equals("skaro")) {
-                        LevelChunk levelChunk = cloneChunk(((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle());
+                        LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";
                         Biome biome = TARDISHelper.biomeMap.get(key);
                         if (biome != null) {
