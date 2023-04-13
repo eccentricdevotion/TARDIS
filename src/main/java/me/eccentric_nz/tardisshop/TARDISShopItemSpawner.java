@@ -73,7 +73,7 @@ public class TARDISShopItemSpawner {
             display.setBillboard(Display.Billboard.VERTICAL);
             display.setInvulnerable(true);
             TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAligment.CENTER);
+            text.setAlignment(TextDisplay.TextAlignment.CENTER);
             text.setText(what.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.getCost()));
             AxisAngle4f aa = new AxisAngle4f();
             text.setTransformation(new Transformation(new Vector3f(0, 0, 0), aa, new Vector3f(0.25f, 0.25f, 0.25f), aa));

@@ -63,7 +63,7 @@ public class TARDISDisplayItemCommand {
                 display.setBillboard(Display.Billboard.VERTICAL);
                 display.setInvulnerable(true);
                 TextDisplay text = (TextDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.75d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAligment.CENTER);
+                text.setAlignment(TextDisplay.TextAlignment.CENTER);
                 text.setText("TARDIS Axe, Cost: 25.00");
                 text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
                 text.setBillboard(Display.Billboard.VERTICAL);
