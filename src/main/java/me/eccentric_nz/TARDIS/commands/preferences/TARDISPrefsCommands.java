@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -33,9 +35,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Command /tardisprefs [arguments].
@@ -59,7 +58,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "isomorphic",
             "key", "key_menu",
             "junk",
-            "language", "lanterns", "lock_containers",
+            "language", "lights", "lock_containers",
             "minecart",
             "quotes",
             "renderer",
@@ -155,6 +154,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         case "language", "translate" -> {
                             return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
+                        }
+                        case "lights" -> {
+                            return new TARDISLightsCommand().setLightsPref(player, args);
                         }
                         case "wall", "floor", "siege_wall", "siege_floor" -> {
                             return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
