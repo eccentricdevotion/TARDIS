@@ -33,7 +33,6 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
@@ -186,7 +185,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
                 }
             }
-            chunks = getChunks(chunk, tud.getSchematic());
+            chunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 if (tud.getPrevious().getPermission().equals("division")) {
@@ -382,9 +381,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("chunks", wherec);
-            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
             // update chunks list in DB
-            chunkList.forEach((hunk) -> {
+            chunks.forEach((hunk) -> {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("tardis_id", id);
                 setc.put("world", world.getName());
@@ -721,23 +719,5 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
         }
-    }
-
-    private List<Chunk> getChunks(Chunk c, Schematic s) {
-        List<Chunk> chinks = new ArrayList<>();
-        chinks.add(c);
-        if (s.getConsoleSize().equals(ConsoleSize.MASSIVE)) {
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ()));
-            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 1));
-        }
-        if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
-            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 1));
-        }
-        return chinks;
     }
 }

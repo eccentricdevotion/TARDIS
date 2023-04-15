@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -199,7 +200,7 @@ public class TARDISBuilderInner implements Runnable {
                 wg1 = new Location(world, startx, starty, startz);
                 wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (d - 1));
                 // get list of used chunks
-                chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
+                chunkList = TARDISChunkUtils.getConsoleChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
                 // update chunks list in DB
                 chunkList.forEach((c) -> {
                     while (!c.isLoaded()) {

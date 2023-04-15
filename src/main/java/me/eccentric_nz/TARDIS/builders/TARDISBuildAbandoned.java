@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -151,7 +152,7 @@ class TARDISBuildAbandoned implements Runnable {
                 String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
                 set.put("chunk", chun);
                 // get list of used chunks
-                List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
+                List<Chunk> chunkList = TARDISChunkUtils.getConsoleChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
                 // update chunks list in DB
                 chunkList.forEach((ch) -> {
                     HashMap<String, Object> setc = new HashMap<>();

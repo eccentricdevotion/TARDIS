@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
@@ -26,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
@@ -162,7 +161,7 @@ public class TARDISInteriorPostioning {
             Location exitLocation = dl.getL();
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-            List<Chunk> chunks = getChunks(c, s);
+            List<Chunk> chunks = TARDISChunkUtils.getConsoleChunks(c, s);
             chunks.forEach((u) -> {
                 // exit players & remove items
                 for (Entity e : u.getEntities()) {
@@ -240,24 +239,5 @@ public class TARDISInteriorPostioning {
                 }
             }
         }
-    }
-
-    // TODO make a utility method
-    private List<Chunk> getChunks(Chunk c, Schematic s) {
-        List<Chunk> chinks = new ArrayList<>();
-        chinks.add(c);
-        if (s.getConsoleSize().equals(ConsoleSize.MASSIVE)) {
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ()));
-            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 2));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 1));
-        }
-        if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
-            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));
-            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 1));
-        }
-        return chinks;
     }
 }
