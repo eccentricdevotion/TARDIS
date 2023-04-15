@@ -73,6 +73,7 @@ public class TARDISLampToggler {
                     b.getChunk().load();
                 }
                 Levelled levelled = TARDISConstants.LIGHT;
+                ItemDisplay display = TARDISDisplayItemUtils.get(b);
                 if (on) {
                     levelled.setLevel(0);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
@@ -80,10 +81,14 @@ public class TARDISLampToggler {
                         TARDISDisplayItemUtils.set(light.getOff(), b);
                     } else {
                         // switch the itemstack
-                        ItemDisplay display = TARDISDisplayItemUtils.get(b);
                         if (display != null) {
                             ItemStack is = display.getItemStack();
                             ItemMeta im = is.getItemMeta();
+                            if (light.getOff().getCustomModelData() == -1) {
+                                im.setCustomModelData(null);
+                            } else {
+                                im.setCustomModelData(light.getOff().getCustomModelData());
+                            }
                             is.setType(light.getOff().getMaterial());
                             is.setItemMeta(im);
                             display.setItemStack(is);
@@ -91,6 +96,19 @@ public class TARDISLampToggler {
                     }
                     b.setBlockData(levelled);
                 } else {
+                    // switch the itemstack
+                    if (display != null) {
+                        ItemStack is = display.getItemStack();
+                        ItemMeta im = is.getItemMeta();
+                        if (light.getOn().getCustomModelData() == -1) {
+                            im.setCustomModelData(null);
+                        } else {
+                            im.setCustomModelData(light.getOn().getCustomModelData());
+                        }
+                        is.setType(light.getOn().getMaterial());
+                        is.setItemMeta(im);
+                        display.setItemStack(is);
+                    }
                     levelled.setLevel(15);
                     b.setBlockData(levelled);
                 }

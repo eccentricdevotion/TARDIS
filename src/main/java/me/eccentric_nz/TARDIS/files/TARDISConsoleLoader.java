@@ -87,7 +87,7 @@ public class TARDISConsoleLoader {
             Consoles.getBY_NAMES().put("LEGACY_BIGGER", new Schematic("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "Legacy Bigger Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false));
             Consoles.getBY_NAMES().put("LEGACY_BUDGET", new Schematic("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "Legacy Default Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false));
             Consoles.getBY_NAMES().put("LEGACY_DELUXE", new Schematic("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "Legacy Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
-            Consoles.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "Legacy 11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.ELEVENTH, false));
+            Consoles.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "Legacy 11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TWELFTH, false));
             Consoles.getBY_NAMES().put("LEGACY_REDSTONE", new Schematic("RED_GLAZED_TERRACOTTA", "legacy_redstone", "Legacy Redstone Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
         }
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
