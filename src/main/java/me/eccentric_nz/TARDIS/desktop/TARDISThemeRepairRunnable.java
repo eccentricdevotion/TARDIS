@@ -234,10 +234,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             floor_type = Material.valueOf(floor[0]);
             // get input array
             arr = obj.get("input").getAsJsonArray();
-            // clear existing lamp blocks
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("tardis_id", id);
-            plugin.getQueryFactory().doDelete("lamps", whered);
             // clear existing precious blocks
             HashMap<String, Object> wherep = new HashMap<>();
             wherep.put("tardis_id", id);
@@ -252,6 +248,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
+            chunks.forEach((c) -> {
+                // remove any display items lamps
+                TARDISDisplayItemUtils.removeDisplaysInChunk(c);
+            });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {

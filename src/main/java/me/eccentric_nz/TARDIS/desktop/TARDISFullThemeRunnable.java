@@ -320,6 +320,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
+            chunks.forEach((c) -> {
+                // remove any display items lamps
+                TARDISDisplayItemUtils.removeDisplaysInChunk(c);
+            });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
@@ -1039,6 +1043,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
             chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 1));
+            if (s.getConsoleSize().equals(ConsoleSize.MASSIVE)) {
+                chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ()));
+                chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 1));
+                chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 2));
+                chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 2));
+                chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 2));
+            }
         }
         return chinks;
     }

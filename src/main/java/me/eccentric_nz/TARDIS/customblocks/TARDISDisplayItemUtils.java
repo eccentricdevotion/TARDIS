@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -37,9 +38,11 @@ import org.bukkit.persistence.PersistentDataType;
 public class TARDISDisplayItemUtils {
 
     /**
-     * Get an item display entity from a block. Used for custom TARDIS blocks
+     * Get an item display entity from a block.Used for custom TARDIS blocks
      *
      * @param block the block to use as the search location
+     * @return The Item Display entity at the blocks location or null if there
+     * isn't one
      */
     public static ItemDisplay get(Block block) {
         for (Entity e : block.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
@@ -55,6 +58,8 @@ public class TARDISDisplayItemUtils {
      * lamp blocks
      *
      * @param interaction the Interaction entity to use as the search location
+     * @return The Item Display entity at the Interaction location or null if
+     * there isn't one
      */
     public static ItemDisplay get(Interaction interaction) {
         for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
@@ -122,6 +127,8 @@ public class TARDISDisplayItemUtils {
      * Spawn an Interaction entity
      *
      * @param location the location to spawn the entity at
+     * @param cmd the custom model data to set for the custom block key
+     * associated with the entity
      */
     public static void set(Location location, int cmd) {
         // spawn an interaction entity
@@ -130,5 +137,18 @@ public class TARDISDisplayItemUtils {
         interaction.setResponsive(true);
         interaction.setPersistent(true);
         interaction.setInvulnerable(true);
+    }
+
+    /**
+     * Remove item display entities in a chunk
+     *
+     * @param chunk the chunk to search for entities
+     */
+    public static void removeDisplaysInChunk(Chunk chunk) {
+        for (Entity entity : chunk.getEntities()) {
+            if (entity instanceof ItemDisplay && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                entity.remove();
+            }
+        }
     }
 }
