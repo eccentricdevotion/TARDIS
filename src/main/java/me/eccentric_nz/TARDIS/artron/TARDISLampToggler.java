@@ -91,9 +91,7 @@ public class TARDISLampToggler {
                     }
                     b.setBlockData(levelled);
                 } else {
-                    if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
-                        levelled.setLevel(15);
-                    }
+                    levelled.setLevel(15);
                     b.setBlockData(levelled);
                 }
             }
