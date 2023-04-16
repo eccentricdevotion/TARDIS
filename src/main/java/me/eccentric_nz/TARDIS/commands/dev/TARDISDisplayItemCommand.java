@@ -16,11 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -131,8 +139,36 @@ public class TARDISDisplayItemCommand {
                 TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
                 converter.setTaskId(taskId);
-                // TODO also find any chemistry rooms and convert the mushroom blocks there, then implement both as player command
-
+                // also find any rooms and convert the mushroom blocks there, TODO implement both as player command
+                // get players tardis_id
+                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                if (rst.fromUUID(player.getUniqueId().toString())) {
+                    int id = rst.getTardis_id();
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetARS rsa = new ResultSetARS(plugin, where);
+                    if (rsa.resultSet()) {
+                        String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                        Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
+                        for (int l = 0; l < 3; l++) {
+                            for (int row = 0; row < 9; row++) {
+                                for (int col = 0; col < 9; col++) {
+                                    if (!json[l][row][col].equalsIgnoreCase("STONE") && !isConsole(json[l][row][col])) {
+                                        // get ARS slot
+                                        TARDISARSSlot slot = new TARDISARSSlot();
+                                        slot.setChunk(c);
+                                        slot.setY(l);
+                                        slot.setX(row);
+                                        slot.setZ(col);
+                                        TARDISDisplayBlockRoomConverter roomConverter = new TARDISDisplayBlockRoomConverter(plugin, player, slot);
+                                        int roomTaskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, roomConverter, 5, 1);
+                                        roomConverter.setTaskId(roomTaskId);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 return true;
             }
             default -> {
@@ -142,4 +178,7 @@ public class TARDISDisplayItemCommand {
         return true;
     }
 
+    private boolean isConsole(String str) {
+        return Consoles.getBY_MATERIALS().containsKey(str);
+    }
 }

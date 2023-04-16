@@ -16,17 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import com.google.gson.JsonObject;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,18 +33,21 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISDisplayBlockConverter implements Runnable {
+public class TARDISDisplayBlockRoomConverter implements Runnable {
 
     private final TARDIS plugin;
     private final Player owner;
+    private final int startx, starty, startz;
     private boolean running;
-    private int c, h, w, level = 0, row = 0, startx, starty, startz, taskId;
+    private int c = 16, h = 16, w = 16, level = 0, row = 0, taskId;
     private World world;
-    private JsonObject obj;
 
-    public TARDISDisplayBlockConverter(TARDIS plugin, Player owner) {
+    public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, TARDISARSSlot slot) {
         this.plugin = plugin;
         this.owner = owner;
+        this.startx = slot.getX();
+        this.starty = slot.getY();
+        this.startz = slot.getZ();
     }
 
     @Override
@@ -61,35 +59,7 @@ public class TARDISDisplayBlockConverter implements Runnable {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                int slot = tardis.getTIPS();
-                if (slot != -1) { // default world - use TIPS
-                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                    TARDISTIPSData pos = tintpos.getTIPSData(slot);
-                    startx = pos.getCentreX();
-                    startz = pos.getCentreZ();
-                } else {
-                    int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
-                    startx = gsl[0];
-                    startz = gsl[2];
-                }
                 world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
-                Schematic schm = tardis.getSchematic();
-                // get JSON
-                obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
-                if (obj != null) {
-                    // get dimensions
-                    JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-                    h = dimensions.get("height").getAsInt();
-                    w = dimensions.get("width").getAsInt();
-                    c = dimensions.get("length").getAsInt();
-                    if (schm.getPermission().equals("mechanical")) {
-                        starty = 62;
-                    } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                        starty = 65;
-                    } else {
-                        starty = 64;
-                    }
-                }
             }
             running = true;
         }
