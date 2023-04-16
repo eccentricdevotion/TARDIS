@@ -110,7 +110,7 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
-                // TODO give back a new display item
+                // give back a new display item
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
                 int model = 10001;
                 ItemStack is;

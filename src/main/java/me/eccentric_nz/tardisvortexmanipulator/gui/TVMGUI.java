@@ -145,7 +145,7 @@ public class TVMGUI {
         coord.setDisplayName("Z");
         coord.setCustomModelData(131);
         z.setItemMeta(coord);
-        // tachyon level - TODO show different levels depening on % full
+        // tachyon level - show different levels depening on % full
         double percent = tachyonLevel / plugin.getConfig().getDouble("tachyon_use.max");
         short durability = (short) (1562 - (percent * 1562));
         ItemStack tach = new ItemStack(Material.DIAMOND_PICKAXE, 1);
@@ -178,6 +178,7 @@ public class TVMGUI {
         yon.setCustomModelData(cmd);
         yon.setLore(lore);
         tach.setItemMeta(yon);
+        // deprecated, but if resource pack not installed gives a visial indication of tachyon levels
         tach.setDurability(durability);
         // lifesigns
         ItemStack life = new ItemStack(Material.BOWL, 1);
