@@ -38,6 +38,23 @@ import org.bukkit.persistence.PersistentDataType;
 public class TARDISDisplayItemUtils {
 
     /**
+     * Get a TARDISDisplayItem from a display entity
+     *
+     * @param display the display entity to get the data from
+     * @return The TARDISDisplayItem that matches this entity isn't one
+     */
+    public static TARDISDisplayItem get(ItemDisplay display) {
+        ItemStack is = display.getItemStack();
+        if (is != null) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasCustomModelData()) {
+                return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+            }
+        }
+        return null;
+    }
+
+    /**
      * Get an item display entity from a block.Used for custom TARDIS blocks
      *
      * @param block the block to use as the search location
@@ -132,7 +149,7 @@ public class TARDISDisplayItemUtils {
      */
     public static void set(Location location, int cmd) {
         // spawn an interaction entity
-        Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
+        Interaction interaction = (Interaction) location.getWorld().spawnEntity(location.clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
         interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
         interaction.setResponsive(true);
         interaction.setPersistent(true);

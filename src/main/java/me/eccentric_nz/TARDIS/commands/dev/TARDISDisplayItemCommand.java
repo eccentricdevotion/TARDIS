@@ -79,10 +79,11 @@ public class TARDISDisplayItemCommand {
             case "remove" -> {
                 BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
                 for (Entity e : block.getWorld().getNearbyEntities(box)) {
-                    if (e instanceof ItemDisplay || e instanceof TextDisplay) {
+                    if (e instanceof ItemDisplay || e instanceof TextDisplay || e instanceof Interaction) {
                         e.remove();
-                        plugin.debug("Removed - " + e.getType());
                     }
+                    // set the block to air
+                    block.setType(Material.AIR);
                 }
             }
             case "place" -> {
@@ -106,11 +107,10 @@ public class TARDISDisplayItemCommand {
                         light.setLevel(level);
                         up.setBlockData(light);
                         // also set an interaction entity
-                        Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation(), EntityType.INTERACTION);
+                        Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
                         interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
                         interaction.setPersistent(true);
-                        interaction.setInvulnerable(true);
                     } else {
                         up.setType(Material.BARRIER);
                     }

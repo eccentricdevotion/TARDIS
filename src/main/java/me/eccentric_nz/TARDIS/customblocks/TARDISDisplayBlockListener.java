@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 /**
  * @author eccentric_nz
@@ -60,6 +62,8 @@ public class TARDISDisplayBlockListener implements Listener {
     public void onDisplayBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
+        ItemStack single = is.clone();
+        single.setAmount(1);
         if (!is.hasItemMeta()) {
             return;
         }
@@ -88,7 +92,7 @@ public class TARDISDisplayBlockListener implements Listener {
             location.getBlock().setBlockData(data);
         }, 1L);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-        display.setItemStack(is);
+        display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
         int amount = is.getAmount() - 1;
@@ -135,57 +139,56 @@ public class TARDISDisplayBlockListener implements Listener {
         }
     }
 
+    /**
+     * Simulate breaking a TARDIS light block
+     *
+     * @param event an entity interact event
+     */
     @EventHandler
     public void onInteractionClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof Interaction interaction) {
             // get the item display entity
             ItemDisplay display = TARDISDisplayItemUtils.get(interaction);
             if (display != null) {
+                event.setCancelled(true);
                 Player player = event.getPlayer();
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (isSonic(inHand)) {
                     // toggle the lamp
-                    ItemStack is = display.getItemStack();
-                    ItemStack change = null;
+                    ItemStack lamp = display.getItemStack();
                     Block light = interaction.getLocation().getBlock();
-                    if (is != null) {
-                        ItemMeta im = is.getItemMeta();
-                        // check the block is a chemistry lamp block
-                        if (is.getType() == Material.SEA_LANTERN) {
-                            change = new ItemStack(Material.REDSTONE_LAMP, 1);
+                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
+                    // check the block is a chemistry lamp block
+                    if (tdi != null && tdi.isLight()) {
+                        TARDISDisplayItem toggled = TardisLight.getToggled(tdi);
+                        ItemMeta im = lamp.getItemMeta();
+                        ItemStack change = new ItemStack(toggled.getMaterial(), 1);
+                        if (toggled.isLit()) {
+                            // create light source
+                            LampToggler.setLightlevel(light, 15);
+                        } else {
                             // delete light source - should eventually get rid of this...
                             LampToggler.deleteLight(light);
                             // set light level to zero
                             LampToggler.setLightlevel(light, 0);
-                        } else if (is.getType() == Material.REDSTONE_LAMP) {
-                            change = new ItemStack(Material.SEA_LANTERN, 1);
-                            // create light source
-                            LampToggler.setLightlevel(light, 15);
                         }
-                        if (change != null) {
-                            change.setItemMeta(im);
-                            display.setItemStack(change);
-                        }
+                        change.setItemMeta(im);
+                        display.setItemStack(change);
                     }
                 } else if (Tag.ITEMS_PICKAXES.isTagged(inHand.getType())) {
-                    Location l = display.getLocation();
-                    Block block = l.getBlock();
+                    Location l = interaction.getLocation();
                     ItemDisplay breaking = null;
-                    ItemDisplay fake = null;
-                    for (Entity e : l.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+                    for (Entity e : l.getWorld().getNearbyEntities(l, 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                         if (e instanceof ItemDisplay item) {
-                            ItemStack is = display.getItemStack();
-                            if (is.hasItemMeta()) {
-                                if (is.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
+                            ItemStack stack = item.getItemStack();
+                            if (stack.hasItemMeta()) {
+                                if (stack.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
                                     breaking = item;
-                                }
-                                if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                                    fake = item;
                                 }
                             }
                         }
                     }
-                    processInteraction(fake, breaking, player, l, block, interaction);
+                    processInteraction(display, breaking, player, l, l.getBlock(), interaction);
                 }
             }
         }
@@ -204,15 +207,17 @@ public class TARDISDisplayBlockListener implements Listener {
     private void processInteraction(ItemDisplay fake, ItemDisplay breaking, Player player, Location l, Block block, Interaction interaction) {
         if (fake != null && player.getGameMode().equals(GameMode.CREATIVE)) {
             fake.remove();
+            if (interaction != null) {
+                interaction.remove();
+            }
             block.setType(Material.AIR);
             return;
         }
         if (breaking != null && fake != null) {
             ItemStack is = breaking.getItemStack();
             int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
-            if (destroy > 4) {
+            if (destroy == 9) {
                 if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-                    // TODO fix item duplication
                     l.getWorld().dropItemNaturally(l, fake.getItemStack());
                 }
                 breaking.remove();
@@ -228,18 +233,22 @@ public class TARDISDisplayBlockListener implements Listener {
                 im.setCustomModelData(im.getCustomModelData() + 1);
                 is.setItemMeta(im);
                 breaking.setItemStack(is);
-                // set a delayed task to reset the breaking animation?
+                // set a delayed task to reset the breaking animation
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    breaking.remove();
+                }, 60);
             }
-        } else if (fake != null) {
+        } else if (breaking == null) {
             // only one item display entity...
             // so spawn a destroy entity
-            ItemStack is = new ItemStack(Material.GRAVEL);
-            ItemMeta im = is.getItemMeta();
-            im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, 1);
-            im.setCustomModelData(10001);
-            is.setItemMeta(im);
-            ItemDisplay display = (ItemDisplay) l.getWorld().spawnEntity(l.add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(is);
+            ItemStack destroy = new ItemStack(Material.GRAVEL);
+            ItemMeta dim = destroy.getItemMeta();
+            dim.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, 0);
+            dim.setCustomModelData(10000);
+            destroy.setItemMeta(dim);
+            Vector v = (interaction != null) ? new Vector(0, 0.5d, 0) : new Vector(0.5d, 0.5d, 0.5d);
+            ItemDisplay display = (ItemDisplay) l.getWorld().spawnEntity(l.clone().add(v), EntityType.ITEM_DISPLAY);
+            display.setItemStack(destroy);
             display.setPersistent(true);
             display.setInvulnerable(true);
         }
