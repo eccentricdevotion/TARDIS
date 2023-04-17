@@ -77,6 +77,9 @@ public class ChemistryBlockListener implements Listener {
                 ItemStack is = display.getItemStack();
                 if (is != null) {
                     String name = blocks.get(is.getType());
+                    if (name == null) {
+                        return;
+                    }
                     Player player = event.getPlayer();
                     ItemStack[] menu;
                     Inventory inventory;

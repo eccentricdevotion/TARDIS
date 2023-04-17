@@ -12,7 +12,11 @@ public enum TardisLight {
     THIRTEENTH(TARDISDisplayItem.LIGHT_THIRTEENTH_ON, TARDISDisplayItem.LIGHT_THIRTEENTH),
     LAMP(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_LAMP_ON, TARDISDisplayItem.LIGHT_LAMP),
     LANTERN(TARDISDisplayItem.LIGHT_LANTERN_ON, TARDISDisplayItem.LIGHT_LANTERN),
-    WOOL(Material.BLACK_WOOL, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_WOOL);
+    WOOL(Material.BLACK_WOOL, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_WOOL),
+    BLUE_LAMP(TARDISDisplayItem.BLUE_LAMP_ON, TARDISDisplayItem.BLUE_LAMP),
+    GREEN_LAMP(TARDISDisplayItem.GREEN_LAMP_ON, TARDISDisplayItem.GREEN_LAMP),
+    PURPLE_LAMP(TARDISDisplayItem.PURPLE_LAMP_ON, TARDISDisplayItem.PURPLE_LAMP),
+    RED_LAMP(TARDISDisplayItem.RED_LAMP_ON, TARDISDisplayItem.RED_LAMP);
 
     private final Material material;
     private final TARDISDisplayItem on;
@@ -40,5 +44,17 @@ public enum TardisLight {
 
     public TARDISDisplayItem getOff() {
         return off;
+    }
+
+    public static TARDISDisplayItem getToggled(TARDISDisplayItem tdi) {
+        for (TardisLight light : TardisLight.values()) {
+            if (light.getOff() == tdi) {
+                return light.getOn();
+            }
+            if (light.getOn() == tdi) {
+                return light.getOff();
+            }
+        }
+        return null;
     }
 }

@@ -37,8 +37,7 @@ public class LampToggler {
     public static void deleteLight(Block lamp) {
         Block block = findLightBlock(lamp);
         if (block != null) {
-            Waterlogged waterlogged = (Waterlogged) block.getBlockData();
-            if (waterlogged.isWaterlogged()) {
+            if (block.getBlockData() instanceof Waterlogged waterlogged && waterlogged.isWaterlogged()) {
                 block.setType(Material.WATER);
             } else {
                 block.setBlockData(TARDISConstants.AIR);
