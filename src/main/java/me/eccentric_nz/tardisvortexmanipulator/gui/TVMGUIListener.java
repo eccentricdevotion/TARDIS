@@ -506,8 +506,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
             qf.saveBeaconBlock(ustr, down);
             BlockData iron = Material.IRON_BLOCK.createBlockData();
             down.setBlockData(iron);
-            List<BlockFace> faces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
-            faces.forEach((f) -> {
+            plugin.getGeneralKeeper().getSurrounding().forEach((f) -> {
                 qf.saveBeaconBlock(ustr, down.getRelative(f));
                 down.getRelative(f).setBlockData(iron);
             });

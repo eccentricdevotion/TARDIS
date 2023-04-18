@@ -1,5 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -14,11 +17,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 public class TVMCommandBeacon {
 
@@ -71,8 +69,7 @@ public class TVMCommandBeacon {
         qf.saveBeaconBlock(ustr, down);
         BlockData iron = Material.IRON_BLOCK.createBlockData();
         down.setBlockData(iron);
-        List<BlockFace> faces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
-        faces.forEach((f) -> {
+        plugin.getGeneralKeeper().getSurrounding().forEach((f) -> {
             qf.saveBeaconBlock(ustr, down.getRelative(f));
             down.getRelative(f).setBlockData(iron);
         });

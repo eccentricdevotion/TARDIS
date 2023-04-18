@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -25,7 +23,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -35,14 +32,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class ImageHolder implements Listener {
 
     private final TARDIS plugin;
-    private final List<BlockFace> faces = new ArrayList<>();
 
     public ImageHolder(TARDIS plugin) {
         this.plugin = plugin;
-        faces.add(BlockFace.EAST);
-        faces.add(BlockFace.NORTH);
-        faces.add(BlockFace.WEST);
-        faces.add(BlockFace.SOUTH);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -50,7 +42,7 @@ public class ImageHolder implements Listener {
         String message = event.getMessage();
         if (message.toLowerCase().contains("angel") && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("angels.spawn_from_chat.chance")) {
             int dist = plugin.getMonstersConfig().getInt("angels.spawn_from_chat.distance_from_player");
-            Block b = event.getPlayer().getLocation().getBlock().getRelative(faces.get(TARDISConstants.RANDOM.nextInt(4)), dist);
+            Block b = event.getPlayer().getLocation().getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(TARDISConstants.RANDOM.nextInt(4)), dist);
             // get highest block in a random direction
             Location highest = b.getWorld().getHighestBlockAt(b.getLocation()).getLocation();
             Location l = highest.add(0, 1, 0);

@@ -113,6 +113,12 @@ public class TARDISGeneralInstanceKeeper {
         return faces;
     }
 
+    public List<BlockFace> getShuffledFaces() {
+        List<BlockFace> shuffled = new ArrayList<>(faces);
+        Collections.shuffle(shuffled);
+        return shuffled;
+    }
+
     public List<BlockFace> getBlockFaces() {
         return blockFaces;
     }
