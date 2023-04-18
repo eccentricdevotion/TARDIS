@@ -123,6 +123,11 @@ public class TARDISDisplayItemUtils {
             Levelled light = TARDISConstants.LIGHT;
             light.setLevel(tdi.isLit() ? 15 : 0);
             block.setBlockData(light);
+            // also set an interaction entity
+            Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
+            interaction.setResponsive(true);
+            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+            interaction.setPersistent(true);
         } else {
             block.setBlockData(TARDISConstants.BARRIER);
         }
@@ -163,7 +168,7 @@ public class TARDISDisplayItemUtils {
      */
     public static void removeDisplaysInChunk(Chunk chunk) {
         for (Entity entity : chunk.getEntities()) {
-            if (entity instanceof ItemDisplay && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+            if ((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 entity.remove();
             }
         }
