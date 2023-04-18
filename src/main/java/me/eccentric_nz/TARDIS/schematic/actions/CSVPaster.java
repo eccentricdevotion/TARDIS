@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -32,12 +32,12 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISCSVPaster {
+public class CSVPaster {
 
     private final TARDIS plugin;
     private final HashMap<String, Material> ID_LOOKUP = new HashMap<>();
 
-    TARDISCSVPaster(TARDIS plugin) {
+    public CSVPaster(TARDIS plugin) {
         this.plugin = plugin;
         ID_LOOKUP.put("20", Material.GLASS);
         ID_LOOKUP.put("25", Material.NOTE_BLOCK);
@@ -63,7 +63,7 @@ class TARDISCSVPaster {
         ID_LOOKUP.put("93:~", Material.REPEATER);
     }
 
-    String[][][] arrayFromCSV(File file) {
+    public String[][][] arrayFromCSV(File file) {
         String[][][] blocks = new String[8][11][11];
         try {
             BufferedReader bufRdr = new BufferedReader(new FileReader(file));
@@ -80,7 +80,7 @@ class TARDISCSVPaster {
         return blocks;
     }
 
-    void buildLegacy(String[][][] s, Location location) {
+    public void buildLegacy(String[][][] s, Location location) {
         World world = location.getWorld();
         int startx = location.getBlockX();
         int resetx = location.getBlockX();

@@ -14,13 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -42,7 +44,7 @@ import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 /**
  * @author eccentric_nz
  */
-class TARDISSchematicPaster implements Runnable {
+public class SchematicPaster implements Runnable {
 
     private final TARDIS plugin;
     private final Player player;
@@ -58,7 +60,7 @@ class TARDISSchematicPaster implements Runnable {
     private boolean running = false;
     private BossBar bb;
 
-    TARDISSchematicPaster(TARDIS plugin, Player player, boolean air) {
+    public SchematicPaster(TARDIS plugin, Player player, boolean air) {
         this.plugin = plugin;
         this.player = player;
         this.air = air;

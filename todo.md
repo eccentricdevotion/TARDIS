@@ -6,11 +6,8 @@
 
 1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test display item custom blocks (new TARDISes, changing desktop)!
-   - Convert lamps and lanterns to TARDIS lights 
-     (add `/tschematic convert` command to update all schematics, remove unneeded redstone blocks),
-     schematics will need to support `ItemDisplay` and `Interaction` entities
+   - Convert lamps and lanterns to TARDIS lights in schematics
    - Add time rotors to delta and rotor schematics
-   - Tidy up `TARDISSchematicCommand` class
 
 ## Next version `5.1.0`
 
