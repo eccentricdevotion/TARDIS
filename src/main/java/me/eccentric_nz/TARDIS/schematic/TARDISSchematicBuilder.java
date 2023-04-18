@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.schematic;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -33,8 +34,14 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Skull;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.BoundingBox;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -131,6 +138,11 @@ public class TARDISSchematicBuilder {
         dimensions.addProperty("width", width);
         dimensions.addProperty("height", height);
         dimensions.addProperty("length", length);
+        JsonArray paintings = new JsonArray();
+        JsonArray itemFrames = new JsonArray();
+        JsonArray itemDisplays = new JsonArray();
+        JsonArray interactions = new JsonArray();
+        List<Entity> entities = new ArrayList<>();
         // create JSON arrays for block data
         JsonArray levels = new JsonArray();
         int f = 2;
@@ -143,6 +155,102 @@ public class TARDISSchematicBuilder {
                 for (int c = minz; c <= maxz; c++) {
                     JsonObject obj = new JsonObject();
                     Block b = w.getBlockAt(r, l, c);
+                    // check for entities
+                    Location location = b.getLocation();
+                    BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
+                    for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
+                        Location eloc = entity.getLocation();
+                        if (entity instanceof Painting art) {
+                            if (!entities.contains(entity)) {
+                                JsonObject painting = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", eloc.getBlockX() - minx);
+                                loc.addProperty("y", eloc.getBlockY() - miny);
+                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                painting.add("rel_location", loc);
+                                painting.addProperty("art", art.getArt().toString());
+                                painting.addProperty("facing", art.getFacing().toString());
+                                paintings.add(painting);
+                                entities.add(entity);
+                            }
+                        }
+                        if (entity instanceof ItemFrame fr) {
+                            if (!entities.contains(entity)) {
+                                JsonObject frame = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", eloc.getBlockX() - minx);
+                                loc.addProperty("y", eloc.getBlockY() - miny);
+                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                frame.add("rel_location", loc);
+                                frame.addProperty("facing", fr.getFacing().toString());
+                                ItemStack item = fr.getItem();
+                                if (item != null) {
+                                    frame.addProperty("item", fr.getItem().getType().toString());
+                                    if (item.hasItemMeta()) {
+                                        ItemMeta im = item.getItemMeta();
+                                        if (im.hasCustomModelData()) {
+                                            frame.addProperty("cmd", im.getCustomModelData());
+                                        }
+                                        if (im.hasDisplayName()) {
+                                            frame.addProperty("name", im.getDisplayName());
+                                        }
+                                        if (im.hasLore()) {
+                                            JsonArray lore = new JsonArray();
+                                            for (String s : im.getLore()) {
+                                                lore.add(s);
+                                            }
+                                            frame.add("lore", lore);
+                                        }
+                                    }
+                                }
+                                frame.addProperty("fixed", fr.isFixed());
+                                frame.addProperty("visible", fr.isVisible());
+                                frame.addProperty("rotation", fr.getRotation().toString());
+                                frame.addProperty("glowing", (fr instanceof GlowItemFrame));
+                                itemFrames.add(frame);
+                                entities.add(entity);
+                            }
+                        }
+                        if (entity instanceof ItemDisplay display) {
+                            if (!entities.contains(entity)) {
+                                JsonObject item = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", eloc.getBlockX() - minx);
+                                loc.addProperty("y", eloc.getBlockY() - miny);
+                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                item.add("rel_location", loc);
+                                JsonObject stack = new JsonObject();
+                                Material material = display.getItemStack().getType();
+                                int model = display.getItemStack().getItemMeta().getCustomModelData();
+                                stack.addProperty("type", material.toString());
+                                stack.addProperty("cmd", model);
+                                TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+                                if (tdi!=null) {
+                                    stack.addProperty("light", tdi.isLight());
+                                    stack.addProperty("lit", tdi.isLit());
+                                }
+                                item.add("stack", stack);
+                                itemDisplays.add(item);
+                                entities.add(entity);
+                            }
+                        }
+                        if (entity instanceof Interaction interaction) {
+                            if (!entities.contains(entity)) {
+                                JsonObject inter = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", eloc.getBlockX() - minx);
+                                loc.addProperty("y", eloc.getBlockY() - miny);
+                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                inter.add("rel_location", loc);
+                                JsonObject bounds = new JsonObject();
+                                bounds.addProperty("height", interaction.getInteractionHeight());
+                                bounds.addProperty("width", interaction.getInteractionWidth());
+                                inter.add("bounds", bounds);
+                                interactions.add(inter);
+                                entities.add(entity);
+                            }
+                        }
+                    }
                     BlockData data = b.getBlockData();
                     Material m = data.getMaterial();
                     // set ARS block
@@ -151,7 +259,7 @@ public class TARDISSchematicBuilder {
                         ars = false;
                     }
                     switch (m) {
-                        case REPEATER:
+                        case REPEATER -> {
                             // random location blocks
                             if (isControlBlock(map.get(f), w, r, l, c)) {
                                 MultipleFacing mushroom = (MultipleFacing) Material.MUSHROOM_STEM.createBlockData();
@@ -164,19 +272,20 @@ public class TARDISSchematicBuilder {
                                 data = mushroom;
                                 f++;
                             }
-                            break;
-                        case LEVER:
+                        }
+                        case LEVER -> {
                             // handbrake
                             if (isControlBlock(h, w, r, l, c)) {
                                 data = Material.CAKE.createBlockData();
                             }
-                            break;
-                        case MUSHROOM_STEM:
+                        }
+                        case MUSHROOM_STEM -> {
                             if (mushroom_stem.containsKey(data.getAsString())) {
                                 data = mushroom_stem.get(data.getAsString()).createBlockData();
                             }
-                        default:
-                            break;
+                        }
+                        default -> {
+                        }
                     }
                     if (bx != 0 && l == by && r == bx && c == bz) {
                         data = Material.BEDROCK.createBlockData();
@@ -224,6 +333,18 @@ public class TARDISSchematicBuilder {
         schematic.add("relative", relative);
         schematic.add("dimensions", dimensions);
         schematic.add("input", levels);
+        if (paintings.size() > 0) {
+            schematic.add("paintings", paintings);
+        }
+        if (itemFrames.size() > 0) {
+            schematic.add("item_frames", itemFrames);
+        }
+        if (itemDisplays.size() > 0) {
+            schematic.add("item_displays", itemDisplays);
+        }
+        if (interactions.size() > 0) {
+            schematic.add("interactions", interactions);
+        }
         return new ArchiveData(schematic, beacon);
     }
 

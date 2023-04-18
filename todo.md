@@ -4,17 +4,21 @@
 
 ## Version 5.0.0
 
-1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Animate models for player disguises
-   - Fix laggy Silurian cave finder - perhaps the new `World#getChunkAt(int x, int z, boolean generate)` might help?
-   - Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
-   - `Player#sendBlockDamage()` for display item custom blocks?
-   - Test display item custom blocks!
+1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
+   - Test display item custom blocks (new TARDISes, changing desktop)!
+   - Convert lamps and lanterns to TARDIS lights 
+     (add `/tschematic convert` command to update all schematics, remove unneeded redstone blocks),
+     schematics will need to support `ItemDisplay` and `Interaction` entities
+   - Add time rotors to delta and rotor schematics
+   - Tidy up `TARDISSchematicCommand` class
 
 ## Next version `5.1.0`
 
 1. Vortex Manipulator predictive text
 2. Pandorica custom model
+3. Fix laggy Silurian cave finder - perhaps the new `World#getChunkAt(int x, int z, boolean generate)` might help?
+4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
+5. Animated models for player disguises
 
 ## Future versions
 
