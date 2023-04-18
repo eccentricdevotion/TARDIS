@@ -263,7 +263,7 @@
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -300,7 +300,7 @@
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
-            <version>7.2.14-SNAPSHOT</version>
+            <version>7.2.15-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
