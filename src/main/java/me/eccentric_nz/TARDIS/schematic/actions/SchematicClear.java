@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class SchematicClear {
 

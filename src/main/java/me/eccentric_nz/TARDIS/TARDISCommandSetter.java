@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
-import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import java.io.File;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
@@ -42,6 +40,8 @@ import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.*;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayCommand;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;

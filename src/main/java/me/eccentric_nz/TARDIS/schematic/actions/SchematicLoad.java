@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.UUID;
 
 public class SchematicLoad {
 

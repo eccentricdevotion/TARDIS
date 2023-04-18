@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
@@ -26,8 +27,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class SchematicConvert {
 
