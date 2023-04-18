@@ -1077,7 +1077,7 @@ commands:
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree|snapshot] [preset_perms|perms|recipes|blueprints|commands|block_colours] [html|all]
+    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree|snapshot|displayitem] [preset_perms|perms|recipes|blueprints|commands|block_colours] [html|all]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
@@ -1416,7 +1416,7 @@ commands:
     description: Save, load or paste a TARDIS schematic.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [save|load|paste|clear|replace] [name]
+    usage: /<command> [save|load|paste|clear|replace|convert] [name]
     save:
       description: Save a TARDIS schematic.
       usage: /<command> save [name]
@@ -1432,6 +1432,9 @@ commands:
     replace:
       description: Replaces the specified block type within an area selected with the TARDIS schematic wand with the second block type.
       usage: /<command> replace [material] [material]
+    covert:
+      description: Converts lamps and sea lanterns to TARDIS light blocks.
+      usage: /<command> convert [light] [material]
   tardisnetherportal:
     aliases: [ tnetherportal, tnp ]
     description: Get coordinates for linking Nether Portals.

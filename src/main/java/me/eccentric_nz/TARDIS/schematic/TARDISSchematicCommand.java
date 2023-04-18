@@ -20,16 +20,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Banner;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Skull;
+import org.bukkit.block.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -145,7 +146,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 TARDISMessage.send(player, "SCHM_NAME");
                 return true;
             }
-            if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace")) {
+            if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace") && !args[0].equalsIgnoreCase("convert")) {
                 return false;
             }
             if (args[0].equalsIgnoreCase("save")) {
@@ -205,6 +206,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 JsonArray paintings = new JsonArray();
                 JsonArray itemFrames = new JsonArray();
+                JsonArray itemDisplays = new JsonArray();
+                JsonArray interactions = new JsonArray();
                 List<Entity> entities = new ArrayList<>();
                 // create JSON arrays for block data
                 JsonArray levels = new JsonArray();
@@ -216,7 +219,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                         for (int c = minz; c <= maxz; c++) {
                             JsonObject obj = new JsonObject();
                             Block b = w.getBlockAt(r, l, c);
-                            // check for paintings
+                            // check for entities
                             Location location = b.getLocation();
                             BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
                             for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
@@ -272,6 +275,45 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                         entities.add(entity);
                                     }
                                 }
+                                if (entity instanceof ItemDisplay display) {
+                                    if (!entities.contains(entity)) {
+                                        JsonObject item = new JsonObject();
+                                        JsonObject loc = new JsonObject();
+                                        loc.addProperty("x", eloc.getBlockX() - minx);
+                                        loc.addProperty("y", eloc.getBlockY() - miny);
+                                        loc.addProperty("z", eloc.getBlockZ() - minz);
+                                        item.add("rel_location", loc);
+                                        JsonObject stack = new JsonObject();
+                                        Material material = display.getItemStack().getType();
+                                        int model = display.getItemStack().getItemMeta().getCustomModelData();
+                                        stack.addProperty("type", material.toString());
+                                        stack.addProperty("cmd", model);
+                                        TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+                                        if (tdi != null) {
+                                            stack.addProperty("light", tdi.isLight());
+                                            stack.addProperty("lit", tdi.isLit());
+                                        }
+                                        item.add("stack", stack);
+                                        itemDisplays.add(item);
+                                        entities.add(entity);
+                                    }
+                                }
+                                if (entity instanceof Interaction interaction) {
+                                    if (!entities.contains(entity)) {
+                                        JsonObject inter = new JsonObject();
+                                        JsonObject loc = new JsonObject();
+                                        loc.addProperty("x", eloc.getBlockX() - minx);
+                                        loc.addProperty("y", eloc.getBlockY() - miny);
+                                        loc.addProperty("z", eloc.getBlockZ() - minz);
+                                        inter.add("rel_location", loc);
+                                        JsonObject bounds = new JsonObject();
+                                        bounds.addProperty("height", interaction.getInteractionHeight());
+                                        bounds.addProperty("width", interaction.getInteractionWidth());
+                                        inter.add("bounds", bounds);
+                                        interactions.add(inter);
+                                        entities.add(entity);
+                                    }
+                                }
                             }
                             String blockData = b.getBlockData().getAsString();
                             obj.addProperty("data", blockData);
@@ -316,6 +358,12 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 if (itemFrames.size() > 0) {
                     schematic.add("item_frames", itemFrames);
+                }
+                if (itemDisplays.size() > 0) {
+                    schematic.add("item_displays", itemDisplays);
+                }
+                if (interactions.size() > 0) {
+                    schematic.add("interactions", interactions);
                 }
                 String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
@@ -400,6 +448,77 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "ARG_MATERIAL");
                     return true;
                 }
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("convert")) {
+                plugin.debug("conversion start");
+                if (args.length < 3) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return true;
+                }
+                TardisLight light;
+                try {
+                    light = TardisLight.valueOf(args[1].toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    light = TardisLight.TENTH;
+                }
+                Material lamp;
+                try {
+                    lamp = Material.valueOf(args[2].toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    lamp = Material.REDSTONE_LAMP;
+                }
+                // check they have selected start and end blocks
+                if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
+                    TARDISMessage.send(player, "SCHM_NO_START");
+                    return true;
+                }
+                if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
+                    TARDISMessage.send(player, "SCHM_NO_END");
+                    return true;
+                }
+                // get the world
+                World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
+                String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
+                if (!w.getName().equals(chk_w)) {
+                    TARDISMessage.send(player, "SCHM_WORLD");
+                    return true;
+                }
+                // get the raw coords
+                int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
+                int sy = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockY();
+                int sz = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockZ();
+                int ex = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockX();
+                int ey = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockY();
+                int ez = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockZ();
+                // get the min & max coords
+                int minx = Math.min(sx, ex);
+                int maxx = Math.max(sx, ex);
+                int miny = Math.min(sy, ey);
+                int maxy = Math.max(sy, ey);
+                int minz = Math.min(sz, ez);
+                int maxz = Math.max(sz, ez);
+                // loop through the blocks inside this cube
+                for (int l = miny; l <= maxy; l++) {
+                    for (int r = minx; r <= maxx; r++) {
+                        for (int c = minz; c <= maxz; c++) {
+                            Block b = w.getBlockAt(r, l, c);
+                            if (b.getType().equals(lamp)) {
+                                plugin.debug("found lamp");
+                                TARDISDisplayItemUtils.set(light.getOn(), b);
+                                // search around block for redstone and remove
+                                for (BlockFace face : plugin.getGeneralKeeper().getBlockFaces()) {
+                                    Block block = b.getRelative(face);
+                                    if (block.getType().equals(Material.LEVER) || block.getType().equals(Material.REDSTONE_BLOCK)) {
+                                        plugin.debug("found redstone");
+                                        block.setType(Material.AIR);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                sender.sendMessage(TardisModule.TARDIS.getName() + "Conversion complete");
                 return true;
             }
         }
