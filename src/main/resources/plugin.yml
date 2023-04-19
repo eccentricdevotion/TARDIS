@@ -1416,7 +1416,7 @@ commands:
     description: Save, load or paste a TARDIS schematic.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [save|load|paste|clear|replace|convert] [name]
+    usage: /<command> [save|load|paste|clear|replace|convert|remove] [name]
     save:
       description: Save a TARDIS schematic.
       usage: /<command> save [name]
@@ -1432,9 +1432,12 @@ commands:
     replace:
       description: Replaces the specified block type within an area selected with the TARDIS schematic wand with the second block type.
       usage: /<command> replace [material] [material]
-    covert:
+    convert:
       description: Converts lamps and sea lanterns to TARDIS light blocks.
       usage: /<command> convert [light] [material]
+    remove:
+      description: Removes TARDIS light blocks and replaces them with redstone lamps.
+      usage: /<command> remove
   tardisnetherportal:
     aliases: [ tnetherportal, tnp ]
     description: Get coordinates for linking Nether Portals.

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
+import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.actions.*;
@@ -24,8 +25,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.io.File;
 
 public class TARDISSchematicCommand implements CommandExecutor {
 
@@ -75,6 +74,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("clear")) {
                 return new SchematicClear().act(plugin, player);
+            }
+            if (args[0].equalsIgnoreCase("remove")) {
+                return new SchematicRemoveLights().act(plugin, player);
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

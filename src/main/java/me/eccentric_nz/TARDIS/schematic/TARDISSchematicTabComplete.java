@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.common.collect.ImmutableList;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Material;
@@ -25,16 +28,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * TabCompleter for /tardisschematic
  */
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove");
     private final List<String> FILE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> LIGHT_SUBS = new ArrayList<>();

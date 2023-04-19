@@ -55,10 +55,11 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an item display entity from a block.Used for custom TARDIS blocks
+     * Get an item display entity from a block. Used for custom TARDIS blocks
+     * and lights.
      *
      * @param block the block to use as the search location
-     * @return The Item Display entity at the blocks location or null if there
+     * @return The Item Display entity at the block's location or null if there
      * isn't one
      */
     public static ItemDisplay get(Block block) {
@@ -68,6 +69,21 @@ public class TARDISDisplayItemUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * Get an interaction entity from a block. Used for custom TARDIS blocks and
+     * lights.
+     *
+     * @param block the block to use as the search location
+     */
+    public static void remove(Block block) {
+        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d,
+                (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof Interaction || e instanceof ItemDisplay) {
+                e.remove();
+            }
+        }
     }
 
     /**
