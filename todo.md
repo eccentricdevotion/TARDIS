@@ -8,6 +8,7 @@
    - Test display item custom blocks (new TARDISes, changing desktop)!
    - Convert lamps and lanterns to TARDIS lights in schematics
    - Add time rotors to delta and rotor schematics
+   - Add a method to add/update tardis rotor record in database when rotor is grown
 
 ## Next version `5.1.0`
 
