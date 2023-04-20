@@ -185,43 +185,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Shade all Libs -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.2-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <minimizeJar>true</minimizeJar>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <artifactSet>
-                                <includes>
-                                    <include>io.papermc:paperlib</include>
-                                </includes>
-                            </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>io.papermc:lib</pattern>
-                                    <shadedPattern>lib:paperlib</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/MANIFEST.MF</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- Manifest generation for database conversion tool -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -237,6 +200,34 @@
                     </archive>
                 </configuration>
             </plugin>
+            <!-- Shade PaperLib -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.2-SNAPSHOT</version>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>me.eccentric_nz.TARDIS.database.tool.Main</mainClass>
+                        </transformer>
+                    </transformers>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <relocations>
+                        <relocation>
+                            <pattern>io.papermc.lib</pattern>
+                            <shadedPattern>me.eccentric_nz.paperlib</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>                
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -245,7 +236,7 @@
             <artifactId>spigot-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -277,7 +268,7 @@
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.8-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>com.sk89q.worldguard.worldguard-libs</groupId>
@@ -302,7 +293,7 @@
             <artifactId>worldedit-bukkit</artifactId>
             <version>7.2.15-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>com.sk89q.worldedit.worldedit-libs</groupId>
@@ -343,7 +334,7 @@
             <artifactId>citizensapi</artifactId>
             <version>2.0.30-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
@@ -366,7 +357,7 @@
             <artifactId>Multiverse-Core</artifactId>
             <version>4.3.2-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -379,7 +370,7 @@
             <artifactId>Multiverse-Inventories</artifactId>
             <version>4.2.4-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -408,7 +399,7 @@
             <artifactId>blocklocker</artifactId>
             <version>1.10.4</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -421,7 +412,7 @@
             <artifactId>LWCX</artifactId>
             <version>2.2.8</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -435,7 +426,7 @@
             <artifactId>ProtocolLib</artifactId>
             <version>5.0.0-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -448,7 +439,7 @@
             <artifactId>LibsDisguises</artifactId>
             <version>10.0.32-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -461,7 +452,7 @@
             <artifactId>EssentialsX</artifactId>
             <version>2.20.0-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -474,7 +465,7 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.11.3</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -495,7 +486,7 @@
             <artifactId>coreprotect</artifactId>
             <version>21.3</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -507,7 +498,7 @@
             <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
             <version>3.4</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -525,7 +516,7 @@
             <groupId>org.geysermc.floodgate</groupId>
             <artifactId>api</artifactId>
             <version>2.2.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -537,6 +528,7 @@
             <groupId>org.swinglabs</groupId>
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
+            <scope>provided</scope>        
         </dependency>
     </dependencies>
 </project>
