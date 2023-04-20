@@ -49,7 +49,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem");
+    private final Set<String> firstsStr = Sets.newHashSet(
+            "add_regions",
+            "advancements",
+            "chunky",
+            "list",
+            "plurals",
+            "stats",
+            "tree",
+            "snapshot",
+            "displayitem",
+            "frame"
+    );
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
