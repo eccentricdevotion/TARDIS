@@ -8,8 +8,6 @@
    - Test display item custom blocks (new TARDISes, changing desktop)!
    - Convert lamps and lanterns to TARDIS lights in schematics - _started_
    - Add time rotors to delta & rotor schematic, update others to have PDC
-   - If `create_worlds` is `true`, disable/don't load TARDIS_TimeVortex
-   - Remove water block when changing desktop from CAVE console
 
 ## Next version `5.1.0`
 

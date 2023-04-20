@@ -1044,6 +1044,13 @@ public class TARDIS extends JavaPlugin {
                 saveConfig();
                 getLogger().log(Level.SEVERE, "Create Worlds was disabled as it requires TARDISChunkGenerator!");
             }
+            // disable TARDIS_TimeVortex world
+            getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
+            try {
+                getPlanetsConfig().save(new File(getDataFolder(), "planets.yml"));
+            } catch (IOException ex) {
+                getLogger().log(Level.SEVERE, "Couldn't save planets.yml!");
+            }
         }
         if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
             getConfig().set("abandon.enabled", false);
