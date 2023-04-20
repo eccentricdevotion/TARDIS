@@ -891,6 +891,22 @@ shaped:
     result: LIGHT_GRAY_DYE
     amount: 1
     lore: ''
+  Time Rotor Delta:
+    easy_shape: 'CRC,GWG,GRG'
+    easy_ingredients:
+      C: PURPLE_DYE
+      R: REDSTONE
+      W: CLOCK
+      G: GLASS_PANE
+    hard_shape: 'CRC,GWG,GRG'
+    hard_ingredients:
+      C: PURPLE_DYE
+      R: REDSTONE_BLOCK
+      W: CLOCK
+      G: GLASS_PANE
+    result: LIGHT_GRAY_DYE
+    amount: 1
+    lore: ''
   Time Rotor Tenth:
     easy_shape: 'CRC,GWG,GRG'
     easy_ingredients:
