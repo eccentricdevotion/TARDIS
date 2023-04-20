@@ -74,7 +74,7 @@ public class TARDISUpgradeBlockScanner {
             int slot = tardis.getTIPS();
             int startz;
             int startx;
-            if (slot != -1) { // default world - use TIPS
+            if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();

@@ -9,6 +9,8 @@
    - Convert lamps and lanterns to TARDIS lights in schematics - _started_
    - Add time rotors to rotor schematic
    - Add a method to add/update tardis rotor record in database when rotor is grown
+   - If `create_worlds` is `true`, disable/don't load TARDIS_TimeVortex
+   - Remove water block when changing desktop from CAVE console
 
 ## Next version `5.1.0`
 

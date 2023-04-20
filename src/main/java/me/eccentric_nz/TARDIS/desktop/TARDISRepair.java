@@ -114,7 +114,7 @@ public class TARDISRepair {
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardis_id();
                 int startx, startz;
-                if (slot != -1) { // default world - use TIPS
+                if (slot != -1000001) { // default world - use TIPS
                     TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                     TARDISTIPSData pos = tintpos.getTIPSData(slot);
                     startx = pos.getCentreX();

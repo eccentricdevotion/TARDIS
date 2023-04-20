@@ -128,6 +128,14 @@ public class TARDISDevCommand implements CommandExecutor {
                         return true;
                     }
                 }
+                if (first.equals("frame")) {
+                    if (sender instanceof Player player) {
+                        return new TARDISFrameCommand().toggle(player, args[1].toLowerCase().equals("lock"));
+                    } else {
+                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        return true;
+                    }
+                }
             } else {
                 TARDISMessage.send(sender, "CMD_ADMIN");
                 return false;
