@@ -402,7 +402,7 @@ public class TARDISSiegeListener implements Listener {
                 return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
             } else {
                 ItemDisplay tdi = TARDISDisplayItemUtils.get(b);
-                return (tdi.getItemStack() != null && tdi.getItemStack().getType() == Material.CYAN_CONCRETE);
+                return (tdi != null && tdi.getItemStack() != null && tdi.getItemStack().getType() == Material.CYAN_CONCRETE);
             }
         }
         return false;

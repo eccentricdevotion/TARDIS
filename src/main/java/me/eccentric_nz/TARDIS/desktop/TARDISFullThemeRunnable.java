@@ -273,6 +273,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             downgrade = (h < ph || w < pw);
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
+            if (tud.getPrevious().getPermission().equals("cave")) {
+                // remove water source block
+                Block water = world.getBlockAt(startx + 1, starty + 9, startz + 10);
+                Block water2 = world.getBlockAt(startx + 8, starty + 14, startz + 8);
+                Block water3 = world.getBlockAt(startx + 8, starty + 14, startz + 5);
+                Block water4 = world.getBlockAt(startx + 8, starty + 13, startz + 5);
+                water.setType(Material.AIR);
+                water2.setType(Material.AIR);
+                water3.setType(Material.AIR);
+                water4.setType(Material.AIR);
+            }
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
@@ -435,7 +446,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             // finished processing - update tardis table!
-            if (set.size() > 0) {
+            if (!set.isEmpty()) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
             }
@@ -512,6 +523,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int z = startz + col;
                 BlockData data;
                 Material type;
+                Block b = world.getBlockAt(x, y, z);
+                if (b.getType().equals(Material.BARRIER) || b.getType().equals(Material.LIGHT)) {
+                    TARDISDisplayItemUtils.remove(b);
+                }
                 try {
                     data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                     type = data.getMaterial();
@@ -529,7 +544,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrocloc);
-                    postBedrock = world.getBlockAt(x, y, z);
+                    postBedrock = b;
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
@@ -552,7 +567,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
                 }
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
-                    fractalBlocks.add(world.getBlockAt(x, y, z));
+                    fractalBlocks.add(b);
                 }
                 if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
                     // replace with gray concrete
@@ -734,7 +749,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
-                    lampBlocks.add(world.getBlockAt(x, y, z));
+                    lampBlocks.add(b);
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -743,7 +758,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getQueryFactory().doInsert("lamps", setlb);
                 }
                 if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
-                    iceBlocks.add(world.getBlockAt(x, y, z));
+                    iceBlocks.add(b);
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
@@ -785,7 +800,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     /*
                      * get the ender crystal location
                      */
-                    ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
+                    ender = b.getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone/bedrock/conduit/netherite block put it in the blocks table
                 if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
@@ -806,34 +821,34 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
                     TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
                 } else if (type.equals(Material.IRON_DOOR)) { // doors
-                    postDoorBlocks.put(world.getBlockAt(x, y, z), data);
+                    postDoorBlocks.put(b, data);
                 } else if (type.equals(Material.LEVER)) {
-                    postLeverBlocks.put(world.getBlockAt(x, y, z), data);
+                    postLeverBlocks.put(b, data);
                 } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
-                    postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
+                    postRedstoneTorchBlocks.put(b, data);
                 } else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
-                    postTorchBlocks.put(world.getBlockAt(x, y, z), data);
+                    postTorchBlocks.put(b, data);
                 } else if (type.equals(Material.STICKY_PISTON)) {
-                    postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
+                    postStickyPistonBaseBlocks.put(b, data);
                 } else if (type.equals(Material.PISTON)) {
-                    postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
+                    postPistonBaseBlocks.put(b, data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
-                    postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
+                    postPistonExtensionBlocks.put(b, data);
                 } else if (Tag.SIGNS.isTagged(type)) {
-                    postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                    postSignBlocks.put(b, data);
                 } else if (type.equals(Material.POINTED_DRIPSTONE)) {
-                    postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
+                    postDripstoneBlocks.put(b, data);
                 } else if (type.equals(Material.GLOW_LICHEN)) {
-                    postLichenBlocks.put(world.getBlockAt(x, y, z), data);
+                    postLichenBlocks.put(b, data);
                 } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
-                    postLanternBlocks.put(world.getBlockAt(x, y, z), data);
+                    postLanternBlocks.put(b, data);
                 } else if (type.equals(Material.SCULK_VEIN)) {
-                    postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
+                    postSculkVeinBlocks.put(b, data);
                 } else if (TARDISStaticUtils.isBanner(type)) {
                     JsonObject state = bb.has("banner") ? bb.getAsJsonObject("banner") : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
-                        postBannerBlocks.put(world.getBlockAt(x, y, z), tbd);
+                        postBannerBlocks.put(b, tbd);
                     }
                 } else if (type.equals(Material.PLAYER_HEAD) || type.equals(Material.PLAYER_WALL_HEAD)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
@@ -842,7 +857,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         if (head.has("uuid")) {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                             if (uuid != null) {
-                                TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                                TARDISHeadSetter.textureSkull(plugin, uuid, head, b);
                             }
                         }
                     }
@@ -859,25 +874,25 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                             case 2 -> {
                                 directional.setFacing(BlockFace.WEST);
                                 data = directional;
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                postRepeaterBlocks.put(b, data);
                                 plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
                             }
                             case 3 -> {
                                 directional.setFacing(BlockFace.NORTH);
                                 data = directional;
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                postRepeaterBlocks.put(b, data);
                                 plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
                             }
                             case 4 -> {
                                 directional.setFacing(BlockFace.SOUTH);
                                 data = directional;
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                postRepeaterBlocks.put(b, data);
                                 plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
                             }
                             default -> {
                                 directional.setFacing(BlockFace.EAST);
                                 data = directional;
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                postRepeaterBlocks.put(b, data);
                                 plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
                             }
                         }
@@ -891,7 +906,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else if (type.equals(Material.SPONGE)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
-                    BlockState state = world.getBlockAt(x, y, z).getState();
+                    BlockState state = b.getState();
                     if (state instanceof BlockState) {
                         plugin.getTardisHelper().removeTileEntity(state);
                     }
