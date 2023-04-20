@@ -18,6 +18,11 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,11 +33,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 /**
  *
@@ -40,7 +42,7 @@ import java.util.logging.Level;
  */
 public class TARDISItemFrameSetter {
 
-    public static void curate(JsonObject json, Location start) {
+    public static void curate(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();
         int px = rel.get("x").getAsInt();
         int py = rel.get("y").getAsInt();
@@ -49,12 +51,14 @@ public class TARDISItemFrameSetter {
         Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
         ItemFrame frame = (ItemFrame) start.getWorld().spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
         frame.setFacingDirection(facing);
+        int cmd = 1;
         if (json.has("item")) {
             try {
                 ItemStack is = new ItemStack(Material.valueOf(json.get("item").getAsString()));
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
-                    im.setCustomModelData(json.get("cmd").getAsInt());
+                    cmd = json.get("cmd").getAsInt();
+                    im.setCustomModelData(cmd);
                 }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());
@@ -71,6 +75,11 @@ public class TARDISItemFrameSetter {
             } catch (IllegalArgumentException e) {
                 Bukkit.getLogger().log(Level.WARNING, "Could not create item stack for schematic item frame!");
             }
+        }
+        if (json.has("rotor") && id != -1) {
+            frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+            // update rotor record
+            TARDISTimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
         }
         frame.setFixed(json.get("fixed").getAsBoolean());
         frame.setVisible(json.get("visible").getAsBoolean());

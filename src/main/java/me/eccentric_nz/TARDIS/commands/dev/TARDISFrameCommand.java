@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.Blink;
 import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
@@ -24,6 +25,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  *
@@ -31,12 +33,23 @@ import org.bukkit.entity.Player;
  */
 public class TARDISFrameCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISFrameCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     public boolean toggle(Player player, boolean lock) {
         // get the item frame the player is targeting
         ItemFrame frame = getItemFrame(player);
         if (frame != null) {
             frame.setFixed(lock);
             frame.setVisible(!lock);
+            if (lock) {
+                frame.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+            } else {
+                frame.getPersistentDataContainer().remove(plugin.getCustomBlockKey());
+            }
             TARDISMessage.message(player, "ItemFrame " + ((lock) ? "locked" : "unlocked") + "!");
         } else {
             TARDISMessage.message(player, "You are not looking at an ItemFrame!");

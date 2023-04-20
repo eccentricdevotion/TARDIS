@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -50,8 +51,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -330,7 +329,7 @@ public class TARDISBuilderInner implements Runnable {
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1);
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, dbID);
                 }
             }
             // reset mushroom stem blocks
@@ -662,15 +661,15 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
-            // TODO add time rotor item frames to the delta and rotor schematics, then delete this section of code...
-            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
-                /*
-                 * spawn an item frame and place the time rotor in it
-                 */
-                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                // TODO still need to insert/update rotor record in database
-                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
-            } else if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+//            // TODO add time rotor item frames to the delta and rotor schematics, then delete this section of code...
+//            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
+//                /*
+//                 * spawn an item frame and place the time rotor in it
+//                 */
+//                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+//                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
+//            } else
+            if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 // if it's the door, don't set it just remember its block then do it at the end

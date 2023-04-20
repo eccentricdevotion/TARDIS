@@ -135,7 +135,7 @@ public class SchematicPaster implements Runnable {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 Location start = new Location(world, x, y, z);
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start);
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Bukkit;
@@ -26,9 +28,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
-import java.util.UUID;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * The time rotor, sometimes called the time column is a component in the central column of the TARDIS console. While
@@ -78,6 +78,7 @@ public class TARDISTimeRotor {
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
+        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
     }
 
     public static void unlockItemFrame(ItemFrame itemFrame) {

@@ -39,6 +39,7 @@ import org.bukkit.block.Skull;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
 public class SchematicSave {
@@ -161,6 +162,9 @@ public class SchematicSave {
                                             frame.add("lore", lore);
                                         }
                                     }
+                                }
+                                if (f.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                                    frame.addProperty("rotor", true);
                                 }
                                 frame.addProperty("fixed", f.isFixed());
                                 frame.addProperty("visible", f.isVisible());

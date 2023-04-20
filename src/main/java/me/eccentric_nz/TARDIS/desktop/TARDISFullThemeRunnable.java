@@ -431,7 +431,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1);
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, id);
                 }
             }
             // finished processing - update tardis table!

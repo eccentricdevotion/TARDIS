@@ -263,7 +263,7 @@ class TARDISBuildAbandoned implements Runnable {
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), cl);
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), cl, dbID);
                 }
             }
             // finished processing - update tardis table!
@@ -537,14 +537,15 @@ class TARDISBuildAbandoned implements Runnable {
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
-            // TODO add time rotor item frames to the delta and rotor schenatics, then delete this section of code...
-            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
-                /*
-                 * spawn an item frame and place the time rotor in it
-                 */
-                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
-            } else if (type.equals(Material.IRON_DOOR)) { // doors
+//            // TODO add time rotor item frames to the delta and rotor schenatics, then delete this section of code...
+//            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
+//                /*
+//                 * spawn an item frame and place the time rotor in it
+//                 */
+//                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+//                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
+//            } else
+            if (type.equals(Material.IRON_DOOR)) { // doors
                 // if it's the door, don't set it just remember its block then do it at the end
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
