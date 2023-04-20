@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -32,10 +35,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * The Daleks were a warlike race who waged war across whole civilisations and races all over the universe. Advance and
@@ -270,7 +269,7 @@ public class TARDISExterminator {
     }
 
     private void removeZeroRoom(int slot, boolean hasZero) {
-        if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
+        if (slot != -1000001 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
             TARDISTIPSData coords = tips.getTIPSData(slot);
             World w = plugin.getServer().getWorld("TARDIS_Zero_Room");

@@ -18,6 +18,10 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -37,11 +41,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -115,7 +114,7 @@ public class TARDISRepair {
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardis_id();
                 int startx, startz;
-                if (slot != -1) { // default world - use TIPS
+                if (slot != -1000001) { // default world - use TIPS
                     TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                     TARDISTIPSData pos = tintpos.getTIPSData(slot);
                     startx = pos.getCentreX();

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
+import java.io.File;
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -49,9 +51,6 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.*;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
@@ -239,6 +238,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 TARDISTimeRotor.updateRotorRecord(id, "");
                 plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
             }
+            plugin.debug("chunk " + chunk.toString());
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
@@ -255,7 +255,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 });
                 ent.remove();
             }
-            if (slot != -1) { // default world - use TIPS
+            if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();

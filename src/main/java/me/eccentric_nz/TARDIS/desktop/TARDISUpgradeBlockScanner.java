@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -34,10 +37,6 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -80,7 +79,7 @@ public class TARDISUpgradeBlockScanner {
             int slot = tardis.getTIPS();
             int startz;
             int startx;
-            if (slot != -1) { // default world - use TIPS
+            if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();

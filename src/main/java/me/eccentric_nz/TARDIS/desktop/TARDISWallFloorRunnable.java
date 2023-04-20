@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
@@ -34,10 +37,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
@@ -103,7 +102,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             }
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
-            if (slot != -1) { // default world - use TIPS
+            if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
