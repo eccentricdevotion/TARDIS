@@ -184,9 +184,12 @@ public class SchematicSave {
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
-                                int model = display.getItemStack().getItemMeta().getCustomModelData();
+                                int model = -1;
+                                if (display.getItemStack().getItemMeta().hasCustomModelData()) {
+                                    model = display.getItemStack().getItemMeta().getCustomModelData();
+                                    stack.addProperty("cmd", model);
+                                }
                                 stack.addProperty("type", material.toString());
-                                stack.addProperty("cmd", model);
                                 TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());

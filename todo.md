@@ -8,6 +8,8 @@
    - Test display item custom blocks (new TARDISes, changing desktop)!
    - Convert lamps and lanterns to TARDIS lights in schematics - _started_
    - Add time rotors to delta & rotor schematic, update others to have PDC
+   - Remove ORIGINAL console as it's the same as LEGACY_BUDGET (or vice versa)
+   - Remove BUDGET console and just use ROTOR as it is essentially the same?
 
 ## Next version `5.1.0`
 
