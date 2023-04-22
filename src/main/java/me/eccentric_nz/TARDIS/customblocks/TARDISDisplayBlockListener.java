@@ -189,6 +189,19 @@ public class TARDISDisplayBlockListener implements Listener {
                         }
                     }
                     processInteraction(display, breaking, player, l, l.getBlock(), interaction);
+                } else if (inHand.getType() == Material.END_ROD) {
+                    // toggle custom model data of item display's item stack
+                    ItemStack lantern = display.getItemStack();
+                    ItemMeta im = lantern.getItemMeta();
+                    int cmd = im.getCustomModelData();
+                    if (cmd == 10005) {
+                        cmd = 10010;
+                    } else {
+                        cmd = 10005;
+                    }
+                    im.setCustomModelData(cmd);
+                    lantern.setItemMeta(im);
+                    display.setItemStack(lantern);
                 }
             }
         }

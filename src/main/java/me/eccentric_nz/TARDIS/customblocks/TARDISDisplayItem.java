@@ -96,13 +96,15 @@ public enum TARDISDisplayItem {
     LIGHT_LAMP(-1, Material.REDSTONE_LAMP, true),
     LIGHT_LANTERN(-1, Material.GRAY_WOOL, true),
     LIGHT_WOOL(-1, Material.BLACK_WOOL, true),
+    LIGHT_CLASSIC_OFFSET(10010, Material.GRAY_WOOL, true),
     LIGHT_CLASSIC_ON(10005, Material.SEA_LANTERN, true, true),
     LIGHT_TENTH_ON(10006, Material.REDSTONE_LAMP, true, true),
     LIGHT_ELEVENTH_ON(10007, Material.REDSTONE_LAMP, true, true),
     LIGHT_TWELFTH_ON(10008, Material.SEA_LANTERN, true, true),
     LIGHT_THIRTEENTH_ON(10009, Material.SEA_LANTERN, true, true),
     LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, true, true),
-    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, true, true);
+    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, true, true),
+    LIGHT_CLASSIC_OFFSET_ON(10010, Material.SEA_LANTERN, true, true);
 
     private int customModelData;
     private final Material material;

@@ -62,11 +62,11 @@ public class TARDISConsoleLoader {
         // FUGITIVE based on Ruth TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         Consoles.getBY_NAMES().put("FUGITIVE", new Schematic("POLISHED_DEEPSLATE", "fugitive", "Ruth (The Fugitive Doctor) Clayton's Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false));
         // MASTER's schematic designed by ShadowAssociate
-        Consoles.getBY_NAMES().put("MASTER", new Schematic("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
+        Consoles.getBY_NAMES().put("MASTER", new Schematic("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, TardisLight.LAMP, false));
         // MECHANICAL adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
         Consoles.getBY_NAMES().put("MECHANICAL", new Schematic("POLISHED_ANDESITE", "mechanical", "Mechanical Console", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false));
         Consoles.getBY_NAMES().put("ORIGINAL", new Schematic("PACKED_MUD", "original", "The original TARDIS plugin Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false));
-        Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false));
+        Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, TardisLight.LAMP, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false));
         Consoles.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false));
@@ -85,7 +85,7 @@ public class TARDISConsoleLoader {
         // legacy consoles
         if (plugin.getConfig().getBoolean("creation.enable_legacy")) {
             Consoles.getBY_NAMES().put("LEGACY_BIGGER", new Schematic("ORANGE_GLAZED_TERRACOTTA", "legacy_bigger", "Legacy Bigger Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false));
-            Consoles.getBY_NAMES().put("LEGACY_BUDGET", new Schematic("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "Legacy Default Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false));
+            Consoles.getBY_NAMES().put("LEGACY_BUDGET", new Schematic("LIGHT_GRAY_GLAZED_TERRACOTTA", "legacy_budget", "Legacy Default Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false));
             Consoles.getBY_NAMES().put("LEGACY_DELUXE", new Schematic("LIME_GLAZED_TERRACOTTA", "legacy_deluxe", "Legacy Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
             Consoles.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "Legacy 11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TWELFTH, false));
             Consoles.getBY_NAMES().put("LEGACY_REDSTONE", new Schematic("RED_GLAZED_TERRACOTTA", "legacy_redstone", "Legacy Redstone Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
