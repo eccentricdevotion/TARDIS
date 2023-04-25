@@ -189,7 +189,7 @@ public class TARDISDisplayBlockListener implements Listener {
                         }
                     }
                     processInteraction(display, breaking, player, l, l.getBlock(), interaction);
-                } else if (inHand.getType() == Material.END_ROD) {
+                } else if (inHand.getType() == Material.END_ROD && player.hasPermission("tardis.admin")) {
                     // toggle custom model data of item display's item stack
                     ItemStack lantern = display.getItemStack();
                     ItemMeta im = lantern.getItemMeta();
