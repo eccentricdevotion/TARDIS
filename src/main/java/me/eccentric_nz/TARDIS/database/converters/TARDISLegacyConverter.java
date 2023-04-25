@@ -48,7 +48,7 @@ public class TARDISLegacyConverter {
         ResultSet rs = null;
         try {
             service.testConnection(connection);
-            // tardis table
+            statement = connection.createStatement();
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 ps = connection.prepareStatement(update);
