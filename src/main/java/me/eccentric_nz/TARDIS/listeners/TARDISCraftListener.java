@@ -78,7 +78,6 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
-        t.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
         t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
         t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone

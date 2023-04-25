@@ -8,14 +8,15 @@
    - Test display item custom blocks (new TARDISes, changing desktop)!
    - Convert lamps and lanterns to TARDIS lights in schematics - _started_
    - Add time rotors to delta & rotor schematic, update others to have PDC
-   - Remove ORIGINAL console as it's the same as LEGACY_BUDGET (or vice versa)
    - Remove BUDGET console and just use ROTOR as it is essentially the same?
+   - Add Control sign text to schematic signs, then check for second line when adding record to database in interior builders
+   - Fix ShopItem materials and custom model data for seed blocks
 
 ## Next version `5.1.0`
 
 1. Vortex Manipulator predictive text
 2. Pandorica custom model
-3. Fix laggy Silurian cave finder - perhaps the new `World#getChunkAt(int x, int z, boolean generate)` might help?
+3. Fix laggy Silurian cave finder
 4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
 5. Animated models for player disguises
 

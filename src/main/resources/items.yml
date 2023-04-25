@@ -53,7 +53,6 @@ judoon_head: 75.00
 k9: 250.00
 knockback_circuit: 100.00
 legacy_bigger_seed: 250.00
-legacy_budget_seed: 250.00
 legacy_deluxe_seed: 250.00
 legacy_eleventh_seed: 250.00
 legacy_redstone_seed: 250.00
@@ -175,7 +174,6 @@ blueprint_console_ender: 33.00
 blueprint_console_factory: 33.00
 blueprint_console_fugitive: 33.00
 blueprint_console_legacy_bigger: 33.00
-blueprint_console_legacy_budget: 33.00
 blueprint_console_legacy_deluxe: 33.00
 blueprint_console_legacy_eleventh: 33.00
 blueprint_console_legacy_redstone: 33.00
@@ -304,12 +302,11 @@ blueprint_preset_village: 33.00
 blueprint_preset_well: 33.00
 blueprint_preset_windmill: 33.00
 blueprint_preset_yellow: 33.00
-blueprint_room_architectural: 33.00
-blueprint_room_jettison: 33.00
 blueprint_room_antigravity: 33.00
 blueprint_room_apiary: 33.00
 blueprint_room_aquarium: 33.00
 blueprint_room_arboretum: 33.00
+blueprint_room_architectural: 33.00
 blueprint_room_baker: 33.00
 blueprint_room_bamboo: 33.00
 blueprint_room_bedroom: 33.00
@@ -323,6 +320,7 @@ blueprint_room_greenhouse: 33.00
 blueprint_room_harmony: 33.00
 blueprint_room_hutch: 33.00
 blueprint_room_igloo: 33.00
+blueprint_room_jettison: 33.00
 blueprint_room_kitchen: 33.00
 blueprint_room_lazarus: 33.00
 blueprint_room_library: 33.00

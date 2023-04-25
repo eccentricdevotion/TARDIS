@@ -89,7 +89,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
         t.put("WEATHERED", Material.WEATHERED_COPPER); // weathered
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
-        t.put("LEGACY_BUDGET", Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
         t.put("LEGACY_DELUXE", Material.LIME_GLAZED_TERRACOTTA);
         t.put("LEGACY_ELEVENTH", Material.CYAN_GLAZED_TERRACOTTA);
         t.put("LEGACY_REDSTONE", Material.RED_GLAZED_TERRACOTTA);

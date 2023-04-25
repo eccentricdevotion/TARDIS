@@ -244,6 +244,7 @@ conversions:
   bind: true
   icons: true
   restore_biomes: true
+  legacy_budget: true
   all_in_one:
     helper: true
     shop: true

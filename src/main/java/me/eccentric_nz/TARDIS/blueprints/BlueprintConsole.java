@@ -33,7 +33,6 @@ public enum BlueprintConsole {
     FACTORY("tardis.factory"),
     FUGITIVE("tardis.fugitive"),
     LEGACY_BIGGER("tardis.legacy_bigger"),
-    LEGACY_BUDGET("tardis.legacy_budget"),
     LEGACY_DELUXE("tardis.legacy_deluxe"),
     LEGACY_ELEVENTH("tardis.legacy_eleventh"),
     LEGACY_REDSTONE("tardis.legacy_redstone"),

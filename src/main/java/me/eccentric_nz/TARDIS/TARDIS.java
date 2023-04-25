@@ -406,6 +406,11 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.archive_wall_data", true);
                 conversions++;
             }
+            if (!getConfig().getBoolean("conversions.legacy_default")) {
+                new TARDISLegacyConverter(this).setOriginal();
+                getConfig().set("conversions.legacy_default", true);
+                conversions++;
+            }
             if (!getConfig().getBoolean("conversions.all_in_one.helper")) {
                 if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.HELPER)) {
                     getConfig().set("conversions.all_in_one.helper", true);
