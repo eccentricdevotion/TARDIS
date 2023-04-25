@@ -10,7 +10,6 @@
    - Add time rotors to delta & rotor schematic, update others to have PDC
    - Remove BUDGET console and just use ROTOR as it is essentially the same?
    - Add Control sign text to schematic signs, then check for second line when adding record to database in interior builders
-   - Fix ShopItem materials and custom model data for seed blocks
 
 ## Next version `5.1.0`
 
@@ -19,6 +18,7 @@
 3. Fix laggy Silurian cave finder
 4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
 5. Animated models for player disguises
+6. Custom Control models #703 #355
 
 ## Future versions
 

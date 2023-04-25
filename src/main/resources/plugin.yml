@@ -268,7 +268,6 @@ permissions:
       tardis.factory: true
       tardis.fugitive: true
       tardis.legacy_bigger: true
-      tardis.legacy_budget: true
       tardis.legacy_deluxe: true
       tardis.legacy_eleventh: true
       tardis.legacy_redstone: true
@@ -354,9 +353,6 @@ permissions:
     default: op
   tardis.custom:
     description: Allow players to build the server's 'custom' TARDIS.
-    default: op
-  tardis.legacy_budget:
-    description: Allow players to build the legacy 'budget' TARDIS.
     default: op
   tardis.legacy_bigger:
     description: Allow players to build the legacy 'bigger' TARDIS.
