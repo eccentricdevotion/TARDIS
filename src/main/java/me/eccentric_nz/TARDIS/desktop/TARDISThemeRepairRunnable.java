@@ -71,7 +71,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
@@ -284,21 +284,35 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             });
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             int s = 0;
-            for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
+            for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
-                psb.setBlockData(entry.getValue());
+                JsonObject signObject = entry.getValue();
+                BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
+                psb.setBlockData(signData);
+                Sign signState = (Sign) psb.getState();
                 // always make the control centre the first oak sign
-                if (s == 0 && (psb.getType().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && psb.getType().equals(Material.OAK_SIGN)))) {
-                    Sign cs = (Sign) psb.getState();
-                    cs.setLine(0, "");
-                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                    cs.setLine(3, "");
-                    cs.update();
+                if (s == 0 && (signData.getMaterial().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && signData.getMaterial().equals(Material.OAK_SIGN)))) {
+                    signState.setLine(0, "");
+                    signState.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    signState.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    signState.setLine(3, "");
                     String controlloc = psb.getLocation().toString();
                     plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
                     s++;
+                } else {
+                    JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
+                    if (text != null) {
+                        signState.setLine(0, text.get("line0").getAsString());
+                        signState.setLine(1, text.get("line1").getAsString());
+                        signState.setLine(2, text.get("line2").getAsString());
+                        signState.setLine(3, text.get("line3").getAsString());
+                        signState.setGlowingText(text.get("glowing").getAsBoolean());
+                        DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
+                        signState.setColor(colour);
+                        signState.setEditable(text.get("editable").getAsBoolean());
+                    }
                 }
+                signState.update();
             }
             lampBlocks.forEach((lamp) -> {
                 TardisLight light = tud.getSchematic().getLights();
@@ -545,15 +559,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
                     if (type.equals(Material.COMMAND_BLOCK)) {
-                        if (tud.getSchematic().getPermission().equals("ender")) {
-                            data = Material.END_STONE_BRICKS.createBlockData();
-                        } else if (tud.getSchematic().getPermission().equals("delta")) {
-                            data = Material.BLACKSTONE.createBlockData();
-                        } else if (tud.getSchematic().getPermission().equals("ancient") || tud.getSchematic().getPermission().equals("fugitive")) {
-                            data = Material.GRAY_WOOL.createBlockData();
-                        } else {
-                            data = Material.STONE_BRICKS.createBlockData();
-                        }
+                        data = switch (tud.getSchematic().getPermission()) {
+                            case "ender" -> Material.END_STONE_BRICKS.createBlockData();
+                            case "delta" -> Material.BLACKSTONE.createBlockData();
+                            case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                            default -> Material.STONE_BRICKS.createBlockData();
+                        };
                     }
                 }
                 if (type.equals(Material.OAK_BUTTON)) {
@@ -611,7 +622,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (Tag.WALL_SIGNS.isTagged(type) || (tud.getSchematic().getPermission().equals("cave") && type.equals(Material.OAK_SIGN))) {
-                    postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                    postSignBlocks.put(world.getBlockAt(x, y, z), bb);
                 } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                     postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.GLOW_LICHEN)) {

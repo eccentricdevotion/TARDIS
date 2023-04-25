@@ -76,7 +76,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
@@ -114,10 +114,11 @@ public class TARDISBuilderInner implements Runnable {
      *
      * @param plugin an instance of the main TARDIS plugin class
      * @param schm the name of the schematic file to use can be ANCIENT, ARS,
-     * BIGGER, BUDGET, CORAL, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER,
-     * MASTER, ORIGINAL, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH,
-     * WAR, WEATHERED, WOOD, LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE,
-     * LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
+     * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
+     * ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
+     * PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
+     * WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     * LEGACY_REDSTONE or a CUSTOM name.
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param player an instance of the player who owns the TARDIS.
@@ -251,21 +252,35 @@ public class TARDISBuilderInner implements Runnable {
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
             int s = 0;
-            for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
+            for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
-                psb.setBlockData(entry.getValue());
+                JsonObject signObject = entry.getValue();
+                BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
+                psb.setBlockData(signData);
+                Sign signState = (Sign) psb.getState();
                 // always make the control centre the first oak sign
-                if (s == 0 && (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN) || (schm.getPermission().equals("cave") && entry.getValue().getMaterial().equals(Material.OAK_SIGN)))) {
-                    Sign cs = (Sign) psb.getState();
-                    cs.setLine(0, "");
-                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                    cs.setLine(3, "");
-                    cs.update();
+                if (s == 0 && (signData.getMaterial().equals(Material.OAK_WALL_SIGN) || (schm.getPermission().equals("cave") && signData.getMaterial().equals(Material.OAK_SIGN)))) {
+                    signState.setLine(0, "");
+                    signState.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    signState.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    signState.setLine(3, "");
                     String controlloc = psb.getLocation().toString();
                     plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
                     s++;
+                } else {
+                    JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
+                    if (text != null) {
+                        signState.setLine(0, text.get("line0").getAsString());
+                        signState.setLine(1, text.get("line1").getAsString());
+                        signState.setLine(2, text.get("line2").getAsString());
+                        signState.setLine(3, text.get("line3").getAsString());
+                        signState.setGlowingText(text.get("glowing").getAsBoolean());
+                        DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
+                        signState.setColor(colour);
+                        signState.setEditable(text.get("editable").getAsBoolean());
+                    }
                 }
+                signState.update();
             }
             for (Map.Entry<Block, BlockData> carpet : postCarpetBlocks.entrySet()) {
                 Block pcb = carpet.getKey();
@@ -333,7 +348,7 @@ public class TARDISBuilderInner implements Runnable {
                 }
             }
             // reset mushroom stem blocks
-            if (postMushroomBlocks.size() > 0) {
+            if (!postMushroomBlocks.isEmpty()) {
                 TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 400L, 1L);
                 runnable.setTask(taskID);
@@ -618,15 +633,16 @@ public class TARDISBuilderInner implements Runnable {
                 String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeploc);
                 if (type.equals(Material.COMMAND_BLOCK)) {
-                    if (schm.getPermission().equals("ender")) {
-                        data = Material.END_STONE_BRICKS.createBlockData();
-                    } else if (schm.getPermission().equals("delta")) {
-                        data = Material.BLACKSTONE.createBlockData();
-                    } else if (schm.getPermission().equals("ancient") || schm.getPermission().equals("fugitive")) {
-                        data = Material.GRAY_WOOL.createBlockData();
-                    } else {
-                        data = Material.STONE_BRICKS.createBlockData();
-                    }
+                    data = switch (schm.getPermission()) {
+                        case "ender" ->
+                            Material.END_STONE_BRICKS.createBlockData();
+                        case "delta" ->
+                            Material.BLACKSTONE.createBlockData();
+                        case "ancient", "fugitive" ->
+                            Material.GRAY_WOOL.createBlockData();
+                        default ->
+                            Material.STONE_BRICKS.createBlockData();
+                    };
                 }
             }
             if (Tag.WOODEN_BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
@@ -661,14 +677,6 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
-//            // TODO add time rotor item frames to the delta and rotor schematics, then delete this section of code...
-//            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
-//                /*
-//                 * spawn an item frame and place the time rotor in it
-//                 */
-//                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-//                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
-//            } else
             if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (type.equals(Material.IRON_DOOR)) { // doors
@@ -687,7 +695,7 @@ public class TARDISBuilderInner implements Runnable {
             } else if (type.equals(Material.LEVER)) {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (Tag.SIGNS.isTagged(type)) {
-                postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                postSignBlocks.put(world.getBlockAt(x, y, z), c);
             } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.GLOW_LICHEN)) {

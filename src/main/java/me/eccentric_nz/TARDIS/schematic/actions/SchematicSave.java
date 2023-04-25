@@ -32,9 +32,11 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -156,9 +158,9 @@ public class SchematicSave {
                                         }
                                         if (im.hasLore()) {
                                             JsonArray lore = new JsonArray();
-                                            for (String s : im.getLore()) {
+                                            im.getLore().forEach(s -> {
                                                 lore.add(s);
-                                            }
+                                            });
                                             frame.add("lore", lore);
                                         }
                                     }
@@ -244,6 +246,21 @@ public class SchematicSave {
                             head.addProperty("texture", skull.getOwnerProfile().getTextures().getSkin().toString());
                         }
                         obj.add("head", head);
+                    }
+                    // signs
+                    if (Tag.ALL_SIGNS.isTagged(b.getType())) {
+                        JsonObject text = new JsonObject();
+                        Sign sign = (Sign) b.getState();
+                        if (sign.getLines().length > 0) {
+                            text.addProperty("line0", sign.getLine(0));
+                            text.addProperty("line1", sign.getLine(1));
+                            text.addProperty("line2", sign.getLine(2));
+                            text.addProperty("line3", sign.getLine(3));
+                            text.addProperty("glowing", sign.isGlowingText());
+                            text.addProperty("colour", sign.getColor().toString());
+                            text.addProperty("editable", sign.isEditable());
+                            obj.add("sign", text);
+                        }
                     }
                     columns.add(obj);
                 }
