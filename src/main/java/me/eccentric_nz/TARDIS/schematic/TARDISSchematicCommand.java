@@ -83,20 +83,17 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 TARDISMessage.send(player, "SCHM_NAME");
                 return true;
             }
-            if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace") && !args[0].equalsIgnoreCase("convert")) {
-                return false;
-            }
             if (args[0].equalsIgnoreCase("save")) {
                 return new SchematicSave().act(plugin, player, args[1]);
-            }
-            if (args[0].equalsIgnoreCase("load")) {
-                return new SchematicLoad().act(plugin, player, args[1]);
             }
             if (args[0].equalsIgnoreCase("replace")) {
                 return new SchematicReplace().act(plugin, player, args);
             }
             if (args[0].equalsIgnoreCase("convert")) {
                 return new SchematicConvert().act(plugin, player, args);
+            }
+            if (args[0].equalsIgnoreCase("load")) {
+                return new SchematicLoad().act(plugin, player, args);
             }
         }
         return false;

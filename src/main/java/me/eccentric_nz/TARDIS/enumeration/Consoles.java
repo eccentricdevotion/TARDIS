@@ -74,6 +74,10 @@ public class Consoles {
         return BY_NAMES;
     }
 
+    public static HashMap<String, Schematic> getBY_PERMS() {
+        return BY_PERMS;
+    }
+
     public static HashMap<String, Schematic> getBY_MATERIALS() {
         return BY_MATERIALS;
     }

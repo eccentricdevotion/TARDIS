@@ -1,8 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 
-import org.bukkit.util.BlockVector;
-
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import org.bukkit.util.BlockVector;
 
 public class SiluriaStructureUtility {
 
@@ -13,6 +14,7 @@ public class SiluriaStructureUtility {
     public static HashMap<BlockVector, String> vectorFour = new HashMap<>();
     public static HashMap<BlockVector, String> vectorFive = new HashMap<>();
     public static HashMap<BlockVector, HashMap<BlockVector, String>> centres = new HashMap<>();
+    public static List<String> structures = Arrays.asList("cross", "east_west", "farm", "large", "lift", "north_south", "small", "temple");
 
     static {
         // zero

@@ -20,8 +20,13 @@ import com.google.common.collect.ImmutableList;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtility;
+import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,6 +39,10 @@ import org.jetbrains.annotations.NotNull;
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove");
+    private final List<String> LOAD_SUBS = ImmutableList.of("console", "room", "structure", "user");
+    private final List<String> CONSOLE_SUBS = new ArrayList<>(Consoles.getBY_PERMS().keySet());
+    private final List<String> ROOM_SUBS = new ArrayList<>();
+    private final List<String> STRUCTURE_SUBS = new ArrayList<>();
     private final List<String> FILE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> LIGHT_SUBS = new ArrayList<>();
@@ -45,6 +54,18 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
                     FILE_SUBS.add(f.substring(0, f.length() - 6));
                 }
             }
+        }
+        for (String r : TARDIS.plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+            ROOM_SUBS.add(r.toLowerCase());
+        }
+        for (String g : GallifeyStructureUtility.structures) {
+            STRUCTURE_SUBS.add("gallifrey_" + g);
+        }
+        for (String s : SiluriaStructureUtility.structures) {
+            STRUCTURE_SUBS.add("siluria_" + s);
+        }
+        for (String d : SkaroStructureUtility.structures) {
+            STRUCTURE_SUBS.add("dalek_" + d);
         }
         for (Material m : Material.values()) {
             if (m.isBlock()) {
@@ -61,13 +82,28 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("load")) {
-            return partial(args[1], FILE_SUBS);
+            return partial(args[1], LOAD_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("paste")) {
             return ImmutableList.of("no_air");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("replace")) {
             return partial(args[1], MAT_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("convert")) {
             return partial(args[1], LIGHT_SUBS);
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("load")) {
+            switch (args[1].toLowerCase()) {
+                case "console" -> {
+                    return partial(args[2], CONSOLE_SUBS);
+                }
+                case "room" -> {
+                    return partial(args[2], ROOM_SUBS);
+                }
+                case "structure" -> {
+                    return partial(args[2], STRUCTURE_SUBS);
+                }
+                default -> {
+                    return partial(args[2], FILE_SUBS);
+                }
+            }
         } else if (args.length == 3 && args[0].equalsIgnoreCase("replace")) {
             return partial(args[2], MAT_SUBS);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("convert")) {
