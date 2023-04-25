@@ -44,6 +44,6 @@ If you have been using the Chameleon Circuit in _Adaptive BIOME_ mode, you can l
 pressing the **Lock** button in the Chameleon GUI. The button will only appear if you are in the correct mode.
 
 Clicking the button will switch the settings to _Shorted out_ and apply the biome preset on a more permanent basis (it
-won't change when you go to a differnet biome).
+won't change when you go to a different biome).
 
 ![Chameleon lock](images/docs/chameleon_lock.jpg)
