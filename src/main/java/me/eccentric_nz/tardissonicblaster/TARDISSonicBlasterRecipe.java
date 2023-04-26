@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -30,6 +26,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  *
@@ -48,20 +49,20 @@ public class TARDISSonicBlasterRecipe {
     }
 
     public void addShapedRecipes() {
-        Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("recipes").getKeys(false);
+        Set<String> shaped = plugin.getBlasterConfig().getConfigurationSection("recipes").getKeys(false);
         for (String s : shaped) {
             plugin.getServer().addRecipe(makeRecipe(s));
         }
     }
 
     public ShapedRecipe makeRecipe(String s) {
-        Material mat = Material.valueOf(plugin.getRecipesConfig().getString(s + ".result"));
-        int amount = plugin.getRecipesConfig().getInt(s + ".amount");
+        Material mat = Material.valueOf(plugin.getBlasterConfig().getString("recipes." + s + ".result"));
+        int amount = plugin.getBlasterConfig().getInt("recipes." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(s);
-        if (!plugin.getRecipesConfig().getString(s + ".lore").isEmpty()) {
-            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString(s + ".lore").split("~")));
+        if (!plugin.getBlasterConfig().getString("recipes." + s + ".lore").isEmpty()) {
+            im.setLore(Arrays.asList(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
         }
         im.setCustomModelData(modelData.get(s));
         is.setItemMeta(im);
@@ -69,16 +70,16 @@ public class TARDISSonicBlasterRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
         try {
-            String[] shape_tmp = plugin.getRecipesConfig().getString(s + ".shape").split(",");
+            String[] shape_tmp = plugin.getBlasterConfig().getString("recipes." + s + ".shape").split(",");
             String[] shape = new String[3];
             for (int i = 0; i < 3; i++) {
                 shape[i] = shape_tmp[i].replaceAll("-", " ");
             }
             r.shape(shape[0], shape[1], shape[2]);
-            Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection(s + ".ingredients").getKeys(false);
+            Set<String> ingredients = plugin.getBlasterConfig().getConfigurationSection("recipes." + s + ".ingredients").getKeys(false);
             for (String g : ingredients) {
                 char c = g.charAt(0);
-                String ingredient = plugin.getRecipesConfig().getString(s + ".ingredients." + g);
+                String ingredient = plugin.getBlasterConfig().getString("recipes." + s + ".ingredients." + g);
                 if (ingredient.contains("=")) {
                     ItemStack exact;
                     String[] choice = ingredient.split("=");
