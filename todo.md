@@ -6,8 +6,6 @@
 
 1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test display item custom blocks for new & abandoned TARDISes!
-   - Convert lamps and lanterns to TARDIS lights in schematics - _started, only twelfth left to do_
-   - Add time rotors to delta & rotor schematic, update others to have PDC
 
 ## Next version `5.1.0`
 
