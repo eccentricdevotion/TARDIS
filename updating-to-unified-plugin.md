@@ -18,6 +18,7 @@ modules:
   dynmap: false
   shop: false
   sonic_blaster: false
+  blueprints: false
 ```
 
 If you are updating from a previous version and have been using any of the other separate plugins,
