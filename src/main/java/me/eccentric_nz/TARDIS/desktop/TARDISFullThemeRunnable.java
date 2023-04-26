@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -53,6 +52,8 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 
+import java.util.*;
+
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
  * automatically relocating any living beings in the deleted room, depositing
@@ -84,7 +85,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private boolean running;
-    private int id, slot, c, ph, pw, h, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
+    private int id, slot, c, h, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
     private World world;
     private List<Chunk> chunks;
     private Block postBedrock;
@@ -167,6 +168,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 size_next = archive_next.getConsoleSize();
             }
             // get previous schematic dimensions
+            int ph, pw;
             if (archive_prev == null) {
                 // get JSON
                 JsonObject prevObj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
@@ -366,36 +368,30 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 ppb.setBlockData(value);
             });
             postPistonExtensionBlocks.forEach(Block::setBlockData);
-            int s = 0;
             for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 JsonObject signObject = entry.getValue();
                 BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
                 psb.setBlockData(signData);
-                Sign signState = (Sign) psb.getState();
-                // always make the control centre the first oak sign
-                if (s == 0 && (signData.getMaterial().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && signData.getMaterial().equals(Material.OAK_SIGN)))) {
-                    signState.setLine(0, "");
-                    signState.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                    signState.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                    signState.setLine(3, "");
-                    String controlloc = psb.getLocation().toString();
-                    plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
-                    s++;
-                } else {
-                    JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
-                    if (text != null) {
-                        signState.setLine(0, text.get("line0").getAsString());
-                        signState.setLine(1, text.get("line1").getAsString());
-                        signState.setLine(2, text.get("line2").getAsString());
-                        signState.setLine(3, text.get("line3").getAsString());
-                        signState.setGlowingText(text.get("glowing").getAsBoolean());
-                        DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
-                        signState.setColor(colour);
-                        signState.setEditable(text.get("editable").getAsBoolean());
+                JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
+                if (text != null) {
+                    Sign signState = (Sign) psb.getState();
+                    String line1 = text.get("line1").getAsString();
+                    // save the control centre sign
+                    if (line1.equals("Control")) {
+                        String controlLocation = psb.getLocation().toString();
+                        plugin.getQueryFactory().insertSyncControl(id, 22, controlLocation, 0);
                     }
+                    signState.setLine(0, text.get("line0").getAsString());
+                    signState.setLine(1, text.get("line1").getAsString());
+                    signState.setLine(2, text.get("line2").getAsString());
+                    signState.setLine(3, text.get("line3").getAsString());
+                    signState.setGlowingText(text.get("glowing").getAsBoolean());
+                    DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
+                    signState.setColor(colour);
+                    signState.setEditable(text.get("editable").getAsBoolean());
+                    signState.update();
                 }
-                signState.update();
             }
             lampBlocks.forEach((lamp) -> {
                 TardisLight light = tud.getSchematic().getLights();
@@ -884,26 +880,22 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         switch (j) {
                             case 2 -> {
                                 directional.setFacing(BlockFace.WEST);
-                                data = directional;
-                                postRepeaterBlocks.put(b, data);
+                                postRepeaterBlocks.put(b, directional);
                                 plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
                             }
                             case 3 -> {
                                 directional.setFacing(BlockFace.NORTH);
-                                data = directional;
-                                postRepeaterBlocks.put(b, data);
+                                postRepeaterBlocks.put(b, directional);
                                 plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
                             }
                             case 4 -> {
                                 directional.setFacing(BlockFace.SOUTH);
-                                data = directional;
-                                postRepeaterBlocks.put(b, data);
+                                postRepeaterBlocks.put(b, directional);
                                 plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
                             }
                             default -> {
                                 directional.setFacing(BlockFace.EAST);
-                                data = directional;
-                                postRepeaterBlocks.put(b, data);
+                                postRepeaterBlocks.put(b, directional);
                                 plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
                             }
                         }
@@ -918,9 +910,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
                     BlockState state = b.getState();
-                    if (state instanceof BlockState) {
-                        plugin.getTardisHelper().removeTileEntity(state);
-                    }
+                    plugin.getTardisHelper().removeTileEntity(state);
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
             }
@@ -1051,9 +1041,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
                     BlockState state = b.getState();
-                    if (state instanceof BlockState) {
-                        plugin.getTardisHelper().removeTileEntity(state);
-                    }
+                    plugin.getTardisHelper().removeTileEntity(state);
                     b.setBlockData(TARDISConstants.AIR);
                 }
             }
