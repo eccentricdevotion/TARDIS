@@ -77,7 +77,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
         lookup.put("Interior SFX", "sfx_on");
-        lookup.put("Lanterns", "lanterns_on");
         lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Mob Farming", "farm_on");
         lookup.put("Preset Sign", "sign_on");
@@ -86,7 +85,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         lookup.put("Telepathic Circuit", "telepathy_on");
         lookup.put("Travel Bar", "travelbar_on");
         lookup.put("Who Quotes", "quotes_on");
-        lookup.put("Wool For Lights Off", "wool_lights_on");
     }
 
     @EventHandler(ignoreCancelled = true)

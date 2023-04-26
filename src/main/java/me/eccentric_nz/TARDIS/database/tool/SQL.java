@@ -304,7 +304,7 @@ public class SQL {
 
             "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES ",
 
-            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `auto_on`, `auto_type`, `auto_default`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `texture_on`, `texture_in`, `texture_out`, `submarine_on`, `dnd_on`, `minecart_on`, `renderer_on`, `wool_lights_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `farm_on`,  `lanterns_on`, `auto_siege_on`, `flying_mode`, `throttle`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
+            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `auto_on`, `auto_type`, `auto_default`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `texture_on`, `texture_in`, `texture_out`, `submarine_on`, `dnd_on`, `minecart_on`, `renderer_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `farm_on`,  `lights`, `auto_siege_on`, `flying_mode`, `throttle`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
 
             "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
 

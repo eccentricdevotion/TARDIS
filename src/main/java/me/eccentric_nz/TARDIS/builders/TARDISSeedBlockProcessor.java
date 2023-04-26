@@ -191,7 +191,6 @@ public class TARDISSeedBlockProcessor {
                 // determine wall block material from HashMap
                 setpp.put("wall", wall_type.toString());
                 setpp.put("floor", floor_type.toString());
-                setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
                 // insert/update player prefs
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
