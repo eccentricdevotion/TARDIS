@@ -8,7 +8,6 @@
    - Test display item custom blocks for new & abandoned TARDISes!
    - Convert lamps and lanterns to TARDIS lights in schematics - _started, only twelfth left to do_
    - Add time rotors to delta & rotor schematic, update others to have PDC
-   - Add Control sign text to schematic signs
 
 ## Next version `5.1.0`
 
