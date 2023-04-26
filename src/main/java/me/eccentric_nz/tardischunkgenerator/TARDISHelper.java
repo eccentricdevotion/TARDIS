@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
@@ -60,6 +54,13 @@ import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+
 public class TARDISHelper {
 
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
@@ -74,7 +75,7 @@ public class TARDISHelper {
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Skaro...");
+            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
@@ -84,8 +85,8 @@ public class TARDISHelper {
             // yes we should!
             String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
-            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
-            plugin.getServer().getConsoleSender().sendMessage(TardisModule.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
+            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
+            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
         }
         // register disguise listener
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);

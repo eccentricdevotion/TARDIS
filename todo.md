@@ -6,6 +6,7 @@
 
 1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
    - Test display item custom blocks for new & abandoned TARDISes!
+   - ?
 
 ## Next version `5.1.0`
 
@@ -15,6 +16,7 @@
 4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
 5. Animated models for player disguises
 6. Custom Control models #703 #355
+7. Sonic Blaster
 
 ## Future versions
 

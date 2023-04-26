@@ -96,7 +96,7 @@ public class TARDISSonicBlasterRecipe {
                 }
             }
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(TardisModule.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getConsole().sendMessage(TardisModule.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put(s, r);

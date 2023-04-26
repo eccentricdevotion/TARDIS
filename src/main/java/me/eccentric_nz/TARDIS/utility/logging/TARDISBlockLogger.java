@@ -53,7 +53,7 @@ public class TARDISBlockLogger {
             if (CoreProtect.APIVersion() < 6) {
                 return;
             }
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Connecting to CoreProtect");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Connecting to CoreProtect");
             coreProtectAPI = CoreProtect;
             logging = true;
         }

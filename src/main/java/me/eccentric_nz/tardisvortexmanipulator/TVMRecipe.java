@@ -3,8 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
-import java.util.Arrays;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
@@ -13,6 +11,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -54,7 +55,7 @@ public class TVMRecipe {
                 r.setIngredient(c, m);
             });
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(TardisModule.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getConsole().sendMessage(TardisModule.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put("Vortex Manipulator", r);
