@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -40,11 +43,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
@@ -121,31 +119,29 @@ public class TARDISScanner {
                         visible = false;
                     }
                 }
-                if (TARDIS.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case SLIME_BALL -> // Dalek
-                                        et = EntityType.LLAMA_SPIT;
-                                case IRON_INGOT -> // Cyberman
-                                        et = EntityType.AREA_EFFECT_CLOUD;
-                                case SUGAR -> // Empty Child
-                                        et = EntityType.FALLING_BLOCK;
-                                case SNOWBALL -> // Ice Warrior
-                                        et = EntityType.ARROW;
-                                case FEATHER -> // Silurian
-                                        et = EntityType.BOAT;
-                                case POTATO -> // Sontaran
-                                        et = EntityType.FIREWORK;
-                                case BAKED_POTATO -> // Strax
-                                        et = EntityType.EGG;
-                                case BOOK -> // Vashta Nerada
-                                        et = EntityType.ENDER_CRYSTAL;
-                                case PAINTING -> // Zygon
-                                        et = EntityType.FISHING_HOOK;
-                                case STONE_BUTTON -> // Weeping Angel
-                                        et = EntityType.DRAGON_FIREBALL;
+                                case BAKED_POTATO -> et = EntityType.EGG; // Strax
+                                case BOOK -> et = EntityType.ENDER_CRYSTAL; // Vashta Nerada
+                                case CRIMSON_BUTTON -> et = EntityType.BLOCK_DISPLAY; // davros
+                                case FEATHER -> et = EntityType.BOAT; // Silurian
+                                case IRON_INGOT -> et = EntityType.AREA_EFFECT_CLOUD; // Cyberman
+                                case KELP -> et = EntityType.THROWN_EXP_BOTTLE; // sea devil
+                                case MANGROVE_PROPAGULE -> et = EntityType.SMALL_FIREBALL; // dalek sec
+                                case NETHERITE_SCRAP -> et = EntityType.GLOW_ITEM_FRAME; // mire
+                                case PAINTING -> et = EntityType.FISHING_HOOK; // Zygon
+                                case POTATO -> et = EntityType.FIREWORK; // Sontaran
+                                case PUFFERFISH -> et = EntityType.INTERACTION; // hath
+                                case RED_CANDLE -> et = EntityType.TEXT_DISPLAY; // headless monk
+                                case SLIME_BALL -> et = EntityType.LLAMA_SPIT; // dalek
+                                case SNOWBALL -> et = EntityType.SNOWBALL; // Ice Warrior
+                                case SPIDER_EYE -> et = EntityType.ITEM_DISPLAY; // racnoss
+                                case STONE_BUTTON -> et = EntityType.DRAGON_FIREBALL; // weeping angel
+                                case SUGAR -> et = EntityType.FALLING_BLOCK; // Empty Child
+                                case TURTLE_EGG -> et = EntityType.ARROW; // slitheen
                                 default -> {
                                 }
                             }
@@ -159,14 +155,10 @@ public class TARDISScanner {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case YELLOW_DYE -> // Judoon
-                                        et = EntityType.SHULKER_BULLET;
-                                case BONE -> // K9
-                                        et = EntityType.EVOKER_FANGS;
-                                case ROTTEN_FLESH -> // Ood
-                                        et = EntityType.ITEM_FRAME;
-                                case GUNPOWDER -> // Toclafane
-                                        et = EntityType.DROPPED_ITEM;
+                                case YELLOW_DYE -> et = EntityType.SHULKER_BULLET; // Judoon
+                                case BONE -> et = EntityType.EVOKER_FANGS; // K9
+                                case ROTTEN_FLESH -> et = EntityType.ITEM_FRAME; // Ood
+                                case GUNPOWDER -> et = EntityType.DROPPED_ITEM; // Toclafane
                                 default -> {
                                 }
                             }
@@ -239,36 +231,44 @@ public class TARDISScanner {
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             if (scannedEntities.size() > 0) {
                 TARDISMessage.send(player, "SCAN_ENTS");
-                for (Map.Entry<EntityType, Integer> entry : scannedEntities.entrySet()) {
+                scannedEntities.forEach((ent, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && playerNames.size() > 0) {
+                    if (ent.equals(EntityType.PLAYER) && playerNames.size() > 0) {
                         playerNames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.substring(2) + ")";
                     }
-                    switch (entry.getKey()) {
-                        case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + entry.getValue());
-                        case LLAMA_SPIT -> player.sendMessage("    Dalek: " + entry.getValue());
-                        case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + entry.getValue());
-                        case ARROW -> player.sendMessage("    Ice Warrior: " + entry.getValue());
-                        case SHULKER_BULLET -> player.sendMessage("    Judoon: " + entry.getValue());
-                        case EVOKER_FANGS -> player.sendMessage("    K9: " + entry.getValue());
-                        case ITEM_FRAME -> player.sendMessage("    Ood: " + entry.getValue());
-                        case SPLASH_POTION -> player.sendMessage("    Silent: " + entry.getValue());
-                        case BOAT -> player.sendMessage("    Silurian: " + entry.getValue());
-                        case FIREWORK -> player.sendMessage("    Sontaran: " + entry.getValue());
-                        case EGG -> player.sendMessage("    Strax: " + entry.getValue());
-                        case DROPPED_ITEM -> player.sendMessage("    Toclafane: " + entry.getValue());
-                        case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + entry.getValue());
-                        case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + entry.getValue());
-                        case FISHING_HOOK -> player.sendMessage("    Zygon: " + entry.getValue());
+                    switch (ent) {
+                        case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + value);
+                        case ARROW -> player.sendMessage("    Slitheen: " + value);
+                        case BLOCK_DISPLAY -> player.sendMessage("    Davros: " + value);
+                        case BOAT -> player.sendMessage("    Silurian: " + value);
+                        case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + value);
+                        case DROPPED_ITEM -> player.sendMessage("    Toclafane: " + value);
+                        case EGG -> player.sendMessage("    Strax: " + value);
+                        case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + value);
+                        case EVOKER_FANGS -> player.sendMessage("    K9: " + value);
+                        case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + value);
+                        case FIREWORK -> player.sendMessage("    Sontaran: " + value);
+                        case FISHING_HOOK -> player.sendMessage("    Zygon: " + value);
+                        case GLOW_ITEM_FRAME -> player.sendMessage("    Mire: " + value);
+                        case INTERACTION -> player.sendMessage("    Hath: " + value);
+                        case ITEM_DISPLAY -> player.sendMessage("    Racnoss: " + value);
+                        case ITEM_FRAME -> player.sendMessage("    Ood: " + value);
+                        case LLAMA_SPIT -> player.sendMessage("    Dalek: " + value);
+                        case SHULKER_BULLET -> player.sendMessage("    Judoon: " + value);
+                        case SMALL_FIREBALL -> player.sendMessage("    Dalek Sec: " + value);
+                        case SNOWBALL -> player.sendMessage("    Ice Warrior: " + value);
+                        case SPLASH_POTION -> player.sendMessage("    Silent: " + value);
+                        case TEXT_DISPLAY -> player.sendMessage("    Headless Monk: " + value);
+                        case THROWN_EXP_BOTTLE -> player.sendMessage("    Sea Devil: " + value);
                         default -> {
-                            if (entry.getKey() != EntityType.ARMOR_STAND) {
-                                player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                            if (ent != EntityType.ARMOR_STAND) {
+                                player.sendMessage("    " + ent + ": " + value + message);
                             }
                         }
                     }
-                }
+                });
                 scannedEntities.clear();
             } else {
                 TARDISMessage.send(player, "SCAN_NONE");

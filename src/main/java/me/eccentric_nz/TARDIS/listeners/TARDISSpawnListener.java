@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -29,9 +31,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -97,11 +96,11 @@ public class TARDISSpawnListener implements Listener {
             if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
             }
-            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le, false);
+                    DalekEquipment.set(le, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
                 }
             }

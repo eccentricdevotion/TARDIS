@@ -16,22 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.commands.bind;
 
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 class BindAdd {
 
@@ -117,15 +116,19 @@ class BindAdd {
                     set.put("name", which.toUpperCase(Locale.ENGLISH));
                 } else {
                     // check valid preset
-                    PRESET preset;
-                    try {
-                        preset = PRESET.valueOf(which.toUpperCase(Locale.ENGLISH));
-                    } catch (IllegalArgumentException e) {
-                        // abort
-                        TARDISMessage.send(player, "ARG_PRESET");
-                        return true;
+                    ChameleonPreset preset;
+                    if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(which)) {
+                        set.put("name", "ITEM:" + which);
+                    } else {
+                        try {
+                            preset = ChameleonPreset.valueOf(which.toUpperCase(Locale.ENGLISH));
+                        } catch (IllegalArgumentException e) {
+                            // abort
+                            TARDISMessage.send(player, "ARG_PRESET");
+                            return true;
+                        }
+                        set.put("name", preset.toString());
                     }
-                    set.put("name", preset.toString());
                 }
                 set.put("type", 5);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);

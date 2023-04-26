@@ -16,21 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the TARDIS itself.
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... everything about the construction of the TARDIS itself.
  *
  * @author eccentric_nz
  */
@@ -48,13 +47,17 @@ public class ResultSetTardis {
     private Tardis tardis;
 
     /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the tardis table.
      *
-     * @param plugin    an instance of the main class.
-     * @param where     a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
-     * @param limit     an SQL LIMIT statement
-     * @param multiple  a boolean indicating whether multiple rows should be fetched
-     * @param abandoned whether to select TARDISes that are abandoned (1) or not (0)
+     * @param plugin an instance of the main class.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values
+     * to refine the search.
+     * @param limit an SQL LIMIT statement
+     * @param multiple a boolean indicating whether multiple rows should be
+     * fetched
+     * @param abandoned whether to select TARDISes that are abandoned (1) or not
+     * (0)
      */
     public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
         this.plugin = plugin;
@@ -66,8 +69,9 @@ public class ResultSetTardis {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the tardis table. This method builds an
+     * SQL query string from the parameters supplied and then executes the
+     * query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -124,17 +128,31 @@ public class ResultSetTardis {
                     if (!rs.wasNull() && !rotor.isEmpty()) {
                         frame = UUID.fromString(rotor);
                     }
-                    PRESET preset;
-                    PRESET demat;
+                    ChameleonPreset preset;
+                    ChameleonPreset demat;
+                    String itemPreset = "";
+                    String itemDemat = "";
                     try {
-                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                        String p = rs.getString("chameleon_preset");
+                        if (p.startsWith("ITEM:")) {
+                            preset = ChameleonPreset.ITEM;
+                            itemPreset = p.split(":")[1];
+                        } else {
+                            preset = ChameleonPreset.valueOf(p);
+                        }
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                     try {
-                        demat = PRESET.valueOf(rs.getString("chameleon_demat"));
+                        String d = rs.getString("chameleon_demat");
+                        if (d.startsWith("ITEM:")) {
+                            demat = ChameleonPreset.ITEM;
+                            itemPreset = d.split(":")[1];
+                        } else {
+                            demat = ChameleonPreset.valueOf(d);
+                        }
                     } catch (IllegalArgumentException e) {
-                        demat = PRESET.FACTORY;
+                        demat = ChameleonPreset.FACTORY;
                     }
                     tardis = new Tardis(
                             rs.getInt("tardis_id"),
@@ -148,6 +166,8 @@ public class ResultSetTardis {
                             companions,
                             preset,
                             demat,
+                            itemPreset,
+                            itemDemat,
                             rs.getInt("adapti_on"),
                             rs.getInt("artron_level"),
                             rs.getString("creeper"),

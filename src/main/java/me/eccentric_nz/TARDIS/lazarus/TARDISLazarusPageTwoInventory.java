@@ -125,7 +125,7 @@ class TARDISLazarusPageTwoInventory {
         page.setItemMeta(one);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
-        if (plugin.checkTWA()) {
+        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             ItemStack weep = new ItemStack(Material.BOWL, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("TARDIS Monsters");

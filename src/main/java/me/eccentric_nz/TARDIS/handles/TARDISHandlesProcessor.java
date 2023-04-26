@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -146,7 +147,7 @@ public class TARDISHandlesProcessor {
                             case LIGHTS -> {
                                 boolean onoff = next.equals(TARDISHandlesBlock.ON);
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().hasLanterns());
+                                    new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().getLights());
                                 }
                             }
                             case POWER -> {
@@ -154,14 +155,14 @@ public class TARDISHandlesProcessor {
                                     case ON -> {
                                         if (!tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }
                                     case OFF -> {
                                         if (tardis.isPowered_on()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }
@@ -365,7 +366,7 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 TARDISMessage.handlesSend(player, "BIOME_SEARCH");
 //                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                                Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
+                                                Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                                 if (nsob == null) {
                                                     TARDISMessage.handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;

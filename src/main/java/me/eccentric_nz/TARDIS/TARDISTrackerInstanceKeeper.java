@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.gson.JsonObject;
+import java.util.*;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -39,8 +40,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-
-import java.util.*;
 
 /**
  * A central repository used to store various data values required to track what Time lords and TARDIS are doing

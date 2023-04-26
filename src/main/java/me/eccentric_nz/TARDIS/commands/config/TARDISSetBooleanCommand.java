@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;

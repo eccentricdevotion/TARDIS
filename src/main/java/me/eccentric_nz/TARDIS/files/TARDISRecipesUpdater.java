@@ -492,6 +492,23 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Engine.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.Time Rotor Delta")) {
+            // rotor delta
+            recipes_config.set("shaped.Time Rotor Delta.easy_shape", "BRB,GWG,GRG");
+            recipes_config.set("shaped.Time Rotor Delta.easy_ingredients.B", "PURPLE_DYE");
+            recipes_config.set("shaped.Time Rotor Delta.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Time Rotor Delta.easy_ingredients.W", "CLOCK");
+            recipes_config.set("shaped.Time Rotor Delta.easy_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.Time Rotor Delta.hard_shape", "CRC,GWG,GRG");
+            recipes_config.set("shaped.Time Rotor Delta.hard_ingredients.B", "PURPLE_DYE");
+            recipes_config.set("shaped.Time Rotor Delta.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Time Rotor Delta.hard_ingredients.W", "CLOCK");
+            recipes_config.set("shaped.Time Rotor Delta.hard_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.Time Rotor Delta.result", "LIGHT_GRAY_DYE");
+            recipes_config.set("shaped.Time Rotor Delta.amount", 1);
+            recipes_config.set("shaped.Time Rotor Delta.lore", "");
+            i++;
+        }
         if (recipes_config.getString("shaped.Time Rotor Tenth.easy_ingredients.C").equals("GRAY_DYE")) {
             recipes_config.set("shaped.Time Rotor Tenth.easy_ingredients.C", "CYAN_DYE");
             recipes_config.set("shaped.Time Rotor Tenth.hard_ingredients.C", "CYAN_DYE");

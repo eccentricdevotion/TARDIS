@@ -18,15 +18,17 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellInventory;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellRoomConstructor;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -49,7 +51,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,6 +86,7 @@ public class TARDISControlListener implements Listener {
         validBlocks.add(Material.DISPENSER);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.MUSHROOM_STEM);
+        validBlocks.add(Material.BARRIER); // new Item Display custom blocks
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
@@ -133,7 +135,7 @@ public class TARDISControlListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        if (tardis.getPreset().equals(PRESET.JUNK)) {
+                        if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                             return;
                         }
                         // check they initialised
@@ -278,7 +280,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 case 12 -> // Control room light switch
-                                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                                 case 13 -> // TIS
                                         new TARDISInfoMenuButton(plugin, player).clickButton();
                                 case 14 -> { // Disk Storage
@@ -350,10 +352,10 @@ public class TARDISControlListener implements Listener {
                                     Inventory inv = plugin.getServer().createInventory(player, 54, Storage.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
-                                    // update note block if it's not MUSHROOM_STEM
-                                    if (blockType.equals(Material.NOTE_BLOCK)) {
-                                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
-                                        block.setBlockData(mushroom, true);
+                                    // update note block if it's not BARRIER + Item Display
+                                    if (blockType.equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                                        block.setBlockData(TARDISConstants.BARRIER, true);
+                                        TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
                                     }
                                 }
                                 case 16 -> // enter zero room

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
@@ -26,9 +28,6 @@ import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -50,7 +49,7 @@ public class TARDISZeroRoomBuilder {
         int slot = tips;
         if (tips == -1) {
             slot = tintpos.getFreeSlot();
-            // uodate TARDIS table with new slot number
+            // update TARDIS table with new slot number
             HashMap<String, Object> set = new HashMap<>();
             set.put("tips", slot);
             HashMap<String, Object> where = new HashMap<>();

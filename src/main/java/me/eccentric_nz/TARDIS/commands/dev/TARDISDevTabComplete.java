@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -31,33 +32,53 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
-    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem", "frame");
+    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
+    private final ImmutableList<String> FRAME_SUBS = ImmutableList.of("lock", "unlock");
+    private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break", "convert");
+    private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
+        for (TARDISDisplayItem d : TARDISDisplayItem.values()) {
+            STONE_SUBS.add(d.getName());
+        }
     }
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
-        if (args.length == 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            String sub = args[0];
-            if (sub.equals("list")) {
-                return partial(lastArg, LIST_SUBS);
+        switch (args.length) {
+            case 1 -> {
+                return partial(args[0], ROOT_SUBS);
             }
-            if (sub.equals("tree")) {
-                return partial(lastArg, MAT_SUBS);
+            case 2 -> {
+                String sub = args[0];
+                if (sub.equals("list")) {
+                    return partial(lastArg, LIST_SUBS);
+                }
+                if (sub.equals("tree")) {
+                    return partial(lastArg, MAT_SUBS);
+                }
+                if (sub.equals("snapshot")) {
+                    return partial(lastArg, SNAPSHOT_SUBS);
+                }
+                if (sub.equals("displayitem")) {
+                    return partial(lastArg, DISPLAY_SUBS);
+                }
+                if (sub.equals("frame")) {
+                    return partial(lastArg, FRAME_SUBS);
+                }
             }
-            if (sub.equals("snapshot")) {
-                return partial(lastArg, SNAPSHOT_SUBS);
+            default -> {
+                if (args[1].equals("place")) {
+                    return partial(lastArg, STONE_SUBS);
+                } else {
+                    return partial(lastArg, MAT_SUBS);
+                }
             }
-        } else if (args.length > 2) {
-            return partial(lastArg, MAT_SUBS);
         }
         return ImmutableList.of();
     }

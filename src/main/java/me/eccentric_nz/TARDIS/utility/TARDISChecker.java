@@ -16,18 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-
-import java.io.*;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -38,68 +36,6 @@ public class TARDISChecker {
 
     public TARDISChecker(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    public static boolean hasDimension(String dimension) {
-        boolean exists = true;
-        File container = TARDIS.plugin.getServer().getWorldContainer();
-        String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
-        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
-        // check if directories exist
-        String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
-        File dimensionDir = new File(dimensionRoot + "dimension");
-        File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
-        File worldGenDir = new File(dimensionRoot + "worldgen");
-        if (!dimensionDir.exists()) {
-            dimensionDir.mkdirs();
-        }
-        if (!dimensionTypeDir.exists()) {
-            dimensionTypeDir.mkdirs();
-        }
-        if (worldGenDir.exists()) {
-            deleteDirectoryAndContents(worldGenDir.toPath());
-        }
-        // copy files to directory
-        File dimFile = new File(dimensionDir, dimension + ".json");
-        if (!dimFile.exists()) {
-            exists = false;
-            TARDISChecker.copy(dimension + "_d.json", dimFile);
-        }
-        File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
-        if (!dimTypeFile.exists()) {
-            exists = false;
-            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
-        }
-        String dataPacksMeta = dataPacksRoot + dimension;
-        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
-        if (!mcmeta.exists()) {
-            exists = false;
-            copy("pack_" + dimension + ".mcmeta", mcmeta);
-        }
-        return exists;
-    }
-
-    public static void updateDimension(String dimension) {
-        File container = TARDIS.plugin.getServer().getWorldContainer();
-        String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
-        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
-        // check if directories exist
-        String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
-        File dimensionDir = new File(dimensionRoot + "dimension");
-        File worldGenDir = new File(dimensionRoot + "worldgen");
-        if (worldGenDir.exists()) {
-            deleteDirectoryAndContents(worldGenDir.toPath());
-        }
-        if (dimensionDir.exists()) {
-            File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
-            // overwrite files
-            File dimFile = new File(dimensionDir, dimension + ".json");
-            TARDISChecker.copy(dimension + "_d.json", dimFile);
-            File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
-            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
-            File metaFile = new File(dataPacksRoot + dimension, "pack.mcmeta");
-            TARDISChecker.copy("pack_" + dimension + ".mcmeta", metaFile);
-        }
     }
 
     public static void copy(String filename, File file) {
@@ -135,26 +71,6 @@ public class TARDISChecker {
         }
     }
 
-    private static void deleteDirectoryAndContents(Path path) {
-        try {
-            Files.walkFileTree(path, new SimpleFileVisitor<>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file);
-                    return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    Files.delete(dir);
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException e) {
-            TARDIS.plugin.debug("Could not delete datapack worldgen directory! " + e.getMessage());
-        }
-    }
-
     public void checkAdvancements() {
         // get server's main world folder
         // is there a worlds container?
@@ -182,6 +98,36 @@ public class TARDISChecker {
             Bukkit.getLogger().log(Level.INFO, ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
             Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
+        } else {
+            // update the format - 12 is the latest for 1.19.4
+            // it's a json file, so load it and check the value
+            Gson gson = new GsonBuilder().create();
+            try {
+                // convert JSON file to map
+                Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
+                // loop map entries
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
+                        for (Map.Entry<?, ?> data : values.entrySet()) {
+                            if (data.getKey().equals("pack_format")) {
+                                Double d = (Double) data.getValue();
+                                if (d < 12.0D) {
+                                    Map<String, Map<String, Object>> mcmap = new HashMap<>();
+                                    Map<String, Object> pack = new HashMap<>();
+                                    pack.put("description", "Data pack for the TARDIS plugin");
+                                    pack.put("pack_format", 12);
+                                    mcmap.put("pack", pack);
+                                    FileWriter writer = new FileWriter(mcmeta);
+                                    gson.toJson(mcmap, writer);
+                                    writer.close();
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (IOException e) {
+
+            }
         }
     }
 }

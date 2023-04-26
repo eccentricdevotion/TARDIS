@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -49,7 +49,7 @@ public class TARDISRemoteRebuildCommand {
             return true;
         }
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
+        if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }

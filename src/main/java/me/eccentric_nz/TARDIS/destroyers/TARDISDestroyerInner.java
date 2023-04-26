@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.World;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Destroys the inner TARDIS.
@@ -64,7 +63,7 @@ public class TARDISDestroyerInner {
         } else {
             coords = tips.getTIPSData(slot);
         }
-        tips.reclaimChunks(w, id);
+        tips.reclaimChunks(w, id, schematic);
         wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         HashMap<String, Object> where = new HashMap<>();

@@ -43,7 +43,8 @@ public class Converter implements Runnable {
      * @param plugin an instance of the TARDIS JavaPlugin class
      * @param sender the player using the /tadmin convert_database command
      * @throws SQLException if their is an SQL error
-     **/
+     *
+     */
     public Converter(TARDIS plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
         this.sender = sender;
@@ -88,6 +89,7 @@ public class Converter implements Runnable {
                             String str;
                             try {
                                 switch (table) {
+                                    // tardis
                                     case achievements -> {
                                         String player = rs.getString("player");
                                         if (rs.wasNull()) {
@@ -138,6 +140,10 @@ public class Converter implements Runnable {
                                     }
                                     case chameleon -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
+                                        sb.append(str);
+                                    }
+                                    case colour -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("colour_id"), rs.getInt("tardis_id"), rs.getInt("red"), rs.getInt("green"), rs.getInt("blue")) + end;
                                         sb.append(str);
                                     }
                                     case chunks -> {
@@ -205,7 +211,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case player_prefs -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getString("auto_type"), rs.getString("auto_default"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("close_gui_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("throttle"), rs.getInt("difficulty"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getString("hum")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getString("auto_type"), rs.getString("auto_default"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("close_gui_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getString("lights"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("throttle"), rs.getInt("difficulty"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getString("hum")) + end;
                                         sb.append(str);
                                     }
                                     case portals -> {
@@ -286,6 +292,28 @@ public class Converter implements Runnable {
                                     }
                                     case vortex -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getInt("task")) + end;
+                                        sb.append(str);
+                                    }
+                                    // shop
+                                    case items -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("item_id"), rs.getString("item"), rs.getString("location"), rs.getFloat("cost")) + end;
+                                        sb.append(str);
+                                    }
+                                    // vortex manipulator
+                                    case beacons -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("beacon_id"), rs.getString("uuid"), rs.getString("location"), rs.getString("block_data")) + end;
+                                        sb.append(str);
+                                    }
+                                    case manipulator -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getInt("tachyon_level")) + end;
+                                        sb.append(str);
+                                    }
+                                    case messages -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("message_id"), rs.getString("uuid_to"), rs.getString("uuid_from"), rs.getString("message"), rs.getString("date"), rs.getInt("read")) + end;
+                                        sb.append(str);
+                                    }
+                                    case saves -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("save_id"), rs.getString("uuid"), rs.getString("save_name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch")) + end;
                                         sb.append(str);
                                     }
                                     default -> {

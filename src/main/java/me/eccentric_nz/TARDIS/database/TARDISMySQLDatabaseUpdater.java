@@ -89,7 +89,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum varchar(24) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'ENGLISH'");
-        prefsupdates.add("lanterns_on int(1) DEFAULT '0'");
+        prefsupdates.add("lights varchar(32) DEFAULT 'TENTH'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
         prefsupdates.add("siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA'");
@@ -97,7 +97,6 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("sign_on int(1) DEFAULT '1'");
         prefsupdates.add("telepathy_on int(1) DEFAULT '0'");
         prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
-        prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
         destsupdates.add("preset varchar(32) DEFAULT ''");
         destsupdates.add("slot int(1) DEFAULT '-1'");

@@ -16,10 +16,16 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -31,13 +37,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Keeps instances of various classes, maps and lists for easy access in other classes.
@@ -112,6 +111,12 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<BlockFace> getFaces() {
         return faces;
+    }
+
+    public List<BlockFace> getShuffledFaces() {
+        List<BlockFace> shuffled = new ArrayList<>(faces);
+        Collections.shuffle(shuffled);
+        return shuffled;
     }
 
     public List<BlockFace> getBlockFaces() {
@@ -326,7 +331,7 @@ public class TARDISGeneralInstanceKeeper {
 
     private HashMap<String, String> buildSignLookup() {
         HashMap<String, String> lookup = new HashMap<>();
-        for (PRESET p : PRESET.values()) {
+        for (ChameleonPreset p : ChameleonPreset.values()) {
             if (!p.getFirstLine().isEmpty() && !lookup.containsKey(p.getFirstLine())) {
                 lookup.put(p.getFirstLine(), p.getSecondLine());
             }

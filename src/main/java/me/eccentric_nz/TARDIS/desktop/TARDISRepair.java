@@ -18,10 +18,6 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -41,6 +37,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -293,10 +293,8 @@ public class TARDISRepair {
                     }
                 }
             } else {
-                String directory = (tardis.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + perm + ".tschm";
                 // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
+                obj = TARDISSchematicGZip.getObject(plugin, "consoles", tardis.getSchematic().getPermission(), tardis.getSchematic().isCustom());
             }
         }
         return obj;

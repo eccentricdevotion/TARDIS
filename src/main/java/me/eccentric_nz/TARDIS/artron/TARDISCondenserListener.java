@@ -334,7 +334,7 @@ public class TARDISCondenserListener implements Listener {
     }
 
     private boolean isBlueprint(ItemStack is) {
-        if (!plugin.getConfig().getBoolean("blueprints.enabled")) {
+        if (!plugin.getConfig().getBoolean("modules.blueprints")) {
             return false;
         }
         if (is.hasItemMeta()) {

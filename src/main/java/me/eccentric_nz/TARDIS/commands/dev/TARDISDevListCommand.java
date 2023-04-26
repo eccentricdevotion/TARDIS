@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -39,6 +41,7 @@ class TARDISDevListCommand {
                 || args[1].equalsIgnoreCase("blueprints")
                 || args[1].equalsIgnoreCase("commands")
                 || args[1].equalsIgnoreCase("block_colours")
+                || args[1].equalsIgnoreCase("change")
             )
         ) {
             if (args[1].equalsIgnoreCase("perms")) {
@@ -63,6 +66,11 @@ class TARDISDevListCommand {
                 return true;
             } else if (args[1].equalsIgnoreCase("block_colours")) {
                 plugin.getTardisHelper().listBlockColours();
+                return true;
+            } else if (args[1].equalsIgnoreCase("change")) {
+                for (Material m : TARDISConstants.CHAMELEON_BLOCKS_CHANGE) {
+                    TARDISConstants.changeToMaterial(m);
+                }
                 return true;
             } else {
                 // preset permissions

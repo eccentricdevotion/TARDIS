@@ -21,8 +21,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -43,19 +45,19 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
 
-import java.io.File;
 import java.util.*;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
- * has substantially modified/rebuilt it.
+ * The TARDIS was prone to a number of technical faults, ranging from depleted
+ * resources to malfunctioning controls to a simple inability to arrive at the
+ * proper time or location. While the Doctor did not build the TARDIS from
+ * scratch, he has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
  */
@@ -75,7 +77,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
@@ -112,18 +114,23 @@ public class TARDISBuilderInner implements Runnable {
      * Builds the inside of the TARDIS.
      *
      * @param plugin     an instance of the main TARDIS plugin class
-     * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BUDGET, CORAL, CUSTOM, DELTA,
-     *                   DELUXE, DIVISION, ELEVENTH, ENDER, MASTER, ORIGINAL, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH,
-     *                   TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BUDGET, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     * @param schm       the name of the schematic file to use can be ANCIENT, ARS,
+     *                   BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
+     *                   ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
+     *                   PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
+     *                   WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
      *                   LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.
      * @param player     an instance of the player who owns the TARDIS.
-     * @param wall_type  a material type determined from the TARDIS seed block, or the middle block in the TARDIS
-     *                   creation stack, this material determines the makeup of the TARDIS walls.
-     * @param floor_type a material type determined from the TARDIS seed block, or 35 (if TARDIS was made via the
-     *                   creation stack), this material determines the makeup of the TARDIS floors.
-     * @param tips       an int determining where this TARDIS will be built ---- -1:own world, > 0:default world ----
+     * @param wall_type  a material type determined from the TARDIS seed block,
+     *                   or the middle block in the TARDIS creation stack, this material
+     *                   determines the makeup of the TARDIS walls.
+     * @param floor_type a material type determined from the TARDIS seed block,
+     *                   or 35 (if TARDIS was made via the creation stack), this material
+     *                   determines the makeup of the TARDIS floors.
+     * @param tips       an int determining where this TARDIS will be built ----
+     *                   -1:own world, > 0:default world ----
      */
     public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, int tips) {
         this.plugin = plugin;
@@ -152,83 +159,78 @@ public class TARDISBuilderInner implements Runnable {
             } else {
                 starty = 64;
             }
-            String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
-                return;
-            }
             // get JSON
-            obj = TARDISSchematicGZip.unzip(path);
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            h = dimensions.get("height").getAsInt() - 1;
-            w = dimensions.get("width").getAsInt();
-            d = dimensions.get("length").getAsInt() - 1;
-            div = (h + 1.0d) * w * (d + 1.0d);
-            playerUUID = player.getUniqueId().toString();
-            // calculate startx, starty, startz
-            if (tips > -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                if (tips == -999) {
-                    pos = tintpos.getTIPSJunkData();
+            obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+            if (obj != null) {
+                // get dimensions
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                h = dimensions.get("height").getAsInt() - 1;
+                w = dimensions.get("width").getAsInt();
+                d = dimensions.get("length").getAsInt() - 1;
+                div = (h + 1.0d) * w * (d + 1.0d);
+                playerUUID = player.getUniqueId().toString();
+                // calculate startx, starty, startz
+                if (tips > -1000001) { // default world - use TIPS
+                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                    if (tips == -999) {
+                        pos = tintpos.getTIPSJunkData();
+                    } else {
+                        pos = tintpos.getTIPSData(tips);
+                    }
+                    startx = pos.getCentreX();
+                    resetx = pos.getCentreX();
+                    startz = pos.getCentreZ();
+                    resetz = pos.getCentreZ();
+                    // get the correct chunk for ARS
+                    Location cl = new Location(world, startx, starty, startz);
+                    Chunk c = world.getChunkAt(cl);
+                    while (!c.isLoaded()) {
+                        c.load(true);
+                    }
+                    String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
+                    set.put("chunk", chun);
+                    if (schm.getPermission().equals("junk")) {
+                        set.put("creeper", cl.toString());
+                    }
                 } else {
-                    pos = tintpos.getTIPSData(tips);
+                    int[] gsl = plugin.getLocationUtils().getStartLocation(dbID);
+                    startx = gsl[0];
+                    resetx = gsl[1];
+                    startz = gsl[2];
+                    resetz = gsl[3];
                 }
-                startx = pos.getCentreX();
-                resetx = pos.getCentreX();
-                startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
-                // get the correct chunk for ARS
-                Location cl = new Location(world, startx, starty, startz);
-                Chunk c = world.getChunkAt(cl);
-                while (!c.isLoaded()) {
-                    c.load(true);
+                wg1 = new Location(world, startx, starty, startz);
+                wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (d - 1));
+                // get list of used chunks
+                chunkList = TARDISChunkUtils.getConsoleChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
+                // update chunks list in DB
+                chunkList.forEach((c) -> {
+                    while (!c.isLoaded()) {
+                        c.load(true);
+                    }
+                    HashMap<String, Object> setc = new HashMap<>();
+                    setc.put("tardis_id", dbID);
+                    setc.put("world", world.getName());
+                    setc.put("x", c.getX());
+                    setc.put("z", c.getZ());
+                    plugin.getQueryFactory().doInsert("chunks", setc);
+                });
+                where.put("tardis_id", dbID);
+                // determine 'use_clay' material
+                try {
+                    use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
+                } catch (IllegalArgumentException e) {
+                    use_clay = UseClay.WOOL;
                 }
-                String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
-                set.put("chunk", chun);
-                if (schm.getPermission().equals("junk")) {
-                    set.put("creeper", cl.toString());
-                }
-            } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(dbID);
-                startx = gsl[0];
-                resetx = gsl[1];
-                startz = gsl[2];
-                resetz = gsl[3];
+                // get input array
+                arr = obj.get("input").getAsJsonArray();
+                // start progress bar
+                bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+                bb.setProgress(0);
+                bb.addPlayer(player);
+                bb.setVisible(true);
+                running = true;
             }
-            wg1 = new Location(world, startx, starty, startz);
-            wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (d - 1));
-            // get list of used chunks
-            chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
-            // update chunks list in DB
-            chunkList.forEach((c) -> {
-                while (!c.isLoaded()) {
-                    c.load(true);
-                }
-                HashMap<String, Object> setc = new HashMap<>();
-                setc.put("tardis_id", dbID);
-                setc.put("world", world.getName());
-                setc.put("x", c.getX());
-                setc.put("z", c.getZ());
-                plugin.getQueryFactory().doInsert("chunks", setc);
-            });
-            where.put("tardis_id", dbID);
-            // determine 'use_clay' material
-            try {
-                use_clay = UseClay.valueOf(plugin.getConfig().getString("creation.use_clay"));
-            } catch (IllegalArgumentException e) {
-                use_clay = UseClay.WOOL;
-            }
-            // get input array
-            arr = obj.get("input").getAsJsonArray();
-            // start progress bar
-            bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
-            bb.setProgress(0);
-            bb.addPlayer(player);
-            bb.setVisible(true);
-            running = true;
         }
         if (level == h && row == w - 1) {
             // put on the door, redstone torches, signs, and the repeaters
@@ -250,21 +252,29 @@ public class TARDISBuilderInner implements Runnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
-            int s = 0;
-            for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
+            for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
-                psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak sign
-                if (s == 0 && (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN) || (schm.getPermission().equals("cave") && entry.getValue().getMaterial().equals(Material.OAK_SIGN)))) {
-                    Sign cs = (Sign) psb.getState();
-                    cs.setLine(0, "");
-                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                    cs.setLine(3, "");
-                    cs.update();
-                    String controlloc = psb.getLocation().toString();
-                    plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
-                    s++;
+                JsonObject signObject = entry.getValue();
+                BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
+                psb.setBlockData(signData);
+                JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
+                if (text != null) {
+                    Sign signState = (Sign) psb.getState();
+                    String line1 = text.get("line1").getAsString();
+                    // save the control centre sign
+                    if (line1.equals("Control")) {
+                        String controlLocation = psb.getLocation().toString();
+                        plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
+                    }
+                    signState.setLine(0, text.get("line0").getAsString());
+                    signState.setLine(1, line1);
+                    signState.setLine(2, text.get("line2").getAsString());
+                    signState.setLine(3, text.get("line3").getAsString());
+                    signState.setGlowingText(text.get("glowing").getAsBoolean());
+                    DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
+                    signState.setColor(colour);
+                    signState.setEditable(text.get("editable").getAsBoolean());
+                    signState.update();
                 }
             }
             for (Map.Entry<Block, BlockData> carpet : postCarpetBlocks.entrySet()) {
@@ -279,20 +289,13 @@ public class TARDISBuilderInner implements Runnable {
                 TARDISFollowerSpawner spawner = new TARDISFollowerSpawner(plugin);
                 spawner.spawnDivisionOod(postOod);
             }
-            lampBlocks.forEach((lamp) -> {
-                BlockData lantern;
-                if (schm.hasLanterns()) {
-                    lantern = TARDISConstants.LANTERN;
-                } else {
-                    lantern = TARDISConstants.LAMP;
-                    ((Lightable) lantern).setLit(true);
-                }
-                lamp.setBlockData(lantern);
-            });
+            lampBlocks.forEach((lamp) -> TARDISDisplayItemUtils.set(schm.getLights().getOn(), lamp));
             lampBlocks.clear();
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
-                    block.setBlockData(TARDISConstants.LIGHT_DIV);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(15);
+                    block.setBlockData(levelled);
                 }
             });
             if (schm.getPermission().equals("cave")) {
@@ -334,11 +337,11 @@ public class TARDISBuilderInner implements Runnable {
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1);
+                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, dbID);
                 }
             }
             // reset mushroom stem blocks
-            if (postMushroomBlocks.size() > 0) {
+            if (!postMushroomBlocks.isEmpty()) {
                 TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 400L, 1L);
                 runnable.setTask(taskID);
@@ -394,8 +397,10 @@ public class TARDISBuilderInner implements Runnable {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
-                // set block data to correct MUSHROOM_STEM
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                // set block data to BARRIER
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
             }
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
@@ -405,8 +410,9 @@ public class TARDISBuilderInner implements Runnable {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
                                 default -> {
-                                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
-                                    postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
+                                    data = TARDISConstants.BARRIER;
+                                    // spawn an item display entity
+                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
                                 }
                             }
                         } else {
@@ -440,8 +446,9 @@ public class TARDISBuilderInner implements Runnable {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
                             default -> {
-                                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
-                                postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
+                                data = TARDISConstants.BARRIER;
+                                // spawn an item display entity
+                                TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
                             }
                         }
                     }
@@ -466,18 +473,20 @@ public class TARDISBuilderInner implements Runnable {
             if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && schm.getPermission().equals("division")) {
                 // replace with gray concrete
                 data = Material.GRAY_CONCRETE.createBlockData();
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     // remember the block to spawn an Ood on
                     postOod = new Location(world, x, y + 1, z);
                 }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
-                postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
-                postMushroomBlocks.add(new MushroomBlock(world.getBlockAt(x, y, z), data));
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }
             if (type.equals(Material.SPAWNER)) { // scanner button
                 /*
@@ -519,8 +528,10 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, dbID);
-                // set block data to correct MUSHROOM_STEM
-                data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                // set block data to correct BARRIER + Item Display
+                data = TARDISConstants.BARRIER;
+                // spawn an item display entity
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
             }
             if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                 /*
@@ -612,15 +623,12 @@ public class TARDISBuilderInner implements Runnable {
                 String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeploc);
                 if (type.equals(Material.COMMAND_BLOCK)) {
-                    if (schm.getPermission().equals("ender")) {
-                        data = Material.END_STONE_BRICKS.createBlockData();
-                    } else if (schm.getPermission().equals("delta")) {
-                        data = Material.BLACKSTONE.createBlockData();
-                    } else if (schm.getPermission().equals("ancient") || schm.getPermission().equals("fugitive")) {
-                        data = Material.GRAY_WOOL.createBlockData();
-                    } else {
-                        data = Material.STONE_BRICKS.createBlockData();
-                    }
+                    data = switch (schm.getPermission()) {
+                        case "ender" -> Material.END_STONE_BRICKS.createBlockData();
+                        case "delta" -> Material.BLACKSTONE.createBlockData();
+                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        default -> Material.STONE_BRICKS.createBlockData();
+                    };
                 }
             }
             if (Tag.WOODEN_BUTTONS.isTagged(type) && !schm.getPermission().equals("junk")) {
@@ -655,16 +663,10 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
             }
-            // if it's the door, don't set it just remember its block then do it at the end
-            if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
-                /*
-                 * spawn an item frame and place the time rotor in it
-                 */
-                TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
-            } else if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+            if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (type.equals(Material.IRON_DOOR)) { // doors
+                // if it's the door, don't set it just remember its block then do it at the end
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
                 postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
@@ -679,7 +681,7 @@ public class TARDISBuilderInner implements Runnable {
             } else if (type.equals(Material.LEVER)) {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (Tag.SIGNS.isTagged(type)) {
-                postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                postSignBlocks.put(world.getBlockAt(x, y, z), c);
             } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.GLOW_LICHEN)) {
@@ -717,26 +719,22 @@ public class TARDISBuilderInner implements Runnable {
                     switch (j) {
                         case 2 -> {
                             directional.setFacing(BlockFace.WEST);
-                            data = directional;
-                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), directional);
                             plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
                         }
                         case 3 -> {
                             directional.setFacing(BlockFace.NORTH);
-                            data = directional;
-                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), directional);
                             plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
                         }
                         case 4 -> {
                             directional.setFacing(BlockFace.SOUTH);
-                            data = directional;
-                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), directional);
                             plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
                         }
                         default -> {
                             directional.setFacing(BlockFace.EAST);
-                            data = directional;
-                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                            postRepeaterBlocks.put(world.getBlockAt(x, y, z), directional);
                             plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
                         }
                     }

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
@@ -23,7 +26,7 @@ import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -50,14 +53,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
- * During TARDIS operation, a distinctive grinding and whirring sound is usually heard. River Song once demonstrated a
- * TARDIS was capable of materialising silently, teasing the Doctor that the noise was actually caused by him leaving
- * the brakes on.
+ * During TARDIS operation, a distinctive grinding and whirring sound is usually
+ * heard. River Song once demonstrated a TARDIS was capable of materialising
+ * silently, teasing the Doctor that the noise was actually caused by him
+ * leaving the brakes on.
  *
  * @author eccentric_nz
  */
@@ -68,8 +68,9 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
     }
 
     /**
-     * Listens for player interaction with TARDIS doors. If the door is right-clicked with the TARDIS key (configurable)
-     * it will teleport the player either into or out of the TARDIS.
+     * Listens for player interaction with TARDIS doors. If the door is
+     * right-clicked with the TARDIS key (configurable) it will teleport the
+     * player either into or out of the TARDIS.
      *
      * @param event a player clicking a block
      */
@@ -142,14 +143,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                         if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                             COMPASS dd = rsd.getDoor_direction();
                             int end_doortype = switch (doortype) {
-                                case 0 -> // outside preset door
-                                        1;
-                                case 2 -> // outside backdoor
-                                        3;
-                                case 3 -> // inside backdoor
-                                        2;
-                                default -> // 1, 4 TARDIS inside door, secondary inside door
-                                        0;
+                                case 0 -> 1;  // outside preset door
+                                case 2 -> 3;  // outside backdoor
+                                case 3 -> 2;  // inside backdoor
+                                default -> 0; // 1, 4 TARDIS inside door, secondary inside door
                             };
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
@@ -208,13 +205,14 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     // toggle the doors
                                                     if (isPoliceBox) {
                                                         new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
-                                                    } else {
-                                                        if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
-                                                            new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
-                                                        } else {
-                                                            new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
-                                                        }
                                                     }
+//                                                    else {
+                                                    if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
+                                                        new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                    } else {
+                                                        new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
+                                                    }
+//                                                    }
                                                 }
                                             } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                                 TrapDoor door_data = (TrapDoor) block.getBlockData();
@@ -250,7 +248,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     int artron = tardis.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     UUID tlUUID = tardis.getUuid();
-                                    PRESET preset = tardis.getPreset();
+                                    ChameleonPreset preset = tardis.getPreset();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = tardis.getCompanions();
@@ -423,7 +421,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 if (canPowerUp && po) {
                                                     // power up the TARDIS
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().hasLanterns()).clickButton(), 20L);
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().getLights()).clickButton(), 20L);
                                                 }
 
                                                 // put player into travellers table
@@ -446,7 +444,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 TARDISMessage.send(player, "SIEGE_NO_ENTER");
                                                 return;
                                             }
-                                            if (preset.equals(PRESET.JUNK_MODE)) {
+                                            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                                                 TARDISMessage.send(player, "JUNK_NO_ENTRY");
                                                 return;
                                             }

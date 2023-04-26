@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -59,23 +59,23 @@ class TARDISRecipesLister {
             }
             if (plugin.getConfig().getBoolean("creation.seed_block_crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
-                    int model;
+                    int model = 10001;
                     String material;
-                    if (TARDISSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {
-                        model = TARDISSeedModel.modelByMaterial(seed.getKey().getSeedMaterial());
-                        if (seed.getKey().getPermission().equals("rotor")) {
-                            material = "MUSHROOM_STEM";
-                        } else {
-                            material = "RED_MUSHROOM_BLOCK";
-                        }
+                    if (seed.getKey().isCustom()) {
+                        material = seed.getKey().getSeedMaterial().toString();
                     } else {
-                        model = 45;
-                        material = "MUSHROOM_STEM";
+                        try {
+                            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase());
+                            model = tdi.getCustomModelData();
+                            material = tdi.getMaterial().toString();
+                        } catch (IllegalArgumentException e) {
+                            material = TARDISDisplayItem.CUSTOM.getMaterial().toString();
+                        }
                     }
                     sender.sendMessage(seed.getKey().getPermission().toUpperCase() + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
                 }
             }
-            if (plugin.checkTWA()) {
+            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (Monster m : Monster.values()) {
                     sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getCustomModelData() + "),");
                 }

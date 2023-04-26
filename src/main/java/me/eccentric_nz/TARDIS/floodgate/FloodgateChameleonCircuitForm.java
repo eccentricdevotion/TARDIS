@@ -1,20 +1,13 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -27,14 +20,18 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
 public class FloodgateChameleonCircuitForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final int id;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
 
-    public FloodgateChameleonCircuitForm(TARDIS plugin, UUID uuid, int id, PRESET preset) {
+    public FloodgateChameleonCircuitForm(TARDIS plugin, UUID uuid, int id, ChameleonPreset preset) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
@@ -97,12 +94,12 @@ public class FloodgateChameleonCircuitForm {
                     updateChameleonSign(rsc.getData(), "FACTORY", player);
                 }
                 if (hasFrame) {
-                    tcf.updateChameleonFrame(PRESET.FACTORY, rsf.getLocation());
+                    tcf.updateChameleonFrame(ChameleonPreset.FACTORY, rsf.getLocation());
                 }
                 TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
             }
             case "Adaptive Biome", "Adaptive Block" -> {
-                PRESET adaptive = (preset.equals(PRESET.SUBMERGED)) ? PRESET.SUBMERGED : PRESET.FACTORY;
+                ChameleonPreset adaptive = (preset.equals(ChameleonPreset.SUBMERGED)) ? ChameleonPreset.SUBMERGED : ChameleonPreset.FACTORY;
                 if (hasFrame) {
                     tcf.updateChameleonFrame(adaptive, rsf.getLocation());
                 }
@@ -129,7 +126,7 @@ public class FloodgateChameleonCircuitForm {
                     updateChameleonSign(rsc.getData(), "INVISIBLE", player);
                 }
                 if (hasFrame) {
-                    tcf.updateChameleonFrame(PRESET.INVISIBLE, rsf.getLocation());
+                    tcf.updateChameleonFrame(ChameleonPreset.INVISIBLE, rsf.getLocation());
                 }
                 TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
             }
@@ -148,7 +145,7 @@ public class FloodgateChameleonCircuitForm {
                         Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
                         Biome biome = current.getBlock().getBiome();
                         // get which preset
-                        PRESET which = getAdaption(biome);
+                        ChameleonPreset which = getAdaption(biome);
                         if (which != null) {
                             set.put("adapti_on", 0);
                             set.put("chameleon_preset", which.toString());
@@ -185,9 +182,9 @@ public class FloodgateChameleonCircuitForm {
         return rs.resultSet() && rs.getTardis().getAdaption() == Adaption.BIOME;
     }
 
-    private PRESET getAdaption(Biome biome) {
+    private ChameleonPreset getAdaption(Biome biome) {
         try {
-            return PRESET.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
         } catch (IllegalArgumentException e) {
             return null;
         }

@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -31,11 +34,6 @@ import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -93,15 +91,11 @@ public class TARDISThemeProcessor {
                 return;
             }
         } else {
-            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            if (obj == null) {
                 return;
             }
-            // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();
@@ -128,15 +122,11 @@ public class TARDISThemeProcessor {
                 return;
             }
         } else {
-            String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+            if (obj == null) {
                 return;
             }
-            // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             ph = dimensions.get("height").getAsInt();
@@ -178,7 +168,7 @@ public class TARDISThemeProcessor {
         HashMap<String, Object> setp = new HashMap<>();
         setp.put("wall", tud.getWall());
         setp.put("floor", tud.getFloor());
-        setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
+        setp.put("lights", tud.getSchematic().getLights().toString());
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);

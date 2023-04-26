@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Shadow1013GL, Pyr0Byt3, pendo324
+ * Copyright (C) 2023 Shadow1013GL, Pyr0Byt3, pendo324
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

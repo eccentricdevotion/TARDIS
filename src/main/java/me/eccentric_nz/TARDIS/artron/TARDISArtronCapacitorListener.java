@@ -16,16 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
+import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -49,12 +53,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 
 /**
  * The Ninth Doctor used the Cardiff rift to "re-charge" his TARDIS. The process took 2 days.
@@ -116,7 +114,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            if (tardis.getPreset().equals(PRESET.JUNK)) {
+                            if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                                 return;
                             }
                             boolean abandoned = tardis.isAbandoned();
@@ -247,7 +245,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             pu = claimAbandoned(player, id, block, tardis);
                                         }
                                         if (pu) {
-                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
                                         }
                                     }
                                 }
@@ -321,12 +319,12 @@ public class TARDISArtronCapacitorListener implements Listener {
                 plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
             }
             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                PRESET preset = tardis.getPreset();
+                ChameleonPreset preset = tardis.getPreset();
                 Sign sign = getSign(current, rscl.getDirection(), preset);
                 if (sign != null) {
                     String player_name = TARDISStaticUtils.getNick(player);
                     String owner;
-                    if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                    if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
                         owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                     } else {
                         owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";

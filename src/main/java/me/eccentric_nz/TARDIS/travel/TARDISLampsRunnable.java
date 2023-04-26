@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,12 +41,11 @@ class TARDISLampsRunnable implements Runnable {
     private final BlockData light;
     private final BlockData BLACK = TARDISConstants.BLACK;
     private final BlockData MUSHROOM;
-    private final boolean use_wool;
     private final boolean lights_on;
     private int task;
     private Location handbrake_loc;
 
-    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, Material light, boolean use_wool) {
+    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, Material light) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.end = end;
@@ -55,7 +54,6 @@ class TARDISLampsRunnable implements Runnable {
             Lightable lit = (Lightable) this.light;
             lit.setLit(true);
         }
-        this.use_wool = use_wool;
         MUSHROOM = (this.light.getMaterial().equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
         lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
     }
@@ -73,11 +71,7 @@ class TARDISLampsRunnable implements Runnable {
             } else {
                 lamps.forEach((b) -> {
                     if (b.getType().equals(light.getMaterial())) {
-                        if (use_wool) {
-                            b.setBlockData(BLACK);
-                        } else {
                             b.setBlockData(MUSHROOM);
-                        }
                     }
                 });
             }
@@ -89,11 +83,7 @@ class TARDISLampsRunnable implements Runnable {
             }
             lamps.forEach((b) -> {
                 if (b.getType().equals(light.getMaterial())) {
-                    if (use_wool) {
-                        b.setBlockData(BLACK);
-                    } else {
-                        b.setBlockData(MUSHROOM);
-                    }
+                    b.setBlockData(MUSHROOM);
                 } else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
                     b.setBlockData(light);
                 }

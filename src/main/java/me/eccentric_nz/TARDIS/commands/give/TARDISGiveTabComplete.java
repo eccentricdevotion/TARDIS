@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.give;
 
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
@@ -29,11 +33,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * TabCompleter for /tardisgive
  */
@@ -44,7 +43,16 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> GIVE_KNOWLEDGE = ImmutableList.of("knowledge", "1", "2", "64");
     private final ImmutableList<String> KIT_SUBS;
     private final List<String> SEED_SUBS = new ArrayList<>();
-    private final ImmutableList<String> MUSHROOM_SUBS = ImmutableList.of("advanced_console", "ancient", "ars", "bigger", "blue_box", "blue_lamp_on", "blue_lamp", "budget", "cave", "cog", "compound", "constructor", "copper", "coral", "creative", "custom", "delta", "deluxe", "disk_storage", "division", "eleventh", "ender", "factory", "fugitive", "green_lamp_on", "green_lamp", "grow", "heat_block", "hexagon", "lab", "lamp_off", "lantern_off", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "master", "mechanical", "medium", "original", "pandorica", "plank", "product", "purple_lamp_on", "purple_lamp", "pyramid", "red_lamp_on", "red_lamp", "redstone", "reducer", "rotor", "roundel_offset", "roundel", "siege_cube", "small", "steampunk", "tall", "the_moment", "thirteenth", "tom", "twelfth", "war", "weathered");
+    private final ImmutableList<String> MUSHROOM_SUBS = ImmutableList.of(
+            "advanced_console", "ancient", "ars", "bigger", "blue_box", "blue_lamp_on", "blue_lamp", "budget", 
+            "cave", "cog", "compound", "constructor", "copper", "coral", "creative", "custom", 
+            "delta", "deluxe", "disk_storage", "division", "eleventh", "ender", "factory", 
+            "fugitive", "green_lamp_on", "green_lamp", "grow", "heat_block", "hexagon", "lab", 
+            "lamp_off", "lantern_off", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", 
+            "master", "mechanical", "medium", "original", "pandorica", "plank", "product", 
+            "purple_lamp_on", "purple_lamp", "pyramid", "red_lamp_on", "red_lamp", "redstone", 
+            "reducer", "rotor", "roundel_offset", "roundel", "siege_cube", "small", "steampunk", 
+            "tall", "the_moment", "thirteenth", "tom", "twelfth", "war", "weathered");
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISGiveTabComplete(TARDIS plugin) {

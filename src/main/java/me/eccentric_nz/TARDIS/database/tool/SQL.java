@@ -48,6 +48,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %schameleon (chameleon_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', blueprintData text, stainData text, glassData text, line1 varchar(48) DEFAULT '', line2 varchar(48) DEFAULT '', line3 varchar(48) DEFAULT '', line4 varchar(48) DEFAULT '', PRIMARY KEY (chameleon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %scolour (colour_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', red int(3) DEFAULT '0', green int(3) DEFAULT '0', blue int(3) DEFAULT '0', PRIMARY KEY (colour_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %schunks (chunk_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '0', x int(7) DEFAULT '0', z int(7) DEFAULT '0', PRIMARY KEY (chunk_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %scondenser (c_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', block_data varchar(32) DEFAULT '', block_count int(11) DEFAULT '0', PRIMARY KEY (c_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -82,7 +84,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %spaper_bag (paper_bag_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', flavour_1 varchar(12) DEFAULT '', amount_1 int(2) DEFAULT '0', flavour_2 varchar(12) DEFAULT '', amount_2 int(2) DEFAULT '0', flavour_3 varchar(12) DEFAULT '', amount_3 int(2) DEFAULT '0', flavour_4 varchar(12) DEFAULT '', amount_4 int(2) DEFAULT '0', PRIMARY KEY (paper_bag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %splayer_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA', siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA', auto_on int(1) DEFAULT '0', auto_type varchar(32) DEFAULT 'CLOSEST', auto_default varchar(12) DEFAULT 'HOME', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', hads_type varchar(12) DEFAULT 'DISPLACEMENT', build_on int(1) DEFAULT '1', close_gui_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, language varchar(32) DEFAULT 'ENGLISH', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', wool_lights_on int(1) DEFAULT '0', sign_on int(1) DEFAULT '1', telepathy_on int(1) DEFAULT '0', travelbar_on int(1) DEFAULT '0', farm_on int(1) DEFAULT '1', lanterns_on int(1) DEFAULT '0', auto_siege_on int(1) DEFAULT '0', flying_mode int(1) DEFAULT '1', throttle int(1) DEFAULT '4', difficulty int(1) DEFAULT '0', auto_powerup_on int(1) DEFAULT '0', auto_rescue_on int(1) DEFAULT '0', hum varchar(24) DEFAULT '', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %splayer_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA', siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA', auto_on int(1) DEFAULT '0', auto_type varchar(32) DEFAULT 'CLOSEST', auto_default varchar(12) DEFAULT 'HOME', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', hads_type varchar(12) DEFAULT 'DISPLACEMENT', build_on int(1) DEFAULT '1', close_gui_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, language varchar(32) DEFAULT 'ENGLISH', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', sign_on int(1) DEFAULT '1', telepathy_on int(1) DEFAULT '0', travelbar_on int(1) DEFAULT '0', farm_on int(1) DEFAULT '1', lights varchar(32) DEFAULT 'TENTH', auto_siege_on int(1) DEFAULT '0', flying_mode int(1) DEFAULT '1', throttle int(1) DEFAULT '4', difficulty int(1) DEFAULT '0', auto_powerup_on int(1) DEFAULT '0', auto_rescue_on int(1) DEFAULT '0', hum varchar(24) DEFAULT '', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sportals (portal_id int(11) NOT NULL AUTO_INCREMENT, portal varchar(512) DEFAULT '', teleport varchar(512) DEFAULT '', direction varchar(5) DEFAULT '', tardis_id int(11) DEFAULT '0', abandoned int(1) DEFAULT '0', PRIMARY KEY (portal_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -118,8 +120,19 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sthevoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            // shop
+            "CREATE TABLE IF NOT EXISTS %sitems (item_id int(11) NOT NULL AUTO_INCREMENT, item varchar(64) DEFAULT '', location varchar(512) DEFAULT '', cost float(5,1) DEFAULT 0), PRIMARY KEY (item_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            // vortex manipulator
+            "CREATE TABLE IF NOT EXISTS %sbeacons (beacon_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', block_data varchar(32) DEFAULT '', PRIMARY KEY (beacon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %smanipulator (uuid varchar(48) NOT NULL, tachyon_level int(11) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %smessages (message_id int(11) NOT NULL AUTO_INCREMENT, uuid_to varchar(48) DEFAULT '', uuid_from varchar(48) DEFAULT '', message text NULL, date bigint(20), `read` int(1) DEFAULT '0', PRIMARY KEY (message_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %ssaves (save_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', save_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float DEFAULT '0', y float DEFAULT '0', z float DEFAULT '0', yaw float DEFAULT '0', pitch float DEFAULT '0', PRIMARY KEY (save_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
     public static final List<String> VALUES = Arrays.asList(
 
@@ -144,6 +157,8 @@ public class SQL {
             "(%s, '%s', '%s')",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+
+            "(%s, %s, %s, %s, %s)",
 
             "(%s, %s, '%s', %s, %s)",
 
@@ -178,8 +193,8 @@ public class SQL {
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
 
             "(%s, '%s', '%s', %s, '%s', %s, '%s', %s, '%s', %s)",
-
-            "(%s, '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', %s, '%s', '%s', %s, %s, '%s', %s, %s, '%s', '%s', %s, '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s')",
+            // player prefs
+            "(%s, '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', %s, '%s', '%s', %s, %s, '%s', %s, %s, '%s', '%s', %s, '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, %s, '%s')",
 
             "(%s, '%s', '%s', '%s', %s, %s)",
 
@@ -215,8 +230,19 @@ public class SQL {
 
             "(%s)",
 
-            "(%s, %s)"
+            "(%s, %s)",
 
+            // shop
+            "(%s, '%s', '%s', %s)",
+
+            // vortex manipulator
+            "(%s, '%s', '%s', '%s')",
+
+            "('%s', %s)",
+
+            "(%s, '%s', '%s', '%s', '%s', %s)",
+
+            "(%s, '%s', '%s', '%s', %s, %s, %s, %s, %s)"
     );
     static final List<String> INSERTS = Arrays.asList(
 
@@ -241,6 +267,8 @@ public class SQL {
             "INSERT INTO `%sblueprint` (`bp_id`, `uuid`, `permission`) VALUES ",
 
             "INSERT INTO `%schameleon` (`chameleon_id`, `tardis_id`, `blueprintData`, `stainData`, `glassData`, `line1`, `line2`, `line3`, `line4`) VALUES ",
+
+            "INSERT INTO `%scolour` (`colour_id`, `tardis_id`, `red`, `green`, `blue`) VALUES ",
 
             "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `world`, `x`, `z`) VALUES ",
 
@@ -312,7 +340,19 @@ public class SQL {
 
             "INSERT INTO `%sthevoid` (`tardis_id`) VALUES ",
 
-            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES "
+            "INSERT INTO `%svortex` (`tardis_id`, `task`) VALUES ",
+
+            //shop
+            "INSERT INTO `%sitems` (`item_id`, `item`, `location`, `cost`) VALUES ",
+
+            // vortex manipulator
+            "INSERT INTO `%sbeacons` (`beacon_id`, `uuid`, `location`, `block_data`) VALUES ",
+
+            "INSERT INTO `%smanipulator` (`uuid`, `tachyon_level`) VALUES ",
+
+            "INSERT INTO `%smessages` (`message_id`, `uuid_to`, `uuid_from`, `message`, `date`, `read`) VALUES ",
+
+            "INSERT INTO `%ssaves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES "
 
     );
     static final String COMMENT = "--";

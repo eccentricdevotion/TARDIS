@@ -34,8 +34,8 @@ import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
-import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
@@ -48,10 +48,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.enumeration.Language;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
@@ -78,13 +75,22 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.tardischunkgenerator.worldgen.*;
+import me.eccentric_nz.tardisshop.ShopSettings;
+import me.eccentric_nz.tardisshop.TARDISShop;
+import me.eccentric_nz.tardisshop.TARDISShopDisplayConverter;
+import me.eccentric_nz.tardissonicblaster.BlasterSettings;
+import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
+import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
+import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -138,9 +144,15 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration planetsConfig;
     private FileConfiguration handlesConfig;
     private FileConfiguration adaptiveConfig;
+    private FileConfiguration generatorConfig;
+    private FileConfiguration shopConfig;
+    private FileConfiguration monstersConfig;
+    private FileConfiguration vortexConfig;
+    private FileConfiguration itemsConfig;
+    private FileConfiguration blasterConfig;
+    private FileConfiguration customModelConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
-    private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
     private TARDISPerceptionFilter filter;
@@ -166,6 +178,7 @@ public class TARDIS extends JavaPlugin {
     private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
+    private NamespacedKey destroyKey;
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
@@ -176,6 +189,9 @@ public class TARDIS extends JavaPlugin {
     private int updateNumber = 0;
     private TARDISBlockLogger blockLogger;
     private TARDISDynmap tardisDynmap;
+    private ShopSettings shopSettings;
+    private TVMSettings tvmSettings;
+    private BlasterSettings blasterSettings;
 
     /**
      * Constructor
@@ -187,10 +203,32 @@ public class TARDIS extends JavaPlugin {
         versions.put("LibsDisguises", "10.0.26");
         versions.put("Multiverse-Core", "4.0");
         versions.put("Multiverse-Inventories", "4.0");
-        versions.put("TARDISChunkGenerator", "4.14.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.8");
+    }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        if (id != null) {
+            if (id.equalsIgnoreCase("flat")) {
+                return new FlatGenerator(this);
+            }
+            if (id.equalsIgnoreCase("water")) {
+                return new WaterGenerator();
+            }
+            if (id.equalsIgnoreCase("gallifrey")) {
+                return new GallifreyGenerator(this);
+            }
+            if (id.equalsIgnoreCase("siluria")) {
+                return new SiluriaGenerator(this);
+            }
+            if (id.equalsIgnoreCase("skaro")) {
+                return new SkaroGenerator(this);
+            }
+            return new TARDISChunkGenerator();
+        }
+        return new TARDISChunkGenerator();
     }
 
     private ModuleDescriptor.Version getServerVersion(String s) {
@@ -219,9 +257,7 @@ public class TARDIS extends JavaPlugin {
             String[] split = preSplit.split("-");
             try {
                 ModuleDescriptor.Version version;
-                if (plg.equals("TARDISChunkGenerator") && preSplit.startsWith("1")) {
-                    version = ModuleDescriptor.Version.parse("1");
-                } else if (plg.equals("WorldGuard") && preSplit.contains(";")) {
+                if (plg.equals("WorldGuard") && preSplit.contains(";")) {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
                     version = ModuleDescriptor.Version.parse(semi[0]);
@@ -296,10 +332,10 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onEnable() {
         pm = getServer().getPluginManager();
-        pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
+        destroyKey = new NamespacedKey(this, "destroy");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
@@ -310,21 +346,14 @@ public class TARDIS extends JavaPlugin {
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
-                console.sendMessage(pluginName + ChatColor.RED + "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
-                hasVersion = false;
-                pm.disablePlugin(this);
-                return;
-            }
-            // TARDISChunkGenerator needs to be enabled
-            if (!loadHelper()) {
-                console.sendMessage(pluginName + ChatColor.RED + "This plugin requires TARDISChunkGenerator to function, disabling...");
+                getLogger().log(Level.SEVERE, "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
                 hasVersion = false;
                 pm.disablePlugin(this);
                 return;
             }
             for (Map.Entry<String, String> plg : versions.entrySet()) {
                 if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
-                    console.sendMessage(pluginName + ChatColor.RED + "This plugin requires " + plg.getKey() + " to be v" + plg.getValue() + " or higher, disabling...");
+                    getLogger().log(Level.SEVERE, "This plugin requires " + plg.getKey() + " to be v" + plg.getValue() + " or higher, disabling...");
                     hasVersion = false;
                     pm.disablePlugin(this);
                     return;
@@ -336,6 +365,8 @@ public class TARDIS extends JavaPlugin {
             saveDefaultConfig();
             reloadConfig();
             loadCustomConfigs();
+            // load TARDISChunkGenerator
+            loadHelper();
             loadLanguage();
             loadSigns();
             loadChameleonGUIs();
@@ -370,17 +401,21 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.icons", true);
                 conversions++;
             }
-            if (!getConfig().getBoolean("conversions.datapacks_1_18")) {
-                TARDISChecker.updateDimension("gallifrey");
-                TARDISChecker.updateDimension("siluria");
-                TARDISChecker.updateDimension("skaro");
-                getConfig().set("conversions.datapacks_1_18", true);
-                conversions++;
-            }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
                 new TARDISWallConverter(this).processArchives();
                 getConfig().set("conversions.archive_wall_data", true);
                 conversions++;
+            }
+            if (!getConfig().getBoolean("conversions.legacy_default")) {
+                new TARDISLegacyConverter(this).setOriginal();
+                getConfig().set("conversions.legacy_default", true);
+                conversions++;
+            }
+            if (!getConfig().getBoolean("conversions.all_in_one.helper")) {
+                if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.HELPER)) {
+                    getConfig().set("conversions.all_in_one.helper", true);
+                    conversions++;
+                }
             }
             loadMultiverse();
             loadInventoryManager();
@@ -421,9 +456,59 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             startZeroHealing();
             startSiegeTicks();
-            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("dynmap.enabled")) {
+            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("modules.dynmap")) {
+                getLogger().log(Level.INFO, "Loading DynMap Module");
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
+            }
+            if (getConfig().getBoolean("modules.weeping_angels")) {
+                if (PaperLib.isPaper()) {
+                    getLogger().log(Level.INFO, "Loading Weeping Angels Module");
+                    new TARDISWeepingAngels(this).enable();
+                    if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
+                        if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.MONSTERS)) {
+                            getConfig().set("conversions.all_in_one.weeping_angels", true);
+                            conversions++;
+                        }
+                    }
+                } else {
+                    getLogger().log(Level.INFO, "The Weeping Angels Module requires Paper server or a suitable variant!");
+                }
+            }
+            if (getConfig().getBoolean("modules.vortex_manipulator")) {
+                getLogger().log(Level.INFO, "Loading Vortex Manipulator Module");
+                new TARDISVortexManipulator(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
+                    boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.VORTEX_MANIPULATOR);
+                    boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
+                    if (cvm && dvm) {
+                        getConfig().set("conversions.all_in_one.vortex_manipulator", true);
+                        conversions++;
+                    }
+                }
+            }
+            if (getConfig().getBoolean("modules.shop")) {
+                getLogger().log(Level.INFO, "Loading Shop Module");
+                new TARDISShop(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
+                    boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.SHOP);
+                    boolean ds = new TARDISShopTransfer(this).transferData();
+                    getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISShopDisplayConverter(this), 300L);
+                    if (cs && ds) {
+                        getConfig().set("conversions.all_in_one.shop", true);
+                        conversions++;
+                    }
+                }
+            }
+            if (getConfig().getBoolean("modules.sonic_blaster")) {
+                getLogger().log(Level.INFO, "Loading Sonic Blaster Module");
+                new TARDISSonicBlaster(this).enable();
+                if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
+                    if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.BLASTER)) {
+                        getConfig().set("conversions.all_in_one.sonic_blaster", true);
+                        conversions++;
+                    }
+                }
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
@@ -542,7 +627,7 @@ public class TARDIS extends JavaPlugin {
             // start bStats metrics
             new TARDISStats(this).startMetrics();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
+            getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -550,7 +635,7 @@ public class TARDIS extends JavaPlugin {
     /**
      * Gets the MySQL database prefix for TARDIS tables
      *
-     * @return the prefix from the config
+     * @return the prefix from the TARDIS configuration
      */
     public String getPrefix() {
         return prefix;
@@ -573,7 +658,7 @@ public class TARDIS extends JavaPlugin {
                 mysql.createTables();
             }
         } catch (Exception e) {
-            console.sendMessage(pluginName + "Connection and Tables Error: " + e);
+            getLogger().log(Level.INFO, "Connection and Tables Error: " + e);
         }
     }
 
@@ -584,7 +669,7 @@ public class TARDIS extends JavaPlugin {
         try {
             service.connection.close();
         } catch (SQLException e) {
-            console.sendMessage(pluginName + "Could not close database connection: " + e);
+            getLogger().log(Level.WARNING, "Could not close database connection: " + e);
         }
     }
 
@@ -597,7 +682,7 @@ public class TARDIS extends JavaPlugin {
         if (!langDir.exists()) {
             boolean result = langDir.mkdir();
             if (result && langDir.setWritable(true) && langDir.setExecutable(true)) {
-                console.sendMessage(pluginName + "Created language directory.");
+                getLogger().log(Level.INFO, "Created language directory.");
             }
         }
         // always copy English default
@@ -615,7 +700,7 @@ public class TARDIS extends JavaPlugin {
             lang = "en";
         }
         // load the language
-        console.sendMessage(pluginName + "Loading language: " + Language.valueOf(lang).getLang());
+        getLogger().log(Level.INFO, "Loading language: " + Language.valueOf(lang).getLang());
         language = YamlConfiguration.loadConfiguration(file);
         // update the language configuration
         new TARDISLanguageUpdater(this).update();
@@ -659,8 +744,12 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
+        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
+                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "flat_world.yml", "handles.yml",
+                "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
+                "shop.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
+//            debug(f);
             tardisCopier.copy(f);
         }
         planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
@@ -682,6 +771,21 @@ public class TARDIS extends JavaPlugin {
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
         new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
+        generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
+        if (getConfig().getBoolean("modules.weeping_angels")) {
+            monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
+        }
+        if (getConfig().getBoolean("modules.shop")) {
+            shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
+            itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
+        }
+        if (getConfig().getBoolean("modules.vortex_manipulator")) {
+            vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
+        }
+        if (getConfig().getBoolean("modules.sonic_blaster")) {
+            blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
+        }
+        customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
     }
 
     /**
@@ -689,7 +793,7 @@ public class TARDIS extends JavaPlugin {
      * quotes from the quotes file.
      */
     private void loadFiles() {
-        tardisCopier.copyFiles();
+        tardisCopier.copyRoomTemplateFile();
         new TARDISRoomMap(this).load();
         quotesfile = tardisCopier.copy("quotes.txt");
     }
@@ -703,7 +807,7 @@ public class TARDIS extends JavaPlugin {
         if (!bookDir.exists()) {
             boolean result = bookDir.mkdir();
             if (result && bookDir.setWritable(true) && bookDir.setExecutable(true)) {
-                console.sendMessage(pluginName + "Created books directory.");
+                getLogger().log(Level.INFO, "Created books directory.");
             }
         }
         Set<String> booknames = achievementConfig.getKeys(false);
@@ -819,20 +923,12 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Checks if the TARDISChunkGenerator plugin is available, and loads support
-     * if it is.
-     *
-     * @return true if the plugin is enabled, if false the TARDIS plugin will
-     * disable itself
+     * Loads the TARDISChunkGenerator support module
      */
-    private boolean loadHelper() {
-        Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
-        if (tcg != null && tcg.isEnabled()) {
-            debug("Hooking into TARDISChunkGenerator!");
-            tardisHelper = (TARDISHelper) getPM().getPlugin("TARDISChunkGenerator");
-            return true;
-        }
-        return false;
+    private void loadHelper() {
+        debug("Loading Helper module!");
+        tardisHelper = new TARDISHelper();
+        tardisHelper.enable(this);
     }
 
     /**
@@ -860,11 +956,11 @@ public class TARDIS extends JavaPlugin {
      * bPermissions (as they have per world config files).
      */
     private void loadPerms() {
-        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
             // copy default permissions file if not present
-            tardisCopier.copy("permissions.txt");
             if (getConfig().getBoolean("creation.create_worlds")) {
-                console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
+                tardisCopier.copy("permissions.txt");
+                getLogger().log(Level.INFO, "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
             }
         }
     }
@@ -889,7 +985,7 @@ public class TARDIS extends JavaPlugin {
                     quotes.add("");
                 }
             } catch (IOException io) {
-                console.sendMessage(pluginName + "Could not read quotes file");
+                getLogger().log(Level.WARNING, "Could not read quotes file");
             } finally {
                 if (bufRdr != null) {
                     try {
@@ -941,23 +1037,30 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("abandon.enabled")) {
                 getConfig().set("abandon.enabled", false);
                 saveConfig();
-                console.sendMessage(pluginName + ChatColor.RED + "Abandoned TARDISes were disabled as create_worlds is true!");
+                getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds is true!");
             }
             if (getConfig().getBoolean("creation.default_world")) {
                 getConfig().set("creation.default_world", false);
                 saveConfig();
-                console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
+                getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
             }
             if (pm.getPlugin("TARDISChunkGenerator") == null) {
                 getConfig().set("creation.create_worlds", false);
                 saveConfig();
-                console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires TARDISChunkGenerator!");
+                getLogger().log(Level.SEVERE, "Create Worlds was disabled as it requires TARDISChunkGenerator!");
+            }
+            // disable TARDIS_TimeVortex world
+            getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
+            try {
+                getPlanetsConfig().save(new File(getDataFolder(), "planets.yml"));
+            } catch (IOException ex) {
+                getLogger().log(Level.SEVERE, "Couldn't save planets.yml!");
             }
         }
         if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
             getConfig().set("abandon.enabled", false);
             saveConfig();
-            console.sendMessage(pluginName + ChatColor.RED + "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
+            getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
         }
     }
 
@@ -1047,7 +1150,7 @@ public class TARDIS extends JavaPlugin {
         }
         String defWorld = getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
         if (getServer().getWorld(defWorld) == null) {
-            console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
+            getLogger().log(Level.INFO, "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(defWorld);
         }
     }
@@ -1060,28 +1163,13 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Gets whether TARDISWeepingAngels is the correct version
-     *
-     * @return true if TWA is the correct version
-     */
-    public boolean checkTWA() {
-        if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
-            ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(twa.getDescription().getVersion());
-            return (version.compareTo(ModuleDescriptor.Version.parse("3.3.1")) >= 0);
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
      * @param o the Object to print to the console
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            console.sendMessage(pluginName + "Debug: " + o);
+            console.sendMessage(TardisModule.DEBUG.getName() + "Debug: " + o);
         }
     }
 
@@ -1173,6 +1261,69 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getCustomConsolesConfig() {
         return customConsolesConfig;
+    }
+
+    /**
+     * Gets the flat world configuration
+     *
+     * @return the flat world configuration
+     */
+    public FileConfiguration getGeneratorConfig() {
+        return generatorConfig;
+    }
+
+    /**
+     * Gets the shop configuration
+     *
+     * @return the shop configuration
+     */
+    public FileConfiguration getShopConfig() {
+        return shopConfig;
+    }
+
+    /**
+     * Gets the monsters configuration
+     *
+     * @return the monsters configuration
+     */
+    public FileConfiguration getMonstersConfig() {
+        return monstersConfig;
+    }
+
+    /**
+     * Gets the vortex manipulator configuration
+     *
+     * @return the vortex manipulator configuration
+     */
+    public FileConfiguration getVortexConfig() {
+        return vortexConfig;
+    }
+
+    /**
+     * Gets the shop items configuration
+     *
+     * @return the shop items configuration
+     */
+    public FileConfiguration getItemsConfig() {
+        return itemsConfig;
+    }
+
+    /**
+     * Gets the shop items configuration
+     *
+     * @return the shop items configuration
+     */
+    public FileConfiguration getBlasterConfig() {
+        return blasterConfig;
+    }
+
+    /**
+     * Gets the custom exterior preset models configuration
+     *
+     * @return the custom models configuration
+     */
+    public FileConfiguration getCustomModelConfig() {
+        return customModelConfig;
     }
 
     /**
@@ -1424,7 +1575,7 @@ public class TARDIS extends JavaPlugin {
      * @return the formatted TARDIS plugin name
      */
     public String getPluginName() {
-        return pluginName;
+        return TardisModule.TARDIS.getName();
     }
 
     /**
@@ -1579,6 +1730,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the TARDIS Destroy NamespacedKey
+     *
+     * @return the TARDIS Destroy NamespacedKey
+     */
+    public NamespacedKey getDestroyKey() {
+        return destroyKey;
+    }
+
+    /**
      * Gets the Time Lord UUID NamespacedKey
      *
      * @return the Time Lord UUID NamespacedKey
@@ -1704,5 +1864,29 @@ public class TARDIS extends JavaPlugin {
 
     public void setTardisDynmap(TARDISDynmap tardisDynmap) {
         this.tardisDynmap = tardisDynmap;
+    }
+
+    public ShopSettings getShopSettings() {
+        return shopSettings;
+    }
+
+    public void setShopSettings(ShopSettings settings) {
+        this.shopSettings = settings;
+    }
+
+    public TVMSettings getTvmSettings() {
+        return tvmSettings;
+    }
+
+    public void setTvmSettings(TVMSettings tvmSettings) {
+        this.tvmSettings = tvmSettings;
+    }
+
+    public BlasterSettings getBlasterSettings() {
+        return blasterSettings;
+    }
+
+    public void setBlasterSettings(BlasterSettings blasterSettings) {
+        this.blasterSettings = blasterSettings;
     }
 }

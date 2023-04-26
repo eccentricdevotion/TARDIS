@@ -18,15 +18,11 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -38,9 +34,15 @@ import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
- * the deleted room, depositing them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted,
+ * automatically relocating any living beings in the deleted room, depositing
+ * them in the control room.
  *
  * @author eccentric_nz
  */
@@ -75,15 +77,11 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     public void run() {
         // initialise
         if (!running) {
-            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug("Could not find a schematic with that name!");
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            if (obj == null) {
                 return;
             }
-            // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt();
@@ -150,7 +148,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                        data = TARDISConstants.BARRIER;
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
                     } else {
                         data = wall_type.createBlockData();
                     }
@@ -161,7 +160,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    data = TARDISConstants.BARRIER;
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
             }

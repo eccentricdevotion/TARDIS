@@ -29,7 +29,7 @@ public class TARDISPermission {
     public static boolean hasPermission(Player player, String node) {
         if (player.hasPermission(node)) {
             return true;
-        } else if (TARDIS.plugin.getConfig().getBoolean("blueprints.enabled")) {
+        } else if (TARDIS.plugin.getConfig().getBoolean("modules.blueprints")) {
             // check database
             return hasBlueprintPermission(player.getUniqueId().toString(), node);
         } else {
@@ -50,7 +50,7 @@ public class TARDISPermission {
     public static boolean hasPermission(CommandSender sender, String node) {
         if (sender.hasPermission(node)) {
             return true;
-        } else if (TARDIS.plugin.getConfig().getBoolean("blueprints.enabled") && sender instanceof Player) {
+        } else if (TARDIS.plugin.getConfig().getBoolean("modules.blueprints") && sender instanceof Player) {
             // check database
             return hasBlueprintPermission(((Player) sender).getUniqueId().toString(), node);
         } else {

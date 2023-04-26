@@ -1,0 +1,44 @@
+# a list of the custom models you want to use
+models:
+  # model name
+  Type 40:
+    # the item that is placed in the item frame
+    item: CLAY_BALL
+  Bad Wolf:
+    item: WOLF_SPAWN_EGG
+
+# CUSTOM MODEL DATA VALUES for each TARDIS visual
+# open/closed door + 2 stages of materialisation (coloured/clear)
+# you must use these values!
+#
+# door_closed: 1001
+# door_open: 1002
+# transparent_coloured: 1003
+# transparent_clear: 1004
+#
+# EXAMPLE MODEL OVERRIDES
+#
+# This would go in assets/minecraft/models/item/clay_ball.json:
+#  {
+#    "parent": "minecraft:item/generated",
+#    "textures": {
+#      "layer0": "minecraft:item/clay_ball"
+#    },
+#    "overrides": [
+#      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/type_40_closed"},
+#      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/type_40_open"},
+#      {"predicate": {"custom_model_data": 1003}, "model": "tardis:block/police_box/type_40_stained"},
+#      {"predicate": {"custom_model_data": 1004}, "model": "tardis:block/police_box/type_40_glass"}
+#    ]
+#  }
+#
+# This would go in assets/minecraft/models/item/wolf_spawn_egg.json:
+#  {
+#    "parent": "minecraft:item/template_spawn_egg",
+#    "overrides": [
+#      {"predicate": {"custom_model_data": 1001}, "model": "tardis:block/police_box/bad_wolf_closed"},
+#      {"predicate": {"custom_model_data": 1002}, "model": "tardis:block/police_box/bad_wolf_open"},
+#      {"predicate": {"custom_model_data": 1003}, "model": "tardis:block/police_box/bad_wolf_stained"},
+#      {"predicate": {"custom_model_data": 1004}, "model": "tardis:block/police_box/bad_wolf_glass"}
+#    ]
+#  }

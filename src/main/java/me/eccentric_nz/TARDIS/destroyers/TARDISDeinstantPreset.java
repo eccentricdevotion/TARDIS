@@ -19,10 +19,10 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
@@ -60,7 +60,7 @@ public class TARDISDeinstantPreset {
      * @param hide   boolean determining whether to forget the protected Police Box blocks.
      * @param preset the preset to destroy
      */
-    public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
+    public void instaDestroyPreset(MaterialisationData dd, boolean hide, ChameleonPreset preset) {
 
         Location l = dd.getLocation();
         COMPASS d = dd.getDirection();
@@ -92,7 +92,7 @@ public class TARDISDeinstantPreset {
         } else {
             int sbx = l.getBlockX() - 1;
             int sby;
-            if (preset.equals(PRESET.SUBMERGED)) {
+            if (preset.equals(ChameleonPreset.SUBMERGED)) {
                 sby = l.getBlockY() - 1;
             } else {
                 sby = l.getBlockY();

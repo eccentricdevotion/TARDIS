@@ -19,10 +19,14 @@ package me.eccentric_nz.TARDIS.blueprints;
 public enum BlueprintType {
 
     BASE,
+    BLASTER,
     CONSOLE,
     FEATURE,
     PRESET,
     ROOM,
+    SHOP,
     SONIC,
-    TRAVEL
+    TRAVEL,
+    VORTEX_MANIPULATOR,
+    WEEPING_ANGELS
 }

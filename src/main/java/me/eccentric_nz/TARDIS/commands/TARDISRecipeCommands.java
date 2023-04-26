@@ -19,10 +19,11 @@ package me.eccentric_nz.TARDIS.commands;
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
@@ -38,9 +39,11 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
- * signals that travel along the time contours in the Space/Time Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
+ * is stored in the Secondary Control Room. All TARDISes have one of these
+ * devices, which can be used to remotely control a TARDIS by broadcasting
+ * Stattenheim signals that travel along the time contours in the Space/Time
+ * Vortex.
  *
  * @author eccentric_nz
  */
@@ -86,7 +89,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
         t.put("WEATHERED", Material.WEATHERED_COPPER); // weathered
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
-        t.put("LEGACY_BUDGET", Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
         t.put("LEGACY_DELUXE", Material.LIME_GLAZED_TERRACOTTA);
         t.put("LEGACY_ELEVENTH", Material.CYAN_GLAZED_TERRACOTTA);
         t.put("LEGACY_REDSTONE", Material.RED_GLAZED_TERRACOTTA);
@@ -143,7 +145,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     TARDISMessage.send(player, "ARG_NOT_VALID");
                     return true;
                 }
-                showTARDISRecipe(player, args[1]);
+                showTARDISRecipe(player, args[1].toUpperCase(Locale.ENGLISH));
                 return true;
             }
             String which = args[0].toLowerCase();
@@ -276,7 +278,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     private void showTARDISRecipe(Player player, String type) {
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS " + type + " seed recipe");
         // redstone torch
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
         // lapis block
@@ -294,36 +296,29 @@ public class TARDISRecipeCommands implements CommandExecutor {
         fl_meta.setLore(Collections.singletonList("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
         // seed block
-        ItemStack block = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
+        ItemStack block = new ItemStack(t.get(type), 1);
         // tardis type
-        ItemStack tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
-        // should be mushroom block
-        int model;
-        if (Consoles.getBY_NAMES().get(type.toUpperCase()).isCustom()) {
-            model = 45;
-        } else if (type.equalsIgnoreCase("DELTA")) {
-            model = 43;
-        } else if (type.equalsIgnoreCase("ROTOR")) {
-            model = 44;
-        } else if (type.equalsIgnoreCase("COPPER")) {
-            model = 46;
-        } else if (type.equalsIgnoreCase("CAVE")) {
-            model = 56;
-        } else if (type.equalsIgnoreCase("WEATHERED")) {
-            model = 57;
-        } else if (type.equalsIgnoreCase("ORIGINAL")) {
-            model = 58;
+        Schematic schm = Consoles.getBY_NAMES().get(type);
+        ItemStack tardis;
+        int model = 10001;
+        if (schm.isCustom()) {
+            tardis = new ItemStack(schm.getSeedMaterial(), 1);
         } else {
-            model = TARDISSeedModel.modelByString(type.toUpperCase());
-            tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+            try {
+                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
+                tardis = new ItemStack(tdi.getMaterial(), 1);
+                model = tdi.getCustomModelData();
+            } catch (IllegalArgumentException e) {
+                tardis = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+            }
         }
         ItemMeta seed = tardis.getItemMeta();
-        seed.setCustomModelData(10000000 + model);
+        seed.setCustomModelData(model);
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();
-        lore.add(type.toUpperCase());
+        lore.add(type);
         lore.add("Walls: ORANGE_WOOL");
         lore.add("Floors: LIGHT_GRAY_WOOL");
         lore.add("Chameleon: FACTORY");

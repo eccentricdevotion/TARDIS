@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
@@ -248,7 +248,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     String value = args[2].toUpperCase(Locale.ENGLISH);
                     if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
-                            PRESET.valueOf(value);
+                            ChameleonPreset.valueOf(value);
                         } catch (IllegalArgumentException e) {
                             TARDISMessage.send(player, "ARG_PRESET");
                             return false;

@@ -55,7 +55,7 @@ public class TARDISAnyoneMoveListener implements Listener {
         Location loc = player.getLocation(); // Grab Location
 
         /*
-         * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
+         * Copyright (C) 2023, The Multiverse Team All rights reserved. Check
          * the Player has actually moved a block to prevent unneeded
          * calculations... This is to prevent huge performance drops on high
          * player count servers.

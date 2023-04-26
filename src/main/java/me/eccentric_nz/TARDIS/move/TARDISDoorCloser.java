@@ -16,22 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -74,12 +73,14 @@ public class TARDISDoorCloser {
             block.setBlockData(closeable, true);
         }
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            ChameleonPreset preset = null;
             // get all companion UUIDs
             List<UUID> uuids = new ArrayList<>();
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
+                preset = rs.getTardis().getPreset();
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                     if (rs.getTardis().getCompanions().equalsIgnoreCase("everyone")) {
                         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
@@ -103,7 +104,7 @@ public class TARDISDoorCloser {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            if (rs.getTardis().getPreset().equals(PRESET.SWAMP)) {
+            if (rs.getTardis().getPreset().equals(ChameleonPreset.SWAMP)) {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
             // unset trackers
@@ -114,7 +115,7 @@ public class TARDISDoorCloser {
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);
-            if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+            if (plugin.getConfig().getBoolean("police_box.view_interior") && (preset != null && !preset.usesItemFrame())) {
                 plugin.getTrackerKeeper().getCasters().remove(uuid);
                 // remove fake blocks
                 if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {

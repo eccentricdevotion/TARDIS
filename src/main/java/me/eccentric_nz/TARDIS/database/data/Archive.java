@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 
 /**
  * @author eccentric_nz
@@ -30,18 +30,18 @@ public class Archive {
     private final String name;
     private final ConsoleSize consoleSize;
     private final boolean beacon;
-    private final boolean lanterns;
+    private final TardisLight light;
     private final int use;
     private final int y;
     private final JsonObject JSON;
     private final String description;
 
-    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, int y, JsonObject JSON, String description) {
+    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, TardisLight light, int use, int y, JsonObject JSON, String description) {
         this.uuid = uuid;
         this.name = name;
         this.consoleSize = ConsoleSize.valueOf(consoleSize);
         this.beacon = beacon;
-        this.lanterns = lanterns;
+        this.light = light;
         this.use = use;
         this.y = y;
         this.JSON = JSON;
@@ -64,8 +64,8 @@ public class Archive {
         return beacon;
     }
 
-    public boolean isLanterns() {
-        return lanterns;
+    public TardisLight getLight() {
+        return light;
     }
 
     public int getUse() {

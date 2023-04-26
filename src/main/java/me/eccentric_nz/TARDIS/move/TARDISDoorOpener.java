@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -24,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.portal.Capture;
 import me.eccentric_nz.TARDIS.portal.Cast;
 import me.eccentric_nz.TARDIS.portal.CastData;
@@ -37,11 +41,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -88,7 +87,7 @@ public class TARDISDoorOpener {
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 Tardis tardis = null;
-                PRESET preset = null;
+                ChameleonPreset preset = null;
                 boolean abandoned = false;
                 if (rs.resultSet()) {
                     tardis = rs.getTardis();
@@ -116,7 +115,7 @@ public class TARDISDoorOpener {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
                 rsc.resultSet();
                 Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                if (preset != null && preset.equals(PRESET.SWAMP)) {
+                if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
                     exportal.add(0.0d, 1.0d, 0.0d);
                 }
                 // interior teleport location
@@ -198,13 +197,13 @@ public class TARDISDoorOpener {
                     // locations
                     if (tardis != null && preset != null && preset.hasPortal()) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
-                        if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
+                        if (preset.equals(ChameleonPreset.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
                             // remember door location
                             plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), other);
                         }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
-                    if (plugin.getConfig().getBoolean("police_box.view_interior")) {
+                    if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesItemFrame()) {
                         ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
                         plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
                         // get distance from door

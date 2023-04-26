@@ -14,6 +14,7 @@
 
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.Set;
 import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -23,8 +24,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Set;
 
 /**
  * PersistentDataContainer for blocks!
@@ -56,20 +55,6 @@ public class CustomBlockData implements PersistentDataContainer {
     public CustomBlockData(final @NotNull Block block, final @NotNull Plugin plugin) {
         this.chunk = block.getChunk();
         this.key = new NamespacedKey(plugin, getKey(block));
-        this.pdc = getPersistentDataContainer();
-    }
-
-    /**
-     * Gets the PersistentDataContainer associated with the given block and plugin
-     *
-     * @param block     Block
-     * @param namespace Namespace
-     * @deprecated Use {@link #CustomBlockData(Block, Plugin)} instead.
-     */
-    @Deprecated()
-    public CustomBlockData(final @NotNull Block block, final @NotNull String namespace) {
-        this.chunk = block.getChunk();
-        this.key = new NamespacedKey(namespace, getKey(block));
         this.pdc = getPersistentDataContainer();
     }
 

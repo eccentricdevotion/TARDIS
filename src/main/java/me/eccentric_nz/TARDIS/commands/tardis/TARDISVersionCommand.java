@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
@@ -23,8 +24,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -41,12 +40,10 @@ class TARDISVersionCommand {
         String pluginName = plugin.getPluginName();
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
-        String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         // send server and TARDIS versions
         sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
         sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
-        sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
         // send dependent plugin versions
         for (Plugin hook : plugin.getPM().getPlugins()) {
             PluginDescriptionFile desc = hook.getDescription();

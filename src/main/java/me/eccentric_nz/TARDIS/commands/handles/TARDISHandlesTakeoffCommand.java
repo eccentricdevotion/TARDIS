@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -57,7 +57,7 @@ class TARDISHandlesTakeoffCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                if (tardis.getPreset().equals(PRESET.JUNK)) {
+                if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                     return true;
                 }
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {

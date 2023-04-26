@@ -18,20 +18,24 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -40,9 +44,9 @@ public class TARDISInstantPoliceBox {
 
     private final TARDIS plugin;
     private final BuildData bd;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
 
-    public TARDISInstantPoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
+    public TARDISInstantPoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;
@@ -91,19 +95,43 @@ public class TARDISInstantPoliceBox {
         }
         frame.setFacingDirection(BlockFace.UP);
         frame.setRotation(bd.getDirection().getRotation());
-        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
-            String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+            String pb = "";
+            switch (preset) {
+                case WEEPING_ANGEL -> pb = "Weeping Angel";
+                case ITEM -> {
+                    for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                        if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
+                            pb = k;
+                            break;
+                        }
+                    }
+                }
+                default -> pb = "Police Box";
+            }
             im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
         }
-        is.setItemMeta(im);
+        if (preset == ChameleonPreset.COLOURED) {
+            // get the colour
+            ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+            if (rsc.resultSet()) {
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
+                is.setItemMeta(leatherArmorMeta);
+            }
+        } else {
+            is.setItemMeta(im);
+        }
         frame.setItem(is, false);
         frame.setFixed(true);
         frame.setVisible(false);
         // set a light block
-        block.getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.LIGHT);
+        Levelled levelled = TARDISConstants.LIGHT;
+        levelled.setLevel(7);
+        block.getRelative(BlockFace.UP, 2).setBlockData(levelled);
     }
 }

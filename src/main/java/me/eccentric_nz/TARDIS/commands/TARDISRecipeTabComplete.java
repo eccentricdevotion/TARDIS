@@ -17,15 +17,14 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * TabCompleter for /tardisrecipe command
@@ -36,7 +35,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
     public static final List<String> TARDIS_TYPES = ImmutableList.of("ancient", "ars", "bigger", "budget", "cave", "copper", "coral",
             "custom", "delta", "deluxe", "division", "eleventh", "ender", "factory", "fugitive", "master", "mechanical", "original",
             "plank", "playgound", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war",
-            "weathered", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
+            "weathered", "wood", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
 
     public TARDISRecipeTabComplete() {
         ROOT_SUBS.add("seed");

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -23,6 +25,8 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -30,8 +34,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -94,7 +96,8 @@ public class TARDISInteriorPostioning {
     /**
      * Calculate the position data for a TIPS slot.
      *
-     * @param slot the slot position in the grid (a number between 0, 399 inclusive)
+     * @param slot the slot position in the grid (a number between 0, 399
+     * inclusive)
      * @return a TIPS Data container
      */
     public TARDISTIPSData getTIPSData(int slot) {
@@ -147,7 +150,7 @@ public class TARDISInteriorPostioning {
     }
 
     // won't remove manually grown rooms...
-    public void reclaimChunks(World w, int id) {
+    public void reclaimChunks(World w, int id, Schematic s) {
         // get ARS data
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -158,9 +161,13 @@ public class TARDISInteriorPostioning {
             Location exitLocation = dl.getL();
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-            for (Entity e : c.getEntities()) {
-                removeEntity(e, exitLocation);
-            }
+            List<Chunk> chunks = TARDISChunkUtils.getConsoleChunks(c, s);
+            chunks.forEach((u) -> {
+                // exit players & remove items
+                for (Entity e : u.getEntities()) {
+                    removeEntity(e, exitLocation);
+                }
+            });
             for (int l = 0; l < 3; l++) {
                 for (int x = 0; x < 9; x++) {
                     for (int z = 0; z < 9; z++) {
@@ -191,10 +198,12 @@ public class TARDISInteriorPostioning {
                     }
                 }
             }
-            // remove dropped items
-            for (Entity e : c.getEntities()) {
-                e.remove();
-            }
+            chunks.forEach((u) -> {
+                // remove dropped items
+                for (Entity e : u.getEntities()) {
+                    e.remove();
+                }
+            });
         }
     }
 

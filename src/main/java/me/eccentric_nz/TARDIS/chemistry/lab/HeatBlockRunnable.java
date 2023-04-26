@@ -16,21 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Snow;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class HeatBlockRunnable implements Runnable {
 
@@ -46,11 +48,16 @@ public class HeatBlockRunnable implements Runnable {
     public void run() {
         for (String s : plugin.getTrackerKeeper().getHeatBlocks()) {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(s);
-            if (location != null) {
-                BlockData blockData = location.getBlock().getBlockData();
-                if (blockData.getMaterial().equals(Material.MUSHROOM_STEM) && blockData.getAsString().equals("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]")) {
-                    // it's a heat block
-                    meltBlock(location);
+            if (location != null && location.getBlock().getType() == Material.BARRIER) {
+                // get the item display
+                ItemDisplay display = TARDISDisplayItemUtils.get(location.getBlock());
+                if (display != null) {
+                    ItemStack is = display.getItemStack();
+                    if (is.getType() == Material.RED_CONCRETE && is.hasItemMeta()
+                            && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                        // it's a heat block
+                        meltBlock(location);
+                    }
                 }
             }
         }

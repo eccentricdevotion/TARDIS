@@ -78,7 +78,6 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
-        t.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, "LEGACY_BUDGET"); // legacy_budget
         t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
         t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
         t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone
@@ -119,7 +118,7 @@ public class TARDISCraftListener implements Listener {
             CraftingInventory ci = event.getInventory();
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
                 String dn = is.getItemMeta().getDisplayName();
-                if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+                if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     lore.add("Walls: " + ci.getItem(6).getType());

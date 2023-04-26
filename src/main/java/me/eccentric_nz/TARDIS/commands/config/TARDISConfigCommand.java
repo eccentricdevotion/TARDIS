@@ -23,7 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
@@ -35,9 +35,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
- * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
- * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
+ * The Lord President was the most powerful member of the Time Lord Council and
+ * had near absolute authority, and used a link to the Matrix, a vast computer
+ * network containing the knowledge and experiences of all past generations of
+ * Time Lords, to set Time Lord policy and remain alert to potential threats
+ * from lesser civilisations.
  *
  * @author eccentric_nz
  */
@@ -89,7 +91,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("any_key", "preferences");
         firstsBool.put("archive", "");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("blueprints", "");
+        firstsBool.put("blueprints", "modules");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("check_for_home", "creation");
@@ -99,8 +101,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
+        firstsBool.put("dynmap", "modules");
         firstsBool.put("emergency_npc", "allow");
-        firstsBool.put("dynmap", "");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
@@ -135,6 +137,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("seed_block_crafting", "creation");
         firstsBool.put("sfx", "allow");
+        firstsBool.put("shop", "modules");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
@@ -147,8 +150,10 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("view_interior", "police_box");
         firstsBool.put("view_interior_uses_console_size", "police_box");
         firstsBool.put("village_travel", "allow");
+        firstsBool.put("vortex_manipulator", "modules");
         firstsBool.put("walk_in_tardis", "preferences");
         firstsBool.put("weather_set", "allow");
+        firstsBool.put("weeping_angels", "modules");
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
@@ -311,13 +316,17 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.setDifficulty(Difficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
                 }
                 if (first.equals("default_preset")) {
-                    try {
-                        PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-                    } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "ARG_PRESET");
-                        return true;
+                    if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[1])) {
+                        plugin.getConfig().set("police_box.default_preset", "ITEM:" + args[1]);
+                    } else {
+                        try {
+                            ChameleonPreset.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        } catch (IllegalArgumentException e) {
+                            TARDISMessage.send(sender, "ARG_PRESET");
+                            return true;
+                        }
+                        plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
                     }
-                    plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
                 }
                 if (first.equals("use_clay")) {
                     try {

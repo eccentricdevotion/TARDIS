@@ -1,15 +1,20 @@
 # TODO
 
-
 ## Current version `4.14.0`
-
-## Next version `4.15.0`
-
-1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS
 
 ## Version 5.0.0
 
-1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
+1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
+   - Test display item custom blocks for new & abandoned TARDISes!
+
+## Next version `5.1.0`
+
+1. Vortex Manipulator predictive text
+2. Pandorica custom model
+3. Fix laggy Silurian cave finder
+4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
+5. Animated models for player disguises
+6. Custom Control models #703 #355
 
 ## Future versions
 
@@ -22,13 +27,11 @@
 
 ## Wiki Documentation
 
-* Semi-random assigned parking - add GUI
-* Add other area sub-commands
+* Add/update all module documentation (config/commands etc)
 
-## Resource Pack / TARDISWeepingAngels
+## Resource Pack / Monsters
 
 1. Re-skin mobs for Resource pack, and add new mob sounds
-    * Davros
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
@@ -36,8 +39,6 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-2. Animate models for player disguises (could be done in TARDIS instead?)
-3. Fix laggy Silurian cave finder
 
 ## Minecraft Bedrock Edition?
 

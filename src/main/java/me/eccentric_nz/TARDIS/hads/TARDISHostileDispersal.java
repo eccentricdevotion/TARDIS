@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
@@ -59,7 +59,7 @@ class TARDISHostileDispersal {
         replace_with_barrier = buildList();
     }
 
-    void disperseTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void disperseTARDIS(int id, UUID uuid, Player hostile, ChameleonPreset preset) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -93,7 +93,7 @@ class TARDISHostileDispersal {
         }
         int sbx = l.getBlockX() - 1;
         int sby;
-        if (preset.equals(PRESET.SUBMERGED)) {
+        if (preset.equals(ChameleonPreset.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();
@@ -140,7 +140,7 @@ class TARDISHostileDispersal {
         plugin.getPresetDestroyer().destroyLamp(l, preset);
         // remove sign
         plugin.getPresetDestroyer().destroySign(l, d, preset);
-        if (preset.equals(PRESET.JUNK_MODE)) {
+        if (preset.equals(ChameleonPreset.JUNK_MODE)) {
             plugin.getPresetDestroyer().destroyHandbrake(l, d);
         }
         // remove blue wool

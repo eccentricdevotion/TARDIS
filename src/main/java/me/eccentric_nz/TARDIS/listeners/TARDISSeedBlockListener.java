@@ -16,19 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
-import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,10 +43,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -57,8 +56,8 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
-     * the block if broken.
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS
+     * key to activate growing, or to return the block if broken.
      *
      * @param event The TARDIS Seed block placement event
      */
@@ -74,15 +73,12 @@ public class TARDISSeedBlockListener implements Listener {
             return;
         }
         if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+            Block block = event.getBlockPlaced();
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-                MultipleFacing multipleFacing;
-                if (which >= 42 && which <= 58) {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
-                } else {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
-                }
-                event.getBlockPlaced().setBlockData(multipleFacing);
+                block.setBlockData(TARDISConstants.BARRIER);
+                TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(is.getType(), which);
+                TARDISDisplayItemUtils.set(tdi, block);
             }
             List<String> lore = im.getLore();
             Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
@@ -92,7 +88,7 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setSchematic(schm);
             seed.setWallType(wall);
             seed.setFloorType(floor);
-            Location l = event.getBlockPlaced().getLocation();
+            Location l = block.getLocation();
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             TARDISMessage.send(player, "SEED_PLACE");
             // now the player has to click the block with the TARDIS key
@@ -105,7 +101,6 @@ public class TARDISSeedBlockListener implements Listener {
      * @param event a block break event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         Player p = event.getPlayer();
@@ -115,21 +110,28 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
-                ItemStack is = new ItemStack(event.getBlock().getType(), 1);
+                // give back a new display item
+                String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
+                int model = 10001;
+                ItemStack is;
+                if (data.getSchematic().isCustom()) {
+                    is = new ItemStack(data.getSchematic().getSeedMaterial(), 1);
+                } else {
+                    try {
+                        TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(console);
+                        is = new ItemStack(tdi.getMaterial(), 1);
+                        model = tdi.getCustomModelData();
+                    } catch (IllegalArgumentException e) {
+                        return;
+                    }
+                }
                 ItemMeta im = is.getItemMeta();
                 if (im == null) {
                     return;
                 }
-                String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
-                int model;
-                if (TARDISSeedModel.consoleMap.containsKey(console)) {
-                    model = TARDISSeedModel.modelByString(console);
-                } else {
-                    model = 45;
-                }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-                im.setCustomModelData(10000000 + model);
+                im.setCustomModelData(model);
                 List<String> lore = new ArrayList<>();
                 lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());
@@ -184,8 +186,9 @@ public class TARDISSeedBlockListener implements Listener {
                         // remove seed data
                         plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
                         // replace seed block with animated grow block
-                        MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
-                        event.getClickedBlock().setBlockData(multipleFacing);
+                        Block block = event.getClickedBlock();
+                        block.setBlockData(TARDISConstants.BARRIER);
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block);
                     }
                 }
             }

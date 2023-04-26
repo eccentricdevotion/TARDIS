@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -28,6 +28,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -39,13 +40,13 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     private final TARDIS plugin;
     private final DestroyData dd;
     private final int loops;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private int task;
     private int i;
     private ItemFrame frame;
     private ItemStack is;
 
-    TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, PRESET preset) {
+    TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.dd = dd;
         loops = dd.getThrottle().getLoops();
@@ -70,7 +71,9 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 default -> { // preset
                     cmd = 1001;
-                    light.setBlockData(TARDISConstants.LIGHT);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(7);
+                    light.setBlockData(levelled);
                 }
             }
             // first run - play sound
@@ -88,7 +91,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 frame.setFacingDirection(BlockFace.UP);
                 frame.setRotation(dd.getDirection().getRotation());
-                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, dd.getTardisID(), false);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
@@ -101,9 +104,10 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                     if (!minecart) {
                         String sound = switch (spaceTimeThrottle) {
-                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            case WARP, RAPID, FASTER ->
+                                "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
                             default -> // NORMAL
-                                    "tardis_takeoff";
+                                "tardis_takeoff";
                         };
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {

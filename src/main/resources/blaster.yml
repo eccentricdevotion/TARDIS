@@ -1,0 +1,43 @@
+max_blocks: 10
+cooldown: 5
+tachyon_use:
+    # maximum charge the blaster can hold
+    max: 1000
+    # amoutn the blaster recharges when close to a TARDIS recharger
+    recharge: 25
+    # the time in ticks between adding recharge amount - 1200 = 60 seconds
+    recharge_interval: 1200
+    # the amount of tachyon energy to use per block removed
+    remove_per_block: 10
+    # the amount of tachyon energy to use to restore a removed block
+    restore_per_block: 20
+recipes:
+  Sonic Blaster:
+      shape: DTD,TST,EBE
+      ingredients:
+          D: DISPENSER
+          T: TNT
+          S: GLOWSTONE_DUST=Sonic Oscillator
+          E: BUCKET=Blaster Battery
+          B: OAK_BUTTON
+      result: GOLDEN_HOE
+      amount: 1
+      lore: 'The Squareness Gun'
+  Blaster Battery:
+      shape: -S-,-R-,-B-
+      ingredients:
+          S: ORANGE_STAINED_GLASS
+          R: REDSTONE
+          B: BUCKET
+      result: BUCKET
+      amount: 1
+      lore: ''
+  Landing Pad:
+      shape: -C-,-S-,-R-
+      ingredients:
+          C: WHITE_CARPET
+          S: SLIME_BLOCK
+          R: REPEATER
+      result: SLIME_BLOCK
+      amount: 1
+      lore: ''

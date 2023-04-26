@@ -20,15 +20,16 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -50,9 +51,11 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
- * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
+ * A police box is a telephone kiosk that can be used by members of the public
+ * wishing to get help from the police. Early in the First Doctor's travels, the
+ * TARDIS assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
+ * TARDIS became locked into that shape.
  *
  * @author eccentric_nz
  */
@@ -62,12 +65,12 @@ public class TARDISInstantPreset {
     private final BuildData bd;
     private final BlockData chameleonBlockData;
     private final boolean rebuild;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final Material random_colour;
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<>();
 
-    public TARDISInstantPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData chameleonBlockData, boolean rebuild) {
+    public TARDISInstantPreset(TARDIS plugin, BuildData bd, ChameleonPreset preset, BlockData chameleonBlockData, boolean rebuild) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;
@@ -82,11 +85,11 @@ public class TARDISInstantPreset {
      * Builds the TARDIS Preset.
      */
     public void buildPreset() {
-        if (preset.equals(PRESET.ANGEL)) {
+        if (preset.equals(ChameleonPreset.ANGEL)) {
             plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
         }
         TARDISChameleonColumn column;
-        if (preset.equals(PRESET.CONSTRUCT)) {
+        if (preset.equals(ChameleonPreset.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
             if (column == null) {
                 TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
@@ -100,7 +103,7 @@ public class TARDISInstantPreset {
         x = bd.getLocation().getBlockX();
         plusx = (bd.getLocation().getBlockX() + 1);
         minusx = (bd.getLocation().getBlockX() - 1);
-        if (preset.equals(PRESET.SUBMERGED)) {
+        if (preset.equals(ChameleonPreset.SUBMERGED)) {
             y = bd.getLocation().getBlockY() - 1;
         } else {
             y = bd.getLocation().getBlockY();
@@ -211,7 +214,7 @@ public class TARDISInstantPreset {
                 }
                 Material mat = colData[yy].getMaterial();
                 // update door location if invisible
-                if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && mat.isAir()) {
+                if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(ChameleonPreset.INVISIBLE) && mat.isAir()) {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door);
                     // if tardis is in the air add under door
@@ -219,11 +222,11 @@ public class TARDISInstantPreset {
                 }
                 switch (mat) {
                     case GRASS_BLOCK, DIRT -> {
-                        BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? chameleonBlockData : colData[yy];
+                        BlockData subi = (preset.equals(ChameleonPreset.SUBMERGED)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                     }
                     case BEDROCK -> {
-                        if (preset.equals(PRESET.THEEND)) {
+                        if (preset.equals(ChameleonPreset.THEEND)) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         } else {
@@ -231,11 +234,12 @@ public class TARDISInstantPreset {
                         }
                     }
                     case WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL, PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL -> {
-                        if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
+                        if (preset.equals(ChameleonPreset.PARTY) || (preset.equals(ChameleonPreset.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
                         }
-                        if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
+                        if ((preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, TARDISConstants.BARRIER, bd.getTardisID());
+                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
                         }
                     }
                     case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches
@@ -299,7 +303,7 @@ public class TARDISInstantPreset {
                         }
                     }
                     case ACACIA_SIGN, BIRCH_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN -> {
-                        if (preset.equals(PRESET.APPERTURE)) {
+                        if (preset.equals(ChameleonPreset.APPERTURE)) {
                             TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                         }
                     }
@@ -327,7 +331,7 @@ public class TARDISInstantPreset {
                                             player_name = ChatColor.stripColor(user.getNick(false));
                                         }
                                         String owner;
-                                        if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                                        if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
                                             owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                                         } else {
                                             owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
@@ -341,7 +345,7 @@ public class TARDISInstantPreset {
                                 }
                                 String line1;
                                 String line2;
-                                if (preset.equals(PRESET.CUSTOM)) {
+                                if (preset.equals(ChameleonPreset.CUSTOM)) {
                                     line1 = plugin.getPresets().custom.getFirstLine();
                                     line2 = plugin.getPresets().custom.getSecondLine();
                                 } else {
@@ -395,7 +399,7 @@ public class TARDISInstantPreset {
                     }
                     case NETHERRACK -> {
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                        if (preset.equals(PRESET.TORCH)) {
+                        if (preset.equals(ChameleonPreset.TORCH)) {
                             world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                         }
                     }
@@ -413,7 +417,7 @@ public class TARDISInstantPreset {
                         }
                     }
                     case WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA, YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA -> {
-                        BlockData chai = (preset.equals(PRESET.FACTORY)) ? chameleonBlockData : colData[yy];
+                        BlockData chai = (preset.equals(ChameleonPreset.FACTORY)) ? chameleonBlockData : colData[yy];
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
                     }
                     default -> { // everything else

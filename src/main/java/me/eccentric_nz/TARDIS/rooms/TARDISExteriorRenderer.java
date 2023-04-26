@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -110,7 +110,7 @@ public class TARDISExteriorRenderer {
             int z = (location.getBlockZ());
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
-            TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
+            TARDISChameleonColumn column = plugin.getPresets().getGlass(ChameleonPreset.RENDER, d);
             int px, pz;
             BlockData[][] data = column.getBlockData();
             for (int i = 0; i < 9; i++) {

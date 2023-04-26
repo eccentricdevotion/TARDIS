@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -55,7 +55,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
 
     public TARDISSudoCommand(TARDIS plugin) {
         this.plugin = plugin;
-        for (PRESET p : PRESET.values()) {
+        for (ChameleonPreset p : ChameleonPreset.values()) {
             CHAM_SUBS.add(p.toString());
         }
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);

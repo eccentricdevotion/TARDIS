@@ -1,5 +1,17 @@
 # config file
 debug: false
+# modules
+# are disabled by default
+# https://eccentricdevotion.github.io/TARDIS/modules.html
+modules:
+  weeping_angels: false
+  vortex_manipulator: false
+  dynmap: false
+  shop: false
+  sonic_blaster: false
+  # blueprints
+  # https://eccentricdevotion.github.io/TARDIS/blueprints.html
+  blueprints: false
 # how the plugin persists data
 # https://eccentricdevotion.github.io/TARDIS/configuration-storage.html
 storage:
@@ -117,7 +129,6 @@ preferences:
 # dynmap
 # https://eccentricdevotion.github.io/TARDIS/dynmap-tardis.html#configuration-options
 dynmap:
-  enabled: true
   update_period: 30
   updates_per_tick: 10
 # desktop theme
@@ -212,10 +223,6 @@ abandon:
 archive:
   enabled: true
   limit: 3
-# blueprints
-# https://eccentricdevotion.github.io/TARDIS/blueprints.html
-blueprints:
-  enabled: false
 # recharger list
 rechargers: { }
 # list areas TARDISes can automatically travel to when their time lords die
@@ -236,6 +243,11 @@ conversions:
   controls: true
   bind: true
   icons: true
-  datapacks: true
-  datapacks_1_18: true
   restore_biomes: true
+  legacy_budget: true
+  all_in_one:
+    helper: true
+    shop: true
+    sonic_blaster: true
+    vortex_manipulator: true
+    weeping_angels: true

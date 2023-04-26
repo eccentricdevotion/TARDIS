@@ -19,13 +19,18 @@ package me.eccentric_nz.TARDIS.api;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -439,7 +444,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(int id, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(int id, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
@@ -449,7 +454,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(UUID uuid, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
@@ -459,7 +464,7 @@ public interface TardisAPI {
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(Player player, ChameleonPreset preset, boolean rebuild);
 
     /**
      * Spawn an abandoned TARDIS at the specified Bukkit Location.
@@ -471,7 +476,7 @@ public interface TardisAPI {
      *                  at the door)
      * @throws TARDISException if the console type is not valid or TARDIS abandonment is disabled on the server
      */
-    void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException;
+    void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException;
 
     /**
      * Convenience method to spawn an abandoned TARDIS at the specified Bukkit Location. The interior will default to
@@ -521,4 +526,259 @@ public interface TardisAPI {
      * @param recipe the recipe to add
      */
     void addShapelessRecipe(String key, ShapelessRecipe recipe);
+
+    /*
+    Weeping Angels
+     */
+    /**
+     * Sets an entity as a Weeping Angel.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setAngelEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as an Ice Warrior.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setWarriorEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Cyberman.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setCyberEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Dalek.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setDalekEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as Dalek Sec.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setDalekSecEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as Davros.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setDavrosEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Empty Child.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setEmptyChildEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Hath.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setHathEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Headless Monk.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setHeadlessMonkEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Mire.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setMireEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Sea Devil.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setSeaDevilEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Slitheen.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setSlitheenEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an armour stand, or disguises a player as a Judoon.
+     *
+     * @param player     The player that will own this Judoon - may be null
+     * @param armorStand The armour stand or player to disguise
+     * @param disguise   A boolean to determine if this is a player disguise
+     */
+    public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise);
+
+    /**
+     * Sets an armour stand, or disguises a player as K9.
+     *
+     * @param player     The player that will own this K9 - may be null
+     * @param armorStand The armour stand or player to disguise
+     * @param disguise   A boolean to determine if this is a player disguise
+     */
+    public void setK9Equipment(Player player, Entity armorStand, boolean disguise);
+
+    /**
+     * Sets an armour stand, or disguises a player as an Ood.
+     *
+     * @param player     The player that will own this Ood - may be null
+     * @param armorStand The armour stand or player to disguise
+     * @param disguise   A boolean to determine if this is a player disguise
+     */
+    public void setOodEquipment(Player player, Entity armorStand, boolean disguise);
+
+    /**
+     * Sets an entity as a Racnoss.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setRacnossEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Silent.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setSilentEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Silurian.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setSilurianEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Sontaran.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setSontaranEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as Strax (a Sontaran butler).
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setStraxEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an armour stand, or disguises a player as a Toclafane.
+     *
+     * @param armorStand The armour stand to disguise
+     * @param disguise   A boolean to determine if this is a player disguise
+     */
+    public void setToclafaneEquipment(Entity armorStand, boolean disguise);
+
+    /**
+     * Sets an entity as a Vashta Nerada.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setVashtaNeradaEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Sets an entity as a Zygon.
+     *
+     * @param le       The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    public void setZygonEquipment(LivingEntity le, boolean disguise);
+
+    /**
+     * Removes a disguise from a Player.
+     *
+     * @param p The Player to un-disguise
+     */
+    public void removeEquipment(Player p);
+
+    /**
+     * Returns whether an entity is a TARDISWeepingAngels entity.
+     *
+     * @param entity the entity to check
+     * @return true if the entity is a TARDISWeepingAngels entity
+     */
+    public boolean isWeepingAngelMonster(Entity entity);
+
+    /**
+     * Returns the Monster type for a TARDISWeepingAngels entity.
+     *
+     * @param entity the entity to get the Monster type for
+     * @return the Monster type
+     */
+    public Monster getWeepingAngelMonsterType(Entity entity);
+
+    /**
+     * Returns whether the specified entity is a claimed TARDISWeepingAngels monster.
+     *
+     * @param entity the entity to check
+     * @param uuid   the UUID of the claiming player
+     * @return a FollowerChecker containing the type of TARDISWeepingAngels monster (JUDOON, K9, OOD) - if the monster
+     * is not claimable it will return WEEPING_ANGEL - and an integer from its persistent data container
+     */
+    public FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
+
+    /**
+     * Set the entity entity equipment and ammunition count for a claimed Judoon
+     *
+     * @param player     the player that will own this Judoon
+     * @param armorStand the armour stand to apply the equipment to
+     * @param ammunition the persistent data container value with the amount of ammunition
+     */
+    public void setJudoonEquipment(Player player, Entity armorStand, int ammunition);
+
+    /**
+     * Start a following task for a claimed monster
+     *
+     * @param stand  the armour stand that will follow the player
+     * @param player the player that owns this Judoon / Ood / K9
+     */
+    public void setFollowing(ArmorStand stand, Player player);
+
+    /**
+     * Get a TARDISWeepingAngels monster head
+     *
+     * @param monster the type of monster head to get
+     * @return a monster head itemstack
+     */
+    public ItemStack getHead(Monster monster);
+
+    /**
+     * Get a K9 item
+     *
+     * @return a K9 itemstack
+     */
+    public ItemStack getK9();
 }

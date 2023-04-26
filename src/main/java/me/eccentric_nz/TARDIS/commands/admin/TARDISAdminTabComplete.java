@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -51,7 +51,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         List<String> tmpPresets = new ArrayList<>();
-        for (PRESET p : PRESET.values()) {
+        for (ChameleonPreset p : ChameleonPreset.values()) {
             tmpPresets.add(p.toString());
         }
         PRESETS = ImmutableList.copyOf(tmpPresets);

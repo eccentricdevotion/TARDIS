@@ -18,21 +18,24 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.ChatColor;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import org.bukkit.ChatColor;
+import org.bukkit.block.data.BlockData;
 
 /**
- * The Unified Intelligence Taskforce — formerly known as the United Nations Intelligence Taskforce, and more usually
- * called UNIT — was a military organisation which operated under the auspices of the United Nations. Its remit was to
- * investigate and combat paranormal and extraterrestrial threats to the Earth. UNIT was not the only alien defence
- * organisation, but it was the one with which the Doctor had the closest personal involvement.
+ * The Unified Intelligence Taskforce — formerly known as the United Nations
+ * Intelligence Taskforce, and more usually called UNIT — was a military
+ * organisation which operated under the auspices of the United Nations. Its
+ * remit was to investigate and combat paranormal and extraterrestrial threats
+ * to the Earth. UNIT was not the only alien defence organisation, but it was
+ * the one with which the Doctor had the closest personal involvement.
  *
  * @author eccentric_nz
  */
@@ -45,21 +48,14 @@ public class TARDISRoomMap {
     }
 
     /**
-     * Loads schematic data into a Map. This allows the rooms_require_blocks option to check the room block counts.
+     * Loads schematic data into a Map. This allows the rooms_require_blocks
+     * option to check the room block counts.
      */
     public void load() {
-        String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
-                String basepath = (user) ? userbasepath : defaultbasepath;
-                String lower = r.toLowerCase(Locale.ENGLISH);
-                File sch = new File(basepath + lower + ".tschm");
-                if (sch.exists()) {
-                    makeRoomMap(basepath + lower, r);
-                } else {
-                    plugin.getLogger().log(Level.INFO, ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
+                boolean success = makeRoomMap(r.toLowerCase(Locale.ENGLISH), r, plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+                if (!success) {
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                     try {
                         plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -73,21 +69,17 @@ public class TARDISRoomMap {
     /**
      * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
      *
-     * @param fileStr the schematic file to read
-     * @param s       the schematic name
+     * @param fileName the schematic file name to read
+     * @param s        the schematic name
+     * @param user     whether the room has been added by a user
      * @return true if the schematic was loaded successfully
      */
-    public boolean makeRoomMap(String fileStr, String s) {
+    public boolean makeRoomMap(String fileName, String s, boolean user) {
         HashMap<String, Integer> blockTypes = new HashMap<>();
-        File f = new File(fileStr + ".tschm");
-        if (!f.exists()) {
-            plugin.getLogger().log(Level.INFO, ChatColor.RED + "Could not find a schematic with that name!");
-            return false;
-        }
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
+        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", fileName, user);
         if (obj == null) {
-            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getConsole().sendMessage(TardisModule.TARDIS.getName() + ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
@@ -105,7 +97,7 @@ public class TARDISRoomMap {
                     for (int col = 0; col < l; col++) {
                         JsonObject c = r.get(col).getAsJsonObject();
                         if (!(c.get("data").getAsString().contains("minecraft"))) {
-                            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+                            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileName + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
                             plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
                             try {
                                 plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -116,9 +108,6 @@ public class TARDISRoomMap {
                         String bid = getMaterialAsString(c.get("data").getAsString());
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
-                        }
-                        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
-                            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
                         }
                         if (blockTypes.containsKey(bid)) {
                             Integer count = blockTypes.get(bid) + 1;
@@ -135,8 +124,11 @@ public class TARDISRoomMap {
     }
 
     private String getMaterialAsString(String data) {
-        String[] square = data.split("\\[");
-        String[] keyed = square[0].split(":");
-        return keyed[1].toUpperCase();
+        BlockData block = plugin.getServer().createBlockData(data);
+        String bid = block.getMaterial().toString();
+        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
+            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
+        }
+        return bid;
     }
 }

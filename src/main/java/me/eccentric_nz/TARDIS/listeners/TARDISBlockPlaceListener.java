@@ -16,20 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,13 +37,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-
 /**
- * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
+ * TARDISes are bioships that are grown from a species of coral presumably
+ * indigenous to Gallifrey.
  * <p>
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
- * many incarnations' travels.
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private
+ * study". Inside it were momentos of his many incarnations' travels.
  *
  * @author eccentric_nz
  */
@@ -57,12 +55,12 @@ public class TARDISBlockPlaceListener implements Listener {
     }
 
     /**
-     * Listens for a player placing a block. If the player places a brown mushroom block with a TARDIS namespaced key,
-     * then convert it to one of the unused brown mushroom block states.
+     * Listens for a player placing a block. If the player places a mushroom
+     * block with a TARDIS namespaced key, then convert it to a new custom
+     * TARDIS block Item Display entity.
      *
      * @param event a player placing a block
      */
-
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
@@ -71,50 +69,35 @@ public class TARDISBlockPlaceListener implements Listener {
             TARDISMessage.send(player, "NOT_IN_ZERO");
             return;
         }
-        String blockStr = event.getBlockPlaced().getLocation().toString();
+        Block block = event.getBlockPlaced();
+        String blockStr = block.getLocation().toString();
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(blockStr)) {
             event.setCancelled(true);
             TARDISMessage.send(player, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
+        // convert old custom mushroom blocks
         if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                boolean light = false;
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                    int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-                    MultipleFacing multipleFacing;
-                    if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
-                    } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
-                    } else {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
-                        light = (which > 0 && which < 5);
-                        if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
+                    TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(block.getBlockData());
+                    if (tdi != null) {
+                        if (tdi == TARDISDisplayItem.HEAT_BLOCK) {
                             // remember heat block location
                             plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
                         }
+                        if (tdi.isLight()) {
+                            LampToggler.setLightlevel(block, tdi.isLit() ? 15 : 0);
+                            // also add interaction entity
+                            TARDISDisplayItemUtils.set(block.getLocation(), tdi.getCustomModelData());
+                        } else {
+                            block.setBlockData(TARDISConstants.BARRIER);
+                        }
+                        TARDISDisplayItemUtils.set(tdi, block);
                     }
-                    if (light) {
-                        multipleFacing = TARDISMushroomBlock.getChemistryStemOn(multipleFacing);
-                        LampToggler.createLight(event.getBlockPlaced());
-                    }
-                    event.getBlockPlaced().setBlockData(multipleFacing);
                     return;
                 }
-            } else {
-                BlockData data;
-                if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
-                } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA_ALL);
-                } else {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
-                }
-                event.getBlockPlaced().setBlockData(data, false);
-                setNextToMushroomBlock(player, event.getBlockPlaced());
-                return;
             }
         }
         if (!TARDISPermission.hasPermission(player, "tardis.rift")) {
@@ -135,7 +118,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 return;
             }
             // add recharger to to config
-            Location l = event.getBlockPlaced().getLocation();
+            Location l = block.getLocation();
             String name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             while (plugin.getConfig().contains("rechargers." + name)) {
                 name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
@@ -147,18 +130,6 @@ public class TARDISBlockPlaceListener implements Listener {
             plugin.getConfig().set("rechargers." + name + ".uuid", player.getUniqueId().toString());
             plugin.saveConfig();
             TARDISMessage.send(player, "RIFT_SUCCESS");
-        }
-    }
-
-    private void setNextToMushroomBlock(Player player, Block block) {
-        Material material = block.getType();
-        for (int i = 0; i < 6; i++) {
-            for (BlockFace face : BlockFace.values()) {
-                Block b = block.getRelative(face, i);
-                if (b.getType().equals(material)) {
-                    player.sendBlockChange(b.getLocation(), b.getBlockData());
-                }
-            }
         }
     }
 }

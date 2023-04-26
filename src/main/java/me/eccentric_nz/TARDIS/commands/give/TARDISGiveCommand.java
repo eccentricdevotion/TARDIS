@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -43,8 +45,6 @@ import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-
 /**
  * @author eccentric_nz
  */
@@ -60,7 +60,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("artron", "");
         items.put("blueprint", "");
         items.put("kit", "");
-        items.put("mushroom", "");
+        items.put("display", "");
         items.put("recipes", "");
         items.put("seed", "");
         items.put("tachyon", "");
@@ -155,10 +155,10 @@ public class TARDISGiveCommand implements CommandExecutor {
                         }
                     }
                 }
-                if (item.equals("mushroom")) {
+                if (item.equals("display")) {
                     if (args.length < 4) {
                         TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                        TARDISMessage.message(sender, "/tardisgive [player] mushroom [amount] [type]");
+                        TARDISMessage.message(sender, "/tardisgive [player] display [amount] [type]");
                         return true;
                     }
                     Player p = plugin.getServer().getPlayer(args[0]);
@@ -166,8 +166,8 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    ItemStack mushroom = new TARDISMushroomCommand(plugin).getStack(args);
-                    p.getInventory().addItem(mushroom);
+                    ItemStack display = new TARDISDisplayBlockCommand(plugin).getStack(args[3]);
+                    p.getInventory().addItem(display);
                     p.updateInventory();
                     TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " " + args[3]);
                     return true;
@@ -225,7 +225,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         String item_to_give = items.get(item);
         ItemStack result;
-        if (item.equals("vortex-manipulator") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+        if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
@@ -400,16 +400,24 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
             }
-            ItemStack is;
             if (Consoles.getBY_NAMES().containsKey(type)) {
-                int model = TARDISSeedModel.modelByString(type);
-                if (Consoles.getBY_NAMES().get(type).isCustom() || type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") || type.equalsIgnoreCase("COPPER") || type.equalsIgnoreCase("CAVE") || type.equalsIgnoreCase("WEATHERED") || type.equalsIgnoreCase("ORIGINAL")) {
-                    is = new ItemStack(Material.MUSHROOM_STEM, 1);
+                Schematic schm = Consoles.getBY_NAMES().get(type);
+                ItemStack is;
+                int model = 10001;
+                if (schm.isCustom()) {
+                    is = new ItemStack(schm.getSeedMaterial(), 1);
                 } else {
-                    is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+                    try {
+                        TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
+                        is = new ItemStack(tdi.getMaterial(), 1);
+                        model = tdi.getCustomModelData();
+                    } catch (IllegalArgumentException e) {
+                        TARDISMessage.send(player, "SEED_NOT_VALID");
+                        return true;
+                    }
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(10000000 + model);
+                im.setCustomModelData(model);
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
                 // set display name
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
@@ -429,7 +437,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
-        if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+        if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }

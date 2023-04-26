@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -29,10 +30,6 @@ import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -264,30 +261,6 @@ public class TARDISStaticUtils {
             case MUSIC_DISC_BLOCKS, MUSIC_DISC_CAT, MUSIC_DISC_CHIRP, MUSIC_DISC_MALL, MUSIC_DISC_WAIT -> true;
             default -> false;
         };
-    }
-
-    /**
-     * Checks whether a chunk is available to build a TARDIS in.
-     *
-     * @param w   the world the chunk is in.
-     * @param x   the x coordinate of the chunk.
-     * @param z   the z coordinate of the chunk.
-     * @param wid the width of the schematic.
-     * @param len the length of the schematic.
-     * @return a list of Chunks.
-     */
-    public static List<Chunk> getChunks(World w, int x, int z, int wid, int len) {
-        List<Chunk> chunks = new ArrayList<>();
-        int cw = TARDISNumberParsers.roundUp(wid, 16);
-        int cl = TARDISNumberParsers.roundUp(len, 16);
-        // check all the chunks that will be used by the schematic
-        for (int cx = 0; cx < cw; cx++) {
-            for (int cz = 0; cz < cl; cz++) {
-                Chunk chunk = w.getChunkAt((x + cx), (z + cz));
-                chunks.add(chunk);
-            }
-        }
-        return chunks;
     }
 
     /**

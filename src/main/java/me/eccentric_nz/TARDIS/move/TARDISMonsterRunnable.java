@@ -23,17 +23,18 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -112,7 +113,7 @@ public class TARDISMonsterRunnable implements Runnable {
             if (!take_action) {
                 continue;
             }
-            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
+            boolean twa = plugin.getConfig().getBoolean("modules.weeping_angels");
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 TARDISMonster tm = new TARDISMonster();
@@ -354,8 +355,8 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (m.getEquipment() != null) {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
-                        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && skeleton instanceof Skeleton skelly) {
-                            if (TARDISAngelsAPI.isDalek(skelly)) {
+                        if (plugin.getConfig().getBoolean("modules.weeping_angels") && skeleton instanceof Skeleton skelly) {
+                            if (isDalek(skelly)) {
                                 TARDISDalekDisguiser.dalekanium(skelly);
                             }
                         }
@@ -421,8 +422,8 @@ public class TARDISMonsterRunnable implements Runnable {
                 ent.setCustomName(m.getName());
             }
             if (m.getPassenger() != null) {
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
-                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent, false);
+                if (plugin.getConfig().getBoolean("modules.weeping_angels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
+                    plugin.getTardisAPI().setSilentEquipment((LivingEntity) ent, false);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
                     ent.addPassenger(passenger);
@@ -434,5 +435,9 @@ public class TARDISMonsterRunnable implements Runnable {
     private boolean isTimelord(TARDISTeleportLocation tpl, Player player) {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
         return (rsc.getCompanions().contains(player.getUniqueId()));
+    }
+
+    private boolean isDalek(Skeleton skeleton) {
+        return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
     }
 }

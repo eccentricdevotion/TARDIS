@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database.tool;
 
 public enum Table {
 
+    // tardis
     achievements,
     arched,
     archive,
@@ -29,6 +30,7 @@ public enum Table {
     blocks,
     blueprint,
     chameleon,
+    colour,
     chunks,
     condenser,
     controls,
@@ -64,5 +66,12 @@ public enum Table {
     travellers,
     vaults,
     thevoid,
-    vortex
+    vortex,
+    // shop
+    items,
+    // vortex manipulator
+    beacons,
+    manipulator,
+    messages,
+    saves
 }

@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -38,15 +38,15 @@ public class TARDISPowerButton {
     private final TARDIS plugin;
     private final int id;
     private final Player player;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final boolean powered;
     private final boolean hidden;
     private final boolean lights;
     private final Location loc;
     private final int level;
-    private final boolean lanterns;
+    private final TardisLight light;
 
-    public TARDISPowerButton(TARDIS plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lights, Location loc, int level, boolean lanterns) {
+    public TARDISPowerButton(TARDIS plugin, int id, Player player, ChameleonPreset preset, boolean powered, boolean hidden, boolean lights, Location loc, int level, TardisLight light) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
@@ -56,14 +56,14 @@ public class TARDISPowerButton {
         this.lights = lights;
         this.loc = loc;
         this.level = level;
-        this.lanterns = lanterns;
+        this.light = light;
     }
 
     public void clickButton() {
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);
         HashMap<String, Object> setp = new HashMap<>();
-        boolean isAdaptive = preset.equals(PRESET.ADAPTIVE);
+        boolean isAdaptive = preset.equals(ChameleonPreset.ADAPTIVE);
         UUID uuid = player.getUniqueId();
         if (powered) {
             if (isTravelling(id)) {
@@ -87,7 +87,7 @@ public class TARDISPowerButton {
             }
             // if lights are on, turn them off
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, light);
             }
             // if beacon is on turn it off
             new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
@@ -108,7 +108,7 @@ public class TARDISPowerButton {
             TARDISMessage.send(player, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, light);
             }
             // determine beacon prefs
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());

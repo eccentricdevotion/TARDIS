@@ -44,7 +44,6 @@ public class FloodgateDesktopThemeForm {
         blocks.put("FACTORY", "yellow_concrete_powder");
         blocks.put("FUGITIVE", "polished_deepslate");
         blocks.put("LEGACY_BIGGER", "orange_glazed");
-        blocks.put("LEGACY_BUDGET", "light_gray_glazed");
         blocks.put("LEGACY_DELUXE", "lime_glazed");
         blocks.put("LEGACY_ELEVENTH", "cyan_glazed");
         blocks.put("LEGACY_REDSTONE", "red_glazed");

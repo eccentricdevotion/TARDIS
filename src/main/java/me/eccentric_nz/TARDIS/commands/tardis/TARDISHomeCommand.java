@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -57,22 +57,28 @@ class TARDISHomeCommand {
             int id = rs.getTardis_id();
             if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
                 // set the PRESET for the home location
-                String which;
-                try {
-                    which = args[2].toUpperCase(Locale.ENGLISH);
-                    PRESET.valueOf(which);
-                } catch (IllegalArgumentException e) {
-                    // abort
-                    TARDISMessage.send(player, "ARG_PRESET");
-                    return true;
+                String which = "";
+                if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
+                    which = args[2];
+                } else {
+                    try {
+                        which = args[2].toUpperCase(Locale.ENGLISH);
+                        ChameleonPreset.valueOf(which);
+                    } catch (IllegalArgumentException e) {
+                        // abort
+                        TARDISMessage.send(player, "ARG_PRESET");
+                        return true;
+                    }
                 }
-                // update home record
-                HashMap<String, Object> whereh = new HashMap<>();
-                whereh.put("tardis_id", id);
-                HashMap<String, Object> seth = new HashMap<>();
-                seth.put("preset", which);
-                plugin.getQueryFactory().doUpdate("homes", seth, whereh);
-                TARDISMessage.send(player, "CHAM_SET", which);
+                if (!which.isEmpty()) {
+                    // update home record
+                    HashMap<String, Object> whereh = new HashMap<>();
+                    whereh.put("tardis_id", id);
+                    HashMap<String, Object> seth = new HashMap<>();
+                    seth.put("preset", which);
+                    plugin.getQueryFactory().doUpdate("homes", seth, whereh);
+                    TARDISMessage.send(player, "CHAM_SET", which);
+                }
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 String world = eyeLocation.getWorld().getName();

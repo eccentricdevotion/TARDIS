@@ -17,11 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -39,6 +34,11 @@ import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -143,15 +143,8 @@ class TARDISArchiveCommand {
                             obj = archive.getJSON();
                         }
                     } else {
-                        String directory = (current.isCustom()) ? "user_schematics" : "schematics";
-                        String path = plugin.getDataFolder() + File.separator + directory + File.separator + current.getPermission() + ".tschm";
-                        File file = new File(path);
-                        if (!file.exists()) {
-                            plugin.debug("Could not find a schematic with that name!");
-                            return true;
-                        }
                         // get JSON
-                        obj = TARDISSchematicGZip.unzip(path);
+                        obj = TARDISSchematicGZip.getObject(plugin, "consoles", current.getPermission(), current.isCustom());
                     }
                     if (obj != null) {
                         // get dimensions
@@ -225,12 +218,12 @@ class TARDISArchiveCommand {
                         set.put("console_size", console_size.toString());
                         set.put("beacon", ad.getBeacon());
                         // get lanterns preference
-                        int lanterns = 0;
+                        String lights = "TENTH";
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-                        if (rsp.resultSet() && rsp.isLanternsOn()) {
-                            lanterns = 1;
+                        if (rsp.resultSet()) {
+                            lights = rsp.getLights().toString();
                         }
-                        set.put("lanterns", lanterns);
+                        set.put("lanterns", lights);
                         if (sub.equals("add")) {
                             // save json to database
                             set.put("uuid", uuid);

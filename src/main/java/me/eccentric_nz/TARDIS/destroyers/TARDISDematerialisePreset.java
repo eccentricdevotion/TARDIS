@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -51,7 +51,7 @@ class TARDISDematerialisePreset implements Runnable {
     private final TARDIS plugin;
     private final DestroyData dd;
     private final int loops;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private final BlockData cham_id;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
@@ -71,14 +71,14 @@ class TARDISDematerialisePreset implements Runnable {
      * @param preset the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
      */
-    TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id) {
+    TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, ChameleonPreset preset, BlockData cham_id) {
         this.plugin = plugin;
         this.dd = dd;
         loops = dd.getThrottle().getLoops();
         this.preset = preset;
         i = 0;
         this.cham_id = cham_id;
-        if (this.preset.equals(PRESET.CONSTRUCT)) {
+        if (this.preset.equals(ChameleonPreset.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection()).getColumn();
@@ -100,7 +100,7 @@ class TARDISDematerialisePreset implements Runnable {
         // get relative locations
         int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx = dd.getLocation().getBlockX() - 1;
         int y;
-        if (preset.equals(PRESET.SUBMERGED)) {
+        if (preset.equals(ChameleonPreset.SUBMERGED)) {
             y = dd.getLocation().getBlockY() - 1;
         } else {
             y = dd.getLocation().getBlockY();
@@ -202,7 +202,7 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                     if (!minecart) {
                         String sound;
-                        if (preset.equals(PRESET.JUNK_MODE)) {
+                        if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                             sound = "junk_takeoff";
                         } else {
                             sound = switch (spaceTimeThrottle) {
@@ -216,7 +216,7 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                 }
                 getColours(dd.getTardisID(), preset);
-            } else if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
+            } else if (preset.equals(ChameleonPreset.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                 // animate particles
                 plugin.getUtils().getJunkTravellers(dd.getLocation()).forEach((e) -> {
                     if (e instanceof Player p) {
@@ -225,7 +225,7 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                 });
             } else {
-                if (i % 3 == 1 && preset.equals(PRESET.PUNKED)) {
+                if (i % 3 == 1 && preset.equals(ChameleonPreset.PUNKED)) {
                     plugin.getPresetDestroyer().destroyPistons(dd.getLocation());
                 }
                 // just change the walls
@@ -275,11 +275,11 @@ class TARDISDematerialisePreset implements Runnable {
                         Material mat = colData[yy].getMaterial();
                         switch (mat) {
                             case GRASS_BLOCK, DIRT -> {
-                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colData[yy];
+                                BlockData subi = (preset.equals(ChameleonPreset.SUBMERGED)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                             }
                             case WHITE_WOOL, LIME_WOOL -> {
-                                BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : colData[yy];
+                                BlockData chaw = (preset.equals(ChameleonPreset.FLOWER)) ? the_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                             }
                             case ACACIA_SAPLING, ALLIUM, AZURE_BLUET, BAMBOO_SAPLING, BEETROOTS, BIRCH_SAPLING, BLUE_ORCHID, CARROTS, CORNFLOWER, CRIMSON_FUNGUS, CRIMSON_ROOTS, DANDELION, DARK_OAK_SAPLING, DEAD_BUSH, FERN, GRASS, JUNGLE_SAPLING, LARGE_FERN, LILAC, LILY_OF_THE_VALLEY, OAK_SAPLING, ORANGE_TULIP, OXEYE_DAISY, PEONY, PINK_TULIP, POPPY, POTATOES, RED_TULIP, ROSE_BUSH, SPRUCE_SAPLING, SUGAR_CANE, SUNFLOWER, SWEET_BERRY_BUSH, TALL_GRASS, WARPED_FUNGUS, WARPED_ROOTS, WHEAT, WHITE_TULIP, WITHER_ROSE -> {
@@ -296,24 +296,24 @@ class TARDISDematerialisePreset implements Runnable {
                             }
                             // wood, iron & trap doors
                             case ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR, CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, IRON_DOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR, SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
-                                if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
+                                if (preset.equals(ChameleonPreset.SWAMP) || preset.equals(ChameleonPreset.TOPSYTURVEY) || preset.equals(ChameleonPreset.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
                             }
                             case WHITE_STAINED_GLASS -> {
-                                BlockData chaf = (preset.equals(PRESET.FLOWER)) ? stain_colour : colData[yy];
+                                BlockData chaf = (preset.equals(ChameleonPreset.FLOWER)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaf);
                             }
                             case LIME_STAINED_GLASS -> {
-                                BlockData chap = (preset.equals(PRESET.PARTY)) ? stain_colour : colData[yy];
+                                BlockData chap = (preset.equals(ChameleonPreset.PARTY)) ? stain_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chap);
                             }
                             case LIGHT_GRAY_STAINED_GLASS -> {
-                                BlockData cham = (preset.equals(PRESET.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
+                                BlockData cham = (preset.equals(ChameleonPreset.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
                             }
                             case LIGHT_GRAY_TERRACOTTA -> {
-                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colData[yy];
+                                BlockData chai = (preset.equals(ChameleonPreset.FACTORY)) ? cham_id : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                             }
                             default -> {
@@ -330,7 +330,7 @@ class TARDISDematerialisePreset implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), preset);
-            if (preset.equals(PRESET.JUNK_MODE)) {
+            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                 // teleport player(s) to exit (tmd.getFromToLocation())
                 getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player p) {
@@ -363,7 +363,7 @@ class TARDISDematerialisePreset implements Runnable {
         return ents;
     }
 
-    private void getColours(int id, PRESET p) {
+    private void getColours(int id, ChameleonPreset p) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
@@ -371,7 +371,7 @@ class TARDISDematerialisePreset implements Runnable {
         if (rs.resultSet()) {
             try {
                 Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
-                if (p.equals(PRESET.FLOWER)) {
+                if (p.equals(ChameleonPreset.FLOWER)) {
                     the_colour = b.getRelative(BlockFace.UP, 3).getBlockData();
                     String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");
                     String colour = (split.length > 2) ? split[0] + "_" + split[1] : split[0];

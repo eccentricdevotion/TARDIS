@@ -17,10 +17,6 @@
 package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +24,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 
 /**
  * @author eccentric_nz
@@ -75,12 +75,18 @@ public class ResultSetArchive {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
+                    TardisLight light;
+                    try {
+                        light = TardisLight.valueOf(rs.getString("lights"));
+                    } catch (IllegalArgumentException e) {
+                        light = TardisLight.LAMP;
+                    }
                     archive = new Archive(
                             UUID.fromString(rs.getString("uuid")),
                             rs.getString("name"),
                             rs.getString("console_size"),
                             rs.getBoolean("beacon"),
-                            rs.getBoolean("lanterns"),
+                            light,
                             rs.getInt("use"),
                             rs.getInt("y"),
                             JsonParser.parseString(rs.getString("data")).getAsJsonObject(),

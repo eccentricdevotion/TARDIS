@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -206,7 +207,13 @@ public class TARDISPluginRespect {
      */
     public void loadFactions() {
         if (plugin.getPM().getPlugin("Factions") != null) {
-            factionsOnServer = true;
+            try {
+                Class.forName("com.massivecraft.factions.entity.MPlayer");
+                plugin.getLogger().log(Level.WARNING, "Factions is the wrong version!");
+                factionsOnServer = false;
+            } catch (ClassNotFoundException e) {
+                factionsOnServer = true;
+            }
         }
     }
 

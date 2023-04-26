@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -33,6 +37,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,11 +51,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -197,7 +197,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             }
                                             TARDISMessage.send(p, "BIOME_SEARCH");
 //                                            Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                            Location nsob = plugin.getTardisHelper().searchBiome(rsc.getWorld(), biome, current);
+                                            Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                             if (nsob == null) {
                                                 TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                 continue;
@@ -280,13 +280,24 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("direction", lore.get(6));
                                                 boolean sub = Boolean.parseBoolean(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
-                                                try {
-                                                    PRESET.valueOf(lore.get(5));
-                                                    set_tardis.put("chameleon_preset", lore.get(5));
-                                                    // set chameleon adaption to OFF
-                                                    set_tardis.put("adapti_on", 0);
-                                                } catch (IllegalArgumentException e) {
-                                                    plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                if (lore.get(5).startsWith("ITEM")) {
+                                                    String[] split = lore.get(5).split(":");
+                                                    if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(split[1])) {
+                                                        set_tardis.put("chameleon_preset", lore.get(5));
+                                                        // set chameleon adaption to OFF
+                                                        set_tardis.put("adapti_on", 0);
+                                                    } else {
+                                                        plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                    }
+                                                } else {
+                                                    try {
+                                                        ChameleonPreset.valueOf(lore.get(5));
+                                                        set_tardis.put("chameleon_preset", lore.get(5));
+                                                        // set chameleon adaption to OFF
+                                                        set_tardis.put("adapti_on", 0);
+                                                    } catch (IllegalArgumentException e) {
+                                                        plugin.debug("Invalid PRESET value: " + lore.get(5));
+                                                    }
                                                 }
                                                 TARDISMessage.send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                                 travelType = TravelType.SAVE;
@@ -298,13 +309,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                         default -> {
                                         }
                                     }
-                                    if (set_next.size() > 0) {
+                                    if (!set_next.isEmpty()) {
                                         // update next
                                         where_next.put("tardis_id", id);
                                         plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
                                     }
-                                    if (set_tardis.size() > 0) {
+                                    if (!set_tardis.isEmpty()) {
                                         // update tardis
                                         where_tardis.put("tardis_id", id);
                                         plugin.getQueryFactory().doUpdate("tardis", set_tardis, where_tardis);

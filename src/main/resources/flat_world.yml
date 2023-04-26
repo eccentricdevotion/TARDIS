@@ -1,0 +1,10 @@
+## Blocks to use in the Flat World Generator
+# Use Spigot Material names
+# bottom has 1 layer
+bottom: BEDROCK
+# rock has ~60 layers
+rock: STONE
+# middle has 3 layers
+middle: DIRT
+# surface has 1 layer
+surface: GRASS_BLOCK

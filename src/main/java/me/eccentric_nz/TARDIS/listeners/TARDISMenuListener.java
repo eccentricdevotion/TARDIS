@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -77,6 +80,14 @@ public class TARDISMenuListener implements Listener {
         TARDISSudoTracker.SUDOERS.remove(event.getPlayer().getUniqueId());
     }
 
+    public int getPageNumber(InventoryView view) {
+        ItemStack is = view.getItem(45);
+        ItemMeta im = is.getItemMeta();
+        String[] split = im.getDisplayName().split(" ");
+        int page = TARDISNumberParsers.parseInt(split[1]);
+        return page;
+    }
+
     private HashMap<String, Integer> getTitleMap() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put(ChatColor.DARK_RED + "Add Companion", 54);
@@ -87,8 +98,9 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);
         map.put(ChatColor.DARK_RED + "Chameleon Help", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Presets", 54);
-        map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 27);
+        map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
+        map.put(ChatColor.DARK_RED + "Colour Picker", 54);
         map.put(ChatColor.DARK_RED + "Companions", 54);
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
         map.put(ChatColor.DARK_RED + "Chemical compounds", 27);

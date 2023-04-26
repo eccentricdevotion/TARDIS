@@ -16,6 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
@@ -27,16 +36,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * The Sub-Wave Network was a piece of sentient software programmed to find anyone who could help to contact the Tenth
@@ -170,8 +169,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO", lower);
                         return true;
                     }
-                    String basepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-                    boolean success = new TARDISRoomMap(plugin).makeRoomMap(basepath + lower, name);
+                    boolean success = new TARDISRoomMap(plugin).makeRoomMap(lower, name, true);
                     if (!success) {
                         TARDISMessage.send(sender, "ROOM_FAILED");
                         return true;

@@ -20,8 +20,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -33,7 +35,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -99,11 +100,11 @@ class SudoUpdate {
                 return true;
             }
             if (updateable.equals(Updateable.STORAGE)) {
-                // update note block if it's not MUSHROOM_STEM
+                // update note block if it's not BARRIER
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
-                if (block.getType().equals(Material.NOTE_BLOCK)) {
-                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
-                    block.setBlockData(mushroom, true);
+                if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                    block.setBlockData(TARDISConstants.BARRIER, true);
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {

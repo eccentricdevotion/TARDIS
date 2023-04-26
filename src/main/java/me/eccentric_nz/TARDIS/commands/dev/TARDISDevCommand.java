@@ -24,20 +24,16 @@ import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
-import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,7 +49,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot");
+    private final Set<String> firstsStr = Sets.newHashSet(
+            "add_regions",
+            "advancements",
+            "chunky",
+            "list",
+            "plurals",
+            "stats",
+            "tree",
+            "snapshot",
+            "displayitem",
+            "frame"
+    );
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -95,37 +102,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     return new TARDISDevListCommand(plugin).listStuff(sender, args);
                 }
                 if (first.equals("tree")) {
-                    if (sender instanceof Player player) {
-                        Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
-                        Block up = targetBlock.getRelative(BlockFace.UP);
-                        if (args.length == 1) {
-                            if (!targetBlock.getType().equals(Material.GRASS_BLOCK)) {
-                                TARDISMessage.message(sender, plugin.getPluginName() + "You must be targeting a grass block!");
-                                return true;
-                            }
-                            plugin.getTardisHelper().growTree("random", up.getLocation());
-                            return true;
-                        }
-                        if (args.length == 4) {
-                            try {
-                                Material stem = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
-                                Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
-                                Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
-                                if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMatrials().contains(stem) || !plugin.getTardisHelper().getTreeMatrials().contains(hat) || !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
-                                    TARDISMessage.send(sender, "ARG_NOT_BLOCK");
-                                    return true;
-                                }
-                                plugin.getTardisHelper().growTree(up.getLocation(), targetBlock.getType(), stem, hat, decor);
-                                return true;
-                            } catch (IllegalArgumentException e) {
-                                TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
-                                return true;
-                            }
-                        } else {
-                            int which = TARDISNumberParsers.parseInt(args[1]);
-                            FractalFence.grow(targetBlock, which);
-                        }
-                    }
+                    return new TARDISTreeCommand(plugin).grow(sender, args);
                 }
                 if (first.equals("plurals")) {
                     for (Material m : Material.values()) {
@@ -154,7 +131,22 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                     }
                 }
-                return true;
+                if (first.equals("displayitem")) {
+                    if (sender instanceof Player player) {
+                        return new TARDISDisplayItemCommand(plugin).display(player, args);
+                    } else {
+                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        return true;
+                    }
+                }
+                if (first.equals("frame")) {
+                    if (sender instanceof Player player) {
+                        return new TARDISFrameCommand(plugin).toggle(player, args[1].toLowerCase().equals("lock"));
+                    } else {
+                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        return true;
+                    }
+                }
             } else {
                 TARDISMessage.send(sender, "CMD_ADMIN");
                 return false;

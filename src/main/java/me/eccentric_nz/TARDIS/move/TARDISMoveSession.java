@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, The Multiverse Team All rights reserved.
+ * Copyright (C) 2023, The Multiverse Team All rights reserved.
 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -25,6 +25,7 @@
 package me.eccentric_nz.TARDIS.move;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,6 +40,10 @@ public class TARDISMoveSession {
         setLocation(p.getLocation());
     }
 
+    public TARDISMoveSession(Entity e) {
+        setLocation(e.getLocation());
+    }
+
     public boolean isStaleLocation() {
         return staleLocation;
     }
@@ -47,7 +52,7 @@ public class TARDISMoveSession {
         staleLocation = active;
     }
 
-    void setStaleLocation(Location loc) {
+    public void setStaleLocation(Location loc) {
 
         // If the player has not moved, they have a stale location
         if (getLocation().getBlockX() == loc.getBlockX() && getLocation().getBlockY() == loc.getBlockY() && getLocation().getBlockZ() == loc.getBlockZ()) {

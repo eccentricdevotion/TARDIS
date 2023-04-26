@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.StandbyData;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.StandbyData;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 
 /**
  * Gets a list of TARDIS ids whose power is on.
@@ -59,26 +59,30 @@ public class ResultSetStandby {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     StandbyData sd;
-                    PRESET preset;
+                    ChameleonPreset preset;
                     try {
-                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                        if (rs.getString("chameleon_preset").startsWith("ITEM")) {
+                            preset = ChameleonPreset.ITEM;
+                        } else {
+                            preset = ChameleonPreset.valueOf(rs.getString("chameleon_preset"));
+                        }
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = ChameleonPreset.FACTORY;
                     }
                     switch (rs.getString("size")) {
-                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, ChameleonPreset.JUNK, TardisLight.TENTH);
                         case "ARCHIVE" -> {
                             HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", rs.getString("uuid"));
                             wherea.put("use", 1);
                             ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
-                            boolean lanterns = false;
+                            TardisLight lightType = TardisLight.LAMP;
                             if (rsa.resultSet()) {
-                                lanterns = rsa.getArchive().isLanterns();
+                                lightType = rsa.getArchive().getLight();
                             }
-                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
+                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lightType);
                         }
-                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).getLights());
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -77,7 +77,7 @@ public class TARDISInnerDoorOpener {
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 Tardis tardis = null;
-                PRESET preset = null;
+                ChameleonPreset preset = null;
                 boolean abandoned = false;
                 if (rs.resultSet()) {
                     tardis = rs.getTardis();

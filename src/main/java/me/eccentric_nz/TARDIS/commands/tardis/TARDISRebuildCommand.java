@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -69,7 +69,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
                 return true;
             }
-            if (tardis.getPreset().equals(PRESET.INVISIBLE) && tardis.getDemat().equals(PRESET.INVISIBLE)) {
+            if (tardis.getPreset().equals(ChameleonPreset.INVISIBLE) && tardis.getDemat().equals(ChameleonPreset.INVISIBLE)) {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
                 return true;
             }

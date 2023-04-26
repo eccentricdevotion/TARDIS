@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -69,7 +69,7 @@ public class TARDISRemoteHideCommand {
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
+        if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE) && olp != null) {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }

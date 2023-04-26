@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -25,12 +26,11 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class TARDISBiomeFinder {
 
@@ -41,7 +41,7 @@ public class TARDISBiomeFinder {
     }
 
     public void run(World w, Biome biome, Player player, int id, COMPASS direction, Location current) {
-        Location tb = plugin.getTardisHelper().searchBiome(w, biome, current);
+        Location tb = BiomeUtilities.searchBiome(w, biome, current);
         // cancel biome finder
         if (tb == null) {
             TARDISMessage.send(player, "BIOME_NOT_FOUND");

@@ -3,13 +3,12 @@ package me.eccentric_nz.TARDIS.utility;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.onarandombox.MultiverseCore.enums.AllowedPortalType;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.command.CommandSender;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.command.CommandSender;
 
 public class TARDISMultiverseImporter {
 
@@ -50,7 +49,7 @@ public class TARDISMultiverseImporter {
                 }
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getAllowedPortals() != AllowedPortalType.NONE);
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".alias", mvw.getAlias());
-                TARDISMessage.send(sender, "MULITVERSE_TRANSFER", mvw.getName());
+                TARDISMessage.send(sender, "MULTIVERSE_TRANSFER", mvw.getName());
                 i++;
             } else {
                 TARDISMessage.send(sender, "MULTIVERSE_EXISTS", mvw.getName());

@@ -20,22 +20,26 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,13 +51,16 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private final TARDIS plugin;
     private final BuildData bd;
     private final int loops;
-    private final PRESET preset;
+    private final ChameleonPreset preset;
     private int task;
     private int i;
     private ItemFrame frame;
     private ItemStack is;
+    private Material dye;
+    private Color colour = null;
+    private String pb;
 
-    TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
+    TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();
@@ -82,7 +89,9 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     default -> { // preset
                         cmd = 1001;
                         // set a light block
-                        light.setBlockData(TARDISConstants.LIGHT);
+                        Levelled levelled = TARDISConstants.LIGHT;
+                        levelled.setLevel(7);
+                        light.setBlockData(levelled);
                     }
                 }
                 // first run
@@ -106,16 +115,17 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     }
                     frame.setFacingDirection(BlockFace.UP);
                     frame.setRotation(bd.getDirection().getRotation());
-                    Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                    dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound;
-                            if (preset.equals(PRESET.JUNK_MODE)) {
+                            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    case WARP, RAPID, FASTER ->
+                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
                                     default -> "tardis_land"; // NORMAL
                                 };
                             }
@@ -124,14 +134,39 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
                     }
+                    switch (preset) {
+                        case WEEPING_ANGEL -> pb = "Weeping Angel";
+                        case ITEM -> {
+                            for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                                if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
+                                    pb = k;
+                                    break;
+                                }
+                            }
+                        }
+                        default -> pb = "Police Box";
+                    }
+                    if (preset == ChameleonPreset.COLOURED) {
+                        // get the colour
+                        ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+                        if (rsc.resultSet()) {
+                            colour = Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue());
+                        }
+                    }
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(cmd);
                 if (bd.shouldAddSign()) {
-                    String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
                     im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
                 }
-                is.setItemMeta(im);
+                if (cmd == 1001 && preset == ChameleonPreset.COLOURED && colour != null) {
+                    // set the colour
+                    LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                    leatherArmorMeta.setColor(colour);
+                    is.setItemMeta(leatherArmorMeta);
+                } else {
+                    is.setItemMeta(im);
+                }
                 frame.setItem(is, false);
                 frame.setFixed(true);
                 frame.setVisible(false);
@@ -190,7 +225,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     // tardis has moved so remove HADS damage count
                     plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
                     // update demat field in database
-                    TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
+                    String update = preset.toString();
+                    if (preset == ChameleonPreset.ITEM) {
+                        update = "ITEM:" + pb;
+                    }
+                    TARDISBuilderUtility.updateChameleonDemat(update, bd.getTardisID());
                 }
             }
         }

@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Remote;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -245,7 +245,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     }
                                     // check whether this is a no invisibility area
                                     String invisibility = rsa.getArea().getInvisibility();
-                                    if (invisibility.equals("DENY") && tardis.getPreset().equals(PRESET.INVISIBLE)) {
+                                    if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                         // check preset
                                         TARDISMessage.send(sender, "AREA_NO_INVISIBLE");
                                         return true;
@@ -369,6 +369,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             }, 5L);
                             return true;
                         }
+
                     }
                 } catch (IllegalArgumentException e) {
                     TARDISMessage.send(sender, "CMD_NOT_VALID");

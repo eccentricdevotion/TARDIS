@@ -11,7 +11,7 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
-    generator: TARDISChunkGenerator:void
+    generator: TARDIS:void
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
@@ -26,7 +26,7 @@ planets:
     world_type: FLAT
     environment: NORMAL
     void: true
-    generator: TARDISChunkGenerator:void
+    generator: TARDIS:void
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
@@ -48,7 +48,7 @@ planets:
     time_travel: true
     world_type: NORMAL
     environment: NORMAL
-    generator: TARDISChunkGenerator:skaro
+    generator: TARDIS:skaro
     keep_spawn_in_memory: false
     spawn_other_mobs: true
     gamerules:
@@ -63,7 +63,7 @@ planets:
     time_travel: true
     world_type: NORMAL
     environment: NORMAL
-    generator: TARDISChunkGenerator:siluria
+    generator: TARDIS:siluria
     keep_spawn_in_memory: false
     spawn_other_mobs: true
     gamerules:
@@ -78,7 +78,7 @@ planets:
     time_travel: true
     world_type: NORMAL
     environment: NORMAL
-    generator: TARDISChunkGenerator:gallifrey
+    generator: TARDIS:gallifrey
     keep_spawn_in_memory: false
     spawn_other_mobs: true
     gamerules:

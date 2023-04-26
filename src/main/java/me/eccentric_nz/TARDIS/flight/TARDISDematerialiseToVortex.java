@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -104,8 +104,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setSubmarine(sub);
             dd.setTardisID(id);
             dd.setThrottle(spaceTimeThrottle);
-            PRESET preset = tardis.getPreset();
-            if (preset.equals(PRESET.JUNK_MODE)) {
+            ChameleonPreset preset = tardis.getPreset();
+            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();
                 wherenl.put("tardis_id", id);
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
@@ -121,7 +121,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                 // play demat sfx
                 if (!minecart) {
-                    if (!preset.equals(PRESET.JUNK_MODE)) {
+                    if (!preset.equals(ChameleonPreset.JUNK_MODE)) {
                         String sound;
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";

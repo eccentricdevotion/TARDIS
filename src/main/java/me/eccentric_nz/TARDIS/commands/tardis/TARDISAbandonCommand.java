@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -27,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Location;
@@ -43,8 +44,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-
 /**
  * @author eccentric_nz
  */
@@ -56,7 +55,7 @@ public class TARDISAbandonCommand {
         this.plugin = plugin;
     }
 
-    public static Sign getSign(Location l, COMPASS d, PRESET p) {
+    public static Sign getSign(Location l, COMPASS d, ChameleonPreset p) {
         Sign sign = null;
         World w = l.getWorld();
         int signx, signz, signy;
@@ -205,7 +204,7 @@ public class TARDISAbandonCommand {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
-                    PRESET preset = rs.getPreset();
+                    ChameleonPreset preset = rs.getPreset();
                     // need to be in tardis
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
@@ -214,7 +213,7 @@ public class TARDISAbandonCommand {
                         TARDISMessage.send(player, "NOT_IN_TARDIS");
                         return true;
                     }
-                    if (preset.equals(PRESET.JUNK_MODE)) {
+                    if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                         TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
                         return true;
                     }
@@ -242,7 +241,7 @@ public class TARDISAbandonCommand {
                     new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered_on()) {
                         // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
+                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();
                     }
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
@@ -267,7 +266,7 @@ public class TARDISAbandonCommand {
                                 }
                             }
                             if (found) {
-                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, id, true);
                                 ItemStack is = new ItemStack(dye, 1);
                                 ItemMeta im = is.getItemMeta();
                                 im.setCustomModelData(1001);

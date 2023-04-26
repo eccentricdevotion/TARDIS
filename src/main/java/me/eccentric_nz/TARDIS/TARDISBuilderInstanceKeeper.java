@@ -17,110 +17,28 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
+import java.util.*;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
-
-import java.util.*;
+import org.bukkit.Tag;
 
 /**
- * Keeps track of various building related lookups. these include: Room block counts, Room seed blocks and Stained Glass
- * block colour equivalents for regular blocks.
+ * Keeps track of various building related lookups. these include: Room block
+ * counts, Room seed blocks and Stained Glass block colour equivalents for
+ * regular blocks.
  *
  * @author eccentric_nz
  */
 public class TARDISBuilderInstanceKeeper {
 
-    private static final Map<String, String> BLOCK_CONVERSION;
+    private static final HashMap<String, String> BLOCK_CONVERSION = initBlockConversion();
     private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_DEEPSLATE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER", "JUKEBOX", "NOTE_BLOCK");
     private static final Set<Material> PRECIOUS = new HashSet<>();
     private static final Set<Integer> TIPS_SLOTS = new HashSet<>();
 
     static {
-        BLOCK_CONVERSION = Map.ofEntries(
-                Map.entry("ACACIA_LEAVES", "ACACIA_SAPLING"),
-                Map.entry("BARRIER", "STONE"),
-                Map.entry("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF"),
-                Map.entry("BIRCH_LEAVES", "BIRCH_SAPLING"),
-                Map.entry("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM"),
-                Map.entry("SMALL_AMETHYST_BUD", "AMETHYST_SHARD"),
-                Map.entry("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD"),
-                Map.entry("LARGE_AMETHYST_BUD", "AMETHYST_SHARD"),
-                Map.entry("AMETHYST_CLUSTER", "AMETHYST_SHARD"),
-                Map.entry("CAKE", "LEVER"),
-                Map.entry("CARROTS", "CARROT"),
-                Map.entry("CAVE_VINES", "GLOW_BERRIES"),
-                Map.entry("CAVE_VINES_PLANT", "GLOW_BERRIES"),
-                Map.entry("COBWEB", "STRING"),
-                Map.entry("COCOA", "COCOA_BEANS"),
-                Map.entry("DARK_OAK_LEAVES", "DARK_OAK_SAPLING"),
-                Map.entry("DIRT_PATH", "DIRT"),
-                Map.entry("FARMLAND", "DIRT"),
-                Map.entry("GRASS_BLOCK", "DIRT"),
-                Map.entry("GRASS", "WHEAT_SEEDS"),
-                Map.entry("IRON_DOOR", "IRON_DOOR"),
-                Map.entry("JUNGLE_LEAVES", "JUNGLE_SAPLING"),
-                Map.entry("LIGHT", "TORCH"),
-                Map.entry("MELON_STEM", "MELON_SEEDS"),
-                Map.entry("MYCELIUM", "DIRT"),
-                Map.entry("OAK_LEAVES", "OAK_SAPLING"),
-                Map.entry("POTATOES", "POTATO"),
-                Map.entry("POWDER_SNOW", "SNOW_BLOCK"),
-                Map.entry("PUMPKIN_STEM", "PUMPKIN_SEEDS"),
-                Map.entry("REDSTONE_WALL_TORCH", "REDSTONE_TORCH"),
-                Map.entry("REDSTONE_WIRE", "REDSTONE"),
-                Map.entry("RED_MUSHROOM_BLOCK", "RED_MUSHROOM"),
-                Map.entry("SCULK_VEIN", "SCULK"),
-                Map.entry("SNOW", "SNOWBALL"),
-                Map.entry("SPRUCE_LEAVES", "SPRUCE_SAPLING"),
-                Map.entry("STONE", "COBBLESTONE"),
-                Map.entry("TALL_GRASS", "WHEAT_SEEDS"),
-                Map.entry("TWISTING_VINES_PLANT", "TWISTING_VINES"),
-                Map.entry("OAK_WALL_SIGN", "OAK_SIGN"),
-                Map.entry("DARK_OAK_WALL_SIGN", "DARK_OAK_SIGN"),
-                Map.entry("SPRUCE_WALL_SIGN", "SPRUCE_SIGN"),
-                Map.entry("BIRCH_WALL_SIGN", "BIRCH_SIGN"),
-                Map.entry("JUNGLE_WALL_SIGN", "JUNGLE_SIGN"),
-                Map.entry("ACACIA_WALL_SIGN", "ACACIA_SIGN"),
-                Map.entry("CRIMSON_WALL_SIGN", "CRIMSON_SIGN"),
-                Map.entry("WALL_TORCH", "TORCH"),
-                Map.entry("WARPED_WALL_SIGN", "WARPED_SIGN"),
-                Map.entry("WEEPING_VINES_PLANT", "WEEPING_VINES"),
-                Map.entry("WHEAT", "WHEAT_SEEDS"),
-                // potted plants
-                Map.entry("POTTED_ACACIA_SAPLING", "ACACIA_SAPLING"),
-                Map.entry("POTTED_ALLIUM", "ALLIUM"),
-                Map.entry("POTTED_AZALEA_BUSH", "AZALEA"),
-                Map.entry("POTTED_AZURE_BLUET", "AZURE_BLUET"),
-                Map.entry("POTTED_BAMBOO", "BAMBOO"),
-                Map.entry("POTTED_BIRCH_SAPLING", "BIRCH_SAPLING"),
-                Map.entry("POTTED_BLUE_ORCHID", "BLUE_ORCHID"),
-                Map.entry("POTTED_BROWN_MUSHROOM", "BROWN_MUSHROOM"),
-                Map.entry("POTTED_CACTUS", "CACTUS"),
-                Map.entry("POTTED_CORNFLOWER", "CORNFLOWER"),
-                Map.entry("POTTED_CRIMSON_FUNGUS", "CRIMSON_FUNGUS"),
-                Map.entry("POTTED_CRIMSON_ROOTS", "CRIMSON_ROOTS"),
-                Map.entry("POTTED_DANDELION", "DANDELION"),
-                Map.entry("POTTED_DARK_OAK_SAPLING", "DARK_OAK_SAPLING"),
-                Map.entry("POTTED_DEAD_BUSH", "DEAD_BUSH"),
-                Map.entry("POTTED_FERN", "FERN"),
-                Map.entry("POTTED_FLOWERING_AZALEA_BUSH", "FLOWERING_AZALEA"),
-                Map.entry("POTTED_JUNGLE_SAPLING", "JUNGLE_SAPLING"),
-                Map.entry("POTTED_LILY_OF_THE_VALLEY", "LILY_OF_THE_VALLEY"),
-                Map.entry("POTTED_OAK_SAPLING", "OAK_SAPLING"),
-                Map.entry("POTTED_ORANGE_TULIP", "ORANGE_TULIP"),
-                Map.entry("POTTED_OXEYE_DAISY", "OXEYE_DAISY"),
-                Map.entry("POTTED_PINK_TULIP", "PINK_TULIP"),
-                Map.entry("POTTED_POPPY", "POPPY"),
-                Map.entry("POTTED_RED_MUSHROOM", "RED_MUSHROOM"),
-                Map.entry("POTTED_RED_TULIP", "RED_TULIP"),
-                Map.entry("POTTED_SPRUCE_SAPLING", "SPRUCE_SAPLING"),
-                Map.entry("POTTED_WARPED_FUNGUS", "WARPED_FUNGUS"),
-                Map.entry("POTTED_WARPED_ROOTS", "WARPED_ROOTS"),
-                Map.entry("POTTED_WHITE_TULIP", "WHITE_TULIP"),
-                Map.entry("POTTED_WITHER_ROSE", "WITHER_ROSE")
-        );
         // precious blocks
         PRECIOUS.add(Material.BEACON);
         PRECIOUS.add(Material.BEDROCK);
@@ -205,8 +123,9 @@ public class TARDISBuilderInstanceKeeper {
     }
 
     /**
-     * Gets a map of Material names where the key is a block that needs to be changed to the item in the map value.
-     * This is needed when condensing blocks for rooms.
+     * Gets a map of Material names where the key is a block that needs to be
+     * changed to the item in the map value. This is needed when condensing
+     * blocks for rooms.
      *
      * @return a map of Material names for conversion
      */
@@ -215,7 +134,8 @@ public class TARDISBuilderInstanceKeeper {
     }
 
     /**
-     * Get a list of blocks that will be ignored by the rooms_require_blocks option
+     * Get a list of blocks that will be ignored by the rooms_require_blocks
+     * option
      *
      * @return a list of block names
      */
@@ -230,5 +150,64 @@ public class TARDISBuilderInstanceKeeper {
      */
     public HashMap<UUID, Integer> getRoomProgress() {
         return roomProgress;
+    }
+
+    private static HashMap<String, String> initBlockConversion() {
+        HashMap<String, String> conversions = new HashMap<>();
+                conversions.put("AMETHYST_CLUSTER", "AMETHYST_SHARD");
+                conversions.put("BARRIER", "STONE");
+                conversions.put("BEETROOTS", "BEETROOT");
+                conversions.put("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF");
+                conversions.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
+                conversions.put("CAKE", "LEVER");
+                conversions.put("CARROTS", "CARROT");
+                conversions.put("CAVE_VINES", "GLOW_BERRIES");
+                conversions.put("CAVE_VINES_PLANT", "GLOW_BERRIES");
+                conversions.put("COBWEB", "STRING");
+                conversions.put("COCOA", "COCOA_BEANS");
+                conversions.put("DIRT_PATH", "DIRT");
+                conversions.put("FARMLAND", "DIRT");
+                conversions.put("GRASS", "WHEAT_SEEDS");
+                conversions.put("GRASS_BLOCK", "DIRT");
+                conversions.put("LARGE_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("LIGHT", "TORCH");
+                conversions.put("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("MELON_STEM", "MELON_SEEDS");
+                conversions.put("MYCELIUM", "DIRT");
+                conversions.put("POTATOES", "POTATO");
+                conversions.put("POWDER_SNOW", "SNOW_BLOCK");
+                conversions.put("PUMPKIN_STEM", "PUMPKIN_SEEDS");
+                conversions.put("REDSTONE_WALL_TORCH", "REDSTONE_TORCH");
+                conversions.put("REDSTONE_WIRE", "REDSTONE");
+                conversions.put("RED_MUSHROOM_BLOCK", "RED_MUSHROOM");
+                conversions.put("SCULK_VEIN", "SCULK");
+                conversions.put("SMALL_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("SNOW", "SNOWBALL");
+                conversions.put("STONE", "COBBLESTONE");
+                conversions.put("TALL_GRASS", "WHEAT_SEEDS");
+                conversions.put("TORCHFLOWER_CROP", "TORCHFLOWER");
+                conversions.put("TWISTING_VINES_PLANT", "TWISTING_VINES");
+                conversions.put("WALL_TORCH", "TORCH");
+                conversions.put("WEEPING_VINES_PLANT", "WEEPING_VINES");
+                conversions.put("WHEAT", "WHEAT_SEEDS");
+        // add all potted plants
+        for (Material pot : Tag.FLOWER_POTS.getValues()) {
+            conversions.put(pot.toString(), pot.toString().replace("POTTED_", ""));
+        }
+        // add all leaves
+        for (Material leaf : Tag.LEAVES.getValues()) {
+            conversions.put(leaf.toString(), leaf.toString().replace("_LEAVES", "_SAPLING"));
+        }
+        conversions.put("MANGROVE_LEAVES", "MANGROVE_PROPAGULE");
+        // all wall signs
+        for (Material sign : Tag.WALL_SIGNS.getValues()) {
+            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
+        }
+        /* hanging signs don't officially exist yet...
+        for (Material sign : Tag.WALL_HANGING_SIGNS.getValues()) {
+            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
+        }
+        */
+        return conversions;
     }
 }

@@ -97,6 +97,10 @@ public class TARDISSQLiteDatabase {
             String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintData TEXT, stainData TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '')";
             statement.executeUpdate(queryChameleon);
 
+            // Table structure for table 'colour'
+            String queryColour = "CREATE TABLE IF NOT EXISTS " + prefix + "colour (colour_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, red INTEGER, green INTEGER, blue INTEGER)";
+            statement.executeUpdate(queryColour);
+
             // Table structure for table 'chunks'
             String queryChunks = "CREATE TABLE IF NOT EXISTS " + prefix + "chunks (chunk_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT, x INTEGER, z INTEGER)";
             statement.executeUpdate(queryChunks);
@@ -166,7 +170,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPaperBag);
 
             // Table structure for table 'player_prefs'
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', auto_on INTEGER DEFAULT 0, auto_type TEXT DEFAULT 'CLOSEST', auto_default TEXT DEFAULT 'HOME', beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, close_gui_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, wool_lights_on INTEGER DEFAULT 0, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lanterns_on INTEGER DEFAULT 0, auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, difficulty INTEGER DEFAULT 0, auto_powerup_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', auto_on INTEGER DEFAULT 0, auto_type TEXT DEFAULT 'CLOSEST', auto_default TEXT DEFAULT 'HOME', beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, close_gui_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lights TEXT DEFAULT 'TENTH', auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, difficulty INTEGER DEFAULT 0, auto_powerup_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'portals'
@@ -251,6 +255,26 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'vortex'
             String queryVortex = "CREATE TABLE IF NOT EXISTS " + prefix + "vortex (tardis_id INTEGER PRIMARY KEY NOT NULL, task INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVortex);
+
+            // Table structure for shop items
+            String queryItems = "CREATE TABLE IF NOT EXISTS " + prefix + "items (item_id INTEGER PRIMARY KEY NOT NULL, item TEXT DEFAULT '', location TEXT DEFAULT '', cost REAL DEFAULT 0)";
+            statement.executeUpdate(queryItems);
+
+            // Table structure for table 'saves'
+            String querySaves = "CREATE TABLE IF NOT EXISTS " + prefix + "saves (save_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', save_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0)";
+            statement.executeUpdate(querySaves);
+
+            // Table structure for table 'messages'
+            String queryMessages = "CREATE TABLE IF NOT EXISTS " + prefix + "messages (message_id INTEGER PRIMARY KEY NOT NULL, uuid_to TEXT DEFAULT '', uuid_from TEXT DEFAULT '', message TEXT DEFAULT '', date INTEGER DEFAULT (strftime('%s', 'now')), read INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryMessages);
+
+            //  Table structure for table 'beacons'
+            String queryBeacons = "CREATE TABLE IF NOT EXISTS " + prefix + "beacons (beacon_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '', block_data TEXT DEFAULT '')";
+            statement.executeUpdate(queryBeacons);
+
+            //  Table structure for table 'manipulator'
+            String queryManipulator = "CREATE TABLE IF NOT EXISTS " + prefix + "manipulator (uuid TEXT PRIMARY KEY NOT NULL, tachyon_level INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryManipulator);
 
             // delete old submerged, gravity and levers tables
             String dropSubmerged = "DROP TABLE IF EXISTS submerged";

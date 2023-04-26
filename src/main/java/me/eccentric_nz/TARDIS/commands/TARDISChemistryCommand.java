@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlock;
@@ -38,9 +40,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class TARDISChemistryCommand implements CommandExecutor {
 
@@ -141,12 +140,12 @@ public class TARDISChemistryCommand implements CommandExecutor {
         inv.setItem(18, ingredient);
         inv.setItem(19, ingredient);
         inv.setItem(20, ingredient);
-        ItemStack result = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
-        ItemMeta im = result.getItemMeta();
         RecipeData data = ChemistryBlock.RECIPES.get(which);
+        ItemStack result = new ItemStack(data.getDisplayItem().getMaterial(), 1);
+        ItemMeta im = result.getItemMeta();
         im.setDisplayName(data.getDisplayName());
         im.setLore(data.getLore());
-        im.setCustomModelData(data.getCustomModelData());
+        im.setCustomModelData(data.getDisplayItem().getCustomModelData());
         result.setItemMeta(im);
         inv.setItem(17, result);
         player.openInventory(inv);

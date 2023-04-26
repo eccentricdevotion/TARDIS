@@ -317,7 +317,7 @@ public class TARDISStattenheimListener implements Listener {
                             beacon_on = rsp.isBeaconOn();
                         }
                         // power up
-                        PRESET preset = tardis.getPreset();
+                        ChameleonPreset preset = tardis.getPreset();
                         HashMap<String, Object> wherep = new HashMap<>();
                         wherep.put("tardis_id", id);
                         HashMap<String, Object> setp = new HashMap<>();
@@ -325,14 +325,14 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on
                         if (tardis.isLights_on()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().hasLanterns());
+                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {
                             new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
-                        if (preset.equals(PRESET.ADAPTIVE) || preset.usesItemFrame()) {
+                        if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
                             new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

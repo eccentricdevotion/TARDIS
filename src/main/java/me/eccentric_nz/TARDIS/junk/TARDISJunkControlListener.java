@@ -88,7 +88,7 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -140,7 +140,7 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rst.getTardis_id();
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -158,7 +158,7 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -176,7 +176,7 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");

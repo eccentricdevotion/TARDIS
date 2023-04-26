@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -24,7 +26,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,9 +35,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -61,7 +60,7 @@ public class TARDISQuitListener implements Listener {
             }
             plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
         }
-        // if 
+        // if
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
@@ -90,7 +89,7 @@ public class TARDISQuitListener implements Listener {
                         return;
                     }
                     // power off
-                    PRESET preset = tardis.getPreset();
+                    ChameleonPreset preset = tardis.getPreset();
                     boolean hidden = tardis.isHidden();
                     boolean lights = tardis.isLights_on();
                     // police box lamp, delay it incase the TARDIS needs rebuilding
@@ -100,12 +99,12 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(PRESET.ADAPTIVE) || preset.usesItemFrame()) {
+                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
+                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
                     }
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);

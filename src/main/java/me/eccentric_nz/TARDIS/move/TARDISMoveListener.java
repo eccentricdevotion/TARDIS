@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -43,10 +46,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 /**
  * Listen for a player moving, if they move over a TARDIS portal, teleport them to the TARDIS interior or exterior.
  */
@@ -69,7 +68,7 @@ public class TARDISMoveListener implements Listener {
         Location loc = player.getLocation(); // Grab Location
 
         /*
-         * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
+         * Copyright (C) 2023, The Multiverse Team All rights reserved. Check
          * the Player has actually moved a block to prevent unneeded
          * calculations... This is to prevent huge performance drops on high
          * player count servers.
@@ -205,7 +204,7 @@ public class TARDISMoveListener implements Listener {
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             if (!tardis.isPowered_on()) {
-                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
                             }
                         }
                     }, 20L);

@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -32,11 +35,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Builds rooms determined by the Architectural Reconfiguration System.
@@ -88,39 +86,39 @@ class TARDISARSRunnable implements Runnable {
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
-            String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
-            // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
-            l.setY(l.getY() + room.getOffset());
-            roomData.setLocation(l);
-            roomData.setRoom(whichroom);
-            roomData.setSchematic(obj);
-            // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
-            long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-            plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
-            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId(), isLastTask);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
-            runnable.setTask(taskID);
-            plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
-            // remove BLOCKS from condenser table if rooms_require_blocks is true
-            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
-                roomBlockCounts.forEach((key, value) -> {
-                    HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", tardis_id);
-                    wherec.put("block_data", key);
-                    plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
-                });
-            }
-            // take their energy!
-            int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("uuid", p.getUniqueId().toString());
-            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
-            if (p.isOnline()) {
-                TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
+            if (obj != null) {
+                // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
+                l.setY(l.getY() + room.getOffset());
+                roomData.setLocation(l);
+                roomData.setRoom(whichroom);
+                roomData.setSchematic(obj);
+                // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
+                long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+                plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
+                TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId(), isLastTask);
+                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
+                runnable.setTask(taskID);
+                plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
+                // remove BLOCKS from condenser table if rooms_require_blocks is true
+                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                    HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
+                    roomBlockCounts.forEach((key, value) -> {
+                        HashMap<String, Object> wherec = new HashMap<>();
+                        wherec.put("tardis_id", tardis_id);
+                        wherec.put("block_data", key);
+                        plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
+                    });
+                }
+                // take their energy!
+                int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("uuid", p.getUniqueId().toString());
+                plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
+                if (p.isOnline()) {
+                    TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
+                }
             }
         }
     }

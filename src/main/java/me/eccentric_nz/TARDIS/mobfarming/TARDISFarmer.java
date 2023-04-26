@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.data.Farm;
@@ -37,9 +39,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold has an identifying number.
@@ -129,7 +128,7 @@ public class TARDISFarmer {
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
                         case ARMOR_STAND -> {
-                            if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                 TARDISFollower follower = new TARDISFollower(entity, p.getUniqueId());
                                 if (follower.isValid()) {
                                     followers.add(follower);
@@ -1086,7 +1085,7 @@ public class TARDISFarmer {
                     pets.add(pet);
                     entity.remove();
                 }
-            } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 TARDISFollower follower = new TARDISFollower(entity, player.getUniqueId());
                 if (follower.isValid()) {
                     followers.add(follower);

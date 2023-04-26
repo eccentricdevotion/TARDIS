@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.World;
 
@@ -54,15 +55,25 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getMaterialForItemFrame(PRESET preset) {
-        if (preset.equals(PRESET.WEEPING_ANGEL)) {
-            return Material.GRAY_STAINED_GLASS_PANE;
-        } else if (preset.equals(PRESET.POLICE_BOX_TENNANT)) {
-            return Material.CYAN_STAINED_GLASS_PANE;
-        } else {
-            String split = preset.toString().replace("POLICE_BOX_", "");
-            String dye = split + "_DYE";
-            return Material.valueOf(dye);
+    public static Material getMaterialForItemFrame(ChameleonPreset preset, int id, boolean isMaterialisation) {
+        switch (preset) {
+            case ITEM -> {
+                ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);
+                if (rstm.fromID(id)) {
+                    String item = (isMaterialisation) ? rstm.getItemPreset() : rstm.getItemDemat();
+                    return Material.valueOf(TARDIS.plugin.getCustomModelConfig().getString("models." + item + ".item"));
+                } else {
+                    return Material.BLUE_DYE;
+                }
+            }
+            case WEEPING_ANGEL -> { return Material.GRAY_STAINED_GLASS_PANE; }
+            case POLICE_BOX_TENNANT -> { return Material.CYAN_STAINED_GLASS_PANE; }
+            case COLOURED -> { return Material.LEATHER_HORSE_ARMOR; }
+            default -> {
+                String split = preset.toString().replace("POLICE_BOX_", "");
+                String dye = split + "_DYE";
+                return Material.valueOf(dye);
+            }
         }
     }
 

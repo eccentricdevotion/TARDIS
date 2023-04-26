@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -50,7 +50,7 @@ public class TARDISHostileAction {
             Tardis tardis = rs.getTardis();
             UUID uuid = tardis.getUuid();
             boolean poweredOn = tardis.isPowered_on();
-            PRESET preset = tardis.getPreset();
+            ChameleonPreset preset = tardis.getPreset();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn() && poweredOn) {

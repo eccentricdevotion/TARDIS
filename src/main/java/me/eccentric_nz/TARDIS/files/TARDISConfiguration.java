@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -74,8 +74,12 @@ public class TARDISConfiguration {
         booleanOptions.put("arch.enabled", true);
         booleanOptions.put("arch.switch_inventory", true);
         booleanOptions.put("archive.enabled", true);
-        booleanOptions.put("blueprints.enabled", false);
         booleanOptions.put("circuits.damage", false);
+        booleanOptions.put("conversions.all_in_one.helper", false);
+        booleanOptions.put("conversions.all_in_one.shop", false);
+        booleanOptions.put("conversions.all_in_one.sonic_blaster", false);
+        booleanOptions.put("conversions.all_in_one.vortex_manipulator", false);
+        booleanOptions.put("conversions.all_in_one.weeping_angels", false);
         booleanOptions.put("conversions.archive_wall_data", false);
         booleanOptions.put("conversions.ars_materials", false);
         booleanOptions.put("conversions.bind", false);
@@ -86,6 +90,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.controls", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.restore_biomes", false);
         booleanOptions.put("creation.add_perms", true);
@@ -99,12 +104,16 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.seed_block_crafting", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
-        booleanOptions.put("dynmap.enabled", true);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
-        booleanOptions.put("police_box.load_shells", false);
+        booleanOptions.put("modules.blueprints", false);
+        booleanOptions.put("modules.dynmap", false);
+        booleanOptions.put("modules.weeping_angels", false);
+        booleanOptions.put("modules.vortex_manipulator", false);
+        booleanOptions.put("modules.shop", false);
+        booleanOptions.put("modules.sonic_blaster", false);
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);
@@ -326,11 +335,20 @@ public class TARDISConfiguration {
         }
         // check / transfer dynmap settings
         if (config.contains("preferences.enable_dynmap")) {
-            plugin.getConfig().set("dynmap.enabled", config.getBoolean("preferences.enable_dynmap"));
+            plugin.getConfig().set("modules.dynmap", config.getBoolean("preferences.enable_dynmap"));
             plugin.getConfig().set("preferences.enable_dynmap", null);
         }
         if (config.contains("dynmap.update_period") && config.getInt("dynmap.update_period") == 10) {
             plugin.getConfig().set("dynmap.update_period", 30);
+        }
+        if (config.contains("dynmap.enabled")) {
+            plugin.getConfig().set("modules.dynmap", config.getBoolean("dynmap.enabled"));
+            plugin.getConfig().set("dynmap.enabled", null);
+        }
+        if (config.contains("blueprints.enabled")) {
+            plugin.getConfig().set("modules.blueprints", config.getBoolean("blueprints.enabled"));
+            plugin.getConfig().set("blueprints.enabled", null);
+            plugin.getConfig().set("blueprints", null);
         }
         // remove handles
         if (config.contains("handles")) {
@@ -339,7 +357,7 @@ public class TARDISConfiguration {
             i++;
         }
         if (i > 0) {
-            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            plugin.getConsole().sendMessage(TardisModule.TARDIS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         // worlds
         new TARDISWorlds(plugin).doWorlds();
