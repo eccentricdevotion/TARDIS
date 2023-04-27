@@ -87,7 +87,7 @@ public class WeepingAngelsRunnable implements Runnable {
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (pplugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 LivingEntity a = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
