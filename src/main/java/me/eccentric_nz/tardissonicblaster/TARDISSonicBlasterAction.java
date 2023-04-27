@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+
+import java.util.UUID;
 
 /**
  *
@@ -62,7 +63,7 @@ public class TARDISSonicBlasterAction {
     }
 
     private void drill(Location target, COMPASS direction, double angle, UUID uuid) {
-        int max_blocks = plugin.getConfig().getInt("max_blocks");
+        int max_blocks = plugin.getBlasterConfig().getInt("max_blocks");
         int block_count = 0;
         int depth = determineHorizontalSectionDepth(angle);
         System.out.println("depth: " + depth);

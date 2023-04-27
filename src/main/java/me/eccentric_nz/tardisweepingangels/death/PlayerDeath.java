@@ -48,7 +48,7 @@ public class PlayerDeath implements Listener {
                     String name = event.getEntity().getName();
                     if (attacker instanceof Zombie) {
                         if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
-                            String what_happened = (plugin.getConfig().getBoolean("cybermen.can_upgrade")) ? "upgraded" : "slain";
+                            String what_happened = (plugin.getMonstersConfig().getBoolean("cybermen.can_upgrade")) ? "upgraded" : "slain";
                             event.setDeathMessage(name + " was " + what_happened + " by a Cyberman");
                             return;
                         }
