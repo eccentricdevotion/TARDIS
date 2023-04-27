@@ -18,7 +18,7 @@ public class TVMCommandGive {
 
     public TVMCommandGive(TARDIS plugin) {
         this.plugin = plugin;
-        full = this.plugin.getConfig().getInt("tachyon_use.max");
+        full = this.plugin.getVortexConfig().getInt("tachyon_use.max");
     }
 
     public boolean process(CommandSender sender, String[] args) {
@@ -30,14 +30,14 @@ public class TVMCommandGive {
             TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_UUID");
             return true;
         }
-        UUID uuid = UUID.fromString(args[1]);
-        Player p = plugin.getServer().getPlayer(uuid);
+        Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null || !p.isOnline()) {
             TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
             return true;
         }
+        UUID uuid = p.getUniqueId();
         // check for existing record
-        TVMResultSetManipulator rs = new TVMResultSetManipulator(plugin, args[1]);
+        TVMResultSetManipulator rs = new TVMResultSetManipulator(plugin, uuid.toString());
         if (rs.resultSet()) {
             int tachyon_level = rs.getTachyonLevel();
             int amount;
@@ -61,7 +61,7 @@ public class TVMCommandGive {
             HashMap<String, Object> set = new HashMap<>();
             set.put("tachyon_level", amount);
             HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", args[1]);
+            where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doUpdate("manipulator", set, where);
             TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_TACHYON_SET", "" + amount);
         } else {

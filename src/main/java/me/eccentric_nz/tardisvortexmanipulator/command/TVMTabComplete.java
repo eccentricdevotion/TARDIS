@@ -17,11 +17,12 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.List;
 
 /**
  * TabCompleter for /vm
@@ -44,6 +45,10 @@ public class TVMTabComplete extends TARDISCompleter implements TabCompleter {
             }
             if (args[0].equalsIgnoreCase("help")) {
                 return partial(args[0], HELP_SUBS);
+            }
+            if (args[0].equalsIgnoreCase("give")) {
+                // player names
+                return null;
             }
         }
         if (args.length == 3) {
