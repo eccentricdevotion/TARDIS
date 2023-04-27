@@ -27,23 +27,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UpdateTARDISPlugins {
 
     private final TARDIS plugin;
-    private final List<String> FILES = new ArrayList<>();
-    private final List<String> URLS = new ArrayList<>();
     private final AtomicBoolean updateInProgress = new AtomicBoolean(false);
 
     public UpdateTARDISPlugins(TARDIS plugin) {
         this.plugin = plugin;
-        FILES.add("TARDIS.jar");
-        FILES.add("TARDISChunkGenerator.jar");
-        URLS.add("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/artifact/target/TARDIS.jar");
-        URLS.add("http://tardisjenkins.duckdns.org:8080/job/TARDISChunkGenerator/lastSuccessfulBuild/artifact/target/TARDISChunkGenerator.jar");
     }
 
     public boolean fetchFromJenkins(CommandSender sender) {
@@ -51,7 +43,7 @@ public class UpdateTARDISPlugins {
             sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "An update is already in progress!");
             return true;
         }
-        sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading TARDIS & TARDISChunkGenerator ...");
+        sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading TARDIS...");
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -64,17 +56,15 @@ public class UpdateTARDISPlugins {
                             update.setExecutable(true);
                         }
                     }
-                    for (int i = 0; i < URLS.size(); i++) {
-                        File dest = new File("plugins/update/" + FILES.get(i));
-                        // connect to tardis jenkins
-                        URL url = new URL(URLS.get(i));
-                        // create a connection
-                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                        con.setRequestProperty("User-Agent", "eccentric_nz/TARDIS");
-                        // get the input stream
-                        try (InputStream input = con.getInputStream()) {
-                            Files.copy(input, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        }
+                    File dest = new File("plugins/update/TARDIS.jar");
+                    // connect to tardis jenkins
+                    URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/artifact/target/TARDIS.jar");
+                    // create a connection
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestProperty("User-Agent", "eccentric_nz/TARDIS");
+                    // get the input stream
+                    try (InputStream input = con.getInputStream()) {
+                        Files.copy(input, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
                     new BukkitRunnable() {
                         @Override
