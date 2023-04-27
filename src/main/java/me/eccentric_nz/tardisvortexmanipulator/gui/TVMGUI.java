@@ -3,12 +3,13 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -146,7 +147,7 @@ public class TVMGUI {
         coord.setCustomModelData(131);
         z.setItemMeta(coord);
         // tachyon level - show different levels depening on % full
-        double percent = tachyonLevel / plugin.getConfig().getDouble("tachyon_use.max");
+        double percent = tachyonLevel / plugin.getVortexConfig().getDouble("tachyon_use.max");
         short durability = (short) (1562 - (percent * 1562));
         ItemStack tach = new ItemStack(Material.DIAMOND_PICKAXE, 1);
         ItemMeta yon = tach.getItemMeta();

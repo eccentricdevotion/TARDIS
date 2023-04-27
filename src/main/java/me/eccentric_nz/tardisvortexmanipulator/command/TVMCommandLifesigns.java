@@ -29,7 +29,7 @@ public class TVMCommandLifesigns {
             TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
-        int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
+        int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
             TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS_TACHYON");
             return true;
@@ -39,7 +39,7 @@ public class TVMCommandLifesigns {
         if (args.length == 1) {
             TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
-            double d = plugin.getConfig().getDouble("lifesign_scan_distance");
+            double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
             List<Entity> ents = player.getNearbyEntities(d, d, d);
             if (!ents.isEmpty()) {
                 // record nearby entities

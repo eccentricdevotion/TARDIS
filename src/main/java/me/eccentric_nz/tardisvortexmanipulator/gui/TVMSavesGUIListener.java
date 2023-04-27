@@ -3,9 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -23,6 +20,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -117,14 +118,14 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 close(player);
                 List<Player> players = new ArrayList<>();
                 players.add(player);
-                if (plugin.getConfig().getBoolean("allow.multiple")) {
+                if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
                     player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
                         if (e instanceof Player && !e.getUniqueId().equals(player.getUniqueId())) {
                             players.add((Player) e);
                         }
                     });
                 }
-                int required = plugin.getConfig().getInt("tachyon_use.travel.saved") * players.size();
+                int required = plugin.getVortexConfig().getInt("tachyon_use.travel.saved") * players.size();
                 if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
                     close(player);
                     TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_REQUIRED", required);

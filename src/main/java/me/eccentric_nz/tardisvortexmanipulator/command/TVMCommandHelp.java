@@ -84,16 +84,16 @@ public class TVMCommandHelp {
                 sender.sendMessage(ChatColor.GREEN + "Tachyon energy");
                 sender.sendMessage("You must have enough Tachyon energy to perform most functions - check the Tachyon Level in the Vortex Manipulator GUI.");
                 sender.sendMessage(ChatColor.GREEN + "------------");
-                sender.sendMessage(ChatColor.GRAY + "Maximum charge level" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.max"));
-                sender.sendMessage(ChatColor.GRAY + "Recharge" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.recharge"));
-                sender.sendMessage(ChatColor.GRAY + "Recharge interval" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.recharge_interval") / 20 + " seconds");
-                sender.sendMessage(ChatColor.GRAY + "Random travel" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.travel.random"));
-                sender.sendMessage(ChatColor.GRAY + "Random travel in a specific world" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.travel.world"));
-                sender.sendMessage(ChatColor.GRAY + "Coordinates travel" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.travel.coords"));
-                sender.sendMessage(ChatColor.GRAY + "Travel to a saved location" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.travel.saved"));
-                sender.sendMessage(ChatColor.GRAY + "Scan lifesigns" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.lifesigns"));
-                sender.sendMessage(ChatColor.GRAY + "Set a beacon signal" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.beacon"));
-                sender.sendMessage(ChatColor.GRAY + "Send a message" + ChatColor.RESET + " - " + plugin.getConfig().getInt("tachyon_use.message"));
+                sender.sendMessage(ChatColor.GRAY + "Maximum charge level" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.max"));
+                sender.sendMessage(ChatColor.GRAY + "Recharge" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.recharge"));
+                sender.sendMessage(ChatColor.GRAY + "Recharge interval" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.recharge_interval") / 20 + " seconds");
+                sender.sendMessage(ChatColor.GRAY + "Random travel" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.travel.random"));
+                sender.sendMessage(ChatColor.GRAY + "Random travel in a specific world" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.travel.world"));
+                sender.sendMessage(ChatColor.GRAY + "Coordinates travel" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.travel.coords"));
+                sender.sendMessage(ChatColor.GRAY + "Travel to a saved location" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.travel.saved"));
+                sender.sendMessage(ChatColor.GRAY + "Scan lifesigns" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.lifesigns"));
+                sender.sendMessage(ChatColor.GRAY + "Set a beacon signal" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.beacon"));
+                sender.sendMessage(ChatColor.GRAY + "Send a message" + ChatColor.RESET + " - " + plugin.getVortexConfig().getInt("tachyon_use.message"));
             }
             if (args[1].equalsIgnoreCase("message")) {
                 TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "VM_HELP");

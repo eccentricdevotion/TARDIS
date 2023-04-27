@@ -20,8 +20,8 @@ public class TVMTachyonRunnable implements Runnable {
 
     public TVMTachyonRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        recharge = this.plugin.getConfig().getInt("tachyon_use.recharge");
-        max = this.plugin.getConfig().getInt("tachyon_use.max");
+        recharge = this.plugin.getVortexConfig().getInt("tachyon_use.recharge");
+        max = this.plugin.getVortexConfig().getInt("tachyon_use.max");
         qf = new TVMQueryFactory(this.plugin);
     }
 

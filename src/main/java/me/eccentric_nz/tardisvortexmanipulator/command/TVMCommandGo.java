@@ -66,14 +66,14 @@ public class TVMCommandGo {
             }
             List<Player> players = new ArrayList<>();
             players.add(player);
-            if (plugin.getConfig().getBoolean("allow.multiple")) {
+            if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
                 for (Entity e : player.getNearbyEntities(0.5d, 0.5d, 0.5d)) {
                     if (e instanceof Player && !e.getUniqueId().equals(player.getUniqueId())) {
                         players.add((Player) e);
                     }
                 }
             }
-            int required = plugin.getConfig().getInt("tachyon_use.saved") * players.size();
+            int required = plugin.getVortexConfig().getInt("tachyon_use.saved") * players.size();
             if (!TVMUtils.checkTachyonLevel(uuid, required)) {
                 TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", required);
                 return true;

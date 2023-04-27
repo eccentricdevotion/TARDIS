@@ -66,13 +66,13 @@ public class TVMCommandCoords {
                     TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                     return true;
                 }
-                required = plugin.getConfig().getInt("tachyon_use.travel.world");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 worlds.add(args[0]);
                 l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
             }
             case 4 -> {
-                required = plugin.getConfig().getInt("tachyon_use.travel.coords");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
                 // world, x, y, z specified
                 World w;
                 if (args[0].contains("~")) {
@@ -123,14 +123,14 @@ public class TVMCommandCoords {
                 }
             }
             default -> {
-                required = plugin.getConfig().getInt("tachyon_use.travel.random");
+                required = plugin.getVortexConfig().getInt("tachyon_use.travel.random");
                 // random
                 l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
             }
         }
         List<Player> players = new ArrayList<>();
         players.add(player);
-        if (plugin.getConfig().getBoolean("allow.multiple")) {
+        if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
             for (Entity e : player.getNearbyEntities(0.5d, 0.5d, 0.5d)) {
                 if (e instanceof Player && !e.getUniqueId().equals(player.getUniqueId())) {
                     players.add((Player) e);

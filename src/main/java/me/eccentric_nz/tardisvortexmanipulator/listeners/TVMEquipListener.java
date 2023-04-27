@@ -85,21 +85,21 @@ public class TVMEquipListener implements Listener {
                     Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
                     vmg.setContents(gui);
                     player.openInventory(vmg);
-                } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getConfig().getBoolean("allow.look_at_block") && TARDISPermission.hasPermission(player, "vm.lookatblock")) {
+                } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getVortexConfig().getBoolean("allow.look_at_block") && TARDISPermission.hasPermission(player, "vm.lookatblock")) {
                     UUID uuid = player.getUniqueId();
-                    int maxDistance = plugin.getConfig().getInt("max_look_at_distance");
+                    int maxDistance = plugin.getVortexConfig().getInt("max_look_at_distance");
                     Location bl = player.getTargetBlock(transparent, maxDistance).getLocation();
                     bl.add(0.0d, 1.0d, 0.0d);
                     List<Player> players = new ArrayList<>();
                     players.add(player);
-                    if (plugin.getConfig().getBoolean("allow.multiple")) {
+                    if (plugin.getVortexConfig().getBoolean("allow.multiple")) {
                         player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
                             if (e instanceof Player && !e.getUniqueId().equals(uuid)) {
                                 players.add((Player) e);
                             }
                         });
                     }
-                    int required = plugin.getConfig().getInt("tachyon_use.travel.to_block");
+                    int required = plugin.getVortexConfig().getInt("tachyon_use.travel.to_block");
                     int actual = required * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
                         TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
@@ -108,7 +108,7 @@ public class TVMEquipListener implements Listener {
                     TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                     // Random malfunction
                     Random rnd = new Random();
-                    if (rnd.nextInt(100) < plugin.getConfig().getInt("block_travel_malfunction_chance")) {
+                    if (rnd.nextInt(100) < plugin.getVortexConfig().getInt("block_travel_malfunction_chance")) {
                         plugin.debug(player.getDisplayName() + " has malfunctioned");
                         Parameters params = new Parameters(player, Flag.getAPIFlags());
                         Location _bl = null;

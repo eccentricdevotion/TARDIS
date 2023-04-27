@@ -3,12 +3,13 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -76,7 +77,7 @@ public class TVMResultSetMessageById {
     }
 
     private String getFormattedDate(long millis) {
-        SimpleDateFormat sdf = new SimpleDateFormat(plugin.getConfig().getString("date_format"));
+        SimpleDateFormat sdf = new SimpleDateFormat(plugin.getVortexConfig().getString("date_format"));
         Date theDate = new Date(millis);
         return sdf.format(theDate);
     }

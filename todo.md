@@ -4,9 +4,7 @@
 
 ## Version 5.0.0
 
-1. Merge TCG along with TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Test display item custom blocks for new & abandoned TARDISes!
-   - ?
+1. ?
 
 ## Next version `5.1.0`
 
