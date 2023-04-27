@@ -90,7 +90,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                     // build a small dalek structure
                     build(limitedRegion, xx + 2, y + 2, zz + 3, random, "small");
                     // spawn a dalek or three?
-                    if (plugin.getServer().getPluginManager().getPlugin("TARDISWeepingAngels") != null && plugin.getServer().getPluginManager().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         for (int i = 0; i < random.nextInt(3) + 1; i++) {
                             LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.SKELETON);
                             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {

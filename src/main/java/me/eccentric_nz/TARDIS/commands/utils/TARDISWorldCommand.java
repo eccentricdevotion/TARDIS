@@ -189,7 +189,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             }
                             case "siluria" -> {
                                 plugin.debug("Siluria enabled, registering planet event listeners");
-                                if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                     plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
                                 }
                             }
@@ -199,7 +199,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                 if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
                                     plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
                                 }
-                                if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                     plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
                                 }
                                 plugin.getTardisHelper().addCustomBiome("skaro");
