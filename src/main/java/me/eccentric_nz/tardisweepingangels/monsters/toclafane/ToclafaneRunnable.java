@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -31,6 +30,8 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+
+import java.util.Collection;
 
 public class ToclafaneRunnable implements Runnable {
 
@@ -75,7 +76,7 @@ public class ToclafaneRunnable implements Runnable {
             int y = w.getHighestBlockYAt(x, z);
             Location l = new Location(w, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 Entity e = w.spawnEntity(l, EntityType.ARMOR_STAND);

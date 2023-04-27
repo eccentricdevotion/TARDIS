@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -33,6 +32,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class JudoonRunnable implements Runnable {
 
@@ -74,7 +75,7 @@ public class JudoonRunnable implements Runnable {
             int y = w.getHighestBlockYAt(x, z);
             Location l = new Location(w, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 Entity e = w.spawnEntity(l, EntityType.ARMOR_STAND);

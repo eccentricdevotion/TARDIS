@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ice_warriors;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -28,7 +25,6 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,6 +36,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class IceWarriorRunnable implements Runnable {
 
@@ -100,7 +100,7 @@ public class IceWarriorRunnable implements Runnable {
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
             if (biomes.contains(l.getBlock().getBiome()) && WaterChecker.isNotWater(l)) {
-                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 LivingEntity i = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);

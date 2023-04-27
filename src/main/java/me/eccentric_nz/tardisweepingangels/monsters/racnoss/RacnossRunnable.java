@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.racnoss;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -27,7 +24,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,10 +37,15 @@ import org.bukkit.entity.PiglinBrute;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 public class RacnossRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int spawn_rate;
+    private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
 
     public RacnossRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -88,7 +89,7 @@ public class RacnossRunnable implements Runnable {
             int z = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = getHighestNetherBlock(world, x, z);
             Location l = new Location(world, x, y + 1, z);
-            if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+            if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
             LivingEntity racnoss = (LivingEntity) world.spawnEntity(l, EntityType.PIGLIN_BRUTE);
@@ -117,6 +118,4 @@ public class RacnossRunnable implements Runnable {
         }
         return y;
     }
-
-    private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
 }

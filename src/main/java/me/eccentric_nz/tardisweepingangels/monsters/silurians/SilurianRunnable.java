@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
-import java.util.Collection;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -36,6 +34,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
+import java.util.logging.Level;
 
 public class SilurianRunnable implements Runnable {
 
@@ -89,7 +90,7 @@ public class SilurianRunnable implements Runnable {
             Location l = new Location(world, x, y + 1, z);
             Location search = CaveFinder.searchCave(l);
             Location cave = ((search == null)) ? l : search;
-            if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(cave)) {
+            if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(cave)) {
                 return;
             }
             LivingEntity s = (LivingEntity) world.spawnEntity(cave, EntityType.SKELETON);

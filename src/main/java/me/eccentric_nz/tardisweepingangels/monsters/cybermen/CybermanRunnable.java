@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.cybermen;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -26,7 +25,6 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -38,6 +36,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class CybermanRunnable implements Runnable {
 
@@ -83,7 +83,7 @@ public class CybermanRunnable implements Runnable {
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 LivingEntity c = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);

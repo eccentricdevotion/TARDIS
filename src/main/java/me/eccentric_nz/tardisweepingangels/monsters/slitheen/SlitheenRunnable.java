@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.slitheen;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -34,6 +33,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class SlitheenRunnable implements Runnable {
 
@@ -79,7 +80,7 @@ public class SlitheenRunnable implements Runnable {
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
-                if (plugin.getPM().getPlugin("WorldGuard") != null && !WorldGuardChecker.canSpawn(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
                 LivingEntity slitheen = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
