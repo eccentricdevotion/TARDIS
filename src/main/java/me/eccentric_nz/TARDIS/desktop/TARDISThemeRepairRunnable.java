@@ -371,6 +371,18 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, id);
                 }
             }
+            if (obj.has("item_displays")) {
+                JsonArray displays = obj.get("item_displays").getAsJsonArray();
+                for (int i = 0; i < displays.size(); i++) {
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
+                }
+            }
+            if (obj.has("interactions")) {
+                JsonArray interactions = obj.get("interactions").getAsJsonArray();
+                for (int i = 0; i < interactions.size(); i++) {
+                    TARDISInteractionSetter.makeClickable(interactions.get(i).getAsJsonObject(), wg1);
+                }
+            }
             // finished processing - update tardis table!
             if (set.size() > 0) {
                 where.put("tardis_id", id);
@@ -534,10 +546,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
                 }
-                if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
-                    // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, z);
-                    lampBlocks.add(lamp);
+                if (type.equals(Material.LIGHT) || type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
+                    if (!type.equals(Material.LIGHT)) {
+                        // remember lamp blocks
+                        Block lamp = world.getBlockAt(x, y, z);
+                        lampBlocks.add(lamp);
+                    }
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;

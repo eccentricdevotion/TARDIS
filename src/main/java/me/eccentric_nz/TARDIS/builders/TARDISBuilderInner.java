@@ -30,10 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -340,6 +337,18 @@ public class TARDISBuilderInner implements Runnable {
                     TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, dbID);
                 }
             }
+            if (obj.has("item_displays")) {
+                JsonArray displays = obj.get("item_displays").getAsJsonArray();
+                for (int i = 0; i < displays.size(); i++) {
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
+                }
+            }
+            if (obj.has("interactions")) {
+                JsonArray interactions = obj.get("interactions").getAsJsonArray();
+                for (int i = 0; i < interactions.size(); i++) {
+                    TARDISInteractionSetter.makeClickable(interactions.get(i).getAsJsonObject(), wg1);
+                }
+            }
             // reset mushroom stem blocks
             if (!postMushroomBlocks.isEmpty()) {
                 TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);
@@ -603,10 +612,12 @@ public class TARDISBuilderInner implements Runnable {
                 seta.put("json", json.toString());
                 plugin.getQueryFactory().doInsert("ars", seta);
             }
-            if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
-                // remember lamp blocks
-                Block lamp = world.getBlockAt(x, y, z);
-                lampBlocks.add(lamp);
+            if (type.equals(Material.LIGHT) || type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
+                if (!type.equals(Material.LIGHT)) {
+                    // remember lamp blocks
+                    Block lamp = world.getBlockAt(x, y, z);
+                    lampBlocks.add(lamp);
+                }
                 // remember lamp block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
                 String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
