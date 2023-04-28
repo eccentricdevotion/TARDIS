@@ -45,7 +45,7 @@ right in!
 |---------------------|----------------------------------------------------------------|
 | `Cake block`        | handbrake                                                      |
 | `Mushroom stem`     | All 4 repeaters                                                |
-| `Oak Sign`          | Control centre                                                 |
+| `Oak Sign`          | Control centre (must have 'Control' on the second line)        |
 | `Wood button`       | Artron Energy Button                                           |
 | `Stone button`      | Random Destination Button                                      |
 | `Chest`             | Artron Energy Condenser                                        |
