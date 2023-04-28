@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -89,12 +88,6 @@ class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 Schematic schm = tardis.getSchematic();
-                Material lampon = schm.getLights().getMaterial();
-                // player preference
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner.getUniqueId().toString());
-                if (rsp.resultSet()) {
-                    lampon = rsp.getLights().getMaterial();
-                }
                 // get JSON
                 JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
                 if (obj != null) {
@@ -124,7 +117,7 @@ class TARDISLampsCommand {
                             for (int zz = bz; zz < bz + 16; zz++) {
                                 for (int yy = starty; yy < endy; yy++) {
                                     Material mat = world.getBlockAt(xx, yy, zz).getType();
-                                    if (mat.equals(lampon)) {
+                                    if (mat.equals(Material.LIGHT)) {
                                         String lamp = w + ":" + xx + ":" + yy + ":" + zz;
                                         HashMap<String, Object> set = new HashMap<>();
                                         set.put("tardis_id", id);
