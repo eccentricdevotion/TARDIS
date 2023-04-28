@@ -18,13 +18,6 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -43,6 +36,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class SchematicSave {
 
@@ -199,22 +200,6 @@ public class SchematicSave {
                                 }
                                 item.add("stack", stack);
                                 itemDisplays.add(item);
-                                entities.add(entity);
-                            }
-                        }
-                        if (entity instanceof Interaction interaction) {
-                            if (!entities.contains(entity)) {
-                                JsonObject inter = new JsonObject();
-                                JsonObject loc = new JsonObject();
-                                loc.addProperty("x", eloc.getBlockX() - minx);
-                                loc.addProperty("y", eloc.getBlockY() - miny);
-                                loc.addProperty("z", eloc.getBlockZ() - minz);
-                                inter.add("rel_location", loc);
-                                JsonObject bounds = new JsonObject();
-                                bounds.addProperty("height", interaction.getInteractionHeight());
-                                bounds.addProperty("width", interaction.getInteractionWidth());
-                                inter.add("bounds", bounds);
-                                interactions.add(inter);
                                 entities.add(entity);
                             }
                         }

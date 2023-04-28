@@ -267,12 +267,6 @@ class TARDISBuildAbandoned implements Runnable {
                     TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), cl);
                 }
             }
-            if (obj.has("interactions")) {
-                JsonArray interactions = obj.get("interactions").getAsJsonArray();
-                for (int i = 0; i < interactions.size(); i++) {
-                    TARDISInteractionSetter.makeClickable(interactions.get(i).getAsJsonObject(), cl);
-                }
-            }
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
             plugin.getServer().getScheduler().cancelTask(task);

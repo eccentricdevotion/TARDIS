@@ -340,12 +340,6 @@ public class TARDISBuilderInner implements Runnable {
                     TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
                 }
             }
-            if (obj.has("interactions")) {
-                JsonArray interactions = obj.get("interactions").getAsJsonArray();
-                for (int i = 0; i < interactions.size(); i++) {
-                    TARDISInteractionSetter.makeClickable(interactions.get(i).getAsJsonObject(), wg1);
-                }
-            }
             // reset mushroom stem blocks
             if (!postMushroomBlocks.isEmpty()) {
                 TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);

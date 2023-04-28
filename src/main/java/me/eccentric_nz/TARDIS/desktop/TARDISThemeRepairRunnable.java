@@ -367,12 +367,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
                 }
             }
-            if (obj.has("interactions")) {
-                JsonArray interactions = obj.get("interactions").getAsJsonArray();
-                for (int i = 0; i < interactions.size(); i++) {
-                    TARDISInteractionSetter.makeClickable(interactions.get(i).getAsJsonObject(), wg1);
-                }
-            }
             // finished processing - update tardis table!
             if (set.size() > 0) {
                 where.put("tardis_id", id);
