@@ -28,6 +28,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -101,6 +102,25 @@ public class TARDISDisplayBlockListener implements Listener {
             is.setAmount(amount);
             player.getInventory().setItemInMainHand(is);
         }
+    }
+
+    /**
+     * Remove an item display / interaction entity when breaking a
+     * TARDIS block in creative gamemode.
+     *
+     * @param event The TARDIS block break event
+     */
+    @EventHandler
+    public void onDisplayBlockBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        Block block = event.getBlock();
+        if (block.getType() != Material.LIGHT && block.getType() != Material.BARRIER) {
+            return;
+        }
+        TARDISDisplayItemUtils.remove(block);
     }
 
     /**

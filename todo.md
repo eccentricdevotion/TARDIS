@@ -4,8 +4,7 @@
 
 ## Version 5.0.0
 
-1. Fix `/tardis lamps` command
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 

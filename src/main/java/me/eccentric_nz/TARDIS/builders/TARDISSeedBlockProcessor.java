@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -36,6 +37,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -240,7 +242,9 @@ public class TARDISSeedBlockProcessor {
                     // delay building exterior
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getPresetBuilder().buildPreset(bd);
-                        location.getBlock().setBlockData(TARDISConstants.AIR);
+                        Block block = location.getBlock();
+                        block.setBlockData(TARDISConstants.AIR);
+                        TARDISDisplayItemUtils.remove(block);
                     }, schm.getConsoleSize().getDelay());
                     // set achievement completed
                     if (TARDISPermission.hasPermission(player, "tardis.book")) {

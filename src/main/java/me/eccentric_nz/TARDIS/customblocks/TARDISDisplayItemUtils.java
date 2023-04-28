@@ -32,7 +32,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDisplayItemUtils {
@@ -106,11 +105,11 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param world the world to spawn the entity in
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param z the z coordinate
+     * @param x     the x coordinate
+     * @param y     the y coordinate
+     * @param z     the z coordinate
      */
     public static void set(TARDISDisplayItem tdi, World world, int x, int y, int z) {
         // spawn an item display entity
@@ -130,7 +129,7 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
     public static void set(TARDISDisplayItem tdi, Block block) {
@@ -162,11 +161,28 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
+     * Spawn an Item Display entity
+     *
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
+     * @param block the block location to spawn the entity at
+     * @param im    the ItemMeta to set on the display ItemStack
+     */
+    public static void setSeed(TARDISDisplayItem tdi, Block block, ItemMeta im) {
+        block.setBlockData(TARDISConstants.BARRIER);
+        ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+        is.setItemMeta(im);
+        ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setPersistent(true);
+        display.setInvulnerable(true);
+    }
+
+    /**
      * Spawn an Interaction entity
      *
      * @param location the location to spawn the entity at
-     * @param cmd the custom model data to set for the custom block key
-     * associated with the entity
+     * @param cmd      the custom model data to set for the custom block key
+     *                 associated with the entity
      */
     public static void set(Location location, int cmd) {
         // spawn an interaction entity
