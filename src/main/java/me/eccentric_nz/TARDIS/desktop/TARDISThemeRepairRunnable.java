@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -64,7 +63,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
-    private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
     private final List<Block> postLightBlocks = new ArrayList<>();
@@ -309,14 +307,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     signState.update();
                 }
             }
-            lampBlocks.forEach((lamp) -> {
-                TardisLight light = tud.getSchematic().getLights();
-                if (archive != null) {
-                    light = archive.getLight();
-                }
-                TARDISDisplayItemUtils.set(light.getOn(), lamp);
-            });
-            lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
@@ -546,13 +536,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
                 }
-                if (type.equals(Material.LIGHT) || type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
-                    if (!type.equals(Material.LIGHT)) {
-                        // remember lamp blocks
-                        Block lamp = world.getBlockAt(x, y, z);
-                        lampBlocks.add(lamp);
-                    }
-                    // remember lamp block locations for malfunction and light switch
+                if (type.equals(Material.LIGHT)) {
+                    // remember light block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);

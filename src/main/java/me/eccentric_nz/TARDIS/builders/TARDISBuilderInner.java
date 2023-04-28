@@ -61,7 +61,6 @@ import java.util.*;
 public class TARDISBuilderInner implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
@@ -286,8 +285,6 @@ public class TARDISBuilderInner implements Runnable {
                 TARDISFollowerSpawner spawner = new TARDISFollowerSpawner(plugin);
                 spawner.spawnDivisionOod(postOod);
             }
-            lampBlocks.forEach((lamp) -> TARDISDisplayItemUtils.set(schm.getLights().getOn(), lamp));
-            lampBlocks.clear();
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
                     Levelled levelled = TARDISConstants.LIGHT;
@@ -612,13 +609,8 @@ public class TARDISBuilderInner implements Runnable {
                 seta.put("json", json.toString());
                 plugin.getQueryFactory().doInsert("ars", seta);
             }
-            if (type.equals(Material.LIGHT) || type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
-                if (!type.equals(Material.LIGHT)) {
-                    // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, z);
-                    lampBlocks.add(lamp);
-                }
-                // remember lamp block locations for malfunction and light switch
+            if (type.equals(Material.LIGHT)) {
+                // remember light block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
                 String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                 setlb.put("tardis_id", dbID);

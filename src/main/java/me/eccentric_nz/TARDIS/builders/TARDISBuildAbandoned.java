@@ -57,7 +57,6 @@ import java.util.*;
 class TARDISBuildAbandoned implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
@@ -230,8 +229,6 @@ class TARDISBuildAbandoned implements Runnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
-            lampBlocks.forEach((lamp) -> TARDISDisplayItemUtils.set(schm.getLights().getOn(), lamp));
-            lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 UUID randomUUID = UUID.randomUUID();
@@ -487,13 +484,8 @@ class TARDISBuildAbandoned implements Runnable {
             if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             }
-            if (type.equals(Material.LIGHT) || type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
-                if (!type.equals(Material.LIGHT)) {
-                    // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, z);
-                    lampBlocks.add(lamp);
-                }
-                // remember lamp block locations for malfunction and light switch
+            if (type.equals(Material.LIGHT)) {
+                // remember light block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
                 String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                 setlb.put("tardis_id", dbID);
