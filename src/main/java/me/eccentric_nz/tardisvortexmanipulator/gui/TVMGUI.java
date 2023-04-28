@@ -39,6 +39,13 @@ public class TVMGUI {
         play.setLore(Arrays.asList(""));
         play.setCustomModelData(108);
         dis.setItemMeta(play);
+        // predictive world
+        ItemStack pred = new ItemStack(Material.BOWL, 1);
+        ItemMeta ict = dis.getItemMeta();
+        ict.setDisplayName("Predictive Text");
+        ict.setLore(Arrays.asList(""));
+        ict.setCustomModelData(148);
+        pred.setItemMeta(ict);
         // keypad pad
         // 1
         ItemStack one = new ItemStack(Material.BOWL, 1);
@@ -237,7 +244,7 @@ public class TVMGUI {
         prev.setItemMeta(let);
 
         ItemStack[] is = {
-                null, null, null, null, dis, null, null, null, null,
+                null, null, null, null, dis, null, pred, null, null,
                 tach, null, world, one, two, three, null, save, null,
                 life, null, x, four, five, six, null, load, null,
                 null, null, y, seven, eight, nine, null, mess, null,
