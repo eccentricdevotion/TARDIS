@@ -55,16 +55,8 @@ public class TARDISDestroyerInner {
             plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
             return;
         }
-        Location wgl;
         TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-        TARDISTIPSData coords;
-        if (schematic.getPermission().equals("junk")) {
-            coords = tips.getTIPSJunkData();
-        } else {
-            coords = tips.getTIPSData(slot);
-        }
         tips.reclaimChunks(w, id, schematic);
-        wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -73,7 +65,13 @@ public class TARDISDestroyerInner {
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
         if (plugin.isWorldGuardOnServer()) {
-            plugin.getWorldGuardUtils().removeRegion(wgl);
+            TARDISTIPSData coords;
+            if (schematic.getPermission().equals("junk")) {
+                coords = tips.getTIPSJunkData();
+            } else {
+                coords = tips.getTIPSData(slot);
+            }
+            plugin.getWorldGuardUtils().removeRegion(new Location(w, coords.getMinX(), 64, coords.getMinZ()));
         }
     }
 }

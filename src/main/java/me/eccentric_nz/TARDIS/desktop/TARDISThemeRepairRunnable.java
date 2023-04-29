@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -48,8 +49,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
-
-import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -248,7 +247,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             plugin.getQueryFactory().doDelete("lamps", wherel);
             chunks.forEach((c) -> {
                 // remove any display items lamps
-                TARDISDisplayItemUtils.removeDisplaysInChunk(c);
+                TARDISDisplayItemUtils.removeDisplaysInChunk(c, starty, starty + h);
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }

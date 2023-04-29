@@ -105,11 +105,11 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
      * @param world the world to spawn the entity in
-     * @param x     the x coordinate
-     * @param y     the y coordinate
-     * @param z     the z coordinate
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
      */
     public static void set(TARDISDisplayItem tdi, World world, int x, int y, int z) {
         // spawn an item display entity
@@ -124,12 +124,13 @@ public class TARDISDisplayItemUtils {
         display.setItemStack(is);
         display.setPersistent(true);
         display.setInvulnerable(true);
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
     }
 
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
     public static void set(TARDISDisplayItem tdi, Block block) {
@@ -158,14 +159,15 @@ public class TARDISDisplayItemUtils {
         display.setItemStack(is);
         display.setPersistent(true);
         display.setInvulnerable(true);
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
     }
 
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
-     * @param im    the ItemMeta to set on the display ItemStack
+     * @param im the ItemMeta to set on the display ItemStack
      */
     public static void setSeed(TARDISDisplayItem tdi, Block block, ItemMeta im) {
         block.setBlockData(TARDISConstants.BARRIER);
@@ -181,8 +183,8 @@ public class TARDISDisplayItemUtils {
      * Spawn an Interaction entity
      *
      * @param location the location to spawn the entity at
-     * @param cmd      the custom model data to set for the custom block key
-     *                 associated with the entity
+     * @param cmd the custom model data to set for the custom block key
+     * associated with the entity
      */
     public static void set(Location location, int cmd) {
         // spawn an interaction entity
@@ -198,10 +200,14 @@ public class TARDISDisplayItemUtils {
      *
      * @param chunk the chunk to search for entities
      */
-    public static void removeDisplaysInChunk(Chunk chunk) {
+    public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
-            if ((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                entity.remove();
+            if ((entity instanceof ItemDisplay || entity instanceof Interaction)
+                    && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                int y = entity.getLocation().getBlockY();
+                if (y >= lower && y <= upper) {
+                    entity.remove();
+                }
             }
         }
     }

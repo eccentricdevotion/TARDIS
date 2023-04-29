@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -51,8 +52,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 
-import java.util.*;
-
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
  * automatically relocating any living beings in the deleted room, depositing
@@ -83,9 +82,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private boolean running;
-    private int id, slot, c, h, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
+    private int id, slot, c, h, ph, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
     private World world;
     private List<Chunk> chunks;
+    private List<Chunk> previousChunks;
     private Block postBedrock;
     private Location postOod;
     private JsonObject obj;
@@ -166,7 +166,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 size_next = archive_next.getConsoleSize();
             }
             // get previous schematic dimensions
-            int ph, pw;
+            int pw;
             if (archive_prev == null) {
                 // get JSON
                 JsonObject prevObj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
@@ -233,6 +233,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
             }
             chunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getSchematic());
+            previousChunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getPrevious());
             if (!tardis.getCreeper().isEmpty()) {
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 if (tud.getPrevious().getPermission().equals("division")) {
@@ -330,16 +331,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
-            chunks.forEach((c) -> {
-                // remove any display items lamps
-                TARDISDisplayItemUtils.removeDisplaysInChunk(c);
+            previousChunks.forEach((c) -> {
+                // remove any item display or interactions
+                TARDISDisplayItemUtils.removeDisplaysInChunk(c, 62, 64 + ph);
+
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
             // remove items
-            chunks.forEach((chink) -> {
+            previousChunks.forEach((chink) -> {
                 // remove dropped items
                 for (Entity e : chink.getEntities()) {
                     if (e instanceof Item) {
@@ -463,11 +465,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
                 if (tud.getPrevious().getPermission().equals("mechanical")) {
-                    // remove the blocks at y = 62 & y = 63 directly under the console
-                    int x = chunk.getBlock(0, 63, 0).getX();
-                    int z = chunk.getBlock(0, 63, 0).getZ();
-                    setAir(x, 63, z, chunk.getWorld(), 0, 1);
-                    setAir(x, 62, z, chunk.getWorld(), 0, 1);
+                    // remove the blocks at y = 62 & y = 63 under the console
+                    for (Chunk u : previousChunks) {
+                        // remove lower console blocks
+                        int cx = u.getX() * 16;
+                        int cz = u.getZ() * 16;
+                        for (int y = 63; y > 61; y--) {
+                            for (int col = cx; col < cx + 16; col++) {
+                                for (int row = cz; row < cz + 16; row++) {
+                                    u.getWorld().getBlockAt(row, y, col).setBlockData(TARDISConstants.AIR);
+                                }
+                            }
+                        }
+                    }
                 }
                 int minusy = (tud.getPrevious().getPermission().equals("mechanical")) ? 2 : 0;
                 List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);

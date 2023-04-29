@@ -167,6 +167,18 @@ public class TARDISInteriorPostioning {
                 for (Entity e : u.getEntities()) {
                     removeEntity(e, exitLocation);
                 }
+                if (s.getPermission().equals("mechanical")) {
+                    // remove lower console blocks
+                    int cx = u.getX() * 16;
+                    int cz = u.getZ() * 16;
+                    for (int y = 62; y < 64; y++) {
+                        for (int col = cx; col < cx + 16; col++) {
+                            for (int row = cz; row < cz + 16; row++) {
+                                w.getBlockAt(row, y, col).setBlockData(TARDISConstants.AIR);
+                            }
+                        }
+                    }
+                }
             });
             for (int l = 0; l < 3; l++) {
                 for (int x = 0; x < 9; x++) {

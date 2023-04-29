@@ -171,6 +171,15 @@ public class TARDISDisplayItemCommand {
                 }
                 return true;
             }
+            case "chunk" -> {
+                Chunk chunk = player.getLocation().getChunk();
+                for (Entity entity : chunk.getEntities()) {
+                    if (entity instanceof ItemDisplay || entity instanceof Interaction) {
+                        entity.remove();
+                    }
+                }
+                return true;
+            }
             default -> {
                 return false;
             }
