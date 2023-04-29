@@ -4,16 +4,18 @@
 
 ## Version 5.0.0
 
-1. Merge TCG along TWA, TVM & TARDISShop into a Mega TARDIS plugin
-   - Animate models for player disguises
-   - Fix laggy Silurian cave finder
+1. Documentation of new/changed features
+2. ?
 
 ## Next version `5.1.0`
 
-1. Convert consoles to use LIGHT blocks for light sources rather than REDSTONE_LAMPS (use display items)
-2. Vortex Manipulator predictive text
-3. Use new Display Items for custom blocks
-4. Pandorica
+1. Vortex Manipulator predictive text
+2. Pandorica custom model
+3. Fix laggy Silurian cave finder
+4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
+5. Animated models for player disguises
+6. Custom Control models #703 #355
+7. Sonic Blaster
 
 ## Future versions
 
