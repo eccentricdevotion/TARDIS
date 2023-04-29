@@ -13,7 +13,6 @@ public enum TardisLight {
     THIRTEENTH(TARDISDisplayItem.LIGHT_THIRTEENTH_ON, TARDISDisplayItem.LIGHT_THIRTEENTH),
     LAMP(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_LAMP_ON, TARDISDisplayItem.LIGHT_LAMP),
     LANTERN(TARDISDisplayItem.LIGHT_LANTERN_ON, TARDISDisplayItem.LIGHT_LANTERN),
-    WOOL(Material.BLACK_WOOL, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_WOOL),
     BLUE_LAMP(TARDISDisplayItem.BLUE_LAMP_ON, TARDISDisplayItem.BLUE_LAMP),
     GREEN_LAMP(TARDISDisplayItem.GREEN_LAMP_ON, TARDISDisplayItem.GREEN_LAMP),
     PURPLE_LAMP(TARDISDisplayItem.PURPLE_LAMP_ON, TARDISDisplayItem.PURPLE_LAMP),
@@ -57,5 +56,16 @@ public enum TardisLight {
             }
         }
         return null;
+    }
+
+    public static TardisLight getFromDisplayItem(TARDISDisplayItem tdi) {
+        String s = tdi.toString();
+        return switch (tdi) {
+            case RED_LAMP, GREEN_LAMP, PURPLE_LAMP, BLUE_LAMP -> TardisLight.valueOf(s);
+            case RED_LAMP_ON, GREEN_LAMP_ON, PURPLE_LAMP_ON, BLUE_LAMP_ON -> TardisLight.valueOf(s.substring(0, s.length() - 3)); // remove _ON
+            case LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN -> TardisLight.valueOf(s.substring(6)); // remove LIGHT_
+            case LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> TardisLight.valueOf(s.substring(6, s.length() - 3));
+            default -> TENTH;
+        };
     }
 }

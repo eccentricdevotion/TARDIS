@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.customblocks;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -208,6 +211,17 @@ public enum TARDISDisplayItem {
         for (TARDISDisplayItem tdi : values()) {
             if (tdi.getMaterial() == m && tdi.getCustomModelData() == cmd) {
                 return tdi;
+            }
+        }
+        return null;
+    }
+
+    public static TARDISDisplayItem getByItemDisplay(ItemDisplay display) {
+        ItemStack is = display.getItemStack();
+        if (is != null) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasCustomModelData()) {
+                return getByMaterialAndData(is.getType(), im.getCustomModelData());
             }
         }
         return null;

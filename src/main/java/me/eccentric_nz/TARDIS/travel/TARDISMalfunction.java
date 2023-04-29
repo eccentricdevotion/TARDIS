@@ -16,10 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -27,14 +33,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a prison and "dumping ground" for those
@@ -197,10 +199,16 @@ public class TARDISMalfunction {
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
-                Material light = rsp.getLights().getMaterial();
+                TardisLight light = TardisLight.TENTH;
+                TARDISDisplayItem tdi = TARDISDisplayItem.LIGHT_TENTH_ON;
+                ItemDisplay display = TARDISDisplayItemUtils.get(rsl.getData().get(0));
+                if (display != null) {
+                    tdi = TARDISDisplayItem.getByItemDisplay(display);
+                    light = TardisLight.getFromDisplayItem(tdi);
+                }
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light);
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi);
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);
