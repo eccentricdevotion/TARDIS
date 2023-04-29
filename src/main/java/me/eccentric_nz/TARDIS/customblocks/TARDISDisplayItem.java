@@ -34,14 +34,14 @@ public enum TARDISDisplayItem {
     BIGGER(Material.GOLD_BLOCK),
     BUDGET(Material.IRON_BLOCK),
     CAVE(Material.DRIPSTONE_BLOCK),
-    COPPER(10001, Material.COPPER_BLOCK),
-    CORAL(10001, Material.FIRE_CORAL_BLOCK),
+    COPPER(10001, Material.COPPER_BLOCK, null),
+    CORAL(10001, Material.FIRE_CORAL_BLOCK, null),
     DELTA(Material.CRYING_OBSIDIAN),
     DELUXE(Material.DIAMOND_BLOCK),
     DIVISION(Material.PINK_GLAZED_TERRACOTTA),
     ELEVENTH(Material.EMERALD_BLOCK),
     ENDER(Material.PURPUR_BLOCK),
-    FACTORY(10001, Material.GRAY_CONCRETE),
+    FACTORY(10001, Material.GRAY_CONCRETE, null),
     FUGITIVE(Material.POLISHED_DEEPSLATE),
     MASTER(Material.NETHER_BRICKS),
     MECHANICAL(Material.POLISHED_ANDESITE),
@@ -51,103 +51,84 @@ public enum TARDISDisplayItem {
     REDSTONE(Material.REDSTONE_BLOCK),
     ROTOR(Material.HONEYCOMB_BLOCK),
     STEAMPUNK(Material.COAL_BLOCK),
-    THIRTEENTH(10001, Material.HORN_CORAL_BLOCK),
+    THIRTEENTH(10001, Material.HORN_CORAL_BLOCK, null),
     TOM(Material.LAPIS_BLOCK),
     TWELFTH(Material.PRISMARINE),
     WAR(Material.WHITE_TERRACOTTA),
     WEATHERED(Material.WEATHERED_COPPER),
-    SMALL(10001, Material.COBBLESTONE),
-    MEDIUM(10002, Material.COBBLESTONE),
-    TALL(10003, Material.COBBLESTONE),
+    SMALL(10001, Material.COBBLESTONE, null),
+    MEDIUM(10002, Material.COBBLESTONE, null),
+    TALL(10003, Material.COBBLESTONE, null),
     LEGACY_BIGGER(Material.ORANGE_GLAZED_TERRACOTTA),
     LEGACY_DELUXE(Material.LIME_GLAZED_TERRACOTTA),
     LEGACY_ELEVENTH(Material.CYAN_GLAZED_TERRACOTTA),
     LEGACY_REDSTONE(Material.RED_GLAZED_TERRACOTTA),
-    CUSTOM(10001, Material.POLISHED_BLACKSTONE),
-    GROW(10001, Material.LIGHT_GRAY_TERRACOTTA),
-    ADVANCED_CONSOLE(10001, Material.JUKEBOX),
-    BLUE_BOX(10001, Material.BLUE_WOOL),
-    COG(10001, Material.GRAY_WOOL),
-    DISK_STORAGE(10001, Material.NOTE_BLOCK),
-    HEXAGON(10001, Material.ORANGE_WOOL),
-    ROUNDEL(10001, Material.WHITE_WOOL),
-    ROUNDEL_OFFSET(10002, Material.WHITE_WOOL),
-    BLUE_LAMP(10001, Material.REDSTONE_LAMP, true),
-    GREEN_LAMP(10002, Material.REDSTONE_LAMP, true),
-    PURPLE_LAMP(10003, Material.REDSTONE_LAMP, true),
-    RED_LAMP(10004, Material.REDSTONE_LAMP, true),
-    BLUE_LAMP_ON(10001, Material.SEA_LANTERN, true, true),
-    GREEN_LAMP_ON(10002, Material.SEA_LANTERN, true, true),
-    PURPLE_LAMP_ON(10003, Material.SEA_LANTERN, true, true),
-    RED_LAMP_ON(10004, Material.SEA_LANTERN, true, true),
-    PANDORICA(10001, Material.BLACK_CONCRETE),
-    COMPOUND(10001, Material.ORANGE_CONCRETE),
-    CONSTRUCTOR(10001, Material.LIGHT_BLUE_CONCRETE),
-    CREATIVE(10001, Material.LIGHT_GRAY_CONCRETE),
-    HEAT_BLOCK(10001, Material.RED_CONCRETE),
-    LAB(10001, Material.YELLOW_CONCRETE),
-    PRODUCT(10001, Material.LIME_CONCRETE),
-    REDUCER(10001, Material.MAGENTA_CONCRETE),
-    SIEGE_CUBE(10001, Material.CYAN_CONCRETE),
-    THE_MOMENT(10001, Material.BROWN_WOOL),
-    LIGHT_CLASSIC(10005, Material.GRAY_WOOL, true),
-    LIGHT_TENTH(10006, Material.GRAY_WOOL, true),
-    LIGHT_ELEVENTH(10007, Material.GRAY_WOOL, true),
-    LIGHT_TWELFTH(10008, Material.GRAY_WOOL, true),
-    LIGHT_THIRTEENTH(10009, Material.GRAY_WOOL, true),
-    LIGHT_LAMP(-1, Material.REDSTONE_LAMP, true),
-    LIGHT_LANTERN(-1, Material.GRAY_WOOL, true),
-    LIGHT_WOOL(-1, Material.BLACK_WOOL, true),
-    LIGHT_CLASSIC_OFFSET(10010, Material.GRAY_WOOL, true),
-    LIGHT_CLASSIC_ON(10005, Material.SEA_LANTERN, true, true),
-    LIGHT_TENTH_ON(10006, Material.REDSTONE_LAMP, true, true),
-    LIGHT_ELEVENTH_ON(10007, Material.REDSTONE_LAMP, true, true),
-    LIGHT_TWELFTH_ON(10008, Material.SEA_LANTERN, true, true),
-    LIGHT_THIRTEENTH_ON(10009, Material.SEA_LANTERN, true, true),
-    LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, true, true),
-    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, true, true),
-    LIGHT_CLASSIC_OFFSET_ON(10010, Material.SEA_LANTERN, true, true);
+    CUSTOM(10001, Material.POLISHED_BLACKSTONE, null),
+    GROW(10001, Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
+    ADVANCED_CONSOLE(10001, Material.JUKEBOX, null),
+    BLUE_BOX(10001, Material.BLUE_WOOL, Material.BLUE_DYE),
+    COG(10001, Material.GRAY_WOOL, Material.GRAY_DYE),
+    DISK_STORAGE(10001, Material.NOTE_BLOCK, null),
+    HEXAGON(10001, Material.ORANGE_WOOL, Material.ORANGE_DYE),
+    ROUNDEL(10001, Material.WHITE_WOOL, Material.WHITE_DYE),
+    ROUNDEL_OFFSET(10002, Material.WHITE_WOOL, Material.LIGHT_GRAY_DYE),
+    BLUE_LAMP(10001, Material.REDSTONE_LAMP, null),
+    GREEN_LAMP(10002, Material.REDSTONE_LAMP, null),
+    PURPLE_LAMP(10003, Material.REDSTONE_LAMP, null),
+    RED_LAMP(10004, Material.REDSTONE_LAMP, null),
+    BLUE_LAMP_ON(10001, Material.SEA_LANTERN, null),
+    GREEN_LAMP_ON(10002, Material.SEA_LANTERN, null),
+    PURPLE_LAMP_ON(10003, Material.SEA_LANTERN, null),
+    RED_LAMP_ON(10004, Material.SEA_LANTERN, null),
+    PANDORICA(10001, Material.BLACK_CONCRETE, null),
+    COMPOUND(10001, Material.ORANGE_CONCRETE, null),
+    CONSTRUCTOR(10001, Material.LIGHT_BLUE_CONCRETE, null),
+    CREATIVE(10001, Material.LIGHT_GRAY_CONCRETE, null),
+    HEAT_BLOCK(10001, Material.RED_CONCRETE, null),
+    LAB(10001, Material.YELLOW_CONCRETE, null),
+    PRODUCT(10001, Material.LIME_CONCRETE, null),
+    REDUCER(10001, Material.MAGENTA_CONCRETE, null),
+    SIEGE_CUBE(10001, Material.CYAN_CONCRETE, null),
+    THE_MOMENT(10001, Material.BROWN_WOOL, Material.REDSTONE_BLOCK),
+    LIGHT_CLASSIC(10005, Material.GRAY_WOOL, Material.TORCH),
+    LIGHT_CLASSIC_OFFSET(10010, Material.GRAY_WOOL, Material.SOUL_TORCH),
+    LIGHT_TENTH(10006, Material.GRAY_WOOL, Material.ORANGE_DYE),
+    LIGHT_ELEVENTH(10007, Material.GRAY_WOOL, Material.YELLOW_DYE),
+    LIGHT_TWELFTH(10008, Material.GRAY_WOOL, Material.CYAN_DYE),
+    LIGHT_THIRTEENTH(10009, Material.GRAY_WOOL, Material.BLUE_DYE),
+    LIGHT_LAMP(-1, Material.REDSTONE_LAMP, null),
+    LIGHT_LANTERN(-1, Material.GRAY_WOOL, null),
+    //    LIGHT_WOOL(-1, Material.BLACK_WOOL),
+    LIGHT_CLASSIC_ON(10005, Material.SEA_LANTERN, null),
+    LIGHT_CLASSIC_OFFSET_ON(10010, Material.SEA_LANTERN, null),
+    LIGHT_TENTH_ON(10006, Material.REDSTONE_LAMP, null),
+    LIGHT_ELEVENTH_ON(10007, Material.REDSTONE_LAMP, null),
+    LIGHT_TWELFTH_ON(10008, Material.SEA_LANTERN, null),
+    LIGHT_THIRTEENTH_ON(10009, Material.SEA_LANTERN, null),
+    LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, null),
+    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, null);
 
     private int customModelData;
     private final Material material;
-    private final boolean light;
-    private final boolean lit;
+    private final Material craftMaterial;
 
     private TARDISDisplayItem(Material item) {
         this.customModelData = 1;
         this.material = item;
-        this.light = false;
-        this.lit = false;
+        this.craftMaterial = null;
     }
 
-    private TARDISDisplayItem(int customModelData, Material item) {
+    private TARDISDisplayItem(int customModelData, Material item, Material craftMaterial) {
         this.customModelData = customModelData;
         this.material = item;
-        this.light = false;
-        this.lit = false;
+        this.craftMaterial = craftMaterial;
     }
 
-    private TARDISDisplayItem(int customModelData, Material item, boolean light) {
-        this.customModelData = customModelData;
-        this.material = item;
-        this.light = light;
-        this.lit = false;
-    }
-
-    private TARDISDisplayItem(int customModelData, Material item, boolean light, boolean lit) {
-        this.customModelData = customModelData;
-        this.material = item;
-        this.light = light;
-        this.lit = lit;
-    }
-
-    private static final HashMap<Integer, TARDISDisplayItem> BY_DATA = new HashMap<>();
     private static final HashMap<String, TARDISDisplayItem> BY_NAME = new HashMap<>();
 
     static {
         for (TARDISDisplayItem tdi : values()) {
             BY_NAME.put(tdi.toString().toLowerCase(), tdi);
-            BY_DATA.put(tdi.customModelData, tdi);
         }
     }
 
@@ -165,6 +146,10 @@ public enum TARDISDisplayItem {
 
     public Material getMaterial() {
         return material;
+    }
+
+    public Material getCraftMaterial() {
+        return craftMaterial;
     }
 
     private static final HashMap<Integer, TARDISDisplayItem> BY_MUSHROOM_STEM = new HashMap<>() {
@@ -200,11 +185,27 @@ public enum TARDISDisplayItem {
     };
 
     public boolean isLight() {
-        return light;
+        switch (this) {
+            case LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN,
+                    LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON
+                    -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 
     public boolean isLit() {
-        return lit;
+        switch (this) {
+            case LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 
     public static TARDISDisplayItem getByMaterialAndData(Material m, int cmd) {

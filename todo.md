@@ -5,8 +5,7 @@
 ## Version 5.0.0
 
 1. Documentation of new/changed features
-2. Recipes for custom blocks and lights
-5. ?
+2. ?
 
 ## Next version `5.1.0`
 
