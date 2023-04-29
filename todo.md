@@ -4,7 +4,11 @@
 
 ## Version 5.0.0
 
-1. ?
+1. Documentation of new/changed features
+2. Recipes for custom blocks and lights
+3. Remove Mechanical lava when exterminating / changing desktop
+4. Remove all display and interaction entities from _previous_ console size, not the size of the console being changed to
+5. ?
 
 ## Next version `5.1.0`
 

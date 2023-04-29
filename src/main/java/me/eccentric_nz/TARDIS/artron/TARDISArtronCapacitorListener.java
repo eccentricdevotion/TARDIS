@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -66,15 +67,9 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
-        validBlocks.add(Material.ACACIA_BUTTON);
-        validBlocks.add(Material.BIRCH_BUTTON);
+        validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.add(Material.COMPARATOR);
-        validBlocks.add(Material.DARK_OAK_BUTTON);
-        validBlocks.add(Material.JUNGLE_BUTTON);
         validBlocks.add(Material.LEVER);
-        validBlocks.add(Material.OAK_BUTTON);
-        validBlocks.add(Material.SPRUCE_BUTTON);
-        validBlocks.add(Material.STONE_BUTTON);
     }
 
     /**
