@@ -30,6 +30,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.BoundingBox;
 
 /**
  * @author eccentric_nz
@@ -63,6 +64,28 @@ public class TARDISDisplayItemUtils {
      */
     public static ItemDisplay get(Block block) {
         for (Entity e : block.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof ItemDisplay display) {
+                return display;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get an item display entity from a light block. Used for custom TARDIS
+     * lights. Light blocks don't have a bounding box, so we need to create our
+     * own from the block's location.
+     *
+     * @param block the light block to use as the search location
+     * @return The Item Display entity at the block's location or null if there
+     * isn't one
+     */
+    public static ItemDisplay getFromLight(Block block) {
+        int x = block.getLocation().getBlockX();
+        int y = block.getLocation().getBlockY();
+        int z = block.getLocation().getBlockZ();
+        BoundingBox box = new BoundingBox(x, y, z, x + 1, y + 1, z + 1);
+        for (Entity e : block.getWorld().getNearbyEntities(box.expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
             if (e instanceof ItemDisplay display) {
                 return display;
             }

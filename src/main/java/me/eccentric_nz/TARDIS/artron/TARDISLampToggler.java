@@ -32,6 +32,7 @@ import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * @author eccentric_nz
@@ -73,44 +74,44 @@ public class TARDISLampToggler {
                     b.getChunk().load();
                 }
                 Levelled levelled = TARDISConstants.LIGHT;
-                ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                ItemDisplay display = TARDISDisplayItemUtils.getFromLight(b);
                 if (on) {
                     levelled.setLevel(0);
+                    b.setBlockData(levelled);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         // convert to light display item
                         TARDISDisplayItemUtils.set(light.getOff(), b);
                     } else {
                         // switch the itemstack
                         if (display != null) {
-                            ItemStack is = display.getItemStack();
+                            ItemStack is = new ItemStack(light.getOff().getMaterial());
                             ItemMeta im = is.getItemMeta();
-                            if (light.getOff().getCustomModelData() == -1) {
-                                im.setCustomModelData(null);
-                            } else {
-                                im.setCustomModelData(light.getOff().getCustomModelData());
+                            im.setDisplayName(light.getOff().getDisplayName());
+                            int cmd = light.getOff().getCustomModelData();
+                            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+                            if (cmd != -1) {
+                                im.setCustomModelData(cmd);
                             }
-                            is.setType(light.getOff().getMaterial());
                             is.setItemMeta(im);
                             display.setItemStack(is);
                         }
                     }
-                    b.setBlockData(levelled);
                 } else {
+                    levelled.setLevel(15);
+                    b.setBlockData(levelled);
                     // switch the itemstack
                     if (display != null) {
-                        ItemStack is = display.getItemStack();
+                        ItemStack is = new ItemStack(light.getOn().getMaterial());
                         ItemMeta im = is.getItemMeta();
-                        if (light.getOn().getCustomModelData() == -1) {
-                            im.setCustomModelData(null);
-                        } else {
-                            im.setCustomModelData(light.getOn().getCustomModelData());
+                        im.setDisplayName(light.getOn().getDisplayName());
+                        int cmd = light.getOn().getCustomModelData();
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+                        if (cmd != -1) {
+                            im.setCustomModelData(cmd);
                         }
-                        is.setType(light.getOn().getMaterial());
                         is.setItemMeta(im);
                         display.setItemStack(is);
                     }
-                    levelled.setLevel(15);
-                    b.setBlockData(levelled);
                 }
             }
         }
