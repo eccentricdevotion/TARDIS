@@ -56,6 +56,7 @@ public class TARDISDisplayItemRecipe {
                 r.setIngredient('A', tdi.getCraftMaterial());
                 r.setIngredient('D', tdi.getMaterial());
                 plugin.getServer().addRecipe(r);
+                plugin.getFigura().getShapedRecipes().put(tdi.getDisplayName(), r);
             }
         }
     }

@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import java.util.Arrays;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class TARDISRecipeCategoryInventory {
 
@@ -42,7 +41,7 @@ public class TARDISRecipeCategoryInventory {
         info_im.setLore(Arrays.asList("Click a button below", "to see the items", "in that recipe category"));
         info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
         info.setItemMeta(info_im);
-        stack[4] = info;
+        stack[0] = info;
         for (RecipeCategory category : RecipeCategory.values()) {
             if (!category.equals(RecipeCategory.UNUSED) && category != RecipeCategory.UNCRAFTABLE) {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);

@@ -22,6 +22,7 @@ import org.bukkit.Material;
 
 public enum RecipeCategory {
 
+    CUSTOM_BLOCKS(Material.ANVIL, 1, 8, ChatColor.DARK_RED),
     ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, ChatColor.GREEN),
     CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, ChatColor.LIGHT_PURPLE),
     FOOD(Material.MELON_SLICE, 10000002, 13, ChatColor.GRAY),
