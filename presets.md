@@ -205,72 +205,96 @@ with its surroundings.
 Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an
 Item Frame. They have custom block models for the materialisation animation as well.
 
-![presets gui](images/presets/stained.jpg)
+![tarnsparent coloured police box](images/presets/stained.jpg)
 
-![presets gui](images/presets/glass.jpg)
+![transparent police box](images/presets/glass.jpg)
 
-![presets gui](images/chameleon/presets_gui_2.jpg)
+![presets gui page 2](images/chameleon/presets_gui_2.jpg)
 
 **POLICE\_BOX\_BLUE** — A standard blue police box.
 
-![Police Box](images/presets/blue.jpg)
+![blue police box](images/presets/blue.jpg)
 
 **POLICE\_BOX\_WHITE** — A white police box.
 
-![yellow submarine](images/presets/white.jpg)
+![white police box](images/presets/white.jpg)
 
 **POLICE\_BOX\_ORANGE** — An orange police box.
 
-![yellow submarine](images/presets/orange.jpg)
+![orange police box](images/presets/orange.jpg)
+
+**POLICE\_BOX\_MAGENTA** — A magenta police box.
+
+![magenta police box](images/presets/magenta.jpg)
 
 **POLICE\_BOX\_LIGHT\_BLUE** — A light blue police box.
 
-![yellow submarine](images/presets/light_blue.jpg)
+![light blue police box](images/presets/light_blue.jpg)
 
 **POLICE\_BOX\_YELLOW** — A yellow police box.
 
-![yellow submarine](images/presets/yellow.jpg)
+![yellow police box](images/presets/yellow.jpg)
 
 **POLICE\_BOX\_LIME** — A lime police box.
 
-![yellow submarine](images/presets/lime.jpg)
+![lime police box](images/presets/lime.jpg)
 
 **POLICE\_BOX\_PINK** — A pink police box.
 
-![yellow submarine](images/presets/pink.jpg)
+![pink police box](images/presets/pink.jpg)
 
 **POLICE\_BOX\_GRAY** — A gray police box.
 
-![yellow submarine](images/presets/gray.jpg)
+![gray police box](images/presets/gray.jpg)
 
 **POLICE\_BOX\_LIGHT\_GRAY** — A light gray police box.
 
-![yellow submarine](images/presets/light_gray.jpg)
+![light gray police box](images/presets/light_gray.jpg)
 
 **POLICE\_BOX\_CYAN** — A cyan police box.
 
-![yellow submarine](images/presets/cyan.jpg)
+![cyan police box](images/presets/cyan.jpg)
 
 **POLICE\_BOX\_PURPLE** — A purple police box.
 
-![yellow submarine](images/presets/purple.jpg)
+![purple police box](images/presets/purple.jpg)
 
 **POLICE\_BOX\_BROWN** — A brown police box.
 
-![yellow submarine](images/presets/brown.jpg)
+![brown police box](images/presets/brown.jpg)
 
 **POLICE\_BOX\_GREEN** — A green police box.
 
-![yellow submarine](images/presets/green.jpg)
+![grenn police box](images/presets/green.jpg)
 
 **POLICE\_BOX\_RED** — A red police box.
 
-![yellow submarine](images/presets/red.jpg)
+![red police box](images/presets/red.jpg)
 
 **POLICE\_BOX\_BLACK** — A black police box.
 
-![yellow submarine](images/presets/black.jpg)
+![black police box](images/presets/black.jpg)
 
 **WEEPING_ANGEL** — A weeping angel.
 
-![yellow submarine](images/presets/weeping.jpg)
+![weeping angel](images/presets/weeping.jpg)
+
+**ANY COLOUR** - Mix your own colour police box! Use the colour picker to mix yor own favourite colour.
+
+![colour picker](images/docs/colour_picker_gui.jpg)
+
+![any colour](images/docs/any_colour_police_box.jpg)
+
+## Custom model presets
+
+You can add your own custom models to the plugin - see the [Custom model presets](custom-model-presets.html) page for more details. These presets will appear on page two.
+
+The plugin includes two example models:
+
+**Type 40** — A Type 40 time travel capsule.
+
+![type 40](images/presets/type_40.jpg)
+
+**Bad Wolf** — The Bad Wolf TARDIS from new Who Series 1.
+
+![bad wolf](images/presets/bad_wolf.jpg)

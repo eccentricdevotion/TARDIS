@@ -56,3 +56,15 @@ right in!
 | `Note block`        | Disk Storage                                                   |
 | `Command block`     | Artron charged creeper spawn location                          |
 | `Daylight detector` | Telepathic Circuit                                             |
+
+## Block and entity support
+
+TARDIS schematics support the following:
+
+* All regular blocks found in the game
+* Banners - preserving colours and patterns
+* Item frames - preserving basic item stack properties (type, custom model data, display name, lore) and frame properties (rotation, glowing, fixed, visibility)
+* Paintings
+* Player heads - preserving textures
+* Item Displays - preserving basic item stack properties (type, custom model data)
+* Signs - preserving all lines, colours and glowing properties
