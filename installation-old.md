@@ -7,22 +7,25 @@ title: Installation
 
 # Installation
 
-Get the latest TARDIS plugin files
+Get the latest TARDIS plugin file
 from: [http://tardisjenkins.duckdns.org:8080/view/TARDIS/](http://tardisjenkins.duckdns.org:8080/view/TARDIS/)
 
 * * *
 
 You install TARDIS just like you would any other Spigot/Paper plugin, by dropping it into the Bukkit plugins folder and
-starting the server. TARDIS depends on a small library of code that is found in another plugin: TARDISChunkGenerator.jar
+starting the server.
+
+> For version before 5.0.0, TARDIS depends on a small library of code that is found in another plugin: TARDISChunkGenerator.jar
 — you can find this on the
 TARDISChunkGenerator [download page](http://tardisjenkins.duckdns.org:8080/view/TARDISChunkGenerator/).
+
 The TARDIS database, configuration, schematic and advancement files will be created automatically.
 
 {#tekkit}
 Some versions of the TARDIS plugin are backwards compatible with previous versions of Spigot (version 2.5.8 is
 compatible
 with Tekkit Classic Server), for the plugin to have full functionality and work correctly you should have Spigot / Paper
-version `1.19.3-R0.1` or higher.
+version `1.19.4-R0.1` or higher.
 
 The TARDIS plugin has evolved into a complex beast, with configurable recipes, and other things that unexperienced
 server
