@@ -8,7 +8,7 @@ title: Time Rotor
 If you are using the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) you can add
 an animated time rotor to your console (or grow a ROTOR console from a TARDIS seed block).
 
-There are 4 time rotor types.
+There are 6 time rotor types.
 
 Early era
 
@@ -25,6 +25,14 @@ Eleventh era
 Twelfth era (not animated)
 
 ![Twelfth era time rotor](images/docs/round_time_rotor.jpg)
+
+Delta
+
+![Delta time rotor](images/docs/delta_time_rotor.jpg)
+
+Engine (rotor)
+
+![Engine time rotor](images/docs/engine_time_rotor.jpg)
 
 ### Adding a Time Rotor
 
@@ -47,7 +55,7 @@ rotor you need to unlock it.
 
 ### Recipes
 
-The crafting recipes for the four time rotors are:
+The crafting recipes for the seven time rotors are:
 
 ![Time Rotor Recipes](images/docs/time_rotor_recipes.gif)
 
@@ -63,11 +71,22 @@ Change the dye colours for each rotor:
 * Tenth &mdash; Cyan ![#0099cc](https://via.placeholder.com/15/0099cc/000000?text=+)
 * Eleventh &mdash; Brown ![#663300](https://via.placeholder.com/15/663300/000000?text=+)
 * Twelfth &mdash; Orange ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+)
+* Delta &mdash; Purple ![#9900cc](https://via.placeholder.com/15/9900cc/000000?text=+)
+* Engine &mdash; Blue ![#3300cc](https://via.placeholder.com/15/3300cc/000000?text=+)
+* Time Engine &mdash; Light blue ![#00cc99](https://via.placeholder.com/15/00cc99/000000?text=+)
 
 Use the command:
 
 ```
-/tardisrecipe time-rotor-[early|tenth|eleventh|twelfth]
+/tardisrecipe time-rotor-[early|tenth|eleventh|twelfth|delta|engine]
 ```
 
 to see the recipes in game.
+
+There is also a Rotor Engine (as seen in the Mechanical console (`/tardisrecipe time-engine`).
+
+![Time engine](images/docs/time_engine.jpg)
+
+![Time engine recipe](images/docs/time_engine_recipe.png)
+
+
