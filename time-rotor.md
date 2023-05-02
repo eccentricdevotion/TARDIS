@@ -82,7 +82,7 @@ Use the command:
 
 to see the recipes in game.
 
-There is also a Rotor Engine (as seen in the Mechanical console (`/tardisrecipe time-engine`).
+There is also a Rotor Engine (as seen in the Mechanical console) - `/tardisrecipe time-engine`.
 
 ![Time engine](images/docs/time_engine.jpg)
 
