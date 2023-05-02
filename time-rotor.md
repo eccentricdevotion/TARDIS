@@ -73,7 +73,6 @@ Change the dye colours for each rotor:
 * Twelfth &mdash; Orange ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+)
 * Delta &mdash; Purple ![#9900cc](https://via.placeholder.com/15/9900cc/000000?text=+)
 * Engine &mdash; Blue ![#3300cc](https://via.placeholder.com/15/3300cc/000000?text=+)
-* Time Engine &mdash; Light blue ![#00cc99](https://via.placeholder.com/15/00cc99/000000?text=+)
 
 Use the command:
 
@@ -86,6 +85,12 @@ to see the recipes in game.
 There is also a Rotor Engine (as seen in the Mechanical console (`/tardisrecipe time-engine`).
 
 ![Time engine](images/docs/time_engine.jpg)
+
+```
+LIGHT_BLUE_DYE | REDSTONE | LIGHT_BLUE_DYE
+GLASSPANE      | ANVIL    | GLASSPANE
+GLASSPANE      | REDSTONE | GLASSPANE
+```
 
 ![Time engine recipe](images/docs/time_engine_recipe.png)
 
