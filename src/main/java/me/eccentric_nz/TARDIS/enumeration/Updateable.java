@@ -50,6 +50,7 @@ public enum Updateable {
     HINGE(false, false, TARDISUpdateableCategory.OTHERS, "Set the side a door hinge is on"),
     IGLOO(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Igloo room"),
     INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "TARDIS Information System"),
+    MUSHROOMS(false, false, true, TARDISUpdateableCategory.OTHERS, "Convert old custom mushroom blocks to TARDIS Item Displays"),
     KEYBOARD(true, false, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.OTHERS, "Keyboard Input sign"),
     LIGHT(true, true, TARDISUpdateableCategory.OTHERS, "Console Light switch"),
     MAP(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "TARDIS Scanner Map"),

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -33,13 +32,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Light;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Interaction;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -47,6 +40,8 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
+
+import java.util.HashMap;
 
 /**
  *
@@ -139,7 +134,7 @@ public class TARDISDisplayItemCommand {
                 TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
                 converter.setTaskId(taskId);
-                // also find any rooms and convert the mushroom blocks there, TODO implement both as player command
+                // also find any rooms and convert the mushroom blocks there
                 // get players tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {

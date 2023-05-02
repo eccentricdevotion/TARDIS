@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.customblocks;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -33,6 +32,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -97,7 +98,7 @@ public class TARDISDisplayBlockConverter implements Runnable {
             // we're finished
             plugin.getServer().getScheduler().cancelTask(taskId);
             taskId = 0;
-            TARDISMessage.message(owner, "Display Block conversion complete");
+            TARDISMessage.message(owner, "CONSOLE Display Block conversion complete");
         } else {
             // check a row of blocks
             for (int col = 0; col < c; col++) {
