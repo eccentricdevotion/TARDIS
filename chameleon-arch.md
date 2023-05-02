@@ -8,8 +8,8 @@ title: Chameleon Arch
 The Tenth Doctor used a Chameleon Arch to change himself into the human John Smith to elude the Family of Blood. You can
 craft a fob watch to change your self from a Time Lord in a regular player (a Steve — albeit with a random name).
 
-- To see the custom fob watch texture you need to use the TARDIS-MCP resource pack, and an MCPatcher modded client.
-- To use the Chameleon Arch feature, the server must have [LibsDisguises](http://ci.md-5.net/job/LibsDisguises/)
+- To see the custom fob watch texture you need to use the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/).
+- For best results when using the Chameleon Arch feature, the server can have [LibsDisguises](http://ci.md-5.net/job/LibsDisguises/)
   installed.
 - Players must have the `tardis.chameleonarch` permission.
 
