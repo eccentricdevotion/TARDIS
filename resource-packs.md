@@ -30,8 +30,7 @@ or here:
 ## TARDIS Weeping Angels
 
 These are included in the TARDIS-Resource-Pack, but if you are running TWA independently or don't want the other TARDIS
-textures, you can use TARDIS
-Use the TARDIS-Sound-Resource-Pack found here:
+textures, you can use the TARDISWeepingAngels-Resource-Pack found here:
 
 [https://github.com/eccentricdevotion/TARDISWeepingAngels-Resource-Pack](https://github.com/eccentricdevotion/TARDISWeepingAngels-Resource-Pack)
 
@@ -42,6 +41,11 @@ or here:
 ![TWA](images/docs/cyberman2.jpg)
 
 ### Keeping the resource packs up-to-date
+
+Resource packs are automatically built on the TARDIS Jenkins server when changes are pushed to GitHub. 
+Download and replace the pack Zip files when a new file is created.
+
+#### Alternatively
 
 The TARDIS resource packs are shared in GitHub repositories. If you install a GitHub client, you can easily keep your
 resource packs current by syncing with any changes that are pushed to the repository.

@@ -21,7 +21,8 @@ The planets are listed and described below!
 
 ## Note
 
-To get the best experience on these planets, it's recommended to download the accompanying plugin and resource pack.
+To get the best experience on these planets, it's recommended to enable the [Weeping Angels module](modules.html) 
+(or for versions prior to v5.0.0, download the accompanying plugin and resource pack).
 Otherwise, mobs will look like vanilla mobs!
 
 - [TARDISWeepingAngels](http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/lastSuccessfulBuild/)

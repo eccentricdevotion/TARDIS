@@ -25,17 +25,19 @@ There are a number of specific player preferences that you can change:
 - Build flag
 - Minecart sounds
 - Exterior Rendering Room
-- Wool Lights
-- Connected Textures
+- `@Deprecated` Wool Lights
+- `@Deprecated` Connected Textures
 - Travel Bar
 - Difficulty
 - Farming
-- Lanterns
+- `@Deprecated` Lanterns
 - Junk Mode
 - Interior hum sound effects
 
 Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a
 Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).
+
+> **Note** Preferences marked with `@Deprecated` may not be available in later versions of the plugin.
 
 ![Player prefs GUI](images/docs/player_prefs_custom.jpg)
 
@@ -167,19 +169,21 @@ materialisation with this command, type:
 
     /tardisprefs minecart [on|off]
 
-### `/tardisprefs wool_lights`
+### `@Deprecated<br>/tardisprefs wool_lights`
 
 You can choose whether to use black wool or sponge (re-textured with the TARDIS Resource Pack to look like Redstone Lamp
 Off blocks) for the off state of the TARDIS lights with this command, type:
 
+    @Deprecated
     /tardisprefs wool_lights [on|off]
 
-### `/tardisprefs ctm`
+### `@Deprecated<br>/tardisprefs ctm`
 
 You can choose whether your Police Box preset uses the Connected Textures Mod to change the block to the left of the
 door to a quartz pillar that is retextured to the Police Box sign (players without the mod installed will see a plain
 quartz pillar instead of the regular blue wool when this is `on`) with this command, type:
 
+    @Deprecated
     /tardisprefs ctm [on|off]
 
 ### `/tardisprefs travelbar`
@@ -208,10 +212,11 @@ To toggle automatically powering up the TARDIS when entering (if it is powered d
 
     /tardisprefs auto_powerup [on|off]
 
-### `/tardisprefs lanterns`
+### `@Deprecated<br>/tardisprefs lanterns`
 
 Set whether your TARDIS console uses lanterns or redstone lamps with this command, type:
 
+    @Deprecated
     /tardisprefs lanterns [on|off]
 
 ON means that the console will use sea lanterns, toggle the lights off and on to see the change.
@@ -224,6 +229,7 @@ You can toggle Junk Mode on or off with this command, type:
 
 To toggle the plain TARDIS on and off (no sign or lamp), type:
 
+    @Deprecated
     /tardisprefs plain [on|off]
 
 To toggle submarine landings on and off, type:
@@ -244,4 +250,5 @@ To set the language used in the '/tardis say' command, type (with auto-complete)
 
 To toggle Police Box textures on and off (biome for CTM is set / not set at the TARDIS' location), type:
 
+    @Deprecated
     /tardisprefs policebox_textures [on|off]

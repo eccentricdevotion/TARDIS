@@ -76,6 +76,9 @@ categorised list of all items.
 | Time Rotor Tenth | `/tardisrecipe time-rotor-tenth` |
 | Time Rotor Eleventh | `/tardisrecipe time-rotor-eleventh` |
 | Time Rotor Twelfth | `/tardisrecipe time-rotor-twelfth` |
+| Time Rotor Delta | `/tardisrecipe time-rotor-delta` |
+| Time Rotor Engine | `/tardisrecipe time-rotor-engine` |
+| Time Engine | `/tardisrecipe time-engine` |
 
 #### Sonic circuits
 
@@ -115,5 +118,23 @@ categorised list of all items.
 | Acid Battery | `/tardisrecipe acid-battery` |
 | Rust Plague Sword | `/tardisrecipe rust-plague-sword` |
 | Tardis Schematic Wand | `/tardisrecipe schematic-wand` |
+| Tardis Monitor | `/tardisrecipe tardis-monitor` |
+| Tardis Monitor Frame | `/tardisrecipe tardis-monitor-frame` |
+
+#### Custom blocks and lights
+
+| Grow | `/tardisrecipe grow` |
+| Blue Box | `/tardisrecipe blue-box` |
+| Cog | `/tardisrecipe cog` |
+| Hexagon | `/tardisrecipe heaxagon` |
+| Roundel | `/tardisrecipe roundel` |
+| Roundel Offset | `/tardisrecipe roundel-offset` |
+| The Moment | `/tardisrecipe the-moment` |
+| Light Classic | `/tardisrecipe light-classic` |
+| Light Classic Offset | `/tardisrecipe light-classic-offset` |
+| Light Tenth | `/tardisrecipe light-tenth` |
+| Light Eleventh | `/tardisrecipe light-eleventh` |
+| Light Twelfth | `/tardisrecipe light-twelfth` |
+| Light Thirteenth | `/tardisrecipe light-thirteenth` |
 
 ![Recipe GUI](images/docs/recipe.jpg)
