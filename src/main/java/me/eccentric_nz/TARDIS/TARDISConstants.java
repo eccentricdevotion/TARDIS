@@ -312,7 +312,6 @@ public class TARDISConstants {
         return false;
     }
 
-
     /**
      * Chameleon blocks to check the surrounding blocks for a valid block to
      * change to
@@ -433,6 +432,11 @@ public class TARDISConstants {
      * BlockData for SNOW
      */
     public static final BlockData SNOW = Material.SNOW.createBlockData();
+
+    /**
+     * BlockData for Snow Block
+     */
+    public static final BlockData SNOW_BLOCK = Material.SNOW_BLOCK.createBlockData();
 
     /**
      * BlockData for GLASS

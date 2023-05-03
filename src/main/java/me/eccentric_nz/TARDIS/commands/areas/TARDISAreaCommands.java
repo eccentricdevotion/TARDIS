@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.areas;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -40,21 +45,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.regex.Pattern;
-
 /**
  * Command /tardisarea [arguments].
  * <p>
- * A dimension is a property of space, extending in a given direction, which, when combined with other dimensions of
- * width and height and time, make up the Universe.
+ * A dimension is a property of space, extending in a given direction, which,
+ * when combined with other dimensions of width and height and time, make up the
+ * Universe.
  *
  * @author eccentric_nz
  */
 public class TARDISAreaCommands implements CommandExecutor {
 
-    public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
@@ -170,15 +171,19 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int max = a.getMaxX();
                     int maz = a.getMaxZ();
                     World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
-                    Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                    b1.setBlockData(SNOW);
-                    Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                    b2.setBlockData(SNOW);
-                    Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                    b3.setBlockData(SNOW);
-                    Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                    b4.setBlockData(SNOW);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
+                    Set<Block> markers = new HashSet<>();
+                    markers.add(w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP));
+                    markers.add(w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP));
+                    markers.add(w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP));
+                    markers.add(w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP));
+                    for (Block block : markers) {
+                        player.sendBlockChange(block.getLocation(), TARDISConstants.SNOW_BLOCK);
+                    }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        for (Block block : markers) {
+                            block.getState().update();
+                        }
+                    }, 300L);
                     return true;
                 }
                 case "yard" -> {
@@ -366,29 +371,5 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    private static class SetAir implements Runnable {
-
-        private final Block b1;
-        private final Block b2;
-        private final Block b3;
-        private final Block b4;
-        private final BlockData air = TARDISConstants.AIR;
-
-        SetAir(Block b1, Block b2, Block b3, Block b4) {
-            this.b1 = b1;
-            this.b2 = b2;
-            this.b3 = b3;
-            this.b4 = b4;
-        }
-
-        @Override
-        public void run() {
-            b1.setBlockData(air);
-            b2.setBlockData(air);
-            b3.setBlockData(air);
-            b4.setBlockData(air);
-        }
     }
 }

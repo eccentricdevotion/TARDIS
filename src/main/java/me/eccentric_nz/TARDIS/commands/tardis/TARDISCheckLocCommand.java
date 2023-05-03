@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -25,8 +26,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -61,7 +60,7 @@ class TARDISCheckLocCommand {
         }
         COMPASS d = rsc.getDirection();
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        tt.testSafeLocation(eyeLocation, d);
+        tt.testSafeLocation(eyeLocation, d, player);
         return true;
     }
 }
