@@ -83,7 +83,6 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 | Name            | Block Required               |
 |-----------------|------------------------------|
 | LEGACY_BIGGER   | Orange Glazed Terracotta     |
-| LEGACY_BUDGET   | Light Grey Glazed Terracotta |
 | LEGACY_DELUXE   | Lime Glazed Terracotta       |
 | LEGACY_ELEVENTH | Cyan Glazed Terracotta       |
 | LEGACY_REDSTONE | Red Glazed Terracotta        |

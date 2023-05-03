@@ -80,6 +80,7 @@ In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘t
     tardis.factory
     tardis.fugitive
     tardis.master
+    tardis.mechanical
     tardis.original
     tardis.plank
     tardis.pyramid
@@ -92,7 +93,6 @@ In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘t
     tardis.war
     tardis.weathered
     tardis.legacy_bigger
-    tardis.legacy_budget
     tardis.legacy_deluxe
     tardis.legacy_eleventh
     tardis.legacy_redstone

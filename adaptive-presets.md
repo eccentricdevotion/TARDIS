@@ -140,3 +140,17 @@ COLD_TAIGA
 
 ![Cold Taiga](images/docs/adaptive_cold_taiga.jpg)
 
+## Locking in a preset
+
+You can use the Chameleon GUI to lock in an adaptive biome preset so that it is used regardless of the biome the TARDIS travels to.
+
+To lock the preset:
+
+1. Set the Chameleon circuit to BIOME Adaptive mode.
+2. Travel to the biome that has the desired preset.
+3. Open the Chameleon GUI again and click the "Lock: button above the Adaptive setting.
+   
+Clicking the button will switch the settings to _Shorted out_ and apply the biome preset on a permanent basis (it
+   won't change when you go to a different biome).
+
+![Chameleon lock](images/docs/chameleon_lock.jpg)

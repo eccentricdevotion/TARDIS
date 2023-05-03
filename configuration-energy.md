@@ -126,21 +126,33 @@ Set the energy cost to upgrade / crossgrade to a different console when using th
 just changing the walls and floor, then `just_wall_floor` sets the percentage the cost is reduced.
 
     upgrades:
+        ancient: [amount] - default: 5000
         ars: [amount] - default: 5000
-        budget: [amount] - default: 5000
-        deluxe: [amount] - default: 10000
-        eleventh: [amount] - default: 10000
-        redstone: [amount] - default: 7500
         bigger: [amount] - default: 7500
+        budget: [amount] - default: 5000
+        cave: [amount] - default: 5000
+        copper: [amount] - default: 20000
+        coral: [amount] - default: 8000
+        delta: [amount] - default: 7500
+        deluxe: [amount] - default: 10000
+        division: [amount] - default: 7500
+        eleventh: [amount] - default: 10000
+        ender: [amount] - default: 5000
+        factory: [amount] - default: 7500
+        fugitive: [amount] - default: 7500
+        master: [amount] - default: 10000
+        mechanical: [amount] - default: 7500
+        original: [amount] - default: 5000
         plank: [amount] - default: 5000
+        pyramid: [amount] - default: 5000
+        redstone: [amount] - default: 7500
+        rotor: [amount] - default: 5000
         steampunk: [amount] - default: 5000
+        thirteenth: [amount] - default: 8000
         tom: [amount] - default: 5000
         twelfth: [amount] - default: 7500
         war: [amount] - default: 5000
-        master: [amount] - default: 10000
-        pyramid: [amount] - default: 5000
-        ender: [amount] - default: 5000
-        coral: [amount] - default: 8000
+        weathered: [amount] - default: 5000
         custom: [amount] - default: 10000
         archive:
           tall: [amount] - default: 10000
@@ -151,7 +163,6 @@ just changing the walls and floor, then `just_wall_floor` sets the percentage th
           small: [amount] - default: 1666
           tall: [amount] - default: 3333
         legacy_deluxe: [amount] - default: 10000
-        legacy_budget: [amount] - default: 5000
         legacy_redstone: [amount] - default: 8000
         legacy_bigger: [amount] - default: 7500
         legacy_eleventh: [amount] - default: 10000

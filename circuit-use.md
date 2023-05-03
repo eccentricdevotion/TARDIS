@@ -13,7 +13,7 @@ there is a 50% chance that a circuit will become damaged even more than usual.
 
 ### Use
 
-Circuit use could will decrease in the following circumstances:
+Circuit use will decrease in the following circumstances:
 
 | Circuit         | Used when                                                           |
 |-----------------|---------------------------------------------------------------------|

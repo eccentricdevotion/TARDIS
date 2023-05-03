@@ -203,7 +203,6 @@ tr.child code { font-size: 11px; }
     <tr class="child"><td colspan="2"><code>tardis.factory</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.fugitive</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_bigger</code></td><td>true</td></tr>
-    <tr class="child"><td colspan="2"><code>tardis.legacy_budget</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_deluxe</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_eleventh</code></td><td>true</td></tr>
     <tr class="child"><td colspan="2"><code>tardis.legacy_redstone</code></td><td>true</td></tr>
@@ -233,6 +232,8 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.factory</code></td><td colspan="2">Allow players to build the First Doctor's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.fugitive</code></td><td colspan="2">Allow players to build the Fugitive (Ruth Clayton) Doctor's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.master</code></td><td colspan="2">Allow players to build the Master's TARDIS.</td><td>op</td></tr>
+    <tr><td><code>tardis.mechanical</code></td><td colspan="2">Allow players to build the Mechanical TARDIS.</td><td>op</td></tr>
+    <tr><td><code>tardis.original</code></td><td colspan="2">Allow players to build the plugin's original TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.plank</code></td><td colspan="2">Allow players to build the 'wood' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.pyramid</code></td><td colspan="2">Allow players to build the Sandstone Pyramid TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.redstone</code></td><td colspan="2">Allow players to build the 'redstone' TARDIS.</td><td>op</td></tr>
@@ -244,7 +245,6 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.war</code></td><td colspan="2">Allow players to build the 'War Doctor's' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.weathered</code></td><td colspan="2">Allow players to build the 'Weathered Copper' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.custom</code></td><td colspan="2">Allow players to build the server's 'custom' TARDIS.</td><td>op</td></tr>
-    <tr><td><code>tardis.legacy_budget</code></td><td colspan="2">Allow players to build the legacy 'budget' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.legacy_bigger</code></td><td colspan="2">Allow players to build the legacy 'bigger' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.legacy_deluxe</code></td><td colspan="2">Allow players to build the legacy 'deluxe' TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.legacy_eleventh</code></td><td colspan="2">Allow players to build the legacy 'eleventh' TARDIS.</td><td>op</td></tr>

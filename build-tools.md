@@ -3,6 +3,10 @@ layout: default
 title: How to use BuildTools
 ---
 
+## TL;DR
+
+Just download Paper - [https://papermc.io/downloads/paper](https://papermc.io/downloads/paper)
+
 # How to use BuildTools
 
 TARDIS is always compiled against the latest version of Spigot. Spigot is being constantly updated, and sometimes TARDIS

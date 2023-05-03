@@ -20,8 +20,7 @@ The speed at which the change happens is linked to the `growth.room_speed` confi
 
 ### Opening the desktop theme GUI
 
-You can open the desktop theme GUI from the [TARDIS Control Menu](control-menu.html), with a command, or by *
-*right-shift-clicking the ARS sign**.
+You can open the desktop theme GUI from the [TARDIS Control Menu](control-menu.html), with a command, or by **right-shift-clicking the ARS sign**.
 
 ![TARDIS Control Menu](images/docs/control_menu_desktop.jpg)
 
@@ -39,8 +38,8 @@ To open the desktop theme GUI using a command type one of the following:
    Energy you won’t be able to select that TARDIS type.
 3. If there are rooms in the way when trying to upgrade to a bigger TARDIS, you will need to manually jettison them
    first (you must be using ARS, manually growing rooms is not supported).
-4. Once a TARDIS type has been selected, the next GUI opens allowing you to select a wall block, click one...
-5. Another GUI opens allowing you to select a floor block, click one...
+4. Once a TARDIS type has been selected, the next GUI opens allowing you to select a wall block, click one... or choose _Default Wall_ to use orange wool.
+5. Another GUI opens allowing you to select a floor block, click one... or choose _Default Floor_ to use light gray wool.
 6. The TARDIS starts reconfiguring — you should be able to stay inside the TARDIS (if needed you will be teleported to a
    safe location).
 7. Watch in amazement as the TARDIS changes before your eyes.

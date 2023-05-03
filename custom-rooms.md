@@ -50,7 +50,7 @@ Lists the blocks needed to grow a room. This is helpful if `rooms_require_blocks
 - with the `/tardisschematic` command and then modify it as needed.
 
 ```    
-    /tardisschematic load template
+    /tardisschematic load user template
     /tardisschematic paste
 ```
 
@@ -60,7 +60,7 @@ Lists the blocks needed to grow a room. This is helpful if `rooms_require_blocks
 - Don’t put doors in the walls they will be added automatically (always in the centre of the wall)
 - If you want to be able to have the rooms use the player wall and floor preferences, then you need to use orange wool
   for the walls and light grey wool for the floors
-- Not all items will work — things that will NOT are: paintings, item frames, plants in flower pots (the pots are OK)
+- Currently armour stands are not supported, but things like item frames, paintings and banners are :)
 - Rooms are grown from the bottom to top so keep that in mind when designing the room — you can’t place levers upside
   down for example as there will be no block for them to stick to and they will just fall into the void
 

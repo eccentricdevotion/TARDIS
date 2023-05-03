@@ -318,7 +318,7 @@ For Spigot 1.12.2
 - Multiverse world aliases are now shown in all instances in the Destination terminal
 - Update to SpigotAPI 1.12.1-R0.1-SNAPSHOT
 - All players are now teleported to safe location when upgrading the TARDIS console
-- Optimised the SQL that populates the control centre sign updates so servers with hundreds of TARDISes perform better
+- Optimised the SQL that populates the Control Menu sign updates so servers with hundreds of TARDISes perform better
 - Converted TARDIS achievements to custom Advancements (complete with toasts)
 
 #### Bug fixes
@@ -533,14 +533,14 @@ For Spigot 1.12.2
 - Use the new VOID biome for the TARDIS interior — update
   the [TARDIS-MCP resource pack](https://github.com/eccentricdevotion/TARDIS-MCP)! — existing TARDIS interior biomes
   will be updated to use VOID instead of SKY, this should stop pesky Endermen spawning
-- The control Centre has been updated with all TARDIS functions, and now displays relevant TARDIS information. Clicking
-  the Control Centre sign while sneaking will open the keyboard
+- The Control Menu has been updated with all TARDIS functions, and now displays relevant TARDIS information. Clicking
+  the Control Menu sign while sneaking will open the keyboard
 - If TARDISWeepingAngels is enabled Whovian monsters now show in the scanner results and the messages when they enter
   the TARDIS
 - Zombie Villagers that enter the TARDIS now keep their profession
 - The TARDIS beacon will now turn red if there is a malfunction
 - Removed the `police_box.materialise` config option
-- New TARDISes will only have the new Control Centre sign and not all the others (they can still be added if desired
+- New TARDISes will only have the new Control Menu sign and not all the others (they can still be added if desired
   using the `/tardis update` command)
 - Added more opportunity for `no_destination_malfunctions`
 - Toggling Junk Mode now respects the rebuild cooldown period

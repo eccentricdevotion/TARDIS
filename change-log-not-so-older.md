@@ -299,8 +299,8 @@ Updated for CraftBukkit / Spigot 1.9
 - The plugin no longer messages players inside the TARDIS about releasing the handbrake when the Police box is rebuilt
 - The plugin no longer sends HADS messages if the player’s HADS preference is OFF
 - Fixed not being able to break the ANGEL and JAIL preset signs to exterminate the TARDIS
-- Fixed the Control Centre sign showing the TARDIS Saved Locations GUI if the player updated the Chameleon Circuit sign
-  to the Control Centre
+- Fixed the Control Menu sign showing the TARDIS Saved Locations GUI if the player updated the Chameleon Circuit sign
+  to the Control Menu
 - Fixed Chameleon presets with trapdoors dropping trapdoors when materialising, changing direction or hiding
 - Fixed toggling the trapdoor on presets with a trapdoor
 - Fixed a bug allowing players to unsiege inside another player’s TARDIS
@@ -622,7 +622,7 @@ default:
 ### Changes
 
 - Swamp Hut preset now has a walk in portal
-- You can no longer power down using the Control Centre sign if `allow.power_down` is `false` in the config
+- You can no longer power down using the Control Menu sign if `allow.power_down` is `false` in the config
 - Added `tardis.budget` as a child node of the `tardis.use` permission
 - A TARDIS Key is now shown in the TARDIS Remote Key recipe (`/tardisrecipe r-key`) — _if you have changed the recipe
   result of the TARDIS Key to something other than a GOLD\_NUGGET, then you will also need to change the matching
@@ -729,7 +729,7 @@ Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP fi
 - Villagers now keep their trades when farming them — requires TARDISHelper v1.2 or higher
 - You can now eject rabbits from the TARDIS
 - The Chameleon circuit now uses red sandstone when landing on red sand
-- You can now power up and check energy levels from the Control Centre GUI when the TARDIS is powered down
+- You can now power up and check energy levels from the Control Menu GUI when the TARDIS is powered down
 - Fixed levers popping off when growing consoles and rooms
 - Fixed pressure plate locations and some minor inconsistencies in TWELFTH console schematic
 - Fixed a seed crafting duplication exploit
@@ -744,7 +744,7 @@ Added a TARDIS Artron Furnace — requires TARDISHelper v1.2 (included in ZIP fi
     - better dropped item removal
     - setting torch blocks correctly
     - always teleport player to safe location
-    - add control centre sign if in schematic
+    - add Control Menu sign if in schematic
 - Added ability to allow a `~` shortcut for current world in the `/tardistravel [world] [x] [y] [z]` command
 - Changes to autonomous homing feature:
     - don’t autonomous home if the TARDIS is in siege mode

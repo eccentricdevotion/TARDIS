@@ -28,12 +28,11 @@ must also be `true` for abandonment to take place.
 `/tardis abandon` — abandons your TARDIS — the TARDIS must be initialised, not travelling or in the time vortex, and not
 set to Junk mode. Players must have `tardis.abandon` permission.
 
-`/tardis abandon list` or `/tardisadmin list abandoned` — lists all abandoned TARDISes. If ProtocolLib is installed you
+`/tardis abandon list` or `/tardisadmin list abandoned` — lists all abandoned TARDISes. Administrators
 can click < Enter > in the list to teleport into that TARDIS (otherwise you’ll need to walk there like everyone else :
 P ). You can also delete an abandoned TARDIS by clicking < Delete >.
 
-Spawning abandoned TARDISes
----------------------------
+## Spawning abandoned TARDISes
 
 You can spawn abandoned TARDISes automatically with a command:
 

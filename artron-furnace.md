@@ -9,15 +9,14 @@ TARDIS Artron Furnaces are special furnaces that can use Artron Storage Cells
 for fuel (as well as coal and other fuels).
 
 Anyone can craft an Artron Furnace, but only players with the `tardis.furnace`
-permission can place them. In order to function TARDISHelper v1.2 or higher must
-be installed.
+permission can place them.
 
 To view the recipe use the `/tardisrecipe atron-furnace` command.
 
 ![Artron Furnace recipe](images/docs/artronfurnace.jpg)
 
 There is a custom texture and a custom sound for the Artron Furnace if you have
-the [TARDIS-Resource-Pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack) and
+the [TARDIS-Resource-Pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack) or
 [TARDISSound](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
 resource packs installed in the client.
 

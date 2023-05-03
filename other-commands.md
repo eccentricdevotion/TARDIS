@@ -898,7 +898,7 @@ Use `/tardis? [command] [subcommand]` when necessary to view the command informa
         <td>tardis.admin</td>
     </tr>
     <tr class="lighter">
-        <td colspan="2" class="usage"><code>/tardisschematic load [name]</code></td>
+        <td colspan="2" class="usage"><code>/tardisschematic load [folder] [name]</code></td>
     </tr>
     <tr class="lighter">
         <td rowspan="2"><code>tardisschematic paste</code></td>

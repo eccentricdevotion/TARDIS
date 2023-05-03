@@ -21,6 +21,7 @@ title: List of default interiors
 - FACTORY
 - FUGITIVE
 - MASTER
+- MECHANICAL
 - ORIGINAL
 - PLANK
 - PYRAMID
@@ -33,7 +34,6 @@ title: List of default interiors
 - WAR
 - WEATHERED
 - LEGACY_BIGGER
-- LEGACY_BUDGET
 - LEGACY_DELUXE
 - LEGACY_ELEVENTH
 - LEGACY_REDSTONE

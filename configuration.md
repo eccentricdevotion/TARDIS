@@ -29,6 +29,14 @@ Choose a configuration page from below:
 14. [Junk TARDIS](junk-tardis.html#config)
 15. [Desktop Theme](desktop-theme.html#config)
 16. [Archives](archive.html#config)
+17. [Custom item model presets](custom-model-presets.html)
+18. [Weeping Angels](weeping-angels.html#configuration)
+19. [Vortex Manipulator](vortex-manipulator.html#configuration)
+20. [TARDIS Shop](tardis-shop.html#config-options)
+21. [Sonic Blaster](sonic-blaster.html#configuration)
+22. [Preset Biome Adaption](adaptive-presets.html)
+23. [Flat World Generator](generators.html#configurable-flat-world)
+24. [Custom Consoles](custom-consoles.html)
 
 ![Recharger](images/docs/recharger.jpg)
 

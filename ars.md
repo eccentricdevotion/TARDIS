@@ -25,8 +25,7 @@ inside this size (except the GRAVITY and ANTIGRAVITY wells which take up two slo
 
 ### The Architectural Reconfiguration System GUI
 
-To use the ARS, you must have an ARS GUI sign. TARDISes created with version 2.6
-and greater have one added automatically. To manually add one (or update its location):
+To use the ARS, open the TARDIS Control Menu GUI or add an ARS GUI sign. To manually add one (or update its location):
 
 1. Place a sign
 2. Use the `/tardis update ars` command to set its location

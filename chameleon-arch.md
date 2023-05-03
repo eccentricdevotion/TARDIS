@@ -6,7 +6,7 @@ title: Chameleon Arch
 # Chameleon Arch
 
 The Tenth Doctor used a Chameleon Arch to change himself into the human John Smith to elude the Family of Blood. You can
-craft a fob watch to change your self from a Time Lord in a regular player (a Steve — albeit with a random name).
+craft a fob watch to change yourself from a Time Lord to a regular player (a Steve — albeit with a random name).
 
 - To see the custom fob watch texture you need to use the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/).
 - For best results when using the Chameleon Arch feature, the server can have [LibsDisguises](http://ci.md-5.net/job/LibsDisguises/)
@@ -25,21 +25,21 @@ Once you have crafted the fob watch, you can put it to use!
 
 1. Right-click-AIR with the watch
 
-- Your health is reduced to 10% — _when Martha Jones asked if the transformation into a human would be painful, the
-  Tenth Doctor simply responded “Oh yeah; it hurts”, implying any change in species caused a great deal of pain_
-- You are given random name
-- The Steve skin is applied
-- Your current Time Lord inventory and armour is saved, and you are given a new empty inventory
+   - Your health is reduced to 10% — _when Martha Jones asked if the transformation into a human would be painful, the
+     Tenth Doctor simply responded “Oh yeah; it hurts”, implying any change in species caused a great deal of pain_
+   - You are given random name
+   - The Steve skin is applied
+   - Your current Time Lord inventory and armour is saved, and you are given a new empty inventory
 
 2. Do stuff... like trick people, become a farmer or join a village...
 3. Try to pilot your TARDIS :(
 
-- Unfortunately the TARDIS no longer recognises that you are a Time Lord so denies you access to the controls
+   - Unfortunately the TARDIS no longer recognises that you are a Time Lord so denies you access to the controls
 
-4. Try to select fob watch in hotbar, even if you can when you try to...
+4. Try to select the fob watch in hotbar, even if you can, when you try to...
 5. Right-click-AIR to ‘de-fob’
 
-- You can’t until the configured minimum ‘fobbed’ time requirement has been met
+   - You can’t until the configured minimum ‘fobbed’ time requirement has been met
 
 When ‘de-fobbing’ your Time Lord inventory and armour is restored.
 

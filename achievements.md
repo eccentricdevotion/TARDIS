@@ -7,8 +7,7 @@ Achievements
 ============
 
 Players can gain rewards for TARDIS achievements. The achievement system is mostly automatic, and works in conjunction
-with TARDIS [books](books.html). If using a Spout enabled server/client combination, then an actual Minecraft
-achievement popup is used :)
+with TARDIS [books](books.html). Minecraft achievement popup included :)
 
 Players can get the following achievements.
 
@@ -53,8 +52,8 @@ looks like this:
       the [Bukkit material enum](https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java)
       name
 * `reward_amount:` the amount of the reward type the player gets
-* `enabled:` a true of false value determining whether the achievement is available to players
-* `repeatable:` a true of false value determining whether the achievement can be repeated
+* `enabled:` a true or false value determining whether the achievement is available to players
+* `repeatable:` a true or false value determining whether the achievement can be repeated
 * `auto:` if `true` the player does not have to manually initiate the start of the achievement with
   the `/tardisbook start` command
 * `message:` is the second line of the achievement notification

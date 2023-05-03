@@ -11,6 +11,8 @@ You can define _flat_ rectangular regions so that TARDISs can either be blocked 
 travel to. This can be useful for creating TARDIS parking lots/airports, preventing players from travelling into towns
 or restricting players to particular locations.
 
+See also [Semi-random parking areas](area-commands.html#semi-random-parking-areas)
+
 A TARDIS area is perfect when setting up a TARDIS recharge beacon.
 
 From TARDIS v3.0-beta-1, an area can be configured as the only place on the server that TARDISes can be created. To set

@@ -96,7 +96,7 @@ TARDIS is in Siege mode.
 
 Siege mode can be disengaged in three ways. All require the TARDIS to have enough energy.
 
-1. Toggle the Siege mode on and off using the button in the Control Centre GUI
+1. Toggle the Siege mode on and off using the button in the Control Menu GUI
 2. Toggle the Siege mode lever inside the TARDIS (if you have one)
 3. SHIFT-RIGHT-click the Siege Cube from the outside
 

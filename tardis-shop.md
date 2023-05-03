@@ -7,7 +7,7 @@ title: TARDIS Shop
 
 TARDIS Shop is a simple shop module for TARDIS items and blueprints.
 
-> __Note__ For TARDIS version 4.13.0 and below you can download it here:
+> __Note__ For TARDIS version 4.14.0 and below you can download it here:
 [http://tardisjenkins.duckdns.org:8080/job/TARDISShop/](http://tardisjenkins.duckdns.org:8080/job/TARDISShop/) -
 _The instructions below are for the TARDIS module, but are pretty much the same, with some extra configuration options (
 database / plugin respect), and separate commands instead of sub-commands._
