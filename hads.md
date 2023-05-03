@@ -21,8 +21,8 @@ To set the HADS type, use the `/tardisprefs` command:
 You can configure how many hits it takes to trigger HADS. See
 the [TARDIS Preferences Configuration](configuration-prefs.html) page.
 
-When HADS (DISPLACEMENT) has been activated, the TARDIS finds a random spot to travel to within a configurable radius (
-default 10 blocks).
+When HADS (DISPLACEMENT) has been activated, the TARDIS finds a random spot to travel to within a configurable radius 
+(default 10 blocks).
 
 When HADS (DISPERSAL) has been activated, the TARDIS scatters its particles and then creates a carpet floor of coloured
 wool.

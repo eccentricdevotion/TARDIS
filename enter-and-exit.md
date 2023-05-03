@@ -64,7 +64,7 @@ can be handy to see what is going on before leaving the safety of the TARDIS.
 The TARDIS door can be handy in other ways:
 
 - [Mob farming](farming.html) — bringing a mob close to the TARDIS door and then entering, will also bring the mob into
-- the TARDIS if you have grown the appropriate room.
+  the TARDIS if you have grown the appropriate room.
 - [Storage minecarts](rail-room.html) — if you run rails up to the TARDIS door (and grow a Rail room) you can transport
   storage minecarts into the TARDIS.
 

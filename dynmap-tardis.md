@@ -5,17 +5,17 @@ title: Dynmap-TARDIS
 
 # Dynmap-TARDIS
 
-If you have Dynmap installed on your server, you can use the Dynmap-TARDIS add-on to display the real-time locations of
-all TARDISes.
+If you have Dynmap installed on your server, you can use the Dynmap-TARDIS module to display the real-time locations of
+all TARDISes. For version 5.0.0 and above set `modules.dynmap: [true\false]` in the TARDIS config.
 
-As of TARDIS v4.6.2 the Dynmap-TARDIS add-on has been integrated into the main TARDIS plugin. To enable/disable TARDISes
+As of TARDIS v4.6.2 the Dynmap-TARDIS add-on plugin has been integrated into the main TARDIS plugin. To enable/disable TARDISes
 in dynmap, set `dynmap.enabled: [true\false]` in the TARDIS config or run the
 command `/tardisconfig dynmap [true|false]`.
 
 ### Configuration options
 
 | Option                                     | Type                                                                                                        | Default Value |
-|--------------------------------------------|-------------------------------------------------------------------------------------------------------------|---------------|
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- | ------------- |
 | dynmap:                                    |
 | ---                                        |
 | &nbsp;&nbsp;&nbsp;&nbsp;`enabled`          | boolean                                                                                                     | `true`        |

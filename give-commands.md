@@ -34,6 +34,6 @@ This will give the a player a TARDIS seed block.
 
 `tardis type` You can find a list here: [List of interiors](list-of-interiors.html)
 
-`wall block` and ` floor block` can be any valid
+`wall block` and `floor block` can be any valid
 Bukkit [material](https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java)
 name 

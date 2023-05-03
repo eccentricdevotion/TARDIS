@@ -30,9 +30,9 @@ In manual flight mode, the more repeaters you miss hitting, the further from you
 You can set the delay between having to click the repeaters in the config: `/tardisconfig manual_flight_delay [ticks]` —
 default is 60 (3 seconds)
 
-Video goes here
+<!--Video goes here
 
-<!--<iframe src="https://player.vimeo.com/video/57807692" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+<iframe src="https://player.vimeo.com/video/57807692" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
 
 ### Regulator flight mode
 

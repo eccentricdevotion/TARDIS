@@ -19,7 +19,7 @@ invisibility or not!
 
 ### Recipe
 
-DIAMOND, Perception Filter, Emerald, and Invisibility Potion in shape shown below.
+Diamond, Perception Filter, Emerald, and Invisibility Potion in shape shown below.
 
 ![Invisibility circuit recipe](images/docs/invisibility_crafting.jpg)
 

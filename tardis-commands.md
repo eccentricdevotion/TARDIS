@@ -51,7 +51,7 @@ To change the direction, type:
     /tardis direction south
     /tardis direction east
 
-You can also use the TARDIS **Direction Frame** to change the direction the exterior is facing:
+You can also use the TARDIS <strong id="direction_frame">Direction Frame</strong> to change the direction the exterior is facing:
 
 - Place an Item Frame and run the `/tardis update direction` command on it
 - Place a TRIPWIRE\_HOOK in the frame
@@ -70,17 +70,6 @@ If you have forgotten where you left the blue Police box, simply type:
 
 and you will be shown the co-ordinates where you left it. _Note:_ if the plugin difficulty is set to `hard` you will
 need to use the TARDIS Locator instead of this command.
-
-### /tardis chameleon
-
-You can toggle the Chameleon Circuit on or off, or short out the circuit with this command, type:
-
-    /tardis chameleon on
-    /tardis chameleon off
-    /tardis chameleon short
-    /tardis chameleon reset
-
-For more information, visit the [Chameleon Circuit](chameleon-circuit.html) page
 
 ### /tardis comehere
 
@@ -148,7 +137,7 @@ Type:
 ### /tardis update
 
 If you want to modify the interior of the TARDIS you will need to use this command. The TARDIS plugin needs to know the
-location of the IRON DOOR, STONE BUTTON, handbrake LEVER, the Artron Energy BUTTON, the Chameleon Circuit SIGN, the 4
+location of the IRON DOOR, STONE BUTTON, handbrake LEVER, the Artron Energy BUTTON, the Control Menu SIGN, the 4
 REPEATERS and various other controls. First move the blocks to their new position then, type one of:
 
     /tardis update advanced
@@ -179,8 +168,8 @@ REPEATERS and various other controls. First move the blocks to their new positio
     /tardis update keyboard
     /tardis update light
     /tardis update map
-    /tardis update rail [unlock]
-    /tardis update rotor
+    /tardis update rail
+    /tardis update rotor [unlock]
     /tardis update save-sign
     /tardis update scanner
     /tardis update siege
@@ -239,9 +228,11 @@ After executing the command, click on the block to update the TARDIS settings.
 ### /tardis lamps
 
 Another “update” type command, this one deletes all of a TARDIS’ lamp records from the database, and rescans the TARDIS
-console for lamps to add back in.
+console for lights to add back in.
 
 This is useful if you have changed the location of the lights of the console room and now I can’t turn them on or off.
+
+#### For TARDIS v4.14.0 and below
 
 **Note:** Make sure that you have set your lamp preference correctly before running the
 command (`/tardisprefs lanterns [on|off]`), so the plugin searches for the correct block type (Redstone Lamp or Sea
@@ -299,12 +290,12 @@ or mob (except horses — you need to ride those out). TARDIS admin users and se
 
 List the players inside your TARDIS.
 
-### /tardis room
+### `@Deprecated`<br>/tardis room 
 
 Add a TARDIS room. _This command is outdated and should be avoided. Use the Architectural Reconfiguration System
 instead._
 
-### /tardis jettison
+### `@Deprecated`<br>/tardis jettison
 
 Remove a TARDIS room. _This command is outdated and should be avoided. Use the Architectural Reconfiguration System
 instead._
@@ -318,7 +309,7 @@ the command to stop the room growing.
 
 ### /tardis version
 
-Display the TARDIS plugin and CraftBukkit / Spigot / Paper version in chat.
+Display the TARDIS plugin, dependent plugins and Spigot / Paper versions in chat.
 
 ### /tardis abandon
 

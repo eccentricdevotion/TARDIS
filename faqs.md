@@ -71,7 +71,7 @@ For best results, follow these steps to set up the plugin to create TARDIS world
 1. Remove all current TARDISes by breaking the Police Box sign
 2. Stop the server
 3. Delete the `plugins/TARDIS` folder
-4. Install TARDISChunkGenerator (if you haven’t already)
+4. Install TARDISChunkGenerator (if necessary - v4.14.0 and below)
 5. Make sure that the TARDIS config option `create_worlds` is set to `true`.
 6. Start the server
 7. Create a TARDIS
@@ -80,7 +80,7 @@ For best results, follow these steps to set up the plugin to create TARDIS world
 
 #### How do I import my TARDIS world into my multi-world plugin? {#import}
 
-You should never do this. The TARDIS plugin can mange its own worlds.
+You should never do this. The TARDIS plugin can manage its own worlds.
 
 [Back to top](#top)
 
@@ -140,7 +140,7 @@ and that you are running Minecraft 1.7.x or higher.
 
 You can download the resource pack from GitHub:
 [https://github.com/eccentricdevotion/TARDIS-SoundResourcePack](https://github.com/eccentricdevotion/TARDIS-SoundResourcePack)
-— take note of installation instructions on that page. ALternatively download from the TARDIS Jenkins server -
+— take note of installation instructions on that page. Alternatively download from the TARDIS Jenkins server -
 [http://tardisjenkins.duckdns.org:8080/job/TARDIS-SoundResourcePack/](http://tardisjenkins.duckdns.org:8080/job/TARDIS-SoundResourcePack/)
 
 [Back to top](#top)
