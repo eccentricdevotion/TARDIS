@@ -16,10 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -46,9 +49,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
@@ -271,9 +271,10 @@ public class TARDISUpdateListener implements Listener {
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(uuid, id);
                     // always set the block type
-                    int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
-                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
-                    block.setBlockData(mushroom, true);
+                    block.setBlockData(TARDISConstants.BARRIER);
+                    TARDISDisplayItem tdi = (updateable.equals(Updateable.ADVANCED)) ? TARDISDisplayItem.ADVANCED_CONSOLE : TARDISDisplayItem.DISK_STORAGE;
+                    TARDISDisplayItemUtils.remove(block);
+                    TARDISDisplayItemUtils.set(tdi, block);
                 }
                 case INFO -> {
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);
