@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -40,8 +41,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
@@ -107,11 +110,17 @@ public class TARDISTimeTravel {
                     Material mat = block.getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
-                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                            MultipleFacing mf = (MultipleFacing) block.getBlockData();
-                            if (!mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && (mat.equals(Material.BROWN_MUSHROOM_BLOCK) || mat.equals(Material.BARRIER))) {
+                            BlockData blockData = block.getBlockData();
+                            if (blockData instanceof MultipleFacing mf && !mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
                                 count++;
                                 break;
+                            } else {
+                                ItemDisplay tdi = TARDISDisplayItemUtils.get(block);
+                                if (tdi == null || tdi.getItemStack() == null || tdi.getItemStack().getType() != Material.CYAN_CONCRETE) {
+                                    count++;
+                                    break;
+                                }
                             }
                         } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing

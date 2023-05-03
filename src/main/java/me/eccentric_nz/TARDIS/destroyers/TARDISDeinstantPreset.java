@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -31,12 +30,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 
 import java.util.Collections;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -189,8 +189,9 @@ public class TARDISDeinstantPreset {
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();
-            BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
-            siege.setBlockData(blockData);
+            siege.setBlockData(TARDISConstants.BARRIER);
+            TARDISDisplayItemUtils.remove(siege);
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
         }
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));

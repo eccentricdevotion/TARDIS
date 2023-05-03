@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
@@ -29,7 +30,8 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -46,7 +48,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,8 +55,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
- * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
- * override to initiate an Automatic Emergency Landing on the "nearest" available habitable planet.
+ * Several events can trigger an Automatic Emergency Landing. Under these
+ * circumstances a TARDIS will use the coordinate override to initiate an
+ * Automatic Emergency Landing on the "nearest" available habitable planet.
  *
  * @author eccentric_nz
  */
@@ -68,8 +70,9 @@ public class TARDISTimeLordDeathListener implements Listener {
     }
 
     /**
-     * Listens for player death. If the player is a time lord and the autonomous circuit is engaged, then the TARDIS
-     * will automatically return to its 'home' location, or the nearest Recharge area.
+     * Listens for player death. If the player is a time lord and the autonomous
+     * circuit is engaged, then the TARDIS will automatically return to its
+     * 'home' location, or the nearest Recharge area.
      *
      * @param event a player dying
      */
@@ -342,8 +345,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     bell.setTask(taskID);
                                     plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                     // place siege block
-                                    BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
-                                    siege.setBlockData(blockData);
+                                    siege.setBlockData(TARDISConstants.BARRIER);
+                                    TARDISDisplayItemUtils.remove(siege);
+                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);
