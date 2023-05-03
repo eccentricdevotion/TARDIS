@@ -13,7 +13,7 @@ Enter a player’s TARDIS (by direct teleport instead of the door).
 /tardisadmin enter [player]
 ```
 
-{ #recharger } Set the beacon block you are targeting in game, as a TARDIS recharge station.
+<a id="recharger"></a> Set the beacon block you are targeting in game, as a TARDIS recharge station.
 
 ```
 /tardisadmin recharger [name]
