@@ -21,27 +21,46 @@ The format is:
 
 All rooms are enabled by default, the rest of the settings are:
 
-| ROOMTYPE    | cost | offset | seed block         |
-|-------------|------|--------|--------------------|
-| ARBORETUM   | 325  | -4     | LEAVES             |
-| BAKER       | 350  | -1     | ENDER\_STONE       |
-| BEDROOM     | 475  | -1     | GLOWSTONE          |
-| CROSS       | 350  | -1     | SOUL\_SAND         |
-| EMPTY       | 250  | -1     | GLASS              |
-| FARM        | 350  | -1     | DIRT               |
-| GRAVITY     | 625  | -12    | MOSSY\_COBBLESTONE |
-| ANTIGRAVITY | 625  | -2     | SANDSTONE          |
-| GREENHOUSE  | 450  | -2     | MELON\_BLOCK       |
-| HARMONY     | 450  | -1     | SMOOTH\_STAIRS     |
-| KITCHEN     | 450  | -1     | PUMPKIN            |
-| LIBRARY     | 550  | -1     | BOOKSHELF          |
-| LONG        | 300  | -2     | NOTE\_BLOCK        |
-| MUSHROOM    | 350  | -1     | GRAVEL             |
-| PASSAGE     | 325  | -2     | LEAVES             |
-| POOL        | 450  | -3     | SNOW\_BLOCK        |
-| VAULT       | 350  | -1     | DISPENSER          |
-| WOOD        | 350  | -1     | WOOD               |
-| WORKSHOP    | 400  | -1     | NETHER\_BRICK      |
+| ROOMTYPE    | cost | offset | seed block               |
+|-------------|------|--------|--------------------------|
+| PASSAGE     | 200  | -4     | CLAY                     |
+| AQUARIUM    | 450  | -4     | TUBE_CORAL_BLOCK         |
+| APIARY      | 450  | -4     | BEE_NEST                 |
+| ARBORETUM   | 325  | -4     | OAK_LEAVES               |
+| BAMBOO      | 475  | -4     | BAMBOO                   |
+| BEDROOM     | 475  | -4     | GLOWSTONE                |
+| BIRDCAGE    | 350  | -4     | YELLOW_GLAZED_TERRACOTTA |
+| CHEMISTRY   | 550  | -4     | BLAST_FURNACE            |
+| KITCHEN     | 450  | -4     | PUMPKIN                  |
+| LAZARUS     | 750  | -4     | FURNACE                  |
+| LIBRARY     | 550  | -4     | ENCHANTING_TABLE         |
+| MANGROVE    | 450  | -4     | MUDDY_MANGROVE_ROOTS     |
+| MAZE        | 650  | -4     | LODESTONE                |
+| NETHER      | 450  | -4     | BLACKSTONE               |
+| POOL        | 450  | -4     | SNOW_BLOCK               |
+| VAULT       | 350  | -4     | DISPENSER                |
+| WORKSHOP    | 400  | -4     | CRAFTING_TABLE           |
+| EMPTY       | 250  | -4     | GLASS                    |
+| GRAVITY     | 625  | -20    | MOSSY_COBBLESTONE        |
+| ANTIGRAVITY | 625  | -4     | SANDSTONE                |
+| HARMONY     | 450  | -4     | STONE_BRICK_STAIRS       |
+| BAKER       | 350  | -4     | END_STONE                |
+| WOOD        | 350  | -4     | OAK_PLANKS               |
+| FARM        | 350  | -4     | DIRT                     |
+| GREENHOUSE  | 450  | -4     | MELON                    |
+| HUTCH       | 450  | -4     | ACACIA_LOG               |
+| GEODE       | 650  | -4     | AMETHYST_BLOCK           |
+| IGLOO       | 650  | -4     | PACKED_ICE               |
+| MUSHROOM    | 350  | -4     | GRAVEL                   |
+| SHELL       | 550  | -4     | DEAD_BRAIN_CORAL_BLOCK   |
+| SMELTER     | 750  | -4     | CHEST                    |
+| STABLE      | 350  | -4     | HAY_BLOCK                |
+| STALL       | 350  | -4     | BROWN_GLAZED_TERRACOTTA  |
+| RAIL        | 650  | -4     | HOPPER                   |
+| VILLAGE     | 550  | -4     | OAK_LOG                  |
+| TRENZALORE  | 550  | -4     | BRICKS                   |
+| RENDERER    | 550  | -4     | TERRACOTTA               |
+| ZERO        | 650  | -4     | OAK_BUTTON               |
 
 ## Room jettisons
 
