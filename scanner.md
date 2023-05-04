@@ -8,6 +8,7 @@ title: Environment scanner
 # Environment scanner
 
 You can add a button or lever to the TARDIS that lets you scan the environment around the TARDIS Police Box.
+This function is also available in the TARDIS Control Menu.
 
 Place the block where you want the scanner to be positioned, and the run the command:
 
@@ -17,7 +18,7 @@ Follow the onscreen instructions.
 
 ## Use
 
-To use the scanner, simply click the button/lever.
+To use the scanner, simply click the button/lever (or the _Scan_ button in the COntrol Menu).
 
 The scanner will show information for the current location of the TARDIS Police Box, or, if a destination has been set,
 the next travel location.

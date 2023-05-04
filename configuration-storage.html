@@ -67,13 +67,31 @@
 				<td colspan="2">Only applicable if <code>database</code> is set to <code>mysql</code>, otherwise this section can be ignored</td>
 			</tr>
 			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>url</code></td>
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>host</code></td>
 				<td class="noborder">string</td>
-				<td class="noborder"><code>mysql://localhost:3306/TARDIS</code></td>
+				<td class="noborder"><code>localhost</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the url to the mysql database, where:<br /><code>localhost</code> = the ip address or hostname of the MySQL server (if the MySQL server is on the same server as the Spigot server, you can usually use <code>localhost</code><br /><code>3306</code> = the port on which the MySQL server is running (default <code>3306</code>)<br /><code>bukkit</code> = the name of the database where the TARDIS data will be stored<br />e.g. <code>mysql://hostname or ip address:port number/datababase name</code></td>
+				<td colspan="2">Sets the host of the mysql database, where:<br /><code>localhost</code> = the ip address or hostname of the MySQL server (if the MySQL server is on the same server as the Spigot server, you can usually use <code>localhost</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>port</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>3306</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the mysql server port, where:<br /><code>3306</code> = the port on which the MySQL server is running (usually 3306)</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>database</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>TARDIS</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the name of the database to connect to, where:<br /><code>TARDIS</code> = the name of the database where the TARDIS data will be stored</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>user</code></td>
@@ -101,6 +119,15 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the prefix added to the table names used in the mysql database. Spigot servers will generally only use one database, so to distinguish the TARDIS tables from other plugins this should probably be set to something like <code>tardis_</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>use_SSL</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether to use an SSL connection to the MySQL database</td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>

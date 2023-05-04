@@ -12,6 +12,10 @@ Commands used by eccentric_nz to help with coding and documenting the TARDIS plu
 * Alias: `/tdev`
 * Permission: `tardis.admin`
 
+<style type="text/css">
+td{vertical-align:top;}
+</style>
+
 | Argument       | Description                                                                                                                                                                                              | Usage                              |
 |----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `add_regions`  | Adds missing WorldGuard regions for Bedrock players.                                                                                                                                                     | `/tdev add_regions`                |

@@ -21,8 +21,7 @@ TARDISChunkGenerator [download page](http://tardisjenkins.duckdns.org:8080/view/
 
 The TARDIS database, configuration, schematic and advancement files will be created automatically.
 
-{#tekkit}
-Some versions of the TARDIS plugin are backwards compatible with previous versions of Spigot (version 2.5.8 is
+<a id="tekkit"></a>Some versions of the TARDIS plugin are backwards compatible with previous versions of Spigot (version 2.5.8 is
 compatible
 with Tekkit Classic Server), for the plugin to have full functionality and work correctly you should have Spigot / Paper
 version `1.19.4-R0.1` or higher.

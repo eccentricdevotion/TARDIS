@@ -6,9 +6,9 @@ title: Siege mode
 # Siege mode
 
 As of TARDIS version 3.2 the plugin allows you to engage Siege mode on your TARDIS. You can read more about Siege mode
-at the [TARDIS wikia](http://tardis.wikia.com/wiki/Siege_mode).
+at the [TARDIS wikia](https://tardis.fandom.com/wiki/Siege_mode).
 
-To engage Siege mode you need to add a lever to the console. To do this you can use the `/tardis update siege` command.
+To engage Siege mode  use the button in TARDIS Control Menu, or add a lever to the console (to do this you can use the `/tardis update siege` command).
 
 ## How it works
 
@@ -64,8 +64,8 @@ The default Artron settings for Siege mode are shown below:
 
     siege_transfer: 10
     siege_deplete: 100
-    siege_creeper: 150
     siege_ticks: 1500
+    siege_creeper: 150
 
 - `siege_deplete: [percentage]` — the percentage of maximum (`full_charge`) energy the TARDIS needs to be able to
   disengage Siege mode. Also the minimum amount of energy that can be transferred to the TARDIS by clicking the Siege
@@ -110,6 +110,7 @@ The player must be online when running the command, and the TARDIS will be resto
 
 ![Siege Cube](images/docs/siegecube.jpg)
 
-**Note:** the TARDIS Siege Cube block is a huge brown mushroom with the texture on all sides. As such it is recommended
-that players use the [TARDIS-MCP Resource Pack](https://github.com/eccentricdevotion/TARDIS-MCP) so that it looks the
-part and can be distinguished easily.
+**Note:** the TARDIS Siege Cube block is a CYAN_CONCRETE block (or BROWN_MUSHROOM_BLOCK for older
+plugin versions) with the texture on all sides. As such it is recommended that players use the
+[TARDIS-Resource-Pack](https://github.com/eccentricdevotion/TARDIS-Resource-Pack) so that it looks
+the part and can be distinguished easily.

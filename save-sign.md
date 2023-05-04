@@ -8,10 +8,10 @@ title: Save Sign
 If you have saved a travel location using the `/tardis save [save_name]` command, or the server admin has set up some
 TARDIS Areas, you can time travel to them in the TARDIS by using the Save Sign GUI.
 
-The Save Sign is automatically added to new TARDISes. You can destroy and place it at a new location by using
+The Save Sign is accessible via the TARDIS Control Menu GUI, or you can place a sign and use
 the `/tardis update save-sign` command.
 
-To use the Save Sign, right-click it to open the inventory based GUI.
+In the Control Menu click the _Saves_ button (or if using a separate Save Sign, right-click it) to open the inventory based GUI.
 
 By default the first item in the GUI is the TARDIS’s “home” location. After that come any locations that you have saved.
 Hovering over the blocks will show you the save name, world name and coordinates.

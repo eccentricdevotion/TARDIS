@@ -23,7 +23,7 @@ Once the room is enabled, growing the Zero Room is a simple matter of following 
 3. Click on the desired control to update the position of the Zero Room Transmat System
 4. Once the Zero Room has grown, activate the control to teleport into the room
 
-**Note:** The Zero room **must** be grown using the `/tardis room` command, as it is not part of the ARS.
+**Note:** The Zero room **must** be grown using the `/tardis room` command, as it is not part of the Architectural Reconfiguration System (ARS).
 
 ## Capabilities
 

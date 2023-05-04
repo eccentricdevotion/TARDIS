@@ -37,7 +37,7 @@ version for your computer!
 These need to go in your Extensions folder.
 
 On Mac, this is found at `/Library/Java/Extensions/`, on Windows, it appears to
-be `C:\Program Files\Java\jdk1.8.0_201\jre\lib\ext`, although jdk1.8.0_201 may change depending on your Java version!
+be `C:\Program Files\Java\jdk-17.jdk\jre\lib\ext`, although jdk-17.jdk may change depending on your Java version!
 
 Move the JARs to this folder and retry! (Make sure to close and re-open the program!)
 
@@ -46,8 +46,9 @@ issue on GitHub. We'll be happy to help!
 
 ## Uh-oh! `***** SQL Error: no such column x`
 
-Make sure you're using the [latest build](http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/). If it
-still breaks, create an issue on GitHub.
+Make sure you're using the [latest build](http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/). 
+Run the plugin at least once on the server before trying the conversion.
+If it still breaks, create an issue on GitHub.
 
 ### Video
 

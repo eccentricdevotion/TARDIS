@@ -21,7 +21,7 @@ open a GUI for setting Player Preferences. Permission for use: `tardis.sonic.sta
 
 ## Upgrades
 
-There are 6 upgrades that you can give your Sonic:
+There are 9 upgrades that you can give your Sonic:
 
 <style type="text/css">
 td{vertical-align:top;}

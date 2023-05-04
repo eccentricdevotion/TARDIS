@@ -8,7 +8,7 @@ title: Map
 The TARDIS Map lets you find your location in the ARS grid.
 
 To open the map, you first need to open the Player Prefs Menu by right-clicking AIR with the sonic screwdriver. Once
-open click the map button in the GUI.
+open click the map button in the GUI. Alternatively, click the _Map_ button in the TARDIS Control Menu.
 
 ### Using the map
 

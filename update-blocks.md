@@ -7,6 +7,7 @@ title: Updateable blocks
 
 **advanced:**
 
+- BARRIER
 - MUSHROOM_STEM
 - JUKEBOX
 
@@ -52,6 +53,7 @@ title: Updateable blocks
 
 **storage:**
 
+- BARRIER
 - MUSHROOM_STEM
 - NOTE_BLOCK
 
