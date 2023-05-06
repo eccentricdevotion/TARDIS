@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -35,6 +37,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
@@ -55,9 +58,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -108,7 +108,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "ARS_NO_TRAVEL");
                                         return;
                                     }
-                                    case 4, 11, 13, 15, 20, 22, 31, 40 -> {
+                                    case 4, 11, 13, 15, 20, 22, 31, 40, 45 -> {
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                             return;
@@ -411,6 +411,27 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     im.setLore(Collections.singletonList(direction));
                                     d.setItemMeta(im);
                                 }
+                                case 45 -> {
+                                    // space time throttle
+                                    // update the lore
+                                    ItemStack spt = view.getItem(45);
+                                    ItemMeta im = spt.getItemMeta();
+                                    String currentThrottle = im.getLore().get(0);
+                                    int delay = SpaceTimeThrottle.valueOf(currentThrottle).getDelay() - 1;
+                                    if (delay < 1) {
+                                        delay = 4;
+                                    }
+                                    String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
+                                    im.setLore(Collections.singletonList(throttle));
+                                    spt.setItemMeta(im);
+                                    // update player prefs
+                                    HashMap<String, Object> wherer = new HashMap<>();
+                                    wherer.put("uuid", player.getUniqueId().toString());
+                                    HashMap<String, Object> setr = new HashMap<>();
+                                    setr.put("throttle", delay);
+                                    plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
+                                    TARDISMessage.send(player, "THROTTLE", throttle);
+                                }
                                 case 47 -> {
                                     // tardis map
                                     Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Map");
@@ -435,7 +456,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 }
                                 case 53 ->
                                     // close
-                                        close(player, false);
+                                    close(player, false);
                                 default -> {
                                 }
                             }

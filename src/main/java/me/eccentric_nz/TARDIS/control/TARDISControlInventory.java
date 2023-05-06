@@ -16,20 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIControlCentre;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -64,6 +65,7 @@ public class TARDISControlInventory {
         String direction = "";
         String off = plugin.getLanguage().getString("SET_OFF");
         String on = plugin.getLanguage().getString("SET_ON");
+        int delay = 1;
         boolean open = false;
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
@@ -77,6 +79,11 @@ public class TARDISControlInventory {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
             if (rsc.resultSet()) {
                 direction = rsc.getDirection().toString();
+            }
+            HashMap<String, Object> wherep = new HashMap<>();
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, rs.getTardis().getUuid().toString());
+            if (rsp.resultSet()) {
+                delay = rsp.getThrottle();
             }
         }
         /*
@@ -112,6 +119,14 @@ public class TARDISControlInventory {
         min.setDisplayName(plugin.getLanguage().getString("BUTTON_TERM"));
         min.setCustomModelData(GUIControlCentre.BUTTON_TERM.getCustomModelData());
         ter.setItemMeta(min);
+        // space time throttle
+        ItemStack thro = new ItemStack(Material.BOWL, 1);
+        ItemMeta ttle = thro.getItemMeta();
+        ttle.setDisplayName(plugin.getLanguage().getString("BUTTON_THROTTLE"));
+        String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
+        ttle.setLore(Collections.singletonList(throttle));
+        ttle.setCustomModelData(GUIControlCentre.BUTTON_THROTTLE.getCustomModelData());
+        thro.setItemMeta(ttle);
         /*
          * ***** INTERIOR *****
          */
@@ -266,7 +281,14 @@ public class TARDISControlInventory {
         can.setCustomModelData(GUIControlCentre.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{ran, null, ars, null, cham, null, art, null, zero, save, null, upg, null, siege, null, scan, null, player, fast, null, pow, null, hide, null, info, null, companion, area, null, lig, null, reb, null, tran, null, null, ter, null, tog, null, dir, null, null, null, null, null, null, map, null, temp, null, null, null, close};
+        return new ItemStack[]{
+            ran, null, ars, null, cham, null, art, null, zero,
+            save, null, upg, null, siege, null, scan, null, player,
+            fast, null, pow, null, hide, null, info, null, companion,
+            area, null, lig, null, reb, null, tran, null, null,
+            ter, null, tog, null, dir, null, null, null, null,
+            thro, null, map, null, temp, null, null, null, close
+        };
     }
 
     public ItemStack[] getControls() {

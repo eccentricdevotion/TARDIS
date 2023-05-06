@@ -40,6 +40,7 @@ public enum GUIControlCentre {
     BUTTON_TEMP(29, 49, Material.BOWL),
     BUTTON_TERM(30, 36, Material.BOWL),
     BUTTON_THEME(31, 11, Material.BOWL),
+    BUTTON_THROTTLE(149, 45, Material.BOWL),
     BUTTON_TRANSMAT(133, 33, Material.BOWL),
     BUTTON_ZERO(32, 8, Material.BOWL),
     COMPANIONS_MENU(45, 26, Material.BOWL),
