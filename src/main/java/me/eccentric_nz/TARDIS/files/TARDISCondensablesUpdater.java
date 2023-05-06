@@ -514,11 +514,11 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("ECHO_SHARD", 20);
             }
             try {
-                String listPath = plugin.getDataFolder() + File.separator + "list.yml";
+                String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
                 plugin.getCondensablesConfig().save(new File(listPath));
-                plugin.getLogger().log(Level.INFO, "Updated list.yml");
+                plugin.getLogger().log(Level.INFO, "Updated condensables.yml");
             } catch (IOException io) {
-                plugin.debug("Could not save list.yml, " + io.getMessage());
+                plugin.debug("Could not save condensables.yml, " + io.getMessage());
             }
         }
     }
