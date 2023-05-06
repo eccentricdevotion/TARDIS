@@ -137,6 +137,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                     }
                 }
+                if (args.length == 2 && (args[0].equalsIgnoreCase("structure") || args[0].equalsIgnoreCase("village"))) {
+                    return new TARDISTravelStructure(plugin).action(player, args, id);
+                }
                 if (args.length == 2 && args[0].equalsIgnoreCase("player")) {
                     return new TARDISTravelPlayer(plugin).action(player, args[1], id);
                 }
