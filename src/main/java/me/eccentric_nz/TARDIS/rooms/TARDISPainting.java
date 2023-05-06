@@ -38,7 +38,7 @@ public class TARDISPainting {
                 return loc;
             }
             // 2x2, 4x2 & 4x4
-            case BUST, MATCH, SKULL_AND_ROSES, STAGE, VOID, WITHER, FIGHTERS, BURNING_SKULL, PIGSCENE, POINTER -> {
+            case BUST, MATCH, SKULL_AND_ROSES, STAGE, VOID, WITHER, FIGHTERS, BURNING_SKULL, PIGSCENE, POINTER, EARTH, WIND, WATER, FIRE -> {
                 if (facing == BlockFace.WEST) {
                     return loc.getBlock().getLocation().add(0, -1, -1);
                 } else if (facing == BlockFace.SOUTH) {
