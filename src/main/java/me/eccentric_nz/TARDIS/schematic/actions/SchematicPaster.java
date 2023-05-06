@@ -128,7 +128,7 @@ public class SchematicPaster implements Runnable {
                         ent.setFacingDirection(facing, true);
                         ent.setArt(art, true);
                     } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!");
+                        plugin.debug("Invalid painting location!" + pl);
                     }
                 }
             }

@@ -391,7 +391,7 @@ public class TARDISRoomRunnable implements Runnable {
                             ent.setFacingDirection(facing, true);
                             ent.setArt(art, true);
                         } catch (IllegalArgumentException e) {
-                            plugin.debug("Could not spawn painting! " + e.getMessage());
+                            plugin.debug("Invalid painting location!" + pl);
                         }
                     }
                 }

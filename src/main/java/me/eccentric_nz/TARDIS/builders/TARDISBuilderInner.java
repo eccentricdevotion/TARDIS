@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -47,8 +48,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -109,24 +108,22 @@ public class TARDISBuilderInner implements Runnable {
     /**
      * Builds the inside of the TARDIS.
      *
-     * @param plugin     an instance of the main TARDIS plugin class
-     * @param schm       the name of the schematic file to use can be ANCIENT, ARS,
-     *                   BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     *                   ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
-     *                   PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
-     *                   WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     *                   LEGACY_REDSTONE or a CUSTOM name.
-     * @param world      the world where the TARDIS is to be built.
-     * @param dbID       the unique key of the record for this TARDIS in the database.
-     * @param player     an instance of the player who owns the TARDIS.
-     * @param wall_type  a material type determined from the TARDIS seed block,
-     *                   or the middle block in the TARDIS creation stack, this material
-     *                   determines the makeup of the TARDIS walls.
+     * @param plugin an instance of the main TARDIS plugin class
+     * @param schm the name of the schematic file to use can be ANCIENT, ARS,
+     * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
+     * ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
+     * PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
+     * WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     * LEGACY_REDSTONE or a CUSTOM name.
+     * @param world the world where the TARDIS is to be built.
+     * @param dbID the unique key of the record for this TARDIS in the database.
+     * @param player an instance of the player who owns the TARDIS.
+     * @param wall_type a material type determined from the TARDIS seed block,
+     * this material determines the makeup of the TARDIS walls.
      * @param floor_type a material type determined from the TARDIS seed block,
-     *                   or 35 (if TARDIS was made via the creation stack), this material
-     *                   determines the makeup of the TARDIS floors.
-     * @param tips       an int determining where this TARDIS will be built ----
-     *                   -1:own world, > 0:default world ----
+     * this material determines the makeup of the TARDIS floors.
+     * @param tips an int determining where this TARDIS will be built ----
+     * -1:own world, > 0:default world ----
      */
     public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, int tips) {
         this.plugin = plugin;
@@ -322,10 +319,14 @@ public class TARDISBuilderInner implements Runnable {
                     Art art = Art.valueOf(painting.get("art").getAsString());
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
                     Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
-                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                    ent.teleport(pl);
-                    ent.setFacingDirection(facing, true);
-                    ent.setArt(art, true);
+                    try {
+                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                        ent.teleport(pl);
+                        ent.setFacingDirection(facing, true);
+                        ent.setArt(art, true);
+                    } catch (IllegalArgumentException e) {
+                        plugin.debug("Invalid painting location!" + pl);
+                    }
                 }
             }
             if (obj.has("item_frames")) {

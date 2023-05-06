@@ -348,10 +348,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     Art art = Art.valueOf(painting.get("art").getAsString());
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
                     Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
-                    Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                    ent.teleport(pl);
-                    ent.setFacingDirection(facing, true);
-                    ent.setArt(art, true);
+                    try {
+                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                        ent.teleport(pl);
+                        ent.setFacingDirection(facing, true);
+                        ent.setArt(art, true);
+                    } catch (IllegalArgumentException e) {
+                        plugin.debug("Invalid painting location!" + pl);
+                    }
                 }
             }
             if (obj.has("item_frames")) {
