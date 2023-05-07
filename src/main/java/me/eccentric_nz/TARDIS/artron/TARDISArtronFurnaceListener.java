@@ -16,9 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -27,6 +30,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,8 +42,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -69,6 +71,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                     if (!lore.get(1).equals("0")) {
                         // track furnace
                         plugin.getTrackerKeeper().getArtronFurnaces().add(l);
+                        setLit(event.getBlock(), true);
                         TARDISSounds.playTARDISSound(furnace.getLocation(), "artron_furnace");
                         // get charge level
                         int charge_level = TARDISNumberParsers.parseInt(lore.get(1));
@@ -88,8 +91,20 @@ public class TARDISArtronFurnaceListener implements Listener {
                     }
                 }
             } else {
+                setLit(event.getBlock(), false);
                 plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
             }
+        }
+    }
+
+    private void setLit(Block block, boolean lit) {
+        ItemDisplay display = TARDISDisplayItemUtils.get(block);
+        if (display != null) {
+            ItemStack itemStack = display.getItemStack();
+            ItemMeta im = itemStack.getItemMeta();
+            im.setCustomModelData((lit ? 10000002 : 10000001));
+            itemStack.setItemMeta(im);
+            display.setItemStack(itemStack);
         }
     }
 
@@ -112,7 +127,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (plugin.getTardisHelper().isArtronFurnace(furnace.getBlock())
                 && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString())
                 && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
-                && event.getCursor().getType() != Material.AIR    // With an item
+                && event.getCursor().getType() != Material.AIR // With an item
                 && furnace.getCookTime() > cookTime) {            // The furnace is not already burning something
             furnace.setCookTimeTotal(cookTime);
         }
@@ -144,6 +159,8 @@ public class TARDISArtronFurnaceListener implements Listener {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);
             }
             plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
+            // set Item Display
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.ARTRON_FURNACE, b);
         } else {
             event.setCancelled(true);
             TARDISMessage.send(player, "NO_PERM_FURNACE");
@@ -166,6 +183,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             im.setDisplayName("TARDIS Artron Furnace");
             im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
             is.setItemMeta(im);
+            TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
         }

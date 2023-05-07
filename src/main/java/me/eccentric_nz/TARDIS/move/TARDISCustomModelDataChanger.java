@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -28,17 +30,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-class TARDISCustomModelDataChanger {
+public class TARDISCustomModelDataChanger {
 
     private final TARDIS plugin;
     private final Block block;
     private final Player player;
     private final int id;
 
-    TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
+    public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
         this.plugin = plugin;
         this.block = block;
         this.player = player;
@@ -48,7 +47,7 @@ class TARDISCustomModelDataChanger {
     /**
      * Toggle the door open and closed by setting the custom model data.
      */
-    void toggleOuterDoor() {
+    public void toggleOuterDoor() {
         UUID uuid = player.getUniqueId();
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);

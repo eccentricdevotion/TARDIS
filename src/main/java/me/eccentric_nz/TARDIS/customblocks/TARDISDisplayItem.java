@@ -69,6 +69,7 @@ public enum TARDISDisplayItem {
     GROW(10001, Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
     // tardis blocks
     ADVANCED_CONSOLE(10001, Material.JUKEBOX, null),
+    ARTRON_FURNACE(10000001, Material.FURNACE, null),
     BLUE_BOX(10001, Material.BLUE_WOOL, Material.BLUE_DYE),
     COG(10001, Material.GRAY_WOOL, Material.GRAY_DYE),
     DISK_STORAGE(10001, Material.NOTE_BLOCK, null),
@@ -80,6 +81,7 @@ public enum TARDISDisplayItem {
     THE_MOMENT(10001, Material.BROWN_WOOL, Material.REDSTONE_BLOCK),
     DOOR(10001, Material.IRON_DOOR, Material.IRON_DOOR),
     DOOR_OPEN(10002, Material.IRON_DOOR, null),
+    DOOR_BOTH_OPEN(10003, Material.IRON_DOOR, null),
     SONIC_GENERATOR(10000001, Material.FLOWER_POT, null),
     // chemistry lamps off
     BLUE_LAMP(10001, Material.REDSTONE_LAMP, null),

@@ -105,8 +105,8 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     /**
-     * Remove an item display / interaction entity when breaking a
-     * TARDIS block in creative gamemode.
+     * Remove an item display / interaction entity when breaking a TARDIS block
+     * in creative gamemode.
      *
      * @param event The TARDIS block break event
      */
@@ -223,6 +223,49 @@ public class TARDISDisplayBlockListener implements Listener {
                     im.setCustomModelData(cmd);
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
+                } else {
+                    if (!plugin.getUtils().inTARDISWorld(player)) {
+                        return;
+                    }
+                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
+                    if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {
+                        Block block = interaction.getLocation().getBlock();
+                        if (player.isSneaking()) {
+                            if (tdi == TARDISDisplayItem.DOOR) {
+                                // move to outside
+                                new DisplayItemDoorMover(plugin).exit(player, block);
+                            }
+                            if (tdi == TARDISDisplayItem.DOOR_OPEN) {
+                                // open right hand door as well
+                                ItemStack itemStack = display.getItemStack();
+                                ItemMeta im = itemStack.getItemMeta();
+                                im.setCustomModelData(10003);
+                                itemStack.setItemMeta(im);
+                                display.setItemStack(itemStack);
+                            }
+                        } else {
+                            ItemStack itemStack = display.getItemStack();
+                            ItemMeta im = itemStack.getItemMeta();
+                            switch (tdi) {
+                                case DOOR -> {
+                                    // open doors / activate portal
+                                    im.setCustomModelData(10002);
+                                    new DisplayItemDoorToggler(plugin).openClose(player, block, false);
+                                }
+                                case DOOR_OPEN -> {
+                                    // close doors / decativate portal
+                                    im.setCustomModelData(10001);
+                                    new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                }
+                                default -> {
+                                    // just close doors
+                                    im.setCustomModelData(10001);
+                                }
+                            }
+                            itemStack.setItemMeta(im);
+                            display.setItemStack(itemStack);
+                        }
+                    }
                 }
             }
         }

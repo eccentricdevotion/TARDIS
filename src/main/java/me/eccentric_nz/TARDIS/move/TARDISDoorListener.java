@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
@@ -38,10 +41,6 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -230,7 +229,7 @@ public class TARDISDoorListener {
      * @param direction the direction of the police box
      * @param enter     whether the pets are entering (true) or exiting (false)
      */
-    void movePets(List<TARDISPet> pets, Location location, Player player, COMPASS direction, boolean enter) {
+    public void movePets(List<TARDISPet> pets, Location location, Player player, COMPASS direction, boolean enter) {
         Location pl = location.clone();
         World w = location.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -351,7 +350,7 @@ public class TARDISDoorListener {
      * @param d2 the direction the second door is facing
      * @return the angle needed to correct the yaw
      */
-    float adjustYaw(COMPASS d1, COMPASS d2) {
+    public float adjustYaw(COMPASS d1, COMPASS d2) {
         return switch (d1) {
             case EAST -> adjustYaw[0][d2.ordinal()];
             case SOUTH -> adjustYaw[1][d2.ordinal()];

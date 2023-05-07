@@ -167,7 +167,7 @@ public class TARDISDisplayItemUtils {
             interaction.setResponsive(true);
             interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
             interaction.setPersistent(true);
-        } else if (tdi != TARDISDisplayItem.SONIC_GENERATOR) {
+        } else if (tdi != TARDISDisplayItem.ARTRON_FURNACE && tdi != TARDISDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
