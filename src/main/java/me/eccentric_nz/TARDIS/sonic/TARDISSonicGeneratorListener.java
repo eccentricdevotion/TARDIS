@@ -16,8 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
@@ -42,11 +48,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -202,6 +203,8 @@ public class TARDISSonicGeneratorListener implements Listener {
         if (rss.resultSet()) {
             if (rss.getSonic().isActivated()) {
                 event.setCancelled(true);
+                // remove Item Display
+                TARDISDisplayItemUtils.remove(b);
                 // set block to AIR
                 b.setBlockData(TARDISConstants.AIR);
                 // drop a custom FLOWER_POT_ITEM
@@ -216,7 +219,7 @@ public class TARDISSonicGeneratorListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
+    public void onSonicGeneratorPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
         if (!is.getType().equals(Material.FLOWER_POT) || !is.hasItemMeta()) {
             return;
@@ -225,7 +228,9 @@ public class TARDISSonicGeneratorListener implements Listener {
         if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Generator")) {
             Player p = event.getPlayer();
             String uuid = p.getUniqueId().toString();
-            String l = event.getBlock().getLocation().toString();
+            Block block = event.getBlock();
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SONIC_GENERATOR, block);
+            String l = block.getLocation().toString();
             // generator was crafted
             // get tardis player is in
             HashMap<String, Object> where = new HashMap<>();

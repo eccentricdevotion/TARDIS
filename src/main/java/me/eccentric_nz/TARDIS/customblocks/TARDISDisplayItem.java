@@ -29,6 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public enum TARDISDisplayItem {
 
+    // seed blocks
     ANCIENT(Material.SCULK),
     ARS(Material.QUARTZ_BLOCK),
     BIGGER(Material.GOLD_BLOCK),
@@ -64,7 +65,9 @@ public enum TARDISDisplayItem {
     LEGACY_ELEVENTH(Material.CYAN_GLAZED_TERRACOTTA),
     LEGACY_REDSTONE(Material.RED_GLAZED_TERRACOTTA),
     CUSTOM(10001, Material.POLISHED_BLACKSTONE, null),
+    // growing seed block
     GROW(10001, Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
+    // tardis blocks
     ADVANCED_CONSOLE(10001, Material.JUKEBOX, null),
     BLUE_BOX(10001, Material.BLUE_WOOL, Material.BLUE_DYE),
     COG(10001, Material.GRAY_WOOL, Material.GRAY_DYE),
@@ -72,24 +75,31 @@ public enum TARDISDisplayItem {
     HEXAGON(10001, Material.ORANGE_WOOL, Material.ORANGE_DYE),
     ROUNDEL(10001, Material.WHITE_WOOL, Material.WHITE_DYE),
     ROUNDEL_OFFSET(10002, Material.WHITE_WOOL, Material.LIGHT_GRAY_DYE),
+    PANDORICA(10001, Material.BLACK_CONCRETE, null),
+    SIEGE_CUBE(10001, Material.CYAN_CONCRETE, null),
+    THE_MOMENT(10001, Material.BROWN_WOOL, Material.REDSTONE_BLOCK),
+    DOOR(10001, Material.IRON_DOOR, Material.IRON_DOOR),
+    DOOR_OPEN(10002, Material.IRON_DOOR, null),
+    SONIC_GENERATOR(10000001, Material.FLOWER_POT, null),
+    // chemistry lamps off
     BLUE_LAMP(10001, Material.REDSTONE_LAMP, null),
     GREEN_LAMP(10002, Material.REDSTONE_LAMP, null),
     PURPLE_LAMP(10003, Material.REDSTONE_LAMP, null),
     RED_LAMP(10004, Material.REDSTONE_LAMP, null),
+    // chemistry lamps on
     BLUE_LAMP_ON(10001, Material.SEA_LANTERN, null),
     GREEN_LAMP_ON(10002, Material.SEA_LANTERN, null),
     PURPLE_LAMP_ON(10003, Material.SEA_LANTERN, null),
     RED_LAMP_ON(10004, Material.SEA_LANTERN, null),
-    PANDORICA(10001, Material.BLACK_CONCRETE, null),
+    // chemistry gui blocks
     COMPOUND(10001, Material.ORANGE_CONCRETE, null),
     CONSTRUCTOR(10001, Material.LIGHT_BLUE_CONCRETE, null),
     CREATIVE(10001, Material.LIGHT_GRAY_CONCRETE, null),
-    HEAT_BLOCK(10001, Material.RED_CONCRETE, null),
     LAB(10001, Material.YELLOW_CONCRETE, null),
     PRODUCT(10001, Material.LIME_CONCRETE, null),
     REDUCER(10001, Material.MAGENTA_CONCRETE, null),
-    SIEGE_CUBE(10001, Material.CYAN_CONCRETE, null),
-    THE_MOMENT(10001, Material.BROWN_WOOL, Material.REDSTONE_BLOCK),
+    HEAT_BLOCK(10001, Material.RED_CONCRETE, null),
+    // lights off
     LIGHT_CLASSIC(10005, Material.GRAY_WOOL, Material.TORCH),
     LIGHT_CLASSIC_OFFSET(10010, Material.GRAY_WOOL, Material.SOUL_TORCH),
     LIGHT_TENTH(10006, Material.GRAY_WOOL, Material.ORANGE_DYE),
@@ -98,7 +108,7 @@ public enum TARDISDisplayItem {
     LIGHT_THIRTEENTH(10009, Material.GRAY_WOOL, Material.BLUE_DYE),
     LIGHT_LAMP(-1, Material.REDSTONE_LAMP, null),
     LIGHT_LANTERN(-1, Material.GRAY_WOOL, null),
-    //    LIGHT_WOOL(-1, Material.BLACK_WOOL),
+    // lights on
     LIGHT_CLASSIC_ON(10005, Material.SEA_LANTERN, null),
     LIGHT_CLASSIC_OFFSET_ON(10010, Material.SEA_LANTERN, null),
     LIGHT_TENTH_ON(10006, Material.REDSTONE_LAMP, null),

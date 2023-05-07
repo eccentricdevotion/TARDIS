@@ -6,7 +6,6 @@
 
 1. Documentation of new/changed features
 2. Allow placing blocks onto TARDIS light blocks
-3. Make Sonic generator an Item Display entity
 4. ?
 
 ## Next version `5.1.0`

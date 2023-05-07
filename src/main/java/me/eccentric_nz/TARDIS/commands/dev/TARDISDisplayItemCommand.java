@@ -77,9 +77,7 @@ public class TARDISDisplayItemCommand {
                 im.setCustomModelData((args.length == 3) ? 10002 : 10001);
                 door.setItemMeta(im);
                 blockDisplay.setItemStack(door);
-                blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-                blockDisplay.setDisplayHeight(2);
-                blockDisplay.setDisplayWidth(2);
+                blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                 // also set an interaction entity
                 Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.INTERACTION);
                 interaction.setResponsive(true);
