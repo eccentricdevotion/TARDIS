@@ -70,6 +70,7 @@ public enum TARDISDisplayItem {
     // tardis blocks
     ADVANCED_CONSOLE(10001, Material.JUKEBOX, null),
     ARTRON_FURNACE(10000001, Material.FURNACE, null),
+    ARTRON_FURNACE_LIT(10000002, Material.FURNACE, null),
     BLUE_BOX(10001, Material.BLUE_WOOL, Material.BLUE_DYE),
     COG(10001, Material.GRAY_WOOL, Material.GRAY_DYE),
     DISK_STORAGE(10001, Material.NOTE_BLOCK, null),

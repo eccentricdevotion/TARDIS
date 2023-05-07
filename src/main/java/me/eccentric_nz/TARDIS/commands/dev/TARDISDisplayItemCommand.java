@@ -122,12 +122,15 @@ public class TARDISDisplayItemCommand {
                         interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
                         interaction.setPersistent(true);
                     } else {
-                        up.setType(Material.BARRIER);
+                        up.setType((tdi == TARDISDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
+                    if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
+                        display.setBrightness(new Display.Brightness(15,15));
+                    }
                 }
             }
             case "break" -> {

@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
@@ -183,6 +184,9 @@ public class TARDISDisplayItemUtils {
         display.setPersistent(true);
         display.setInvulnerable(true);
         display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+        if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
+            display.setBrightness(new Display.Brightness(15, 15));
+        }
     }
 
     /**

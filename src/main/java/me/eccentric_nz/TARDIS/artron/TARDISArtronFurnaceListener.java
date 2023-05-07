@@ -30,6 +30,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -105,6 +106,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             im.setCustomModelData((lit ? 10000002 : 10000001));
             itemStack.setItemMeta(im);
             display.setItemStack(itemStack);
+            display.setBrightness(new Display.Brightness(15,15));
         }
     }
 
