@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -40,8 +41,6 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-
-import java.util.HashMap;
 
 /**
  *
@@ -70,6 +69,24 @@ public class TARDISDisplayItemCommand {
                 text.setText("TARDIS Axe, Cost: 25.00");
                 text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
                 text.setBillboard(Display.Billboard.VERTICAL);
+            }
+            case "block" -> {
+                ItemDisplay blockDisplay = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.ITEM_DISPLAY);
+                ItemStack door = new ItemStack(Material.IRON_DOOR);
+                ItemMeta im = door.getItemMeta();
+                im.setCustomModelData((args.length == 3) ? 10002 : 10001);
+                door.setItemMeta(im);
+                blockDisplay.setItemStack(door);
+                blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+                blockDisplay.setDisplayHeight(2);
+                blockDisplay.setDisplayWidth(2);
+                // also set an interaction entity
+                Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.INTERACTION);
+                interaction.setResponsive(true);
+                interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10001);
+                interaction.setPersistent(true);
+                interaction.setInteractionHeight(2.0f);
+                interaction.setInteractionWidth(1.0f);
             }
             case "remove" -> {
                 BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);

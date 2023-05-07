@@ -5,7 +5,9 @@
 ## Version 5.0.0
 
 1. Documentation of new/changed features
-2. ?
+2. Allow placing blocks onto TARDIS light blocks
+3. Make Sonic generator an Item Display entity
+4. ?
 
 ## Next version `5.1.0`
 
@@ -28,7 +30,9 @@
 
 ## Wiki Documentation
 
-* Add/update all module documentation (config/commands etc)
+* Converting lights - use light switch, or repair console using desktop theme GUI
+* `/tardis lamps` command only works for LIGHT blocks
+* Potential to walk/fall through light blocks
 
 ## Resource Pack / Monsters
 
