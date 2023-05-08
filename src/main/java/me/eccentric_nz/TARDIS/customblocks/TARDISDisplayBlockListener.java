@@ -16,14 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.data.type.Light;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -172,7 +177,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
                 ItemStack inHand = player.getInventory().getItemInMainHand();
-                if (isSonic(inHand)) {
+                if (isRedstoneSonic(inHand)) {
                     // toggle the lamp
                     ItemStack lamp = display.getItemStack();
                     Block light = interaction.getLocation().getBlock();
@@ -224,11 +229,11 @@ public class TARDISDisplayBlockListener implements Listener {
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
                 } else {
-                    if (!plugin.getUtils().inTARDISWorld(player)) {
-                        return;
-                    }
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                     if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {
+                        if (!plugin.getUtils().inTARDISWorld(player)) {
+                            return;
+                        }
                         Block block = interaction.getLocation().getBlock();
                         if (player.isSneaking()) {
                             if (tdi == TARDISDisplayItem.DOOR) {
@@ -265,17 +270,58 @@ public class TARDISDisplayBlockListener implements Listener {
                             itemStack.setItemMeta(im);
                             display.setItemStack(itemStack);
                         }
+                    } else if (player.isSneaking() && tdi.isLight()) {
+                        Material toPlace = inHand.getType();
+                        if (isPlaceable(toPlace)) {
+                            // place block in hand on top
+                            Block block = interaction.getLocation().getBlock().getRelative(BlockFace.UP);
+                            if (block.getType().isAir()) {
+                                block.setType(toPlace);
+                                // if directional block rotate based on player direction
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    BlockData data = block.getBlockData();
+                                    if (data instanceof Directional directional) {
+                                        directional.setFacing(data instanceof Stairs ? player.getFacing() : player.getFacing().getOppositeFace());
+                                        block.setBlockData(data);
+                                    }
+                                    if (data instanceof Rotatable rotatable) {
+                                        rotatable.setRotation(player.getFacing().getOppositeFace());
+                                        block.setBlockData(data);
+                                    }
+                                }, 1);
+                                if (player.getGameMode() == GameMode.SURVIVAL) {
+                                    // remove a block from inventory
+                                    int amount = inHand.getAmount() - 1;
+                                    if (amount > 0) {
+                                        player.getInventory().getItemInMainHand().setAmount(amount);
+                                    } else {
+                                        player.getInventory().setItemInMainHand(null);
+                                    }
+                                    player.updateInventory();
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    private boolean isSonic(ItemStack is) {
+    private boolean isPlaceable(Material material) {
+        if (!material.isSolid() || Tag.DOORS.isTagged(material) || material.hasGravity() || Tag.PRESSURE_PLATES.isTagged(material)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isRedstoneSonic(ItemStack is) {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
+                if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
+                    List<String> lore = im.getLore();
+                    return lore != null && lore.contains("Redstone Upgrade");
+                }
             }
         }
         return false;

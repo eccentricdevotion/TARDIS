@@ -1,9 +1,8 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
-import org.bukkit.Material;
-
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.Material;
 
 public class CubicMaterial {
 
@@ -380,19 +379,22 @@ public class CubicMaterial {
             Material.YELLOW_STAINED_GLASS,
             Material.YELLOW_STAINED_GLASS_PANE,
             Material.YELLOW_TERRACOTTA,
-            Material.YELLOW_WOOL
+            Material.YELLOW_WOOL,
             // 1.19 blocks
-//             Material.MANGROVE_LOG,
-//             Material.MANGROVE_PLANKS,
-//             Material.MANGROVE_ROOTS,
-//             Material.MANGROVE_WOOD,
-//             Material.MUDDY_MANGROVE_ROOTS,
-//             Material.MUD,
-//             Material.MUD_BRICKS,
-//             Material.PACKED_MUD,
-//             Material.OCHRE_FROGLIGHT,
-//             Material.PEARLESCENT_FROGLIGHT,
-//             Material.VERDANT_FROGLIGHT,
-//             Material.REINFORCED_DEEPSLATE
+            Material.MANGROVE_LOG,
+            Material.MANGROVE_PLANKS,
+            Material.MANGROVE_ROOTS,
+            Material.MANGROVE_WOOD,
+            Material.MUDDY_MANGROVE_ROOTS,
+            Material.MUD,
+            Material.MUD_BRICKS,
+            Material.PACKED_MUD,
+            Material.OCHRE_FROGLIGHT,
+            Material.PEARLESCENT_FROGLIGHT,
+            Material.VERDANT_FROGLIGHT,
+            Material.REINFORCED_DEEPSLATE
+            // TODO add 1.20 blocks
+            // BAMBOO
+            // CHERRY
     );
 }

@@ -5,8 +5,10 @@
 ## Version 5.0.0
 
 1. Documentation of new/changed features
-2. Allow placing blocks onto TARDIS light blocks
-4. ?
+2. Item Display interior doors
+   * Make new console with doors in place
+   * When growing new / changing desktop set display as interior door, need to tag the display entity in the schematic similar to time rotors
+3. ?
 
 ## Next version `5.1.0`
 
@@ -32,6 +34,11 @@
 * Converting lights - use light switch, or repair console using desktop theme GUI
 * `/tardis lamps` command only works for LIGHT blocks
 * Potential to walk/fall through light blocks
+* Setting time rotors / display doors for schematics
+* Placing blocks onto TARDIS light blocks 
+  - must be sneaking (like if placing onto any other interactable block e.g. furnace) 
+  - placed on top as we can't detect which face of an interaction entity is clicked
+  - basic support for directional/rotatable blocks
 
 ## Resource Pack / Monsters
 
