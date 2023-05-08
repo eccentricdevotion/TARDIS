@@ -100,12 +100,14 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        int amount = is.getAmount() - 1;
-        if (amount < 1) {
-            player.getInventory().setItemInMainHand(null);
-        } else {
-            is.setAmount(amount);
-            player.getInventory().setItemInMainHand(is);
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            int amount = is.getAmount() - 1;
+            if (amount < 1) {
+                player.getInventory().setItemInMainHand(null);
+            } else {
+                is.setAmount(amount);
+                player.getInventory().setItemInMainHand(is);
+            }
         }
     }
 
