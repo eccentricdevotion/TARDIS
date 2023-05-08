@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -31,9 +34,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -104,6 +104,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         for (int col = sz; col <= ez; col++) {
                             Block block = world.getBlockAt(row, level, col);
                             block.setBlockData(TARDISConstants.AIR);
+                            TARDISDisplayItemUtils.remove(block);
                         }
                     }
                 }

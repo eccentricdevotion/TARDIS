@@ -16,9 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -35,9 +38,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -149,7 +149,7 @@ class TARDISDematerialisePreset implements Runnable {
                         plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection());
                     }
                     case SWAMP -> plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
-                    case JAIL, TOPSYTURVEY -> plugin.getPresetDestroyer().destroyDoor(dd.getTardisID()); 
+                    case JAIL, TOPSYTURVEY -> plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
                     case MESA -> {
                         // destroy door
                         plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
@@ -271,7 +271,6 @@ class TARDISDematerialisePreset implements Runnable {
                         }
                     }
                     for (int yy = 3; yy >= 0; yy--) {
-                        boolean change = true;
                         Material mat = colData[yy].getMaterial();
                         switch (mat) {
                             case GRASS_BLOCK, DIRT -> {
@@ -318,8 +317,10 @@ class TARDISDematerialisePreset implements Runnable {
                             }
                             default -> {
                                 // everything else
-                                if (change) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                                if (preset == ChameleonPreset.JUNK_MODE && (mat == Material.ORANGE_WOOL || mat == Material.ORANGE_STAINED_GLASS || mat == Material.GLASS)) {
+                                    // remove item display entities
+                                    TARDISDisplayItemUtils.remove(world.getBlockAt(xx, (y + yy), zz));
                                 }
                             }
                         }

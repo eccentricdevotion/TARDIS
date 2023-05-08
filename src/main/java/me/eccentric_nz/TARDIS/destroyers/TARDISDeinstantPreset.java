@@ -16,9 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -32,11 +36,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
-
-import java.util.Collections;
-import java.util.HashMap;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -154,6 +153,9 @@ public class TARDISDeinstantPreset {
                         Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
                         if (!b.getType().isAir()) {
                             b.setBlockData(TARDISConstants.AIR);
+                            if (preset == ChameleonPreset.JUNK_MODE) {
+                                TARDISDisplayItemUtils.remove(b);
+                            }
                         }
                     }
                 }

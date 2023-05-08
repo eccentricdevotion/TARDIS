@@ -18,8 +18,12 @@ package me.eccentric_nz.TARDIS.junk;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -35,11 +39,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * @author eccentric_nz
@@ -169,14 +168,14 @@ public class TARDISJunkBuilder implements Runnable {
                                             TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
                                         }
                                         case ORANGE_WOOL -> {
-                                            BlockData stem;
+                                            BlockData wall;
                                             if (wall_type.equals(Material.ORANGE_WOOL)) {
-                                                stem = TARDISConstants.BARRIER;
+                                                wall = TARDISConstants.BARRIER;
                                                 TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
                                             } else {
-                                                stem = wall_type.createBlockData();
+                                                wall = wall_type.createBlockData();
                                             }
-                                            TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
+                                            TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall, bd.getTardisID());
                                         }
                                         case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
                                         default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
