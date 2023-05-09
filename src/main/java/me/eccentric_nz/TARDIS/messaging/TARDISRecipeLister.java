@@ -42,7 +42,30 @@ public class TARDISRecipeLister {
         TARDISMessage.message(sender, ChatColor.GRAY + "Click to view the recipe");
         TARDISMessage.message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
-            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
+            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE && category != RecipeCategory.CUSTOM_BLOCKS && category != RecipeCategory.ROTORS && category != RecipeCategory.MISC) {
+                TARDISMessage.message(sender, category.getName());
+                for (RecipeItem item : RecipeItem.values()) {
+                    if (item.getCategory() == category) {
+                        TextComponent tci = new TextComponent(item.toTabCompletionString());
+                        tci.setColor(category.getColour());
+                        tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
+                        tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe " + item.toTabCompletionString()));
+                        sender.spigot().sendMessage(tci);
+                    }
+                }
+                TARDISMessage.message(sender, "");
+            }
+        }
+        TextComponent more = new TextComponent("Show more...");
+        more.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        more.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe list_more"));
+        sender.spigot().sendMessage(more);
+    }
+
+    public void listMore() {
+        TARDISMessage.message(sender, "");
+        for (RecipeCategory category : RecipeCategory.values()) {
+            if (category == RecipeCategory.CUSTOM_BLOCKS || category == RecipeCategory.ROTORS || category == RecipeCategory.MISC) {
                 TARDISMessage.message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {

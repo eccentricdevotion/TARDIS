@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -45,6 +44,8 @@ import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.*;
+
 /**
  * @author eccentric_nz
  */
@@ -53,6 +54,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     private final TARDIS plugin;
     private final int full;
     private final HashMap<String, String> items = new HashMap<>();
+    private final List<String> custom = new ArrayList<>();
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -60,13 +62,15 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("artron", "");
         items.put("blueprint", "");
         items.put("kit", "");
-        items.put("display", "");
         items.put("recipes", "");
         items.put("seed", "");
         items.put("tachyon", "");
         for (RecipeItem recipeItem : RecipeItem.values()) {
             if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
                 items.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
+            }
+            if (recipeItem.getCategory() == RecipeCategory.CUSTOM_BLOCKS) {
+                custom.add(recipeItem.toTabCompletionString());
             }
         }
     }
@@ -78,6 +82,10 @@ public class TARDISGiveCommand implements CommandExecutor {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
                     new TARDISGiveLister(plugin, sender).list();
+                    return true;
+                }
+                if (args.length == 1 && args[0].equalsIgnoreCase("list_more")) {
+                    new TARDISGiveLister(plugin, sender).listMore();
                     return true;
                 }
                 if (args.length < 3) {
@@ -155,23 +163,6 @@ public class TARDISGiveCommand implements CommandExecutor {
                         }
                     }
                 }
-                if (item.equals("display")) {
-                    if (args.length < 4) {
-                        TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                        TARDISMessage.message(sender, "/tardisgive [player] display [amount] [type]");
-                        return true;
-                    }
-                    Player p = plugin.getServer().getPlayer(args[0]);
-                    if (p == null) { // player must be online
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-                        return true;
-                    }
-                    ItemStack display = new TARDISDisplayBlockCommand(plugin).getStack(args[3]);
-                    p.getInventory().addItem(display);
-                    p.updateInventory();
-                    TARDISMessage.send(p, "GIVE_ITEM", sender.getName(), amount + " " + args[3]);
-                    return true;
-                }
                 if (item.equals("artron")) {
                     if (TARDISStaticUtils.getOfflinePlayer(args[0]) == null) {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
@@ -229,12 +220,13 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
+
         if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
-            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
-            result = recipe.getResult();
+            result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
+        } else if (custom.contains(item)) {
+            result = new TARDISDisplayBlockCommand(plugin).getStack(item);
         } else {
-            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
-            result = recipe.getResult();
+            result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
         }
         if (item.equals("vortex-manipulator")) {
             TARDISMessage.send(sender, "GIVE_VORTEX", player.getName());
