@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -37,6 +36,8 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -129,12 +130,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (!recipeItems.containsKey(args[0].toLowerCase(Locale.ENGLISH))) {
-                new TARDISRecipeLister(sender).list();
+                if (args[0].equalsIgnoreCase("list_more")) {
+                    new TARDISRecipeLister(sender).listMore();
+                } else {
+                    new TARDISRecipeLister(sender).list();
+                }
                 return true;
-            }
-            if (args.length < 1) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                return false;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

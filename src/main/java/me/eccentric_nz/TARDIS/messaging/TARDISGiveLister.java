@@ -46,7 +46,6 @@ public class TARDISGiveLister {
         dev.put("kit", "TARDIS Item Kit");
         dev.put("recipes", "Grant TARDIS recipes");
         dev.put("seed", "TARDIS Seed Block");
-        dev.put("mushroom", "Textured mushroom blocks");
     }
 
     public void list() {
@@ -64,7 +63,7 @@ public class TARDISGiveLister {
         }
         TARDISMessage.message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
-            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
+            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE && category != RecipeCategory.CUSTOM_BLOCKS && category != RecipeCategory.ROTORS && category != RecipeCategory.MISC) {
                 TARDISMessage.message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
@@ -75,8 +74,31 @@ public class TARDISGiveLister {
                         sender.spigot().sendMessage(tci);
                     }
                 }
+                TARDISMessage.message(sender, "");
             }
-            TARDISMessage.message(sender, "");
+        }
+        TextComponent more = new TextComponent("Show more...");
+        more.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        more.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisgive list_more"));
+        sender.spigot().sendMessage(more);
+    }
+
+    public void listMore() {
+        TARDISMessage.message(sender, "");
+        for (RecipeCategory category : RecipeCategory.values()) {
+            if (category == RecipeCategory.CUSTOM_BLOCKS || category == RecipeCategory.ROTORS || category == RecipeCategory.MISC) {
+                TARDISMessage.message(sender, category.getName());
+                for (RecipeItem item : RecipeItem.values()) {
+                    if (item.getCategory() == category) {
+                        TextComponent tci = new TextComponent(item.toTabCompletionString());
+                        tci.setColor(category.getColour());
+                        tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
+                        tci.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + item.toTabCompletionString() + " "));
+                        sender.spigot().sendMessage(tci);
+                    }
+                }
+                TARDISMessage.message(sender, "");
+            }
         }
     }
 }
