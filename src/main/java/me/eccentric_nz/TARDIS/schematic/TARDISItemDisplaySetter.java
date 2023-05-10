@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import org.bukkit.Location;
@@ -28,7 +30,7 @@ import org.bukkit.block.Block;
  */
 public class TARDISItemDisplaySetter {
 
-    public static void fakeBlock(JsonObject json, Location start) {
+    public static void fakeBlock(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();
         int px = rel.get("x").getAsInt();
         int py = rel.get("y").getAsInt();
@@ -40,6 +42,19 @@ public class TARDISItemDisplaySetter {
             JsonObject stack = json.get("stack").getAsJsonObject();
             if (stack.has("cmd")) {
                 model = stack.get("cmd").getAsInt();
+            }
+            if (stack.has("door")) {
+                HashMap<String, Object> setd = new HashMap<>();
+                    String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                    setd.put("tardis_id", id);
+                    setd.put("door_type", 1);
+                    setd.put("door_location", doorloc);
+                    setd.put("door_direction", "SOUTH");
+                    TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+                    // if create_worlds is true, set the world spawn
+                    if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
+                        block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
+                    }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
             TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);

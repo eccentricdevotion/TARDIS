@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
@@ -40,6 +41,7 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -56,27 +58,31 @@ import org.bukkit.entity.*;
 class TARDISBuildAbandoned implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
     private final int dbID;
     private final Player player;
     private final Material wall_type = Material.ORANGE_WOOL;
     private final Material floor_type = Material.LIGHT_GRAY_WOOL;
+    private final HashMap<Block, BlockData> postBedBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
+    private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
+    private final List<Block> postLightBlocks = new ArrayList<>();
+    private Location postOod = null;
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
     private Block postBedrock = null;
@@ -177,7 +183,8 @@ class TARDISBuildAbandoned implements Runnable {
             }
         }
         if (level == h && row == w - 1) {
-            // put on the door, redstone torches, signs, and the repeaters
+            // put on the door, redstone torches, signs, beds, and the repeaters
+            postBedBlocks.forEach(Block::setBlockData);
             postDoorBlocks.forEach(Block::setBlockData);
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
@@ -228,6 +235,21 @@ class TARDISBuildAbandoned implements Runnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
+            if (postOod != null) {
+                // spawn Ood
+                TARDISFollowerSpawner spawner = new TARDISFollowerSpawner(plugin);
+                spawner.spawnDivisionOod(postOod);
+            }
+            postLightBlocks.forEach((block) -> {
+                if (block.getType().isAir()) {
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(15);
+                    block.setBlockData(levelled);
+                }
+            });
+            for (int f = 0; f < fractalBlocks.size(); f++) {
+                FractalFence.grow(fractalBlocks.get(f), f);
+            }
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 UUID randomUUID = UUID.randomUUID();
@@ -267,7 +289,7 @@ class TARDISBuildAbandoned implements Runnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), cl);
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), cl, dbID);
                 }
             }
             // finished processing - update tardis table!
@@ -360,6 +382,20 @@ class TARDISBuildAbandoned implements Runnable {
                         }
                         data = Material.getMaterial(m).createBlockData();
                     }
+                }
+            }
+            if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
+                fractalBlocks.add(world.getBlockAt(x, y, z));
+            }
+            if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && schm.getPermission().equals("division")) {
+                postLightBlocks.add(world.getBlockAt(x, y - 1, z));
+            }
+            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (schm.getPermission().equals("division") || schm.getPermission().equals("hospital"))) {
+                // replace with gray concrete
+                data = schm.getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                    // remember the block to spawn an Ood on
+                    postOod = new Location(world, x, y + 1, z);
                 }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
@@ -541,6 +577,8 @@ class TARDISBuildAbandoned implements Runnable {
             if (type.equals(Material.IRON_DOOR)) { // doors
                 // if it's the door, don't set it just remember its block then do it at the end
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (Tag.BEDS.isTagged(type)) {
+                postBedBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
                 postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {

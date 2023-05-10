@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -27,9 +29,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.List;
-import java.util.UUID;
 
 public class TARDISFollowerSpawner {
 
@@ -72,7 +71,7 @@ public class TARDISFollowerSpawner {
 
     public void spawnDivisionOod(Location location) {
         plugin.setTardisSpawn(true);
-        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location.clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
         plugin.getTardisAPI().setOodEquipment(null, stand, false);
     }
 

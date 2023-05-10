@@ -60,8 +60,6 @@ import org.bukkit.entity.*;
 public class TARDISBuilderInner implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> fractalBlocks = new ArrayList<>();
-    private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
     private final int dbID;
@@ -69,21 +67,23 @@ public class TARDISBuilderInner implements Runnable {
     private final Material wall_type;
     private final Material floor_type;
     private final int tips;
+    private final HashMap<Block, BlockData> postBedBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
-    private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
+    private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final List<Block> postLightBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final HashMap<String, Object> set = new HashMap<>();
@@ -226,7 +226,8 @@ public class TARDISBuilderInner implements Runnable {
             }
         }
         if (level == h && row == w - 1) {
-            // put on the door, redstone torches, signs, and the repeaters
+            // put on the door, redstone torches, signs, beds, and the repeaters
+            postBedBlocks.forEach(Block::setBlockData);
             postDoorBlocks.forEach(Block::setBlockData);
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
@@ -338,14 +339,8 @@ public class TARDISBuilderInner implements Runnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
                 }
-            }
-            // reset mushroom stem blocks
-            if (!postMushroomBlocks.isEmpty()) {
-                TARDISMushroomRunnable runnable = new TARDISMushroomRunnable(plugin, postMushroomBlocks);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 400L, 1L);
-                runnable.setTask(taskID);
             }
             // remove dropped items
             chunkList.forEach((chink) -> {
@@ -666,6 +661,8 @@ public class TARDISBuilderInner implements Runnable {
             }
             if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
+            } else if (Tag.BEDS.isTagged(type)) {
+                postBedBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 // if it's the door, don't set it just remember its block then do it at the end
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);

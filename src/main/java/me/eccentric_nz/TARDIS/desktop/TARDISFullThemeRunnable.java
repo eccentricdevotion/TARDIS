@@ -64,23 +64,24 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
+    private final HashMap<Block, BlockData> postBedBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
     private final List<Block> postLightBlocks = new ArrayList<>();
-    private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
-    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postLanternBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private boolean running;
     private int id, slot, c, h, ph, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
     private World world;
@@ -207,9 +208,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
-                for (Entity end : chunk.getEntities()) {
-                    if (end.getType().equals(EntityType.ENDER_CRYSTAL)) {
-                        end.remove();
+                for (Entity entity : chunk.getEntities()) {
+                    if (entity.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                        entity.remove();
                     }
                 }
             }
@@ -236,7 +237,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             previousChunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getPrevious());
             if (!tardis.getCreeper().isEmpty()) {
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
-                if (tud.getPrevious().getPermission().equals("division")) {
+                if (tud.getPrevious().getPermission().equals("division") || tud.getPrevious().getPermission().equals("hospital")) {
                     // remove ood
                     new TARDISFollowerSpawner(plugin).removeDivisionOod(creeper);
                 }
@@ -349,7 +350,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 }
             });
-            // put on the door, redstone torches, signs, and the repeaters
+            // put on the door, redstone torches, signs, beds and the repeaters
+            postBedBlocks.forEach(Block::setBlockData);
             postDoorBlocks.forEach(Block::setBlockData);
             postRedstoneTorchBlocks.forEach(Block::setBlockData);
             postLeverBlocks.forEach(Block::setBlockData);
@@ -454,7 +456,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1);
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
                 }
             }
             // finished processing - update tardis table!
@@ -589,7 +591,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(b);
                 }
-                if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
+                if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (tud.getSchematic().getPermission().equals("division") || tud.getSchematic().getPermission().equals("hospital"))) {
                     // replace with gray concrete
                     data = Material.GRAY_CONCRETE.createBlockData();
                     if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
@@ -831,6 +833,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 // if it's the door, don't set it just remember its block then do it at the end
                 if (type.equals(Material.IRON_DOOR)) { // doors
                     postDoorBlocks.put(b, data);
+                } else if (Tag.BEDS.isTagged(type)) {
+                    postBedBlocks.put(b, data);
                 } else if (type.equals(Material.LEVER)) {
                     postLeverBlocks.put(b, data);
                 } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
