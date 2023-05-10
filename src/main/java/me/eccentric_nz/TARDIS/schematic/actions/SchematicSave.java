@@ -119,7 +119,7 @@ public class SchematicSave {
                     Block b = w.getBlockAt(r, l, c);
                     // check for entities
                     Location location = b.getLocation();
-                    BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
+                    BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1).expand(0.1d);
                     for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
                         Location eloc = entity.getLocation();
                         if (entity instanceof Painting art) {
