@@ -75,6 +75,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.SCULK, "ANCIENT"); // ancient city
         t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
         t.put(Material.WEATHERED_COPPER, "WEATHERED"); // weathered copper
+        t.put(Material.WHITE_CONCRETE, "HOSPITAL"); // hospital
         t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
         t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
         t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh

@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -507,6 +506,23 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Rotor Delta.result", "LIGHT_GRAY_DYE");
             recipes_config.set("shaped.Time Rotor Delta.amount", 1);
             recipes_config.set("shaped.Time Rotor Delta.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Time Rotor Hospital")) {
+            // rotor delta
+            recipes_config.set("shaped.Time Rotor Hospital.easy_shape", "BRB,GWG,GRG");
+            recipes_config.set("shaped.Time Rotor Hospital.easy_ingredients.B", "WHITE_DYE");
+            recipes_config.set("shaped.Time Rotor Hospital.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Time Rotor Hospital.easy_ingredients.W", "CLOCK");
+            recipes_config.set("shaped.Time Rotor Hospital.easy_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.Time Rotor Hospital.hard_shape", "CRC,GWG,GRG");
+            recipes_config.set("shaped.Time Rotor Hospital.hard_ingredients.B", "WHITE_DYE");
+            recipes_config.set("shaped.Time Rotor Hospital.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Time Rotor Hospital.hard_ingredients.W", "CLOCK");
+            recipes_config.set("shaped.Time Rotor Hospital.hard_ingredients.G", "GLASS_PANE");
+            recipes_config.set("shaped.Time Rotor Hospital.result", "LIGHT_GRAY_DYE");
+            recipes_config.set("shaped.Time Rotor Hospital.amount", 1);
+            recipes_config.set("shaped.Time Rotor Hospital.lore", "");
             i++;
         }
         if (recipes_config.getString("shaped.Time Rotor Tenth.easy_ingredients.C").equals("GRAY_DYE")) {

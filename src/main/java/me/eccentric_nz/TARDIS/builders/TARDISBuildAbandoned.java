@@ -98,10 +98,10 @@ class TARDISBuildAbandoned implements Runnable {
      * @param plugin an instance of the TARDIS plugin main class.
      * @param schm the name of the schematic file to use can be ANCIENT, ARS,
      * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     * ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
-     * PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
-     * WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     * LEGACY_REDSTONE or a CUSTOM name.
+     * ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
+     * ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
+     * TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
+     * LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
@@ -501,7 +501,7 @@ class TARDISBuildAbandoned implements Runnable {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                         case "delta" -> Material.BLACKSTONE.createBlockData();
-                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        case "ancient", "fugitive", "hospital" -> Material.GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
                     };
                 }

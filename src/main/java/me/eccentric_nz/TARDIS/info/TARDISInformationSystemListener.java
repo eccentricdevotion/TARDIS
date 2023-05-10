@@ -513,6 +513,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("u")) {
                     showInfo(p, TARDISInfoMenu.FUGITIVE);
                 }
+                if (chat.equalsIgnoreCase("+")) {
+                    showInfo(p, TARDISInfoMenu.HOSPITAL);
+                }
                 if (chat.equalsIgnoreCase("R")) {
                     showInfo(p, TARDISInfoMenu.REDSTONE);
                 }

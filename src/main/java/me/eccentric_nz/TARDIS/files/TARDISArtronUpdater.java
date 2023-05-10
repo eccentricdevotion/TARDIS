@@ -94,6 +94,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.ender", 5000);
         integerOptions.put("upgrades.factory", 7500);
         integerOptions.put("upgrades.fugitive", 7500);
+        integerOptions.put("upgrades.hospital", 5000);
         integerOptions.put("upgrades.legacy_bigger", 7500);
         integerOptions.put("upgrades.legacy_deluxe", 10000);
         integerOptions.put("upgrades.legacy_eleventh", 10000);

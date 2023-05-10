@@ -44,6 +44,7 @@ public enum TARDISDisplayItem {
     ENDER(Material.PURPUR_BLOCK),
     FACTORY(10001, Material.GRAY_CONCRETE, null),
     FUGITIVE(Material.POLISHED_DEEPSLATE),
+    HOSPITAL(Material.WHITE_CONCRETE),
     MASTER(Material.NETHER_BRICKS),
     MECHANICAL(Material.POLISHED_ANDESITE),
     ORIGINAL(Material.PACKED_MUD),

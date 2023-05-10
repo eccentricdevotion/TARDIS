@@ -45,6 +45,7 @@ grey_bow_tie: 2.00
 handles: 5.00
 hath_head: 75.00
 headless_monk_head: 75.00
+hospital_seed: 250.00
 ice_warrior_head: 75.00
 ignite_circuit: 100.00
 island_punch_jelly_baby: 0.50
@@ -130,6 +131,7 @@ time_engine: 40.00
 time_rotor_early: 40.00
 time_rotor_eleventh: 40.00
 time_rotor_engine: 40.00
+time_rotor_hospital: 40.00
 time_rotor_tenth: 40.00
 time_rotor_twelfth: 40.00
 tom_seed: 250.00

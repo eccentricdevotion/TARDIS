@@ -19,12 +19,8 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -46,19 +42,9 @@ public class TARDISTimeRotor {
             put("delta", 10000006);
             put("engine", 10000007);
             put("engine_rotor", 10000008);
+            put("hospital", 10000009);
         }
     };
-
-    public static void setItemFrame(String schm, Location location, int id) {
-        location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
-        ItemFrame itemFrame = (ItemFrame) location.getWorld().spawnEntity(location, EntityType.ITEM_FRAME);
-        itemFrame.setFacingDirection(BlockFace.UP);
-        setRotor(BY_NAME.get(schm), itemFrame, false);
-        // save itemFrame UUID
-        UUID uuid = itemFrame.getUniqueId();
-        updateRotorRecord(id, uuid.toString());
-        TARDIS.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
-    }
 
     public static void updateRotorRecord(int id, String uuid) {
         HashMap<String, Object> where = new HashMap<>();

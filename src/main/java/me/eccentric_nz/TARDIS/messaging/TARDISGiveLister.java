@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.Map;
+import java.util.TreeMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -25,9 +27,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author eccentric_nz

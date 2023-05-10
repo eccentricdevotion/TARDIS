@@ -32,6 +32,7 @@ public enum BlueprintConsole {
     ENDER("tardis.ender"),
     FACTORY("tardis.factory"),
     FUGITIVE("tardis.fugitive"),
+    HOSPITAL("tardis.hospital"),
     LEGACY_BIGGER("tardis.legacy_bigger"),
     LEGACY_DELUXE("tardis.legacy_deluxe"),
     LEGACY_ELEVENTH("tardis.legacy_eleventh"),

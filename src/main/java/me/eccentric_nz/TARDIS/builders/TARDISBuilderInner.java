@@ -111,10 +111,10 @@ public class TARDISBuilderInner implements Runnable {
      * @param plugin an instance of the main TARDIS plugin class
      * @param schm the name of the schematic file to use can be ANCIENT, ARS,
      * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     * ELEVENTH, ENDER, FACTORY, FUGITIVE, MASTER, MECHANICAL, ORIGINAL, PLANK,
-     * PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR,
-     * WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     * LEGACY_REDSTONE or a CUSTOM name.
+     * ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
+     * ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
+     * TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
+     * LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param player an instance of the player who owns the TARDIS.
@@ -424,9 +424,12 @@ public class TARDISBuilderInner implements Runnable {
                         if (!schm.getPermission().equals("eleventh")) {
                             if (floor_type == Material.LIGHT_GRAY_WOOL) {
                                 data = switch (use_clay) {
-                                    case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
-                                    case CONCRETE -> Material.LIGHT_GRAY_CONCRETE.createBlockData();
-                                    default -> Material.LIGHT_GRAY_WOOL.createBlockData();
+                                    case TERRACOTTA ->
+                                        Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+                                    case CONCRETE ->
+                                        Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                                    default ->
+                                        Material.LIGHT_GRAY_WOOL.createBlockData();
                                 };
                             } else {
                                 data = floor_type.createBlockData();
@@ -471,9 +474,9 @@ public class TARDISBuilderInner implements Runnable {
             if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && schm.getPermission().equals("division")) {
                 postLightBlocks.add(world.getBlockAt(x, y - 1, z));
             }
-            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && schm.getPermission().equals("division")) {
+            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (schm.getPermission().equals("division") || schm.getPermission().equals("hospital"))) {
                 // replace with gray concrete
-                data = Material.GRAY_CONCRETE.createBlockData();
+                data = schm.getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
                 if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     // remember the block to spawn an Ood on
                     postOod = new Location(world, x, y + 1, z);
@@ -624,7 +627,7 @@ public class TARDISBuilderInner implements Runnable {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                         case "delta" -> Material.BLACKSTONE.createBlockData();
-                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        case "ancient", "fugitive", "hospital" -> Material.GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
                     };
                 }

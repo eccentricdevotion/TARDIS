@@ -267,6 +267,7 @@ permissions:
       tardis.ender: true
       tardis.factory: true
       tardis.fugitive: true
+      tardis.hospital: true
       tardis.legacy_bigger: true
       tardis.legacy_deluxe: true
       tardis.legacy_eleventh: true
@@ -317,6 +318,12 @@ permissions:
     default: op
   tardis.factory:
     description: Allow players to build the First Doctor's TARDIS.
+    default: op
+  tardis.fugitive:
+    description: Allow players to build Ruth (The Fugitive Doctor) Clayton's TARDIS.
+    default: op
+  tardis.hospital:
+    description: Allow players to build the St John's Hospital TARDIS.
     default: op
   tardis.master:
     description: Allow players to build the Master's TARDIS.

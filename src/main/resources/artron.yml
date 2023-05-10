@@ -41,6 +41,7 @@ upgrades:
   ender: 5000
   factory: 7500
   fugitive: 7500
+  hospital: 5000
   master: 10000
   mechanical: 7500
   original: 5000

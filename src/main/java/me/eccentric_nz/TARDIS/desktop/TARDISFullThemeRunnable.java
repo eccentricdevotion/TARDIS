@@ -790,7 +790,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         data = switch (tud.getSchematic().getPermission()) {
                             case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                             case "delta" -> Material.BLACKSTONE.createBlockData();
-                            case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                            case "ancient", "fugitive", "hospital" -> Material.GRAY_WOOL.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();
                         };
                     }
@@ -829,13 +829,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getGeneralKeeper().getProtectBlockMap().put(loc, id);
                 }
                 // if it's the door, don't set it just remember its block then do it at the end
-                if (type.equals(Material.HONEYCOMB_BLOCK) && (tud.getSchematic().getPermission().equals("delta") || tud.getSchematic().getPermission().equals("rotor"))) {
-                    /*
-                     * spawn an item frame and place the time rotor in it
-                     */
-                    TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                    TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
-                } else if (type.equals(Material.IRON_DOOR)) { // doors
+                if (type.equals(Material.IRON_DOOR)) { // doors
                     postDoorBlocks.put(b, data);
                 } else if (type.equals(Material.LEVER)) {
                     postLeverBlocks.put(b, data);
