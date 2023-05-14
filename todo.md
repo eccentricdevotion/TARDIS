@@ -5,10 +5,9 @@
 ## Version 5.0.0
 
 1. Documentation of new/changed features
-2. Item Display interior doors
-   * When growing new / changing desktop set display as interior door, need to tag the display entity in the schematic similar to time rotors
-   * Test Hospital schematic - new + changing / repairing desktop - beds...
-3. ?
+2. Recipe etc for Double door
+3. Separate page for custom consoles in Desktop Theme GUI
+4. ?
 
 ## Next version `5.1.0`
 
