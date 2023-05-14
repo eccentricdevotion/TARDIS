@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
@@ -34,15 +36,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
-
-import java.util.HashMap;
-import java.util.List;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Various utility methods.
  * <p>
- * The TARDIS can be programmed to execute automatic functions based on certain conditions. It also automatically
- * repairs after too much damage.
+ * The TARDIS can be programmed to execute automatic functions based on certain
+ * conditions. It also automatically repairs after too much damage.
  *
  * @author eccentric_nz
  */
@@ -108,10 +108,11 @@ public class TARDISUtils {
     }
 
     /**
-     * Checks if player has storage record, and update the tardis_id field if they do.
+     * Checks if player has storage record, and update the tardis_id field if
+     * they do.
      *
      * @param uuid the player's UUID
-     * @param id   the player's TARDIS ID
+     * @param id the player's TARDIS ID
      */
     public void updateStorageId(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
@@ -254,34 +255,43 @@ public class TARDISUtils {
         TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
         return switch (displayType) {
             case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-            );
+                .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                );
             case COORDS -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                    .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                    .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-            );
+                .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                );
             case DIRECTION -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%FACING%", getFacing(player))
-                    .replace("%FACING_XZ%", getFacingXZ(player))
-            );
+                .replace("%FACING%", getFacing(player))
+                .replace("%FACING_XZ%", getFacingXZ(player))
+                );
             case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+                .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
             case WORLD -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%WORLD%", player.getLocation().getWorld().getName()));
+                .replace("%WORLD%", player.getLocation().getWorld().getName()));
             default -> // ALL
-                    ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                            .replace("%WORLD%", player.getLocation().getWorld().getName())
-                            .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                            .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                            .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                            .replace("%FACING%", getFacing(player))
-                            .replace("%FACING_XZ%", getFacingXZ(player))
-                            .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                            .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                            .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-                            .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-                    );
+                ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
+                .replace("%WORLD%", player.getLocation().getWorld().getName())
+                .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                .replace("%FACING%", getFacing(player))
+                .replace("%FACING_XZ%", getFacingXZ(player))
+                .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+                );
         };
+    }
+
+    public boolean isCustomModel(ItemStack is) {
+        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(is.getType().toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

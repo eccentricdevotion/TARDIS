@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
 
 /**
  * @author eccentric_nz
@@ -98,26 +97,26 @@ public enum ChameleonPreset {
     CAVE(Material.BARRIER, "CAVE", "", true, true),
     // coloured police boxes
     POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, 0, "", "", false, true, "Blue Police Box"),
-    POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, 1, "", "", false, false, "White Police Box"),
-    POLICE_BOX_ORANGE(Material.ORANGE_CONCRETE_POWDER, 2, "", "", false, false, "Orange Police Box"),
-    POLICE_BOX_MAGENTA(Material.MAGENTA_CONCRETE_POWDER, 3, "", "", false, false, "Magenta Police Box"),
-    POLICE_BOX_LIGHT_BLUE(Material.LIGHT_BLUE_CONCRETE_POWDER, 4, "", "", false, false, "Light Blue Police Box"),
-    POLICE_BOX_YELLOW(Material.YELLOW_CONCRETE_POWDER, 5, "", "", false, false, "Yellow Police Box"),
-    POLICE_BOX_LIME(Material.LIME_CONCRETE_POWDER, 6, "", "", false, false, "Lime Police Box"),
-    POLICE_BOX_PINK(Material.PINK_CONCRETE_POWDER, 7, "", "", false, false, "Pink Police Box"),
-    POLICE_BOX_GRAY(Material.GRAY_CONCRETE_POWDER, 8, "", "", false, false, "Gray Police Box"),
-    POLICE_BOX_LIGHT_GRAY(Material.LIGHT_GRAY_CONCRETE_POWDER, 9, "", "", false, false, "Light Gray Police Box"),
-    POLICE_BOX_CYAN(Material.CYAN_CONCRETE_POWDER, 10, "", "", false, false, "Cyan Police Box"),
-    POLICE_BOX_PURPLE(Material.PURPLE_CONCRETE_POWDER, 11, "", "", false, false, "Purple Police Box"),
-    POLICE_BOX_BROWN(Material.BROWN_CONCRETE_POWDER, 12, "", "", false, false, "Brown Police Box"),
-    POLICE_BOX_GREEN(Material.GREEN_CONCRETE_POWDER, 13, "", "", false, false, "Green Police Box"),
-    POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, 14, "", "", false, false, "Red Police Box"),
-    POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
-    POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, false, "Tennant Era Police Box"),
+    POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, 1, "", "", false, true, "White Police Box"),
+    POLICE_BOX_ORANGE(Material.ORANGE_CONCRETE_POWDER, 2, "", "", false, true, "Orange Police Box"),
+    POLICE_BOX_MAGENTA(Material.MAGENTA_CONCRETE_POWDER, 3, "", "", false, true, "Magenta Police Box"),
+    POLICE_BOX_LIGHT_BLUE(Material.LIGHT_BLUE_CONCRETE_POWDER, 4, "", "", false, true, "Light Blue Police Box"),
+    POLICE_BOX_YELLOW(Material.YELLOW_CONCRETE_POWDER, 5, "", "", false, true, "Yellow Police Box"),
+    POLICE_BOX_LIME(Material.LIME_CONCRETE_POWDER, 6, "", "", false, true, "Lime Police Box"),
+    POLICE_BOX_PINK(Material.PINK_CONCRETE_POWDER, 7, "", "", false, true, "Pink Police Box"),
+    POLICE_BOX_GRAY(Material.GRAY_CONCRETE_POWDER, 8, "", "", false, true, "Gray Police Box"),
+    POLICE_BOX_LIGHT_GRAY(Material.LIGHT_GRAY_CONCRETE_POWDER, 9, "", "", false, true, "Light Gray Police Box"),
+    POLICE_BOX_CYAN(Material.CYAN_CONCRETE_POWDER, 10, "", "", false, true, "Cyan Police Box"),
+    POLICE_BOX_PURPLE(Material.PURPLE_CONCRETE_POWDER, 11, "", "", false, true, "Purple Police Box"),
+    POLICE_BOX_BROWN(Material.BROWN_CONCRETE_POWDER, 12, "", "", false, true, "Brown Police Box"),
+    POLICE_BOX_GREEN(Material.GREEN_CONCRETE_POWDER, 13, "", "", false, true, "Green Police Box"),
+    POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, 14, "", "", false, true, "Red Police Box"),
+    POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, true, "Black Police Box"),
+    POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, true, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
-    COLOURED(Material.LEATHER_HORSE_ARMOR, 18, "", "", false, false, "Pick a colour"),
+    COLOURED(Material.LEATHER_HORSE_ARMOR, 18, "", "", false, true, "Pick a colour"),
 
-    ITEM(Material.BARRIER, -1, "", "", false, false, "Item");
+    ITEM(Material.BARRIER, -1, "", "", false, true, "Item");
 
     public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
     private final static Map<Material, ChameleonPreset> BY_MATERIAL = Maps.newHashMap();
@@ -236,9 +235,9 @@ public enum ChameleonPreset {
 
     public boolean usesItemFrame() {
         return switch (this) {
-            case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE, 
-                POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, 
-                POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, 
+            case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
+                POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
+                POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED,
                 POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, ITEM -> true;
             default -> false;
         };
@@ -246,10 +245,10 @@ public enum ChameleonPreset {
 
     public boolean isBlockPreset() {
         return switch (this) {
-            case ADAPTIVE, ANDESITE, ANGEL, APPERTURE, CAKE, CANDY, CHALICE, CHORUS, CREEPY, DESERT, DIORITE, 
-                DUCK, FACTORY, FENCE, FLOWER, GAZEBO, GRANITE, GRAVESTONE, HELIX, JAIL, JUNGLE, LAMP, LIBRARY, 
-                LIGHTHOUSE, MINESHAFT, NETHER, PANDORICA, PARTY, PEANUT, PINE, PORTAL, PRISMARINE, PUNKED, 
-                ROBOT, SHROOM, SNOWMAN, STONE, SUBMERGED, SWAMP, TELEPHONE, TOILET, TOPSYTURVEY, TORCH, 
+            case ADAPTIVE, ANDESITE, ANGEL, APPERTURE, CAKE, CANDY, CHALICE, CHORUS, CREEPY, DESERT, DIORITE,
+                DUCK, FACTORY, FENCE, FLOWER, GAZEBO, GRANITE, GRAVESTONE, HELIX, JAIL, JUNGLE, LAMP, LIBRARY,
+                LIGHTHOUSE, MINESHAFT, NETHER, PANDORICA, PARTY, PEANUT, PINE, PORTAL, PRISMARINE, PUNKED,
+                ROBOT, SHROOM, SNOWMAN, STONE, SUBMERGED, SWAMP, TELEPHONE, TOILET, TOPSYTURVEY, TORCH,
                 VILLAGE, WELL, WINDMILL, YELLOW, CUSTOM -> true;
             default -> false;
         };

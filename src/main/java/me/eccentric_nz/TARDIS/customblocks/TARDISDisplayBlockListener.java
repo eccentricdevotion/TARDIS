@@ -249,6 +249,8 @@ public class TARDISDisplayBlockListener implements Listener {
                                 im.setCustomModelData(10003);
                                 itemStack.setItemMeta(im);
                                 display.setItemStack(itemStack);
+                                // close doors / decativate portal
+                                new DisplayItemDoorToggler(plugin).openClose(player, block, true);
                             }
                         } else {
                             ItemStack itemStack = display.getItemStack();

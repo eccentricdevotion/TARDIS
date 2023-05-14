@@ -60,7 +60,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             ItemStack dye = frame.getItem();
-            if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || isCustomModel(dye)) && dye.hasItemMeta()) {
+            if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
                 ItemMeta dim = dye.getItemMeta();
                 if (dim.hasCustomModelData()) {
                     int cmd = dim.getCustomModelData();
@@ -219,14 +219,5 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         } else {
             TARDISSounds.playTARDISSound(l, "tardis_door_close");
         }
-    }
-
-    private boolean isCustomModel(ItemStack is) {
-        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-            if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(is.getType().toString())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

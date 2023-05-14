@@ -61,14 +61,14 @@ public class TARDISCustomModelDataChanger {
         }
         ItemFrame itemFrame = null;
         for (Entity e : outer.getWorld().getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
-            if (e instanceof ItemFrame) {
-                itemFrame = (ItemFrame) e;
+            if (e instanceof ItemFrame frame) {
+                itemFrame = frame;
                 break;
             }
         }
         if (itemFrame != null) {
             ItemStack is = itemFrame.getItem();
-            if (TARDISConstants.DYES.contains(is.getType()) && is.hasItemMeta()) {
+            if ((TARDISConstants.DYES.contains(is.getType()) || plugin.getUtils().isCustomModel(is)) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasCustomModelData()) {
                     int cmd = im.getCustomModelData();

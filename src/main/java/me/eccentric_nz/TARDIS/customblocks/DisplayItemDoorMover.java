@@ -39,9 +39,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 
 /**
@@ -107,99 +104,90 @@ public class DisplayItemDoorMover {
                     minecart = rsp.isMinecartOn();
                 }
                 // get the other door direction
-                int end_doortype = switch (rsd.getDoor_type()) {
-                    case 0 -> 1;  // outside preset door
-                    case 2 -> 3;  // outside backdoor
-                    case 3 -> 2;  // inside backdoor
-                    default -> 0; // 1, 4 TARDIS inside door, secondary inside door
-                };
                 COMPASS d;
                 HashMap<String, Object> other = new HashMap<>();
                 other.put("tardis_id", id);
-                other.put("door_type", end_doortype);
-                ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
-                if (rse.resultSet()) {
-                    d = rse.getDoor_direction();
+                other.put("door_type", 1);
+                ResultSetDoors rsexit = new ResultSetDoors(plugin, other, false);
+                if (rsexit.resultSet()) {
+                    d = rsexit.getDoor_direction();
                 } else {
                     d = d_backup;
                 }
-                        // is the TARDIS materialising?
-                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                            TARDISMessage.send(player, "LOST_IN_VORTEX");
-                            return;
-                        }
-                        // Can't SHIFT-click if INVISIBLE preset
-                        if (preset.equals(ChameleonPreset.INVISIBLE)) {
-                            TARDISMessage.send(player, "INVISIBILITY_SNEAK");
-                            return;
-                        }
-                        Location exitLoc;
-                        // player is in the TARDIS - always exit to current location
-                        Block door_bottom;
-                        Door door = (Door) block.getBlockData();
-                        door_bottom = (door.getHalf().equals(Bisected.Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
-                        boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
-                        if (opened && preset.hasDoor()) {
-                            exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
-                        } else {
-                            exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
-                        }
-                        if (hb && exitLoc != null) {
-                            COMPASS dd = rsd.getDoor_direction();
-                            // change the yaw if the door directions are different
-                            if (!dd.equals(d)) {
-                                yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(dd, d);
-                            }
-                            exitLoc.setYaw(yaw);
-                            // get location from database
-                            // make location safe ie. outside of the bluebox
-                            double ex = exitLoc.getX();
-                            double ez = exitLoc.getZ();
-                            if (opened) {
+                // is the TARDIS materialising?
+                if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                    TARDISMessage.send(player, "LOST_IN_VORTEX");
+                    return;
+                }
+                // Can't SHIFT-click if INVISIBLE preset
+                if (preset.equals(ChameleonPreset.INVISIBLE)) {
+                    TARDISMessage.send(player, "INVISIBILITY_SNEAK");
+                    return;
+                }
+                Location exitLoc;
+                // player is in the TARDIS - always exit to current location
+                boolean opened = TARDISStaticUtils.isDoorOpen(block);
+                if (opened && preset.hasDoor()) {
+                    exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rsexit.getDoor_location());
+                } else {
+                    exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                }
+                if (hb && exitLoc != null) {
+                    COMPASS dd = rsd.getDoor_direction();
+                    // change the yaw if the door directions are different
+                    if (!dd.equals(d)) {
+                        yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(dd, d);
+                    }
+                    exitLoc.setYaw(yaw);
+                    // get location from database
+                    // make location safe ie. outside of the bluebox
+                    double ex = exitLoc.getX();
+                    double ez = exitLoc.getZ();
+                    if (opened) {
+                        exitLoc.setX(ex + 0.5);
+                        exitLoc.setZ(ez + 0.5);
+                    } else {
+                        switch (d) {
+                            case NORTH -> {
                                 exitLoc.setX(ex + 0.5);
+                                exitLoc.setZ(ez + 2.5);
+                            }
+                            case EAST -> {
+                                exitLoc.setX(ex - 1.5);
                                 exitLoc.setZ(ez + 0.5);
-                            } else {
-                                switch (d) {
-                                    case NORTH -> {
-                                        exitLoc.setX(ex + 0.5);
-                                        exitLoc.setZ(ez + 2.5);
-                                    }
-                                    case EAST -> {
-                                        exitLoc.setX(ex - 1.5);
-                                        exitLoc.setZ(ez + 0.5);
-                                    }
-                                    case SOUTH -> {
-                                        exitLoc.setX(ex + 0.5);
-                                        exitLoc.setZ(ez - 1.5);
-                                    }
-                                    case WEST -> {
-                                        exitLoc.setX(ex + 2.5);
-                                        exitLoc.setZ(ez + 0.5);
-                                    }
-                                }
                             }
-                            // exit TARDIS!
-                            plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exitLoc, true, block.getWorld(), userQuotes, 2, minecart, false);
-                            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
-                                TARDISFarmer tf = new TARDISFarmer(plugin);
-                                TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
-                                if (petsAndFollowers != null) {
-                                    if (petsAndFollowers.getPets().size() > 0) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
-                                    }
-                                    if (petsAndFollowers.getFollowers().size() > 0) {
-                                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
-                                    }
-                                }
+                            case SOUTH -> {
+                                exitLoc.setX(ex + 0.5);
+                                exitLoc.setZ(ez - 1.5);
                             }
-                            // remove player from traveller table
-                            HashMap<String, Object> wheret = new HashMap<>();
-                            where.put("uuid", player.getUniqueId().toString());
-                            plugin.getQueryFactory().doSyncDelete("travellers", wheret);
-                        } else {
-                            TARDISMessage.send(player, "LOST_IN_VORTEX");
+                            case WEST -> {
+                                exitLoc.setX(ex + 2.5);
+                                exitLoc.setZ(ez + 0.5);
+                            }
                         }
                     }
+                    // exit TARDIS!
+                    plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exitLoc, true, block.getWorld(), userQuotes, 2, minecart, false);
+                    if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
+                        TARDISFarmer tf = new TARDISFarmer(plugin);
+                        TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
+                        if (petsAndFollowers != null) {
+                            if (!petsAndFollowers.getPets().isEmpty()) {
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
+                            }
+                            if (!petsAndFollowers.getFollowers().isEmpty()) {
+                                new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
+                            }
+                        }
+                    }
+                    // remove player from traveller table
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("uuid", player.getUniqueId().toString());
+                    plugin.getQueryFactory().doSyncDelete("travellers", wheret);
+                } else {
+                    TARDISMessage.send(player, "LOST_IN_VORTEX");
+                }
+            }
         }
     }
 }

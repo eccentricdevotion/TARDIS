@@ -27,8 +27,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.portal.Capture;
 import me.eccentric_nz.TARDIS.portal.Cast;
 import me.eccentric_nz.TARDIS.portal.CastData;
@@ -74,152 +74,152 @@ public class TARDISDoorOpener {
     /**
      * Open the door.
      */
-    private void open(Block block, Block other, boolean add) {
-        if (Tag.DOORS.isTagged(block.getType())) {
-            Openable openable = (Openable) block.getBlockData();
+    private void open(Block inner, Block outer, boolean add) {
+        if (Tag.DOORS.isTagged(inner.getType())) {
+            Openable openable = (Openable) inner.getBlockData();
             openable.setOpen(true);
-            block.setBlockData(openable, true);
-            if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-                // get all companion UUIDs
-                List<UUID> uuids = new ArrayList<>();
-                uuids.add(uuid);
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                Tardis tardis = null;
-                ChameleonPreset preset = null;
-                boolean abandoned = false;
-                if (rs.resultSet()) {
-                    tardis = rs.getTardis();
-                    preset = tardis.getPreset();
-                    abandoned = tardis.isAbandoned();
-                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                        if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
-                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                                uuids.add(p.getUniqueId());
-                            }
-                        } else {
-                            String[] companions = tardis.getCompanions().split(":");
-                            for (String c : companions) {
-                                if (!c.isEmpty()) {
-                                    uuids.add(UUID.fromString(c));
-                                }
-                            }
+            inner.setBlockData(openable, true);
+        }
+        if (add && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            // get all companion UUIDs
+            List<UUID> uuids = new ArrayList<>();
+            uuids.add(uuid);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+            Tardis tardis = null;
+            ChameleonPreset preset = null;
+            boolean abandoned = false;
+            if (rs.resultSet()) {
+                tardis = rs.getTardis();
+                preset = tardis.getPreset();
+                abandoned = tardis.isAbandoned();
+                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                    if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                            uuids.add(p.getUniqueId());
                         }
-                    }
-                }
-                // get locations
-                // exterior portal (from current location)
-                HashMap<String, Object> where_exportal = new HashMap<>();
-                where_exportal.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
-                rsc.resultSet();
-                Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
-                    exportal.add(0.0d, 1.0d, 0.0d);
-                }
-                // interior teleport location
-                Location indoor = null;
-                COMPASS indirection = COMPASS.SOUTH;
-                // exterior teleport location
-                Location exdoor = null;
-                COMPASS exdirection = COMPASS.SOUTH;
-                // interior portal
-                Location inportal = null;
-                ResultSetPortals rsp = new ResultSetPortals(plugin, id);
-                rsp.resultSet();
-                for (HashMap<String, String> map : rsp.getData()) {
-                    Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
-                    COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
-                    if (map.get("door_type").equals("1")) {
-                        // clone it because we're going to change it!
-                        inportal = tmp_loc.clone();
-                        indirection = tmp_direction;
-                        // adjust for teleport
-                        int getx = tmp_loc.getBlockX();
-                        int getz = tmp_loc.getBlockZ();
-                        switch (indirection) {
-                            case NORTH -> {
-                                // z -ve
-                                tmp_loc.setX(getx + 0.5);
-                                tmp_loc.setZ(getz - 0.5);
-                            }
-                            case EAST -> {
-                                // x +ve
-                                tmp_loc.setX(getx + 1.5);
-                                tmp_loc.setZ(getz + 0.5);
-                            }
-                            case SOUTH -> {
-                                // z +ve
-                                tmp_loc.setX(getx + 0.5);
-                                tmp_loc.setZ(getz + 1.5);
-                            }
-                            case WEST -> {
-                                // x -ve
-                                tmp_loc.setX(getx - 0.5);
-                                tmp_loc.setZ(getz + 0.5);
-                            }
-                        }
-                        indoor = tmp_loc;
                     } else {
-                        exdoor = tmp_loc.clone();
-                        exdirection = COMPASS.valueOf(map.get("door_direction"));
-                        // adjust for teleport
-                        if (preset.usesItemFrame()) {
-                            switch (rsc.getDirection()) {
-                                case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
-                                case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);
-                                case SOUTH -> exdoor.add(0.5d, 0.0d, -1.0d);
-                                default -> exdoor.add(-1.0d, 0.0d, 0.5d);
+                        String[] companions = tardis.getCompanions().split(":");
+                        for (String c : companions) {
+                            if (!c.isEmpty()) {
+                                uuids.add(UUID.fromString(c));
                             }
-                        } else {
-                            exdoor.setX(exdoor.getX() + 0.5);
-                            exdoor.setZ(exdoor.getZ() + 0.5);
                         }
                     }
                 }
-                if (!checkForSpace(block, indirection)) {
-                    // set trackers
-                    TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
-                    tp_in.setLocation(indoor);
-                    tp_in.setTardisId(id);
-                    tp_in.setDirection(indirection);
-                    tp_in.setAbandoned(abandoned);
-                    TARDISTeleportLocation tp_out = new TARDISTeleportLocation();
-                    tp_out.setLocation(exdoor);
-                    tp_out.setTardisId(id);
-                    tp_out.setDirection(exdirection);
-                    tp_out.setAbandoned(abandoned);
-                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                        // players
-                        uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
-                    }
-                    // locations
-                    if (tardis != null && preset != null && preset.hasPortal()) {
-                        plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
-                        if (preset.equals(ChameleonPreset.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
-                            // remember door location
-                            plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), other);
+            }
+            // get locations
+            // exterior portal (from current location)
+            HashMap<String, Object> where_exportal = new HashMap<>();
+            where_exportal.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
+            rsc.resultSet();
+            Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
+                exportal.add(0.0d, 1.0d, 0.0d);
+            }
+            // interior teleport location
+            Location indoor = null;
+            COMPASS indirection = COMPASS.SOUTH;
+            // exterior teleport location
+            Location exdoor = null;
+            COMPASS exdirection = COMPASS.SOUTH;
+            // interior portal
+            Location inportal = null;
+            ResultSetPortals rsp = new ResultSetPortals(plugin, id);
+            rsp.resultSet();
+            for (HashMap<String, String> map : rsp.getData()) {
+                Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
+                COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
+                if (map.get("door_type").equals("1")) {
+                    // clone it because we're going to change it!
+                    inportal = tmp_loc.clone();
+                    indirection = tmp_direction;
+                    // adjust for teleport
+                    int getx = tmp_loc.getBlockX();
+                    int getz = tmp_loc.getBlockZ();
+                    switch (indirection) {
+                        case NORTH -> {
+                            // z -ve
+                            tmp_loc.setX(getx + 0.5);
+                            tmp_loc.setZ(getz - 0.5);
+                        }
+                        case EAST -> {
+                            // x +ve
+                            tmp_loc.setX(getx + 1.5);
+                            tmp_loc.setZ(getz + 0.5);
+                        }
+                        case SOUTH -> {
+                            // z +ve
+                            tmp_loc.setX(getx + 0.5);
+                            tmp_loc.setZ(getz + 1.5);
+                        }
+                        case WEST -> {
+                            // x -ve
+                            tmp_loc.setX(getx - 0.5);
+                            tmp_loc.setZ(getz + 0.5);
                         }
                     }
-                    plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
-                    if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesItemFrame()) {
-                        ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
-                        plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
-                        // get distance from door
-                        Player player = plugin.getServer().getPlayer(uuid);
-                        Location location = player.getLocation();
-                        int distance = (location.getWorld() == exportal.getWorld()) ? (int) location.distanceSquared(exportal) : 1; // or exdoor?
-                        if (distance <= 9) {
-                            // start casting
-                            Capture capture = new Capture();
-                            BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor(), consoleSize);
-                            Cast cast = new Cast(plugin, exportal);
-                            cast.castInterior(uuid, data);
-                            if (capture.getRotorData().getFrame() != null) {
-                                // get vector of rotor
-                                cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), rsc.getDirection());
-                            }
+                    indoor = tmp_loc;
+                } else {
+                    exdoor = tmp_loc.clone();
+                    exdirection = COMPASS.valueOf(map.get("door_direction"));
+                    // adjust for teleport
+                    if (preset.usesItemFrame()) {
+                        switch (rsc.getDirection()) {
+                            case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
+                            case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);
+                            case SOUTH -> exdoor.add(0.5d, 0.0d, -1.0d);
+                            default -> exdoor.add(-1.0d, 0.0d, 0.5d);
+                        }
+                    } else {
+                        exdoor.setX(exdoor.getX() + 0.5);
+                        exdoor.setZ(exdoor.getZ() + 0.5);
+                    }
+                }
+            }
+            if (!checkForSpace(inner, indirection)) {
+                // set trackers
+                TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
+                tp_in.setLocation(indoor);
+                tp_in.setTardisId(id);
+                tp_in.setDirection(indirection);
+                tp_in.setAbandoned(abandoned);
+                TARDISTeleportLocation tp_out = new TARDISTeleportLocation();
+                tp_out.setLocation(exdoor);
+                tp_out.setTardisId(id);
+                tp_out.setDirection(exdirection);
+                tp_out.setAbandoned(abandoned);
+                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                    // players
+                    uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
+                }
+                // locations
+                if (tardis != null && preset != null && preset.hasPortal()) {
+                    plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                    if (preset.equals(ChameleonPreset.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
+                        // remember door location
+                        plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), outer);
+                    }
+                }
+                plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
+                if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesItemFrame()) {
+                    ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
+                    plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
+                    // get distance from door
+                    Player player = plugin.getServer().getPlayer(uuid);
+                    Location location = player.getLocation();
+                    int distance = (location.getWorld() == exportal.getWorld()) ? (int) location.distanceSquared(exportal) : 1; // or exdoor?
+                    if (distance <= 9) {
+                        // start casting
+                        Capture capture = new Capture();
+                        BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor(), consoleSize);
+                        Cast cast = new Cast(plugin, exportal);
+                        cast.castInterior(uuid, data);
+                        if (capture.getRotorData().getFrame() != null) {
+                            // get vector of rotor
+                            cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), rsc.getDirection());
                         }
                     }
                 }
