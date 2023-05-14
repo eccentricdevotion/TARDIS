@@ -465,7 +465,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
                     // replace with gray concrete
-                    data = Material.GRAY_CONCRETE.createBlockData();
+                    data = tud.getSchematic().getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
                     if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         // remember the block to spawn an Ood on
                         postOod = new Location(world, x, y + 1, z);
@@ -555,7 +555,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         data = switch (tud.getSchematic().getPermission()) {
                             case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                             case "delta" -> Material.BLACKSTONE.createBlockData();
-                            case "ancient", "fugitive", "hospital" -> Material.GRAY_WOOL.createBlockData();
+                            case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                            case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();
                         };
                     }

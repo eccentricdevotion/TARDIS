@@ -622,7 +622,8 @@ public class TARDISBuilderInner implements Runnable {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                         case "delta" -> Material.BLACKSTONE.createBlockData();
-                        case "ancient", "fugitive", "hospital" -> Material.GRAY_WOOL.createBlockData();
+                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
                     };
                 }
