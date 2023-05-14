@@ -20,6 +20,8 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.*;
@@ -27,6 +29,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Openable;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
@@ -41,7 +44,7 @@ public class TARDISStaticUtils {
     /**
      * Get the direction a player is facing.
      *
-     * @param p    the player
+     * @param p the player
      * @param swap whether to swap the direction E &lt;-&gt; W, S &lt;-&gt; N
      * @return the direction the player is facing
      */
@@ -67,8 +70,7 @@ public class TARDISStaticUtils {
      */
     public static boolean isOceanBiome(Biome b) {
         return switch (b) {
-            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN ->
-                    true;
+            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN -> true;
             default -> false;
         };
     }
@@ -130,12 +132,22 @@ public class TARDISStaticUtils {
      * @return true or false
      */
     public static boolean isDoorOpen(Block door) {
-        Openable openable = (Openable) door.getBlockData();
-        return openable.isOpen();
+        if (door.getBlockData() instanceof Openable openable) {
+            return openable.isOpen();
+        }
+        ItemDisplay display = TARDISDisplayItemUtils.get(door);
+        if (display != null) {
+            TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
+            if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * Gets the column to set the Police box sign in if CTM is on in the player's preferences.
+     * Gets the column to set the Police box sign in if CTM is on in the
+     * player's preferences.
      *
      * @param d the direction of the Police Box
      * @return the column
@@ -152,10 +164,10 @@ public class TARDISStaticUtils {
     /**
      * Sets the Chameleon Sign text or messages the player.
      *
-     * @param loc  the location string retrieved from the database
+     * @param loc the location string retrieved from the database
      * @param line the line number to set
      * @param text the text to write
-     * @param p    the player to message (if the Chameleon control is not a sign)
+     * @param p the player to message (if the Chameleon control is not a sign)
      */
     public static void setSign(String loc, int line, String text, Player p) {
         if (!loc.isEmpty()) {
@@ -206,10 +218,7 @@ public class TARDISStaticUtils {
     }
 
     public static boolean isBanner(Material material) {
-        return switch (material) {
-            case BLACK_BANNER, BLUE_BANNER, BROWN_BANNER, CYAN_BANNER, GRAY_BANNER, GREEN_BANNER, LIGHT_BLUE_BANNER, LIGHT_GRAY_BANNER, LIME_BANNER, MAGENTA_BANNER, ORANGE_BANNER, PINK_BANNER, PURPLE_BANNER, RED_BANNER, WHITE_BANNER, YELLOW_BANNER, BLACK_WALL_BANNER, BLUE_WALL_BANNER, BROWN_WALL_BANNER, CYAN_WALL_BANNER, GRAY_WALL_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_WALL_BANNER, MAGENTA_WALL_BANNER, ORANGE_WALL_BANNER, PINK_WALL_BANNER, PURPLE_WALL_BANNER, RED_WALL_BANNER, WHITE_WALL_BANNER, YELLOW_WALL_BANNER -> true;
-            default -> false;
-        };
+        return Tag.BANNERS.isTagged(material);
     }
 
     public static String getNick(UUID uuid) {
