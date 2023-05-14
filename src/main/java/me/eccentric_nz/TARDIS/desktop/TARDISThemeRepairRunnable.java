@@ -463,7 +463,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(world.getBlockAt(x, y, z));
                 }
-                if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && tud.getSchematic().getPermission().equals("division")) {
+                if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (tud.getSchematic().getPermission().equals("division") || tud.getSchematic().getPermission().equals("hospital"))) {
                     // replace with gray concrete
                     data = tud.getSchematic().getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
                     if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
