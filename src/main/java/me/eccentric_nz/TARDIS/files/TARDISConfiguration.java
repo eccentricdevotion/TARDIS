@@ -97,7 +97,6 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.check_for_home", true);
         booleanOptions.put("creation.create_worlds", false);
         booleanOptions.put("creation.create_worlds_with_perms", false);
-        booleanOptions.put("creation.custom_schematic", false);
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
@@ -205,7 +204,6 @@ public class TARDISConfiguration {
         integerOptions.put("travel.tp_radius", 500);
         // string
         stringOptions.put("creation.area", "none");
-        stringOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("creation.tips_next", "FREE");
@@ -267,6 +265,10 @@ public class TARDISConfiguration {
         }
         if (config.contains("travel.chameleon")) {
             plugin.getConfig().set("travel.chameleon", null);
+        }
+        if (config.contains("creation.custom_schematic")) {
+            plugin.getConfig().set("creation.custom_schematic", null);
+            plugin.getConfig().set("creation.custom_schematic_seed", null);
         }
         if (config.contains("conversions.lowercase_world_names")) {
             plugin.getConfig().set("conversions.lowercase_world_names", null);

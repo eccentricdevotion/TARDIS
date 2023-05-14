@@ -37,8 +37,6 @@ creation:
   inventory_group: 0
   add_perms: true
   enable_legacy: true
-  custom_schematic: false
-  custom_schematic_seed: OBSIDIAN
   use_clay: WOOL
   count: 0
   area: none

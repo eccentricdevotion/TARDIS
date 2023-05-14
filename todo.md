@@ -6,8 +6,7 @@
 
 1. Documentation of new/changed features
 2. Recipe etc for Double door
-3. Separate page for custom consoles in Desktop Theme GUI
-4. ?
+3. ?
 
 ## Next version `5.1.0`
 

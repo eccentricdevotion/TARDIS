@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -33,11 +35,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 /**
- * A control room's look could be changed over time. The process by which an operator could transform a control room was
- * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
+ * A control room's look could be changed over time. The process by which an
+ * operator could transform a control room was fairly simple, once compared by
+ * the Fifth Doctor to changing a "desktop theme".
  *
  * @author eccentric_nz
  */
@@ -58,29 +59,46 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
+                ItemStack choice = view.getItem(slot);
                 event.setCancelled(true);
                 switch (slot) {
-                    case 46 ->
+                    case 46 -> {
                         // archive
+                        if (choice != null) {
                             archive(p);
+                        }
+                    }
                     case 47 -> {
                         // repair
-                        if (plugin.getConfig().getBoolean("allow.repair")) {
+                        if (choice != null && plugin.getConfig().getBoolean("allow.repair")) {
                             repair(p);
                         }
                     }
                     case 48 -> {
                         // clean
-                        if (plugin.getConfig().getBoolean("allow.repair")) {
+                        if (choice != null && plugin.getConfig().getBoolean("allow.repair")) {
                             clean(p);
                         }
                     }
-                    case 53 ->
-                        // close
-                            close(p);
+                    case 51 -> {
+                        // get player upgrade data
+                        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
+                        ItemStack[] consoles;
+                        // switch page
+                        if (choice.getItemMeta().getCustomModelData() == GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData()) {
+                            // page 2
+                            consoles = new TARDISCustomThemeInventory(plugin, p, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
+                        } else {
+                            // page 1
+                            consoles = new TARDISPluginThemeInventory(plugin, p, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
+                        }
+                        Inventory upg = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
+                        upg.setContents(consoles);
+                        p.openInventory(upg);
+                    }
+                    case 53 -> close(p); // close
                     default -> {
                         // get Display name of selected console
-                        ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             String perm = Consoles.schematicFor(choice.getType()).getPermission();
                             if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
@@ -153,9 +171,10 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     }
 
     /**
-     * Initiates a TARDIS repair. Resets the console back to the original console schematic, Players must condense all
-     * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
-     * 'free' repair(s).
+     * Initiates a TARDIS repair. Resets the console back to the original
+     * console schematic, Players must condense all missing blocks - unless the
+     * /tardisadmin repair [player] [amount] command has been run, assigning the
+     * player a 'free' repair(s).
      */
     private void repair(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -184,8 +203,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     }
 
     /**
-     * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
-     * will not be restored).
+     * Initiates a TARDIS clean. Removes any blocks that are not part of the
+     * original console schematic (missing blocks will not be restored).
      */
     private void clean(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

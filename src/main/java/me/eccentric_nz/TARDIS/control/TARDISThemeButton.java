@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
+import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
@@ -78,7 +78,7 @@ public class TARDISThemeButton {
         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
             new FloodgateDestinationTerminalForm(plugin, player.getUniqueId()).send();
         } else {
-            ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+            ItemStack[] consoles = new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
             Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
             upg.setContents(consoles);
             player.openInventory(upg);

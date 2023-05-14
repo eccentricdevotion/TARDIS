@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
@@ -57,7 +57,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         // add first arguments
         firstsStr.put("area", "creation");
         firstsStr.put("autonomous_area", "");
-        firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
         firstsStr.put("default_key", "preferences");
         firstsStr.put("default_preset", "police_box");
@@ -97,7 +96,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("check_for_home", "creation");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
-        firstsBool.put("custom_schematic", "creation");
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
@@ -289,7 +287,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 if (first.equals("sign_colour")) {
                     return new TARDISSignColourCommand(plugin).setColour(sender, args);
                 }
-                if (first.equals("key") || first.equals("custom_schematic_seed")) {
+                if (first.equals("key")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {

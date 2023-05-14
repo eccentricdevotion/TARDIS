@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
+import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -98,7 +98,7 @@ class TARDISUpgradeCommand {
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         // open the upgrade menu
-        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+        ItemStack[] consoles = new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
         Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);
