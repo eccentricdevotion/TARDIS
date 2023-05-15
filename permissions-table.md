@@ -231,6 +231,7 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.ender</code></td><td colspan="2">Allow players to build the Ender TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.factory</code></td><td colspan="2">Allow players to build the First Doctor's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.fugitive</code></td><td colspan="2">Allow players to build the Fugitive (Ruth Clayton) Doctor's TARDIS.</td><td>op</td></tr>
+    <tr><td><code>tardis.hospital</code></td><td colspan="2">Allow players to build the St John's Hospital TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.master</code></td><td colspan="2">Allow players to build the Master's TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.mechanical</code></td><td colspan="2">Allow players to build the Mechanical TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.original</code></td><td colspan="2">Allow players to build the plugin's original TARDIS.</td><td>op</td></tr>

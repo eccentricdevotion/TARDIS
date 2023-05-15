@@ -64,6 +64,7 @@ The TARDIS type is the block that replaces the "Iron Block" in the above craftin
 | [ENDER](interiors#ender)           | Purpur Block           | An End-inspired TARDIS interior                         |
 | [FACTORY](interiors#factory)       | Yellow Concrete Powder | 1st Doctor's Factory TARDIS (by Razihel)                |
 | [FUGITIVE](interiors#fugitive)     | Polished Deepslate     | Ruth (The Fugitive Doctor) Clayton's Console (by DT10)  |
+| [HOSPITAL](interiors#hospital)     | White Concrete         | St John's Hospital interior                             |
 | [ORIGINAL](interiors#original)     | Packed Mud             | The original TARDIS plugin Console                      |
 | [MASTER](interiors#master)         | Nether Bricks          | The Master's TARDIS interior (by ShadowAssociate)       |
 | [MECHANICAL](interiors#mechanical) | Polished Andesite      | Mechanical TARDIS interior (by Plastic Straw)           |

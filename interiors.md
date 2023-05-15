@@ -95,6 +95,12 @@ Fugutive TARDIS - Ruth (The Fugitive Doctor) Clayton's Console
 
 ![Fugutive TARDIS](images/consoles/fugitive_vanilla.jpg)
 
+## HOSPITAL
+
+St John's Hospital TARDIS - A medical themed console
+
+![Hospital TARDIS](images/consoles/hospital.jpg)
+
 ## MASTER
 
 ‘Master’ TARDIS - The Master’s TARDIS (thanks to ShadowAssociate)

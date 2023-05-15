@@ -20,6 +20,7 @@ title: List of default interiors
 - ENDER
 - FACTORY
 - FUGITIVE
+- HOSPITAL
 - MASTER
 - MECHANICAL
 - ORIGINAL

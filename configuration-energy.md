@@ -140,6 +140,7 @@ just changing the walls and floor, then `just_wall_floor` sets the percentage th
         ender: [amount] - default: 5000
         factory: [amount] - default: 7500
         fugitive: [amount] - default: 7500
+        hospital: [amount] - default: 5000
         master: [amount] - default: 10000
         mechanical: [amount] - default: 7500
         original: [amount] - default: 5000

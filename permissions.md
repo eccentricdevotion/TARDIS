@@ -79,6 +79,7 @@ In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘t
     tardis.ender
     tardis.factory
     tardis.fugitive
+    tardis.hospital
     tardis.master
     tardis.mechanical
     tardis.original

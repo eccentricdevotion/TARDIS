@@ -34,6 +34,10 @@ Engine
 
 ![Engine time rotor](images/docs/engine_time_rotor.gif)
 
+Hospital
+
+![Hospital time rotor](images/docs/hospital_time_rotor.gif)
+
 ### Adding a Time Rotor
 
 To add a time rotor to an existing console:
@@ -73,11 +77,12 @@ Change the dye colours for each rotor:
 * Twelfth &mdash; Orange ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+)
 * Delta &mdash; Purple ![#9900cc](https://via.placeholder.com/15/9900cc/000000?text=+)
 * Engine &mdash; Blue ![#0000ff](https://via.placeholder.com/15/0000ff/000000?text=+)
+* Hospital &mdash; Red ![#0000ff](https://via.placeholder.com/15/ff0000/000000?text=+)
 
 Use the command:
 
 ```
-/tardisrecipe time-rotor-[early|tenth|eleventh|twelfth|delta|engine]
+/tardisrecipe time-rotor-[early|tenth|eleventh|twelfth|delta|engine|hospital]
 ```
 
 to see the recipes in game.
