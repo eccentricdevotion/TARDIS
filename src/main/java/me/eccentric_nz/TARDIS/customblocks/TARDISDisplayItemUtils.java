@@ -226,24 +226,30 @@ public class TARDISDisplayItemUtils {
      * @param cmd the custom model data to set for the custom block key
      * associated with the entity
      */
-    public static void set(Location location, int cmd) {
+    public static void set(Location location, int cmd, boolean isDoor) {
         // spawn an interaction entity
         Interaction interaction = (Interaction) location.getWorld().spawnEntity(location.clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
         interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
         interaction.setResponsive(true);
         interaction.setPersistent(true);
         interaction.setInvulnerable(true);
+        if (isDoor) {
+            // set size
+            interaction.setInteractionHeight(2.0f);
+            interaction.setInteractionWidth(1.0f);
+        }
     }
 
     /**
      * Remove item display, interaction & item frame entities in a chunk
      *
      * @param chunk the chunk to search for entities
+     * @param lower a lower y value to limit which entities will be removed
+     * @param upper an upper y value to limit which entities will be removed
      */
     public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
-            if (
-                    // TARDIS item display and interaction entities
+            if ( // TARDIS item display and interaction entities
                     ((entity instanceof ItemDisplay || entity instanceof Interaction)
                     && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER))
                     // and item frames

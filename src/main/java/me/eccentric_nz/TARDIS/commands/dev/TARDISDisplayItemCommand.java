@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -32,7 +33,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.type.Light;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -111,25 +112,36 @@ public class TARDISDisplayItemCommand {
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (tdi.isLight()) {
-                        Light light = (Light) Material.LIGHT.createBlockData();
-                        int level = (tdi.isLit()) ? 15 : 0;
-                        light.setLevel(level);
-                        up.setBlockData(light);
+                    if (tdi == TARDISDisplayItem.DOOR || tdi.isLight()) {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
                         interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
                         interaction.setPersistent(true);
+                        if (tdi.isLight()) {
+                            Levelled light = TARDISConstants.LIGHT;
+                            int level = (tdi.isLit()) ? 15 : 0;
+                            light.setLevel(level);
+                            up.setBlockData(light);
+                        }
+                        if (tdi == TARDISDisplayItem.DOOR) {
+                            // set size
+                            interaction.setInteractionHeight(2.0f);
+                            interaction.setInteractionWidth(1.0f);
+                        }
                     } else {
                         up.setType((tdi == TARDISDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
-                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+                    double ay = (tdi == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
+                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
+                    if (tdi == TARDISDisplayItem.DOOR) {
+                        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+                    }
                     if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
-                        display.setBrightness(new Display.Brightness(15,15));
+                        display.setBrightness(new Display.Brightness(15, 15));
                     }
                 }
             }

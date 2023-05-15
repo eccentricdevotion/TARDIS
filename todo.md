@@ -5,7 +5,7 @@
 ## Version 5.0.0
 
 1. Documentation of new/changed features
-2. Recipe etc for Double door
+2. Operating theatre room
 3. ?
 
 ## Next version `5.1.0`

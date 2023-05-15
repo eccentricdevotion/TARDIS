@@ -26,8 +26,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.block.data.Rotatable;
-import org.bukkit.block.data.type.Light;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -84,22 +84,32 @@ public class TARDISDisplayBlockListener implements Listener {
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight()) {
-            Light light = (Light) Material.LIGHT.createBlockData();
-            light.setLevel((which.isLit() ? 15 : 0));
-            data = light;
+        if (which.isLight() || which == TARDISDisplayItem.DOOR) {
+            if (which.isLight()) {
+                Levelled light = TARDISConstants.LIGHT;
+                light.setLevel((which.isLit() ? 15 : 0));
+                data = light;
+            } else {
+                data = null;
+            }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, cmd);
+            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR);
         } else {
             data = TARDISConstants.BARRIER;
         }
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            location.getBlock().setBlockData(data);
-        }, 1L);
-        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+        if (data != null) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                location.getBlock().setBlockData(data);
+            }, 1L);
+        }
+        double ay = (which == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
+        if (which == TARDISDisplayItem.DOOR) {
+            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+        }
         if (player.getGameMode() != GameMode.CREATIVE) {
             int amount = is.getAmount() - 1;
             if (amount < 1) {
