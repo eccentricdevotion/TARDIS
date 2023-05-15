@@ -35,7 +35,7 @@ To open the desktop theme GUI using a command type one of the following:
 1. Run the command, or right-shift-click the ARS sign to open the GUI.
 2. When the GUI opens — select the TARDIS you want to change to — this can be the same type as you currently have if you
    just want to change the walls and floor. If you don’t have permission for the TARDIS type or don’t have enough Artron
-   Energy you won’t be able to select that TARDIS type.
+   Energy you won’t be able to select that TARDIS type. The server's custom consoles appear on page two.
 3. If there are rooms in the way when trying to upgrade to a bigger TARDIS, you will need to manually jettison them
    first (you must be using ARS, manually growing rooms is not supported).
 4. Once a TARDIS type has been selected, the next GUI opens allowing you to select a wall block, click one... or choose _Default Wall_ to use orange wool.
