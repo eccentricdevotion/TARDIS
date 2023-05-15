@@ -68,3 +68,23 @@ TARDIS schematics support the following:
 * Player heads - preserving textures
 * Item Displays - preserving basic item stack properties (type, custom model data)
 * Signs - preserving all lines, colours and glowing properties
+
+## Time rotors and interior double doors
+
+You can include time rotors (`/tardisrecipe time-rotor-[type]`) and item display double doors (`/tardisrecipe door`) in schematics.
+Time rotors need to locked in place to add some extra data that is stored with the item frame, 
+and so that the plugin knows to add/update the rotor record in the TARDIS database.
+
+* Craft the appropriate items, or use the '/tardisgive` command to obtain the items
+* For time rotors:
+   - place a time rotor into an item frame
+   - target the item frame by looking at it
+   - run the command `/tardisdev frame lock`
+   - the item frame should disappear if you have targeted correctly
+   - create the schematic in the usual way
+   - if necessary, run the command `/tardisdev frame unlock` to unlock the frame again
+* For the interior double doors:
+   - just place the doors as you would any other block
+   - the dispay item takes up 2 block spaces, the block you clicked on and the block to the right (when the player is facing north) 
+   - the doors always face and open in a South direction
+   - create the schematic in the usual way

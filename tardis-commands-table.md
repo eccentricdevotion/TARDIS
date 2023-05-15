@@ -47,7 +47,7 @@ A list of all the `/tardis` sub commands.
     <tr class="lighter"><td id="inside"><code>inside</code></td><td>List players inside your TARDIS.</td><td class="usage"><code>/tardis inside</code></td><td>tardis.use</td></tr>
     <tr><td id="item"><code>item</code></td><td>Allows a player to update TARDIS circuits from previous versions to the newer custom model data item.</td><td class="usage"><code>/tardis item [hand|inventory]</code></td><td>tardis.use</td></tr>
     <tr class="lighter"><td id="jettison"><code>jettison</code></td><td>Remove a TARDIS room.</td><td class="usage"><code>/tardis jettison [room type]</code></td><td>tardis.room</td></tr>
-    <tr><td id="lamps"><code>lamps</code></td><td>Scan the main control room for new or moved lamp blocks.</td><td class="usage"><code>/tardis lamps</code></td><td>tardis.use</td></tr>
+    <tr><td id="lamps"><code>lamps</code></td><td>Scan the main control room for new or moved light blocks.</td><td class="usage"><code>/tardis lamps</code></td><td>tardis.use</td></tr>
     <tr class="lighter"><td id="list"><code>list</code></td><td>List saved time travel locations, companions, areas and rechargers.</td><td class="usage"><code>/tardis list [saves|companions|areas|rechargers]</code></td><td>tardis.list</td></tr>
     <tr><td id="make_her_blue"><code>make_her_blue</code></td><td>Makes the TARDIS visible again if it was using the INVISIBLE preset.</td><td class="usage"><code>/tardis make_her_blue</code></td><td>tardis.use</td></tr>
     <tr class="lighter"><td id="monsters"><code>monsters</code></td><td>Reset monster spawning or kill all monsters in the TARDIS.</td><td class="usage"><code>/tardis monsters [reset|kill]</code></td><td>tardis.use</td></tr>

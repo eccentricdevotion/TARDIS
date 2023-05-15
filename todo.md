@@ -28,7 +28,7 @@
 
 ## Wiki Documentation
 
-* Add/update all module documentation (config/commands etc)
+?
 
 ## Resource Pack / Monsters
 

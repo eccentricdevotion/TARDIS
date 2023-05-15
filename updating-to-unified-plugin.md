@@ -31,3 +31,19 @@ To do this:
 3. Stop the server.
 4. Edit the TARDIS config file - enable the modules that you require.
 5. Restart the server, TARDIS will automatically transfer configuration settings and database records.
+
+## Updating mushroom blocks and lamps
+
+The new plugin no longer uses unused mushroom block states to display custom TARDIS blocks. If you want to 
+convert your console and rooms to use custom Item Display entities, you can use the command `/tardis update display_items`.
+
+To convert lamps to custom display lights you have two options:
+
+* use light switch to toggle the lights off and back on again, or 
+* repair console using the Desktop Theme GUI
+
+### Notes
+
+* The `/tardis lamps` command now only works for LIGHT blocks.
+* There is the potential to walk/fall through light blocks - if you are placing your own lights, make sure they have 
+  a block behind or under them so you don't fall into the time vortex.
