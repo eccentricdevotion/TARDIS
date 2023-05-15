@@ -8,7 +8,7 @@ title: Time Rotor
 If you are using the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) you can add
 an animated time rotor to your console (or grow a DELTA, MECHANICAL, ROTOR, or TOM console from a TARDIS seed block).
 
-There are 6 time rotor types.
+There are 7 time rotor types.
 
 Early era
 
@@ -77,7 +77,7 @@ Change the dye colours for each rotor:
 * Twelfth &mdash; Orange ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+)
 * Delta &mdash; Purple ![#9900cc](https://via.placeholder.com/15/9900cc/000000?text=+)
 * Engine &mdash; Blue ![#0000ff](https://via.placeholder.com/15/0000ff/000000?text=+)
-* Hospital &mdash; Red ![#0000ff](https://via.placeholder.com/15/ff0000/000000?text=+)
+* Hospital &mdash; White ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+)
 
 Use the command:
 
