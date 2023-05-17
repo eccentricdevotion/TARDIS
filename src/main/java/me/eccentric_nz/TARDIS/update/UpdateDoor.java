@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -26,8 +27,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class UpdateDoor {
 
@@ -42,7 +41,6 @@ public class UpdateDoor {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         String location = block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ();
-
         if (updateable.equals(Updateable.DOOR) && !secondary) {
             // if portals are on, remove the current portal first
             if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
@@ -52,9 +50,12 @@ public class UpdateDoor {
                 }
             }
             // get door data this should let us determine the direction
-            Directional d = (Directional) block.getBlockData();
+            String direction = "SOUTH";
+            if (block.getBlockData() instanceof Directional directional) {
+                direction = directional.getFacing().toString();
+            }
             set.put("door_location", location);
-            set.put("door_direction", d.getFacing().toString());
+            set.put("door_direction", direction);
             where.put("door_type", 1);
         }
         if ((updateable.equals(Updateable.BACKDOOR) || (updateable.equals(Updateable.DOOR) && secondary))) {

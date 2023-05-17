@@ -4,9 +4,8 @@
 
 ## Version 5.0.0
 
-1. Documentation of new/changed features
-2. Operating theatre room
-3. ?
+1. Operating theatre room
+2. ?
 
 ## Next version `5.1.0`
 
@@ -29,14 +28,7 @@
 
 ## Wiki Documentation
 
-* Converting lights - use light switch, or repair console using desktop theme GUI
-* `/tardis lamps` command only works for LIGHT blocks
-* Potential to walk/fall through light blocks
-* Setting time rotors / display doors for schematics
-* Placing blocks onto TARDIS light blocks 
-  - must be sneaking (like if placing onto any other interactable block e.g. furnace) 
-  - placed on top as we can't detect which face of an interaction entity is clicked
-  - basic support for directional/rotatable blocks
+* Add new operating theatre room
 
 ## Resource Pack / Monsters
 

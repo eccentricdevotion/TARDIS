@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
@@ -47,10 +50,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -257,8 +256,8 @@ public class TARDISDisplayBlockListener implements Listener {
                         }
                         Block block = interaction.getLocation().getBlock();
                         UUID playerUUID = player.getUniqueId();
-                        String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
                         if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
+                            String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("uuid", uuid);
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -272,6 +271,7 @@ public class TARDISDisplayBlockListener implements Listener {
                             new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                             TARDISSudoTracker.SUDOERS.remove(playerUUID);
+                            TARDISMessage.send(player, "UPDATE_SET", "double door");
                             return;
                         }
                         if (player.isSneaking()) {
