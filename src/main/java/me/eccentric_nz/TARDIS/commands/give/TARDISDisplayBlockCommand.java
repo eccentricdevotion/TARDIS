@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -31,8 +32,9 @@ public class TARDISDisplayBlockCommand {
     }
 
     public ItemStack getStack(String arg) {
+        String display = TARDISStringUtils.toEnumUppercase(arg);
         try {
-            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(arg.toUpperCase());
+            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(display);
             ItemStack is = new ItemStack(tdi.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(tdi.getDisplayName());
