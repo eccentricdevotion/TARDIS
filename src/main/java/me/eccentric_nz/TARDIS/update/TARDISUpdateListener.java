@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -49,6 +47,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
@@ -111,6 +112,7 @@ public class TARDISUpdateListener implements Listener {
         // check they are still in the TARDIS world
         if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
             TARDISMessage.send(player, "UPDATE_IN_WORLD");
+            plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             return;
         }
         String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
@@ -135,6 +137,7 @@ public class TARDISUpdateListener implements Listener {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                 return;
             }
             Tardis tardis = rs.getTardis();

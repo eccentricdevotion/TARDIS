@@ -437,7 +437,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>10.0.33-SNAPSHOT</version>
+            <version>10.0.34-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
