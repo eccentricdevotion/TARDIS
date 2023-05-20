@@ -65,7 +65,7 @@ public class TARDISControlRunnable implements Runnable {
                                     sign.setLine(1, ChatColor.BLACK + resultSetConsole.getLocation());
                                     sign.setLine(2, ChatColor.BLACK + resultSetConsole.getBiome());
                                 }
-                                sign.setLine(3, ChatColor.BLUE + resultSetConsole.getPreset());
+                                sign.setLine(3, ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", ""));
                                 sign.update();
                             }
                         }
