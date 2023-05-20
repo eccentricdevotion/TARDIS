@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,9 +28,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Performs Architectural Reconfiguration System room jettisons.
@@ -62,20 +62,21 @@ class TARDISARSJettisonRunnable implements Runnable {
             for (int xx = x; xx < (x + 16); xx++) {
                 for (int zz = z; zz < (z + 16); zz++) {
                     Block b = w.getBlockAt(xx, yy, zz);
+                    // remove display items
+                    TARDISDisplayItemUtils.remove(b);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
-                    if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
-                        if (b.getType().equals(Material.LIME_WOOL) || b.getType().equals(Material.PINK_WOOL)) {
-                            String l = new Location(w, xx, yy, zz).toString();
-                            HashMap<String, Object> where = new HashMap<>();
-                            where.put("location", l);
-                            where.put("tardis_id", id);
-                            plugin.getQueryFactory().doDelete("gravity_well", where);
-                            // remove trackers
-                            if (b.getType().equals(Material.LIME_WOOL)) {
-                                plugin.getGeneralKeeper().getGravityUpList().remove(l);
-                            } else {
-                                plugin.getGeneralKeeper().getGravityDownList().remove(l);
-                            }
+                    if ((r.equals("GRAVITY") || r.equals("ANTIGRAVITY"))
+                            && (b.getType().equals(Material.LIME_WOOL) || b.getType().equals(Material.PINK_WOOL))) {
+                        String l = new Location(w, xx, yy, zz).toString();
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("location", l);
+                        where.put("tardis_id", id);
+                        plugin.getQueryFactory().doDelete("gravity_well", where);
+                        // remove trackers
+                        if (b.getType().equals(Material.LIME_WOOL)) {
+                            plugin.getGeneralKeeper().getGravityUpList().remove(l);
+                        } else {
+                            plugin.getGeneralKeeper().getGravityDownList().remove(l);
                         }
                     }
                     BlockState state = b.getState();
@@ -145,7 +146,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                 }
             }
             // remove mob farming locations
-            if (r.equals("FARM") || r.equals("APIARY") || r.equals("GEODE") || r.equals("HUTCH") || r.equals("IGLOO") ||  r.equals("MANGROVE") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
+            if (r.equals("FARM") || r.equals("APIARY") || r.equals("GEODE") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("MANGROVE") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
                 HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", id);
                 HashMap<String, Object> setf = new HashMap<>();

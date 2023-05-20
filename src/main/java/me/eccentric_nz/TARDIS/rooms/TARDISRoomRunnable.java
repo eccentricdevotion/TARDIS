@@ -31,6 +31,8 @@ import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemDisplaySetter;
+import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -67,25 +69,25 @@ public class TARDISRoomRunnable implements Runnable {
     private final Player player;
     private final UUID uuid;
     private final List<Chunk> chunkList = new ArrayList<>();
+    private final List<Block> caneblocks = new ArrayList<>();
+    private final List<Block> carrotblocks = new ArrayList<>();
+    private final List<Block> farmlandblocks = new ArrayList<>();
     private final List<Block> iceblocks = new ArrayList<>();
     private final List<Block> lampblocks = new ArrayList<>();
-    private final List<Block> caneblocks = new ArrayList<>();
     private final List<Block> melonblocks = new ArrayList<>();
     private final List<Block> potatoblocks = new ArrayList<>();
-    private final List<Block> carrotblocks = new ArrayList<>();
     private final List<Block> pumpkinblocks = new ArrayList<>();
-    private final List<Block> wheatblocks = new ArrayList<>();
-    private final List<Block> farmlandblocks = new ArrayList<>();
     private final List<Block> signblocks = new ArrayList<>();
+    private final List<Block> wheatblocks = new ArrayList<>();
     private final List<Material> notThese = new ArrayList<>();
     private final List<BlockData> flora = new ArrayList<>();
     private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
-    private final HashMap<Block, BlockData> propagules = new HashMap<>();
     private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
     private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
-    private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> propagules = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> seagrass = new HashMap<>();
+    private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
@@ -393,6 +395,19 @@ public class TARDISRoomRunnable implements Runnable {
                         } catch (IllegalArgumentException e) {
                             plugin.debug("Invalid painting location!" + pl);
                         }
+                    }
+                }
+                Location start = new Location(world, resetx, resety, resetz);
+                if (obj.has("item_frames")) {
+                    JsonArray frames = obj.get("item_frames").getAsJsonArray();
+                    for (int i = 0; i < frames.size(); i++) {
+                        TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, tardis_id);
+                    }
+                }
+                if (obj.has("item_displays")) {
+                    JsonArray displays = obj.get("item_displays").getAsJsonArray();
+                    for (int i = 0; i < displays.size(); i++) {
+                        TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, tardis_id);
                     }
                 }
                 if (room.equals("BAKER") || room.equals("WOOD")) {
