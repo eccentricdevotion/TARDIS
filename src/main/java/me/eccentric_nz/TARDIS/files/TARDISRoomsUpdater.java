@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -105,6 +104,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.STABLE.user", false);
         booleanOptions.put("rooms.STALL.enabled", true);
         booleanOptions.put("rooms.STALL.user", false);
+        booleanOptions.put("rooms.SURGERY.enabled", true);
+        booleanOptions.put("rooms.SURGERY.user", false);
         booleanOptions.put("rooms.TRENZALORE.enabled", true);
         booleanOptions.put("rooms.TRENZALORE.user", false);
         booleanOptions.put("rooms.VAULT.enabled", true);
@@ -182,6 +183,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.STABLE.offset", -4);
         integerOptions.put("rooms.STALL.cost", 350);
         integerOptions.put("rooms.STALL.offset", -4);
+        integerOptions.put("rooms.SURGERY.cost", 350);
+        integerOptions.put("rooms.SURGERY.offset", -4);
         integerOptions.put("rooms.TRENZALORE.cost", 550);
         integerOptions.put("rooms.TRENZALORE.offset", -4);
         integerOptions.put("rooms.VAULT.cost", 350);
@@ -227,6 +230,7 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.SMELTER.seed", "CHEST");
         stringOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         stringOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
+        stringOptions.put("rooms.SURGERY.seed", "RED_CONCRETE");
         stringOptions.put("rooms.TRENZALORE.seed", "BRICK");
         stringOptions.put("rooms.VAULT.seed", "DISPENSER");
         stringOptions.put("rooms.VILLAGE.seed", "LOG");

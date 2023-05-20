@@ -4,8 +4,7 @@
 
 ## Version 5.0.0
 
-1. Operating theatre room
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 
@@ -28,7 +27,7 @@
 
 ## Wiki Documentation
 
-* Add new operating theatre room
+* Add new surgery room
 
 ## Resource Pack / Monsters
 

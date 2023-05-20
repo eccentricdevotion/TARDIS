@@ -53,6 +53,7 @@ public enum Room {
     SMELTER,
     STABLE,
     STALL,
+    SURGERY,
     TRENZALORE,
     VAULT,
     VILLAGE,

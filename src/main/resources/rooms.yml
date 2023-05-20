@@ -198,6 +198,12 @@ rooms:
     offset: -4
     seed: BROWN_GLAZED_TERRACOTTA
     user: false
+  SURGERY:
+    enabled: true
+    cost: 350
+    offset: -4
+    seed: RED_CONCRETE
+    user: false
   RAIL:
     enabled: true
     cost: 650

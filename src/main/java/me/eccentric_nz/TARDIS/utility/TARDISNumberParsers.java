@@ -128,7 +128,6 @@ public class TARDISNumberParsers {
                 }
             } else {
                 --sz;
-
                 for (i = start; i < sz || i < sz + 1 && allowSigns && !foundDigit; ++i) {
                     if (chars[i] >= '0' && chars[i] <= '9') {
                         foundDigit = true;
@@ -163,7 +162,6 @@ public class TARDISNumberParsers {
                         allowSigns = true;
                     }
                 }
-
                 if (i < chars.length) {
                     if (chars[i] >= '0' && chars[i] <= '9') {
                         return true;
