@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -60,16 +61,39 @@ public class TARDISDisplayItemCommand {
         Block block = player.getTargetBlock(null, 8);
         switch (args[1].toLowerCase()) {
             case "add" -> {
+                if (args.length < 3) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return true;
+                }
+                Material material;
+                ItemDisplay.ItemDisplayTransform transform = ItemDisplay.ItemDisplayTransform.GROUND;
+                try {
+                    material = Material.valueOf(args[2]);
+                    if (args.length > 2) {
+                        transform = ItemDisplay.ItemDisplayTransform.valueOf(args[3]);
+                    }
+                } catch (IllegalArgumentException e) {
+                    material = Material.DIAMOND_AXE;
+                }
                 ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-                display.setItemStack(new ItemStack(Material.DIAMOND_AXE));
-                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+                ItemStack is = new ItemStack(material);
+                if (args.length > 3 && TARDISNumberParsers.isSimpleNumber(args[4])) {
+                    int cmd = TARDISNumberParsers.parseInt(args[4]);
+                    ItemMeta im = is.getItemMeta();
+                    im.setCustomModelData(cmd);
+                    is.setItemMeta(im);
+                }
+                display.setItemStack(is);
+                display.setItemDisplayTransform(transform);
                 display.setBillboard(Display.Billboard.VERTICAL);
                 display.setInvulnerable(true);
-                TextDisplay text = (TextDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.75d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAlignment.CENTER);
-                text.setText("TARDIS Axe, Cost: 25.00");
-                text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
-                text.setBillboard(Display.Billboard.VERTICAL);
+                if (args.length > 3 && args[4].equalsIgnoreCase("true")) {
+                    TextDisplay text = (TextDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.75d, 0.5d), EntityType.TEXT_DISPLAY);
+                    text.setAlignment(TextDisplay.TextAlignment.CENTER);
+                    text.setText(TARDISStringUtils.capitalise(material.toString()) + ", Cost: 25.00");
+                    text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
+                    text.setBillboard(Display.Billboard.VERTICAL);
+                }
             }
             case "block" -> {
                 ItemDisplay blockDisplay = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.ITEM_DISPLAY);

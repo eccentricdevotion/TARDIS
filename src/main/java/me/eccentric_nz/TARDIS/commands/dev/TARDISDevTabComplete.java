@@ -22,9 +22,11 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,23 +41,33 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break", "convert", "chunk", "block");
     private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
+    private final List<String> TRANSFORM_SUBS = new ArrayList<>();
+    private final List<String> ITEM_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
         for (TARDISDisplayItem d : TARDISDisplayItem.values()) {
             STONE_SUBS.add(d.getName());
         }
+        for (ItemDisplay.ItemDisplayTransform t : ItemDisplay.ItemDisplayTransform.values()) {
+            TRANSFORM_SUBS.add(t.toString());
+        }
+        for (Material m : Material.values()) {
+            if (m.isItem()) {
+                ITEM_SUBS.add(m.toString());
+            }
+        }
     }
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
+        String sub = args[0];
         switch (args.length) {
             case 1 -> {
                 return partial(args[0], ROOT_SUBS);
             }
             case 2 -> {
-                String sub = args[0];
                 if (sub.equals("list")) {
                     return partial(lastArg, LIST_SUBS);
                 }
@@ -72,12 +84,17 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                     return partial(lastArg, FRAME_SUBS);
                 }
             }
-            default -> {
-                if (args[1].equals("place")) {
-                    return partial(lastArg, STONE_SUBS);
-                } else {
-                    return partial(lastArg, MAT_SUBS);
+            case 4 -> {
+                if (sub.equals("displayitem")) {
+                    return partial(lastArg, TRANSFORM_SUBS);
                 }
+            }
+            default -> {
+                return switch (args[1]) {
+                    case "place" -> partial(lastArg, STONE_SUBS);
+                    case "add" -> partial(lastArg, ITEM_SUBS);
+                    default -> partial(lastArg, MAT_SUBS);
+                };
             }
         }
         return ImmutableList.of();
