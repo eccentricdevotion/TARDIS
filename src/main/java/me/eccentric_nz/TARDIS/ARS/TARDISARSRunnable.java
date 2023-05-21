@@ -81,6 +81,11 @@ class TARDISARSRunnable implements Runnable {
                 wall_type = Material.ORANGE_WOOL;
                 floor_type = Material.LIGHT_GRAY_WOOL;
             }
+            // SURGERY special case
+            if (room.getConfigPath().equals("SURGERY")) {
+                wall_type = Material.WHITE_CONCRETE;
+                floor_type = Material.LIGHT_GRAY_CONCRETE;
+            }
             roomData.setMiddleType(wall_type);
             roomData.setFloorType(floor_type);
             // get start locations

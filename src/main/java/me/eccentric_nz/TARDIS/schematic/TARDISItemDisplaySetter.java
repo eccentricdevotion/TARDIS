@@ -24,6 +24,11 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author macgeek
@@ -45,22 +50,38 @@ public class TARDISItemDisplaySetter {
             }
             if (stack.has("door")) {
                 HashMap<String, Object> setd = new HashMap<>();
-                    String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                    setd.put("tardis_id", id);
-                    setd.put("door_type", 1);
-                    setd.put("door_location", doorloc);
-                    setd.put("door_direction", "SOUTH");
-                    TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
-                    // if create_worlds is true, set the world spawn
-                    if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
-                        block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
-                    }
+                String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                setd.put("tardis_id", id);
+                setd.put("door_type", 1);
+                setd.put("door_location", doorloc);
+                setd.put("door_direction", "SOUTH");
+                TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+                // if create_worlds is true, set the world spawn
+                if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
+                    block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
+                }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
             TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
             if (tdi != null) {
                 TARDISDisplayItemUtils.set(tdi, block);
+            } else {
+                setInRoom(block, material, model);
             }
         }
+    }
+
+    public static void setInRoom(Block block, Material material, int model) {
+        ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
+        ItemStack is = new ItemStack(material);
+        if (model != -1) {
+            ItemMeta im = is.getItemMeta();
+            im.setCustomModelData(model);
+            is.setItemMeta(im);
+        }
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+        display.setBillboard(Display.Billboard.VERTICAL);
+        display.setInvulnerable(true);
     }
 }

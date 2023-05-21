@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
@@ -88,6 +87,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> seagrass = new HashMap<>();
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> trapdoorblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
@@ -134,6 +134,7 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.CARROTS);
         notThese.add(Material.COCOA);
         notThese.add(Material.DARK_OAK_DOOR);
+        notThese.add(Material.IRON_TRAPDOOR);
         notThese.add(Material.JUNGLE_DOOR);
         notThese.add(Material.LEVER);
         notThese.add(Material.MANGROVE_PROPAGULE);
@@ -208,6 +209,7 @@ public class TARDISRoomRunnable implements Runnable {
                                 case SPRUCE_SIGN -> signblocks.add(postBlock);
                                 case OAK_DOOR -> doorblocks.put(postBlock, postData);
                                 case LEVER -> leverblocks.put(postBlock, postData);
+                                case IRON_TRAPDOOR -> trapdoorblocks.put(postBlock, postData);
                                 default -> {
                                 }
                             }
@@ -256,6 +258,11 @@ public class TARDISRoomRunnable implements Runnable {
                 if (propagules.size() > 0) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
+                    }
+                }
+                if (trapdoorblocks.size() > 0) {
+                    for (Map.Entry<Block, BlockData> trap : trapdoorblocks.entrySet()) {
+                        trap.getKey().setBlockData(trap.getValue());
                     }
                 }
                 if (seagrass.size() > 0) {
@@ -624,19 +631,21 @@ public class TARDISRoomRunnable implements Runnable {
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
-                    if (room.equals("RENDERER") || room.equals("ZERO")) {
-                        plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
-                    } else if (room.equals("MAZE")) {
-                        String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
-                        plugin.getQueryFactory().insertControl(tardis_id, 44, loc_str, 0);
-                    } else {
-                        ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
-                        if (rsf.resultSet()) {
-                            // update
-                            plugin.getQueryFactory().doUpdate("farming", sets, wheres);
-                        } else {
-                            sets.put("tardis_id", tardis_id);
-                            plugin.getQueryFactory().doInsert("farming", sets);
+                    switch (room) {
+                        case "RENDERER", "ZERO" -> plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
+                        case "MAZE" -> {
+                            String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
+                            plugin.getQueryFactory().insertControl(tardis_id, 44, loc_str, 0);
+                        }
+                        default -> {
+                            ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
+                            if (rsf.resultSet()) {
+                                // update
+                                plugin.getQueryFactory().doUpdate("farming", sets, wheres);
+                            } else {
+                                sets.put("tardis_id", tardis_id);
+                                plugin.getQueryFactory().doInsert("farming", sets);
+                            }
                         }
                     }
                     // replace with correct block
@@ -725,6 +734,12 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.LEVER)) {
                     Block lever = world.getBlockAt(startx, starty, startz);
                     leverblocks.put(lever, data);
+                }
+                // remember iron trap doors if SURGERY room
+                if (type.equals(Material.IRON_TRAPDOOR) && room.equals("SURGERY")) {
+                    Block trap = world.getBlockAt(startx, starty, startz);
+                    trapdoorblocks.put(trap, data);
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember redstone torches
                 if (type.equals(Material.REDSTONE_TORCH)) {
@@ -817,8 +832,13 @@ public class TARDISRoomRunnable implements Runnable {
                     if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                         data = TARDISConstants.AIR;
                     } else {
-                        BlockData wall = (ow.equals(Material.ORANGE_WOOL)) ? plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)) : ow.createBlockData();
-                        data = (wall_type.equals(Material.ORANGE_WOOL)) ? wall : wall_type.createBlockData();
+                        if (ow.equals(Material.ORANGE_WOOL) && wall_type.equals(Material.ORANGE_WOOL)) {
+                            data = TARDISConstants.BARRIER;
+                            // set hexagon item display
+                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                        } else {
+                            data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
+                        }
                     }
                 }
                 // always clear the door blocks on the north and west sides of adjacent spaces
