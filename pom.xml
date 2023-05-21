@@ -476,7 +476,7 @@
         <dependency>
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
             <artifactId>RedProtect</artifactId>
-            <version>8.1.0-SNAPSHOT</version>
+            <version>8.1.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/RedProtect.jar</systemPath>
