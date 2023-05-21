@@ -41,6 +41,7 @@ This list is in alphabetical order.
 - [Shell](#shell)
 - [Smelter](#smelter)
 - [Storage Vault](#vault)
+- [Surgery](#surgery)
 - [Trenzalore](#trenzalore)
 - [Village](#village)
 - [Wood Secondary Console](#secondary-console-wood)
@@ -173,6 +174,10 @@ This list is in alphabetical order.
 #### Smelter
 
 ![Smelter](images/rooms/smelter.png)
+
+#### Surgery
+
+![Surgery](images/rooms/surgery.png)
 
 #### Trenzalore
 

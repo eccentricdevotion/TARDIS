@@ -56,6 +56,7 @@ All rooms are enabled by default, the rest of the settings are:
 | SMELTER     | 750  | -4     | CHEST                    |
 | STABLE      | 350  | -4     | HAY_BLOCK                |
 | STALL       | 350  | -4     | BROWN_GLAZED_TERRACOTTA  |
+| SURGERY     | 350  | -4     | RED_CONCRETE             |
 | TRENZALORE  | 550  | -4     | BRICKS                   |
 | VAULT       | 350  | -4     | DISPENSER                |
 | VILLAGE     | 550  | -4     | OAK_LOG                  |

@@ -70,6 +70,7 @@ and follow the instructions. The room types and their corresponding seed blocks 
     Smelter - CHEST
     Stable - HAY_BLOCK
     Stall - NETHER_WART_BLOCK
+    Surgery - RED_CONCRETE
     Trenzalore - BRICKS
     Vault - DISPENSER
     Village - OAK_LOG

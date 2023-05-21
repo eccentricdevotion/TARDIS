@@ -126,10 +126,13 @@ Otherwise there are individual nodes for for each room:
     tardis.room.antigravity
     tardis.room.arboretum
     tardis.room.baker
+    tardis.room.bamboo
     tardis.room.bedroom
     tardis.room.birdcage
+    tardis.room.chemistry
     tardis.room.empty
     tardis.room.farm
+    tardis.room.geode
     tardis.room.gravity
     tardis.room.greenhouse
     tardis.room.harmony
@@ -138,12 +141,18 @@ Otherwise there are individual nodes for for each room:
     tardis.room.kitchen
     tardis.room.lazarus
     tardis.room.library
+    tardis.room.maze
     tardis.room.mushroom
+    tardis.room.nether
     tardis.room.passage
     tardis.room.pool
     tardis.room.rail
     tardis.room.renderer
+    tardis.room.shell
+    tardis.room.smelter
     tardis.room.stable
+    tardis.room.stall
+    tardis.room.surgery
     tardis.room.trenzalore
     tardis.room.vault
     tardis.room.village
