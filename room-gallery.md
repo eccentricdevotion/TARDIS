@@ -177,7 +177,7 @@ This list is in alphabetical order.
 
 #### Surgery
 
-![Surgery](images/rooms/surgery.png)
+![Surgery](images/rooms/surgery.jpg)
 
 #### Trenzalore
 
