@@ -102,13 +102,13 @@ class TARDISMaterialisePreset implements Runnable {
             plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
         }
         if (this.preset.equals(ChameleonPreset.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
-            stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection()).getColumn();
-            glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection().forPreset()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection().forPreset()).getColumn();
         } else {
-            column = plugin.getPresets().getColumn(preset, bd.getDirection());
-            stained_column = plugin.getPresets().getStained(preset, bd.getDirection());
-            glass_column = plugin.getPresets().getGlass(preset, bd.getDirection());
+            column = plugin.getPresets().getColumn(preset, bd.getDirection().forPreset());
+            stained_column = plugin.getPresets().getStained(preset, bd.getDirection().forPreset());
+            glass_column = plugin.getPresets().getGlass(preset, bd.getDirection().forPreset());
         }
         Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         Material[] glassColours = new Material[]{Material.WHITE_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.MAGENTA_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS, Material.LIME_STAINED_GLASS, Material.PINK_STAINED_GLASS, Material.CYAN_STAINED_GLASS, Material.PURPLE_STAINED_GLASS, Material.BLUE_STAINED_GLASS, Material.BROWN_STAINED_GLASS, Material.GREEN_STAINED_GLASS, Material.RED_STAINED_GLASS};
@@ -190,7 +190,7 @@ class TARDISMaterialisePreset implements Runnable {
                         }
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
-                    switch (bd.getDirection()) {
+                    switch (bd.getDirection().forPreset()) {
                         case SOUTH -> {
                             // if (yaw >= 315 || yaw < 45)
                             signx = x;
@@ -477,7 +477,7 @@ class TARDISMaterialisePreset implements Runnable {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                                     } else {
                                         Rotatable rotatable = (Rotatable) colData[yy];
-                                        rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
+                                        rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection().forPreset()));
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                                     }
                                 }
@@ -659,7 +659,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                                 } else {
                                     Rotatable rotatable = (Rotatable) coldatas[yy];
-                                    rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
+                                    rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection().forPreset()));
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, rotatable);
                                 }
                             }
@@ -780,7 +780,7 @@ class TARDISMaterialisePreset implements Runnable {
         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
         HashMap<String, Object> setd = new HashMap<>();
         setd.put("door_location", doorloc);
-        setd.put("door_direction", bd.getDirection().toString());
+        setd.put("door_direction", bd.getDirection().forPreset().toString());
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());

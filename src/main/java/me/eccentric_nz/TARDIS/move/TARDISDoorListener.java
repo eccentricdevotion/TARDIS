@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
@@ -41,6 +38,10 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -352,10 +353,10 @@ public class TARDISDoorListener {
      */
     public float adjustYaw(COMPASS d1, COMPASS d2) {
         return switch (d1) {
-            case EAST -> adjustYaw[0][d2.ordinal()];
-            case SOUTH -> adjustYaw[1][d2.ordinal()];
-            case WEST -> adjustYaw[2][d2.ordinal()];
-            default -> adjustYaw[3][d2.ordinal()];
+            case EAST -> adjustYaw[0][d2.ordinal() / 2];
+            case SOUTH -> adjustYaw[1][d2.ordinal() / 2];
+            case WEST -> adjustYaw[2][d2.ordinal() / 2];
+            default -> adjustYaw[3][d2.ordinal() / 2];
         };
     }
 

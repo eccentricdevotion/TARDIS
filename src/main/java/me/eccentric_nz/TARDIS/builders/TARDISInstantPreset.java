@@ -90,13 +90,13 @@ public class TARDISInstantPreset {
         }
         TARDISChameleonColumn column;
         if (preset.equals(ChameleonPreset.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
             if (column == null) {
                 TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
                 return;
             }
         } else {
-            column = plugin.getPresets().getColumn(preset, bd.getDirection());
+            column = plugin.getPresets().getColumn(preset, bd.getDirection().forPreset());
         }
         int plusx, minusx, x, plusz, y, minusz, z;
         // get relative locations
@@ -129,7 +129,7 @@ public class TARDISInstantPreset {
             }
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
         }
-        switch (bd.getDirection()) {
+        switch (bd.getDirection().forPreset()) {
             case SOUTH -> {
                 //if (yaw >= 315 || yaw < 45)
                 signx = x;
@@ -412,7 +412,7 @@ public class TARDISInstantPreset {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                         } else {
                             Rotatable rotatable = (Rotatable) colData[yy];
-                            rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
+                            rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection().forPreset()));
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                         }
                     }
@@ -475,7 +475,7 @@ public class TARDISInstantPreset {
         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
         HashMap<String, Object> setd = new HashMap<>();
         setd.put("door_location", doorloc);
-        setd.put("door_direction", bd.getDirection().toString());
+        setd.put("door_direction", bd.getDirection().forPreset().toString());
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());

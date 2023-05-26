@@ -72,7 +72,7 @@ class TARDISFlightAdjustment {
                 Location sub = null;
                 boolean safe;
                 if (bd.isSubmarine()) {
-                    sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
+                    sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection().forPreset());
                     safe = (sub != null);
                 } else {
                     int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());

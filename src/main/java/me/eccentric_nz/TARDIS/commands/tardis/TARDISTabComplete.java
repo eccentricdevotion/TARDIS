@@ -42,7 +42,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> ON_OFF_SUBS = ImmutableList.of("on", "off");
     private final List<String> DOOR_SUBS = ImmutableList.of("open", "close");
     private final List<String> ITEM_SUBS = ImmutableList.of("hand", "inventory");
-    private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
+    private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east", "north_east", "north_west", "south_west", "south_east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update", "y");
     private final List<String> EXTRA_SUBS = ImmutableList.of("blocks", "unlock");

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
@@ -36,6 +34,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -62,7 +63,7 @@ public class TARDISDeinstantPreset {
     public void instaDestroyPreset(MaterialisationData dd, boolean hide, ChameleonPreset preset) {
 
         Location l = dd.getLocation();
-        COMPASS d = dd.getDirection();
+        COMPASS d = dd.getDirection().forPreset();
         int id = dd.getTardisID();
         boolean sub = dd.isSubmarine();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {

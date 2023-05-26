@@ -257,7 +257,13 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setcurrent.put("x", final_location.getBlockX());
                         setcurrent.put("y", final_location.getBlockY());
                         setcurrent.put("z", final_location.getBlockZ());
-                        setcurrent.put("direction", bd.getDirection().toString());
+                        String direction;
+                        if (preset.usesItemFrame()) {
+                            direction = bd.getDirection().toString();
+                        } else {
+                            direction = bd.getDirection().forPreset().toString();
+                        }
+                        setcurrent.put("direction", direction);
                         setcurrent.put("submarine", (bd.isSubmarine()) ? 1 : 0);
                         wherecurrent.put("tardis_id", id);
                         // back
@@ -269,7 +275,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setback.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
                         whereback.put("tardis_id", id);
                         // update Police Box door direction
-                        setdoor.put("door_direction", bd.getDirection().toString());
+                        setdoor.put("door_direction", bd.getDirection().forPreset().toString());
                         wheredoor.put("tardis_id", id);
                         wheredoor.put("door_type", 0);
                         if (setcurrent.size() > 0) {

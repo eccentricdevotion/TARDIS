@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
@@ -38,6 +36,9 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -79,13 +80,13 @@ class TARDISDematerialisePreset implements Runnable {
         i = 0;
         this.cham_id = cham_id;
         if (this.preset.equals(ChameleonPreset.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection()).getColumn();
-            stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection()).getColumn();
-            glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection().forPreset()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection().forPreset()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection().forPreset()).getColumn();
         } else {
-            column = plugin.getPresets().getColumn(preset, dd.getDirection());
-            stained_column = plugin.getPresets().getStained(preset, dd.getDirection());
-            glass_column = plugin.getPresets().getGlass(preset, dd.getDirection());
+            column = plugin.getPresets().getColumn(preset, dd.getDirection().forPreset());
+            stained_column = plugin.getPresets().getStained(preset, dd.getDirection().forPreset());
+            glass_column = plugin.getPresets().getGlass(preset, dd.getDirection().forPreset());
         }
     }
 
@@ -123,7 +124,7 @@ class TARDISDematerialisePreset implements Runnable {
                         int flowerx;
                         int flowery = (dd.getLocation().getBlockY() + 1);
                         int flowerz;
-                        switch (dd.getDirection()) {
+                        switch (dd.getDirection().forPreset()) {
                             case NORTH -> {
                                 flowerx = dd.getLocation().getBlockX();
                                 flowerz = dd.getLocation().getBlockZ() + 1;
@@ -145,10 +146,10 @@ class TARDISDematerialisePreset implements Runnable {
                     }
                     case CAKE -> plugin.getPresetDestroyer().destroyLamp(dd.getLocation(), preset);
                     case JUNK_MODE -> {
-                        plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
-                        plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection());
+                        plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection().forPreset(), preset);
+                        plugin.getPresetDestroyer().destroyHandbrake(dd.getLocation(), dd.getDirection().forPreset());
                     }
-                    case SWAMP -> plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection(), preset);
+                    case SWAMP -> plugin.getPresetDestroyer().destroySign(dd.getLocation(), dd.getDirection().forPreset(), preset);
                     case JAIL, TOPSYTURVEY -> plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
                     case MESA -> {
                         // destroy door
@@ -159,7 +160,7 @@ class TARDISDematerialisePreset implements Runnable {
                         int bushy = (dd.getLocation().getBlockY() + 3);
                         int deadz;
                         int bushz;
-                        switch (dd.getDirection()) {
+                        switch (dd.getDirection().forPreset()) {
                             case NORTH -> {
                                 deadx = dd.getLocation().getBlockX() + 1;
                                 deadz = dd.getLocation().getBlockZ() + 1;

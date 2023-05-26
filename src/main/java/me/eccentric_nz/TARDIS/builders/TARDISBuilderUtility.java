@@ -43,7 +43,7 @@ public class TARDISBuilderUtility {
         ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, whered, false);
         HashMap<String, Object> setd = new HashMap<>();
         setd.put("door_location", doorloc);
-        setd.put("door_direction", bd.getDirection().toString());
+        setd.put("door_direction", bd.getDirection().forPreset().toString());
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoor_id());

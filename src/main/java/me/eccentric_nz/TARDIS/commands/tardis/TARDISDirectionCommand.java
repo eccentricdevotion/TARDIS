@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -39,7 +39,6 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -55,9 +54,16 @@ public class TARDISDirectionCommand {
 
     public boolean changeDirection(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-            if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
+            if (args.length < 2) {
                 TARDISMessage.send(player, "DIRECTION_NEED");
-                return false;
+                return true;
+            }
+            COMPASS compass;
+            try {
+                compass = COMPASS.valueOf(args[1].toUpperCase());
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(player, "DIRECTION_NEED");
+                return true;
             }
             UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
@@ -65,9 +71,14 @@ public class TARDISDirectionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
-                return false;
+                return true;
             }
             Tardis tardis = rs.getTardis();
+            if (!tardis.getPreset().usesItemFrame()
+                    && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
+                TARDISMessage.send(player, "DIRECTION_PRESET");
+                return true;
+            }
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                 TARDISMessage.send(player, "POWER_DOWN");
                 return true;
@@ -102,7 +113,7 @@ public class TARDISDirectionCommand {
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
-            String dir = args[1].toUpperCase(Locale.ENGLISH);
+//            String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -114,18 +125,17 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
-            set.put("direction", dir);
+            set.put("direction", compass.toString());
             plugin.getQueryFactory().doUpdate("current", set, tid);
             HashMap<String, Object> did = new HashMap<>();
             HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);
             did.put("tardis_id", id);
-            setd.put("door_direction", dir);
+            setd.put("door_direction", compass.forPreset().toString());
             plugin.getQueryFactory().doUpdate("doors", setd, did);
             // close doors & therefore remove open portals...
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
                 if (demat.equals(ChameleonPreset.DUCK)) {
@@ -143,7 +153,7 @@ public class TARDISDirectionCommand {
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
                 BuildData bd = new BuildData(uuid.toString());
-                bd.setDirection(d);
+                bd.setDirection(compass);
                 bd.setLocation(l);
                 bd.setMalfunction(false);
                 bd.setOutside(false);
@@ -173,11 +183,15 @@ public class TARDISDirectionCommand {
                     }
                     for (Entity e : chunk.getEntities()) {
                         if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
-                            Rotation r = switch (d) {
+                            Rotation r = switch (compass) {
                                 case EAST -> Rotation.COUNTER_CLOCKWISE;
+                                case SOUTH_EAST -> Rotation.COUNTER_CLOCKWISE_45;
                                 case SOUTH -> Rotation.NONE;
+                                case SOUTH_WEST -> Rotation.CLOCKWISE_45;
                                 case WEST -> Rotation.CLOCKWISE;
-                                default -> Rotation.FLIPPED;
+                                case NORTH_WEST -> Rotation.CLOCKWISE_135;
+                                case NORTH -> Rotation.FLIPPED;
+                                default -> Rotation.FLIPPED_45;
                             };
                             frame.setRotation(r);
                             break;

@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -30,6 +29,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+
+import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -59,72 +61,102 @@ public class TARDISDirectionFrameListener implements Listener {
                 HashMap<String, Object> wherep = new HashMap<>();
                 wherep.put("tardis_id", id);
                 ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false, 2);
-                if (rso.resultSet() && !rso.getTardis().getUuid().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                    return;
-                }
-                // if the item frame has a tripwire hook in it
-                if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
-                    if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
-                        TARDISMessage.send(player, "POWER_DOWN");
+                if (rso.resultSet()) {
+                    Tardis tardis = rso.getTardis();
+                    if (!tardis.getUuid().equals(player.getUniqueId())) {
+                        event.setCancelled(true);
                         return;
                     }
-                    String direction;
-                    if (player.isSneaking()) {
-                        // cancel the rotation!
-                        event.setCancelled(true);
-                        // perform the rotation
-                        direction = switch (frame.getRotation()) {
-                            case FLIPPED -> "NORTH";
-                            case COUNTER_CLOCKWISE -> "EAST";
-                            case NONE -> "SOUTH";
-                            default -> "WEST";
-                        };
-                        player.performCommand("tardis direction " + direction);
-                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis direction " + direction);
-                    } else {
-                        Rotation r;
-                        // set the rotation
-                        switch (frame.getRotation()) {
-                            case FLIPPED -> {
-                                r = Rotation.FLIPPED_45;
-                                direction = "EAST";
-                            }
-                            case COUNTER_CLOCKWISE -> {
-                                r = Rotation.COUNTER_CLOCKWISE_45;
-                                direction = "SOUTH";
-                            }
-                            case NONE -> {
-                                r = Rotation.CLOCKWISE_45;
-                                direction = "WEST";
-                            }
-                            default -> {
-                                r = Rotation.CLOCKWISE_135;
-                                direction = "NORTH";
-                            }
+                    // if the item frame has a tripwire hook in it
+                    if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
                         }
-                        frame.setRotation(r);
-                        TARDISMessage.send(player, "DIRECTON_SET", direction);
-                    }
-                } else {
-                    // are they placing a tripwire hook?
-                    if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        // get current tardis direction
-                        HashMap<String, Object> wherec = new HashMap<>();
-                        wherec.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                        if (rscl.resultSet()) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                // update the TRIPWIRE_HOOK rotation
-                                Rotation r = switch (rscl.getDirection()) {
-                                    case EAST -> Rotation.COUNTER_CLOCKWISE;
-                                    case SOUTH -> Rotation.NONE;
-                                    case WEST -> Rotation.CLOCKWISE;
-                                    default -> Rotation.FLIPPED;
-                                };
+                        String direction;
+                        if (player.isSneaking()) {
+                            // cancel the rotation!
+                            event.setCancelled(true);
+                            // perform the rotation
+                            direction = switch (frame.getRotation()) {
+                                case FLIPPED -> "NORTH";
+                                case FLIPPED_45 -> "NORTH_EAST";
+                                case COUNTER_CLOCKWISE -> "EAST";
+                                case COUNTER_CLOCKWISE_45 -> "SOUTH_EAST";
+                                case NONE -> "SOUTH";
+                                case CLOCKWISE_45 -> "SOUTH_WEST";
+                                case CLOCKWISE -> "WEST";
+                                default -> "NORTH_WEST";
+                            };
+                            player.performCommand("tardis direction " + direction);
+                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis direction " + direction);
+                        } else {
+                            boolean isPreset = !tardis.getPreset().usesItemFrame();
+                            Rotation r;
+                            // set the rotation
+                            switch (frame.getRotation()) {
+                                case FLIPPED -> {
+                                    r = Rotation.FLIPPED_45;
+                                    direction = (isPreset) ? "EAST" : "NORTH_EAST";
+                                }
+                                case FLIPPED_45 -> {
+                                    r = Rotation.COUNTER_CLOCKWISE;
+                                    direction = "EAST";
+                                }
+                                case COUNTER_CLOCKWISE_45 -> {
+                                    r = Rotation.NONE;
+                                    direction = "SOUTH";
+                                }
+                                case CLOCKWISE_45 -> {
+                                    r = Rotation.CLOCKWISE;
+                                    direction = "WEST";
+                                }
+                                case CLOCKWISE_135 -> {
+                                    r = Rotation.FLIPPED;
+                                    direction = "NORTH";
+                                }
+                                case COUNTER_CLOCKWISE -> {
+                                    r = Rotation.COUNTER_CLOCKWISE_45;
+                                    direction = (isPreset) ? "SOUTH" : "SOUTH_EAST";
+                                }
+                                case NONE -> {
+                                    r = Rotation.CLOCKWISE_45;
+                                    direction = (isPreset) ? "WEST" : "SOUTH_WEST";
+                                }
+                                default -> {
+                                    r = Rotation.CLOCKWISE_135;
+                                    direction = (isPreset) ? "NORTH" : "NORTH_WEST";
+                                }
+                            }
+                            if (isPreset) {
                                 frame.setRotation(r);
-                                TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
-                            }, 4L);
+                            }
+                            TARDISMessage.send(player, "DIRECTON_SET", direction);
+                        }
+                    } else {
+                        // are they placing a tripwire hook?
+                        if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                            // get current tardis direction
+                            HashMap<String, Object> wherec = new HashMap<>();
+                            wherec.put("tardis_id", id);
+                            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                            if (rscl.resultSet()) {
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    // update the TRIPWIRE_HOOK rotation
+                                    Rotation r = switch (rscl.getDirection()) {
+                                        case EAST -> Rotation.COUNTER_CLOCKWISE;
+                                        case SOUTH_EAST -> Rotation.COUNTER_CLOCKWISE_45;
+                                        case SOUTH -> Rotation.NONE;
+                                        case SOUTH_WEST -> Rotation.CLOCKWISE_45;
+                                        case WEST -> Rotation.CLOCKWISE;
+                                        case NORTH_WEST -> Rotation.CLOCKWISE_135;
+                                        case NORTH -> Rotation.FLIPPED;
+                                        default -> Rotation.FLIPPED_45;
+                                    };
+                                    frame.setRotation(r);
+                                    TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                                }, 4L);
+                            }
                         }
                     }
                 }

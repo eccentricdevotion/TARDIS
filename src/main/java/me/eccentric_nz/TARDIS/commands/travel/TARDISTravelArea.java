@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -31,6 +30,8 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -104,7 +105,7 @@ public class TARDISTravelArea {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                 return true;
             }
-            set.put("direction", rsc.getDirection().toString());
+            set.put("direction", rsc.getDirection().forPreset().toString());
         }
         set.put("submarine", 0);
         HashMap<String, Object> tid = new HashMap<>();
