@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
@@ -25,15 +26,17 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-
 /**
- * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
- * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically choses its own
- * shape. When a TARDIS materialises in a new location, within the first nanosecond of landing, its chameleon circuit
- * analyses the surrounding area, calculates a twelve-dimensional data map of all objects within a thousand-mile radius
- * and then determines which outer shell will best blend in with the environment. According to the Eleventh Doctor, the
- * TARDIS would perform these functions, but then disguise itself as a 1960s era police box anyway.
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything
+ * desired. The owner can program the circuit to make it assume a specific
+ * shape. If no appearance is specified, the TARDIS automatically choses its own
+ * shape. When a TARDIS materialises in a new location, within the first
+ * nanosecond of landing, its chameleon circuit analyses the surrounding area,
+ * calculates a twelve-dimensional data map of all objects within a
+ * thousand-mile radius and then determines which outer shell will best blend in
+ * with the environment. According to the Eleventh Doctor, the TARDIS would
+ * perform these functions, but then disguise itself as a 1960s era police box
+ * anyway.
  *
  * @author eccentric_nz
  */
@@ -43,13 +46,15 @@ public class TARDISChameleonInventory {
     private final TARDIS plugin;
     private final Adaption adapt;
     private final ChameleonPreset preset;
+    private final String model;
     private final ItemStack on;
     private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, ChameleonPreset preset) {
+    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, ChameleonPreset preset, String model) {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
+        this.model = model;
         on = new ItemStack(Material.LIME_WOOL, 1);
         off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
         terminal = getItemStack();
@@ -151,8 +156,13 @@ public class TARDISChameleonInventory {
         boolean isNotFactoryInvisibleOrConstruct = !preset.equals(ChameleonPreset.INVISIBLE) && !preset.equals(ChameleonPreset.FACTORY) && !preset.equals(ChameleonPreset.CONSTRUCT);
         ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         ItemMeta set = pre.getItemMeta();
-        String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        set.setDisplayName(sonoff);
+        String shorted;
+        if (isNotFactoryInvisibleOrConstruct) {
+            shorted = ChatColor.GREEN + ((preset == ChameleonPreset.ITEM) ? model : preset.toString());
+        } else {
+            shorted = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        }
+        set.setDisplayName(shorted);
         pre.setItemMeta(set);
         // Construct radio button
         ItemStack bui = (preset.equals(ChameleonPreset.CONSTRUCT)) ? on.clone() : off.clone();
@@ -168,9 +178,9 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         return new ItemStack[]{
-                apply, null, null, lock, null, null, null, null, null,
-                null, null, dis, adap, invis, shor, cons, null, null,
-                null, null, fac, biome, not, pre, bui, null, close
+            apply, null, null, lock, null, null, null, null, null,
+            null, null, dis, adap, invis, shor, cons, null, null,
+            null, null, fac, biome, not, pre, bui, null, close
         };
     }
 

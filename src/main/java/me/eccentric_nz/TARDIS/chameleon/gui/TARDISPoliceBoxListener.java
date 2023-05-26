@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -35,9 +37,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -126,7 +125,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                 case 52 ->
                                     // return to Chameleon Circuit GUI
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
                                             Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                             gui.setContents(stacks);
                                             player.openInventory(gui);

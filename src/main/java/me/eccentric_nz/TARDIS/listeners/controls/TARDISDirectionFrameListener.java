@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import java.util.HashMap;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -28,10 +30,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-
-import java.util.HashMap;
-import java.util.logging.Level;
+import org.bukkit.event.player.PlayerInteractEntityEvent; 
 
 /**
  * @author eccentric_nz

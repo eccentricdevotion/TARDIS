@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
@@ -35,10 +37,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.List;
+import org.bukkit.entity.Player; 
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which

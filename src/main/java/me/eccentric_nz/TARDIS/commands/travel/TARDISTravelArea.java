@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -30,8 +31,6 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  *

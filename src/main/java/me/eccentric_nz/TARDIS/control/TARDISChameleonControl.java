@@ -36,7 +36,7 @@ class TARDISChameleonControl {
         this.plugin = plugin;
     }
 
-    void openGUI(Player player, int id, Adaption adapt, ChameleonPreset preset) {
+    void openGUI(Player player, int id, Adaption adapt, ChameleonPreset preset, String model) {
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -59,7 +59,7 @@ class TARDISChameleonControl {
             return;
         }
         // open Chameleon Circuit GUI
-        ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset).getMenu();
+        ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset, model).getMenu();
         Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
         cc_gui.setContents(cc);
         player.openInventory(cc_gui);

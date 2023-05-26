@@ -180,7 +180,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     // open Chameleon Circuit GUI
-                                    ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                    ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
                                     Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                     cc_gui.setContents(cc);
                                     player.openInventory(cc_gui);

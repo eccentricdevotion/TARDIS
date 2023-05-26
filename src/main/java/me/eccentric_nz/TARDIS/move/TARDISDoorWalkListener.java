@@ -254,13 +254,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                     // should toggle inner door too!
                                                 }
-//                                                else {
                                                 if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 } else {
                                                     new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
                                                 }
-//                                                }
                                             }
                                         } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                             TrapDoor door_data = (TrapDoor) block.getBlockData();

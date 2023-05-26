@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
@@ -34,10 +37,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing

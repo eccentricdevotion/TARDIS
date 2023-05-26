@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.io.IOException;
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -62,9 +64,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * The various systems of the console room are fairly well-understood. According to one account, each of the six panels
@@ -503,7 +502,7 @@ public class TARDISControlListener implements Listener {
                                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
                                         new FloodgateChameleonCircuitForm(plugin, playerUUID, id, rs.getTardis().getPreset()).send();
                                     } else {
-                                        new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset());
+                                        new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());
                                     }
                                 }
                                 case 32 -> {

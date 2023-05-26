@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
@@ -39,12 +42,8 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 /**
- * @author eccentric_nz
+ * @author eccentric_nz 
  */
 public class TARDISDoorListener {
 

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
@@ -38,10 +41,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * A trip stitch circuit-breaker was a circuit that if was enabled in the psycho-kinetic threshold manipulator of the
@@ -91,7 +90,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                     switch (cmd) { // Chameleon circuit
                                         case 10001966, 20001966 -> {
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                            stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
                                         } // ARS circuit
                                         case 10001973, 20001973 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");

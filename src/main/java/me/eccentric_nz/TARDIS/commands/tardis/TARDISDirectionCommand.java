@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -37,9 +39,6 @@ import org.bukkit.Rotation;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -113,7 +112,6 @@ public class TARDISDirectionCommand {
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
-//            String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
