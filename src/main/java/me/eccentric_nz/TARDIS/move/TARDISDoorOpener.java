@@ -37,7 +37,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
@@ -179,7 +178,7 @@ public class TARDISDoorOpener {
                     }
                 }
             }
-            if (!checkForSpace(inner, indirection)) {
+            if (!plugin.getPresetBuilder().checkForSpace(inner, indirection)) {
                 // set trackers
                 TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
                 tp_in.setLocation(indoor);
@@ -225,19 +224,5 @@ public class TARDISDoorOpener {
                 }
             }
         }
-    }
-
-    private boolean checkForSpace(Block b, COMPASS d) {
-        BlockFace face = getOppositeFace(d);
-        return (b.getRelative(face).getType().isAir() && b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());
-    }
-
-    private BlockFace getOppositeFace(COMPASS d) {
-        return switch (d) {
-            case SOUTH -> BlockFace.NORTH;
-            case WEST -> BlockFace.EAST;
-            case NORTH -> BlockFace.SOUTH;
-            default -> BlockFace.WEST;
-        };
     }
 }

@@ -221,4 +221,9 @@ public class TARDISPresetBuilderFactory {
             default -> BlockFace.WEST;
         };
     }
+    
+    public boolean checkForSpace(Block b, COMPASS d) {
+        BlockFace face = getOppositeFace(d);
+        return (b.getRelative(face).getType().isAir() && b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());
+    }
 }
