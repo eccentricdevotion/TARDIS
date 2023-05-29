@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.move;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -32,7 +33,9 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -46,6 +49,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
@@ -76,7 +80,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                         if (rsd.resultSet()) {
                             event.setCancelled(true);
                             int id = rsd.getTardis_id();
-                            boolean open = cmd < 1002;
+                            boolean closed = cmd < 1002;
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                 TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                 return;
@@ -99,7 +103,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                 if (rsc.getCompanions().contains(playerUUID) || tardis.isAbandoned()) {
                                     if (!rsd.isLocked()) {
-                                        if (open) {
+                                        if (closed) {
                                             // get key material
                                             ResultSetPlayerPrefs rspref = new ResultSetPlayerPrefs(plugin, uuid.toString());
                                             String key;
@@ -116,7 +120,8 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                 key = plugin.getConfig().getString("preferences.key");
                                             }
                                             Material m = Material.valueOf(key);
-                                            if (player.getInventory().getItemInMainHand().getType().equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
+                                            ItemStack hand = player.getInventory().getItemInMainHand();
+                                            if (hand.getType().equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
                                                 if (player.isSneaking()) {
                                                     // tp to the interior
                                                     // get INNER TARDIS location
@@ -180,6 +185,38 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     frame.setItem(dye, false);
                                                 }
                                                 playDoorSound(true, location);
+                                            } else {
+                                                if (TARDISStaticUtils.isSonic(hand) && TARDISMaterials.dyes.contains(dye.getType()) && tardis.getUuid().equals(playerUUID)) {
+                                                    ItemMeta im = hand.getItemMeta();
+                                                    List<String> lore = im.getLore();
+                                                    if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                                                        // check for dye in slot
+                                                        PlayerInventory inv = player.getInventory();
+                                                        ItemStack colour = inv.getItem(8);
+                                                        if (colour == null || !TARDISMaterials.dyes.contains(colour.getType())) {
+                                                            TARDISMessage.send(player, "SONIC_DYE");
+                                                            return;
+                                                        }
+                                                        // dye = item frame item
+                                                        if (dye.getType() == colour.getType()) {
+                                                            // same colour - do nothing
+                                                            return;
+                                                        }
+                                                        long now = System.currentTimeMillis();
+                                                        TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                                                        dye.setType(colour.getType());
+                                                        frame.setItem(dye, false);
+                                                        // remove one dye
+                                                        int a = colour.getAmount();
+                                                        int a2 = a - 1;
+                                                        if (a2 > 0) {
+                                                            inv.getItem(8).setAmount(a2);
+                                                        } else {
+                                                            inv.setItem(8, null);
+                                                        }
+                                                        player.updateInventory();
+                                                    }
+                                                }
                                             }
                                         } else {
                                             if (tardis.isAbandoned()) {
@@ -193,7 +230,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             frame.setItem(dye, false);
                                             playDoorSound(false, location);
                                         }
-                                    } else if (tardis.getUuid() != playerUUID) {
+                                    } else if (!tardis.getUuid().equals(playerUUID)) {
                                         TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                     } else {
                                         TARDISMessage.send(player, "DOOR_UNLOCK");
