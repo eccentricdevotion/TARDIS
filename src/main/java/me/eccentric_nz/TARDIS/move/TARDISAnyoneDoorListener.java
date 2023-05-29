@@ -266,7 +266,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         TrapDoor door_data = (TrapDoor) block.getBlockData();
                                         door_data.setOpen(!door_data.isOpen());
                                     }
-                                } else if (rs.getTardis().getUuid() != playerUUID) {
+                                } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                                     TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                 } else {
                                     TARDISMessage.send(player, "DOOR_UNLOCK");

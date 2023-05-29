@@ -87,7 +87,7 @@ public class DisplayItemDoorToggler {
                             minecart = rsp.isMinecartOn();
                         }
                         new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoors();
-                    } else if (rs.getTardis().getUuid() != playerUUID) {
+                    } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                         TARDISMessage.send(player, "DOOR_DEADLOCKED");
                     } else {
                         TARDISMessage.send(player, "DOOR_UNLOCK");

@@ -206,19 +206,17 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     if (isPoliceBox) {
                                                         new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                     }
-//                                                    else {
                                                     if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
                                                         new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                     } else {
                                                         new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
                                                     }
-//                                                    }
                                                 }
                                             } else if (Tag.TRAPDOORS.isTagged(blockType)) {
                                                 TrapDoor door_data = (TrapDoor) block.getBlockData();
                                                 door_data.setOpen(!door_data.isOpen());
                                             }
-                                        } else if (rs.getTardis().getUuid() != playerUUID) {
+                                        } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                                             TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                         } else {
                                             TARDISMessage.send(player, "DOOR_UNLOCK");

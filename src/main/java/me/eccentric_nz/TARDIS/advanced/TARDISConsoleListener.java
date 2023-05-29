@@ -16,8 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
@@ -35,14 +42,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 
 /**
  * @author eccentric_nz
@@ -160,7 +159,7 @@ public class TARDISConsoleListener implements Listener {
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
-                                if (rst.resultSet() && rst.getTardis().getUuid() == diskUuid) {
+                                if (rst.resultSet() && rst.getTardis().getUuid().equals(diskUuid)) {
                                     if (uuid == rst.getTardis().getUuid()) {
                                         // time lords can't use their own disks!
                                         TARDISMessage.send(p, "SECURITY_TIMELORD");
