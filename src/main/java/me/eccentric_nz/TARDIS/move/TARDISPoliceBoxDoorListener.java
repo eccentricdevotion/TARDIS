@@ -185,37 +185,43 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     frame.setItem(dye, false);
                                                 }
                                                 playDoorSound(true, location);
-                                            } else {
-                                                if (TARDISStaticUtils.isSonic(hand) && TARDISMaterials.dyes.contains(dye.getType()) && tardis.getUuid().equals(playerUUID)) {
-                                                    ItemMeta im = hand.getItemMeta();
-                                                    List<String> lore = im.getLore();
-                                                    if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
-                                                        // check for dye in slot
-                                                        PlayerInventory inv = player.getInventory();
-                                                        ItemStack colour = inv.getItem(8);
-                                                        if (colour == null || !TARDISMaterials.dyes.contains(colour.getType())) {
-                                                            TARDISMessage.send(player, "SONIC_DYE");
-                                                            return;
-                                                        }
-                                                        // dye = item frame item
-                                                        if (dye.getType() == colour.getType()) {
-                                                            // same colour - do nothing
-                                                            return;
-                                                        }
-                                                        long now = System.currentTimeMillis();
-                                                        TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
-                                                        dye.setType(colour.getType());
-                                                        frame.setItem(dye, false);
-                                                        // remove one dye
-                                                        int a = colour.getAmount();
-                                                        int a2 = a - 1;
-                                                        if (a2 > 0) {
-                                                            inv.getItem(8).setAmount(a2);
-                                                        } else {
-                                                            inv.setItem(8, null);
-                                                        }
-                                                        player.updateInventory();
+                                            } else if (TARDISStaticUtils.isSonic(hand) && TARDISMaterials.dyes.contains(dye.getType()) && tardis.getUuid().equals(playerUUID)) {
+                                                ItemMeta im = hand.getItemMeta();
+                                                List<String> lore = im.getLore();
+                                                if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                                                    // check for dye in slot
+                                                    PlayerInventory inv = player.getInventory();
+                                                    ItemStack colour = inv.getItem(8);
+                                                    if (colour == null || !TARDISMaterials.dyes.contains(colour.getType())) {
+                                                        TARDISMessage.send(player, "SONIC_DYE");
+                                                        return;
                                                     }
+                                                    // dye = item frame item
+                                                    if (dye.getType() == colour.getType()) {
+                                                        // same colour - do nothing
+                                                        return;
+                                                    }
+                                                    long now = System.currentTimeMillis();
+                                                    TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                                                    dye.setType(colour.getType());
+                                                    frame.setItem(dye, false);
+                                                    // remove one dye
+                                                    int a = colour.getAmount();
+                                                    int a2 = a - 1;
+                                                    if (a2 > 0) {
+                                                        inv.getItem(8).setAmount(a2);
+                                                    } else {
+                                                        inv.setItem(8, null);
+                                                    }
+                                                    player.updateInventory();
+                                                    // update database
+                                                    HashMap<String, Object> set = new HashMap<>();
+                                                    String c = "POLICE_BOX_" + colour.getType().toString().replace("_DYE", "");
+                                                    set.put("chameleon_preset", c);
+                                                    set.put("chameleon_demat", c);
+                                                    HashMap<String, Object> wheret = new HashMap<>();
+                                                    wheret.put("tardis_id", tardis.getTardis_id());
+                                                    plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                                                 }
                                             }
                                         } else {
