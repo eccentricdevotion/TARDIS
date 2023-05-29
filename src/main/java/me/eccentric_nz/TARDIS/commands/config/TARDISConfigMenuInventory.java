@@ -50,7 +50,24 @@ public class TARDISConfigMenuInventory {
         Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
         config.forEach((c) -> {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("abandon") && !c.startsWith("arch") && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("creation") && !c.startsWith("debug") && !c.startsWith("desktop") && !c.startsWith("dynmap") && !c.startsWith("junk") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds") && !c.startsWith("storage") && !c.startsWith("blueprints") && !c.startsWith("autonomous_areas")) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
+                    && !c.startsWith("abandon")
+                    && !c.startsWith("arch")
+                    && !c.startsWith("autonomous_areas")
+                    && !c.startsWith("blueprints")
+                    && !c.startsWith("circuits")
+                    && !c.startsWith("conversions")
+                    && !c.startsWith("creation")
+                    && !c.startsWith("debug")
+                    && !c.startsWith("desktop")
+                    && !c.startsWith("dynmap")
+                    && !c.startsWith("junk")
+                    && !c.startsWith("modules")
+                    && !c.startsWith("siege")
+                    && !c.startsWith("storage")
+                    && !c.startsWith("travel")
+                    && !c.startsWith("worlds")
+            ) {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
