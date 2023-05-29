@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
@@ -25,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,10 +44,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -132,7 +132,7 @@ public class TARDISCondenserListener implements Listener {
                         }
                         String item = is.getType().toString();
                         // condense sonic screwdriver
-                        if (item.equals("BLAZE_ROD") && isSonic(is)) {
+                        if (item.equals("BLAZE_ROD") && TARDISStaticUtils.isSonic(is)) {
                             // add artron for base screwdriver
                             double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
                             amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
@@ -321,16 +321,6 @@ public class TARDISCondenserListener implements Listener {
         aec.setContents(is);
         p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 0.5f, 1);
         p.openInventory(aec);
-    }
-
-    private boolean isSonic(ItemStack is) {
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
-            }
-        }
-        return false;
     }
 
     private boolean isBlueprint(ItemStack is) {

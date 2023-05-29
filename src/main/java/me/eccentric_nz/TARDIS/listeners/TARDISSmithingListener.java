@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -27,10 +30,6 @@ import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmithingInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class TARDISSmithingListener implements Listener {
 
@@ -72,7 +71,7 @@ public class TARDISSmithingListener implements Listener {
             SmithingInventory inventory = event.getInventory();
             // get the current sonic
             ItemStack sonic = inventory.getItem(0);
-            if (isSonic(sonic)) {
+            if (TARDISStaticUtils.isSonic(sonic)) {
                 ItemMeta im = sonic.getItemMeta();
                 // get the upgrade
                 boolean found = false;
@@ -128,17 +127,5 @@ public class TARDISSmithingListener implements Listener {
                 }
             }
         }
-    }
-
-    private boolean isSonic(ItemStack is) {
-        if (is != null) {
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
-                }
-            }
-        }
-        return false;
     }
 }

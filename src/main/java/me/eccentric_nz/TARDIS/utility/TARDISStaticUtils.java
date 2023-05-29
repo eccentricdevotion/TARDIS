@@ -32,6 +32,7 @@ import org.bukkit.block.data.Openable;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
 
 /**
@@ -299,4 +300,21 @@ public class TARDISStaticUtils {
         }
         return null;
     }
+
+    /**
+     * Checks whether an ItemStack is a sonic screwdriver
+     *
+     * @param is the ItemStack to check
+     * @return
+     */
+    public static boolean isSonic(ItemStack is) {
+        if (is != null && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName()) {
+                return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
+            }
+        }
+        return false;
+    }
+
 }

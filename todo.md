@@ -4,7 +4,8 @@
 
 ## Version 5.0.0
 
-1. ?
+1. Update to Minecraft/Spigot/Paper 1.120
+2. ?
 
 ## Next version `5.1.0`
 

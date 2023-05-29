@@ -16,11 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,11 +38,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener implements Listener {
 
@@ -91,7 +91,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
     }
 
     private void loadSonic(ItemStack sonic, Player player, InventoryView view) {
-        if (!isSonic(sonic)) {
+        if (!TARDISStaticUtils.isSonic(sonic)) {
             return;
         }
         ItemMeta im = sonic.getItemMeta();
@@ -271,7 +271,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             plugin.getQueryFactory().doUpdate("sonic", set, where);
             // set sonic lore
             ItemStack sonic = view.getItem(18);
-            if (isSonic(sonic)) {
+            if (TARDISStaticUtils.isSonic(sonic)) {
                 ItemMeta im = sonic.getItemMeta();
                 if (upgrades.size() > 1) {
                     im.setLore(upgrades);
@@ -295,7 +295,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
     private ConfiguredSonic createConfiguredSonic(Player player, InventoryView view) {
         // get sonic in slot 18
         ItemStack is = view.getItem(18);
-        if (isSonic(is)) {
+        if (TARDISStaticUtils.isSonic(is)) {
             ItemMeta im = is.getItemMeta();
             // get the upgrades from the lore
             List<String> lore = im.getLore();
@@ -331,18 +331,6 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, sonic_uuid);
         }
         return null;
-    }
-
-    private boolean isSonic(ItemStack is) {
-        if (is != null) {
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
-                }
-            }
-        }
-        return false;
     }
 
     @EventHandler(ignoreCancelled = true)
