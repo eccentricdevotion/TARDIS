@@ -125,6 +125,8 @@ public class TARDIS extends JavaPlugin {
     private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
     private final List<String> cleanUpWorlds = new ArrayList<>();
     private final HashMap<String, String> versions = new HashMap<>();
+    private final String versionRegex = "(\\d+[.])+\\d+";
+    private final Pattern versionPattern = Pattern.compile(versionRegex);
     //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -200,11 +202,11 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
-        versions.put("GriefPrevention", "16.13");
-        versions.put("LibsDisguises", "10.0.26");
-        versions.put("Multiverse-Core", "4.0");
-        versions.put("Multiverse-Inventories", "4.0");
-        versions.put("Towny", "0.95");
+        versions.put("GriefPrevention", "16.18");
+        versions.put("LibsDisguises", "10.0.34");
+        versions.put("Multiverse-Core", "4.3");
+        versions.put("Multiverse-Inventories", "4.2");
+        versions.put("Towny", "0.98");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.8");
     }
@@ -233,20 +235,8 @@ public class TARDIS extends JavaPlugin {
     }
 
     private ModuleDescriptor.Version getServerVersion(String s) {
-        Pattern pat = Pattern.compile("\\((.+?)\\)", Pattern.DOTALL);
-        Matcher mat = pat.matcher(s);
-        String v;
-        if (mat.find()) {
-            String[] split = mat.group(1).split(" ");
-            String[] tmp = split[1].split("-");
-            if (tmp.length > 1) {
-                v = tmp[0];
-            } else {
-                v = split[1];
-            }
-        } else {
-            v = "1.13";
-        }
+        Matcher mat = versionPattern.matcher(s);
+        String v = mat.find() ? mat.group(0) : "1.13";
         return ModuleDescriptor.Version.parse(v);
     }
 
@@ -254,36 +244,23 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
-            String preSplit = check.getDescription().getVersion();
-            String[] split = preSplit.split("-");
-            try {
-                ModuleDescriptor.Version version;
-                if (plg.equals("WorldGuard") && preSplit.contains(";")) {
-                    // eg 6.2.1;84bc322
-                    String[] semi = split[0].split(";");
-                    version = ModuleDescriptor.Version.parse(semi[0]);
-                } else if (plg.equals("WorldGuard") && preSplit.contains("+")) {
-                    // eg 7.0.8+33cdb4a
-                    String[] plus = preSplit.split("\\+");
-                    version = ModuleDescriptor.Version.parse(plus[0]);
-                } else if (plg.equals("Towny") && preSplit.contains(" ")) {
-                    // eg 0.93.1.0 Pre-Release 4
-                    String[] space = split[0].split(" ");
-                    version = ModuleDescriptor.Version.parse(space[0]);
-                } else {
-                    version = ModuleDescriptor.Version.parse(split[0]);
+            String yamlVersion = check.getDescription().getVersion();
+            Matcher matcher = versionPattern.matcher(yamlVersion);
+            if (matcher.find()) {
+                String pluginVersion = matcher.group(0);
+                try {
+                    ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(pluginVersion);
+                    return (version.compareTo(minVersion) >= 0);
+                } catch (IllegalArgumentException e) {
+                    debug("Version IllegalArgumentException");
                 }
-                return (version.compareTo(minVersion) >= 0);
-            } catch (IllegalArgumentException e) {
-                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
-                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-                getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
-                getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
-                return true;
             }
-        } else {
-            return true;
+            getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
+            getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+            getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
+            getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", yamlVersion);
         }
+        return true;
     }
 
     @Override
