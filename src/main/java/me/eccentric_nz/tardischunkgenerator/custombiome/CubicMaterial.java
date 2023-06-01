@@ -381,6 +381,7 @@ public class CubicMaterial {
             Material.YELLOW_TERRACOTTA,
             Material.YELLOW_WOOL,
             // 1.19 blocks
+            Material.MANGROVE_LEAVES,
             Material.MANGROVE_LOG,
             Material.MANGROVE_PLANKS,
             Material.MANGROVE_ROOTS,
@@ -392,9 +393,20 @@ public class CubicMaterial {
             Material.OCHRE_FROGLIGHT,
             Material.PEARLESCENT_FROGLIGHT,
             Material.VERDANT_FROGLIGHT,
-            Material.REINFORCED_DEEPSLATE
-            // TODO add 1.20 blocks
-            // BAMBOO
-            // CHERRY
+            Material.REINFORCED_DEEPSLATE,
+            // 1.20 blocks
+            Material.BAMBOO_BLOCK,
+            Material.BAMBOO_MOSAIC,
+            Material.BAMBOO_PLANKS,
+            Material.CHERRY_LEAVES,
+            Material.CHERRY_LOG,
+            Material.CHERRY_PLANKS,
+            Material.CHERRY_WOOD,
+            Material.CHISELED_BOOKSHELF,
+            Material.STRIPPED_BAMBOO_BLOCK,
+            Material.STRIPPED_CHERRY_LOG,
+            Material.STRIPPED_CHERRY_WOOD,
+//            Material.SUSPICIOUS_GRAVEL,
+            Material.SUSPICIOUS_SAND
     );
 }
