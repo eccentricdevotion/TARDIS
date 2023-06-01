@@ -24,6 +24,8 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.entity.EntityType;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a
@@ -33,6 +35,21 @@ import org.bukkit.loot.LootTables;
  * @author eccentric_nz
  */
 public class TARDISConstants {
+    
+    /**
+     * Item Display entity zero rotation angle for transformations
+     */
+    public static final AxisAngle4f AXIS_ANGLE_ZERO = new AxisAngle4f(0, 0, 0, 0);
+
+    /**
+     * Item Display entity zero offset vector for transformations
+     */
+    public static final Vector3f VECTOR_ZERO = new Vector3f(0, 0, 0);
+
+    /**
+     * Item Display entity 0.25 scale vector for transformations
+     */
+    public static final Vector3f VECTOR_QUARTER = new Vector3f(0.25f, 0.25f, 0.25f);
 
     /**
      * Consoles which need to be higher

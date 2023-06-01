@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardisshop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,8 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 
 public class TARDISShopItemSpawner {
 
@@ -75,8 +74,7 @@ public class TARDISShopItemSpawner {
             TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
             text.setAlignment(TextDisplay.TextAlignment.CENTER);
             text.setText(what.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.getCost()));
-            AxisAngle4f aa = new AxisAngle4f();
-            text.setTransformation(new Transformation(new Vector3f(0, 0, 0), aa, new Vector3f(0.25f, 0.25f, 0.25f), aa));
+            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
             text.setBillboard(Display.Billboard.VERTICAL);
         } catch (IllegalArgumentException e) {
             plugin.debug("Illegal shop item [" + toEnum + "] :" + e.getMessage());

@@ -41,8 +41,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 
 /**
  *
@@ -91,7 +89,7 @@ public class TARDISDisplayItemCommand {
                     TextDisplay text = (TextDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.75d, 0.5d), EntityType.TEXT_DISPLAY);
                     text.setAlignment(TextDisplay.TextAlignment.CENTER);
                     text.setText(TARDISStringUtils.capitalise(material.toString()) + ", Cost: 25.00");
-                    text.setTransformation(new Transformation(new Vector3f(0, 0, 0), new AxisAngle4f(), new Vector3f(0.25f, 0.25f, 0.25f), new AxisAngle4f()));
+                    text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
                     text.setBillboard(Display.Billboard.VERTICAL);
                 }
             }
