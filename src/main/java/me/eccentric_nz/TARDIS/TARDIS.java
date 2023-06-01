@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -96,6 +89,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -261,6 +262,10 @@ public class TARDIS extends JavaPlugin {
                     // eg 6.2.1;84bc322
                     String[] semi = split[0].split(";");
                     version = ModuleDescriptor.Version.parse(semi[0]);
+                } else if (plg.equals("WorldGuard") && preSplit.contains("+")) {
+                    // eg 7.0.8+33cdb4a
+                    String[] plus = preSplit.split("\\+");
+                    version = ModuleDescriptor.Version.parse(plus[0]);
                 } else if (plg.equals("Towny") && preSplit.contains(" ")) {
                     // eg 0.93.1.0 Pre-Release 4
                     String[] space = split[0].split(" ");
