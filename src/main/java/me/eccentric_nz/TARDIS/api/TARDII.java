@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import io.papermc.lib.PaperLib;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -987,7 +988,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public FollowerChecker isClaimedMonster(Entity entity, UUID uuid) {
-        return new FollowerChecker(entity, uuid);
+        return (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels") && PaperLib.isPaper()) ? new FollowerChecker(entity, uuid) : null;
     }
 
     @Override
