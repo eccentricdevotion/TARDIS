@@ -102,8 +102,13 @@ STAINED GLASS PANES. To change the colour of these blocks you must have a suitab
 dye item in the last (right-most) slot of you hotbar. LEFT-clicking a block while
 sneaking (hold down the SHIFT key) will change the block colour and consume 1 dye item.
 
-You can also change Chamemelon preset coloured Police Boxes. Have a suitable
+You can change Chamemelon preset coloured Police Boxes. Have a suitable
 dye item in the last (right-most) slot of you hotbar, then RIGHT-click the item frame to set the colour.
+
+If you have the permission `tardis.sonic.paint_blocks` you can tint any cubic shaped block in your TARDIS
+in addtion to the coloured blocks listed above. Use the same method as for coloured blocks to add the tint -
+to remove the tint, place a SPONGE block in the last (right-most) slot of your hotbar and LEFT-SHIFT-click 
+the block.
 
 ### Ignite
 
