@@ -43,7 +43,7 @@ public class TARDISDisplayItemUtils {
      * Get a TARDISDisplayItem from a display entity
      *
      * @param display the display entity to get the data from
-     * @return The TARDISDisplayItem that matches this entity isn't one
+     * @return The TARDISDisplayItem that matches this entity or null if there isn't one
      */
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();

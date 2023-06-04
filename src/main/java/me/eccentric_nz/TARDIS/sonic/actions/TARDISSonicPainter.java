@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.TARDISTinter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import org.bukkit.Material;
-import static org.bukkit.Material.BLACK_CANDLE;
-import static org.bukkit.Material.BLACK_CANDLE_CAKE;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -32,197 +31,15 @@ import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Bed.Part;
 import org.bukkit.block.data.type.Candle;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 public class TARDISSonicPainter {
-
-    private static final List<Material> PAINTABLE = new ArrayList<>();
-
-    static {
-        PAINTABLE.add(Material.BLACK_BED);
-        PAINTABLE.add(Material.BLACK_CANDLE);
-        PAINTABLE.add(Material.BLACK_CANDLE_CAKE);
-        PAINTABLE.add(Material.BLACK_CARPET);
-        PAINTABLE.add(Material.BLACK_CONCRETE);
-        PAINTABLE.add(Material.BLACK_CONCRETE_POWDER);
-        PAINTABLE.add(Material.BLACK_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.BLACK_STAINED_GLASS);
-        PAINTABLE.add(Material.BLACK_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.BLACK_TERRACOTTA);
-        PAINTABLE.add(Material.BLACK_WOOL);
-        PAINTABLE.add(Material.BLUE_BED);
-        PAINTABLE.add(Material.BLUE_CANDLE);
-        PAINTABLE.add(Material.BLUE_CANDLE_CAKE);
-        PAINTABLE.add(Material.BLUE_CARPET);
-        PAINTABLE.add(Material.BLUE_CONCRETE);
-        PAINTABLE.add(Material.BLUE_CONCRETE_POWDER);
-        PAINTABLE.add(Material.BLUE_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.BLUE_STAINED_GLASS);
-        PAINTABLE.add(Material.BLUE_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.BLUE_TERRACOTTA);
-        PAINTABLE.add(Material.BLUE_WOOL);
-        PAINTABLE.add(Material.BROWN_BED);
-        PAINTABLE.add(Material.BROWN_CANDLE);
-        PAINTABLE.add(Material.BROWN_CANDLE_CAKE);
-        PAINTABLE.add(Material.BROWN_CARPET);
-        PAINTABLE.add(Material.BROWN_CONCRETE);
-        PAINTABLE.add(Material.BROWN_CONCRETE_POWDER);
-        PAINTABLE.add(Material.BROWN_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.BROWN_STAINED_GLASS);
-        PAINTABLE.add(Material.BROWN_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.BROWN_TERRACOTTA);
-        PAINTABLE.add(Material.BROWN_WOOL);
-        PAINTABLE.add(Material.CYAN_BED);
-        PAINTABLE.add(Material.CYAN_CANDLE);
-        PAINTABLE.add(Material.CYAN_CANDLE_CAKE);
-        PAINTABLE.add(Material.CYAN_CARPET);
-        PAINTABLE.add(Material.CYAN_CONCRETE);
-        PAINTABLE.add(Material.CYAN_CONCRETE_POWDER);
-        PAINTABLE.add(Material.CYAN_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.CYAN_STAINED_GLASS);
-        PAINTABLE.add(Material.CYAN_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.CYAN_TERRACOTTA);
-        PAINTABLE.add(Material.CYAN_WOOL);
-        PAINTABLE.add(Material.GRAY_BED);
-        PAINTABLE.add(Material.GRAY_CANDLE);
-        PAINTABLE.add(Material.GRAY_CANDLE_CAKE);
-        PAINTABLE.add(Material.GRAY_CARPET);
-        PAINTABLE.add(Material.GRAY_CONCRETE);
-        PAINTABLE.add(Material.GRAY_CONCRETE_POWDER);
-        PAINTABLE.add(Material.GRAY_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.GRAY_STAINED_GLASS);
-        PAINTABLE.add(Material.GRAY_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.GRAY_TERRACOTTA);
-        PAINTABLE.add(Material.GRAY_WOOL);
-        PAINTABLE.add(Material.GREEN_BED);
-        PAINTABLE.add(Material.GREEN_CANDLE);
-        PAINTABLE.add(Material.GREEN_CANDLE_CAKE);
-        PAINTABLE.add(Material.GREEN_CARPET);
-        PAINTABLE.add(Material.GREEN_CONCRETE);
-        PAINTABLE.add(Material.GREEN_CONCRETE_POWDER);
-        PAINTABLE.add(Material.GREEN_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.GREEN_STAINED_GLASS);
-        PAINTABLE.add(Material.GREEN_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.GREEN_TERRACOTTA);
-        PAINTABLE.add(Material.GREEN_WOOL);
-        PAINTABLE.add(Material.LIGHT_BLUE_BED);
-        PAINTABLE.add(Material.LIGHT_BLUE_CANDLE);
-        PAINTABLE.add(Material.LIGHT_BLUE_CANDLE_CAKE);
-        PAINTABLE.add(Material.LIGHT_BLUE_CARPET);
-        PAINTABLE.add(Material.LIGHT_BLUE_CONCRETE);
-        PAINTABLE.add(Material.LIGHT_BLUE_CONCRETE_POWDER);
-        PAINTABLE.add(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.LIGHT_BLUE_STAINED_GLASS);
-        PAINTABLE.add(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.LIGHT_BLUE_TERRACOTTA);
-        PAINTABLE.add(Material.LIGHT_BLUE_WOOL);
-        PAINTABLE.add(Material.LIGHT_GRAY_BED);
-        PAINTABLE.add(Material.LIGHT_GRAY_CANDLE);
-        PAINTABLE.add(Material.LIGHT_GRAY_CANDLE_CAKE);
-        PAINTABLE.add(Material.LIGHT_GRAY_CARPET);
-        PAINTABLE.add(Material.LIGHT_GRAY_CONCRETE);
-        PAINTABLE.add(Material.LIGHT_GRAY_CONCRETE_POWDER);
-        PAINTABLE.add(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.LIGHT_GRAY_STAINED_GLASS);
-        PAINTABLE.add(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.LIGHT_GRAY_TERRACOTTA);
-        PAINTABLE.add(Material.LIGHT_GRAY_WOOL);
-        PAINTABLE.add(Material.LIME_BED);
-        PAINTABLE.add(Material.LIME_CANDLE);
-        PAINTABLE.add(Material.LIME_CANDLE_CAKE);
-        PAINTABLE.add(Material.LIME_CARPET);
-        PAINTABLE.add(Material.LIME_CONCRETE);
-        PAINTABLE.add(Material.LIME_CONCRETE_POWDER);
-        PAINTABLE.add(Material.LIME_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.LIME_STAINED_GLASS);
-        PAINTABLE.add(Material.LIME_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.LIME_TERRACOTTA);
-        PAINTABLE.add(Material.LIME_WOOL);
-        PAINTABLE.add(Material.MAGENTA_BED);
-        PAINTABLE.add(Material.MAGENTA_CANDLE);
-        PAINTABLE.add(Material.MAGENTA_CANDLE_CAKE);
-        PAINTABLE.add(Material.MAGENTA_CARPET);
-        PAINTABLE.add(Material.MAGENTA_CONCRETE);
-        PAINTABLE.add(Material.MAGENTA_CONCRETE_POWDER);
-        PAINTABLE.add(Material.MAGENTA_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.MAGENTA_STAINED_GLASS);
-        PAINTABLE.add(Material.MAGENTA_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.MAGENTA_TERRACOTTA);
-        PAINTABLE.add(Material.MAGENTA_WOOL);
-        PAINTABLE.add(Material.ORANGE_BED);
-        PAINTABLE.add(Material.ORANGE_CANDLE);
-        PAINTABLE.add(Material.ORANGE_CANDLE_CAKE);
-        PAINTABLE.add(Material.ORANGE_CARPET);
-        PAINTABLE.add(Material.ORANGE_CONCRETE);
-        PAINTABLE.add(Material.ORANGE_CONCRETE_POWDER);
-        PAINTABLE.add(Material.ORANGE_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.ORANGE_STAINED_GLASS);
-        PAINTABLE.add(Material.ORANGE_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.ORANGE_TERRACOTTA);
-        PAINTABLE.add(Material.ORANGE_WOOL);
-        PAINTABLE.add(Material.PINK_BED);
-        PAINTABLE.add(Material.PINK_CANDLE);
-        PAINTABLE.add(Material.PINK_CANDLE_CAKE);
-        PAINTABLE.add(Material.PINK_CARPET);
-        PAINTABLE.add(Material.PINK_CONCRETE);
-        PAINTABLE.add(Material.PINK_CONCRETE_POWDER);
-        PAINTABLE.add(Material.PINK_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.PINK_STAINED_GLASS);
-        PAINTABLE.add(Material.PINK_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.PINK_TERRACOTTA);
-        PAINTABLE.add(Material.PINK_WOOL);
-        PAINTABLE.add(Material.PURPLE_BED);
-        PAINTABLE.add(Material.PURPLE_CANDLE);
-        PAINTABLE.add(Material.PURPLE_CANDLE_CAKE);
-        PAINTABLE.add(Material.PURPLE_CARPET);
-        PAINTABLE.add(Material.PURPLE_CONCRETE);
-        PAINTABLE.add(Material.PURPLE_CONCRETE_POWDER);
-        PAINTABLE.add(Material.PURPLE_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.PURPLE_STAINED_GLASS);
-        PAINTABLE.add(Material.PURPLE_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.PURPLE_TERRACOTTA);
-        PAINTABLE.add(Material.PURPLE_WOOL);
-        PAINTABLE.add(Material.RED_BED);
-        PAINTABLE.add(Material.RED_CANDLE);
-        PAINTABLE.add(Material.RED_CANDLE_CAKE);
-        PAINTABLE.add(Material.RED_CARPET);
-        PAINTABLE.add(Material.RED_CONCRETE);
-        PAINTABLE.add(Material.RED_CONCRETE_POWDER);
-        PAINTABLE.add(Material.RED_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.RED_STAINED_GLASS);
-        PAINTABLE.add(Material.RED_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.RED_TERRACOTTA);
-        PAINTABLE.add(Material.RED_WOOL);
-        PAINTABLE.add(Material.WHITE_BED);
-        PAINTABLE.add(Material.WHITE_CANDLE);
-        PAINTABLE.add(Material.WHITE_CANDLE_CAKE);
-        PAINTABLE.add(Material.WHITE_CARPET);
-        PAINTABLE.add(Material.WHITE_CONCRETE);
-        PAINTABLE.add(Material.WHITE_CONCRETE_POWDER);
-        PAINTABLE.add(Material.WHITE_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.WHITE_STAINED_GLASS);
-        PAINTABLE.add(Material.WHITE_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.WHITE_TERRACOTTA);
-        PAINTABLE.add(Material.WHITE_WOOL);
-        PAINTABLE.add(Material.YELLOW_BED);
-        PAINTABLE.add(Material.YELLOW_CANDLE);
-        PAINTABLE.add(Material.YELLOW_CANDLE_CAKE);
-        PAINTABLE.add(Material.YELLOW_CARPET);
-        PAINTABLE.add(Material.YELLOW_CONCRETE);
-        PAINTABLE.add(Material.YELLOW_CONCRETE_POWDER);
-        PAINTABLE.add(Material.YELLOW_GLAZED_TERRACOTTA);
-        PAINTABLE.add(Material.YELLOW_STAINED_GLASS);
-        PAINTABLE.add(Material.YELLOW_STAINED_GLASS_PANE);
-        PAINTABLE.add(Material.YELLOW_TERRACOTTA);
-        PAINTABLE.add(Material.YELLOW_WOOL);
-    }
-
-    public static List<Material> getPaintable() {
-        return PAINTABLE;
-    }
 
     public static void paint(TARDIS plugin, Player player, Block b) {
         // must be in TARDIS world
@@ -237,12 +54,31 @@ public class TARDISSonicPainter {
             // check for dye in slot
             PlayerInventory inv = player.getInventory();
             ItemStack dye = inv.getItem(8);
+            Material material = b.getType();
+            if (dye != null && dye.getType() == Material.SPONGE && player.hasPermission("tardis.sonic.paint_block") && CubicMaterial.cubes.contains(material)) {
+                // check for display item
+                ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                if (display == null) {
+                    return;
+                }
+                // get the itemstack
+                ItemStack is = display.getItemStack();
+                if (is == null) {
+                    return;
+                }
+                ItemMeta im = is.getItemMeta();
+                if (im != null && im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.BYTE)) {
+                    // remove the tint
+                    display.remove();
+                }
+                return;
+            }
             if (dye == null || !TARDISMaterials.dyes.contains(dye.getType())) {
                 TARDISMessage.send(player, "SONIC_DYE");
                 return;
             }
             // don't do anything if it is the same colour
-            switch (b.getType()) {
+            switch (material) {
                 case BLACK_CARPET, BLACK_CONCRETE, BLACK_CONCRETE_POWDER, BLACK_GLAZED_TERRACOTTA, BLACK_STAINED_GLASS, BLACK_STAINED_GLASS_PANE, BLACK_TERRACOTTA, BLACK_WOOL, BLACK_CANDLE, BLACK_CANDLE_CAKE, BLACK_BED -> {
                     if (!dye.getType().equals(Material.BLACK_DYE)) {
                         changeColour(b, dye, inv, player);
@@ -324,6 +160,10 @@ public class TARDISSonicPainter {
                     }
                 }
                 default -> {
+                    // tint block with stained glass item display
+                    if (CubicMaterial.cubes.contains(material) && player.hasPermission("tardis.sonic.paint_block")) {
+                        new TARDISTinter(plugin).paintBlock(player, b, dye.getType().toString(), inv);
+                    }
                 }
             }
         } else {
@@ -373,15 +213,19 @@ public class TARDISSonicPainter {
             // also change the other side of the bed
             Block side;
             switch (bed.getFacing()) {
-                case WEST -> side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.EAST) : block.getRelative(BlockFace.WEST);
-                case NORTH -> side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.SOUTH) : block.getRelative(BlockFace.NORTH);
-                case EAST -> side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.WEST) : block.getRelative(BlockFace.EAST);
-                default -> side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.NORTH) : block.getRelative(BlockFace.SOUTH); // SOUTH
+                case WEST ->
+                    side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.EAST) : block.getRelative(BlockFace.WEST);
+                case NORTH ->
+                    side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.SOUTH) : block.getRelative(BlockFace.NORTH);
+                case EAST ->
+                    side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.WEST) : block.getRelative(BlockFace.EAST);
+                default ->
+                    side = (bed.getPart() == Part.HEAD) ? block.getRelative(BlockFace.NORTH) : block.getRelative(BlockFace.SOUTH); // SOUTH
             }
             ((Bed) data).setPart(getOpposite(bed.getPart()));
             side.setBlockData(data, false);
         } else {
-            block.setBlockData(data, true); 
+            block.setBlockData(data, true);
         }
     }
 

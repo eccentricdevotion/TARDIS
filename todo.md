@@ -16,8 +16,6 @@
 5. Animated models for player disguises
 6. Custom Control models #703 #355
 7. Sonic Blaster
-8. Tint any block with the Sonic Screwdriver Painter Upgrade
-9. `new TranslatableComponent(item.getTranslationKey()).toPlainText()`
 
 ## Future versions
 

@@ -493,7 +493,10 @@ permissions:
     description: Allows the sonic screwdriver with Emerald Environment abilities to re-sow plants if the player has the appropriate seed items in their inventory.
     default: op
   tardis.sonic.paint:
-    description: Allows the sonic screwdriver to be upgraded and used with Painter abilities..
+    description: Allows the sonic screwdriver to be upgraded and used with Painter abilities.
+    default: op
+  tardis.sonic.paint_block:
+    description: Allows the sonic screwdriver upgraded with Painter abilities to tint any cubic block.
     default: op
   tardis.sonic.sort:
     description: Allows a player to use the chest sorting function of the sonic screwdriver.
@@ -1685,7 +1688,7 @@ commands:
   # weeping angels
   twa:
     aliases: [ tardisweepingangels ]
-    description: Manipulate TARDISWeepingAngels monsters with various arguments (spawn, kill, remove, count, disguise, equip, etc)..
+    description: Manipulate TARDISWeepingAngels monsters with various arguments (spawn, kill, remove, count, disguise, equip, etc).
     usage: /<command> [subcommand] <monster type> <world> <max>
     spawn:
       description: Spawns a monster on the block you are targeting.

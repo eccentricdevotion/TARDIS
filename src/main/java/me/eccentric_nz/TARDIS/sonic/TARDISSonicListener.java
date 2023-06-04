@@ -197,7 +197,7 @@ public class TARDISSonicListener implements Listener {
                             // break block
                             TARDISSonicDisruptor.breakBlock(plugin, player, block);
                         }
-                    } else if (TARDISSonicPainter.getPaintable().contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                    } else if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
                         event.setCancelled(true);
                         // paint the block
                         TARDISSonicPainter.paint(plugin, player, block);
