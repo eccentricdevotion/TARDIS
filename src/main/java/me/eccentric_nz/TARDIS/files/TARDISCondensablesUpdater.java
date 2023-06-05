@@ -418,6 +418,22 @@ public class TARDISCondensablesUpdater {
             list.put("BEE_NEST", 100);
             // 1.20
             list.put("ACACIA_HANGING_SIGN", 2);
+//            list.put("ARMOR_TRIM_COAST", 1400);
+//            list.put("ARMOR_TRIM_DUNE", 1400);
+//            list.put("ARMOR_TRIM_EYE", 1400);
+//            list.put("ARMOR_TRIM_HOST", 1400);
+//            list.put("ARMOR_TRIM_RAISER", 1400);
+//            list.put("ARMOR_TRIM_RIB", 1400);
+//            list.put("ARMOR_TRIM_SENTRY", 1400);
+//            list.put("ARMOR_TRIM_SHAPER", 1400);
+//            list.put("ARMOR_TRIM_SILENCE", 1400);
+//            list.put("ARMOR_TRIM_SNOUT", 1400);
+//            list.put("ARMOR_TRIM_SPIRE", 1400);
+//            list.put("ARMOR_TRIM_TIDE", 1400);
+//            list.put("ARMOR_TRIM_VEX", 1400);
+//            list.put("ARMOR_TRIM_WARD", 1400);
+//            list.put("ARMOR_TRIM_WAYFINDER", 1400);
+//            list.put("ARMOR_TRIM_WILD", 1400);
             list.put("BAMBOO_BLOCK", 2);
             list.put("BAMBOO_BUTTON", 1);
             list.put("BAMBOO_CHEST_RAFT", 8);
@@ -436,6 +452,7 @@ public class TARDISCondensablesUpdater {
             list.put("BAMBOO_STAIRS", 1);
             list.put("BAMBOO_TRAPDOOR", 6);
             list.put("BIRCH_HANGING_SIGN", 2);
+//            list.put("CALIBRATED_SKULK_SENSOR", 30);
             list.put("CHERRY_BOAT", 3);
             list.put("CHERRY_BUTTON", 1);
             list.put("CHERRY_DOOR", 3);
@@ -458,17 +475,41 @@ public class TARDISCondensablesUpdater {
             list.put("DECORATED_POT", 80);
             list.put("JUNGLE_HANGING_SIGN", 2);
             list.put("MANGROVE_HANGING_SIGN", 2);
+//            list.put("MUSIC_DISC_RELIC", 120);
             list.put("OAK_HANGING_SIGN", 2);
             list.put("PIGLIN_HEAD", 200);
-            list.put("POTTERY_SHARD_ARCHER", 20);
-            list.put("POTTERY_SHARD_PRIZE", 20);
-            list.put("POTTERY_SHARD_ARMS_UP", 20);
-            list.put("POTTERY_SHARD_SKULL", 20);
+//            list.put("PINK_PETALS", 2);
+//            list.put("PITCHER_PLANT", 2);
+//            list.put("PITCHER_POD", 2);
+            list.put("POTTERY_SHERD_ANGLER", 20);
+            list.put("POTTERY_SHERD_ARCHER", 20);
+            list.put("POTTERY_SHERD_ARMS UP", 20);
+            list.put("POTTERY_SHERD_BLADE", 20);
+            list.put("POTTERY_SHERD_BREWER", 20);
+            list.put("POTTERY_SHERD_BURN", 20);
+            list.put("POTTERY_SHERD_DANGER", 20);
+            list.put("POTTERY_SHERD_EXPLORER", 20);
+            list.put("POTTERY_SHERD_FRIEND", 20);
+            list.put("POTTERY_SHERD_HEART", 20);
+            list.put("POTTERY_SHERD_HEARTBREAK", 20);
+            list.put("POTTERY_SHERD_HOWL", 20);
+            list.put("POTTERY_SHERD_MINER", 20);
+            list.put("POTTERY_SHERD_MOURNER", 20);
+            list.put("POTTERY_SHERD_PLENTY", 20);
+            list.put("POTTERY_SHERD_PRIZE", 20);
+            list.put("POTTERY_SHERD_SHEAF", 20);
+            list.put("POTTERY_SHERD_SHELTER", 20);
+            list.put("POTTERY_SHERD_SKULL", 20);
+            list.put("POTTERY_SHERD_SNORT", 20);
+//            list.put("SKULK_SENSOR", 30);
             list.put("SPRUCE_HANGING_SIGN", 2);
             list.put("STRIPPED_BAMBOO_BLOCK", 2);
             list.put("STRIPPED_CHERRY_LOG", 2);
             list.put("STRIPPED_CHERRY_WOOD", 2);
+//            list.put("SUSPICIOUS_GRAVEL", 2); // unobtainable
+//            list.put("SUSPICIOUS_SAND", 2); // unobtainable
             list.put("TORCHFLOWER", 20);
+//            list.put("TORCHFLOWER_SEEDS", 20);
             list.put("WARPED_HANGING_SIGN", 2);
 
             for (Map.Entry<String, Object> entry : list.entrySet()) {
@@ -512,6 +553,13 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("DISC_FRAGMENT_5", 20);
                 plugin.getCondensablesConfig().set("GOAT_HORN", 20);
                 plugin.getCondensablesConfig().set("ECHO_SHARD", 20);
+            }
+            // fix sherds
+            if (plugin.getCondensablesConfig().contains("POTTERY_SHARD_ARCHER")) {
+                plugin.getCondensablesConfig().set("POTTERY_SHARD_ARCHER", null);
+                plugin.getCondensablesConfig().set("POTTERY_SHARD_PRIZE", null);
+                plugin.getCondensablesConfig().set("POTTERY_SHARD_ARMS_UP", null);
+                plugin.getCondensablesConfig().set("POTTERY_SHARD_SKULL", null);
             }
             try {
                 String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

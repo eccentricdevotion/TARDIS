@@ -1068,6 +1068,22 @@ public class TARDISCondensables {
             condensables.put("YELLOW_CANDLE", 35);
             // 1.20
             condensables.put("ACACIA_HANGING_SIGN", 2);
+//            condensables.put("ARMOR_TRIM_COAST", 1400);
+//            condensables.put("ARMOR_TRIM_DUNE", 1400);
+//            condensables.put("ARMOR_TRIM_EYE", 1400);
+//            condensables.put("ARMOR_TRIM_HOST", 1400);
+//            condensables.put("ARMOR_TRIM_RAISER", 1400);
+//            condensables.put("ARMOR_TRIM_RIB", 1400);
+//            condensables.put("ARMOR_TRIM_SENTRY", 1400);
+//            condensables.put("ARMOR_TRIM_SHAPER", 1400);
+//            condensables.put("ARMOR_TRIM_SILENCE", 1400);
+//            condensables.put("ARMOR_TRIM_SNOUT", 1400);
+//            condensables.put("ARMOR_TRIM_SPIRE", 1400);
+//            condensables.put("ARMOR_TRIM_TIDE", 1400);
+//            condensables.put("ARMOR_TRIM_VEX", 1400);
+//            condensables.put("ARMOR_TRIM_WARD", 1400);
+//            condensables.put("ARMOR_TRIM_WAYFINDER", 1400);
+//            condensables.put("ARMOR_TRIM_WILD", 1400);
             condensables.put("BAMBOO_BLOCK", 2);
             condensables.put("BAMBOO_BUTTON", 1);
             condensables.put("BAMBOO_CHEST_RAFT", 8);
@@ -1086,6 +1102,8 @@ public class TARDISCondensables {
             condensables.put("BAMBOO_STAIRS", 1);
             condensables.put("BAMBOO_TRAPDOOR", 6);
             condensables.put("BIRCH_HANGING_SIGN", 2);
+            condensables.put("BRUSH", 24);
+//            condensables.put("CALIBRATED_SKULK_SENSOR", 30);
             condensables.put("CHERRY_BOAT", 3);
             condensables.put("CHERRY_BUTTON", 1);
             condensables.put("CHERRY_DOOR", 3);
@@ -1108,17 +1126,41 @@ public class TARDISCondensables {
             condensables.put("DECORATED_POT", 80);
             condensables.put("JUNGLE_HANGING_SIGN", 2);
             condensables.put("MANGROVE_HANGING_SIGN", 2);
+//            condensables.put("MUSIC_DISC_RELIC", 120);
             condensables.put("OAK_HANGING_SIGN", 2);
             condensables.put("PIGLIN_HEAD", 200);
-            condensables.put("POTTERY_SHARD_ARCHER", 20);
-            condensables.put("POTTERY_SHARD_ARMS_UP", 20);
-            condensables.put("POTTERY_SHARD_PRIZE", 20);
-            condensables.put("POTTERY_SHARD_SKULL", 20);
+//            condensables.put("PINK_PETALS", 2);
+//            condensables.put("PITCHER_PLANT", 2);
+//            condensables.put("PITCHER_POD", 2);
+            condensables.put("POTTERY_SHERD_ANGLER", 20);
+            condensables.put("POTTERY_SHERD_ARCHER", 20);
+            condensables.put("POTTERY_SHERD_ARMS UP", 20);
+            condensables.put("POTTERY_SHERD_BLADE", 20);
+            condensables.put("POTTERY_SHERD_BREWER", 20);
+            condensables.put("POTTERY_SHERD_BURN", 20);
+            condensables.put("POTTERY_SHERD_DANGER", 20);
+            condensables.put("POTTERY_SHERD_EXPLORER", 20);
+            condensables.put("POTTERY_SHERD_FRIEND", 20);
+            condensables.put("POTTERY_SHERD_HEART", 20);
+            condensables.put("POTTERY_SHERD_HEARTBREAK", 20);
+            condensables.put("POTTERY_SHERD_HOWL", 20);
+            condensables.put("POTTERY_SHERD_MINER", 20);
+            condensables.put("POTTERY_SHERD_MOURNER", 20);
+            condensables.put("POTTERY_SHERD_PLENTY", 20);
+            condensables.put("POTTERY_SHERD_PRIZE", 20);
+            condensables.put("POTTERY_SHERD_SHEAF", 20);
+            condensables.put("POTTERY_SHERD_SHELTER", 20);
+            condensables.put("POTTERY_SHERD_SKULL", 20);
+            condensables.put("POTTERY_SHERD_SNORT", 20);
+//            condensables.put("SKULK_SENSOR", 30);
             condensables.put("SPRUCE_HANGING_SIGN", 2);
             condensables.put("STRIPPED_BAMBOO_BLOCK", 2);
             condensables.put("STRIPPED_CHERRY_LOG", 2);
             condensables.put("STRIPPED_CHERRY_WOOD", 2);
+//            condensables.put("SUSPICIOUS_GRAVEL", 2); // unobtainable
+//            condensables.put("SUSPICIOUS_SAND", 2); // unobtainable
             condensables.put("TORCHFLOWER", 20);
+//            condensables.put("TORCHFLOWER_SEEDS", 20);
             condensables.put("WARPED_HANGING_SIGN", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
