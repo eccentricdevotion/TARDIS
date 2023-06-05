@@ -120,7 +120,14 @@ public enum TARDISDisplayItem {
     LIGHT_TWELFTH_ON(10008, Material.SEA_LANTERN, null),
     LIGHT_THIRTEENTH_ON(10009, Material.SEA_LANTERN, null),
     LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, null),
-    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, null);
+    LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, null),
+    // console sides
+    CONSOLE_1(1001, Material.AMETHYST_SHARD, null),
+    CONSOLE_2(1002, Material.AMETHYST_SHARD, null),
+    CONSOLE_3(1003, Material.AMETHYST_SHARD, null),
+    CONSOLE_4(1004, Material.AMETHYST_SHARD, null),
+    CONSOLE_5(1005, Material.AMETHYST_SHARD, null),
+    CONSOLE_6(1006, Material.AMETHYST_SHARD, null);
 
     private int customModelData;
     private final Material material;

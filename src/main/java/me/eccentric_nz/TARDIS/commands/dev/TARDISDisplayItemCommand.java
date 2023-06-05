@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -162,6 +163,9 @@ public class TARDISDisplayItemCommand {
                     if (tdi == TARDISDisplayItem.DOOR) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
+                    if (tdi.getMaterial() == Material.AMETHYST_SHARD) {
+                        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+                    }
                     if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
                         display.setBrightness(new Display.Brightness(15, 15));
                     }
@@ -224,6 +228,41 @@ public class TARDISDisplayItemCommand {
                     if (entity instanceof ItemDisplay || entity instanceof Interaction) {
                         entity.remove();
                     }
+                }
+                return true;
+            }
+            case "console" -> {
+                Block up = block.getRelative(BlockFace.UP);
+                for (int i = 0; i < 6; i++) {
+                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
+                    ItemMeta im = shard.getItemMeta();
+                    im.setCustomModelData(1001 + i);
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
+                    shard.setItemMeta(im);
+                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+                    display.setItemStack(shard);
+                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+                    display.setPersistent(true);
+                    display.setInvulnerable(true);
+                    float yaw = i * 60.0f;
+                    yaw = Location.normalizeYaw(yaw);
+                    // set display rotation
+                    display.setRotation(yaw, 0);
+                }
+                for (int i = 30; i < 360; i += 60) {
+                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
+                    ItemMeta im = shard.getItemMeta();
+                    im.setCustomModelData(1007);
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
+                    shard.setItemMeta(im);
+                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+                    display.setItemStack(shard);
+                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+                    display.setPersistent(true);
+                    display.setInvulnerable(true);
+                    float yaw = Location.normalizeYaw(i);
+                    // set display rotation
+                    display.setRotation(yaw, 0);
                 }
                 return true;
             }
