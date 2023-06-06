@@ -428,6 +428,7 @@ permissions:
       tardis.room.smelter: true
       tardis.room.stable: true
       tardis.room.stall: true
+      tardis.room.surgery: true
       tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
