@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.util.*;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
@@ -26,6 +25,8 @@ import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
+
+import java.util.*;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a
@@ -86,6 +87,182 @@ public class TARDISConstants {
      * Valid Chameleon blocks
      */
     public static final Set<Material> CHAMELEON_BLOCKS_VALID = getValidMaterials();
+    /**
+     * Bad Chameleon blocks that shouldn't be changed to
+     */
+    public static final Set<Material> CHAMELEON_BLOCKS_BAD = getBadMaterials();
+    public static final List<Tag> CHAMELEON_TAGS_CHANGE = Arrays.asList(
+            Tag.SLABS, Tag.STAIRS, Tag.TRAPDOORS, Tag.CLIMBABLE, Tag.WALLS, Tag.FLOWER_POTS
+    );
+    /**
+     * Chameleon blocks that need to be changed to a full block
+     */
+    public static final Set<Material> CHAMELEON_BLOCKS_CHANGE = getChangeBlocks();
+    /**
+     * Chameleon blocks to check the surrounding blocks for a valid block to
+     * change to
+     */
+    public static final Set<Material> CHAMELEON_BLOCKS_NEXT = makeNextMaterials();
+    /**
+     * Precious Chameleon blocks
+     */
+    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(
+            Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.TNT, Material.DIAMOND_BLOCK,
+            Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.NETHERITE_BLOCK
+    );
+    /**
+     * A list of vowels
+     */
+    public static final List<String> VOWELS = Arrays.asList("A", "E", "I", "O", "U");
+    /**
+     * A list of living entity types that can be reported in scanner results
+     */
+    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(
+            EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CAMEL, EntityType.CAT,
+            EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.CREEPER, EntityType.DOLPHIN, EntityType.DONKEY,
+            EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.EVOKER, EntityType.FOX, EntityType.FROG,
+            EntityType.GHAST, EntityType.GIANT, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.GUARDIAN, EntityType.HOGLIN, EntityType.HORSE,
+            EntityType.HUSK, EntityType.ILLUSIONER, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MAGMA_CUBE, EntityType.MULE,
+            EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PHANTOM, EntityType.PIG, EntityType.PIGLIN,
+            EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.PLAYER, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT,
+            EntityType.RAVAGER, EntityType.SALMON, EntityType.SHEEP, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON,
+            EntityType.SKELETON_HORSE, EntityType.SLIME, EntityType.SNIFFER, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.STRAY,
+            EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VEX, EntityType.VILLAGER,
+            EntityType.VINDICATOR, EntityType.WANDERING_TRADER, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER, EntityType.WITHER_SKELETON,
+            EntityType.WOLF, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN
+    );
+    /**
+     * A list of materials that can be replaced when the TARDIS lands
+     */
+    public static final Set<Material> GOOD_MATERIALS = getReplaceableMaterials();
+    /**
+     * A list of water materials types that can be replaced when the TARDIS
+     * lands
+     */
+    public static final List<Material> GOOD_WATER = Arrays.asList(
+            Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER,
+            Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE
+    );
+    /**
+     * A list of titles to display when a TARDIS Seed block is growing
+     */
+    public static final List<String> GROWTH_STATES = Arrays.asList(
+            "Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty",
+            "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone",
+            "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle",
+            "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry",
+            "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems",
+            "Choosing gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles",
+            "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators",
+            "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit",
+            "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator",
+            "Polishing telepathic induction circuits", "Preparing TARDIS factory exterior"
+    );
+    /**
+     * BlockData for AIR
+     */
+    public static final BlockData AIR = Material.AIR.createBlockData();
+    /**
+     * BlockData for VOID_AIR
+     */
+    public static final BlockData VOID_AIR = Material.VOID_AIR.createBlockData();
+    /**
+     * BlockData for FIRE
+     */
+    public static final BlockData FIRE = Material.FIRE.createBlockData();
+    /**
+     * BlockData for lit REDSTONE_LAMP
+     */
+    public static final BlockData LAMP = Bukkit.createBlockData("minecraft:redstone_lamp[lit=true]");
+    /**
+     * BlockData for SNOW
+     */
+    public static final BlockData SNOW = Material.SNOW.createBlockData();
+    /**
+     * BlockData for Snow Block
+     */
+    public static final BlockData SNOW_BLOCK = Material.SNOW_BLOCK.createBlockData();
+    /**
+     * BlockData for GLASS
+     */
+    public static final BlockData GLASS = Material.GLASS.createBlockData();
+    /**
+     * BlockData for REDSTONE_BLOCK
+     */
+    public static final BlockData POWER = Material.REDSTONE_BLOCK.createBlockData();
+    /**
+     * BlockData for SEA_LANTERN
+     */
+    public static final BlockData LANTERN = Material.SEA_LANTERN.createBlockData();
+    /**
+     * BlockData for BLACK_WOOL
+     */
+    public static final BlockData BLACK = Material.BLACK_WOOL.createBlockData();
+    /**
+     * BlockData for DAYLIGHT_DETECTOR
+     */
+    public static final BlockData DAYLIGHT = Material.DAYLIGHT_DETECTOR.createBlockData();
+    /**
+     * BlockData for ICE
+     */
+    public static final BlockData ICE = Material.ICE.createBlockData();
+    /**
+     * BlockData for WATER
+     */
+    public static final BlockData WATER = Material.WATER.createBlockData();
+    /**
+     * BlockData for police box LIGHT
+     */
+    public static final Levelled LIGHT = (Levelled) Material.LIGHT.createBlockData();
+    /**
+     * BlockData for Division LIGHT
+     */
+    public static final Levelled LIGHT_DIV = setLight(15);
+    /**
+     * BlockData for Item Display barrier blocks
+     */
+    public static final BlockData BARRIER = Material.BARRIER.createBlockData();
+    /**
+     * A list of loot tables to populate TARDIS planet chests
+     */
+    public static final List<LootTable> LOOT = Arrays.asList(
+            LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(),
+            LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(),
+            LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(),
+            LootTables.VILLAGE_ARMORER.getLootTable(), LootTables.VILLAGE_BUTCHER.getLootTable(), LootTables.VILLAGE_CARTOGRAPHER.getLootTable(),
+            LootTables.VILLAGE_DESERT_HOUSE.getLootTable(), LootTables.VILLAGE_FISHER.getLootTable(), LootTables.VILLAGE_FLETCHER.getLootTable(),
+            LootTables.VILLAGE_MASON.getLootTable(), LootTables.VILLAGE_PLAINS_HOUSE.getLootTable(), LootTables.VILLAGE_SAVANNA_HOUSE.getLootTable(),
+            LootTables.VILLAGE_SHEPHERD.getLootTable(), LootTables.VILLAGE_SNOWY_HOUSE.getLootTable(), LootTables.VILLAGE_TAIGA_HOUSE.getLootTable(),
+            LootTables.VILLAGE_TANNERY.getLootTable(), LootTables.VILLAGE_TEMPLE.getLootTable(), LootTables.VILLAGE_TOOLSMITH.getLootTable(),
+            LootTables.VILLAGE_WEAPONSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable(), LootTables.PILLAGER_OUTPOST.getLootTable()
+    );
+    /**
+     * A random number generator for reuse
+     */
+    public static final Random RANDOM = new Random();
+    /**
+     * A list of particle dust options for use in TARDIS forcefields
+     */
+    public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(
+            new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
+            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1)
+    );
+    /**
+     * An empty BarFlag array for use with TARDIS boss bars
+     */
+    public static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
+    /**
+     * A list of materials used in ItemFrame Chameleon presets
+     */
+    public static final List<Material> DYES = Arrays.asList(
+            Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE,
+            Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE,
+            Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE, Material.LEATHER_HORSE_ARMOR
+    );
 
     private static Set<Material> getValidMaterials() {
         Set<Material> set = new HashSet<>();
@@ -143,11 +320,6 @@ public class TARDISConstants {
         return set;
     }
 
-    /**
-     * Bad Chameleon blocks that shouldn't be changed to
-     */
-    public static final Set<Material> CHAMELEON_BLOCKS_BAD = getBadMaterials();
-
     private static Set<Material> getBadMaterials() {
         Set<Material> set = new HashSet<>();
         set.add(Material.BREWING_STAND);
@@ -191,14 +363,6 @@ public class TARDISConstants {
         set.addAll(Tag.WALL_POST_OVERRIDE.getValues());
         return set;
     }
-
-    public static final List<Tag> CHAMELEON_TAGS_CHANGE = Arrays.asList(
-            Tag.SLABS, Tag.STAIRS, Tag.TRAPDOORS, Tag.CLIMBABLE, Tag.WALLS, Tag.FLOWER_POTS
-    );
-    /**
-     * Chameleon blocks that need to be changed to a full block
-     */
-    public static final Set<Material> CHAMELEON_BLOCKS_CHANGE = getChangeBlocks();
 
     private static Set<Material> getChangeBlocks() {
         Set<Material> set = new HashSet<>();
@@ -329,12 +493,6 @@ public class TARDISConstants {
         return false;
     }
 
-    /**
-     * Chameleon blocks to check the surrounding blocks for a valid block to
-     * change to
-     */
-    public static final Set<Material> CHAMELEON_BLOCKS_NEXT = makeNextMaterials();
-
     private static Set<Material> makeNextMaterials() {
         Set<Material> set = new HashSet<>();
         set.add(Material.AIR);
@@ -345,45 +503,9 @@ public class TARDISConstants {
         set.addAll(Tag.CROPS.getValues());
         set.addAll(Tag.FLOWERS.getValues());
         set.addAll(Tag.RAILS.getValues());
-        set.addAll(Tag.REPLACEABLE_PLANTS.getValues());
+        set.addAll(Tag.REPLACEABLE.getValues());
         return set;
     }
-
-    /**
-     * Precious Chameleon blocks
-     */
-    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(
-            Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.TNT, Material.DIAMOND_BLOCK,
-            Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.NETHERITE_BLOCK
-    );
-
-    /**
-     * A list of vowels
-     */
-    public static final List<String> VOWELS = Arrays.asList("A", "E", "I", "O", "U");
-
-    /**
-     * A list of living entity types that can be reported in scanner results
-     */
-    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(
-            EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CAMEL, EntityType.CAT,
-            EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.CREEPER, EntityType.DOLPHIN, EntityType.DONKEY,
-            EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.EVOKER, EntityType.FOX, EntityType.FROG,
-            EntityType.GHAST, EntityType.GIANT, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.GUARDIAN, EntityType.HOGLIN, EntityType.HORSE,
-            EntityType.HUSK, EntityType.ILLUSIONER, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MAGMA_CUBE, EntityType.MULE,
-            EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PHANTOM, EntityType.PIG, EntityType.PIGLIN,
-            EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.PLAYER, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT,
-            EntityType.RAVAGER, EntityType.SALMON, EntityType.SHEEP, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON,
-            EntityType.SKELETON_HORSE, EntityType.SLIME, EntityType.SNIFFER, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.STRAY,
-            EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VEX, EntityType.VILLAGER,
-            EntityType.VINDICATOR, EntityType.WANDERING_TRADER, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER, EntityType.WITHER_SKELETON,
-            EntityType.WOLF, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN
-    );
-
-    /**
-     * A list of materials that can be replaced when the TARDIS lands
-     */
-    public static final Set<Material> GOOD_MATERIALS = getReplaceableMaterials();
 
     private static Set<Material> getReplaceableMaterials() {
         Set<Material> set = new HashSet<>();
@@ -395,161 +517,10 @@ public class TARDISConstants {
         set.add(Material.VOID_AIR);
         set.addAll(Tag.FLOWERS.getValues());
         set.addAll(Tag.LEAVES.getValues());
-        set.addAll(Tag.REPLACEABLE_PLANTS.getValues());
+        set.addAll(Tag.REPLACEABLE.getValues());
         set.addAll(Tag.SAPLINGS.getValues());
         return set;
     }
-
-    /**
-     * A list of water materials types that can be replaced when the TARDIS
-     * lands
-     */
-    public static final List<Material> GOOD_WATER = Arrays.asList(
-            Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER,
-            Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE
-    );
-
-    /**
-     * A list of titles to display when a TARDIS Seed block is growing
-     */
-    public static final List<String> GROWTH_STATES = Arrays.asList(
-            "Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty",
-            "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone",
-            "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle",
-            "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry",
-            "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems",
-            "Choosing gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles",
-            "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators",
-            "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit",
-            "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator",
-            "Polishing telepathic induction circuits", "Preparing TARDIS factory exterior"
-    );
-
-    /**
-     * BlockData for AIR
-     */
-    public static final BlockData AIR = Material.AIR.createBlockData();
-
-    /**
-     * BlockData for VOID_AIR
-     */
-    public static final BlockData VOID_AIR = Material.VOID_AIR.createBlockData();
-
-    /**
-     * BlockData for FIRE
-     */
-    public static final BlockData FIRE = Material.FIRE.createBlockData();
-
-    /**
-     * BlockData for lit REDSTONE_LAMP
-     */
-    public static final BlockData LAMP = Bukkit.createBlockData("minecraft:redstone_lamp[lit=true]");
-
-    /**
-     * BlockData for SNOW
-     */
-    public static final BlockData SNOW = Material.SNOW.createBlockData();
-
-    /**
-     * BlockData for Snow Block
-     */
-    public static final BlockData SNOW_BLOCK = Material.SNOW_BLOCK.createBlockData();
-
-    /**
-     * BlockData for GLASS
-     */
-    public static final BlockData GLASS = Material.GLASS.createBlockData();
-
-    /**
-     * BlockData for REDSTONE_BLOCK
-     */
-    public static final BlockData POWER = Material.REDSTONE_BLOCK.createBlockData();
-
-    /**
-     * BlockData for SEA_LANTERN
-     */
-    public static final BlockData LANTERN = Material.SEA_LANTERN.createBlockData();
-
-    /**
-     * BlockData for BLACK_WOOL
-     */
-    public static final BlockData BLACK = Material.BLACK_WOOL.createBlockData();
-
-    /**
-     * BlockData for DAYLIGHT_DETECTOR
-     */
-    public static final BlockData DAYLIGHT = Material.DAYLIGHT_DETECTOR.createBlockData();
-
-    /**
-     * BlockData for ICE
-     */
-    public static final BlockData ICE = Material.ICE.createBlockData();
-
-    /**
-     * BlockData for WATER
-     */
-    public static final BlockData WATER = Material.WATER.createBlockData();
-
-    /**
-     * BlockData for police box LIGHT
-     */
-    public static final Levelled LIGHT = (Levelled) Material.LIGHT.createBlockData();
-
-    /**
-     * BlockData for Division LIGHT
-     */
-    public static final Levelled LIGHT_DIV = setLight(15);
-
-    /**
-     * BlockData for Item Display barrier blocks
-     */
-    public static final BlockData BARRIER = Material.BARRIER.createBlockData();
-
-    /**
-     * A list of loot tables to populate TARDIS planet chests
-     */
-    public static final List<LootTable> LOOT = Arrays.asList(
-            LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(),
-            LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(),
-            LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(),
-            LootTables.VILLAGE_ARMORER.getLootTable(), LootTables.VILLAGE_BUTCHER.getLootTable(), LootTables.VILLAGE_CARTOGRAPHER.getLootTable(),
-            LootTables.VILLAGE_DESERT_HOUSE.getLootTable(), LootTables.VILLAGE_FISHER.getLootTable(), LootTables.VILLAGE_FLETCHER.getLootTable(),
-            LootTables.VILLAGE_MASON.getLootTable(), LootTables.VILLAGE_PLAINS_HOUSE.getLootTable(), LootTables.VILLAGE_SAVANNA_HOUSE.getLootTable(),
-            LootTables.VILLAGE_SHEPHERD.getLootTable(), LootTables.VILLAGE_SNOWY_HOUSE.getLootTable(), LootTables.VILLAGE_TAIGA_HOUSE.getLootTable(),
-            LootTables.VILLAGE_TANNERY.getLootTable(), LootTables.VILLAGE_TEMPLE.getLootTable(), LootTables.VILLAGE_TOOLSMITH.getLootTable(),
-            LootTables.VILLAGE_WEAPONSMITH.getLootTable(), LootTables.WOODLAND_MANSION.getLootTable(), LootTables.PILLAGER_OUTPOST.getLootTable()
-    );
-
-    /**
-     * A random number generator for reuse
-     */
-    public static final Random RANDOM = new Random();
-
-    /**
-     * A list of particle dust options for use in TARDIS forcefields
-     */
-    public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(
-            new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1),
-            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
-            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
-            new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
-            new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
-            new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1)
-    );
-
-    /**
-     * An empty BarFlag array for use with TARDIS boss bars
-     */
-    public static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
-
-    /**
-     * A list of materials used in ItemFrame Chameleon presets
-     */
-    public static final List<Material> DYES = Arrays.asList(
-            Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE,
-            Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE,
-            Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE, Material.LEATHER_HORSE_ARMOR
-    );
 
     /**
      * Checks whether a world name is a TARDIS planet

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import java.util.Map;
-import java.util.UUID;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.MinecraftServer;
@@ -30,11 +28,14 @@ import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
-import org.bukkit.entity.Player; 
+import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+
+import java.util.Map;
+import java.util.UUID;
 
 public class TARDISEPSDisguiser {
 
@@ -53,7 +54,7 @@ public class TARDISEPSDisguiser {
         ServerLevel nmsWorld = ((CraftWorld) world).getHandle();
         for (Map.Entry<Integer, UUID> map : TARDISDisguiseTracker.DISGUISED_NPCS.entrySet()) {
             Entity stand = nmsWorld.getEntity(map.getKey());
-            if (stand != null && stand.getLevel().getWorld() == world) {
+            if (stand != null && stand.level().getWorld() == world) {
                 ServerPlayer entityPlayer = ((CraftPlayer) Bukkit.getOfflinePlayer(map.getValue())).getHandle();
                 ServerPlayer npc = new ServerPlayer(server, nmsWorld, entityPlayer.getGameProfile());
                 // set location

@@ -7,8 +7,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.map.CraftMapView;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.map.CraftMapView;
 import org.bukkit.map.MapView;
 
 import java.lang.reflect.Field;
@@ -34,7 +34,7 @@ public final class TARDISMapUpdater extends Player {
     }
 
     public void update(MapView mapView) {
-        if (((CraftWorld) mapView.getWorld()).getHandle() != level) {
+        if (((CraftWorld) mapView.getWorld()).getHandle() != level()) {
             throw new IllegalArgumentException("world of mapView cannot be different");
         }
         try {
@@ -45,7 +45,7 @@ public final class TARDISMapUpdater extends Player {
             for (int x = worldMap.mapView.getCenterX() - size / 2; x <= worldMap.mapView.getCenterX() + size / 2; x += 64) {
                 for (int z = worldMap.mapView.getCenterZ() - size / 2; z <= worldMap.mapView.getCenterZ() + size / 2; z += 64) {
                     setPosRaw(x, 0.0, z);
-                    ((MapItem) Items.FILLED_MAP).update(level, this, worldMap);
+                    ((MapItem) Items.FILLED_MAP).update(level(), this, worldMap);
                 }
             }
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {

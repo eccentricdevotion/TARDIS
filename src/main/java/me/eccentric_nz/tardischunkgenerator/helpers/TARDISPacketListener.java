@@ -17,9 +17,6 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import io.netty.channel.*;
-import java.lang.reflect.Field;
-import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
@@ -37,11 +34,15 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftChunk;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+
+import java.lang.reflect.Field;
+import java.util.UUID;
+import java.util.logging.Level;
 
 public class TARDISPacketListener {
 
@@ -106,7 +107,7 @@ public class TARDISPacketListener {
                                     }
                                 }
                             }
-                            packet = new ClientboundLevelChunkWithLightPacket(levelChunk, levelChunk.getLevel().getLightEngine(), null, null, true);
+                            packet = new ClientboundLevelChunkWithLightPacket(levelChunk, levelChunk.getLevel().getLightEngine(), null, null);
                         } else {
                             Bukkit.getLogger().log(Level.INFO, "biome was null");
                         }

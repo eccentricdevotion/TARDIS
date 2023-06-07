@@ -26,7 +26,7 @@ import com.mojang.util.UUIDTypeAdapter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import javax.net.ssl.HttpsURLConnection;

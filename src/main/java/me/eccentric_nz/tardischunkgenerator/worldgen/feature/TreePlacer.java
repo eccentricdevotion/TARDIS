@@ -4,74 +4,71 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.WeepingVinesFeature;
-import net.minecraft.world.level.material.Material;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.v1_20_R1.block.data.CraftBlockData;
 
 public class TreePlacer {
 
+    private final BlockPredicate predicate = BlockPredicate.matchesBlocks(Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING, Blocks.JUNGLE_SAPLING, Blocks.ACACIA_SAPLING, Blocks.CHERRY_SAPLING, Blocks.DARK_OAK_SAPLING, Blocks.MANGROVE_PROPAGULE, Blocks.DANDELION, Blocks.TORCHFLOWER, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM, Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP, Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.WITHER_ROSE, Blocks.LILY_OF_THE_VALLEY, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM, Blocks.WHEAT, Blocks.SUGAR_CANE, Blocks.ATTACHED_PUMPKIN_STEM, Blocks.ATTACHED_MELON_STEM, Blocks.PUMPKIN_STEM, Blocks.MELON_STEM, Blocks.LILY_PAD, Blocks.NETHER_WART, Blocks.COCOA, Blocks.CARROTS, Blocks.POTATOES, Blocks.CHORUS_PLANT, Blocks.CHORUS_FLOWER, Blocks.TORCHFLOWER_CROP, Blocks.PITCHER_CROP, Blocks.BEETROOTS, Blocks.SWEET_BERRY_BUSH, Blocks.WARPED_FUNGUS, Blocks.CRIMSON_FUNGUS, Blocks.WEEPING_VINES, Blocks.WEEPING_VINES_PLANT, Blocks.TWISTING_VINES, Blocks.TWISTING_VINES_PLANT, Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT, Blocks.SPORE_BLOSSOM, Blocks.AZALEA, Blocks.FLOWERING_AZALEA, Blocks.MOSS_CARPET, Blocks.PINK_PETALS, Blocks.BIG_DRIPLEAF, Blocks.BIG_DRIPLEAF_STEM, Blocks.SMALL_DRIPLEAF);
     private final RandomSource random = RandomSource.create();
 
-    public void place(TARDISTreeData data, WorldGenLevel level, BlockPos blockPos, ChunkGenerator generator) {
+    public boolean place(TARDISTreeData data, WorldGenLevel level, BlockPos blockPos, ChunkGenerator generator) {
         BlockState base = ((CraftBlockData) Bukkit.createBlockData(data.getBase())).getState();
         BlockPos pos = null;
         BlockState under = level.getBlockState(blockPos.below());
         if (under == base) {
             pos = blockPos;
         }
-        if (pos != null) {
+        if (pos == null) {
+            return false;
+        } else {
             int i = Mth.nextInt(random, 4, 13);
             if (random.nextInt(12) == 0) {
                 i *= 2;
             }
             if (!data.isPlanted()) {
-                int depth = generator.getGenDepth();
-                if (pos.getY() + i + 1 >= depth) {
-                    return;
+                int j = generator.getGenDepth();
+                if (pos.getY() + i + 1 >= j) {
+                    return false;
                 }
             }
-            boolean b = !data.isPlanted() && random.nextFloat() < 0.06F;
+            boolean flag = !data.isPlanted() && random.nextFloat() < 0.06F;
             level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 4);
-            placeStem(level, data, pos, i, b);
-            placeHat(level, data, pos, i, b);
+            this.placeStem(level, random, data, pos, i, flag);
+            this.placeHat(level, random, data, pos, i, flag);
+            return true;
         }
     }
 
-    private boolean isReplaceable(LevelAccessor level, BlockPos pos, boolean b) {
-        return level.isStateAtPosition(pos, (blockState) -> {
-            Material material = blockState.getMaterial();
-            return blockState.canBeReplaced() || b && material == Material.PLANT;
-        });
-    }
-
-    private void placeStem(LevelAccessor level, TARDISTreeData data, BlockPos pos, int i, boolean b) {
-        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
+    private void placeStem(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos pos, int i, boolean b) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         BlockState stem = ((CraftBlockData) Bukkit.createBlockData(data.getStem())).getState();
         int limit = b ? 1 : 0;
         for (int x = -limit; x <= limit; ++x) {
             for (int z = -limit; z <= limit; ++z) {
                 boolean edge = b && Mth.abs(x) == limit && Mth.abs(z) == limit;
                 for (int y = 0; y < i; ++y) {
-                    blockPos.setWithOffset(pos, x, y, z);
-                    if (isReplaceable(level, blockPos, true)) {
+                    mutableBlockPos.setWithOffset(pos, x, y, z);
+                    if (isReplaceable(level, mutableBlockPos, true)) {
                         if (data.isPlanted()) {
-                            if (!level.getBlockState(blockPos.below()).isAir()) {
-                                level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+                            if (!level.getBlockState(mutableBlockPos.below()).isAir()) {
+                                level.destroyBlock(mutableBlockPos, true);
                             }
-                            level.setBlock(blockPos, stem, 3);
+                            level.setBlock(mutableBlockPos, stem, 3);
                         } else if (edge) {
                             if (random.nextFloat() < 0.1F) {
-                                setBlock(level, blockPos, stem);
+                                setBlock(level, mutableBlockPos, stem);
                             }
                         } else {
-                            setBlock(level, blockPos, stem);
+                            setBlock(level, mutableBlockPos, stem);
                         }
                     }
                 }
@@ -79,8 +76,8 @@ public class TreePlacer {
         }
     }
 
-    private void placeHat(LevelAccessor level, TARDISTreeData data, BlockPos pos, int i, boolean b) {
-        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
+    private void placeHat(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos blockPos, int i, boolean b) {
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         BlockState hat = ((CraftBlockData) Bukkit.createBlockData(data.getHat())).getState();
         boolean isNetherWart = hat.is(Blocks.NETHER_WART_BLOCK);
         int max = Math.min(random.nextInt(1 + i / 3) + 5, i);
@@ -100,21 +97,21 @@ public class TreePlacer {
                     boolean notEdge = !bx && !bz && h != i;
                     boolean bxz = bx && bz;
                     boolean notTop = h < min + 3;
-                    blockPos.setWithOffset(pos, x, h, z);
-                    if (isReplaceable(level, blockPos, false)) {
-                        if (data.isPlanted() && !level.getBlockState(blockPos.below()).isAir()) {
-                            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+                    pos.setWithOffset(blockPos, x, h, z);
+                    if (isReplaceable(level, pos, false)) {
+                        if (data.isPlanted() && !level.getBlockState(pos.below()).isAir()) {
+                            level.destroyBlock(pos, true);
                         }
                         if (notTop) {
                             if (!notEdge) {
-                                placeHatDropBlock(level, blockPos, hat, isNetherWart);
+                                this.placeHatDropBlock(level, random, pos, hat, isNetherWart);
                             }
                         } else if (notEdge) {
-                            placeHatBlock(level, data, blockPos, 0.1F, 0.2F, isNetherWart ? 0.1F : 0.0F);
+                            this.placeHatBlock(level, random, data, pos, 0.1F, 0.2F, isNetherWart ? 0.1F : 0.0F);
                         } else if (bxz) {
-                            placeHatBlock(level, data, blockPos, 0.01F, 0.7F, isNetherWart ? 0.083F : 0.0F);
+                            this.placeHatBlock(level, random, data, pos, 0.01F, 0.7F, isNetherWart ? 0.083F : 0.0F);
                         } else {
-                            placeHatBlock(level, data, blockPos, 5.0E-4F, 0.98F, isNetherWart ? 0.07F : 0.0F);
+                            this.placeHatBlock(level, random, data, pos, 5.0E-4F, 0.98F, isNetherWart ? 0.07F : 0.0F);
                         }
                     }
                 }
@@ -122,38 +119,46 @@ public class TreePlacer {
         }
     }
 
-    private void placeHatBlock(LevelAccessor level, TARDISTreeData data, BlockPos.MutableBlockPos blockPos, float var4, float var5, float var6) {
+    private void placeHatBlock(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos pos, float f, float f1, float f2) {
         BlockState decor = ((CraftBlockData) Bukkit.createBlockData(data.getDecor())).getState();
         BlockState hat = ((CraftBlockData) Bukkit.createBlockData(data.getHat())).getState();
-        if (random.nextFloat() < var4) {
-            setBlock(level, blockPos, decor);
-        } else if (random.nextFloat() < var5) {
-            setBlock(level, blockPos, hat);
-            if (random.nextFloat() < var6) {
-                tryPlaceWeepingVines(blockPos, level);
+        if (random.nextFloat() < f) {
+            this.setBlock(level, pos, decor);
+        } else if (random.nextFloat() < f1) {
+            this.setBlock(level, pos, hat);
+            if (random.nextFloat() < f2) {
+                tryPlaceWeepingVines(pos, level, random);
             }
         }
     }
 
-    private void placeHatDropBlock(LevelAccessor level, BlockPos pos, BlockState state, boolean b) {
+    private void placeHatDropBlock(WorldGenLevel level, RandomSource random, BlockPos pos, BlockState state, boolean b) {
         if (level.getBlockState(pos.below()).is(state.getBlock())) {
-            setBlock(level, pos, state);
-        } else if ((double) random.nextFloat() < 0.15) {
-            setBlock(level, pos, state);
+            this.setBlock(level, pos, state);
+        } else if ((double) random.nextFloat() < 0.15D) {
+            this.setBlock(level, pos, state);
             if (b && random.nextInt(11) == 0) {
-                tryPlaceWeepingVines(pos, level);
+                tryPlaceWeepingVines(pos, level, random);
             }
         }
     }
 
-    private void tryPlaceWeepingVines(BlockPos pos, LevelAccessor level) {
-        BlockPos.MutableBlockPos blockPos = pos.mutable().move(Direction.DOWN);
-        if (level.isEmptyBlock(blockPos)) {
+    private void tryPlaceWeepingVines(BlockPos pos, WorldGenLevel level, RandomSource random) {
+        BlockPos.MutableBlockPos down = pos.mutable().move(Direction.DOWN);
+        if (level.isEmptyBlock(down)) {
             int i = Mth.nextInt(random, 1, 5);
             if (random.nextInt(7) == 0) {
                 i *= 2;
             }
-            WeepingVinesFeature.placeWeepingVinesColumn(level, random, blockPos, i, 23, 25);
+            WeepingVinesFeature.placeWeepingVinesColumn(level, random, down, i, 23, 25);
+        }
+    }
+
+    private boolean isReplaceable(WorldGenLevel level, BlockPos pos, boolean b) {
+        if (level.isStateAtPosition(pos, BlockBehaviour.BlockStateBase::canBeReplaced)) {
+            return true;
+        } else {
+            return b && predicate.test(level, pos);
         }
     }
 
