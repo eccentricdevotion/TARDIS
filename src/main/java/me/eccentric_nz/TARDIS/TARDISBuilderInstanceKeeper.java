@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
-import java.util.*;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
+
+import java.util.*;
 
 /**
  * Keeps track of various building related lookups. these include: Room block
@@ -75,6 +76,66 @@ public class TARDISBuilderInstanceKeeper {
      */
     public static Set<Integer> getTipsSlots() {
         return TIPS_SLOTS;
+    }
+
+    private static HashMap<String, String> initBlockConversion() {
+        HashMap<String, String> conversions = new HashMap<>();
+                conversions.put("AMETHYST_CLUSTER", "AMETHYST_SHARD");
+                conversions.put("BARRIER", "STONE");
+                conversions.put("BEETROOTS", "BEETROOT");
+                conversions.put("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF");
+                conversions.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
+                conversions.put("CAKE", "LEVER");
+                conversions.put("CARROTS", "CARROT");
+                conversions.put("CAVE_VINES", "GLOW_BERRIES");
+                conversions.put("CAVE_VINES_PLANT", "GLOW_BERRIES");
+                conversions.put("COBWEB", "STRING");
+                conversions.put("COCOA", "COCOA_BEANS");
+                conversions.put("DIRT_PATH", "DIRT");
+                conversions.put("FARMLAND", "DIRT");
+                conversions.put("GRASS", "WHEAT_SEEDS");
+                conversions.put("GRASS_BLOCK", "DIRT");
+                conversions.put("LARGE_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("LIGHT", "TORCH");
+                conversions.put("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("MELON_STEM", "MELON_SEEDS");
+                conversions.put("MYCELIUM", "DIRT");
+                conversions.put("PITCHER_CROP", "PITCHER_PLANT");
+                conversions.put("POTATOES", "POTATO");
+                conversions.put("POWDER_SNOW", "SNOW_BLOCK");
+                conversions.put("PUMPKIN_STEM", "PUMPKIN_SEEDS");
+                conversions.put("REDSTONE_WALL_TORCH", "REDSTONE_TORCH");
+                conversions.put("REDSTONE_WIRE", "REDSTONE");
+                conversions.put("RED_MUSHROOM_BLOCK", "RED_MUSHROOM");
+                conversions.put("SCULK_VEIN", "SCULK");
+                conversions.put("SMALL_AMETHYST_BUD", "AMETHYST_SHARD");
+                conversions.put("SNOW", "SNOWBALL");
+                conversions.put("STONE", "COBBLESTONE");
+                conversions.put("TALL_GRASS", "WHEAT_SEEDS");
+                conversions.put("TORCHFLOWER_CROP", "TORCHFLOWER");
+                conversions.put("TWISTING_VINES_PLANT", "TWISTING_VINES");
+                conversions.put("WALL_TORCH", "TORCH");
+                conversions.put("WEEPING_VINES_PLANT", "WEEPING_VINES");
+                conversions.put("WHEAT", "WHEAT_SEEDS");
+        // add all potted plants
+        for (Material pot : Tag.FLOWER_POTS.getValues()) {
+            conversions.put(pot.toString(), pot.toString().replace("POTTED_", ""));
+        }
+        // add all leaves
+        for (Material leaf : Tag.LEAVES.getValues()) {
+            conversions.put(leaf.toString(), leaf.toString().replace("_LEAVES", "_SAPLING"));
+        }
+        conversions.put("MANGROVE_LEAVES", "MANGROVE_PROPAGULE");
+        // all wall signs
+        for (Material sign : Tag.WALL_SIGNS.getValues()) {
+            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
+        }
+        /* hanging signs don't officially exist yet...
+        for (Material sign : Tag.WALL_HANGING_SIGNS.getValues()) {
+            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
+        }
+        */
+        return conversions;
     }
 
     /**
@@ -150,64 +211,5 @@ public class TARDISBuilderInstanceKeeper {
      */
     public HashMap<UUID, Integer> getRoomProgress() {
         return roomProgress;
-    }
-
-    private static HashMap<String, String> initBlockConversion() {
-        HashMap<String, String> conversions = new HashMap<>();
-                conversions.put("AMETHYST_CLUSTER", "AMETHYST_SHARD");
-                conversions.put("BARRIER", "STONE");
-                conversions.put("BEETROOTS", "BEETROOT");
-                conversions.put("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF");
-                conversions.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
-                conversions.put("CAKE", "LEVER");
-                conversions.put("CARROTS", "CARROT");
-                conversions.put("CAVE_VINES", "GLOW_BERRIES");
-                conversions.put("CAVE_VINES_PLANT", "GLOW_BERRIES");
-                conversions.put("COBWEB", "STRING");
-                conversions.put("COCOA", "COCOA_BEANS");
-                conversions.put("DIRT_PATH", "DIRT");
-                conversions.put("FARMLAND", "DIRT");
-                conversions.put("GRASS", "WHEAT_SEEDS");
-                conversions.put("GRASS_BLOCK", "DIRT");
-                conversions.put("LARGE_AMETHYST_BUD", "AMETHYST_SHARD");
-                conversions.put("LIGHT", "TORCH");
-                conversions.put("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD");
-                conversions.put("MELON_STEM", "MELON_SEEDS");
-                conversions.put("MYCELIUM", "DIRT");
-                conversions.put("POTATOES", "POTATO");
-                conversions.put("POWDER_SNOW", "SNOW_BLOCK");
-                conversions.put("PUMPKIN_STEM", "PUMPKIN_SEEDS");
-                conversions.put("REDSTONE_WALL_TORCH", "REDSTONE_TORCH");
-                conversions.put("REDSTONE_WIRE", "REDSTONE");
-                conversions.put("RED_MUSHROOM_BLOCK", "RED_MUSHROOM");
-                conversions.put("SCULK_VEIN", "SCULK");
-                conversions.put("SMALL_AMETHYST_BUD", "AMETHYST_SHARD");
-                conversions.put("SNOW", "SNOWBALL");
-                conversions.put("STONE", "COBBLESTONE");
-                conversions.put("TALL_GRASS", "WHEAT_SEEDS");
-                conversions.put("TORCHFLOWER_CROP", "TORCHFLOWER");
-                conversions.put("TWISTING_VINES_PLANT", "TWISTING_VINES");
-                conversions.put("WALL_TORCH", "TORCH");
-                conversions.put("WEEPING_VINES_PLANT", "WEEPING_VINES");
-                conversions.put("WHEAT", "WHEAT_SEEDS");
-        // add all potted plants
-        for (Material pot : Tag.FLOWER_POTS.getValues()) {
-            conversions.put(pot.toString(), pot.toString().replace("POTTED_", ""));
-        }
-        // add all leaves
-        for (Material leaf : Tag.LEAVES.getValues()) {
-            conversions.put(leaf.toString(), leaf.toString().replace("_LEAVES", "_SAPLING"));
-        }
-        conversions.put("MANGROVE_LEAVES", "MANGROVE_PROPAGULE");
-        // all wall signs
-        for (Material sign : Tag.WALL_SIGNS.getValues()) {
-            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
-        }
-        /* hanging signs don't officially exist yet...
-        for (Material sign : Tag.WALL_HANGING_SIGNS.getValues()) {
-            conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
-        }
-        */
-        return conversions;
     }
 }
