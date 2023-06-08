@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
@@ -480,12 +479,11 @@ public class TARDISCondensablesUpdater {
             list.put("OAK_HANGING_SIGN", 2);
             list.put("PIGLIN_HEAD", 200);
             list.put("PINK_PETALS", 2);
-            list.put("PITCHER_CROP", 2);
             list.put("PITCHER_PLANT", 2);
             list.put("PITCHER_POD", 2);
             list.put("ANGLER_POTTERY_SHERD", 20);
             list.put("ARCHER_POTTERY_SHERD", 20);
-            list.put("ARMS_POTTERY_SHERD UP", 20);
+            list.put("ARMS_UP_POTTERY_SHERD", 20);
             list.put("BLADE_POTTERY_SHERD", 20);
             list.put("BREWER_POTTERY_SHERD", 20);
             list.put("BURN_POTTERY_SHERD", 20);

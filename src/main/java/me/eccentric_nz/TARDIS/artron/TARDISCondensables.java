@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.util.HashMap;
 import java.util.Set;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * A TARDIS has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
@@ -1131,12 +1130,11 @@ public class TARDISCondensables {
             condensables.put("OAK_HANGING_SIGN", 2);
             condensables.put("PIGLIN_HEAD", 200);
             condensables.put("PINK_PETALS", 2);
-            condensables.put("PITCHER_CROP", 2);
             condensables.put("PITCHER_PLANT", 2);
             condensables.put("PITCHER_POD", 2);
             condensables.put("ANGLER_POTTERY_SHERD", 20);
             condensables.put("ARCHER_POTTERY_SHERD", 20);
-            condensables.put("ARMS_POTTERY_SHERD UP", 20);
+            condensables.put("ARMS_UP_POTTERY_SHERD", 20);
             condensables.put("BLADE_POTTERY_SHERD", 20);
             condensables.put("BREWER_POTTERY_SHERD", 20);
             condensables.put("BURN_POTTERY_SHERD", 20);
@@ -1162,7 +1160,7 @@ public class TARDISCondensables {
 //            condensables.put("SUSPICIOUS_GRAVEL", 2); // unobtainable
 //            condensables.put("SUSPICIOUS_SAND", 2); // unobtainable
             condensables.put("TORCHFLOWER", 20);
-//            condensables.put("TORCHFLOWER_SEEDS", 20);
+            condensables.put("TORCHFLOWER_SEEDS", 20);
             condensables.put("WARPED_HANGING_SIGN", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
