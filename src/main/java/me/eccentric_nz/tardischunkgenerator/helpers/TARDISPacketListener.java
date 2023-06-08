@@ -17,6 +17,9 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import io.netty.channel.*;
+import java.lang.reflect.Field;
+import java.util.UUID;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
@@ -39,10 +42,6 @@ import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.lang.reflect.Field;
-import java.util.UUID;
-import java.util.logging.Level;
 
 public class TARDISPacketListener {
 

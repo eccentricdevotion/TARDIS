@@ -561,6 +561,9 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("POTTERY_SHARD_ARMS_UP", null);
                 plugin.getCondensablesConfig().set("POTTERY_SHARD_SKULL", null);
             }
+            if (plugin.getCondensablesConfig().contains("ARMS_POTTERY_SHERD UP")) {
+                plugin.getCondensablesConfig().set("ARMS_POTTERY_SHERD UP", null);
+            }
             try {
                 String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
                 plugin.getCondensablesConfig().save(new File(listPath));
