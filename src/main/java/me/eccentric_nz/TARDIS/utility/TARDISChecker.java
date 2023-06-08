@@ -18,14 +18,15 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -83,6 +84,11 @@ public class TARDISChecker {
             Bukkit.getLogger().log(Level.INFO, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
             tardisDir.mkdirs();
         }
+        // update root advancement
+        File root = new File(dataPacksRoot, "root.json");
+        if (root.exists()) {
+            copy("root.json", root);
+        }
         for (Advancement advancement : Advancement.values()) {
             String json = advancement.getConfigName() + ".json";
             File jfile = new File(dataPacksRoot, json);
@@ -99,7 +105,7 @@ public class TARDISChecker {
             Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
         } else {
-            // update the format - 12 is the latest for 1.19.4
+            // update the format - 15 is the latest for 1.20
             // it's a json file, so load it and check the value
             Gson gson = new GsonBuilder().create();
             try {
@@ -111,11 +117,11 @@ public class TARDISChecker {
                         for (Map.Entry<?, ?> data : values.entrySet()) {
                             if (data.getKey().equals("pack_format")) {
                                 Double d = (Double) data.getValue();
-                                if (d < 12.0D) {
+                                if (d < 15.0D) {
                                     Map<String, Map<String, Object>> mcmap = new HashMap<>();
                                     Map<String, Object> pack = new HashMap<>();
                                     pack.put("description", "Data pack for the TARDIS plugin");
-                                    pack.put("pack_format", 12);
+                                    pack.put("pack_format", 15);
                                     mcmap.put("pack", pack);
                                     FileWriter writer = new FileWriter(mcmeta);
                                     gson.toJson(mcmap, writer);

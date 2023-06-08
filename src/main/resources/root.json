@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:compass"
+            "item": "minecraft:compass",
+            "nbt": "{ \"CustomModelData\": 1001 }"
         },
         "title": "Doctor Who",
         "description": "Exploration in space and time",
@@ -11,7 +12,20 @@
     },
     "criteria": {
         "place_block": {
+            "conditions": {
+                "location": [
+                    {
+                        "block":"minecraft:melon_stem",
+                        "condition":"minecraft:block_state_property"
+                    }
+                ]
+            },
             "trigger": "minecraft:placed_block"
         }
-    }
+    },
+    "requirements": [
+        [
+            "place_block"
+        ]
+    ]
 }
