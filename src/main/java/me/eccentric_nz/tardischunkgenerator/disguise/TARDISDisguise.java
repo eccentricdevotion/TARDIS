@@ -170,6 +170,11 @@ public class TARDISDisguise {
                 str = "GlowSquid";
                 hasEntityStr = false;
             }
+            case SNIFFER -> {
+                str = "Sniffer";
+                packagePath += "animal.sniffer.";
+                hasEntityStr = false;
+            }
             default -> {
                 str = capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.";
