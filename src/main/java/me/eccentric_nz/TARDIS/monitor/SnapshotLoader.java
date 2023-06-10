@@ -70,23 +70,28 @@ public class SnapshotLoader {
                         BufferedReader br = new BufferedReader(new FileReader(file));
                         Color[][] colours = gson.fromJson(br, Color[][].class);
                         MapView mapView = Bukkit.getMap(mapId);
-                        mapView.setTrackingPosition(false);
-                        for (MapRenderer renderer : mapView.getRenderers()) {
-                            mapView.removeRenderer(renderer);
-                        }
-                        mapView.addRenderer(new MapRenderer() {
-                            @Override
-                            public void render(@NotNull MapView mapViewNew, @NotNull MapCanvas mapCanvas, @NotNull Player player) {
-                                if (!mapIDsNotToRender.contains(mapId)) {
-                                    mapIDsNotToRender.add(mapId);
-                                    for (int x = 0; x < 128; x++) {
-                                        for (int y = 0; y < 128; y++) {
-                                            mapCanvas.setPixelColor(x, y, colours[x][y]);
+                        if (mapView != null) {
+                            mapView.setTrackingPosition(false);
+                            for (MapRenderer renderer : mapView.getRenderers()) {
+                                mapView.removeRenderer(renderer);
+                            }
+                            mapView.addRenderer(new MapRenderer() {
+                                @Override
+                                public void render(@NotNull MapView mapViewNew, @NotNull MapCanvas mapCanvas, @NotNull Player player) {
+                                    if (!mapIDsNotToRender.contains(mapId)) {
+                                        mapIDsNotToRender.add(mapId);
+                                        for (int x = 0; x < 128; x++) {
+                                            for (int y = 0; y < 128; y++) {
+                                                mapCanvas.setPixelColor(x, y, colours[x][y]);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        } else {
+                            // remove the file as map doesn't exist
+                            file.delete();
+                        }
                     } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
                         plugin.getLogger().log(Level.WARNING, "Could not render map with id: {0}", mapId);
                     }
