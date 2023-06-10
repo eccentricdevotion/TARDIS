@@ -1,11 +1,8 @@
 # TODO
 
-## Current version `4.14.0`
+## Current ersion `5.0.0`
 
-## Version 5.0.0
-
-1. Update to Minecraft/Spigot/Paper 1.120
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 
@@ -32,7 +29,7 @@
 
 ## Resource Pack / Monsters
 
-1. Re-skin mobs for Resource pack, and add new mob sounds
+1. New mobs and sounds for Resource pack
     * Whispermen
     * Clockwork Droid
     * Endermites -> Cybermats
