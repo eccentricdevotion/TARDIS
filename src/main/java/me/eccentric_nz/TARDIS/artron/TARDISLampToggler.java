@@ -74,7 +74,7 @@ public class TARDISLampToggler {
                     b.getChunk().load();
                 }
                 Levelled levelled = TARDISConstants.LIGHT;
-                ItemDisplay display = TARDISDisplayItemUtils.getFromLight(b);
+                ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(b);
                 if (on) {
                     levelled.setLevel(0);
                     b.setBlockData(levelled);

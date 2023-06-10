@@ -74,7 +74,7 @@ public class TARDISInnerDoorOpener {
             block.setBlockData(openable, true);
         } else {
             // get and open display door
-            ItemDisplay display = TARDISDisplayItemUtils.getFromLight(block);
+            ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
             if (display != null) {
                 TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                 if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {

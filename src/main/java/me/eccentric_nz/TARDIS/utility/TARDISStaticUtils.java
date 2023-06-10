@@ -136,7 +136,7 @@ public class TARDISStaticUtils {
         if (door.getBlockData() instanceof Openable openable) {
             return openable.isOpen();
         }
-        ItemDisplay display = TARDISDisplayItemUtils.get(door);
+        ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(door);
         if (display != null) {
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
             if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {

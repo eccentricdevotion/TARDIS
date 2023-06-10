@@ -43,7 +43,8 @@ public class TARDISDisplayItemUtils {
      * Get a TARDISDisplayItem from a display entity
      *
      * @param display the display entity to get the data from
-     * @return The TARDISDisplayItem that matches this entity or null if there isn't one
+     * @return The TARDISDisplayItem that matches this entity or null if there
+     * isn't one
      */
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();
@@ -74,15 +75,15 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an item display entity from a light block. Used for custom TARDIS
-     * lights. Light blocks don't have a bounding box, so we need to create our
-     * own from the block's location.
+     * Get an item display entity from a block. Used for custom TARDIS lights
+     * and double door. Light blocks don't have a bounding box, so we need to
+     * create our own from the block's location.
      *
-     * @param block the light block to use as the search location
+     * @param block the block to use as the search location
      * @return The Item Display entity at the block's location or null if there
      * isn't one
      */
-    public static ItemDisplay getFromLight(Block block) {
+    public static ItemDisplay getFromBoundingBox(Block block) {
         int x = block.getLocation().getBlockX();
         int y = block.getLocation().getBlockY();
         int z = block.getLocation().getBlockZ();
