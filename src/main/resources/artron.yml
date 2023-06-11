@@ -87,5 +87,6 @@ sonic_generator:
   ignite: 10
   arrow: 10
   knockback: 10
+  brush: 10
 shell: 500
 custard_cream: 25

@@ -20,6 +20,7 @@ public enum ShopItem {
     BLUEBERRY_JELLY_BABY("Blueberry Jelly Baby", Material.MELON_SLICE, 10000012, ShopItemRecipe.SHAPELESS),
     BOWL_OF_CUSTARD("Bowl of Custard", Material.MUSHROOM_STEW, 10000001, ShopItemRecipe.SHAPELESS),
     BROWN_BOW_TIE("Brown Bow Tie", Material.LEATHER_HELMET, 10000035),
+    BRUSH_CIRCUIT("Brush Circuit", Material.GLOWSTONE_DUST, 10001987),
     BUBBLEGUM_JELLY_BABY("Bubblegum Jelly Baby", Material.MELON_SLICE, 10000004, ShopItemRecipe.SHAPELESS),
     BUDGET_SEED("Budget Seed", Material.IRON_BLOCK, 1, ShopItemRecipe.SEED),
     CAPPUCCINO_JELLY_BABY("Cappuccino Jelly Baby", Material.MELON_SLICE, 10000013, ShopItemRecipe.SHAPELESS),

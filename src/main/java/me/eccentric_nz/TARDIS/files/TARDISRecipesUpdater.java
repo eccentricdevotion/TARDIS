@@ -354,6 +354,13 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Monitor Frame.lore", "Place in an upwards~facing item frame");
             i++;
         }
+        if (!recipes_config.contains("shapeless.Knockback Upgrade")) {
+            recipes_config.set("shapeless.Knockback Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Knockback Circuit");
+            recipes_config.set("shapeless.Knockback Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Knockback Upgrade.amount", 1);
+            recipes_config.set("shapeless.Knockback Upgrade.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Knockback Circuit")) {
             recipes_config.set("shaped.Knockback Circuit.easy_shape", "-K-,RSR,-R-");
             recipes_config.set("shaped.Knockback Circuit.easy_ingredients.K", "GOLDEN_SWORD");
@@ -888,11 +895,25 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
             i++;
         }
-        if (!recipes_config.contains("shapeless.Knockback Upgrade")) {
-            recipes_config.set("shapeless.Knockback Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Knockback Circuit");
-            recipes_config.set("shapeless.Knockback Upgrade.result", "BLAZE_ROD");
-            recipes_config.set("shapeless.Knockback Upgrade.amount", 1);
-            recipes_config.set("shapeless.Knockback Upgrade.lore", "");
+        if (!recipes_config.contains("shapeless.Brush Upgrade")) {
+            recipes_config.set("shapeless.Brush Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Brush Circuit");
+            recipes_config.set("shapeless.Brush Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Brush Upgrade.amount", 1);
+            recipes_config.set("shapeless.Brush Upgrade.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Brush Circuit")) {
+            recipes_config.set("shaped.Brush Circuit.easy_shape", "-K-,RSR,-R-");
+            recipes_config.set("shaped.Brush Circuit.easy_ingredients.K", "FEATHER");
+            recipes_config.set("shaped.Brush Circuit.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Brush Circuit.easy_ingredients.S", "COPPER_INGOT");
+            recipes_config.set("shaped.Brush Circuit.hard_shape", "-K-,RSR,-R-");
+            recipes_config.set("shaped.Brush Circuit.hard_ingredients.K", "BRUSH");
+            recipes_config.set("shaped.Brush Circuit.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Brush Circuit.hard_ingredients.S", "COPPER_BLOCK");
+            recipes_config.set("shaped.Brush Circuit.result", "GLOWSTONE_DUST");
+            recipes_config.set("shaped.Brush Circuit.amount", 1);
+            recipes_config.set("shaped.Brush Circuit.lore", "");
             i++;
         }
         if (!recipes_config.contains("shaped.Ignite Circuit")) {

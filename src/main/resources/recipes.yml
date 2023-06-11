@@ -1045,6 +1045,20 @@ shaped:
     result: GLOWSTONE_DUST
     amount: 1
     lore: ''
+  Brush Circuit:
+    easy_shape: '-K-,RSR,-R-'
+    easy_ingredients:
+      K: FEATHER
+      R: REDSTONE
+      S: COPPER_INGOT
+    hard_shape: '-K-,RSR,-R-'
+    hard_ingredients:
+      K: BRUSH
+      R: REDSTONE
+      S: COPPER_BLOCK
+    result: GLOWSTONE_DUST
+    amount: 1
+    lore: ''
   Authorised Control Disk:
     easy_shape: 'QRQ,RLR,QRQ'
     easy_ingredients:
@@ -1130,6 +1144,11 @@ shapeless:
     lore: ''
   Knockback Upgrade:
     recipe: BLAZE_ROD,GLOWSTONE_DUST=Knockback Circuit
+    result: BLAZE_ROD
+    amount: 1
+    lore: ''
+  Brush Upgrade:
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Brush Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''

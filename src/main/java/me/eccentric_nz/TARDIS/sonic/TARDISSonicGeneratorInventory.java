@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
@@ -25,11 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -68,40 +67,15 @@ class TARDISSonicGeneratorInventory {
             }
         }
         // \u00a7 = § (ChatColor code)
-        // info 1/3
-        ItemStack info = new ItemStack(Material.BOOK, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Instructions (1/3)");
-        List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
-        info_im.setLore(lore);
-        info_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getCustomModelData());
-        info.setItemMeta(info_im);
-        stack[38] = info;
-        // info 2/3
-        ItemStack info1 = new ItemStack(Material.BOOK, 1);
-        ItemMeta info1_im = info.getItemMeta();
-        info1_im.setDisplayName("Instructions (2/3)");
-        List<String> lore1 = Arrays.asList("You can reset the upgrades", "by clicking the 'Standard' button.", "The Artron cost for the", "sonic is shown bottom left.");
-        info1_im.setLore(lore1);
-        info1_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_2_OF_3.getCustomModelData());
-        info1.setItemMeta(info1_im);
-        stack[39] = info1;
-        // info 3/3
-        ItemStack info2 = new ItemStack(Material.BOOK, 1);
-        ItemMeta info2_im = info.getItemMeta();
-        info2_im.setDisplayName("Instructions (3/3)");
-        List<String> lore2 = Arrays.asList("The final sonic result", "is shown in the middle", "of the bottom row.");
-        info2_im.setLore(lore2);
-        info2_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_3_OF_3.getCustomModelData());
-        info2.setItemMeta(info2_im);
-        stack[40] = info2;
-        // standard sonic
-        ItemStack sta = new ItemStack(Material.BOWL, 1);
-        ItemMeta dard = sta.getItemMeta();
-        dard.setDisplayName("Standard Sonic");
-        dard.setCustomModelData(GUISonicGenerator.STANDARD_SONIC.getCustomModelData());
-        sta.setItemMeta(dard);
-        stack[27] = sta;
+        // brush upgrade
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.brush")) {
+            ItemStack brush = new ItemStack(Material.BOWL, 1);
+            ItemMeta dust = brush.getItemMeta();
+            dust.setDisplayName("Brush Upgrade");
+            dust.setCustomModelData(GUISonicGenerator.BRUSH_UPGRADE.getCustomModelData());
+            brush.setItemMeta(dust);
+            stack[27] = brush;
+        }
         // knockback upgrade
         if (TARDISPermission.hasPermission(player, "tardis.sonic.knockback")) {
             ItemStack knock = new ItemStack(Material.BOWL, 1);
@@ -174,6 +148,40 @@ class TARDISSonicGeneratorInventory {
             arr.setItemMeta(ow);
             stack[35] = arr;
         }
+        // standard sonic
+        ItemStack sta = new ItemStack(Material.BOWL, 1);
+        ItemMeta dard = sta.getItemMeta();
+        dard.setDisplayName("Standard Sonic");
+        dard.setCustomModelData(GUISonicGenerator.STANDARD_SONIC.getCustomModelData());
+        sta.setItemMeta(dard);
+        stack[36] = sta;
+        // info 1/3
+        ItemStack info = new ItemStack(Material.BOOK, 1);
+        ItemMeta info_im = info.getItemMeta();
+        info_im.setDisplayName("Instructions (1/3)");
+        List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
+        info_im.setLore(lore);
+        info_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getCustomModelData());
+        info.setItemMeta(info_im);
+        stack[38] = info;
+        // info 2/3
+        ItemStack info1 = new ItemStack(Material.BOOK, 1);
+        ItemMeta info1_im = info.getItemMeta();
+        info1_im.setDisplayName("Instructions (2/3)");
+        List<String> lore1 = Arrays.asList("You can reset the upgrades", "by clicking the 'Standard' button.", "The Artron cost for the", "sonic is shown bottom left.");
+        info1_im.setLore(lore1);
+        info1_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_2_OF_3.getCustomModelData());
+        info1.setItemMeta(info1_im);
+        stack[39] = info1;
+        // info 3/3
+        ItemStack info2 = new ItemStack(Material.BOOK, 1);
+        ItemMeta info2_im = info.getItemMeta();
+        info2_im.setDisplayName("Instructions (3/3)");
+        List<String> lore2 = Arrays.asList("The final sonic result", "is shown in the middle", "of the bottom row.");
+        info2_im.setLore(lore2);
+        info2_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_3_OF_3.getCustomModelData());
+        info2.setItemMeta(info2_im);
+        stack[40] = info2;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
@@ -238,6 +246,10 @@ class TARDISSonicGeneratorInventory {
         if (data.hasKnockback()) {
             upgrades.add("Knockback Upgrade");
             artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+        }
+        if (data.hasBrush()) {
+            upgrades.add("Brush Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
         }
         // cost
         ItemStack cost = new ItemStack(Material.BOWL, 1);

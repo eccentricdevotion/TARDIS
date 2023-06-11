@@ -142,33 +142,29 @@ public class TARDISCondenserListener implements Listener {
                                 if (lore.contains("Bio-scanner Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                                 }
-
                                 if (lore.contains("Diamond Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
                                 }
-
                                 if (lore.contains("Emerald Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
                                 }
-
                                 if (lore.contains("Redstone Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                                 }
-
                                 if (lore.contains("Painter Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
                                 }
-
                                 if (lore.contains("Ignite Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
                                 }
-
                                 if (lore.contains("Pickup Arrows Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
                                 }
-
                                 if (lore.contains("Knockback Upgrade")) {
                                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+                                }
+                                if (lore.contains("Brush Upgrade")) {
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
                                 }
                             }
                             inv.remove(is);

@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.tool;
 
+import java.io.File;
+import java.sql.*;
+import java.util.MissingFormatArgumentException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
-
-import java.io.File;
-import java.sql.*;
-import java.util.MissingFormatArgumentException;
 
 /**
  * @author eccentric_nz
@@ -239,7 +238,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case sonic -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sonic_id"), rs.getString("uuid"), rs.getInt("activated"), rs.getString("sonic_type"), rs.getInt("model"), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), rs.getString("sonic_uuid")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sonic_id"), rs.getString("uuid"), rs.getInt("activated"), rs.getString("sonic_type"), rs.getInt("model"), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), rs.getInt("brush"), rs.getString("sonic_uuid")) + end;
                                         sb.append(str);
                                     }
                                     case storage -> {

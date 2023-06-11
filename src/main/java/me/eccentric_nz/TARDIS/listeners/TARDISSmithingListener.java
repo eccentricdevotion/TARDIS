@@ -46,6 +46,7 @@ public class TARDISSmithingListener implements Listener {
         upgrades.put("Ignite Upgrade", "ignite");
         upgrades.put("Pickup Arrows Upgrade", "arrow");
         upgrades.put("Knockback Upgrade", "knockback");
+        upgrades.put("Brush Upgrade", "brush");
         customModelData.put(10001968, "Admin Upgrade");
         customModelData.put(10001969, "Bio-scanner Upgrade");
         customModelData.put(10001970, "Redstone Upgrade");
@@ -55,6 +56,7 @@ public class TARDISSmithingListener implements Listener {
         customModelData.put(10001982, "Ignite Upgrade");
         customModelData.put(10001984, "Pickup Arrows Upgrade");
         customModelData.put(10001986, "Knockback Upgrade");
+        customModelData.put(10001987, "Brush Upgrade");
     }
 
     /**

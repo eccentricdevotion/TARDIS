@@ -511,6 +511,9 @@ permissions:
   tardis.sonic.knockback:
     description: Allows a player to use the entity knockback function of the sonic screwdriver.
     default: op
+  tardis.sonic.brush:
+    description: Allows a player to use the archeology brush function of the sonic screwdriver.
+    default: op
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op

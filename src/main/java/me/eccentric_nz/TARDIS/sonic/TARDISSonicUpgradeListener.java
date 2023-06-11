@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -29,10 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -55,6 +54,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         upgrades.put("Ignite Upgrade", "ignite");
         upgrades.put("Pickup Arrows Upgrade", "arrow");
         upgrades.put("Knockback Upgrade", "knockback");
+        upgrades.put("Brush Upgrade", "brush");
         customModelData.put(10001968, "Admin Upgrade");
         customModelData.put(10001969, "Bio-scanner Upgrade");
         customModelData.put(10001970, "Redstone Upgrade");
@@ -64,6 +64,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         customModelData.put(10001982, "Ignite Upgrade");
         customModelData.put(10001984, "Pickup Arrows Upgrade");
         customModelData.put(10001986, "Knockback Upgrade");
+        customModelData.put(10001987, "Brush Upgrade");
     }
 
     /**

@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a Time Lord's preferred sonic
@@ -69,7 +68,20 @@ public class ResultSetConfiguredSonic {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                configuredSonic = new ConfiguredSonic(rs.getInt("sonic_id"), UUID.fromString(rs.getString("uuid")), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), UUID.fromString(rs.getString("sonic_uuid")));
+                configuredSonic = new ConfiguredSonic(
+                        rs.getInt("sonic_id"),
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getInt("bio"),
+                        rs.getInt("diamond"),
+                        rs.getInt("emerald"),
+                        rs.getInt("redstone"),
+                        rs.getInt("painter"),
+                        rs.getInt("ignite"),
+                        rs.getInt("arrow"),
+                        rs.getInt("knockback"),
+                        rs.getInt("brush"), 
+                        UUID.fromString(rs.getString("sonic_uuid"))
+                );
             } else {
                 return false;
             }

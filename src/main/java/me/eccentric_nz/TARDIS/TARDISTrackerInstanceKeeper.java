@@ -88,6 +88,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
     private final HashMap<UUID, Location> startLocation = new HashMap<>();
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
+    private final HashMap<UUID, Long> brushCooldown = new HashMap<>();
     private final HashMap<UUID, Long> hideCooldown = new HashMap<>();
     private final HashMap<UUID, Long> rebuildCooldown = new HashMap<>();
     private final HashMap<UUID, Long> setTime = new HashMap<>();
@@ -529,6 +530,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, Long> getHideCooldown() {
         return hideCooldown;
+    }
+
+    /**
+     * Tracks players using the sonic screwdriver brush upgrade
+     *
+     * @return a Map of player UUIDs and the time in milliseconds they last used the brush
+     */
+    public HashMap<UUID, Long> getBrushCooldown() {
+        return brushCooldown;
     }
 
     /**

@@ -10,15 +10,15 @@ import org.bukkit.inventory.ItemStack;
 public class ShopItemGetter {
 
     public static ItemStack getTWAItem(ShopItem item) {
-            if (item.getMaterial() == Material.BONE) {
-                // K9
-                return HeadBuilder.getK9();
-            } else {
-                // Monster head
-                String m = item.toString().replace("_HEAD", "");
-                Monster monster = Monster.valueOf(m);
-                return HeadBuilder.getItemStack(monster);
-            }
+        if (item.getMaterial() == Material.BONE) {
+            // K9
+            return HeadBuilder.getK9();
+        } else {
+            // Monster head
+            String m = item.toString().replace("_HEAD", "");
+            Monster monster = Monster.valueOf(m);
+            return HeadBuilder.getItemStack(monster);
+        }
     }
 
     public static ItemStack getSeedItem(ShopItem item) {

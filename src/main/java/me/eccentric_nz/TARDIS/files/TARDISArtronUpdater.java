@@ -69,6 +69,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("siege_transfer", 10);
         integerOptions.put("sonic_generator.standard", 10);
         integerOptions.put("sonic_generator.bio", 10);
+        integerOptions.put("sonic_generator.brush", 10);
         integerOptions.put("sonic_generator.diamond", 10);
         integerOptions.put("sonic_generator.emerald", 10);
         integerOptions.put("sonic_generator.redstone", 10);

@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
@@ -49,10 +50,11 @@ public class TARDISSonicListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonic;
-    private final List<Material> diamond = new ArrayList<>();
-    private final List<Material> doors = new ArrayList<>();
-    private final List<Material> redstone = new ArrayList<>();
-    private final List<Material> ignite = new ArrayList<>();
+    private final Set<Material> diamond = new HashSet<>();
+    private final Set<Material> doors = new HashSet<>();
+    private final Set<Material> redstone = new HashSet<>();
+    private final Set<Material> ignite = new HashSet<>();
+    private final Set<Material> suspicious = new HashSet<>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -98,6 +100,8 @@ public class TARDISSonicListener implements Listener {
         ignite.add(Material.OBSIDIAN);
         ignite.add(Material.SOUL_SAND);
         ignite.add(Material.SOUL_SOIL);
+        suspicious.add(Material.SUSPICIOUS_GRAVEL);
+        suspicious.add(Material.SUSPICIOUS_SAND);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -178,7 +182,12 @@ public class TARDISSonicListener implements Listener {
                         TARDISSonicRedstone.togglePoweredState(plugin, player, block);
                         return;
                     }
-                    if (!redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
+                    if (suspicious.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.brush") && lore != null && lore.contains("Brush Upgrade")) {
+                        TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                        TARDISSonicBrush.dust(plugin, block, player);
+                        return;
+                    }
+                    if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         TARDISSonicScanner.scan(plugin, block.getLocation(), player);

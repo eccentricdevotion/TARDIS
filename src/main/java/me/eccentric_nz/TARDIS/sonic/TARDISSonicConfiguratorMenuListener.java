@@ -199,6 +199,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
                         case "Ignite Upgrade" -> configuredSonic.setIgnite(SonicConfig.ENABLED);
                         case "Pickup Arrows Upgrade" -> configuredSonic.setArrow(SonicConfig.ENABLED);
                         case "Knockback Upgrade" -> configuredSonic.setKnockback(SonicConfig.ENABLED);
+                        case "Brush Upgrade" -> configuredSonic.setBrush(SonicConfig.ENABLED);
                         default -> {
                         }
                     }
@@ -224,37 +225,42 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             if (dia == 1) {
                 upgrades.add("Diamond Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[dia]);
+            configuredSonic.setDiamond(SonicConfig.values()[dia]);
             int eme = getSonicConfig(11, view);
             if (eme == 1) {
                 upgrades.add("Emerald Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[eme]);
+            configuredSonic.setEmerald(SonicConfig.values()[eme]);
             int red = getSonicConfig(12, view);
             if (red == 1) {
                 upgrades.add("Redstone Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[red]);
+            configuredSonic.setRedstone(SonicConfig.values()[red]);
             int pai = getSonicConfig(13, view);
             if (pai == 1) {
                 upgrades.add("Painter Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[pai]);
+            configuredSonic.setPainter(SonicConfig.values()[pai]);
             int ign = getSonicConfig(14, view);
             if (ign == 1) {
                 upgrades.add("Ignite Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[ign]);
+            configuredSonic.setIgnite(SonicConfig.values()[ign]);
             int arr = getSonicConfig(15, view);
             if (arr == 1) {
                 upgrades.add("Pickup Arrows Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[arr]);
+            configuredSonic.setArrow(SonicConfig.values()[arr]);
             int kno = getSonicConfig(16, view);
             if (kno == 1) {
                 upgrades.add("Knockback Upgrade");
             }
-            configuredSonic.setBio(SonicConfig.values()[kno]);
+            configuredSonic.setKnockback(SonicConfig.values()[kno]);
+            int bru = getSonicConfig(17, view);
+            if (bru == 1) {
+                upgrades.add("Brush Upgrade");
+            }
+            configuredSonic.setBrush(SonicConfig.values()[bru]);
             sonics.put(player.getUniqueId(), configuredSonic);
             // prepare data for database insertion
             HashMap<String, Object> set = new HashMap<>();
@@ -266,6 +272,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             set.put("ignite", ign);
             set.put("arrow", arr);
             set.put("knockback", kno);
+            set.put("brush", bru);
             HashMap<String, Object> where = new HashMap<>();
             where.put("sonic_id", configuredSonic.getSonic_id());
             plugin.getQueryFactory().doUpdate("sonic", set, where);
@@ -308,6 +315,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             int ignite = lore != null && lore.contains("Ignite Upgrade") ? 1 : 0;
             int arrow = lore != null && lore.contains("Pickup Arrows Upgrade") ? 1 : 0;
             int knockback = lore != null && lore.contains("Knockback Upgrade") ? 1 : 0;
+            int brush = lore != null && lore.contains("Brush Upgrade") ? 1 : 0;
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
@@ -324,11 +332,12 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             set.put("ignite", ignite);
             set.put("arrow", arrow);
             set.put("knockback", knockback);
+            set.put("brush", brush);
             set.put("sonic_uuid", sonic_uuid.toString());
             // insert into database
             int id = plugin.getQueryFactory().doSyncInsert("sonic", set);
             // create  the configured sonic
-            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, sonic_uuid);
+            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, brush, sonic_uuid);
         }
         return null;
     }

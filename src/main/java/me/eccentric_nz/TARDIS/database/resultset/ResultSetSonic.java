@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
-import org.bukkit.ChatColor;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +23,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Sonic;
+import org.bukkit.ChatColor;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a Time Lord's preferred sonic
@@ -92,7 +91,21 @@ public class ResultSetSonic {
                 rs.next();
                 String colour = rs.getString("sonic_type");
                 ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
-                sonic = new Sonic(UUID.fromString(rs.getString("uuid")), rs.getBoolean("activated"), cc, rs.getInt("model"), rs.getBoolean("bio"), rs.getBoolean("diamond"), rs.getBoolean("emerald"), rs.getBoolean("redstone"), rs.getBoolean("painter"), rs.getBoolean("ignite"), rs.getBoolean("arrow"), rs.getBoolean("knockback"));
+                sonic = new Sonic(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getBoolean("activated"),
+                        cc,
+                        rs.getInt("model"),
+                        rs.getBoolean("bio"),
+                        rs.getBoolean("diamond"),
+                        rs.getBoolean("emerald"),
+                        rs.getBoolean("redstone"),
+                        rs.getBoolean("painter"),
+                        rs.getBoolean("ignite"),
+                        rs.getBoolean("arrow"),
+                        rs.getBoolean("knockback"),
+                        rs.getBoolean("brush")
+                );
             } else {
                 return false;
             }

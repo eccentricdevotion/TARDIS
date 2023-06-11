@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import org.bukkit.ChatColor;
-
 import java.util.UUID;
+import org.bukkit.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -37,8 +36,9 @@ public class Sonic {
     private final boolean ignite;
     private final boolean arrow;
     private final boolean knockback;
+    private final boolean brush;
 
-    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback) {
+    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush) {
         this.uuid = uuid;
         this.activated = activated;
         this.sonicType = sonicType;
@@ -51,6 +51,7 @@ public class Sonic {
         this.ignite = ignite;
         this.arrow = arrow;
         this.knockback = knockback;
+        this.brush = brush;
     }
 
     public UUID getUuid() {
@@ -99,5 +100,9 @@ public class Sonic {
 
     public boolean hasKnockback() {
         return knockback;
+    }
+
+    public boolean hasBrush() {
+        return brush;
     }
 }

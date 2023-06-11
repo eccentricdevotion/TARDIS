@@ -1,6 +1,6 @@
 # TODO
 
-## Current ersion `5.0.0`
+## Current version `5.0.0`
 
 1. ?
 

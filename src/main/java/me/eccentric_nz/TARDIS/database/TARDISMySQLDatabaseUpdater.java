@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four dimensional world. They have Curiosity Circuits
@@ -115,6 +114,7 @@ class TARDISMySQLDatabaseUpdater {
         farmingupdates.add("mangrove varchar(512) DEFAULT ''");
         sonicupdates.add("arrow int(1) DEFAULT '0'");
         sonicupdates.add("knockback int(1) DEFAULT '0'");
+        sonicupdates.add("brush int(1) DEFAULT '0'");
         sonicupdates.add("model int(11) DEFAULT '10000011'");
         sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
     }

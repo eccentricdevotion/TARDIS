@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
@@ -35,10 +38,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -72,6 +71,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Ignite Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full));
         map.put("Pickup Arrows Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full));
         map.put("Knockback Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full));
+        map.put("Brush Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full));
         return map;
     }
 
@@ -85,6 +85,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         map.put("Ignite Upgrade", "ignite");
         map.put("Pickup Arrows Upgrade", "arrow");
         map.put("Knockback Upgrade", "knockback");
+        map.put("Brush Upgrade", "brush");
         return map;
     }
 
@@ -122,26 +123,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             setCost(view, costs.get("Standard Sonic"));
                         }
                     }
-                    case 27 -> {
-                        // reset to standard
-                        sonic = view.getItem(49);
-                        if (sonic == null) {
-                            sonic = new ItemStack(Material.BLAZE_ROD, 1);
-                            slotWasNull = true;
-                        }
-                        sonic_im = sonic.getItemMeta();
-                        if (slotWasNull) {
-                            sonic_im.setDisplayName("Sonic Screwdriver");
-                            view.setItem(49, sonic);
-                        } else {
-                            // remove lore
-                            sonic_im.setLore(null);
-                        }
-                        sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
-                        sonic.setItemMeta(sonic_im);
-                        setCost(view, costs.get("Standard Sonic"));
-                    }
-                    case 28, 29, 30, 31, 32, 33, 34, 35 -> {
+                    case 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
                         ItemStack upgrade = view.getItem(slot);
                         ItemMeta upgrade_im = upgrade.getItemMeta();
                         String upgrade_name = upgrade_im.getDisplayName();
@@ -170,6 +152,25 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                         if (slotWasNull) {
                             view.setItem(49, sonic);
                         }
+                    }
+                    case 36 -> {
+                        // reset to standard
+                        sonic = view.getItem(49);
+                        if (sonic == null) {
+                            sonic = new ItemStack(Material.BLAZE_ROD, 1);
+                            slotWasNull = true;
+                        }
+                        sonic_im = sonic.getItemMeta();
+                        if (slotWasNull) {
+                            sonic_im.setDisplayName("Sonic Screwdriver");
+                            view.setItem(49, sonic);
+                        } else {
+                            // remove lore
+                            sonic_im.setLore(null);
+                        }
+                        sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
+                        sonic.setItemMeta(sonic_im);
+                        setCost(view, costs.get("Standard Sonic"));
                     }
                     case 43 -> {
                         // save

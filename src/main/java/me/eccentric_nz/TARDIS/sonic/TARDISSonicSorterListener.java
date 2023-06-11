@@ -21,13 +21,14 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import com.griefcraft.cache.ProtectionCache;
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.model.Protection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,12 +45,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
- * Borrowed from the SimpleSort plugin. <a href="http://dev.bukkit.org/bukkit-plugins/simplesort/">...</a>
+ * Borrowed from the SimpleSort plugin.
+ * <a href="http://dev.bukkit.org/bukkit-plugins/simplesort/">...</a>
  *
  * @author Shadow1013GL
  * @author Pyr0Byt3
@@ -165,13 +163,7 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         // LWCX
                         if (plugin.getPM().isPluginEnabled("LWC")) {
-                            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-                            if (protectionCache != null) {
-                                Protection protection = protectionCache.getProtection(block);
-                                if (protection != null && !protection.isOwner(player)) {
-                                    allow = false;
-                                }
-                            }
+                            allow = !new TARDISLWCChecker().isBlockProtected(block, player);
                         }
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();

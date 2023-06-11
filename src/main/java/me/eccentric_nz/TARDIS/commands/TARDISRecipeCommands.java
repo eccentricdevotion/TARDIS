@@ -384,6 +384,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
             case "Knockback Upgrade" -> {
                 return "Knockback Circuit";
             }
+            case "Brush Upgrade" -> {
+                return "Brush Circuit";
+            }
             default -> {  // TARDIS Stattenheim Circuit"
                 if (quartzCount == 0) {
                     return "TARDIS Locator Circuit"; // 1965

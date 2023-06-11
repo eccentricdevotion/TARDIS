@@ -26,6 +26,7 @@ public enum GlowstoneCircuit {
     ADMIN("Server Admin Circuit", 10001968),
     ARS("TARDIS ARS Circuit", 10001973),
     BIO("Bio-scanner Circuit", 10001969),
+    BRUSH("Brush Circuit", 10001987),
     CHAMELEON("TARDIS Chameleon Circuit", 10001966),
     CIRCUITS("Circuits", 10001985),
     DIAMOND("Diamond Disruptor Circuit", 10001971),
