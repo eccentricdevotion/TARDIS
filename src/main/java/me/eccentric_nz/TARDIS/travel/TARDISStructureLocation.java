@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.generator.structure.Structure;
 
@@ -34,48 +35,13 @@ public class TARDISStructureLocation {
     }
 
     public String getWhich() {
-        if (which.equals(Structure.END_CITY)) {
-            return "End City";
-        }
-        if (which.equals(Structure.ANCIENT_CITY)) {
-            return "Ancient City";
-        }
-        if (which.equals(Structure.BASTION_REMNANT)) {
-            return "Bastion Remnant";
-        }
-        if (which.equals(Structure.FORTRESS)) {
+        String s = which.getKey().getKey();
+        if (s.startsWith("ocean_ruin_") || s.startsWith("ruined_portal_") || s.startsWith("village_")) {
+            return TARDISStringUtils.switchCapitalise(s);
+        } else if (which.equals(Structure.FORTRESS)) {
             return "Nether Fortress";
+        } else {
+            return TARDISStringUtils.capitalise(s);
         }
-        if (which.equals(Structure.VILLAGE_PLAINS)) {
-            return "Plains Village";
-        }
-        if (which.equals(Structure.VILLAGE_DESERT)) {
-            return "Desert Village";
-        }
-        if (which.equals(Structure.VILLAGE_SAVANNA)) {
-            return "Savanna Village";
-        }
-        if (which.equals(Structure.VILLAGE_SNOWY)) {
-            return "Snowy Village";
-        }
-        if (which.equals(Structure.VILLAGE_TAIGA)) {
-            return "Taiga Village";
-        }
-        if (which.equals(Structure.MANSION)) {
-            return "Mansion";
-        }
-        if (which.equals(Structure.JUNGLE_PYRAMID)) {
-            return "Jungle Pyramid";
-        }
-        if (which.equals(Structure.DESERT_PYRAMID)) {
-            return "Desert Pyramid";
-        }
-        if (which.equals(Structure.IGLOO)) {
-            return "Igloo";
-        }
-        if (which.equals(Structure.SWAMP_HUT)) {
-            return "Swamp Hut";
-        }
-        return "No Structure";
     }
 }

@@ -17,19 +17,18 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 
 /**
  * TabCompleter for /tardistravel
@@ -53,9 +52,12 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
         if (rsa.resultSet()) {
             AREA_SUBS.addAll(rsa.getNames());
         }
-        STRUCTURE_SUBS = Arrays.asList("VILLAGE_DESERT", "VILLAGE_PLAINS", "VILLAGE_SAVANNA", "VILLAGE_SNOWY", "VILLAGE_TAIGA",
-                "MANSION", "JUNGLE_PYRAMID", "DESERT_PYRAMID", "IGLOO", "SWAMP_HUT", "ANCIENT_CITY", "MINESHAFT", "MINESHAFT_MESA",
-                "MONUMENT", "PILLAGER_OUTPOST", "SHIPWRECK", "SHIPWRECK_BEACHED", "FORTRESS", "BASTION_REMNANT", "END_CITY");
+        STRUCTURE_SUBS = Arrays.asList("PILLAGER_OUTPOST", "MINESHAFT", "MINESHAFT_MESA", "MANSION", "JUNGLE_PYRAMID",
+                "DESERT_PYRAMID", "IGLOO", "SHIPWRECK", "SHIPWRECK_BEACHED", "SWAMP_HUT", "STRONGHOLD", "MONUMENT",
+                "OCEAN_RUIN_COLD", "OCEAN_RUIN_WARM", "FORTRESS", "NETHER_FOSSIL", "END_CITY", "BURIED_TREASURE",
+                "BASTION_REMNANT", "VILLAGE_PLAINS", "VILLAGE_DESERT", "VILLAGE_SAVANNA", "VILLAGE_SNOWY", "VILLAGE_TAIGA",
+                "RUINED_PORTAL", "RUINED_PORTAL_DESERT", "RUINED_PORTAL_JUNGLE", "RUINED_PORTAL_SWAMP", "RUINED_PORTAL_MOUNTAIN",
+                "RUINED_PORTAL_OCEAN", "RUINED_PORTAL_NETHER", "ANCIENT_CITY", "TRAIL_RUINS");
     }
 
     @Override

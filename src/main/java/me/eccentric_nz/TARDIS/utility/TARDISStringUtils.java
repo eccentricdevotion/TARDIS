@@ -36,6 +36,16 @@ public class TARDISStringUtils {
         return builder.toString().trim();
     }
 
+    public static String switchCapitalise(String s) {
+        String[] split = s.split("_");
+        StringBuilder builder = new StringBuilder();
+        builder.append(split[split.length - 1]);
+        for (int i = 0; i < split.length - 1; i++) {
+            builder.append(" ").append(uppercaseFirst(split[i]));
+        }
+        return builder.toString();
+    }
+
     public static String sentenceCase(String s) {
         String replaced = s.replace("_", " ");
         return uppercaseFirst(replaced);
@@ -90,8 +100,8 @@ public class TARDISStringUtils {
     }
 
     /**
-     * Determines the Material type of the block. Values are calculated by converting the string values stored in a
-     * TARDIS Seed block.
+     * Determines the Material type of the block. Values are calculated by
+     * converting the string values stored in a TARDIS Seed block.
      *
      * @param str the lore stored in the TARDIS Seed block's Item Meta
      * @return an String representing the Material
@@ -104,11 +114,13 @@ public class TARDISStringUtils {
     /**
      * Replace all occurrences of Strings within another String.
      *
-     * @param text            text to search and replace in, no-op if null
-     * @param searchList      the Strings to search for, no-op if null
+     * @param text text to search and replace in, no-op if null
+     * @param searchList the Strings to search for, no-op if null
      * @param replacementList the Strings to replace them with, no-op if null
-     * @return the text with any replacements processed, {@code null} if null String input
-     * @throws IllegalArgumentException if the lengths of the arrays are not the same (null is ok, and/or size 0)
+     * @return the text with any replacements processed, {@code null} if null
+     * String input
+     * @throws IllegalArgumentException if the lengths of the arrays are not the
+     * same (null is ok, and/or size 0)
      */
     public static String replaceEach(String text, String[] searchList, String[] replacementList) {
         if (isEmpty(text) || isEmptyArray(searchList) || isEmptyArray(replacementList)) {
@@ -173,8 +185,8 @@ public class TARDISStringUtils {
             replaceIndex = -1;
             // find the next earliest match
             for (int i = 0; i < searchLength; i++) {
-                if (noMoreMatchesForReplIndex[i] || searchList[i] == null ||
-                        searchList[i].isEmpty() || replacementList[i] == null) {
+                if (noMoreMatchesForReplIndex[i] || searchList[i] == null
+                        || searchList[i].isEmpty() || replacementList[i] == null) {
                     continue;
                 }
                 tempIndex = text.indexOf(searchList[i], start);
@@ -212,7 +224,8 @@ public class TARDISStringUtils {
      * Returns the length of the specified array.
      *
      * @param array the array to retrieve the length from, may be null
-     * @return The length of the array, or {@code 0} if the array is {@code null}
+     * @return The length of the array, or {@code 0} if the array is
+     * {@code null}
      * @throws IllegalArgumentException if the object argument is not an array.
      */
     private static int getLength(Object array) {
