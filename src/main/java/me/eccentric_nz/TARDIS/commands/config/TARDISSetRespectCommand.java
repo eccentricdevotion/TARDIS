@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;

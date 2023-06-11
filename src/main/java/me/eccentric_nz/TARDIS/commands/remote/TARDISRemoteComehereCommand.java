@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import com.griefcraft.cache.ProtectionCache;
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.model.Protection;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -35,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -126,20 +124,11 @@ public class TARDISRemoteComehereCommand {
             count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
         Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
-        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-            if (BlockLockerAPIv2.isProtected(eyeLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
-                count = 1;
-            }
+        if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(eyeLocation.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
+            count = 1;
         }
-        if (plugin.getPM().isPluginEnabled("LWC")) {
-            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-            if (protectionCache != null) {
-                Protection protection = protectionCache.getProtection(eyeLocation.getBlock());
-                Protection underProtection = protectionCache.getProtection(under);
-                if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
-                    count = 1;
-                }
-            }
+        if (plugin.getPM().isPluginEnabled("LWC") && new TARDISLWCChecker().isBlockProtected(eyeLocation.getBlock(), under, player)) {
+            count = 1;
         }
         if (count > 0) {
             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");

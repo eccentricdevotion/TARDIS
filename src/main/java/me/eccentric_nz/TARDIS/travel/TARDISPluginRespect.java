@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;

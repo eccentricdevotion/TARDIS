@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import com.griefcraft.cache.ProtectionCache;
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.model.Protection;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -62,13 +60,7 @@ public class TARDISSonicRespect {
             }
             // LWCX
             if (plugin.getPM().isPluginEnabled("LWC")) {
-                ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-                if (protectionCache != null) {
-                    Protection protection = protectionCache.getProtection(block);
-                    if (protection != null && !protection.isOwner(player)) {
-                        return false;
-                    }
-                }
+                return !new TARDISLWCChecker().isBlockProtected(block, player);
             }
             // BlockLocker
             if (plugin.getPM().isPluginEnabled("BlockLocker")) {

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import com.griefcraft.cache.ProtectionCache;
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.model.Protection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +36,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -58,8 +56,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
- * summons the operator's TARDIS when the operator is in the field.
+ * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a
+ * Stattenheim signal through the Vortex, which summons the operator's TARDIS
+ * when the operator is in the field.
  *
  * @author eccentric_nz
  */
@@ -198,20 +197,11 @@ public class TARDISStattenheimListener implements Listener {
                             count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                         }
                         Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
-                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-                            if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
-                                count = 1;
-                            }
+                        if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
+                            count = 1;
                         }
-                        if (plugin.getPM().isPluginEnabled("LWC")) {
-                            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-                            if (protectionCache != null) {
-                                Protection protection = protectionCache.getProtection(remoteLocation.getBlock());
-                                Protection underProtection = protectionCache.getProtection(under);
-                                if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
-                                    count = 1;
-                                }
-                            }
+                        if (plugin.getPM().isPluginEnabled("LWC") && new TARDISLWCChecker().isBlockProtected(remoteLocation.getBlock(), under, player)) {
+                            count = 1;
                         }
                         if (count > 0) {
                             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");

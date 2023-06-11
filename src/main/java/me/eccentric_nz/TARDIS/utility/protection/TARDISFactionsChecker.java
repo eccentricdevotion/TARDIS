@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.utility.protection;
 
-import com.massivecraft.factions.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -27,7 +26,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-class TARDISFactionsUUID {
+public class TARDISFactionsChecker {
 
     /**
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
@@ -37,15 +36,13 @@ class TARDISFactionsUUID {
      * @param l the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    boolean isInFaction(Player p, Location l) {
-        boolean bool = true;
-        FPlayer uplayer = FPlayers.getInstance().getByPlayer(p);
-        Faction ufac = uplayer.getFaction();
-        FLocation flocation = new FLocation(l);
-        Faction lfac = Board.getInstance().getFactionAt(flocation);
-        if (!ufac.equals(lfac) && !lfac.isWilderness()) {
-            bool = false;
+    public static boolean isInFaction(Player p, Location l) {
+        try {
+            Class.forName("com.massivecraft.factions.entity.MPlayer");
+            // TODO add back support for official factions? I can't find whether it is 1.19 compatible...
+            return false;
+        } catch (ClassNotFoundException e) {
+            return new TARDISFactionsUUID().isInFaction(p, l);
         }
-        return bool;
     }
 }

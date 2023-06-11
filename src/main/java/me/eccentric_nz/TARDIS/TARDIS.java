@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
 import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
