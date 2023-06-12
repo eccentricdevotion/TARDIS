@@ -29,11 +29,15 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BrushableBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -59,7 +63,8 @@ public class TARDISDevCommand implements CommandExecutor {
             "tree",
             "snapshot",
             "displayitem",
-            "frame"
+            "frame",
+            "brushable"
     );
     private final TARDIS plugin;
 
@@ -146,6 +151,24 @@ public class TARDISDevCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "CMD_PLAYER");
                         return true;
                     }
+                }
+                if (first.equals("brushable")) {
+                    if (sender instanceof Player player) {
+                        if (args.length == 2) {
+                            // get target block
+                            Block block = player.getTargetBlock(null, 8);
+                            sender.sendMessage(block.getState().toString());
+                        } else {
+                            ItemStack sand = new ItemStack(Material.SUSPICIOUS_SAND);
+                            BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
+                            BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
+                            blockState.setItem(player.getInventory().getItemInMainHand());
+                            sandMeta.setBlockState(blockState);
+                            sand.setItemMeta(sandMeta);
+                            player.getInventory().addItem(sand);
+                        }
+                    }
+                    return true;
                 }
             } else {
                 TARDISMessage.send(sender, "CMD_ADMIN");
