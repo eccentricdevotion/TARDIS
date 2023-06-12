@@ -28,7 +28,7 @@ import org.bukkit.block.BrushableBlock;
 import org.bukkit.block.data.Brushable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootContext.Builder;
+import org.bukkit.loot.LootContext;
 import org.bukkit.loot.LootTable;
 
 public class TARDISSonicBrush {
@@ -41,18 +41,19 @@ public class TARDISSonicBrush {
                 int dusted = brushable.getDusted() + 1;
                 BrushableBlock bb = (BrushableBlock) b.getState();
                 if (dusted == 4) {
-                    ItemStack is = null;
-                    LootTable table = bb.getLootTable();
-                    if (table != null) {
-                        // generate loot
-                        Builder builder = new Builder(b.getLocation()).killer(p);
-                        Collection<ItemStack> col = table.populateLoot(TARDISConstants.RANDOM, builder.build());
-                        if (col.size() > 0) {
-                            is = Iterables.get(col, 0);
+                    ItemStack is = bb.getItem();
+                    if (is == null) {
+                        LootTable table = bb.getLootTable();
+                        if (table != null) {
+                            // generate loot
+                            LootContext.Builder builder = new LootContext.Builder(b.getLocation()).killer(p);
+                            Collection<ItemStack> col = table.populateLoot(TARDISConstants.RANDOM, builder.build());
+                            if (col.size() > 0) {
+                                is = Iterables.get(col, 0);
+                            }
                         }
                     }
                     if (is != null) {
-                        TARDIS.plugin.debug("FOUR brushed itemstack = " + is.getType());
                         // play a sound
                         p.playSound(b.getLocation(), isSand ? Sound.BLOCK_SUSPICIOUS_SAND_BREAK : Sound.BLOCK_SUSPICIOUS_GRAVEL_BREAK, 1.0f, 1.0f);
                         // drop the item
