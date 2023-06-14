@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -383,6 +384,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     if (line1.equals("Control")) {
                         String controlLocation = psb.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(id, 22, controlLocation, 0);
+                        WaxedHelper.setWaxed(signState);
                     }
                     signState.setLine(0, text.get("line0").getAsString());
                     signState.setLine(1, text.get("line1").getAsString());

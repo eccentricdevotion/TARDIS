@@ -20,14 +20,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-
-import java.util.HashMap;
 
 public class UpdateARS {
 
@@ -85,6 +85,7 @@ public class UpdateARS {
             as.setLine(2, plugin.getSigns().getStringList("ars").get(1));
             as.setLine(3, plugin.getSigns().getStringList("ars").get(2));
             as.update();
+            WaxedHelper.setWaxed(as);
         }
     }
 }

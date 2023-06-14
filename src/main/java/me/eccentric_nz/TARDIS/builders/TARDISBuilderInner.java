@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -259,6 +260,7 @@ public class TARDISBuilderInner implements Runnable {
                     if (line1.equals("Control")) {
                         String controlLocation = psb.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
+                        WaxedHelper.setWaxed(signState);
                     }
                     signState.setLine(0, text.get("line0").getAsString());
                     signState.setLine(1, line1);

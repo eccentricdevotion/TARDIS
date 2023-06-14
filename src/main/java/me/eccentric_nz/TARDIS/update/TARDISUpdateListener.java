@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -31,6 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,14 +51,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
- * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
- * the Doctor's own regeneration. Some of these changes were physical in nature (involving secondary control rooms,
- * etc.), but it was also possible to re-arrange the interior design of the TARDIS with ease, using the Architectural
- * Configuration system.
+ * The TARDIS interior goes through occasional metamorphoses, sometimes by
+ * choice, sometimes for other reasons, such as the Doctor's own regeneration.
+ * Some of these changes were physical in nature (involving secondary control
+ * rooms, etc.), but it was also possible to re-arrange the interior design of
+ * the TARDIS with ease, using the Architectural Configuration system.
  *
  * @author eccentric_nz
  */
@@ -68,8 +69,10 @@ public class TARDISUpdateListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS console and other specific items. If the block is clicked and
-     * players name is contained in the appropriate HashMap, then the block's position is recorded in the database.
+     * Listens for player interaction with the TARDIS console and other specific
+     * items. If the block is clicked and players name is contained in the
+     * appropriate HashMap, then the block's position is recorded in the
+     * database.
      *
      * @param event a player clicking on a block
      */
@@ -198,6 +201,7 @@ public class TARDISUpdateListener implements Listener {
                     cs.setLine(2, "");
                     cs.setLine(3, tardis.getPreset().toString());
                     cs.update();
+                    WaxedHelper.setWaxed(cs);
                 }
                 case KEYBOARD -> {
                     plugin.getQueryFactory().insertControl(id, 7, blockLocStr, secondary ? 1 : 0);
@@ -218,6 +222,7 @@ public class TARDISUpdateListener implements Listener {
                     ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     ss.setLine(3, "");
                     ss.update();
+                    WaxedHelper.setWaxed(ss);
                 }
                 case TERMINAL -> {
                     plugin.getQueryFactory().insertControl(id, 9, blockLocStr, secondary ? 1 : 0);
@@ -228,6 +233,7 @@ public class TARDISUpdateListener implements Listener {
                     ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     ts.setLine(3, "");
                     ts.update();
+                    WaxedHelper.setWaxed(ts);
                 }
                 case CONTROL -> {
                     plugin.getQueryFactory().insertControl(id, 22, blockLocStr, secondary ? 1 : 0);
@@ -238,6 +244,7 @@ public class TARDISUpdateListener implements Listener {
                     os.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     os.setLine(3, "");
                     os.update();
+                    WaxedHelper.setWaxed(os);
                 }
                 case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
                 case BACK -> {
@@ -268,6 +275,7 @@ public class TARDISUpdateListener implements Listener {
                     es.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     es.setLine(3, "");
                     es.update();
+                    WaxedHelper.setWaxed(es);
                 }
                 case ADVANCED, STORAGE -> {
                     plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
@@ -288,6 +296,7 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(2, plugin.getSigns().getStringList("info").get(0));
                     s.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.update();
+                    WaxedHelper.setWaxed(s);
                 }
                 case ZERO -> plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                 case THROTTLE -> {
