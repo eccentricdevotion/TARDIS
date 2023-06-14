@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -26,6 +27,8 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,11 +37,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-
 /**
- * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and Psionosauropodomorpha, are a species of Earth
- * reptile. Technologically advanced, they live alongside their aquatic cousins, the Sea Devils.
+ * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and
+ * Psionosauropodomorpha, are a species of Earth reptile. Technologically
+ * advanced, they live alongside their aquatic cousins, the Sea Devils.
  *
  * @author eccentric_nz
  */
@@ -51,8 +53,9 @@ public class TARDISBlockBreakListener implements Listener {
     }
 
     /**
-     * Listens for the TARDIS Police Box sign being broken. If the sign is broken, then the TARDIS is destroyed, the
-     * database records removed and the TARDIS world deleted.
+     * Listens for the TARDIS Police Box sign being broken. If the sign is
+     * broken, then the TARDIS is destroyed, the database records removed and
+     * the TARDIS world deleted.
      *
      * @param event a player breaking a block
      */
@@ -98,9 +101,10 @@ public class TARDISBlockBreakListener implements Listener {
         if (Tag.WALL_SIGNS.isTagged(blockType)) {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
-            String line0 = ChatColor.stripColor(sign.getLine(0));
-            String line1 = ChatColor.stripColor(sign.getLine(1));
-            String line2 = ChatColor.stripColor(sign.getLine(2));
+            SignSide front = sign.getSide(Side.FRONT);
+            String line0 = ChatColor.stripColor(front.getLine(0));
+            String line1 = ChatColor.stripColor(front.getLine(1));
+            String line2 = ChatColor.stripColor(front.getLine(2));
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();

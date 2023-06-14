@@ -42,6 +42,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.block.data.type.SeaPickle;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
@@ -244,13 +246,14 @@ public class TARDISRoomRunnable implements Runnable {
                     boolean first = true;
                     for (Block b : signblocks) {
                         Sign sign = (Sign) b.getState();
+                        SignSide front = sign.getSide(Side.FRONT);
                         if (first) {
-                            sign.setLine(1, "Chemistry");
-                            sign.setLine(2, "Lab");
+                            front.setLine(1, "Chemistry");
+                            front.setLine(2, "Lab");
                             first = false;
                         } else {
-                            sign.setLine(1, "Science");
-                            sign.setLine(2, "is fun!");
+                            front.setLine(1, "Science");
+                            front.setLine(2, "is fun!");
                         }
                         sign.update();
                     }

@@ -42,6 +42,8 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -317,6 +319,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                 ChameleonPreset preset = tardis.getPreset();
                 Sign sign = getSign(current, rscl.getDirection(), preset);
                 if (sign != null) {
+                    SignSide front = sign.getSide(Side.FRONT);
                     String player_name = TARDISStaticUtils.getNick(player);
                     String owner;
                     if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
@@ -325,9 +328,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                         owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                     }
                     switch (preset) {
-                        case GRAVESTONE -> sign.setLine(3, owner);
-                        case ANGEL, JAIL -> sign.setLine(2, owner);
-                        default -> sign.setLine(0, owner);
+                        case GRAVESTONE -> front.setLine(3, owner);
+                        case ANGEL, JAIL -> front.setLine(2, owner);
+                        default -> front.setLine(0, owner);
                     }
                     sign.update();
                 }

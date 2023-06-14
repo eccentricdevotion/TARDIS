@@ -51,6 +51,8 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 
 /**
@@ -379,6 +381,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
                 if (text != null) {
                     Sign signState = (Sign) psb.getState();
+                    SignSide front = signState.getSide(Side.FRONT);
                     String line1 = text.get("line1").getAsString();
                     // save the control centre sign
                     if (line1.equals("Control")) {
@@ -386,13 +389,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         plugin.getQueryFactory().insertSyncControl(id, 22, controlLocation, 0);
                         WaxedHelper.setWaxed(signState);
                     }
-                    signState.setLine(0, text.get("line0").getAsString());
-                    signState.setLine(1, text.get("line1").getAsString());
-                    signState.setLine(2, text.get("line2").getAsString());
-                    signState.setLine(3, text.get("line3").getAsString());
-                    signState.setGlowingText(text.get("glowing").getAsBoolean());
+                    front.setLine(0, text.get("line0").getAsString());
+                    front.setLine(1, line1);
+                    front.setLine(2, text.get("line2").getAsString());
+                    front.setLine(3, text.get("line3").getAsString());
+                    front.setGlowingText(text.get("glowing").getAsBoolean());
                     DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
-                    signState.setColor(colour);
+                    front.setColor(colour);
                     signState.setEditable(text.get("editable").getAsBoolean());
                     signState.update();
                 }

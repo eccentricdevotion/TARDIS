@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -25,9 +26,9 @@ import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -59,8 +60,9 @@ class TARDISARSRemoveCommand {
                 Block b = l.getBlock();
                 if (Tag.SIGNS.isTagged(b.getType())) {
                     Sign sign = (Sign) b.getState();
+                    SignSide front = sign.getSide(Side.FRONT);
                     for (int i = 0; i < 4; i++) {
-                        sign.setLine(i, "");
+                        front.setLine(i, "");
                     }
                     sign.update();
                 }

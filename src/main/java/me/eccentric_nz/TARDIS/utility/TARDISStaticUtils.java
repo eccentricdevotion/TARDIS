@@ -29,6 +29,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Openable;
+import org.bukkit.block.sign.Side;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -182,7 +183,7 @@ public class TARDISStaticUtils {
                 Block cc = l.getBlock();
                 if (Tag.SIGNS.isTagged(cc.getType())) {
                     Sign sign = (Sign) cc.getState();
-                    sign.setLine(line, text);
+                    sign.getSide(Side.FRONT).setLine(line, text);
                     sign.update();
                 } else {
                     TARDISMessage.send(p, "CHAM", " " + text);
@@ -205,7 +206,7 @@ public class TARDISStaticUtils {
             Block cc = l.getBlock();
             if (Tag.SIGNS.isTagged(cc.getType())) {
                 Sign sign = (Sign) cc.getState();
-                str = sign.getLine(3);
+                str = sign.getSide(Side.FRONT).getLine(3);
             }
         }
         return str;

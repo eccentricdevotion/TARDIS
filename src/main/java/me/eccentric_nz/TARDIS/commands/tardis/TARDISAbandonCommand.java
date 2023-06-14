@@ -37,6 +37,8 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -256,31 +258,26 @@ public class TARDISAbandonCommand {
                         if (preset.usesItemFrame()) {
                             World world = rsc.getWorld();
                             // remove name from the item frame item
-                            ItemFrame frame = null;
-                            boolean found = false;
                             for (Entity e : world.getNearbyEntities(current, 1.0d, 1.0d, 1.0d)) {
-                                if (e instanceof ItemFrame) {
-                                    frame = (ItemFrame) e;
-                                    found = true;
+                                if (e instanceof ItemFrame frame) {
+                                    Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, id, true);
+                                    ItemStack is = new ItemStack(dye, 1);
+                                    ItemMeta im = is.getItemMeta();
+                                    im.setCustomModelData(1001);
+                                    im.setDisplayName("");
+                                    is.setItemMeta(im);
+                                    frame.setItem(is, false);
                                     break;
                                 }
-                            }
-                            if (found) {
-                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, id, true);
-                                ItemStack is = new ItemStack(dye, 1);
-                                ItemMeta im = is.getItemMeta();
-                                im.setCustomModelData(1001);
-                                im.setDisplayName("");
-                                is.setItemMeta(im);
-                                frame.setItem(is, false);
                             }
                         } else {
                             Sign sign = getSign(current, rsc.getDirection(), preset);
                             if (sign != null) {
+                                SignSide front = sign.getSide(Side.FRONT);
                                 switch (preset) {
-                                    case GRAVESTONE -> sign.setLine(3, "");
-                                    case ANGEL, JAIL -> sign.setLine(2, "");
-                                    default -> sign.setLine(0, "");
+                                    case GRAVESTONE -> front.setLine(3, "");
+                                    case ANGEL, JAIL -> front.setLine(2, "");
+                                    default -> front.setLine(0, "");
                                 }
                                 sign.update();
                             }

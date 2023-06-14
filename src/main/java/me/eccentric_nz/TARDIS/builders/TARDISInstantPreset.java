@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
@@ -46,9 +47,9 @@ import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
-
-import java.util.*;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -315,6 +316,7 @@ public class TARDISInstantPreset {
                             plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                             if (Tag.SIGNS.isTagged(sign.getType())) {
                                 Sign s = (Sign) sign.getState();
+                                SignSide front = s.getSide(Side.FRONT);
                                 if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", bd.getTardisID());
@@ -337,9 +339,9 @@ public class TARDISInstantPreset {
                                             owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                         }
                                         switch (preset) {
-                                            case GRAVESTONE -> s.setLine(3, owner);
-                                            case ANGEL, JAIL -> s.setLine(2, owner);
-                                            default -> s.setLine(0, owner);
+                                            case GRAVESTONE -> front.setLine(3, owner);
+                                            case ANGEL, JAIL -> front.setLine(2, owner);
+                                            default -> front.setLine(0, owner);
                                         }
                                     }
                                 }
@@ -354,43 +356,43 @@ public class TARDISInstantPreset {
                                 }
                                 switch (preset) {
                                     case ANGEL -> {
-                                        s.setLine(0, sign_colour + line1);
-                                        s.setLine(1, sign_colour + line2);
-                                        s.setLine(3, sign_colour + "TARDIS");
+                                        front.setLine(0, sign_colour + line1);
+                                        front.setLine(1, sign_colour + line2);
+                                        front.setLine(3, sign_colour + "TARDIS");
                                     }
                                     case APPERTURE -> {
-                                        s.setLine(1, sign_colour + line1);
-                                        s.setLine(2, sign_colour + line2);
-                                        s.setLine(3, sign_colour + "LAB");
+                                        front.setLine(1, sign_colour + line1);
+                                        front.setLine(2, sign_colour + line2);
+                                        front.setLine(3, sign_colour + "LAB");
                                     }
                                     case JAIL -> {
-                                        s.setLine(0, sign_colour + line1);
-                                        s.setLine(1, sign_colour + line2);
-                                        s.setLine(3, sign_colour + "CAPTURE");
+                                        front.setLine(0, sign_colour + line1);
+                                        front.setLine(1, sign_colour + line2);
+                                        front.setLine(3, sign_colour + "CAPTURE");
                                     }
                                     case THEEND -> {
-                                        s.setLine(1, sign_colour + line1);
-                                        s.setLine(2, sign_colour + line2);
-                                        s.setLine(3, sign_colour + "HOT ROD");
+                                        front.setLine(1, sign_colour + line1);
+                                        front.setLine(2, sign_colour + line2);
+                                        front.setLine(3, sign_colour + "HOT ROD");
                                     }
                                     case CONSTRUCT -> {
                                         // get sign text from database
                                         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisID());
                                         if (rscs.resultSet()) {
                                             if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
-                                                s.setLine(1, sign_colour + line1);
-                                                s.setLine(2, sign_colour + line2);
+                                                front.setLine(1, sign_colour + line1);
+                                                front.setLine(2, sign_colour + line2);
                                             } else {
-                                                s.setLine(0, rscs.getLine1());
-                                                s.setLine(1, rscs.getLine2());
-                                                s.setLine(2, rscs.getLine3());
-                                                s.setLine(3, rscs.getLine4());
+                                                front.setLine(0, rscs.getLine1());
+                                                front.setLine(1, rscs.getLine2());
+                                                front.setLine(2, rscs.getLine3());
+                                                front.setLine(3, rscs.getLine4());
                                             }
                                         }
                                     }
                                     default -> {
-                                        s.setLine(1, sign_colour + line1);
-                                        s.setLine(2, sign_colour + line2);
+                                        front.setLine(1, sign_colour + line1);
+                                        front.setLine(2, sign_colour + line2);
                                     }
                                 }
                                 s.update();

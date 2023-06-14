@@ -28,6 +28,8 @@ import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 
 public class UpdateARS {
 
@@ -80,10 +82,11 @@ public class UpdateARS {
         if (Tag.SIGNS.isTagged(block.getType())) {
             // add text to sign
             Sign as = (Sign) block.getState();
-            as.setLine(0, "TARDIS");
-            as.setLine(1, plugin.getSigns().getStringList("ars").get(0));
-            as.setLine(2, plugin.getSigns().getStringList("ars").get(1));
-            as.setLine(3, plugin.getSigns().getStringList("ars").get(2));
+            SignSide front = as.getSide(Side.FRONT);
+            front.setLine(0, "TARDIS");
+            front.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+            front.setLine(2, plugin.getSigns().getStringList("ars").get(1));
+            front.setLine(3, plugin.getSigns().getStringList("ars").get(2));
             as.update();
             WaxedHelper.setWaxed(as);
         }

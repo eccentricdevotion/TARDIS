@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -36,9 +37,9 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -155,10 +156,11 @@ public class TARDISShellRoomConstructor {
             // read the sign
             if (sign != null) {
                 Sign s = (Sign) sign.getState();
-                String s1 = (s.getLine(0).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(0);
-                String s2 = (s.getLine(1).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(1);
-                String s3 = (s.getLine(2).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(2);
-                String s4 = (s.getLine(3).contains("&PLAYER")) ? player.getName() + "'s" : s.getLine(3);
+                SignSide front = s.getSide(Side.FRONT);
+                String s1 = (front.getLine(0).contains("&PLAYER")) ? player.getName() + "'s" : front.getLine(0);
+                String s2 = (front.getLine(1).contains("&PLAYER")) ? player.getName() + "'s" : front.getLine(1);
+                String s3 = (front.getLine(2).contains("&PLAYER")) ? player.getName() + "'s" : front.getLine(2);
+                String s4 = (front.getLine(3).contains("&PLAYER")) ? player.getName() + "'s" : front.getLine(3);
                 set.put("line1", s1);
                 set.put("line2", s2);
                 set.put("line3", s3);

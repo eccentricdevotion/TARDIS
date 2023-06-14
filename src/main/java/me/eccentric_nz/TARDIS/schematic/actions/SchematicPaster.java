@@ -33,6 +33,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -188,15 +190,16 @@ public class SchematicPaster implements Runnable {
                         ACACIA_WALL_HANGING_SIGN, BAMBOO_WALL_HANGING_SIGN, CHERRY_WALL_HANGING_SIGN, BIRCH_WALL_HANGING_SIGN, CRIMSON_WALL_HANGING_SIGN, DARK_OAK_WALL_HANGING_SIGN, JUNGLE_WALL_HANGING_SIGN, MANGROVE_WALL_HANGING_SIGN, OAK_WALL_HANGING_SIGN, SPRUCE_WALL_HANGING_SIGN, WARPED_WALL_HANGING_SIGN-> {
                     block.setBlockData(data, true);
                     Sign sign = (Sign) block.getState();
+                    SignSide front = sign.getSide(Side.FRONT);
                     JsonObject text = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
                     if (text != null) {
-                        sign.setLine(0, text.get("line0").getAsString());
-                        sign.setLine(1, text.get("line1").getAsString());
-                        sign.setLine(2, text.get("line2").getAsString());
-                        sign.setLine(3, text.get("line3").getAsString());
-                        sign.setGlowingText(text.get("glowing").getAsBoolean());
+                        front.setLine(0, text.get("line0").getAsString());
+                        front.setLine(1, text.get("line1").getAsString());
+                        front.setLine(2, text.get("line2").getAsString());
+                        front.setLine(3, text.get("line3").getAsString());
+                        front.setGlowingText(text.get("glowing").getAsBoolean());
                         DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
-                        sign.setColor(colour);
+                        front.setColor(colour);
                         sign.setEditable(text.get("editable").getAsBoolean());
                         sign.update();
                     }

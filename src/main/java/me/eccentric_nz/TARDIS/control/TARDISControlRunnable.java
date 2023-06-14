@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 
 /**
  * @author eccentric_nz
@@ -51,21 +53,22 @@ public class TARDISControlRunnable implements Runnable {
                             if (Tag.SIGNS.isTagged(resultSetConsole.getSign().getType())) {
                                 // get the sign
                                 Sign sign = (Sign) resultSetConsole.getSign().getState();
+                                SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    sign.setLine(0, ChatColor.DARK_PURPLE + "Drifting in the");
-                                    sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
-                                    sign.setLine(2, "");
+                                    front.setLine(0, ChatColor.DARK_PURPLE + "Drifting in the");
+                                    front.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
+                                    front.setLine(2, "");
                                 } else {
                                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
                                         worldName = plugin.getMVHelper().getAlias(worldName);
                                     }
-                                    sign.setLine(0, ChatColor.DARK_PURPLE + worldName);
-                                    sign.setLine(1, ChatColor.BLACK + resultSetConsole.getLocation());
-                                    sign.setLine(2, ChatColor.BLACK + resultSetConsole.getBiome());
+                                    front.setLine(0, ChatColor.DARK_PURPLE + worldName);
+                                    front.setLine(1, ChatColor.BLACK + resultSetConsole.getLocation());
+                                    front.setLine(2, ChatColor.BLACK + resultSetConsole.getBiome());
                                 }
-                                sign.setLine(3, ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", ""));
+                                front.setLine(3, ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", ""));
                                 sign.update();
                             }
                         }
@@ -80,11 +83,12 @@ public class TARDISControlRunnable implements Runnable {
                             if (Tag.SIGNS.isTagged(resultSetConsole.getSign().getType())) {
                                 // get the sign
                                 Sign sign = (Sign) resultSetConsole.getSign().getState();
+                                SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
-                                sign.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
-                                sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
-                                sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
-                                sign.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
+                                front.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                                front.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
+                                front.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
+                                front.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
                                 sign.update();
                             }
                         }
@@ -98,4 +102,3 @@ public class TARDISControlRunnable implements Runnable {
         });
     }
 }
-

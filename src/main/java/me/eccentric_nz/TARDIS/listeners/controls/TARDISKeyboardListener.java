@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -29,6 +32,7 @@ import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,10 +41,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.logging.Level;
 
 /**
  * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
@@ -73,7 +73,7 @@ public class TARDISKeyboardListener implements Listener {
         if (b != null && Tag.SIGNS.isTagged(b.getType())) {
             Player player = event.getPlayer();
             Sign sign = (Sign) b.getState();
-            if (sign.getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
+            if (sign.getSide(Side.FRONT).getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
                 TARDISSign.sendSignLink(player);
                 return;
             }

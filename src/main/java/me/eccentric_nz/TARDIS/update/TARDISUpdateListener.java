@@ -44,6 +44,8 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -196,10 +198,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 31, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign cs = (Sign) block.getState();
-                    cs.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
-                    cs.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
-                    cs.setLine(2, "");
-                    cs.setLine(3, tardis.getPreset().toString());
+                    SignSide front = cs.getSide(Side.FRONT);
+                    front.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                    front.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
+                    front.setLine(2, "");
+                    front.setLine(3, tardis.getPreset().toString());
                     cs.update();
                     WaxedHelper.setWaxed(cs);
                 }
@@ -207,9 +210,10 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 7, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ks = (Sign) block.getState();
-                    ks.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
+                    SignSide front = ks.getSide(Side.FRONT);
+                    front.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
                     for (int i = 1; i < 4; i++) {
-                        ks.setLine(i, "");
+                        front.setLine(i, "");
                     }
                     ks.update();
                 }
@@ -217,10 +221,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 32, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ss = (Sign) block.getState();
-                    ss.setLine(0, "TARDIS");
-                    ss.setLine(1, plugin.getSigns().getStringList("saves").get(0));
-                    ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
-                    ss.setLine(3, "");
+                    SignSide front = ss.getSide(Side.FRONT);
+                    front.setLine(0, "TARDIS");
+                    front.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                    front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
+                    front.setLine(3, "");
                     ss.update();
                     WaxedHelper.setWaxed(ss);
                 }
@@ -228,10 +233,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 9, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign ts = (Sign) block.getState();
-                    ts.setLine(0, "");
-                    ts.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
-                    ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
-                    ts.setLine(3, "");
+                    SignSide front = ts.getSide(Side.FRONT);
+                    front.setLine(0, "");
+                    front.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                    front.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
+                    front.setLine(3, "");
                     ts.update();
                     WaxedHelper.setWaxed(ts);
                 }
@@ -239,10 +245,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 22, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign os = (Sign) block.getState();
-                    os.setLine(0, "");
-                    os.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                    os.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                    os.setLine(3, "");
+                    SignSide front = os.getSide(Side.FRONT);
+                    front.setLine(0, "");
+                    front.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    front.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    front.setLine(3, "");
                     os.update();
                     WaxedHelper.setWaxed(os);
                 }
@@ -270,10 +277,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 11, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign es = (Sign) block.getState();
-                    es.setLine(0, "");
-                    es.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
-                    es.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
-                    es.setLine(3, "");
+                    SignSide front = es.getSide(Side.FRONT);
+                    front.setLine(0, "");
+                    front.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                    front.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
+                    front.setLine(3, "");
                     es.update();
                     WaxedHelper.setWaxed(es);
                 }
@@ -291,10 +299,11 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);
                     // add text to sign
                     Sign s = (Sign) block.getState();
-                    s.setLine(0, "-----");
-                    s.setLine(1, "TARDIS");
-                    s.setLine(2, plugin.getSigns().getStringList("info").get(0));
-                    s.setLine(3, plugin.getSigns().getStringList("info").get(1));
+                    SignSide front = s.getSide(Side.FRONT);
+                    front.setLine(0, "-----");
+                    front.setLine(1, "TARDIS");
+                    front.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                    front.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.update();
                     WaxedHelper.setWaxed(s);
                 }

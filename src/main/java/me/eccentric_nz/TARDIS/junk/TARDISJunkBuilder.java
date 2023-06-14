@@ -38,6 +38,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
+import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 
 /**
@@ -189,7 +190,7 @@ public class TARDISJunkBuilder implements Runnable {
                             postTerminalBlock.setBlockData(sign);
                             if (Tag.WALL_SIGNS.isTagged(postTerminalBlock.getType())) {
                                 Sign ts = (Sign) postTerminalBlock.getState();
-                                ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
+                                ts.getSide(Side.FRONT).setLine(0, plugin.getSigns().getStringList("junk").get(0));
                                 ts.update();
                             }
                         }

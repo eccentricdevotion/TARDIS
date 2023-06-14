@@ -38,6 +38,8 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -238,13 +240,14 @@ public class SchematicSave {
                     if (Tag.ALL_SIGNS.isTagged(b.getType())) {
                         JsonObject text = new JsonObject();
                         Sign sign = (Sign) b.getState();
-                        if (sign.getLines().length > 0) {
-                            text.addProperty("line0", sign.getLine(0));
-                            text.addProperty("line1", sign.getLine(1));
-                            text.addProperty("line2", sign.getLine(2));
-                            text.addProperty("line3", sign.getLine(3));
-                            text.addProperty("glowing", sign.isGlowingText());
-                            text.addProperty("colour", sign.getColor().toString());
+                        SignSide front = sign.getSide(Side.FRONT);
+                        if (front.getLines().length > 0) {
+                            text.addProperty("line0", front.getLine(0));
+                            text.addProperty("line1", front.getLine(1));
+                            text.addProperty("line2", front.getLine(2));
+                            text.addProperty("line3", front.getLine(3));
+                            text.addProperty("glowing", front.isGlowingText());
+                            text.addProperty("colour", front.getColor().toString());
                             text.addProperty("editable", sign.isEditable());
                             obj.add("sign", text);
                         }

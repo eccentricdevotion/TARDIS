@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -35,16 +38,14 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.Comparator;
 import org.bukkit.block.data.type.Repeater;
 import org.bukkit.block.data.type.Switch;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -193,9 +194,10 @@ public class TARDISJunkControlListener implements Listener {
         // get the destination sign
         Sign s = getDestinationSign(id);
         if (s != null) {
-            String line1 = s.getLine(1);
-            String line2 = s.getLine(2);
-            String line3 = s.getLine(3);
+            SignSide front = s.getSide(Side.FRONT);
+            String line1 = front.getLine(1);
+            String line2 = front.getLine(2);
+            String line3 = front.getLine(3);
             if (line1.isEmpty() || line2.isEmpty() || line3.isEmpty()) {
                 if (line1.isEmpty() && line2.isEmpty() && line3.isEmpty()) {
                     // check location
@@ -244,7 +246,7 @@ public class TARDISJunkControlListener implements Listener {
                 pos = (v < worlds.size() - 1) ? v + 1 : 0;
             }
             worldMap.put(uuid, pos);
-            s.setLine(1, worlds.get(pos));
+            s.getSide(Side.FRONT).setLine(1, worlds.get(pos));
             s.update();
         }
     }
@@ -257,7 +259,7 @@ public class TARDISJunkControlListener implements Listener {
         // get comparator data
         Comparator c = (Comparator) getControlBlock(id, 3).getBlockData();
         if (s != null && r != null && c != null) {
-            String txt = s.getLine(line);
+            String txt = s.getSide(Side.FRONT).getLine(line);
             if (txt.isEmpty()) {
                 txt = "0";
             }
@@ -267,7 +269,7 @@ public class TARDISJunkControlListener implements Listener {
             int current = TARDISNumberParsers.parseInt(txt);
             // increment / decrement sign coord value
             int amount = current + (multiplier * positiveNegative);
-            s.setLine(line, "" + amount);
+            s.getSide(Side.FRONT).setLine(line, "" + amount);
             s.update();
         }
     }
