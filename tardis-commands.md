@@ -376,9 +376,11 @@ Display the 'Tag the Ood' game statistics.
 
 ### /tardis transmat
 
-Sets an internal TARDIS transmat location.
+Adds, updates, removes and teleports to an internal TARDIS transmat location.
 
-    /tardis transmat [name]
+    /tardis transmat [tp|add|update|remove|list] [name]
+
+Stand at the location where you want to add a transmat location, then run the command `/tardis transmat add [name]`.
 
 * * *
 
