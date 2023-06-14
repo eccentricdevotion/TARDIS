@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * Artron energy is used as a source of energy in the TARDIS. Visually, artron energy resembles a sort of blue

@@ -1,13 +1,12 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
+import java.util.logging.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.util.CraftMagicNumbers;
-
-import java.util.logging.Level;
 
 public class GetBlockColours {
 

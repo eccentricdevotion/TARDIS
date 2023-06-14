@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
+import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class TARDISSmelterOre {
 

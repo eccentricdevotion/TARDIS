@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
-
 import java.util.Map;
 
 /**

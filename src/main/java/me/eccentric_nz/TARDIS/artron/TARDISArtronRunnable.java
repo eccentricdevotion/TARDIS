@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Location;
-
-import java.util.HashMap;
 
 /**
  * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy

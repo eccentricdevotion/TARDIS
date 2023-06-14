@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -27,8 +28,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  *

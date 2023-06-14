@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -24,8 +25,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Switch;
-
-import java.util.HashMap;
 
 public class TARDISHandbrake {
 

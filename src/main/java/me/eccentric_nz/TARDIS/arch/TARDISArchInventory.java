@@ -22,17 +22,16 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.io.IOException;
+import java.sql.*;
+import java.util.UUID;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-
-import java.io.IOException;
-import java.sql.*;
-import java.util.UUID;
-import java.util.logging.Level;
 
 public class TARDISArchInventory {
 

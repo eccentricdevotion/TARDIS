@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -34,10 +37,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockFertilizeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class SuperFertisliserListener implements Listener {
 

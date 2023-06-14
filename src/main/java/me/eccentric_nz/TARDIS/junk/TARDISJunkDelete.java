@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -28,8 +29,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

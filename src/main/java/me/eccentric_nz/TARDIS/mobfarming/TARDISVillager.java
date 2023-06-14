@@ -18,10 +18,9 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 //import org.bukkit.entity.Villager.Career;
 
+import java.util.List;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.MerchantRecipe;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz

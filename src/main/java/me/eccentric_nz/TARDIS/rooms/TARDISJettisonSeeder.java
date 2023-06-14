@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -35,9 +37,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Artron energy is to normal energy what movements within the deeps of the sea are to the waves on the surface.

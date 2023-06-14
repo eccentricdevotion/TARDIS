@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISShellBuilder;
@@ -42,8 +43,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

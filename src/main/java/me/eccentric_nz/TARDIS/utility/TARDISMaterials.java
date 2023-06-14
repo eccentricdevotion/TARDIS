@@ -17,15 +17,14 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.google.common.collect.Sets;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.entity.EntityType;
-
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.entity.EntityType;
 
 /**
  * @author eccentric_nz

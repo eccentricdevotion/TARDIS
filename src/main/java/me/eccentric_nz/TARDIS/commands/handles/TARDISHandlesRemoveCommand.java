@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 class TARDISHandlesRemoveCommand {
 

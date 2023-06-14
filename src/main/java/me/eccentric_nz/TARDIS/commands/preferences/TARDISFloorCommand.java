@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

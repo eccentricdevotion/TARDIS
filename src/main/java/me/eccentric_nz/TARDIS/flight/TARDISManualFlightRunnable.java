@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
@@ -23,10 +26,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct

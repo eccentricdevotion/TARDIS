@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -23,9 +25,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The Weeping Angels are a species of quantum-locked humanoids from the early universe. They are known for being

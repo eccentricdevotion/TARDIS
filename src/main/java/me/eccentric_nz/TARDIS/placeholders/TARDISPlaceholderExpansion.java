@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.placeholders;
 
+import java.util.HashMap;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -23,8 +24,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 

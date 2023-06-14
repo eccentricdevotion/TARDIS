@@ -1,8 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import org.bukkit.util.BlockVector;
-
 import java.util.HashMap;
+import org.bukkit.util.BlockVector;
 
 public class SiluriaProcessData {
 

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -25,10 +28,6 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

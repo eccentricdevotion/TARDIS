@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -28,9 +30,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according

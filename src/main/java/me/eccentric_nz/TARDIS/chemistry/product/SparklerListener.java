@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.product;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,8 +30,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 public class SparklerListener implements Listener {
 

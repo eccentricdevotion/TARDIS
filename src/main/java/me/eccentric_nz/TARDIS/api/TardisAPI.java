@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -35,10 +38,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -71,7 +70,8 @@ public interface TardisAPI {
     /**
      * Retrieves a TARDIS's current location.
      *
-     * @param uuid the UUID of the TARDIS' Time Lord to retrieve the location for
+     * @param uuid the UUID of the TARDIS' Time Lord to retrieve the location
+     * for
      * @return the current TARDIS location or null if not found
      */
     Location getTARDISCurrentLocation(UUID uuid);
@@ -85,7 +85,8 @@ public interface TardisAPI {
     Location getTARDISNextLocation(int id);
 
     /**
-     * Retries the Current TARDIS location, chameleon preset, powered and siege status for the Dynmap-TARDIS plugin.
+     * Retries the Current TARDIS location, chameleon preset, powered and siege
+     * status for the Dynmap-TARDIS plugin.
      *
      * @param id the TARDIS id to retrieve the data for
      * @return the current TARDIS data or null if not found
@@ -93,32 +94,34 @@ public interface TardisAPI {
     TARDISData getTARDISMapData(int id);
 
     /**
-     * Get a random location from a provided list of worlds in the specified environment. If environment is null, then
-     * it will choose a random one.
+     * Get a random location from a provided list of worlds in the specified
+     * environment. If environment is null, then it will choose a random one.
      *
-     * @param worlds      a List of world names to search
+     * @param worlds a List of world names to search
      * @param environment the world type to search
-     * @param params      a Parameters object determining what flags to check for when getting the Location
+     * @param params a Parameters object determining what flags to check for
+     * when getting the Location
      * @return a random Location or null if one could not be found
      */
     Location getRandomLocation(List<String> worlds, World.Environment environment, Parameters params);
 
     /**
-     * Get a random location from a provided list of worlds in the specified environment. If environment is null, then
-     * it will choose a random one.
+     * Get a random location from a provided list of worlds in the specified
+     * environment. If environment is null, then it will choose a random one.
      *
-     * @param worlds      a List of world names to search
+     * @param worlds a List of world names to search
      * @param environment the world type to search
-     * @param p           the player to get the location for
+     * @param p the player to get the location for
      * @return a random Location or null if one could not be found
      */
     Location getRandomLocation(List<String> worlds, World.Environment environment, Player p);
 
     /**
-     * Get a random location from a provided list of worlds in a random environment.
+     * Get a random location from a provided list of worlds in a random
+     * environment.
      *
      * @param worlds a List of world names to search
-     * @param p      the player to get the location for
+     * @param p the player to get the location for
      * @return a random Location or null if one could not be found
      */
     Location getRandomLocation(List<String> worlds, Player p);
@@ -135,7 +138,7 @@ public interface TardisAPI {
      * Get a random OVERWORLD location from a specific world.
      *
      * @param world the world to search
-     * @param p     the player to get the location for
+     * @param p the player to get the location for
      * @return a random Location or null if one could not be found
      */
     Location getRandomOverworldLocation(String world, Player p);
@@ -152,7 +155,7 @@ public interface TardisAPI {
      * Get a random NETHER location from a specific world.
      *
      * @param world the world to search
-     * @param p     the player to get the location for
+     * @param p the player to get the location for
      * @return a random Location or null if one could not be found
      */
     Location getRandomNetherLocation(String world, Player p);
@@ -169,7 +172,7 @@ public interface TardisAPI {
      * Get a random THE_END location from a specific world.
      *
      * @param world the world to search
-     * @param p     the player to get the location for
+     * @param p the player to get the location for
      * @return a random Location or null if one could not be found
      */
     Location getRandomEndLocation(String world, Player p);
@@ -192,7 +195,8 @@ public interface TardisAPI {
      * Get the TARDIS a player is in.
      *
      * @param p the player to query
-     * @return a string containing the Time Lord (player name) of the TARDIS the player is in
+     * @return a string containing the Time Lord (player name) of the TARDIS the
+     * player is in
      */
     String getTARDISPlayerIsIn(Player p);
 
@@ -200,7 +204,8 @@ public interface TardisAPI {
      * Get the TARDIS a player is in.
      *
      * @param uuid the UUID of the player
-     * @return a string containing the Time Lord (player name) of the TARDIS the player is in
+     * @return a string containing the Time Lord (player name) of the TARDIS the
+     * player is in
      */
     String getTARDISPlayerIsIn(UUID uuid);
 
@@ -324,30 +329,34 @@ public interface TardisAPI {
     /**
      * Get the TARDIS shaped recipes.
      *
-     * @return a HashMap&lt;String, ShapedRecipe&gt; containing the TARDIS shaped recipes
+     * @return a HashMap&lt;String, ShapedRecipe&gt; containing the TARDIS
+     * shaped recipes
      */
     HashMap<String, ShapedRecipe> getShapedRecipes();
 
     /**
      * Get the TARDIS shapeless recipes.
      *
-     * @return a HashMap&lt;String, ShapelessRecipe&gt; containing the TARDIS shapeless recipes
+     * @return a HashMap&lt;String, ShapelessRecipe&gt; containing the TARDIS
+     * shapeless recipes
      */
     HashMap<String, ShapelessRecipe> getShapelessRecipes();
 
     /**
      * Get a TARDIS item
      *
-     * @param item   the TARDIS item to get
+     * @param item the TARDIS item to get
      * @param player the player who will be receiving the item
-     * @return an ItemStack of the TARDIS item ot null if an invalid item was specified
+     * @return an ItemStack of the TARDIS item ot null if an invalid item was
+     * specified
      */
     ItemStack getTARDISShapeItem(String item, Player player);
 
     /**
      * Get the TARDIS seed recipes.
      *
-     * @return a HashMap&lt;Schematic, ShapedRecipe&gt; containing the TARDIS seed recipes
+     * @return a HashMap&lt;Schematic, ShapedRecipe&gt; containing the TARDIS
+     * seed recipes
      */
     HashMap<Schematic, ShapedRecipe> getSeedRecipes();
 
@@ -355,7 +364,8 @@ public interface TardisAPI {
      * Get a TARDIS Seed ItemStack
      *
      * @param schematic the console type to get
-     * @return a TARDIS seed block item or null if an invalid schematic is specified
+     * @return a TARDIS seed block item or null if an invalid schematic is
+     * specified
      */
     ItemStack getTARDISSeedItem(String schematic);
 
@@ -369,9 +379,10 @@ public interface TardisAPI {
     /**
      * Get a TARDIS Blueprint Disk
      *
-     * @param item   the blueprint disk to get
+     * @param item the blueprint disk to get
      * @param player the player who will be receiving the item
-     * @return a TARDIS Blueprint Disk item or null if an invalid schematic is specified
+     * @return a TARDIS Blueprint Disk item or null if an invalid schematic is
+     * specified
      */
     ItemStack getTARDISBlueprintItem(String item, Player player);
 
@@ -385,9 +396,9 @@ public interface TardisAPI {
     /**
      * Set a TARDIS's next destination.
      *
-     * @param id       the TARDIS id to set the destination for
+     * @param id the TARDIS id to set the destination for
      * @param location the next location to travel to
-     * @param travel   whether the TARDIS should travel to the destination
+     * @param travel whether the TARDIS should travel to the destination
      * @return true if the destination was set successfully
      */
     boolean setDestination(int id, Location location, boolean travel);
@@ -395,9 +406,9 @@ public interface TardisAPI {
     /**
      * Convenience method to set a TARDIS's next destination.
      *
-     * @param uuid     the UUID of the Time Lord (player) to set the destination for
+     * @param uuid the UUID of the Time Lord (player) to set the destination for
      * @param location the next location to travel to
-     * @param travel   whether the TARDIS should travel to the destination
+     * @param travel whether the TARDIS should travel to the destination
      * @return true if the destination was set successfully
      */
     boolean setDestination(UUID uuid, Location location, boolean travel);
@@ -405,9 +416,9 @@ public interface TardisAPI {
     /**
      * Convenience method to set a TARDIS's next destination.
      *
-     * @param player   the Time Lord (player) to set the destination for
+     * @param player the Time Lord (player) to set the destination for
      * @param location the next location to travel to
-     * @param travel   whether the TARDIS should travel to the destination
+     * @param travel whether the TARDIS should travel to the destination
      * @return true if the destination was set successfully
      */
     boolean setDestination(Player player, Location location, boolean travel);
@@ -423,7 +434,8 @@ public interface TardisAPI {
     /**
      * Convenience method to get information from the database for a TARDIS.
      *
-     * @param uuid the UUID of the Time Lord (player) of the TARDIS id to get information for
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS id to get
+     * information for
      * @return return a {@link Tardis} data object, or null if no data was found
      */
     Tardis getTardisData(UUID uuid);
@@ -439,8 +451,8 @@ public interface TardisAPI {
     /**
      * Set the Chameleon Preset for a TARDIS.
      *
-     * @param id      the TARDIS id to set the destination for
-     * @param preset  the exterior preset to use
+     * @param id the TARDIS id to set the destination for
+     * @param preset the exterior preset to use
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
@@ -449,8 +461,9 @@ public interface TardisAPI {
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
      *
-     * @param uuid    the UUID of the Time Lord (player) of the TARDIS to set the destination for
-     * @param preset  the exterior preset to use
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS to set the
+     * destination for
+     * @param preset the exterior preset to use
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
@@ -459,8 +472,9 @@ public interface TardisAPI {
     /**
      * Convenience method to set the Chameleon Preset for a TARDIS.
      *
-     * @param player  the Time Lord (player) of the TARDIS to set the destination for
-     * @param preset  the exterior preset to use
+     * @param player the Time Lord (player) of the TARDIS to set the destination
+     * for
+     * @param preset the exterior preset to use
      * @param rebuild whether to rebuild the TARDIS exterior
      * @return true if the preset was set
      */
@@ -469,18 +483,20 @@ public interface TardisAPI {
     /**
      * Spawn an abandoned TARDIS at the specified Bukkit Location.
      *
-     * @param location  the location to spawn the TARDIS
-     * @param type      the type of interior to build
-     * @param preset    the Chameleon preset of the exterior
-     * @param direction the direction of the TARDIS exterior ( this is the direction the player is facing when looking
-     *                  at the door)
-     * @throws TARDISException if the console type is not valid or TARDIS abandonment is disabled on the server
+     * @param location the location to spawn the TARDIS
+     * @param type the type of interior to build
+     * @param preset the Chameleon preset of the exterior
+     * @param direction the direction of the TARDIS exterior ( this is the
+     * direction the player is facing when looking at the door)
+     * @throws TARDISException if the console type is not valid or TARDIS
+     * abandonment is disabled on the server
      */
     void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException;
 
     /**
-     * Convenience method to spawn an abandoned TARDIS at the specified Bukkit Location. The interior will default to
-     * BUDGET, the exterior Chameleon Preset to FACTORY and the direction to SOUTH.
+     * Convenience method to spawn an abandoned TARDIS at the specified Bukkit
+     * Location. The interior will default to BUDGET, the exterior Chameleon
+     * Preset to FACTORY and the direction to SOUTH.
      *
      * @param location the location to spawn the TARDIS
      */
@@ -489,24 +505,27 @@ public interface TardisAPI {
     /**
      * Change the desktop theme of a TARDIS.
      *
-     * @param id     the TARDIS id to change the desktop for
-     * @param wall   the wall block type to change to
-     * @param floor  the floor block type to change to
+     * @param id the TARDIS id to change the desktop for
+     * @param wall the wall block type to change to
+     * @param floor the floor block type to change to
      * @param artron whether to check for and charge Artron Energy
-     * @return a comma separated String containing the wall and floor block names (so they can be restored) if the walls
-     * and floor were successfully changed, an empty String if not
+     * @return a comma separated String containing the wall and floor block
+     * names (so they can be restored) if the walls and floor were successfully
+     * changed, an empty String if not
      */
     String setDesktopWallAndFloor(int id, String wall, String floor, boolean artron);
 
     /**
      * Convenience method to change the desktop theme of a TARDIS.
      *
-     * @param uuid   the UUID of the Time Lord (player) of the TARDIS to change the desktop for
-     * @param wall   the wall block type to change to
-     * @param floor  the floor block type to change to
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS to change
+     * the desktop for
+     * @param wall the wall block type to change to
+     * @param floor the floor block type to change to
      * @param artron whether to check for and charge Artron Energy
-     * @return a comma separated String containing the wall and floor block names (so they can be restored) if the walls
-     * and floor were successfully changed, an empty String if not
+     * @return a comma separated String containing the wall and floor block
+     * names (so they can be restored) if the walls and floor were successfully
+     * changed, an empty String if not
      * @throws TARDISException if the wall or floor type is not valid
      */
     String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException;
@@ -514,7 +533,7 @@ public interface TardisAPI {
     /**
      * Add a recipe to TARDIS' shaped recipe list
      *
-     * @param key    the name of the recipe result
+     * @param key the name of the recipe result
      * @param recipe the recipe to add
      */
     void addShapedRecipe(String key, ShapedRecipe recipe);
@@ -522,7 +541,7 @@ public interface TardisAPI {
     /**
      * Add a recipe to TARDIS' shapeless recipe list
      *
-     * @param key    the name of the recipe result
+     * @param key the name of the recipe result
      * @param recipe the recipe to add
      */
     void addShapelessRecipe(String key, ShapelessRecipe recipe);
@@ -533,7 +552,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Weeping Angel.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setAngelEquipment(LivingEntity le, boolean disguise);
@@ -541,7 +560,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as an Ice Warrior.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setWarriorEquipment(LivingEntity le, boolean disguise);
@@ -549,7 +568,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Cyberman.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setCyberEquipment(LivingEntity le, boolean disguise);
@@ -557,7 +576,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Dalek.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setDalekEquipment(LivingEntity le, boolean disguise);
@@ -565,7 +584,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as Dalek Sec.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setDalekSecEquipment(LivingEntity le, boolean disguise);
@@ -573,7 +592,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as Davros.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setDavrosEquipment(LivingEntity le, boolean disguise);
@@ -581,7 +600,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Empty Child.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setEmptyChildEquipment(LivingEntity le, boolean disguise);
@@ -589,7 +608,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Hath.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setHathEquipment(LivingEntity le, boolean disguise);
@@ -597,7 +616,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Headless Monk.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setHeadlessMonkEquipment(LivingEntity le, boolean disguise);
@@ -605,7 +624,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Mire.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setMireEquipment(LivingEntity le, boolean disguise);
@@ -613,7 +632,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Sea Devil.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setSeaDevilEquipment(LivingEntity le, boolean disguise);
@@ -621,7 +640,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Slitheen.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setSlitheenEquipment(LivingEntity le, boolean disguise);
@@ -629,34 +648,34 @@ public interface TardisAPI {
     /**
      * Sets an armour stand, or disguises a player as a Judoon.
      *
-     * @param player     The player that will own this Judoon - may be null
+     * @param player The player that will own this Judoon - may be null
      * @param armorStand The armour stand or player to disguise
-     * @param disguise   A boolean to determine if this is a player disguise
+     * @param disguise A boolean to determine if this is a player disguise
      */
     public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as K9.
      *
-     * @param player     The player that will own this K9 - may be null
+     * @param player The player that will own this K9 - may be null
      * @param armorStand The armour stand or player to disguise
-     * @param disguise   A boolean to determine if this is a player disguise
+     * @param disguise A boolean to determine if this is a player disguise
      */
     public void setK9Equipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as an Ood.
      *
-     * @param player     The player that will own this Ood - may be null
+     * @param player The player that will own this Ood - may be null
      * @param armorStand The armour stand or player to disguise
-     * @param disguise   A boolean to determine if this is a player disguise
+     * @param disguise A boolean to determine if this is a player disguise
      */
     public void setOodEquipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an entity as a Racnoss.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setRacnossEquipment(LivingEntity le, boolean disguise);
@@ -664,7 +683,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Silent.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setSilentEquipment(LivingEntity le, boolean disguise);
@@ -672,7 +691,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Silurian.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setSilurianEquipment(LivingEntity le, boolean disguise);
@@ -680,7 +699,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Sontaran.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setSontaranEquipment(LivingEntity le, boolean disguise);
@@ -688,7 +707,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as Strax (a Sontaran butler).
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setStraxEquipment(LivingEntity le, boolean disguise);
@@ -697,14 +716,14 @@ public interface TardisAPI {
      * Sets an armour stand, or disguises a player as a Toclafane.
      *
      * @param armorStand The armour stand to disguise
-     * @param disguise   A boolean to determine if this is a player disguise
+     * @param disguise A boolean to determine if this is a player disguise
      */
     public void setToclafaneEquipment(Entity armorStand, boolean disguise);
 
     /**
      * Sets an entity as a Vashta Nerada.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setVashtaNeradaEquipment(LivingEntity le, boolean disguise);
@@ -712,7 +731,7 @@ public interface TardisAPI {
     /**
      * Sets an entity as a Zygon.
      *
-     * @param le       The LivingEntity to disguise
+     * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
     public void setZygonEquipment(LivingEntity le, boolean disguise);
@@ -741,28 +760,31 @@ public interface TardisAPI {
     public Monster getWeepingAngelMonsterType(Entity entity);
 
     /**
-     * Returns whether the specified entity is a claimed TARDISWeepingAngels monster.
+     * Returns whether the specified entity is a claimed TARDISWeepingAngels
+     * monster.
      *
      * @param entity the entity to check
-     * @param uuid   the UUID of the claiming player
-     * @return a FollowerChecker containing the type of TARDISWeepingAngels monster (JUDOON, K9, OOD) - if the monster
-     * is not claimable it will return WEEPING_ANGEL - and an integer from its persistent data container
+     * @param uuid the UUID of the claiming player
+     * @return a FollowerChecker containing the type of TARDISWeepingAngels
+     * monster (JUDOON, K9, OOD) - if the monster is not claimable it will
+     * return WEEPING_ANGEL - and an integer from its persistent data container
      */
     public FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
 
     /**
      * Set the entity entity equipment and ammunition count for a claimed Judoon
      *
-     * @param player     the player that will own this Judoon
+     * @param player the player that will own this Judoon
      * @param armorStand the armour stand to apply the equipment to
-     * @param ammunition the persistent data container value with the amount of ammunition
+     * @param ammunition the persistent data container value with the amount of
+     * ammunition
      */
     public void setJudoonEquipment(Player player, Entity armorStand, int ammunition);
 
     /**
      * Start a following task for a claimed monster
      *
-     * @param stand  the armour stand that will follow the player
+     * @param stand the armour stand that will follow the player
      * @param player the player that owns this Judoon / Ood / K9
      */
     public void setFollowing(ArmorStand stand, Player player);

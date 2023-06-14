@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

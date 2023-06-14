@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.blueprints;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlueprint;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class TARDISPermission {
 

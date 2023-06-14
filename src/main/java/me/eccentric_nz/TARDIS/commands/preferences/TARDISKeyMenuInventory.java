@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.Arrays;
+import java.util.Collections;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell

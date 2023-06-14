@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -36,8 +37,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.*;
 
 /**
  * A control room's look could be changed over time. The process by which an operator could transform a control room was

@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import java.util.Arrays;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class TARDISSonicConfiguratorInventory {
 

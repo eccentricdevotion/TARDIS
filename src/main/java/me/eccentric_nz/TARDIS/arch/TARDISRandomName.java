@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
-
 import java.util.Arrays;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  * @author eccentric_nz

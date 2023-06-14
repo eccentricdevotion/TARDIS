@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -29,8 +30,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

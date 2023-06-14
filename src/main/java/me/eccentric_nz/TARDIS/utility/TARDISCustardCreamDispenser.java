@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -27,8 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-
-import java.util.HashMap;
 
 public class TARDISCustardCreamDispenser {
 

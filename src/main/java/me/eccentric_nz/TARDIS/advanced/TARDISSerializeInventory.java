@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 /**
- * @author original code by comphenix - <a href="https://gist.github.com/aadnk/8138186">...</a>
+ * @author original code by comphenix -
+ * <a href="https://gist.github.com/aadnk/8138186">...</a>
  */
 public class TARDISSerializeInventory {
 

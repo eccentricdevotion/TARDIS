@@ -1,6 +1,11 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import com.mojang.datafixers.util.Pair;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -18,12 +23,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R1.util.CraftNamespacedKey;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 public class BiomeUtilities {
 

@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
-
 import java.util.Arrays;
 import java.util.List;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
 
 public enum GUIAutonomous {
 

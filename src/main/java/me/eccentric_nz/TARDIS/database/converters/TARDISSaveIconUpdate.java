@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
+import java.sql.*;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-
-import java.sql.*;
-import java.util.logging.Level;
 
 /**
  * @author eccentric_nz

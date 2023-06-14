@@ -1,7 +1,6 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 
 import com.mojang.datafixers.util.Pair;
-
 import java.util.Random;
 
 public class IslandSpiral {

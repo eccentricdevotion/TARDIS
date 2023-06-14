@@ -1,9 +1,8 @@
 package me.eccentric_nz.tardischunkgenerator.logging;
 
+import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
-
-import java.io.*;
 
 /**
  * This class provides various  methods for retrieving Exception stacktrace as a String in full or shortened version.

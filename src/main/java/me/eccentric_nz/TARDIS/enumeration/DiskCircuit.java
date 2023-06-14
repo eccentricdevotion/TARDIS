@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
-
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 
 /**
  * @author eccentric_nz

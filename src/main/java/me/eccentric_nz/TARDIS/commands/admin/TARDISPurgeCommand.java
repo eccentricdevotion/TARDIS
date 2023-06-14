@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
@@ -23,9 +25,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

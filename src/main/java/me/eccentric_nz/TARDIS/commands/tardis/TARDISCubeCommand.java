@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

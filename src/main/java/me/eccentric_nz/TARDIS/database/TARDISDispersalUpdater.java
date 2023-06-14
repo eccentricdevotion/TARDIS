@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.*;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Cyber-conversion into Cybermen involves the replacement of body parts (including limbs, organs, and vital systems)

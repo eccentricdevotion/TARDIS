@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import org.bukkit.command.CommandSender;
-
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

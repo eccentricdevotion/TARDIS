@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.utility.protection;
 
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
-
 import java.util.Map;
 
 /**

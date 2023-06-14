@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHandbrakeCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
-
-import java.util.UUID;
 
 public class SudoHandbrake {
 

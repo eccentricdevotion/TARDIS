@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -35,10 +38,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class SilurianSpawnerListener implements Listener {
 

@@ -16,19 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Location;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Repeater;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Location;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Repeater;
 
 /**
  * The sonic screwdriver is a highly versatile tool used by many, but not all, incarnations of the Doctor. The Doctor

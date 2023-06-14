@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -39,10 +42,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author eccentric_nz

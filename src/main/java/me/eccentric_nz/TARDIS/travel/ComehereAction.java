@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -23,8 +24,6 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class ComehereAction {
 

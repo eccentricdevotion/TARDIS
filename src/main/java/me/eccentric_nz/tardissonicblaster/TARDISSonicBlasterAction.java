@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-
-import java.util.UUID;
 
 /**
  *

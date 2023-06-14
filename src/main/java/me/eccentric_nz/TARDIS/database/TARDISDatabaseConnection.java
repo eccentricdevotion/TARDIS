@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Singleton class to get the database connection.

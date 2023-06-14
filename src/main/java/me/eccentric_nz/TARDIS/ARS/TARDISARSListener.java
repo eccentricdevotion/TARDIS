@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -31,13 +32,13 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
-
 /**
- * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
- * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
- * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
- * the total sum of any currency.
+ * The architectural reconfiguration system is a component of the Doctor's
+ * TARDIS in the shape of a tree that, according to the Eleventh Doctor,
+ * "reconstructs the particles according to your needs." It is basically "a
+ * machine that makes machines," perhaps somewhat like a 3D printer. It is,
+ * according to Gregor Van Baalen's scanner, "more valuable than the total sum
+ * of any currency.
  *
  * @author eccentric_nz
  */
@@ -52,8 +53,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
-     * accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a
+     * TARDIS GUI, then the click is processed accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -86,7 +87,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     }
                     case 10 ->
                         // load map
-                            loadMap(view, playerUUID);
+                        loadMap(view, playerUUID);
                     case 12 -> {
                         // reconfigure
                         if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
@@ -218,8 +219,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * Checks the saved map to see whether the selected slot can be reset.
      *
      * @param playerUUID the UUID of the player using the GUI
-     * @param slot       the slot that was clicked
-     * @param updown     the type id of the block in the slot
+     * @param slot the slot that was clicked
+     * @param updown the type id of the block in the slot
      * @return true or false
      */
     private boolean checkSavedGrid(UUID playerUUID, int slot, int updown) {
@@ -242,9 +243,9 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Populates arrays of room names and seed IDs for the scrollable room buttons.
+     * Populates arrays of room names and seed IDs for the scrollable room
+     * buttons.
      */
-
     private void getRoomIdAndNames() {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();

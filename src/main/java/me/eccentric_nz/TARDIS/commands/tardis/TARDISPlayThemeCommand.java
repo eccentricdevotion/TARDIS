@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Theme;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.Locale;
 
 class TARDISPlayThemeCommand {
 

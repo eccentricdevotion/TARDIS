@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-
 import java.sql.*;
 import java.util.*;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Chronomium was a time-active element that displaced time around it. In its unprocessed form, chronomium slowed down

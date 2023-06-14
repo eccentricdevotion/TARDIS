@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.command.CommandSender;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.command.CommandSender;
 
 /**
  * Reesha was a rosebush-like plant who needed to keep herself pruned to prevent her consciousness from fading and

@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Language;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author eccentric_nz

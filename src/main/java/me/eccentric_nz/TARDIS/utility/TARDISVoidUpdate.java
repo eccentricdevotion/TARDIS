@@ -16,17 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-
-import java.util.HashMap;
-
-import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
 
 /**
  * @author eccentric_nz

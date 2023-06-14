@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.universaltranslator.Language;
@@ -23,10 +26,6 @@ import me.eccentric_nz.TARDIS.universaltranslator.TranslateData;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

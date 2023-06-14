@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import org.bukkit.command.CommandSender;
-
-import java.util.Set;
 
 /**
  *

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,9 +27,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz

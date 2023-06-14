@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import org.bukkit.entity.Player;
@@ -23,8 +24,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -46,9 +45,11 @@ public class TARDISInventoryPluginHelper implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldSwitch = switch (plugin.getInvManager()) {
-            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case MULTIVERSE ->
+                !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             // GAMEMODE
-            default -> (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+            default ->
+                (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
         };
         if (shouldSwitch) {
             // switch to non-fobbed inventory before inventory manager
@@ -68,9 +69,11 @@ public class TARDISInventoryPluginHelper implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldSwitch = switch (plugin.getInvManager()) {
-            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case MULTIVERSE ->
+                !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             // GAMEMODE
-            default -> (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+            default ->
+                (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
         };
         if (shouldSwitch) {
             // switch to back to fobbed inventory after MVI and MI

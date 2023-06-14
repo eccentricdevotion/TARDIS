@@ -16,25 +16,28 @@
  */
 package me.eccentric_nz.TARDIS.achievement;
 
-import org.bukkit.entity.Player;
-
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import org.bukkit.entity.Player;
 
 /**
- * The Doctor Who Experience was one of the largest and most ambitious Doctor Who exhibitions ever staged. Featuring
- * props and costumes from throughout the franchise's forty-seven year history, it also featured one new and different
- * element; an interactive story in which people could take part and become part of the adventure.
+ * The Doctor Who Experience was one of the largest and most ambitious Doctor
+ * Who exhibitions ever staged. Featuring props and costumes from throughout the
+ * franchise's forty-seven year history, it also featured one new and different
+ * element; an interactive story in which people could take part and become part
+ * of the adventure.
  *
  * @author desht
  * <p>
  * Adapted from ExperienceUtils code originally in ScrollingMenuSign.
  * <p>
- * Credit to nisovin (<a href="http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480">...</a>)
- * for an implementation that avoids the problems of getTotalExperience(), which doesn't work properly after a player
- * has enchanted something.
+ * Credit to nisovin
+ * (<a href="http://forums.bukkit.org/threads/experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/#post-1067480">...</a>)
+ * for an implementation that avoids the problems of getTotalExperience(), which
+ * doesn't work properly after a player has enchanted something.
  * <p>
- * Credit to comphenix for further contributions: See <a href="http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622">...</a>
+ * Credit to comphenix for further contributions: See
+ * <a href="http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622">...</a>
  */
 class TARDISXPRewarder {
 
@@ -65,7 +68,8 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Initialize the XP lookup table. See <a href="http://minecraft.gamepedia.com/Experience">...</a>
+     * Initialize the XP lookup table. See
+     * <a href="http://minecraft.gamepedia.com/Experience">...</a>
      *
      * @param maxLevel The highest level handled by the lookup tables
      */
@@ -78,8 +82,9 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Calculate the level that the given XP quantity corresponds to, without using the lookup tables. This is needed if
-     * getLevelForExp() is called with an XP quantity beyond the range of the existing lookup tables.
+     * Calculate the level that the given XP quantity corresponds to, without
+     * using the lookup tables. This is needed if getLevelForExp() is called
+     * with an XP quantity beyond the range of the existing lookup tables.
      *
      * @param exp the amount of experience
      * @return the experience level
@@ -112,8 +117,9 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
-     * behaviour of the basic Bukkit player.giveExp() method.
+     * Adjust the player's XP by the given amount in an intelligent fashion.
+     * Works around some of the non-intuitive behaviour of the basic Bukkit
+     * player.giveExp() method.
      *
      * @param amt Amount of XP, may be negative
      */
@@ -122,8 +128,9 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
-     * behaviour of the basic Bukkit player.giveExp() method.
+     * Adjust the player's XP by the given amount in an intelligent fashion.
+     * Works around some of the non-intuitive behaviour of the basic Bukkit
+     * player.giveExp() method.
      *
      * @param amt Amount of XP, may be negative
      */
@@ -187,7 +194,8 @@ class TARDISXPRewarder {
     }
 
     /**
-     * Retrieves the amount of experience the experience bar can hold at the given level.
+     * Retrieves the amount of experience the experience bar can hold at the
+     * given level.
      *
      * @param level the level to check
      * @return the amount of experience at this level in the level bar
@@ -205,7 +213,8 @@ class TARDISXPRewarder {
      *
      * @param level The level to check for.
      * @return The amount of XP needed for the level.
-     * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
+     * @throws IllegalArgumentException if the level is less than 0 or greater
+     * than the current hard maximum
      */
     private int getXpForLevel(int level) {
         if (level < 0 || level > hardMaxLevel) {

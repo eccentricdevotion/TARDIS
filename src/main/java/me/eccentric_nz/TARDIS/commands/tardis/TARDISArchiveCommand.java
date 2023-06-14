@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -34,11 +38,6 @@ import me.eccentric_nz.TARDIS.schematic.*;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

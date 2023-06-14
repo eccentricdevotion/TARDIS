@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -24,10 +27,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * The Helmic Orientators are slide controls (some consoles have a keyboard) used by the operator for setting the

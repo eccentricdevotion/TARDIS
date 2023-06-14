@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * TabCompleter for /tardisartron

@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -42,10 +41,11 @@ public class Parameters {
     private COMPASS compass;
 
     /**
-     * Data holder for parameters related to finding a TARDIS time Travel location
+     * Data holder for parameters related to finding a TARDIS time Travel
+     * location
      *
      * @param player the player to check the parameters for
-     * @param flags  a list of flags to check
+     * @param flags a list of flags to check
      */
     public Parameters(Player player, List<Flag> flags) {
         this.player = player;

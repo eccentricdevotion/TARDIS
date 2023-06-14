@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

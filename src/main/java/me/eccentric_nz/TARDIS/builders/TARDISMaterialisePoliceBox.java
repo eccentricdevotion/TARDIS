@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
@@ -40,11 +44,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
 

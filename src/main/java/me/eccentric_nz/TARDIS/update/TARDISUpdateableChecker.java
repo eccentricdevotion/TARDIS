@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.update;
 
 import com.google.common.collect.Sets;
+import java.util.HashMap;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -28,9 +30,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Set;
 
 public class TARDISUpdateableChecker {
 

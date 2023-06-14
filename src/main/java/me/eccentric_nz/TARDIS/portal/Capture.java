@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.portal;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import org.bukkit.Location;
@@ -24,8 +25,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.util.Vector;
-
-import java.util.UUID;
 
 public class Capture {
 

@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.*;
 
 /**
  * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.

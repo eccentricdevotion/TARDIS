@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
-
-import java.util.UUID;
 
 public class ComehereRequest {
 

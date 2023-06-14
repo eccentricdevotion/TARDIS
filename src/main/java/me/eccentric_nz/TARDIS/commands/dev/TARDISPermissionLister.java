@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.command.CommandSender;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.command.CommandSender;
 
 public class TARDISPermissionLister {
 

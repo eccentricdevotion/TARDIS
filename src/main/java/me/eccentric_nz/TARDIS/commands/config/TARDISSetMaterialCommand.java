@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

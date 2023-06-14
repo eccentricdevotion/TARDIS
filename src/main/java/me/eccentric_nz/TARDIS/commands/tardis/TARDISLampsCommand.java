@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -33,9 +35,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to

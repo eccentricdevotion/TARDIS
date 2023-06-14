@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.Material;
-
 import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.Material;
 
 /**
  * @author eccentric_nz

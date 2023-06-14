@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
-
 import java.io.*;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
 
 /**
  * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly

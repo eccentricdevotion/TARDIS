@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.entity.Player;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.entity.Player;
 
 /**
  * Krakenites ware swamp-living aliens with a cylindrical body covered in a thick, grey shell with the texture of

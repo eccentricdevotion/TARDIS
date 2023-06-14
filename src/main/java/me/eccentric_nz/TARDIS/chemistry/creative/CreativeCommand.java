@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.creative;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
@@ -24,8 +25,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Locale;
 
 public class CreativeCommand {
 

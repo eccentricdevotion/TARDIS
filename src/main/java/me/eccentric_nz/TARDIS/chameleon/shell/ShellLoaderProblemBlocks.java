@@ -1,10 +1,9 @@
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
-import org.bukkit.Material;
-import org.bukkit.Tag;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 
 public class ShellLoaderProblemBlocks {
 

@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -24,11 +28,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-import java.util.logging.Level;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture

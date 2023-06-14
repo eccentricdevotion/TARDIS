@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
@@ -25,10 +28,6 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.Gate;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class TARDISSonic {
 

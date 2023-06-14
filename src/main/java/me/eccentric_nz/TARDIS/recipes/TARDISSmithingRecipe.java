@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
@@ -24,10 +27,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 
 public class TARDISSmithingRecipe {
 

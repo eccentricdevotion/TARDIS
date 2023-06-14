@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.lab;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import org.bukkit.Location;
@@ -38,8 +39,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
-
-import java.util.*;
 
 public class CureBrewingListener implements Listener {
 

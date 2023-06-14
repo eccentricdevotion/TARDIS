@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
 import org.bukkit.Material;
@@ -23,9 +25,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

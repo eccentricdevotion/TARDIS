@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
+import java.util.Random;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.GrassPlacer;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISFeatures;
 import net.minecraft.core.BlockPos;
@@ -12,8 +13,6 @@ import org.bukkit.craftbukkit.v1_20_R1.CraftRegionAccessor;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
-
-import java.util.Random;
 
 public class GallifreyGrassPopulator extends BlockPopulator {
 

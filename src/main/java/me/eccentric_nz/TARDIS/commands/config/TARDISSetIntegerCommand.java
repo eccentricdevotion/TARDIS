@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISChatPaginator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.command.CommandSender;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.messaging.TARDISChatPaginator;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz

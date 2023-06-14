@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -27,8 +28,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz

@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.api.event;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -34,10 +33,10 @@ public class TARDISTravelEvent extends TARDISEvent {
     /**
      * A TARDIS Time Travel event.
      *
-     * @param player     the player growing the room
-     * @param tardis     the Tardis data object, may be null
+     * @param player the player growing the room
+     * @param tardis the Tardis data object, may be null
      * @param travelType the type of travel that occurred
-     * @param id         the TARDIS id
+     * @param id the TARDIS id
      */
     public TARDISTravelEvent(Player player, Tardis tardis, TravelType travelType, int id) {
         super(player, tardis);

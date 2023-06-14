@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class TARDISSonicDispersed {
 

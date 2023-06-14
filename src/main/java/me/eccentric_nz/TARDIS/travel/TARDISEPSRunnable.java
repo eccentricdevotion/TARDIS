@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -27,10 +30,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Emergency Programme One was a feature of the Doctor's TARDIS designed to return a companion to a designated place in

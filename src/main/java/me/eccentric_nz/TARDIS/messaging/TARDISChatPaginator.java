@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 
 /**
  * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings

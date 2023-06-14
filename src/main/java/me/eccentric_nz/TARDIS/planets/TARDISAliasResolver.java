@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-
-import java.util.HashMap;
 
 public class TARDISAliasResolver {
 

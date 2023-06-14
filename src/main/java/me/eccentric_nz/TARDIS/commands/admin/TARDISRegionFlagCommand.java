@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,8 +27,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.UUID;
 
 public class RemoveCommand {
 

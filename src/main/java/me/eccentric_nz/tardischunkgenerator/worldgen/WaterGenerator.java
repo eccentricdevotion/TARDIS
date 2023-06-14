@@ -1,7 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import me.eccentric_nz.tardischunkgenerator.worldgen.populators.IslandBlockPopulator;
+import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.WaterBiomeProvider;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.IslandBlockPopulator;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BiomeProvider;
@@ -9,9 +11,6 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
-
-import java.util.List;
-import java.util.Random;
 
 public class WaterGenerator extends ChunkGenerator {
 

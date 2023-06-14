@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import com.mojang.authlib.GameProfile;
+import java.lang.reflect.Field;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -10,9 +12,6 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R1.map.CraftMapView;
 import org.bukkit.map.MapView;
-
-import java.lang.reflect.Field;
-import java.util.UUID;
 
 public final class TARDISMapUpdater extends Player {
 

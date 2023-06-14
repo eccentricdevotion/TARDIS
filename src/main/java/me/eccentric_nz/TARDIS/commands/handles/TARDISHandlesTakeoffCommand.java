@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
+import java.util.Collections;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -29,9 +31,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

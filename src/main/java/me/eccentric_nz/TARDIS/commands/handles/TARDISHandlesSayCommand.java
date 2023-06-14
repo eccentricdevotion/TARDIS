@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
+import java.util.Arrays;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
 
 /**
  * @author eccentric_nz

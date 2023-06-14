@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
-import java.util.UUID;
 
 /**
  * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC

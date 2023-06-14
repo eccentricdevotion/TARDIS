@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz

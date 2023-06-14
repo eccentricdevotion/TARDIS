@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
+import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-
-import java.util.List;
 
 /**
  * Data storage class for room building. We can just create a new instance and pass this around to the various methods

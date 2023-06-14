@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.chemistry.element;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.creative.CompoundsCreativeInventory;
 import me.eccentric_nz.TARDIS.chemistry.creative.ProductsCreativeInventory;
@@ -29,11 +33,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 public class ElementGUIListener implements Listener {
 

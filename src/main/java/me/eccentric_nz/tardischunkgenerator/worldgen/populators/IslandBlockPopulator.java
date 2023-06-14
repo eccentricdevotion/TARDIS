@@ -1,6 +1,10 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.mojang.datafixers.util.Pair;
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.WaterCircle;
 import org.bukkit.Location;
@@ -9,11 +13,6 @@ import org.bukkit.TreeType;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
-
-import java.util.NavigableMap;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class IslandBlockPopulator extends BlockPopulator {
 

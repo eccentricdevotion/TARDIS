@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
+import java.util.Map;
+import java.util.UUID;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.MinecraftServer;
@@ -33,9 +35,6 @@ import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-
-import java.util.Map;
-import java.util.UUID;
 
 public class TARDISEPSDisguiser {
 

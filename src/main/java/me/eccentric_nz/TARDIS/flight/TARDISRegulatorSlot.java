@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Using data collected from the Interstitial Antenna, the Mean Free Path Tracker shows a TARDIS' planned path through

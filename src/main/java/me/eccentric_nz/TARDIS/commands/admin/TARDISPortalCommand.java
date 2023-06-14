@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * @author eccentric_nz

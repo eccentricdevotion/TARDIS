@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ice_warriors;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -36,10 +39,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class IceWarriorRunnable implements Runnable {
 

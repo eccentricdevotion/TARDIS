@@ -17,6 +17,12 @@
 package me.eccentric_nz.TARDIS.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
@@ -24,13 +30,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his

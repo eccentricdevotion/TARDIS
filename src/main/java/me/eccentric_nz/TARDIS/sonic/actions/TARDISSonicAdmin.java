@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
@@ -28,10 +31,6 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 public class TARDISSonicAdmin {
 

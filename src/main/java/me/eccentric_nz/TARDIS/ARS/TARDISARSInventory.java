@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIArs;
@@ -25,13 +28,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 /**
- * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
- * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
+ * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural
+ * Configuration software to relocate the console outside the ship (as it was
+ * too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz
  */

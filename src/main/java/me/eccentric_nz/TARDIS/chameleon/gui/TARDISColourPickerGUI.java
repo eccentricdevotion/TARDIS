@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
 import org.bukkit.Color;
@@ -7,8 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-
-import java.util.Arrays;
 
 public class TARDISColourPickerGUI {
 

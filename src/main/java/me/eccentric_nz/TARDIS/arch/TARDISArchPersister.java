@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.entity.Player;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +23,9 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz

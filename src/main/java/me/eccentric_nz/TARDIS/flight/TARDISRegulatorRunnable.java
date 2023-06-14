@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import org.bukkit.inventory.InventoryView;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.inventory.InventoryView;
 
 /**
  * The helmic regulator also appeared in the Tenth Doctor's TARDIS in the form of a bicycle pump. It is one of the last

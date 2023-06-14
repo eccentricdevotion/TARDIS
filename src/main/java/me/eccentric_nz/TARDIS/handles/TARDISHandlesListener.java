@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -29,9 +31,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

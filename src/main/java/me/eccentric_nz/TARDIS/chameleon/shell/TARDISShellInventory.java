@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
@@ -25,8 +26,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the

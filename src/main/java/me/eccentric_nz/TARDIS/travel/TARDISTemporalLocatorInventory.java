@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.Arrays;
+import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITemporalLocator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a

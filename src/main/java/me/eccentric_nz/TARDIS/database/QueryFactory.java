@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.entity.Player;
-
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.

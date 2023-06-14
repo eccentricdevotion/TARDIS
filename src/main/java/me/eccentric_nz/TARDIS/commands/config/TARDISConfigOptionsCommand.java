@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz

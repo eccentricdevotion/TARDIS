@@ -1,13 +1,12 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class TVMCommandRemove {
 

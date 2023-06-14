@@ -1,6 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import com.mojang.serialization.Lifecycle;
+import java.lang.reflect.Field;
+import java.util.IdentityHashMap;
+import java.util.logging.Level;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.WritableRegistry;
@@ -14,10 +17,6 @@ import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
-
-import java.lang.reflect.Field;
-import java.util.IdentityHashMap;
-import java.util.logging.Level;
 
 public class CustomBiome {
 

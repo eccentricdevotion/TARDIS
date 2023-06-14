@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.transmat;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITransmat;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -23,9 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TARDISTransmatInventory {
 

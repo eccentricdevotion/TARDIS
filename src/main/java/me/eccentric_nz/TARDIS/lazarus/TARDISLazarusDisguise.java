@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class TARDISLazarusDisguise {
 

@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
 
 /**
  * John Lumic was a business tycoon, owner of Cybus Industries and the creator of the Cybermen. Though he publicly

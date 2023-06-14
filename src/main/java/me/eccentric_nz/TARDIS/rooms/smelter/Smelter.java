@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.util.Vector;
 
 /**
  * @author eccentric_nz

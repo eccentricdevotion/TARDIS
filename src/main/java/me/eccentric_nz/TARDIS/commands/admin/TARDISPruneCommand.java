@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
-
-import java.io.File;
 
 /**
  * @author eccentric_nz

@@ -19,6 +19,9 @@ package me.eccentric_nz.tardischunkgenerator.disguise;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
@@ -28,10 +31,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.logging.Level;
 
 public class TARDISChameleonArchDisguiser {
 

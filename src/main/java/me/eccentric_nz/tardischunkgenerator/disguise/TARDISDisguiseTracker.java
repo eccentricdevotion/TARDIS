@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
 import com.mojang.authlib.properties.PropertyMap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

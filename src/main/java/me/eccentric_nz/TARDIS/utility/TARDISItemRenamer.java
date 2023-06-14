@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 /**
  * Soon after taking Amy Pond on board for the first time, the TARDIS console provided the Doctor with a new sonic

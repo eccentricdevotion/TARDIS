@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
@@ -26,9 +28,6 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author eccentric_nz

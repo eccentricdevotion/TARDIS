@@ -18,6 +18,9 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
@@ -25,10 +28,6 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TARDISFirework {
 

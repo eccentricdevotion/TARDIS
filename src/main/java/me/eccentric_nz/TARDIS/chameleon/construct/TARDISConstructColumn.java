@@ -18,13 +18,12 @@ package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz

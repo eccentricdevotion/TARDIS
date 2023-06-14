@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.chatGUI;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author eccentric_nz

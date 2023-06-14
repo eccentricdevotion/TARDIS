@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -23,13 +26,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-
 /**
- * The synchronic feedback circuit, along with the multi-loop stabiliser, was an essential component for a smooth
- * rematerialisation of a TARDIS.
+ * The synchronic feedback circuit, along with the multi-loop stabiliser, was an
+ * essential component for a smooth rematerialisation of a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -80,7 +79,8 @@ public class TARDISCircuitChecker {
     }
 
     /**
-     * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
+     * Checks the TARDIS's Advanced Console inventory to see which circuits are
+     * installed.
      */
     public void getCircuits() {
         HashMap<String, Object> where = new HashMap<>();

@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import org.bukkit.persistence.PersistentDataAdapterContext;
-import org.bukkit.persistence.PersistentDataType;
-
 import java.nio.ByteBuffer;
 import java.util.UUID;
+import org.bukkit.persistence.PersistentDataAdapterContext;
+import org.bukkit.persistence.PersistentDataType;
 
 public class TARDISUUIDDataType implements PersistentDataType<byte[], UUID> {
 

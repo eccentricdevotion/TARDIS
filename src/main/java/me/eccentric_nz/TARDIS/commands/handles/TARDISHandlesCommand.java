@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesWeirdness;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -25,8 +26,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 /**
  * @author eccentric_nz

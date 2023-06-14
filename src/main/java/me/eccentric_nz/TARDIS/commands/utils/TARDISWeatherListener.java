@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
@@ -32,8 +33,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
 
 public class TARDISWeatherListener extends TARDISMenuListener implements Listener {
 

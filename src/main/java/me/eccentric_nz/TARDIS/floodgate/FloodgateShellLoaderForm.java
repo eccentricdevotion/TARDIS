@@ -2,6 +2,9 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -28,10 +31,6 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 
 public class FloodgateShellLoaderForm {
 

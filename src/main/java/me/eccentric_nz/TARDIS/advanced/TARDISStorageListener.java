@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -38,16 +43,11 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
 /**
- * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
- * systems had failed. They allowed a TARDIS to use whatever resources were available to ensure the survival of the ship
- * and its crew.
+ * Banshee Circuits were components of TARDISes, emergency defence mechanisms
+ * used as a last resort when all other systems had failed. They allowed a
+ * TARDIS to use whatever resources were available to ensure the survival of the
+ * ship and its crew.
  *
  * @author eccentric_nz
  */

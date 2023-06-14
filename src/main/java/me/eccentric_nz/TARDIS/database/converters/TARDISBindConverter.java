@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-
 import java.sql.*;
 import java.util.Locale;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class TARDISBindConverter {
 

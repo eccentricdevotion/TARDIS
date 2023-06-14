@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import org.bukkit.util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.bukkit.util.StringUtil;
 
 /**
  * @author eccentric_nz

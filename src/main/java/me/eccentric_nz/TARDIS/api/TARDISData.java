@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import org.bukkit.Location;
-
 import java.util.List;
+import org.bukkit.Location;
 
 /**
  * @author eccentric_nz

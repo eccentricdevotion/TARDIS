@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 import java.util.UUID;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class TARDISSudoTracker {
 

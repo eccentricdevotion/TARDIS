@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
+import java.util.Random;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.TARDISVoidBiomeProvider;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
-
-import java.util.Random;
 
 /**
  * @author eccentric_nz

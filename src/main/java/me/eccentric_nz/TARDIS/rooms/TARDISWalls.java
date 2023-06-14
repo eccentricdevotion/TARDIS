@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 
 /**
  * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS has no real constraints on the amount of

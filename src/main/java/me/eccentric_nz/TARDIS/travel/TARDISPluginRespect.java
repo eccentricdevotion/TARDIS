@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -27,6 +23,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;

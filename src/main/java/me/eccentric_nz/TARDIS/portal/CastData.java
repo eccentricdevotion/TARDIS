@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.portal;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import org.bukkit.Location;
-
-import java.util.UUID;
 
 public class CastData {
 

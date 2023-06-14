@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.block.Biome;
-
 import java.util.Map;
+import org.bukkit.block.Biome;
 
 /**
  * @author eccentric_nz

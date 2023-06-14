@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
+import java.util.HashSet;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author eccentric_nz

@@ -3,6 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
+import java.util.Arrays;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
@@ -11,9 +13,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.Set;
 
 /**
  * @author eccentric_nz

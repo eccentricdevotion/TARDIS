@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -26,10 +29,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * The helmic regulator was a component of the control panel of a Type 40 TARDIS. This device's principle function was

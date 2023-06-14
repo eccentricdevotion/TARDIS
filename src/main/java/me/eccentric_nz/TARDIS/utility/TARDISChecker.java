@@ -18,15 +18,14 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 /**
  * @author eccentric_nz

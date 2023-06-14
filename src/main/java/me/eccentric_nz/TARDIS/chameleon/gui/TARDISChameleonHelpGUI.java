@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonHelp;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Collections;
 
 /**
  * @author eccentric_nz

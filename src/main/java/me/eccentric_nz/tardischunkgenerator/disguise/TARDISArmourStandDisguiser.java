@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
+import java.util.Map;
+import java.util.UUID;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerLookAtPacket;
@@ -31,9 +33,6 @@ import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.Map;
-import java.util.UUID;
 
 ;
 //ClientboundRemoveEntitiesPacket

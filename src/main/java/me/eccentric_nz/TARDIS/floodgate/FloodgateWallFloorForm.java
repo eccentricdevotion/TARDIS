@@ -1,5 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeProcessor;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -9,10 +12,6 @@ import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.response.CustomFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class FloodgateWallFloorForm {
 

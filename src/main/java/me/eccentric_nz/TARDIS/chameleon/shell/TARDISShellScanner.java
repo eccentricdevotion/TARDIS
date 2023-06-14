@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -26,8 +27,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-
-import java.util.HashMap;
 
 public class TARDISShellScanner {
 

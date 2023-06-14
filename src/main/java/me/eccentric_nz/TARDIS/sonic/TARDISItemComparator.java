@@ -29,10 +29,9 @@ package me.eccentric_nz.TARDIS.sonic;
  * @author pendo324
  */
 
+import java.util.Comparator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-
-import java.util.Comparator;
 
 class TARDISItemComparator implements Comparator<ItemStack> {
 

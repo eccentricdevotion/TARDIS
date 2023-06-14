@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.hads;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
@@ -31,8 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-
-import java.util.*;
 
 /**
  * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the

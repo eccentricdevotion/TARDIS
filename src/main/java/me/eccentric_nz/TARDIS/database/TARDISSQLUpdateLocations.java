@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz
