@@ -18,29 +18,29 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
-import me.eccentric_nz.TARDIS.schematic.TARDISHeadSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.sign.Side;
-import org.bukkit.block.sign.SignSide;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -187,22 +187,9 @@ public class SchematicPaster implements Runnable {
                 case ACACIA_SIGN, BAMBOO_SIGN, CHERRY_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, MANGROVE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN,
                         ACACIA_WALL_SIGN, BAMBOO_WALL_SIGN, CHERRY_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, MANGROVE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN,
                         ACACIA_HANGING_SIGN, BAMBOO_HANGING_SIGN, CHERRY_HANGING_SIGN, BIRCH_HANGING_SIGN, CRIMSON_HANGING_SIGN, DARK_OAK_HANGING_SIGN, JUNGLE_HANGING_SIGN, MANGROVE_HANGING_SIGN, OAK_HANGING_SIGN, SPRUCE_HANGING_SIGN, WARPED_HANGING_SIGN,
-                        ACACIA_WALL_HANGING_SIGN, BAMBOO_WALL_HANGING_SIGN, CHERRY_WALL_HANGING_SIGN, BIRCH_WALL_HANGING_SIGN, CRIMSON_WALL_HANGING_SIGN, DARK_OAK_WALL_HANGING_SIGN, JUNGLE_WALL_HANGING_SIGN, MANGROVE_WALL_HANGING_SIGN, OAK_WALL_HANGING_SIGN, SPRUCE_WALL_HANGING_SIGN, WARPED_WALL_HANGING_SIGN-> {
+                        ACACIA_WALL_HANGING_SIGN, BAMBOO_WALL_HANGING_SIGN, CHERRY_WALL_HANGING_SIGN, BIRCH_WALL_HANGING_SIGN, CRIMSON_WALL_HANGING_SIGN, DARK_OAK_WALL_HANGING_SIGN, JUNGLE_WALL_HANGING_SIGN, MANGROVE_WALL_HANGING_SIGN, OAK_WALL_HANGING_SIGN, SPRUCE_WALL_HANGING_SIGN, WARPED_WALL_HANGING_SIGN -> {
                     block.setBlockData(data, true);
-                    Sign sign = (Sign) block.getState();
-                    SignSide front = sign.getSide(Side.FRONT);
-                    JsonObject text = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
-                    if (text != null) {
-                        front.setLine(0, text.get("line0").getAsString());
-                        front.setLine(1, text.get("line1").getAsString());
-                        front.setLine(2, text.get("line2").getAsString());
-                        front.setLine(3, text.get("line3").getAsString());
-                        front.setGlowingText(text.get("glowing").getAsBoolean());
-                        DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
-                        front.setColor(colour);
-                        sign.setEditable(text.get("editable").getAsBoolean());
-                        sign.update();
-                    }
+                    TARDISSignSetter.setSign(block, col, null, 0);
                 }
                 default -> {
                     block.setBlockData(data, true);

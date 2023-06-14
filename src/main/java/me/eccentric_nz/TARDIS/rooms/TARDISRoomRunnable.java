@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -29,9 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
-import me.eccentric_nz.TARDIS.schematic.TARDISItemDisplaySetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISItemFrameSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -47,6 +45,10 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+
+import java.util.*;
+
+import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the

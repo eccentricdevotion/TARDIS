@@ -18,13 +18,6 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -45,6 +38,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class SchematicSave {
 
@@ -249,6 +250,15 @@ public class SchematicSave {
                             text.addProperty("glowing", front.isGlowingText());
                             text.addProperty("colour", front.getColor().toString());
                             text.addProperty("editable", sign.isEditable());
+                            JsonObject side = new JsonObject();
+                            SignSide back = sign.getSide(Side.BACK);
+                            side.addProperty("line0", back.getLine(0));
+                            side.addProperty("line1", back.getLine(1));
+                            side.addProperty("line2", back.getLine(2));
+                            side.addProperty("line3", back.getLine(3));
+                            side.addProperty("glowing", back.isGlowingText());
+                            side.addProperty("colour", back.getColor().toString());
+                            text.add("back", side);
                             obj.add("sign", text);
                         }
                     }

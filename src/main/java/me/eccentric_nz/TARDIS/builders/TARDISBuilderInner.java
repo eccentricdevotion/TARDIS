@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -31,26 +30,25 @@ import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.*;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.block.sign.Side;
-import org.bukkit.block.sign.SignSide;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
+
+import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -249,33 +247,7 @@ public class TARDISBuilderInner implements Runnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
-            for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {
-                Block psb = entry.getKey();
-                JsonObject signObject = entry.getValue();
-                BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
-                psb.setBlockData(signData);
-                JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
-                if (text != null) {
-                    Sign signState = (Sign) psb.getState();
-                    SignSide front = signState.getSide(Side.FRONT);
-                    String line1 = text.get("line1").getAsString();
-                    // save the control centre sign
-                    if (line1.equals("Control")) {
-                        String controlLocation = psb.getLocation().toString();
-                        plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
-                        WaxedHelper.setWaxed(signState);
-                    }
-                    front.setLine(0, text.get("line0").getAsString());
-                    front.setLine(1, line1);
-                    front.setLine(2, text.get("line2").getAsString());
-                    front.setLine(3, text.get("line3").getAsString());
-                    front.setGlowingText(text.get("glowing").getAsBoolean());
-                    DyeColor colour = DyeColor.valueOf(text.get("colour").getAsString());
-                    front.setColor(colour);
-                    signState.setEditable(text.get("editable").getAsBoolean());
-                    signState.update();
-                }
-            }
+            TARDISSignSetter.setSigns(postSignBlocks, plugin, dbID);
             for (Map.Entry<Block, BlockData> carpet : postCarpetBlocks.entrySet()) {
                 Block pcb = carpet.getKey();
                 pcb.setBlockData(carpet.getValue());
