@@ -375,7 +375,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
             // finished processing - update tardis table!
-            if (set.size() > 0) {
+            if (!set.isEmpty()) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -28,8 +29,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * Command /tardisbook [book].
@@ -67,7 +66,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 if (first.equals("list")) {
                     int b = 1;
                     TARDISMessage.send(sender, "BOOK_RASS");
-                    if (books.size() > 0) {
+                    if (!books.isEmpty()) {
                         for (Map.Entry<String, String> entry : books.entrySet()) {
                             sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                             b++;

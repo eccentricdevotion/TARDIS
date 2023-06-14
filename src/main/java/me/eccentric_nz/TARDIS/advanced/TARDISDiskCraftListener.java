@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -30,10 +33,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -93,7 +92,7 @@ public class TARDISDiskCraftListener implements Listener {
                                             plugin.debug("Could not get biome from craft item! " + e);
                                         }
                                     }
-                                    if (disk_lore.size() > 0) {
+                                    if (!disk_lore.isEmpty()) {
                                         disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                         ItemMeta dim = disk.getItemMeta();
                                         dim.setDisplayName("Biome Storage Disk");
@@ -134,7 +133,7 @@ public class TARDISDiskCraftListener implements Listener {
                                 List<String> lore = im.getLore();
                                 if (lore.get(0).equals("Blank")) {
                                     // preset disk
-                                    if (items.size() > 0) {
+                                    if (!items.isEmpty()) {
                                         Material m = items.get(0).getType();
                                         String preset = "";
                                         if (ChameleonPreset.getPreset(m) != null) {

@@ -378,7 +378,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
             // scan nearby entities
             double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
             List<Entity> ents = player.getNearbyEntities(d, d, d);
-            if (ents.size() > 0) {
+            if (!ents.isEmpty()) {
                 // record nearby entities
                 HashMap<EntityType, Integer> scannedentities = new HashMap<>();
                 List<String> playernames = new ArrayList<>();
@@ -403,7 +403,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
                 scannedentities.entrySet().forEach((entry) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                    if (entry.getKey().equals(EntityType.PLAYER) && !playernames.isEmpty()) {
                         playernames.forEach((pn) -> {
                             buf.append(", ").append(pn);
                         });

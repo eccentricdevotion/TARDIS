@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -31,9 +33,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Teleport to the spawn point of worlds on the server
@@ -107,7 +106,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
         // Remember that we can return null to default to online player name matching
         if (args.length <= 1) {
             List<String> part = partial(args[0], ROOT_SUBS);
-            return (part.size() > 0) ? part : null;
+            return (!part.isEmpty()) ? part : null;
         } else if (args.length == 2) {
             return null;
         }

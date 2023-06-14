@@ -260,7 +260,7 @@ class TARDISSonicGeneratorInventory {
         cost.setItemMeta(cost_im);
         stack[45] = cost;
 
-        if (upgrades.size() > 0) {
+        if (!upgrades.isEmpty()) {
             List<String> finalUps = new ArrayList<>();
             finalUps.add("Upgrades:");
             finalUps.addAll(upgrades);

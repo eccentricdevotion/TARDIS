@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.forcefield;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Location;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +23,10 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Location;
 
 public class TARDISForceFieldPersister {
 
@@ -45,7 +44,7 @@ public class TARDISForceFieldPersister {
     }
 
     public void save() {
-        if (plugin.getTrackerKeeper().getActiveForceFields().size() > 0) {
+        if (!plugin.getTrackerKeeper().getActiveForceFields().isEmpty()) {
             try {
                 connection.setAutoCommit(false);
                 ps = connection.prepareStatement("INSERT INTO " + prefix + "forcefield (uuid, location) VALUES (?, ?)");

@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -103,7 +102,7 @@ class TARDISToggleOnOffCommand {
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
             TARDISMessage.send(player, grammar, pref);
         }
-        if (setp.size() > 0) {
+        if (!setp.isEmpty()) {
             plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         }
         return true;

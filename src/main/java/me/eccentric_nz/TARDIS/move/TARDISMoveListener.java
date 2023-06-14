@@ -188,10 +188,10 @@ public class TARDISMoveListener implements Listener {
                 // tp player
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(player, to, exit, l.getWorld(), userQuotes, 0, minecart, false);
                 if (petsAndFollowers != null) {
-                    if (petsAndFollowers.getPets().size() > 0) {
+                    if (!petsAndFollowers.getPets().isEmpty()) {
                         plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), player, d, true);
                     }
-                    if (petsAndFollowers.getFollowers().size() > 0) {
+                    if (!petsAndFollowers.getFollowers().isEmpty()) {
                         new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
                     }
                 }

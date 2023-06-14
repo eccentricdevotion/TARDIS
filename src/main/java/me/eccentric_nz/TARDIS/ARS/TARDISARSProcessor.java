@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Chunk;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Preprocessor for checking changes in the Architectural Reconfiguration System.
@@ -118,11 +117,11 @@ class TARDISARSProcessor {
         if (overlimit) {
             error = "ARS_LIMIT";
         }
-        return jettison.size() > 0 || (changed.size() > 0 && !overlimit);
+        return !jettison.isEmpty() || (!changed.isEmpty() && !overlimit);
     }
 
     boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
-        if (changed.size() > 0) {
+        if (!changed.isEmpty()) {
             int totalcost = 0;
             int recoveredcost = 0;
             // calculate energy gained by jettisons

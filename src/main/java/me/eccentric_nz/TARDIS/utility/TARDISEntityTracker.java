@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -87,7 +86,7 @@ public class TARDISEntityTracker {
                 plugin.getTardisHelper().disguiseArmourStand(stand, e.getType(), options);
             }
         }
-        if (npcids.size() > 0) {
+        if (!npcids.isEmpty()) {
             plugin.getTrackerKeeper().getRenderedNPCs().put(uuid, npcids);
         }
     }

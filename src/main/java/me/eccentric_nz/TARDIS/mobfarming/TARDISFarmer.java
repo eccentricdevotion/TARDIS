@@ -83,7 +83,7 @@ public class TARDISFarmer {
 
         List<TARDISPet> pets = new ArrayList<>();
         List<TARDISFollower> followers = new ArrayList<>();
-        if (mobs.size() > 0) {
+        if (!mobs.isEmpty()) {
             List<TARDISAxolotl> axolotls = new ArrayList<>();
             List<TARDISHorse> horses = new ArrayList<>();
             List<TARDISLlama> llamas = new ArrayList<>();
@@ -107,7 +107,6 @@ public class TARDISFarmer {
             }
             // count total farm mobs
             int farmtotal = 0;
-            Material material = Material.OCHRE_FROGLIGHT;
             // is there a farm room?
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
@@ -498,7 +497,7 @@ public class TARDISFarmer {
                         fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0 || axolotls.size() > 0 || frogs.size() > 0) {
+                if (!bees.isEmpty() || farmtotal > 0 || !horses.isEmpty() || !villagers.isEmpty() || !pets.isEmpty() || !polarbears.isEmpty() || !llamas.isEmpty() || !parrots.isEmpty() || !pandas.isEmpty() || !rabbits.isEmpty() || fish != null || !followers.isEmpty() || !axolotls.isEmpty() || !frogs.isEmpty()) {
                     boolean canfarm = switch (plugin.getInvManager()) {
                         case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                         default -> true;
@@ -512,7 +511,7 @@ public class TARDISFarmer {
                 if (!apiary.isEmpty()) {
                     // get location of apiary room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(apiary);
-                    if (bees.size() > 0) {
+                    if (!bees.isEmpty()) {
                         Location beehive = TARDISStaticLocationGetters.getSpawnLocationFromDB(apiary);
                         while (!world.getChunkAt(beehive).isLoaded()) {
                             world.getChunkAt(beehive).load();
@@ -534,13 +533,13 @@ public class TARDISFarmer {
                             bee.setRemoveWhenFarAway(false);
                         });
                     }
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && bees.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !bees.isEmpty()) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.BEE_SPAWN_EGG, bees.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (bees.size() > 0) {
+                } else if (!bees.isEmpty()) {
                     TARDISMessage.send(p, "FARM_APIARY");
                 }
                 if (!aquarium.isEmpty() && fish != null) {
@@ -572,7 +571,7 @@ public class TARDISFarmer {
                 if (!bamboo.isEmpty()) {
                     // get location of bamboo room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(bamboo);
-                    if (pandas.size() > 0) {
+                    if (!pandas.isEmpty()) {
                         Location forest = TARDISStaticLocationGetters.getSpawnLocationFromDB(bamboo);
                         while (!world.getChunkAt(forest).isLoaded()) {
                             world.getChunkAt(forest).load();
@@ -593,19 +592,19 @@ public class TARDISFarmer {
                             panda.setRemoveWhenFarAway(false);
                         });
                     }
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && pandas.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !pandas.isEmpty()) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.PANDA_SPAWN_EGG, pandas.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (pandas.size() > 0) {
+                } else if (!pandas.isEmpty()) {
                     TARDISMessage.send(p, "FARM_BAMBOO");
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(farm);
-                    if (chickens.size() > 0) {
+                    if (!chickens.isEmpty()) {
                         Location chicken_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, -3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
@@ -624,7 +623,7 @@ public class TARDISFarmer {
                             chicken.setRemoveWhenFarAway(false);
                         });
                     }
-                    if (cows.size() > 0) {
+                    if (!cows.isEmpty()) {
                         Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
@@ -643,7 +642,7 @@ public class TARDISFarmer {
                             cow.setRemoveWhenFarAway(false);
                         });
                     }
-                    if (pigs.size() > 0) {
+                    if (!pigs.isEmpty()) {
                         Location pig_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, -3);
                         while (!world.getChunkAt(pig_pen).isLoaded()) {
                             world.getChunkAt(pig_pen).load();
@@ -663,7 +662,7 @@ public class TARDISFarmer {
                             pig.setRemoveWhenFarAway(false);
                         });
                     }
-                    if (sheep.size() > 0) {
+                    if (!sheep.isEmpty()) {
                         Location sheep_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, 3);
                         while (!world.getChunkAt(sheep_pen).isLoaded()) {
                             world.getChunkAt(sheep_pen).load();
@@ -683,7 +682,7 @@ public class TARDISFarmer {
                             ewe.setRemoveWhenFarAway(false);
                         });
                     }
-                    if (mooshrooms.size() > 0) {
+                    if (!mooshrooms.isEmpty()) {
                         Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
@@ -706,23 +705,23 @@ public class TARDISFarmer {
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
                     // no farm, give the player spawn eggs
                     Inventory inv = p.getInventory();
-                    if (chickens.size() > 0) {
+                    if (!chickens.isEmpty()) {
                         ItemStack is = new ItemStack(Material.CHICKEN_SPAWN_EGG, chickens.size());
                         inv.addItem(is);
                     }
-                    if (cows.size() > 0) {
+                    if (!cows.isEmpty()) {
                         ItemStack is = new ItemStack(Material.COW_SPAWN_EGG, cows.size());
                         inv.addItem(is);
                     }
-                    if (pigs.size() > 0) {
+                    if (!pigs.isEmpty()) {
                         ItemStack is = new ItemStack(Material.PIG_SPAWN_EGG, pigs.size());
                         inv.addItem(is);
                     }
-                    if (sheep.size() > 0) {
+                    if (!sheep.isEmpty()) {
                         ItemStack is = new ItemStack(Material.SHEEP_SPAWN_EGG, sheep.size());
                         inv.addItem(is);
                     }
-                    if (mooshrooms.size() > 0) {
+                    if (!mooshrooms.isEmpty()) {
                         ItemStack is = new ItemStack(Material.MOOSHROOM_SPAWN_EGG, mooshrooms.size());
                         inv.addItem(is);
                     }
@@ -733,7 +732,7 @@ public class TARDISFarmer {
                 if (!geode.isEmpty()) {
                     // get location of geode room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(geode);
-                    if (axolotls.size() > 0) {
+                    if (!axolotls.isEmpty()) {
                         Location pool = TARDISStaticLocationGetters.getSpawnLocationFromDB(geode);
                         while (!world.getChunkAt(pool).isLoaded()) {
                             world.getChunkAt(pool).load();
@@ -753,16 +752,16 @@ public class TARDISFarmer {
                             axolotl.setRemoveWhenFarAway(false);
                         });
                     }
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && axolotls.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !axolotls.isEmpty()) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.AXOLOTL_SPAWN_EGG, axolotls.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (axolotls.size() > 0) {
+                } else if (!axolotls.isEmpty()) {
                     TARDISMessage.send(p, "FARM_GEODE");
                 }
-                if (!stable.isEmpty() && horses.size() > 0) {
+                if (!stable.isEmpty() && !horses.isEmpty()) {
                     // get location of stable room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(stable);
                     Location horse_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stable);
@@ -810,15 +809,15 @@ public class TARDISFarmer {
                         equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(e.getSpeed());
                         equine.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && horses.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !horses.isEmpty()) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.HORSE_SPAWN_EGG, horses.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (horses.size() > 0) {
+                } else if (!horses.isEmpty()) {
                     TARDISMessage.send(p, "FARM_STABLE");
                 }
-                if (!stall.isEmpty() && llamas.size() > 0) {
+                if (!stall.isEmpty() && !llamas.isEmpty()) {
                     // get location of stable room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(stall);
                     Location llama_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stall);
@@ -864,15 +863,15 @@ public class TARDISFarmer {
                         cria.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(ll.getSpeed());
                         cria.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && llamas.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !llamas.isEmpty()) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.LLAMA_SPAWN_EGG, llamas.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (llamas.size() > 0) {
+                } else if (!llamas.isEmpty()) {
                     TARDISMessage.send(p, "FARM_STALL");
                 }
-                if (!hutch.isEmpty() && rabbits.size() > 0) {
+                if (!hutch.isEmpty() && !rabbits.isEmpty()) {
                     // get location of hutch room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(hutch);
                     Location rabbit_hutch = TARDISStaticLocationGetters.getSpawnLocationFromDB(hutch);
@@ -894,15 +893,15 @@ public class TARDISFarmer {
                         bunny.setRabbitType(e.getBunnyType());
                         bunny.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && rabbits.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !rabbits.isEmpty()) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.RABBIT_SPAWN_EGG, rabbits.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (rabbits.size() > 0) {
+                } else if (!rabbits.isEmpty()) {
                     TARDISMessage.send(p, "FARM_HUTCH");
                 }
-                if (!village.isEmpty() && villagers.size() > 0) {
+                if (!village.isEmpty() && !villagers.isEmpty()) {
                     // get location of village room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(village);
                     Location v_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(village);
@@ -930,15 +929,15 @@ public class TARDISFarmer {
                         }
                         npc.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && villagers.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !villagers.isEmpty()) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.VILLAGER_SPAWN_EGG, villagers.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (villagers.size() > 0) {
+                } else if (!villagers.isEmpty()) {
                     TARDISMessage.send(p, "FARM_VILLAGE");
                 }
-                if (!igloo.isEmpty() && polarbears.size() > 0) {
+                if (!igloo.isEmpty() && !polarbears.isEmpty()) {
                     // get location of igloo room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(igloo);
                     Location i_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(igloo);
@@ -959,15 +958,15 @@ public class TARDISFarmer {
                         }
                         polar.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && polarbears.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !polarbears.isEmpty()) {
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.POLAR_BEAR_SPAWN_EGG, polarbears.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (polarbears.size() > 0) {
+                } else if (!polarbears.isEmpty()) {
                     TARDISMessage.send(p, "FARM_IGLOO");
                 }
-                if (!birdcage.isEmpty() && parrots.size() > 0) {
+                if (!birdcage.isEmpty() && !parrots.isEmpty()) {
                     // get location of birdcage room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(birdcage);
                     Location b_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(birdcage);
@@ -990,17 +989,17 @@ public class TARDISFarmer {
                         parrot.setSitting(false); // let them fly in the cage
                         parrot.setRemoveWhenFarAway(false);
                     });
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && parrots.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !parrots.isEmpty()) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.PARROT_SPAWN_EGG, parrots.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (parrots.size() > 0) {
+                } else if (!parrots.isEmpty()) {
                     TARDISMessage.send(p, "FARM_BIRDCAGE");
                 }
                 if (!mangrove.isEmpty()) {
-                    if (frogs.size() > 0) {
+                    if (!frogs.isEmpty()) {
                         // get location of bamboo room
                         Location swamp = TARDISStaticLocationGetters.getSpawnLocationFromDB(mangrove);
                         World world = swamp.getWorld();
@@ -1020,13 +1019,13 @@ public class TARDISFarmer {
                             frog.setRemoveWhenFarAway(false);
                         });
                     }
-                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && frogs.size() > 0) {
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !frogs.isEmpty()) {
                     // give spawn eggs
                     Inventory inv = p.getInventory();
                     ItemStack is = new ItemStack(Material.FROG_SPAWN_EGG, frogs.size());
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (frogs.size() > 0) {
+                } else if (!frogs.isEmpty()) {
                     TARDISMessage.send(p, "FARM_MANGROVE");
                 }
             }

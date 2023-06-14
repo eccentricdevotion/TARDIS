@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -25,13 +31,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * A trilanic activator is a device created and used by the Zygons to control their Skarasens. It is hand-sized and has
@@ -109,7 +108,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                         }
                     }
                 }
-                if (upd.size() > 0) {
+                if (!upd.isEmpty()) {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", playerUUID);
                     plugin.getQueryFactory().doUpdate("player_prefs", upd, where);

@@ -140,7 +140,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                 }
 
                             }
-                            if (set.size() > 0) {
+                            if (!set.isEmpty()) {
                                 set.put("adapti_on", 0);
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);

@@ -232,7 +232,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (level == h && row == w && col == (c - 1)) {
                 // the entire schematic has been read :)
-                if (iceblocks.size() > 0) {
+                if (!iceblocks.isEmpty()) {
                     if (player != null) {
                         TARDISMessage.send(player, "ICE");
                     }
@@ -240,7 +240,7 @@ public class TARDISRoomRunnable implements Runnable {
                     iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                     iceblocks.clear();
                 }
-                if (room.equals("CHEMISTRY") && signblocks.size() > 0) {
+                if (room.equals("CHEMISTRY") && !signblocks.isEmpty()) {
                     boolean first = true;
                     for (Block b : signblocks) {
                         Sign sign = (Sign) b.getState();
@@ -255,17 +255,17 @@ public class TARDISRoomRunnable implements Runnable {
                         sign.update();
                     }
                 }
-                if (propagules.size() > 0) {
+                if (!propagules.isEmpty()) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
                     }
                 }
-                if (trapdoorblocks.size() > 0) {
+                if (!trapdoorblocks.isEmpty()) {
                     for (Map.Entry<Block, BlockData> trap : trapdoorblocks.entrySet()) {
                         trap.getKey().setBlockData(trap.getValue());
                     }
                 }
-                if (seagrass.size() > 0) {
+                if (!seagrass.isEmpty()) {
                     for (Map.Entry<Block, BlockData> grass : seagrass.entrySet()) {
                         grass.getKey().setBlockData(grass.getValue());
                     }
@@ -482,7 +482,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // set banners
                 setBanners(bannerblocks);
                 // remove the chunks, so they can unload as normal again
-                if (chunkList.size() > 0) {
+                if (!chunkList.isEmpty()) {
                     chunkList.forEach((ch) -> ch.setForceLoaded(false));
                 }
                 plugin.getTrackerKeeper().getRoomTasks().remove(task);
@@ -1014,7 +1014,7 @@ public class TARDISRoomRunnable implements Runnable {
                 rd.setLevel(level);
                 plugin.getTrackerKeeper().getRoomTasks().put(task, rd);
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             // abort room growing task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;

@@ -154,10 +154,10 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     tardis_loc.setYaw(yaw);
                                                     movePlayer(player, tardis_loc, false, playerWorld, rspref.isQuotesOn(), 1, rspref.isMinecartOn(), false);
                                                     if (petsAndFollowers != null) {
-                                                        if (petsAndFollowers.getPets().size() > 0) {
+                                                        if (!petsAndFollowers.getPets().isEmpty()) {
                                                             movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
                                                         }
-                                                        if (petsAndFollowers.getFollowers().size() > 0) {
+                                                        if (!petsAndFollowers.getFollowers().isEmpty()) {
                                                             new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                         }
                                                     }

@@ -34,7 +34,7 @@ public class JudoonGuardRunnable implements Runnable {
 
     @Override
     public void run() {
-        if (TARDISWeepingAngels.getGuards().size() > 0) {
+        if (!TARDISWeepingAngels.getGuards().isEmpty()) {
             for (UUID uuid : TARDISWeepingAngels.getGuards()) {
                 Entity entity = Bukkit.getEntity(uuid);
                 if (entity != null) {

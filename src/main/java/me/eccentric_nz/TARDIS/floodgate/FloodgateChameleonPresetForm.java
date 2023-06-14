@@ -1,5 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
@@ -17,10 +20,6 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class FloodgateChameleonPresetForm {
 
@@ -90,7 +89,7 @@ public class FloodgateChameleonPresetForm {
                     new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                 }
                 TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
-                if (set.size() > 0) {
+                if (!set.isEmpty()) {
                     set.put("adapti_on", 0);
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);

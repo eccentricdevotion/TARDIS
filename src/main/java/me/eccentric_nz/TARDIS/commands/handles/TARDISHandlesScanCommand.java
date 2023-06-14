@@ -130,7 +130,7 @@ class TARDISHandlesScanCommand {
                             }
                         }
                     }
-                    if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                    if (et.equals(EntityType.ENDERMAN) && !k.getPassengers().isEmpty() && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                         // silent
                         et = EntityType.SPLASH_POTION;
                     }
@@ -185,12 +185,12 @@ class TARDISHandlesScanCommand {
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            if (scannedEntities.size() > 0) {
+            if (!scannedEntities.isEmpty()) {
                 TARDISMessage.handlesSend(player, "SCAN_ENTS");
                 scannedEntities.forEach((ent, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (ent.equals(EntityType.PLAYER) && playerNames.size() > 0) {
+                    if (ent.equals(EntityType.PLAYER) && !playerNames.isEmpty()) {
                         playerNames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.substring(2) + ")";
                     }

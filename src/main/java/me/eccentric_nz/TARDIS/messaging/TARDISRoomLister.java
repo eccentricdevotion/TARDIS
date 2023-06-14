@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import net.md_5.bungee.api.ChatColor;
@@ -24,10 +27,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -50,7 +49,7 @@ public class TARDISRoomLister {
         TARDISMessage.message(player, "");
         options.forEach((key, value) -> {
             player.sendMessage(key);
-            if (value.size() > 0) {
+            if (!value.isEmpty()) {
                 value.forEach((s) -> {
                     TextComponent tcr = new TextComponent("    " + s);
                     ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;

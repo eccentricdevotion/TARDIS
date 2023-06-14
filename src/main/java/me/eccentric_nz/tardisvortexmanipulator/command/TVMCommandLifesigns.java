@@ -1,5 +1,9 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -10,11 +14,6 @@ import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TVMCommandLifesigns {
 
@@ -66,7 +65,7 @@ public class TVMCommandLifesigns {
                 for (Map.Entry<EntityType, Integer> entry : scannedEntities.entrySet()) {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                    if (entry.getKey().equals(EntityType.PLAYER) && !playernames.isEmpty()) {
                         playernames.forEach((pn) -> {
                             buf.append(", ").append(pn);
                         });

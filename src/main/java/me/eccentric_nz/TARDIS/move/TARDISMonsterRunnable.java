@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -35,8 +36,6 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -129,7 +128,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         case ENDERMAN -> {
                             Enderman enderman = (Enderman) e;
                             tm.setCarried(enderman.getCarriedBlock());
-                            if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                            if (twa && !e.getPassengers().isEmpty() && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                                 dn = "Silent";
                             }
                         }
@@ -194,7 +193,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     tm.setAge(e.getTicksLived());
                     tm.setHealth(((LivingEntity) e).getHealth());
                     tm.setName(e.getCustomName());
-                    if (e.getPassengers().size() > 0) {
+                    if (!e.getPassengers().isEmpty()) {
                         tm.setPassenger(e.getPassengers().get(0).getType());
                     }
                     moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));

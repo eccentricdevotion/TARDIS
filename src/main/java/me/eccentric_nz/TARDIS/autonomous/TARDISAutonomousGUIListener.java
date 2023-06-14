@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -29,8 +30,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 public class TARDISAutonomousGUIListener extends TARDISMenuListener implements Listener {
 
@@ -86,7 +85,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener implements L
                         }
                         case 5 -> {
                             // configured areas
-                            if (plugin.getConfig().getStringList("autonomous_areas").size() > 0) {
+                            if (!plugin.getConfig().getStringList("autonomous_areas").isEmpty()) {
                                 set.put("auto_type", "CONFIGURED_AREAS");
                                 setTypeSlots(view, 14);
                             } else {
@@ -113,7 +112,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener implements L
                             //ignore
                         }
                     }
-                    if (set.size() > 0) {
+                    if (!set.isEmpty()) {
                         // update player prefs
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", player.getUniqueId().toString());

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -48,8 +49,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.*;
 
 /**
  * A control sphere is a device created by the Great Intelligence to control its Robot Yetis. It is a glass sphere that
@@ -366,7 +365,7 @@ public class TARDISTerminalListener implements Listener {
             }
         });
         // next world in list
-        if (allowedWorlds.size() > 0) {
+        if (!allowedWorlds.isEmpty()) {
             int rw = terminalWorlds.get(p.getUniqueId());
             if (rw > allowedWorlds.size() - 1) {
                 rw = 0;

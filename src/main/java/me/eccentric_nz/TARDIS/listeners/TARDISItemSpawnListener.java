@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemSpawnEvent;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class TARDISItemSpawnListener implements Listener {
 
@@ -37,7 +36,7 @@ public class TARDISItemSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onBedDrop(ItemSpawnEvent event) {
-        if ((plugin.getTrackerKeeper().getMaterialising().size() > 0 || plugin.getTrackerKeeper().getDematerialising().size() > 0) && items.contains(event.getEntity().getItemStack().getType())) {
+        if ((!plugin.getTrackerKeeper().getMaterialising().isEmpty() || !plugin.getTrackerKeeper().getDematerialising().isEmpty()) && items.contains(event.getEntity().getItemStack().getType())) {
             event.setCancelled(true);
         }
     }

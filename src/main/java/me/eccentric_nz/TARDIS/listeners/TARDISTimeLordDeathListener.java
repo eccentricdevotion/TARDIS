@@ -110,7 +110,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                         if (rst.resultSet()) {
                                             List<UUID> data = rst.getData();
-                                            if (data.size() > 0 && !data.contains(uuid)) {
+                                            if (!data.isEmpty() && !data.contains(uuid)) {
                                                 // schedule the NPC to appear
                                                 TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);

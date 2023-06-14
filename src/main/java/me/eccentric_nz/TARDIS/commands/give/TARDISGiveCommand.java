@@ -174,7 +174,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         player = (Player) sender;
                     } else if (args[0].equals("@p")) {
                         List<Entity> near = Bukkit.selectEntities(sender, "@p");
-                        if (near.size() > 0 && near.get(0) instanceof Player) {
+                        if (!near.isEmpty() && near.get(0) instanceof Player) {
                             player = (Player) near.get(0);
                             if (player == null) {
                                 TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
@@ -334,7 +334,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             player = (Player) sender;
         } else if (args[0].equals("@p")) {
             List<Entity> near = Bukkit.selectEntities(sender, "@p");
-            if (near.size() > 0 && near.get(0) instanceof Player) {
+            if (!near.isEmpty() && near.get(0) instanceof Player) {
                 player = (Player) near.get(0);
                 if (player == null) {
                     TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
@@ -363,7 +363,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             player = (Player) sender;
         } else if (args[0].equals("@p")) {
             List<Entity> near = Bukkit.selectEntities(sender, "@p");
-            if (near.size() > 0 && near.get(0) instanceof Player) {
+            if (!near.isEmpty() && near.get(0) instanceof Player) {
                 player = (Player) near.get(0);
                 if (player == null) {
                     TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");

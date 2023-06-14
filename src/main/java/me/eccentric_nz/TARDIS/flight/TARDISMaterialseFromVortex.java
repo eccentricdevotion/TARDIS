@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
@@ -46,9 +48,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -278,7 +277,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setdoor.put("door_direction", bd.getDirection().forPreset().toString());
                         wheredoor.put("tardis_id", id);
                         wheredoor.put("door_type", 0);
-                        if (setcurrent.size() > 0) {
+                        if (!setcurrent.isEmpty()) {
                             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);

@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -37,8 +38,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.*;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
@@ -331,7 +330,7 @@ public class TARDISARSMethods {
                         }
                         TARDISMessage.send(player, "ARS_START");
                         // do all jettisons first
-                        if (tap.getJettison().size() > 0) {
+                        if (!tap.getJettison().isEmpty()) {
                             TARDISMessage.send(player, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                             long del = 5L;
                             for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {

@@ -117,14 +117,14 @@ public class ToclafaneListener implements Listener {
                 }
             }
         } else if (entity instanceof Bee bee) {
-            if (entity.getPassengers().size() > 0) {
+            if (!entity.getPassengers().isEmpty()) {
                 Entity passenger = entity.getPassengers().get(0);
                 if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                     bee.setHasStung(false);
                 }
             }
         } else if (entity instanceof Player player && damager instanceof Bee bee) {
-            if (damager.getPassengers().size() > 0) {
+            if (!damager.getPassengers().isEmpty()) {
                 Entity passenger = damager.getPassengers().get(0);
                 if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                     bee.setHasStung(false);
@@ -140,7 +140,7 @@ public class ToclafaneListener implements Listener {
         Entity entity = event.getEntity();
         if (entity instanceof Bee bee) {
             if (bee.getTarget() instanceof Player || bee.getAnger() >= 0) {
-                if (bee.getPassengers().size() > 0) {
+                if (!bee.getPassengers().isEmpty()) {
                     Entity passenger = bee.getPassengers().get(0);
                     if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                         bee.setHasStung(false);

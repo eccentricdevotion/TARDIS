@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
+import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -30,8 +31,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-
-import java.util.Collection;
 
 public class ToclafaneRunnable implements Runnable {
 
@@ -53,7 +52,7 @@ public class ToclafaneRunnable implements Runnable {
                 int n = 0;
                 Collection<Bee> hive = w.getEntitiesByClass(Bee.class);
                 for (Bee b : hive) {
-                    if (b.getPassengers() != null && b.getPassengers().size() > 0 && b.getPassengers().get(0) instanceof ArmorStand) {
+                    if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().get(0) instanceof ArmorStand) {
                         n++;
                     }
                 }

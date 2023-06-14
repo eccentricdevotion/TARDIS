@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -31,8 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -158,7 +157,7 @@ class TARDISRemoteTravelCommand {
             wheredoor.put("door_type", 0);
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
-            if (set.size() > 0) {
+            if (!set.isEmpty()) {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import com.google.common.collect.Iterables;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -48,12 +47,11 @@ public class TARDISSonicBrush {
                         // generate loot
                         LootContext.Builder builder = new LootContext.Builder(b.getLocation()).killer(p);
                         Collection<ItemStack> col = table.populateLoot(TARDISConstants.RANDOM, builder.build());
-                        if (col.size() > 0) {
+                        if (!col.isEmpty()) {
                             is = Iterables.get(col, 0);
                             bb.setItem(is);
                             bb.setLootTable(null); // !important, otherwise item stack will revert to AIR
                             bb.update();
-                            p.sendBlockChanges(Collections.singletonList(bb));
                         }
                     }
                 }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -34,8 +35,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashMap;
-
 /**
  * @author eccentric_nz
  */
@@ -52,7 +51,7 @@ public class TARDISHorseListener implements Listener {
         Entity e = event.getEntity();
         if (e instanceof AbstractHorse h && !(e instanceof Llama)) {
             Material m = event.getBlock().getType();
-            Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
+            Entity passenger = (!h.getPassengers().isEmpty()) ? h.getPassengers().get(0) : null;
             if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
                 if (passenger instanceof Player p) {
                     String pworld = p.getLocation().getWorld().getName();

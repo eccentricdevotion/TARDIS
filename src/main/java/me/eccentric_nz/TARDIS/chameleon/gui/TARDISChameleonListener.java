@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -42,9 +44,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -275,7 +274,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                 }
                                 default -> close(player);
                             }
-                            if (set.size() > 0) {
+                            if (!set.isEmpty()) {
                                 plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                             }
                         }

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
@@ -39,10 +42,6 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
@@ -114,7 +113,7 @@ public class TARDISSiegeMode {
                             breeding.add(breeding_area);
                         }
                     });
-                    if (breeding.size() > 0) {
+                    if (!breeding.isEmpty()) {
                         plugin.getTrackerKeeper().getSiegeBreedingAreas().put(chu[0], breeding);
                     } else {
                         plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(chu[0]);
@@ -130,7 +129,7 @@ public class TARDISSiegeMode {
                             }
                         });
                     }
-                    if (growth.size() > 0) {
+                    if (!growth.isEmpty()) {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().put(chu[0], growth);
                     } else {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(chu[0]);

@@ -32,10 +32,10 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -394,10 +394,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
                                                 TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
                                                 if (petsAndFollowers != null) {
-                                                    if (petsAndFollowers.getPets().size() > 0) {
+                                                    if (!petsAndFollowers.getPets().isEmpty()) {
                                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
                                                     }
-                                                    if (petsAndFollowers.getFollowers().size() > 0) {
+                                                    if (!petsAndFollowers.getFollowers().isEmpty()) {
                                                         new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
                                                     }
                                                 }
@@ -461,10 +461,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             tardis_loc.setYaw(yaw);
                                             movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart, false);
                                             if (petsAndFollowers != null) {
-                                                if (petsAndFollowers.getPets().size() > 0) {
+                                                if (!petsAndFollowers.getPets().isEmpty()) {
                                                     movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
                                                 }
-                                                if (petsAndFollowers.getFollowers().size() > 0) {
+                                                if (!petsAndFollowers.getFollowers().isEmpty()) {
                                                     new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                 }
                                             }

@@ -66,7 +66,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
         String lastArg = args[args.length - 1];
         if (args.length == 1) {
             List<String> part = partial(args[0], ROOT_SUBS);
-            return (part.size() > 0) ? part : null;
+            return (!part.isEmpty()) ? part : null;
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase(Locale.ROOT);
             if (sub.equals("area")) {

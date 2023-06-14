@@ -202,7 +202,7 @@ public class Death implements Listener {
             }
             if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                 // remove the guardian as well
-                Entity guardian = (event.getEntity().getPassengers().size() > 0) ? event.getEntity().getPassengers().get(0) : null;
+                Entity guardian = (!event.getEntity().getPassengers().isEmpty()) ? event.getEntity().getPassengers().get(0) : null;
                 if (guardian != null) {
                     guardian.remove();
                 }

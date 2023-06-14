@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
@@ -33,8 +34,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
 
 /**
  * Load and unload worlds on the server
@@ -287,7 +286,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         String lastArg = args[args.length - 1];
         if (args.length == 1) {
             List<String> part = partial(args[0], ROOT_SUBS);
-            return (part.size() > 0) ? part : null;
+            return (!part.isEmpty()) ? part : null;
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable") || args[0].equalsIgnoreCase("update")) {
                 return partial(lastArg, PLANET_SUBS);
