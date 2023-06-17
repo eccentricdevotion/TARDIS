@@ -266,7 +266,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.8-SNAPSHOT</version>
+            <version>7.0.9-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
@@ -291,7 +291,7 @@
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
-            <version>7.2.15-SNAPSHOT</version>
+            <version>7.2.16-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
@@ -339,7 +339,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.99.1.0</version>
+            <version>0.99.2.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Towny.jar</systemPath>
