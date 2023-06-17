@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -47,7 +47,7 @@ class TARDISRescueCommand {
 
     boolean startRescue(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         if (args[1].equalsIgnoreCase("accept")) {
@@ -57,18 +57,18 @@ class TARDISRescueCommand {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                TARDISMessage.send(player, "POWER_DOWN");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                 return true;
             }
             String saved = args[1];
             if (!saved.equalsIgnoreCase("accept")) {
                 Player destPlayer = plugin.getServer().getPlayer(saved);
                 if (destPlayer == null) {
-                    TARDISMessage.send(player, "NOT_ONLINE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
                     return true;
                 }
                 UUID savedUUID = destPlayer.getUniqueId();
@@ -87,12 +87,13 @@ class TARDISRescueCommand {
                                 new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
                                 plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.RESCUE, rd.getTardis_id()));
                             } else {
-                                TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_RELEASE", destPlayer.getName());
                             }
                         }
                     }, 2L);
                 } else {
-                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who);
+                    plugin.getMessenger().send(destPlayer, TardisModule.TARDIS, "RESCUE_REQUEST", who);
+                    // TODO
                     TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
                     textComponent.setColor(ChatColor.AQUA);
                     textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
@@ -102,13 +103,13 @@ class TARDISRescueCommand {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {
                             plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
-                            TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_NO_RESPONSE", saved);
                         }
                     }, 1200L);
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERM_PLAYER");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
             return true;
         }
         return false;

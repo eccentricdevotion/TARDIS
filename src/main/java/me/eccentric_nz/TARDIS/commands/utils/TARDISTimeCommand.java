@@ -22,8 +22,8 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Time;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -46,16 +46,16 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardistime")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return true;
             }
             if (sender instanceof Player player) {
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                     return true;
                 }
                 if (!player.hasPermission("tardis.admin")) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
                 Location location = player.getLocation();
@@ -71,7 +71,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                         world = rsc.getWorld();
                     } else {
                         // can't change weather in TARDIS world
-                        TARDISMessage.send(player, "TIME_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_TARDIS");
                         return true;
                     }
                 }
@@ -83,12 +83,12 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     try {
                         ticks = Long.parseLong(args[0]);
                     } catch (NumberFormatException nfe) {
-                        TARDISMessage.send(player, "TIME_FORMAT");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_FORMAT");
                         return true;
                     }
                 }
                 world.setTime(ticks);
-                TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getName());
                 return true;
             }
         }

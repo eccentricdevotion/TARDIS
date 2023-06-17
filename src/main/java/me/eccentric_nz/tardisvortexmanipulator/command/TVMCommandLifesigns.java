@@ -8,7 +8,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import org.bukkit.entity.Entity;
@@ -25,18 +24,18 @@ public class TVMCommandLifesigns {
 
     public boolean scan(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "vm.lifesigns")) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS_TACHYON");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS_TACHYON");
             return true;
         }
         // remove tachyons
         new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
         if (args.length == 1) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
             double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
             List<Entity> ents = player.getNearbyEntities(d, d, d);
@@ -80,23 +79,23 @@ public class TVMCommandLifesigns {
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PLAYER");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PLAYER");
             return true;
         }
         Player scanned = plugin.getServer().getPlayer(args[1]);
         if (scanned == null) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
             return true;
         }
         if (!scanned.isOnline()) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NOT_ONLINE", args[1]);
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NOT_ONLINE", args[1]);
             return true;
         }
         // getHealth() / getMaxHealth() * getHealthScale()
         double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
         float hunger = (scanned.getFoodLevel() / 20F) * 100;
         int air = scanned.getRemainingAir();
-        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", args[1]);
+        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", args[1]);
         player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
         player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
         player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");

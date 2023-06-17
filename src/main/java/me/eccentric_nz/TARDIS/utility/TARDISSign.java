@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 
 public class TARDISSign {
 
+    // TODO
     public static void sendSignLink(Player player) {
         TextComponent start = new TextComponent("Click the link to view the TARDIS wiki: ");
         TextComponent link = new TextComponent("https://eccentricdevotion.github.io/TARDIS/site-map.html");

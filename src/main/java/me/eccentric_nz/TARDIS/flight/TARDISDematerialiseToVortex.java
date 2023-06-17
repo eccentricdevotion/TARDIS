@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -109,7 +109,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 wherenl.put("tardis_id", id);
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                 if (!rsn.resultSet()) {
-                    TARDISMessage.send(player, "DEST_NO_LOAD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NO_LOAD");
                     return;
                 }
                 Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());

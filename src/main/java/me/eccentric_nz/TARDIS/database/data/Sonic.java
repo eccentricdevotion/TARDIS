@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import java.util.UUID;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * @author eccentric_nz

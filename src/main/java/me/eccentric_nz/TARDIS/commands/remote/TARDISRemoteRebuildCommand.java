@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -44,12 +44,12 @@ public class TARDISRemoteRebuildCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return true;
         }
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE)) {
-            TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
+            plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
             return true;
         }
         BuildData bd = new BuildData(player.getUniqueId().toString());
@@ -63,7 +63,7 @@ public class TARDISRemoteRebuildCommand {
         bd.setTardisID(id);
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
-        TARDISMessage.send(sender, "TARDIS_REBUILT");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_REBUILT");
         // set hidden to false
         if (hidden) {
             HashMap<String, Object> whereh = new HashMap<>();

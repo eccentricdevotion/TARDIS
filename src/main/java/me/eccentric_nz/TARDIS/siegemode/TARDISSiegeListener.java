@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -121,7 +121,7 @@ public class TARDISSiegeListener implements Listener {
                 }
             }
             if (!isCompanion) {
-                TARDISMessage.send(event.getPlayer(), "SIEGE_COMPANION");
+                plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "SIEGE_COMPANION");
                 return;
             }
         }
@@ -177,12 +177,12 @@ public class TARDISSiegeListener implements Listener {
         }
         if (plugin.getUtils().inTARDISWorld(p)) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
         if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_WORLD");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
             return;
         }
         item.setInvulnerable(true);
@@ -193,12 +193,12 @@ public class TARDISSiegeListener implements Listener {
             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
             int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
             if (count > 0) {
-                TARDISMessage.send(p, "SIEGE_NO_SPACE");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_SPACE");
                 return;
             }
             List<String> lore = is.getItemMeta().getLore();
             if (lore == null || lore.size() < 2) {
-                TARDISMessage.send(p, "SIEGE_NO_ID");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_ID");
                 return;
             }
             String[] line2 = lore.get(1).split(": ");
@@ -238,13 +238,13 @@ public class TARDISSiegeListener implements Listener {
         Location loc = event.getBlock().getLocation();
         if (plugin.getUtils().inTARDISWorld(loc)) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
         String w = p.getLocation().getWorld().getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_WORLD");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
             return;
         }
         // check there is room to expand to a police box
@@ -253,7 +253,7 @@ public class TARDISSiegeListener implements Listener {
         int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
         if (count > 0) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_SPACE");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_SPACE");
             return;
         }
         // update the current location
@@ -288,7 +288,7 @@ public class TARDISSiegeListener implements Listener {
         Player p = event.getPlayer();
         if (plugin.getUtils().inTARDISWorld(p)) {
             event.setCancelled(true);
-            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
         }
         UUID uuid = p.getUniqueId();
         // check location
@@ -321,7 +321,7 @@ public class TARDISSiegeListener implements Listener {
                 }
             }
             if (!isCompanion) {
-                TARDISMessage.send(p, "SIEGE_COMPANION");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_COMPANION");
                 return;
             }
         }
@@ -336,7 +336,7 @@ public class TARDISSiegeListener implements Listener {
             // check player has enough Time Lord energy - default 10% of full_charge
             int level = rsp.getArtronLevel();
             if (min > level) {
-                TARDISMessage.send(p, "SIEGE_MIN", String.format("%s", min));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_MIN", String.format("%s", min));
                 return;
             }
             // transfer min
@@ -346,12 +346,12 @@ public class TARDISSiegeListener implements Listener {
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("player_prefs", -min, wheretl, p);
             plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, p);
-            TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_TRANSFER", String.format("%s", min));
         } else {
             // attempt to unsiege the TARDIS
             // check TARDIS has minimum energy level
             if (min > tardis.getArtron_level()) {
-                TARDISMessage.send(p, "SIEGE_POWER");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_POWER");
                 return;
             }
             // rebuild the TARDIS
@@ -377,7 +377,7 @@ public class TARDISSiegeListener implements Listener {
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }
-            TARDISMessage.send(p, "SIEGE_OFF");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_OFF");
         }
     }
 

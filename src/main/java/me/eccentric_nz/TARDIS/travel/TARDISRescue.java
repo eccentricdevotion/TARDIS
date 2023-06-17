@@ -28,10 +28,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -64,19 +64,19 @@ public class TARDISRescue {
      */
     public boolean rescue(Player player, UUID saved, int id, COMPASS d, boolean rescue, boolean request) {
         if (plugin.getServer().getPlayer(saved) == null) {
-            TARDISMessage.send(player, "NOT_ONLINE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
             return false;
         }
         Location player_loc = plugin.getServer().getPlayer(saved).getLocation();
         if (plugin.getTardisArea().isInExistingArea(player_loc)) {
-            TARDISMessage.send(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
             return false;
         }
         if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
             return false;
         }
         if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
-            TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return false;
         }
         World w = player_loc.getWorld();
@@ -84,7 +84,7 @@ public class TARDISRescue {
         int move = (rescue) ? 0 : 3;
         int count = TARDISTimeTravel.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
         if (count > 0) {
-            TARDISMessage.send(player, "RESCUE_NOT_SAFE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_NOT_SAFE");
             return false;
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -99,7 +99,7 @@ public class TARDISRescue {
         plugin.getQueryFactory().doSyncUpdate("next", set, where);
         TravelType travelType = (rescue) ? TravelType.RESCUE : TravelType.PLAYER;
         if (!rescue) {
-            TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 new TARDISLand(plugin, id, player).exitVortex();
                 plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
@@ -127,31 +127,31 @@ public class TARDISRescue {
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return new RescueData(false, 0);
             }
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
             if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                 return new RescueData(false, 0);
             }
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet() && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                 return new RescueData(false, 0);
             }
             int tardis_id = rst.getTardis_id();
             if (tardis_id != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
-                TARDISMessage.send(player, "CMD_ONLY_TL");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                 return new RescueData(false, 0);
             }
             int level = tardis.getArtron_level();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
-                TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                 return new RescueData(false, 0);
             }
             // get direction
@@ -159,7 +159,7 @@ public class TARDISRescue {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return new RescueData(false, 0);
             }
             return new RescueData(rescue(player, saved, id, rsc.getDirection(), !request, request), id);

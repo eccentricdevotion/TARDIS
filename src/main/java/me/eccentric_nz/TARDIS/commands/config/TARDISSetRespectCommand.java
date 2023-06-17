@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import com.google.common.collect.ImmutableList;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import org.bukkit.command.CommandSender;
 
@@ -39,24 +39,24 @@ class TARDISSetRespectCommand {
     boolean setRegion(CommandSender sender, String[] args) {
         String region = args[1].toLowerCase(Locale.ENGLISH);
         if (!regions.contains(region)) {
-            TARDISMessage.send(sender, "ARG_TOWNY");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TOWNY");
             return false;
         }
         plugin.getConfig().set("preferences.respect_towny", region);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "respect_towny");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "respect_towny");
         return true;
     }
 
     boolean setFlag(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!flags.contains(flag)) {
-            TARDISMessage.send(sender, "ARG_FLAG");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_FLAG");
             return false;
         }
         plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "respect_worldguard");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "respect_worldguard");
         return true;
     }
 }

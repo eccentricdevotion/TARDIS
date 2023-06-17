@@ -27,9 +27,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -86,13 +86,13 @@ public class TARDISCondenserListener implements Listener {
                         switch (plugin.getWorldManager()) {
                             case MULTIVERSE -> {
                                 if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
                             }
                             case NONE -> {
                                 if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
-                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
                             }
@@ -244,7 +244,7 @@ public class TARDISCondenserListener implements Listener {
                         }
                         // warn players about not condensing enchanted items
                         if (savedEnchantedItems > 0) {
-                            TARDISMessage.send(player, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
                         }
                         // halve it cause 1:1 is too much...
                         amount = Math.round(amount / 2.0F);
@@ -265,9 +265,9 @@ public class TARDISCondenserListener implements Listener {
                                     taf.doAchievement(Math.round((amount * 100F) / fc));
                                 }
                             }
-                            TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_CONDENSED", String.format("%d", amount));
                         } else {
-                            TARDISMessage.send(player, "CONDENSE_NO_VALID");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_VALID");
                         }
                     } else {
                         plugin.debug("TARDIS data was null!");

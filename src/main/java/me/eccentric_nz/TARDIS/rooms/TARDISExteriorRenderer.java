@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
@@ -59,9 +59,9 @@ public class TARDISExteriorRenderer {
         int ipbz = TARDISNumberParsers.parseInt(idata[3]);
         Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
-            TARDISMessage.send(p, "DEST_NO_CHANGE");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "DEST_NO_CHANGE");
         } else {
-            TARDISMessage.send(p, "RENDER_START");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "RENDER_START");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -224,7 +224,7 @@ public class TARDISExteriorRenderer {
                 }
             }
             plugin.getTrackerKeeper().getRenderer().put(id, isRendered);
-            TARDISMessage.send(p, "RENDER_DONE");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "RENDER_DONE");
             // remove dropped items
             for (Entity e : location.getChunk().getEntities()) {
                 if (e instanceof Item) {
@@ -245,7 +245,7 @@ public class TARDISExteriorRenderer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             transmat(p, d, location);
             p.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-            TARDISMessage.send(p, "RENDER_EXIT");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "RENDER_EXIT");
         }, 10L);
     }
 

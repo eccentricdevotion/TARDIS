@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -306,7 +306,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 if (rst.resultSet()) {
                     Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
                     if (p != null) {
-                        TARDISMessage.send(p, "MONSTER", m.getDisplayName());
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "MONSTER", m.getDisplayName());
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<>();

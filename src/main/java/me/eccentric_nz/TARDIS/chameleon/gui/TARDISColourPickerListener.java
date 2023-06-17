@@ -5,9 +5,9 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,7 +88,7 @@ public class TARDISColourPickerListener extends TARDISMenuListener implements Li
                                 set.put("tardis_id", id);
                                 plugin.getQueryFactory().doInsert("colour", set);
                             }
-                            TARDISMessage.send(player, "COLOUR_SET");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_SET");
                         }
                         close(player);
                     }

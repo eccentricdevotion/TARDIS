@@ -33,9 +33,9 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
@@ -154,7 +154,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -204,7 +204,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -242,7 +242,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -276,7 +276,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not create WorldGuard Protection for recharger! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
 
@@ -310,7 +310,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
         }
     }
 
@@ -330,7 +330,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -360,10 +360,10 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
             }
         } else {
-            plugin.getLogger().log(Level.INFO, "Could not get WorldGuard region for TARDIS location!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not get WorldGuard region for TARDIS location!");
         }
     }
 
@@ -379,7 +379,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getLogger().log(Level.INFO, "Could not remove recharger WorldGuard Protection for recharger! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not remove recharger WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
 
@@ -407,7 +407,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not remove WorldGuard Protection for " + room + " room! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not remove WorldGuard Protection for " + room + " room! " + e.getMessage());
             }
         }
     }
@@ -436,7 +436,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
             }
         }
     }
@@ -465,7 +465,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
             }
         }
     }
@@ -516,7 +516,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
             }
         }
     }
@@ -553,7 +553,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
             }
         }
     }
@@ -581,7 +581,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not set WorldGuard CHEST_ACCESS flag to DENY! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not set WorldGuard CHEST_ACCESS flag to DENY! " + e.getMessage());
             }
         }
     }
@@ -609,7 +609,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (StorageException e) {
-                plugin.getLogger().log(Level.INFO, "Could not set WorldGuard CHEST_ACCESS flag to ALLOW! " + e.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not set WorldGuard CHEST_ACCESS flag to ALLOW! " + e.getMessage());
             }
         }
     }
@@ -734,7 +734,7 @@ public class TARDISWorldGuardUtils {
                 try {
                     rm.save();
                 } catch (StorageException e) {
-                    plugin.getLogger().log(Level.INFO, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
                 }
             }
         }

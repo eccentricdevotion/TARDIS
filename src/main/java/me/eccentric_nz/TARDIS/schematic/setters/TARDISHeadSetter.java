@@ -17,16 +17,15 @@
 package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonObject;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.UUID;
-import java.util.logging.Level;
 
 /**
  *
@@ -45,7 +44,7 @@ public class TARDISHeadSetter {
             skull.setOwnerProfile(profile);
             skull.update();
         } catch (MalformedURLException ex) {
-            plugin.getLogger().log(Level.WARNING, "Could not create schematic texture URL for player head!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not create schematic texture URL for player head!");
         }
     }
 }

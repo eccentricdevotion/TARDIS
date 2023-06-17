@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,7 +43,7 @@ class TARDISManualFlightStarter implements Runnable {
     public void run() {
         long delay = plugin.getConfig().getLong("travel.manual_flight_delay");
         // start a manual flight session
-        TARDISMessage.send(player, "FLIGHT_ENGAGED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_ENGAGED");
         TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
         int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
         mfr.setTaskID(taskid);

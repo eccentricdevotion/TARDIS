@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,24 +28,30 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISItemCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISItemCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     public boolean update(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory")) {
-            TARDISMessage.send(player, "ARG_ITEM");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_ITEM");
             return true;
         }
         if (args[1].equalsIgnoreCase("hand")) {
             ItemStack inHand = player.getInventory().getItemInMainHand();
             if (inHand == null || !inHand.hasItemMeta()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
                 return true;
             }
             ItemMeta im = inHand.getItemMeta();
             if (!im.hasDisplayName()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
                 return true;
             }
             // strip color codes
@@ -61,37 +68,37 @@ public class TARDISItemCommand {
                     }
                 } else {
                     if (im.hasCustomModelData()) {
-                        TARDISMessage.send(player, "ITEM_HAS_DATA");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_HAS_DATA");
                         return true;
                     }
                     inHand.setItemMeta(im);
                 }
                 player.updateInventory();
-                TARDISMessage.send(player, "ITEM_UPDATED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
             }
         } else {
             int i = 0;
             for (ItemStack is : player.getInventory()) {
                 if (is != null && is.hasItemMeta()) {
-                    TARDISMessage.message(player, is.getType().toString());
+                    plugin.getMessenger().message(player, is.getType().toString());
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName()) {
                         // strip color codes
                         String stripped = ChatColor.stripColor(im.getDisplayName());
-                        TARDISMessage.message(player, stripped);
+                        plugin.getMessenger().message(player, stripped);
                         // look up display name
                         RecipeItem recipeItem = RecipeItem.getByName(stripped);
-                        TARDISMessage.message(player, recipeItem.toString());
+                        plugin.getMessenger().message(player, recipeItem.toString());
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             if (is.getType().equals(Material.FILLED_MAP)) {
-                                TARDISMessage.message(player, "Filled Map!");
+                                plugin.getMessenger().message(player, "Filled Map!");
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
-                                    TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
+                                    plugin.getMessenger().message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
                                     is.setType(Material.GLOWSTONE_DUST);
                                     i++;
                                 } else {
-                                    TARDISMessage.message(player, "IllegalArgumentException for " + stripped);
+                                    plugin.getMessenger().message(player, "IllegalArgumentException for " + stripped);
                                 }
                             }
                             if (!im.hasCustomModelData()) {
@@ -104,7 +111,7 @@ public class TARDISItemCommand {
                 }
             }
             if (i > 0) {
-                TARDISMessage.send(player, "ITEMS_UPDATED", "" + i);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEMS_UPDATED", "" + i);
                 player.updateInventory();
             }
         }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.MonsterTargetListener;
 import org.bukkit.Chunk;
@@ -132,7 +133,7 @@ public class Damage implements Listener {
                             inv.setItem(slot, new ItemStack(Material.AIR));
                         }
                         p.updateInventory();
-                        p.sendMessage(plugin.getPluginName() + "The Weeping Angels stole your TARDIS Key");
+                        plugin.getMessenger().send(p, TardisModule.MONSTERS, "The Weeping Angels stole your TARDIS Key");
                         break;
                     }
                 }

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -59,9 +59,9 @@ public class TARDISPruner {
             try {
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
                     if (rs.isBeforeFirst()) {
-                        sender.sendMessage(plugin.getPluginName() + "Prune List:");
+                        plugin.getMessenger().message(sender, TardisModule.TARDIS,  "Prune List:");
                     } else {
-                        TARDISMessage.send(sender, "PRUNE_NONE");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_NONE");
                     }
                     while (rs.next()) {
                         HashMap<String, Object> wherecl = new HashMap<>();

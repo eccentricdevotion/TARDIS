@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -99,10 +99,10 @@ public class FloodgateDesktopThemeForm {
                     // open wall form
                     new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
                 } else {
-                    TARDISMessage.send(player, "UPDATE_NO_ENERGY", label);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_ENERGY", label);
                 }
             } else {
-                TARDISMessage.send(player, "NO_PERM_UPGRADE_CONSOLE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE_CONSOLE");
             }
         }
     }

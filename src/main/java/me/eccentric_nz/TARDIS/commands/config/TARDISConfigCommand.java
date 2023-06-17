@@ -24,8 +24,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -223,7 +223,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
-                    TARDISMessage.send(sender, "ARG_NOT_VALID");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1 && first.equals("reload")) {
@@ -245,11 +245,11 @@ public class TARDISConfigCommand implements CommandExecutor {
                     }
                     // show the value of the config option
                     if (isMainConfig) {
-                        TARDISMessage.send(sender, "CONFIG_OPTION", path, plugin.getConfig().getString(path));
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_OPTION", path, plugin.getConfig().getString(path));
                     } else {
-                        TARDISMessage.send(sender, "CONFIG_OPTION_ARTRON", first, plugin.getArtronConfig().getString(path));
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_OPTION_ARTRON", first, plugin.getArtronConfig().getString(path));
                     }
-                    TARDISMessage.send(sender, "CONFIG_OPTION_SET", first);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_OPTION_SET", first);
                     return true;
                 }
                 if (first.equals("reload")) {
@@ -273,7 +273,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
-                        TARDISMessage.send(sender, "ARG_DB");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DB");
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
@@ -307,7 +307,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") && !args[1].equalsIgnoreCase("hard")) {
-                        TARDISMessage.send(sender, "ARG_DIFF");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DIFF");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
@@ -320,7 +320,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                         try {
                             ChameleonPreset.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                         } catch (IllegalArgumentException e) {
-                            TARDISMessage.send(sender, "ARG_PRESET");
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_PRESET");
                             return true;
                         }
                         plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
@@ -330,7 +330,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     try {
                         UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "ARG_USE_CLAY");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_USE_CLAY");
                         return true;
                     }
                     plugin.getConfig().set("creation.use_clay", args[1].toUpperCase(Locale.ENGLISH));
@@ -340,7 +340,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("vortex_fall")) {
                     if (!args[1].equalsIgnoreCase("kill") && !args[1].equalsIgnoreCase("teleport")) {
-                        TARDISMessage.send(sender, "ARG_VORTEX");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_VORTEX");
                         return true;
                     }
                     plugin.getConfig().set("preferences.vortex_fall", args[1].toLowerCase(Locale.ENGLISH));
@@ -365,10 +365,10 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
                 return true;
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
                 return false;
             }
         }

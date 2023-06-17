@@ -61,7 +61,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaLi
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
 import me.eccentric_nz.tardisweepingangels.utils.*;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -150,7 +150,7 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new K9Listener(plugin), plugin);
         plugin.getPM().registerEvents(new ChunkListener(plugin), plugin);
         plugin.getPM().registerEvents(new SilurianSpawnerListener(plugin), plugin);
-        plugin.getPM().registerEvents(new OodListener(), plugin);
+        plugin.getPM().registerEvents(new OodListener(plugin), plugin);
         plugin.getPM().registerEvents(new JudoonListener(plugin), plugin);
         plugin.getPM().registerEvents(new ToclafaneListener(plugin), plugin);
         plugin.getPM().registerEvents(new ArmourStandListener(), plugin);

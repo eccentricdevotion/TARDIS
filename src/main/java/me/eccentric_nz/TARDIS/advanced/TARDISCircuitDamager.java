@@ -24,8 +24,8 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,13 +56,13 @@ public class TARDISCircuitDamager {
         if ((uses_left - 1) <= 0) {
             // destroy
             setCircuitDamage(circuit.getName(), 0, true);
-            TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "CIRCUIT_VAPOUR", circuit.getName());
         } else {
             // decrement
             int decremented = uses_left - 1;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 setCircuitDamage(circuit.getName(), decremented, false);
-                TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
             }, 5L);
         }
     }

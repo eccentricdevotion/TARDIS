@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,22 +50,22 @@ public class TARDISDisplayCommand extends TARDISCompleter implements CommandExec
                 if (p.hasPermission("tardis.display")) {
                     if (plugin.getTrackerKeeper().getDisplay().containsKey(uuid)) {
                         plugin.getTrackerKeeper().getDisplay().remove(uuid);
-                        TARDISMessage.send(p, "DISPLAY_DISABLED");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_DISABLED");
                     } else {
                         plugin.getTrackerKeeper().getDisplay().put(uuid, TARDISDisplayType.ALL);
-                        TARDISMessage.send(p, "DISPLAY_ENABLED");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_ENABLED");
                     }
                 } else {
-                    TARDISMessage.send(p, "DISPLAY_PERMISSION");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_PERMISSION");
                 }
             }
             if (args.length == 1) {
                 try {
                     TARDISDisplayType displayType = TARDISDisplayType.valueOf(args[0].toUpperCase());
                     plugin.getTrackerKeeper().getDisplay().put(uuid, displayType);
-                    TARDISMessage.send(p, "DISPLAY_ENABLED");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_ENABLED");
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(p, "DISPLAY_INVALID");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_INVALID");
                 }
             }
         }

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -83,7 +83,7 @@ public class TARDISRoomSeeder implements Listener {
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check they are still in the TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
-                    TARDISMessage.send(player, "ROOM_IN_WORLD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_IN_WORLD");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
@@ -93,12 +93,12 @@ public class TARDISRoomSeeder implements Listener {
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    TARDISMessage.send(player, "PLATE_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PLATE_NOT_FOUND");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
                 if (!trd.isAir()) {
-                    TARDISMessage.send(player, "AIR_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AIR_NOT_FOUND");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
@@ -114,7 +114,7 @@ public class TARDISRoomSeeder implements Listener {
                 where.put("z", c.getZ());
                 ResultSetChunks rsc = new ResultSetChunks(plugin, where, false);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "ROOM_CONSOLE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_CONSOLE");
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
@@ -124,7 +124,7 @@ public class TARDISRoomSeeder implements Listener {
                     int cy = block.getY();
                     int cz = c.getZ();
                     if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
-                        TARDISMessage.send(player, "ROOM_USE_ARS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_USE_ARS");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
@@ -133,7 +133,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
-                    TARDISMessage.send(player, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
                     plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }

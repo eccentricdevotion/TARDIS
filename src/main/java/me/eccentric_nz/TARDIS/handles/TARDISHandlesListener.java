@@ -21,7 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -85,7 +85,7 @@ public class TARDISHandlesListener implements Listener {
         if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
             // can only be placed in an item frame
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "HANDLES_FRAME");
+            plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "HANDLES_FRAME");
         }
     }
 }

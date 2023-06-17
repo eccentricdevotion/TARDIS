@@ -21,8 +21,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
@@ -40,7 +40,7 @@ class TARDISJunkFind {
     public boolean find(CommandSender sender) {
         // get current location
         if (!TARDISPermission.hasPermission(sender, "tardis.junk")) {
-            TARDISMessage.send(sender, "JUNK_NO_PERM");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NO_PERM");
             return true;
         }
         // get junk TARDIS id
@@ -55,10 +55,10 @@ class TARDISJunkFind {
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     world = plugin.getMVHelper().getAlias(rsc.getWorld());
                 }
-                TARDISMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                 return true;
             } else {
-                TARDISMessage.send(sender, "JUNK_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NOT_FOUND");
                 return true;
             }
         }

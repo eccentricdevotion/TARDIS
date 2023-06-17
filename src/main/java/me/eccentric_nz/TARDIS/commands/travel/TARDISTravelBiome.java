@@ -27,8 +27,8 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISBiomeFinder;
 import org.bukkit.Location;
@@ -51,7 +51,7 @@ public class TARDISTravelBiome {
 
     public boolean action(Player player, String[] args, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
-            TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_BIOME");
             return true;
         }
         String upper = args[1].toUpperCase(Locale.ENGLISH);
@@ -79,11 +79,11 @@ public class TARDISTravelBiome {
                     }
                 }
                 if (!hasBiomeDisk) {
-                    TARDISMessage.send(player, "BIOME_DISK_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_DISK_NOT_FOUND");
                     return true;
                 }
             } else {
-                TARDISMessage.send(player, "ADV_BIOME");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_BIOME");
                 return true;
             }
         }
@@ -95,45 +95,45 @@ public class TARDISTravelBiome {
                 }
             }
             String b = buf.substring(0, buf.length() - 2);
-            TARDISMessage.send(player, "BIOMES", b);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
             try {
                 Biome biome = Biome.valueOf(upper);
                 if (biome.equals(Biome.THE_VOID)) {
-                    TARDISMessage.send(player, "BIOME_TRAVEL_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
                     return true;
                 }
-                TARDISMessage.send(player, "BIOME_SEARCH");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_SEARCH");
                 World w;
                 HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return true;
                 }
                 // have they specified a world argument?
                 if (args.length > 2) {
                     // must be in the vortex
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        TARDISMessage.send(player, "BIOME_FROM_VORTEX");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_FROM_VORTEX");
                         return true;
                     }
                     String planet = args[2].toLowerCase(Locale.ROOT);
                     if (TARDISConstants.isTARDISPlanet(planet)) {
-                        TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", args[2]);
                         return true;
                     }
                     // get the world
                     w = TARDISAliasResolver.getWorldFromAlias(args[2]);
                     if (w == null) {
-                        TARDISMessage.send(player, "WORLD_DELETED", args[2]);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED", args[2]);
                         return true;
                     }
                 } else {
                     String planet = rsc.getWorld().getName();
                     if (TARDISConstants.isTARDISPlanet(planet)) {
-                        TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                         return true;
                     }
                     w = rsc.getWorld();
@@ -141,7 +141,7 @@ public class TARDISTravelBiome {
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection(), current);
             } catch (IllegalArgumentException iae) {
-                TARDISMessage.send(player, "BIOME_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
                 return true;
             }
         }

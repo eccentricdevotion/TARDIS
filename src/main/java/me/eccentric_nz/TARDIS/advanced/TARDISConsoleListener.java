@@ -28,9 +28,9 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -103,11 +103,11 @@ public class TARDISConsoleListener implements Listener {
                         // only the time lord of this tardis
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
                         if (!rs.fromBoth(id, uuid.toString())) {
-                            TARDISMessage.send(p, "NOT_OWNER");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_OWNER");
                             return;
                         }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                            TARDISMessage.send(p, "POWER_DOWN");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "TARDIS Console");
@@ -162,7 +162,7 @@ public class TARDISConsoleListener implements Listener {
                                 if (rst.resultSet() && rst.getTardis().getUuid().equals(diskUuid)) {
                                     if (uuid == rst.getTardis().getUuid()) {
                                         // time lords can't use their own disks!
-                                        TARDISMessage.send(p, "SECURITY_TIMELORD");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "SECURITY_TIMELORD");
                                         return;
                                     }
                                     // process disk
@@ -178,16 +178,16 @@ public class TARDISConsoleListener implements Listener {
                                             p.getInventory().setItemInMainHand(null);
                                         }
                                         p.updateInventory();
-                                        TARDISMessage.send(p, "SECURITY_SUCCESS");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "SECURITY_SUCCESS");
                                     } else {
                                         // error message player
-                                        TARDISMessage.send(p, "SECURITY_ERROR", processed);
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "SECURITY_ERROR", processed);
                                     }
                                 }
                             }
                         }
                     } else {
-                        TARDISMessage.send(p, "ADV_OPEN");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_OPEN");
                     }
                 }
             }

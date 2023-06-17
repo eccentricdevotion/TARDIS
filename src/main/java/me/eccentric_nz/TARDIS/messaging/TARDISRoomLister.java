@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -44,13 +45,14 @@ public class TARDISRoomLister {
     }
 
     public void list() {
-        TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
-        TARDISMessage.message(player, ChatColor.GRAY + "Click a room name to suggest a command");
-        TARDISMessage.message(player, "");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
+        plugin.getMessenger().messageWithColour(player, "Click a room name to suggest a command", "#AAAAAA");
+        plugin.getMessenger().message(player, "");
         options.forEach((key, value) -> {
             player.sendMessage(key);
             if (!value.isEmpty()) {
                 value.forEach((s) -> {
+                    // TODO
                     TextComponent tcr = new TextComponent("    " + s);
                     ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
                     tcr.setColor(colour);
@@ -59,10 +61,10 @@ public class TARDISRoomLister {
                     player.spigot().sendMessage(tcr);
                 });
             } else {
-                TARDISMessage.send(player, "ROOM_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NONE");
             }
         });
-        TARDISMessage.send(player, "ROOM_GALLERY");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_GALLERY");
         TextComponent tcg = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
         tcg.setColor(ChatColor.AQUA);
         tcg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));

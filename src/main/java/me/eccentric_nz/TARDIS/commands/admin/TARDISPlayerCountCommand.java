@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
@@ -40,7 +40,7 @@ class TARDISPlayerCountCommand {
         int max_count = plugin.getConfig().getInt("creation.count");
         OfflinePlayer player = TARDISStaticUtils.getOfflinePlayer(args[1]);
         if (player == null) {
-            TARDISMessage.send(sender, "PLAYER_NOT_VALID");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_VALID");
             return true;
         }
         String uuid = player.getUniqueId().toString();
@@ -54,13 +54,13 @@ class TARDISPlayerCountCommand {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
                 plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
-                TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_SET", args[1], count, max_count);
             } else {
                 // display count
-                TARDISMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_IS", args[1], rsc.getCount(), max_count);
             }
         } else {
-            TARDISMessage.send(sender, "COUNT_NOT_FOUND");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_NOT_FOUND");
         }
         return true;
     }

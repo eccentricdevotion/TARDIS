@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -58,7 +58,7 @@ class TARDISConfigOptionsCommand {
 
     boolean showConfigOptions(CommandSender sender, String[] args) {
         String section = args[1].toLowerCase(Locale.ENGLISH);
-        TARDISMessage.send(sender, "CONFIG");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);

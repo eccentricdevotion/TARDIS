@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.commands.utils;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.entity.Player;
 
@@ -47,12 +47,12 @@ public class TARDISAcceptor {
                 if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(uuid)) {
                     Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(uuid));
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                        TARDISMessage.send(who, message, name);
+                        plugin.getMessenger().send(who, TardisModule.TARDIS, message, name);
                     }
                     plugin.getTrackerKeeper().getTelepathicRescue().remove(uuid);
                 } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                    TARDISMessage.send(rescuer, message, name);
-                    TARDISMessage.send(player, "REQUEST_ACCEPTED", rescuer.getName(), request ? "travel" : "rescue");
+                    plugin.getMessenger().send(rescuer, TardisModule.TARDIS, message, name);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_ACCEPTED", rescuer.getName(), request ? "travel" : "rescue");
                 }
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                     new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();

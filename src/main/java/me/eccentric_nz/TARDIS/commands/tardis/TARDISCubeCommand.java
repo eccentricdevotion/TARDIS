@@ -21,7 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,27 +40,27 @@ class TARDISCubeCommand {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
             int id = rs.getTardis_id();
             if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NOT_SIEGED");
                 return true;
             }
             // get the player who is carrying the Siege cube
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
                 if (map.getValue() == id) {
                     String p = plugin.getServer().getPlayer(map.getKey()).getName();
-                    TARDISMessage.send(player, "SIEGE_CARRIER", p);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_CARRIER", p);
                     return true;
                 }
             }
             // not found
-            TARDISMessage.send(player, "SIEGE_CARRIER", "no one!");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_CARRIER", "no one!");
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

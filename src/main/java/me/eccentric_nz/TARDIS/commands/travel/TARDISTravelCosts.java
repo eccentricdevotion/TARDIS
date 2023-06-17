@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.commands.travel;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -37,10 +37,10 @@ public class TARDISTravelCosts {
     }
 
     public boolean action(Player player) {
-        TARDISMessage.send(player, "TRAVEL_COSTS");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_COSTS");
         for (String s : costs) {
             String c = (s.equals("rebuild")) ? plugin.getArtronConfig().getString("random") : plugin.getArtronConfig().getString(s);
-            TARDISMessage.message(player, "    " + s + ": " + ChatColor.AQUA + c);
+            plugin.getMessenger().message(player, "    " + s + ": " + ChatColor.AQUA + c);
         }
         return true;
     }

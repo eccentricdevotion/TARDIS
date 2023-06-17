@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -61,7 +61,7 @@ class TARDISLampsCommand {
     boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
-            TARDISMessage.send(owner, "NO_PERMS");
+            plugin.getMessenger().send(owner, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -75,7 +75,7 @@ class TARDISLampsCommand {
             wherel.put("tardis_id", id);
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
             if (rsl.resultSet()) {
-                TARDISMessage.send(owner, "LAMP_DELETE");
+                plugin.getMessenger().send(owner, TardisModule.TARDIS, "LAMP_DELETE");
                 HashMap<String, Object> wheredel = new HashMap<>();
                 wheredel.put("tardis_id", id);
                 plugin.getQueryFactory().doDelete("lamps", wheredel);
@@ -122,7 +122,7 @@ class TARDISLampsCommand {
                                         set.put("tardis_id", id);
                                         set.put("location", lamp);
                                         plugin.getQueryFactory().doInsert("lamps", set);
-                                        TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
+                                        plugin.getMessenger().send(owner, TardisModule.TARDIS, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
                                     }
                                 }
                             }
@@ -132,7 +132,7 @@ class TARDISLampsCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(owner, "NOT_A_TIMELORD");
+            plugin.getMessenger().send(owner, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return false;
         }
     }

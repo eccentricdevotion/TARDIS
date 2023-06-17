@@ -9,8 +9,8 @@ import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class FloodgateAreasForm {
             FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
             player.sendForm(form);
         } else {
-            TARDISMessage.send(player, "AREA_NONE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NONE");
         }
     }
 
@@ -68,7 +68,7 @@ public class FloodgateAreasForm {
             l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
         }
         if (l == null) {
-            TARDISMessage.send(player, "NO_MORE_SPOTS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
             return;
         }
         // get the TARDIS the player is in
@@ -87,7 +87,7 @@ public class FloodgateAreasForm {
             }
             // check the player is not already in the area!
             if (plugin.getTardisArea().isInExistingArea(rsc, rsa.getArea().getAreaId())) {
-                TARDISMessage.send(player, "TRAVEL_NO_AREA");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
                 return;
             }
             HashMap<String, Object> set_next = new HashMap<>();
@@ -102,7 +102,7 @@ public class FloodgateAreasForm {
             } else {
                 set_next.put("direction", rsc.getDirection().toString());
             }
-            TARDISMessage.send(player, "TRAVEL_APPROVED", label);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", label);
             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.AREA));
         }
     }

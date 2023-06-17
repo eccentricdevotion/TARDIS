@@ -21,12 +21,11 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
@@ -95,14 +94,14 @@ public class TARDISEPSRunnable implements Runnable {
                 players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
+                        plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM + message);
                     }
                 });
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     players.forEach((p) -> {
                         Player pp = plugin.getServer().getPlayer(p);
                         if (pp != null) {
-                            TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
+                            plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM, plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
                     plugin.getTardisHelper().removeNPC(npcID, l.getWorld());

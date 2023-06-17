@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -78,7 +78,7 @@ public class TARDISCreeperDeathListener implements Listener {
                             set.put("artron_level", level);
                             plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
                         }
-                        TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_CREEPER", String.format("%d", amount));
                         // are we doing an achievement?
                         if (plugin.getAchievementConfig().getBoolean("kill.enabled")) {
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.KILL, 1);

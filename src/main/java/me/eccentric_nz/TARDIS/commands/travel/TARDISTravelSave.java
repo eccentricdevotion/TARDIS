@@ -25,13 +25,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -56,13 +56,13 @@ public class TARDISTravelSave {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND");
                 return true;
             }
             World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
             if (w != null) {
                 if (w.getName().startsWith("TARDIS_")) {
-                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                     return true;
                 }
                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
@@ -83,17 +83,17 @@ public class TARDISTravelSave {
                     wheres.put("z", rsd.getZ());
                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
                     if (rsz.resultSet()) {
-                        TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET);
                         return true;
                     }
                     String invisibility = tac.getArea().getInvisibility();
                     if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
                         // check preset
-                        TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                         return true;
                     } else if (!invisibility.equals("ALLOW")) {
                         // force preset
-                        TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
                         HashMap<String, Object> wherei = new HashMap<>();
                         wherei.put("tardis_id", id);
                         HashMap<String, Object> seti = new HashMap<>();
@@ -116,7 +116,7 @@ public class TARDISTravelSave {
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
                     set.put("direction", rsc.getDirection().toString());
@@ -135,7 +135,7 @@ public class TARDISTravelSave {
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", id);
                 plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                TARDISMessage.send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.SAVE));
                 plugin.getTrackerKeeper().getRescue().remove(id);
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -143,11 +143,11 @@ public class TARDISTravelSave {
                     plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.SAVE, id));
                 }
             } else {
-                TARDISMessage.send(player, "SAVE_NO_WORLD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_WORLD");
             }
             return true;
         } else {
-            TARDISMessage.send(player, "TRAVEL_NO_PERM_SAVE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_SAVE");
             return true;
         }
     }

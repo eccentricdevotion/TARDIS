@@ -131,7 +131,7 @@ public class TARDISAllInOneConfigConverter {
             }
             return true;
         } catch (IOException | InvalidConfigurationException e) {
-            plugin.getLogger().log(Level.WARNING, "Could not transfer config options from " + module + " legacy plugin folder! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not transfer config options from " + module + " legacy plugin folder! " + e.getMessage());
         }
         return false;
     }

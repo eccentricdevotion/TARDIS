@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Farm;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -503,7 +503,7 @@ public class TARDISFarmer {
                         default -> true;
                     };
                     if (!canfarm) {
-                        TARDISMessage.send(p, "WORLD_NO_FARM");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLD_NO_FARM");
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                         return null;
                     }
@@ -540,7 +540,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!bees.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_APIARY");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_APIARY");
                 }
                 if (!aquarium.isEmpty() && fish != null) {
                     // get location of aquarium room
@@ -599,7 +599,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!pandas.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_BAMBOO");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_BAMBOO");
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
@@ -727,7 +727,7 @@ public class TARDISFarmer {
                     }
                     p.updateInventory();
                 } else if (farmtotal > 0) {
-                    TARDISMessage.send(p, "FARM");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM");
                 }
                 if (!geode.isEmpty()) {
                     // get location of geode room
@@ -759,7 +759,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!axolotls.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_GEODE");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_GEODE");
                 }
                 if (!stable.isEmpty() && !horses.isEmpty()) {
                     // get location of stable room
@@ -815,7 +815,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!horses.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_STABLE");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_STABLE");
                 }
                 if (!stall.isEmpty() && !llamas.isEmpty()) {
                     // get location of stable room
@@ -869,7 +869,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!llamas.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_STALL");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_STALL");
                 }
                 if (!hutch.isEmpty() && !rabbits.isEmpty()) {
                     // get location of hutch room
@@ -899,7 +899,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!rabbits.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_HUTCH");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_HUTCH");
                 }
                 if (!village.isEmpty() && !villagers.isEmpty()) {
                     // get location of village room
@@ -935,7 +935,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!villagers.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_VILLAGE");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_VILLAGE");
                 }
                 if (!igloo.isEmpty() && !polarbears.isEmpty()) {
                     // get location of igloo room
@@ -964,7 +964,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!polarbears.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_IGLOO");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_IGLOO");
                 }
                 if (!birdcage.isEmpty() && !parrots.isEmpty()) {
                     // get location of birdcage room
@@ -996,7 +996,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!parrots.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_BIRDCAGE");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_BIRDCAGE");
                 }
                 if (!mangrove.isEmpty()) {
                     if (!frogs.isEmpty()) {
@@ -1026,7 +1026,7 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (!frogs.isEmpty()) {
-                    TARDISMessage.send(p, "FARM_MANGROVE");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_MANGROVE");
                 }
             }
         }

@@ -23,7 +23,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.creative.CompoundsCreativeInventory;
 import me.eccentric_nz.TARDIS.chemistry.creative.ProductsCreativeInventory;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

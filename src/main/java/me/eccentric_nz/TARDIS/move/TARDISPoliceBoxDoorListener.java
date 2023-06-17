@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
@@ -82,11 +82,11 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                             int id = rsd.getTardis_id();
                             boolean closed = cmd < 1002;
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
                                 return;
                             }
                             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                                TARDISMessage.send(player, "NOT_WHILE_MAT");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                                 return;
                             }
                             // handbrake must be on
@@ -96,7 +96,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrake_on()) {
-                                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
                                 // must be Time Lord or companion
@@ -193,7 +193,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     PlayerInventory inv = player.getInventory();
                                                     ItemStack colour = inv.getItem(8);
                                                     if (colour == null || !TARDISMaterials.dyes.contains(colour.getType())) {
-                                                        TARDISMessage.send(player, "SONIC_DYE");
+                                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
                                                         return;
                                                     }
                                                     // dye = item frame item
@@ -226,7 +226,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             }
                                         } else {
                                             if (tardis.isAbandoned()) {
-                                                TARDISMessage.send(player, "ABANDONED_DOOR");
+                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_DOOR");
                                                 return;
                                             }
                                             // close portal & inner door
@@ -237,9 +237,9 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             playDoorSound(false, location);
                                         }
                                     } else if (!tardis.getUuid().equals(playerUUID)) {
-                                        TARDISMessage.send(player, "DOOR_DEADLOCKED");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
                                     } else {
-                                        TARDISMessage.send(player, "DOOR_UNLOCK");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
                                     }
                                 }
                             }

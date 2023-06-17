@@ -36,8 +36,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
@@ -70,7 +70,7 @@ class TARDISUpdateCommand {
             if (args.length == 1) {
                 return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             if (args[1].equalsIgnoreCase("list")) {
@@ -129,7 +129,7 @@ class TARDISUpdateCommand {
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
             Tardis tardis = rs.getTardis();
@@ -138,7 +138,7 @@ class TARDISUpdateCommand {
             try {
                 updateable = Updateable.valueOf(tardis_block);
             } catch (IllegalArgumentException e) {
-                new TARDISUpdateLister(player).list();
+                new TARDISUpdateLister(plugin, player).list();
                 return true;
             }
             if (args.length == 3 && args[2].equalsIgnoreCase("blocks")) {
@@ -199,19 +199,19 @@ class TARDISUpdateCommand {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
                         String under = block.getRelative(BlockFace.DOWN).getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
-                        TARDISMessage.send(player, "ROTOR_UNFIXED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROTOR_UNFIXED");
                     }
                     return true;
                 }
                 plugin.getTrackerKeeper().getUpdatePlayers().put(playerUUID, tardis_block);
-                TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
-                    TARDISMessage.send(player, "HOOK_REMIND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HOOK_REMIND");
                 }
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

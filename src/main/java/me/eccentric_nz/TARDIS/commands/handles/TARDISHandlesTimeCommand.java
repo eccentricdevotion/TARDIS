@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 
@@ -43,8 +42,8 @@ class TARDISHandlesTimeCommand {
         String formatted = date.format(formatter);
         // send message to player with current time
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
-            TARDISMessage.handlesSend(player, "HANDLES_SERVER_TIME", formatted);
+            plugin.getMessenger().handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
+            plugin.getMessenger().handlesSend(player, "HANDLES_SERVER_TIME", formatted);
         }, 2L);
         return true;
     }

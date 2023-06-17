@@ -26,11 +26,11 @@ import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,7 +68,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_IN_TARDIS");
             }
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
@@ -109,7 +109,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                             stack = new TARDISTerminalInventory(plugin).getTerminal();
                                         }
                                         // scanner circuit
-                                        default -> TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
+                                        default -> new TARDISScanner(plugin).scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
                                     }
                                     // close inventory
                                     p.closeInventory();
@@ -120,7 +120,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                     }
                                 }, 1L);
                             } else {
-                                TARDISMessage.send(p, "NO_TARDIS");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_TARDIS");
                             }
                         }
                     }

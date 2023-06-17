@@ -18,8 +18,8 @@ package me.eccentric_nz.tardisweepingangels.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -145,7 +145,7 @@ public class WorldProcessor implements Runnable {
             try {
                 String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
                 config.save(new File(monstersPath));
-                plugin.getLogger().log(Level.INFO, "Updated monsters.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.MONSTERS, "Updated monsters.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save monsters.yml, " + io.getMessage());
             }

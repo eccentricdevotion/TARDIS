@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.advancement.AdvancementProgress;
@@ -75,8 +74,8 @@ public class TARDISAchievementFactory {
                 TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
             }
         } else {
-            player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
-            player.sendMessage(ChatColor.WHITE + TARDIS.plugin.getAchievementConfig().getString(adv.getConfigName() + ".message"));
+            TARDIS.plugin.getMessenger().messageWithColour(player, "Advancement Made!", "#FFFF55");
+            TARDIS.plugin.getMessenger().message(player, TARDIS.plugin.getAchievementConfig().getString(adv.getConfigName() + ".message"));
         }
     }
 

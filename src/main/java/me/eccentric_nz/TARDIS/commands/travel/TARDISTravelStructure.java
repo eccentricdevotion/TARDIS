@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -47,17 +47,17 @@ public class TARDISTravelStructure {
 
     public boolean action(Player player, String[] args, int id) {
         if (!plugin.getConfig().getBoolean("allow.village_travel")) {
-            TARDISMessage.send(player, "TRAVEL_NO_VILLAGE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_VILLAGE");
             return true;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
-            TARDISMessage.send(player, "TRAVEL_NO_PERM_VILLAGE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_VILLAGE");
             return true;
         }
         // find a village / nether fortress / end city
         TARDISStructureLocation randomVillage = new TARDISStructureTravel(plugin).getRandomVillage(player, id, args);
         if (randomVillage == null) {
-            TARDISMessage.send(player, "VILLAGE_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
             return true;
         }
         Location village = randomVillage.getLocation();
@@ -84,7 +84,7 @@ public class TARDISTravelStructure {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "TRAVEL_LOADED", randomVillage.getWhich(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", randomVillage.getWhich(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.blueprints;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -46,7 +46,7 @@ public class BlueprintProcessor {
                     set.put("uuid", diskUuid.toString());
                     set.put("permission", perm);
                     plugin.getQueryFactory().doInsert("blueprint", set);
-                    TARDISMessage.send(player, "BLUEPRINT", im.getLore().get(0));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BLUEPRINT", im.getLore().get(0));
                 }
             }
         }

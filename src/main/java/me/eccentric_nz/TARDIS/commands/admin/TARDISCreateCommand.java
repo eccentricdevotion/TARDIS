@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -48,7 +48,7 @@ public class TARDISCreateCommand {
             // args[1] player
             Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                 return true;
             }
             // args[2] schematic
@@ -62,12 +62,12 @@ public class TARDISCreateCommand {
                     try {
                         wallMaterial = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
                         if (!TARDISWalls.BLOCKS.contains(wallMaterial)) {
-                            TARDISMessage.send(sender, "WALL_NOT_VALID", args[3]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", args[3]);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
                             return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "SEED_MAT_NOT_VALID", args[3]);
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", args[3]);
                         return true;
                     }
                 }
@@ -76,12 +76,12 @@ public class TARDISCreateCommand {
                     try {
                         floorMaterial = Material.valueOf(args[4].toUpperCase(Locale.ROOT));
                         if (!TARDISWalls.BLOCKS.contains(floorMaterial)) {
-                            TARDISMessage.send(sender, "WALL_NOT_VALID", args[4]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", args[4]);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
                             return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "SEED_MAT_NOT_VALID", args[4]);
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", args[4]);
                         return true;
                     }
                 }
@@ -94,11 +94,11 @@ public class TARDISCreateCommand {
                 // build a TARDIS
                 return new TARDISSeedBlockProcessor(plugin).processBlock(data, target, player);
             } else {
-                TARDISMessage.send(sender, "ARG_SEED");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_SEED");
                 return true;
             }
         } else {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
     }

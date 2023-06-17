@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -62,14 +62,14 @@ public class TARDISSonicAdmin {
                 if (rsn.resultSet()) {
                     Tardis tardis = rsn.getTardis();
                     String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
-                    TARDISMessage.send(player, "TARDIS_WHOSE", name);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WHOSE", name);
                     int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
-                    TARDISMessage.send(player, "ENERGY_LEVEL", String.format("%d", percent));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_LEVEL", String.format("%d", percent));
                     HashMap<String, Object> whereb = new HashMap<>();
                     whereb.put("tardis_id", id);
                     ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
                     if (rsb.resultSet()) {
-                        TARDISMessage.send(player, "SCAN_LAST", rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_LAST", rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
                     }
                 }
                 HashMap<String, Object> whereid = new HashMap<>();
@@ -77,17 +77,17 @@ public class TARDISSonicAdmin {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
                 if (rst.resultSet()) {
                     List<UUID> data = rst.getData();
-                    TARDISMessage.send(player, "SONIC_INSIDE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_INSIDE");
                     data.forEach((s) -> {
                         Player p = plugin.getServer().getPlayer(s);
                         if (p != null) {
-                            player.sendMessage(p.getDisplayName());
+                            plugin.getMessenger().message(player, p.getDisplayName());
                         } else {
-                            player.sendMessage(plugin.getServer().getOfflinePlayer(s).getName() + " (Offline)");
+                            plugin.getMessenger().message(player, plugin.getServer().getOfflinePlayer(s).getName() + " (Offline)");
                         }
                     });
                 } else {
-                    TARDISMessage.send(player, "SONIC_OCCUPY");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_OCCUPY");
                 }
             }
         }, 60L);

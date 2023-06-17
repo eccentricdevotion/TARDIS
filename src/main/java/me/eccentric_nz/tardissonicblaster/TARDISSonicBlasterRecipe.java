@@ -23,7 +23,6 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -95,7 +94,7 @@ public class TARDISSonicBlasterRecipe {
                 }
             }
         } catch (IllegalArgumentException e) {
-            plugin.getConsole().sendMessage(TardisModule.BLASTER.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.BLASTER, "Recipe failed! Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put(s, r);

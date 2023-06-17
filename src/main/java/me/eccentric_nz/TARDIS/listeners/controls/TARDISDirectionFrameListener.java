@@ -23,14 +23,14 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent; 
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 /**
  * @author eccentric_nz
@@ -69,7 +69,7 @@ public class TARDISDirectionFrameListener implements Listener {
                     // if the item frame has a tripwire hook in it
                     if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
                         if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                         String direction;
@@ -88,7 +88,7 @@ public class TARDISDirectionFrameListener implements Listener {
                                 default -> "NORTH_WEST";
                             };
                             player.performCommand("tardis direction " + direction);
-                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis direction " + direction);
+                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis direction " + direction);
                         } else {
                             boolean isPreset = !tardis.getPreset().usesItemFrame();
                             Rotation r;
@@ -130,7 +130,7 @@ public class TARDISDirectionFrameListener implements Listener {
                             if (isPreset) {
                                 frame.setRotation(r);
                             }
-                            TARDISMessage.send(player, "DIRECTON_SET", direction);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTON_SET", direction);
                         }
                     } else {
                         // are they placing a tripwire hook?
@@ -153,7 +153,7 @@ public class TARDISDirectionFrameListener implements Listener {
                                         default -> Rotation.FLIPPED_45;
                                     };
                                     frame.setRotation(r);
-                                    TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_CURRENT", rscl.getDirection().toString());
                                 }, 4L);
                             }
                         }

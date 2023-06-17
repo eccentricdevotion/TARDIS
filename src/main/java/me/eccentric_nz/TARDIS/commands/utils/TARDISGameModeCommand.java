@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -62,7 +62,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 
     private boolean setPlayerGameMode(CommandSender sender, String[] args, GameMode gm) {
         if (gm == null && args.length < 1) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         Player player = null;
@@ -70,12 +70,12 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
         if (sender instanceof ConsoleCommandSender) {
             // must specify a player name
             if ((gm == null && args.length < 2) || ((gm != null && args.length < 1))) {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                 return true;
             }
             player = plugin.getServer().getPlayer(gm == null ? args[1] : args[0]);
             if (player == null) {
-                TARDISMessage.send(sender, "NOT_ONLINE");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_ONLINE");
                 return true;
             }
             thirdperson = true;
@@ -84,7 +84,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
             if (gm == null && args.length == 2) {
                 player = plugin.getServer().getPlayer(args[1]);
                 if (player == null) {
-                    TARDISMessage.send(sender, "NOT_ONLINE");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_ONLINE");
                     return true;
                 }
             } else if (gm != null && args.length == 1) {
@@ -94,7 +94,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                     player = plugin.getServer().getPlayer(args[0]);
                     thirdperson = true;
                     if (player == null) {
-                        TARDISMessage.send(sender, "NOT_ONLINE");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_ONLINE");
                         return true;
                     }
                 }
@@ -111,7 +111,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                     case "a" -> gm = GameMode.ADVENTURE;
                     case "sp" -> gm = GameMode.SPECTATOR;
                     default -> {
-                        TARDISMessage.send(sender, "ARG_GAMEMODE");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GAMEMODE");
                         return false;
                     }
                 }
@@ -119,16 +119,16 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                 try {
                     gm = GameMode.valueOf(args[0].toUpperCase(Locale.ENGLISH));
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(sender, "ARG_GAMEMODE");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GAMEMODE");
                     return false;
                 }
             }
         }
         player.setGameMode(gm);
         if (thirdperson) {
-            TARDISMessage.send(sender, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());
         }
-        TARDISMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_GAMEMODE_PLAYER", gm.toString());
         return true;
     }
 

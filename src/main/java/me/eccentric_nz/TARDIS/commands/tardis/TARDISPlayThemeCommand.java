@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Theme;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 class TARDISPlayThemeCommand {
@@ -32,7 +32,7 @@ class TARDISPlayThemeCommand {
 
     boolean playTheme(Player p, String[] args) {
         if (plugin.getTrackerKeeper().getEggs().contains(p.getUniqueId())) {
-            TARDISMessage.send(p, "THEME_PLAYING");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "THEME_PLAYING");
             return true;
         }
         Theme theme = Theme.RANDOM;
@@ -40,7 +40,7 @@ class TARDISPlayThemeCommand {
             try {
                 theme = Theme.valueOf(args[1].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(p, "ARG_THEME");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ARG_THEME");
                 return false;
             }
         }

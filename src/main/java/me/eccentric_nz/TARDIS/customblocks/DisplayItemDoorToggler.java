@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISCustomModelDataChanger;
 import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import org.bukkit.Location;
@@ -55,11 +55,11 @@ public class DisplayItemDoorToggler {
         if (rsd.resultSet()) {
             int id = rsd.getTardis_id();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
                 return;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                TARDISMessage.send(player, "NOT_WHILE_MAT");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                 return;
             }
             // handbrake must be on
@@ -68,7 +68,7 @@ public class DisplayItemDoorToggler {
             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
             if (rs.resultSet()) {
                 if (!rs.getTardis().isHandbrake_on()) {
-                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
                     return;
                 }
                 UUID playerUUID = player.getUniqueId();
@@ -88,12 +88,12 @@ public class DisplayItemDoorToggler {
                         }
                         new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoors();
                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
-                        TARDISMessage.send(player, "DOOR_DEADLOCKED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
                     } else {
-                        TARDISMessage.send(player, "DOOR_UNLOCK");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
                     }
                 } else {
-                    TARDISMessage.send(player, "SIEGE_COMPANION");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_COMPANION");
                 }
             }
         }

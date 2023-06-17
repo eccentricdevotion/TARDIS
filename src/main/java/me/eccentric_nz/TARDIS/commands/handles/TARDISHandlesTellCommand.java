@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,7 +35,7 @@ class TARDISHandlesTellCommand {
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player != null) {
             String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-            TARDISMessage.handlesMessage(player, message);
+            plugin.getMessenger().handlesMessage(player, message);
         }
         return true;
     }

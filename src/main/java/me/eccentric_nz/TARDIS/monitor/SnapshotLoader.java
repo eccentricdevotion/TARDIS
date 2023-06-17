@@ -27,9 +27,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
@@ -93,7 +93,7 @@ public class SnapshotLoader {
                             file.delete();
                         }
                     } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-                        plugin.getLogger().log(Level.WARNING, "Could not render map with id: {0}", mapId);
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not render map with id: " + mapId);
                     }
                 }
             }

@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -84,7 +84,7 @@ public class ResultSetForcefield {
                 location = new Location(world, x, y, z);
                 // check location is not in a TARDIS area
                 if (plugin.getTardisArea().isInExistingArea(location)) {
-                    TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
+                    plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "FORCE_FIELD_IN_AREA");
                     return false;
                 }
             } else {

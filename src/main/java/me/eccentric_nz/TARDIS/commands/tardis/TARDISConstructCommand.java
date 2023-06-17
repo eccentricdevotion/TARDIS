@@ -22,9 +22,9 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -41,24 +41,24 @@ class TARDISConstructCommand {
 
     public boolean setLine(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return true;
         }
         int id = rs.getTardis_id();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {
-            TARDISMessage.send(player, "NO_CONSTRUCT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONSTRUCT");
             return true;
         }
         // check line number
         if (!lineNumbers.contains(args[1])) {
-            TARDISMessage.send(player, "CONSTRUCT_LINE_NUM");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_NUM");
             return true;
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -68,13 +68,13 @@ class TARDISConstructCommand {
         String raw = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
         // strip color codes and check length
         if (ChatColor.stripColor(raw).length() > 16) {
-            TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_LEN");
             return true;
         }
         set.put("line" + l, raw);
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
-        TARDISMessage.send(player, "CONSTRUCT_LINE_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_SAVED");
         return true;
     }
 }

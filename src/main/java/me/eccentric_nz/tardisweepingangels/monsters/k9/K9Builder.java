@@ -19,7 +19,6 @@ package me.eccentric_nz.tardisweepingangels.monsters.k9;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
@@ -56,12 +55,12 @@ public class K9Builder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.LEVER) && west.getType().equals(Material.TRIPWIRE_HOOK)) || (east.getType().equals(Material.TRIPWIRE_HOOK) && west.getType().equals(Material.LEVER)) || (north.getType().equals(Material.LEVER) && south.getType().equals(Material.TRIPWIRE_HOOK)) || (north.getType().equals(Material.TRIPWIRE_HOOK) && south.getType().equals(Material.LEVER))) {
                 if (!TARDISPermission.hasPermission(event.getPlayer(), "tardisweepingangels.build.k9")) {
-                    event.getPlayer().sendMessage(plugin.getPluginName() + "WA_PERM_BUILD", "K9");
+                    plugin.getMessenger().send(event.getPlayer(), TardisModule.MONSTERS, "WA_PERM_BUILD", "K9");
                     return;
                 }
                 Player player = event.getPlayer();
                 if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + placed.getWorld().getName())) {
-                    TARDISMessage.send(player, TardisModule.MONSTERS, "WA_BUILD");
+                    plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_BUILD");
                     return;
                 }
                 // we're building K9

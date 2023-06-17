@@ -22,7 +22,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -74,44 +74,44 @@ public class TARDISCaveFinder {
                         switch (directions[i]) {
                             case 0 -> {
                                 // east
-                                TARDISMessage.send(p, "LOOK_E");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_E");
                                 for (int east = startx; east < plusx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_E");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_E");
                                         return new Location(w, east, chk.getY(), startz);
                                     }
                                 }
                             }
                             case 1 -> {
                                 // south
-                                TARDISMessage.send(p, "LOOK_S");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_S");
                                 for (int south = startz; south < plusz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_S");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_S");
                                         return new Location(w, startx, chk.getY(), south);
                                     }
                                 }
                             }
                             case 2 -> {
                                 // west
-                                TARDISMessage.send(p, "LOOK_W");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_W");
                                 for (int west = startx; west > minusx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_W");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_W");
                                         return new Location(w, west, chk.getY(), startz);
                                     }
                                 }
                             }
                             case 3 -> {
                                 // north
-                                TARDISMessage.send(p, "LOOK_N");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_N");
                                 for (int north = startz; north > minusz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_N");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_N");
                                         return new Location(w, startx, chk.getY(), north);
                                     }
                                 }
@@ -121,10 +121,10 @@ public class TARDISCaveFinder {
                 }
             } else {
                 String env = (w.getGenerator().getClass().getName().contains("hothgenerator")) ? "Hoth World System" : w.getEnvironment().toString();
-                TARDISMessage.send(p, "CAVE_NO_TRAVEL", env);
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_NO_TRAVEL", env);
             }
         } else {
-            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
         }
         return null;
     }

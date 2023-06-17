@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.database.converters;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 
 public class TARDISWorldNameConverter {
@@ -104,7 +104,7 @@ public class TARDISWorldNameConverter {
             if (i > 0) {
                 ps.executeBatch();
                 connection.commit();
-                plugin.getLogger().log(Level.INFO, "Converted " + i + " old " + world + " world name records");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " old " + world + " world name records");
             }
             connection.setAutoCommit(true);
         } catch (SQLException e) {

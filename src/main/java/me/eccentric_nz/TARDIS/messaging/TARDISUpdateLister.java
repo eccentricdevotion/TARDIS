@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -30,21 +31,24 @@ import org.bukkit.entity.Player;
  */
 public class TARDISUpdateLister {
 
+    private final TARDIS plugin;
     private final Player player;
 
-    public TARDISUpdateLister(Player player) {
+    public TARDISUpdateLister(TARDIS plugin, Player player) {
+        this.plugin = plugin;
         this.player = player;
     }
 
     public void list() {
-        TARDISMessage.send(player, "UPDATE_INFO");
-        TARDISMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
-        TARDISMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
-        TARDISMessage.message(player, "");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_INFO");
+        plugin.getMessenger().messageWithColour(player, "Hover over command argument to see a description", "#AAAAAA");
+        plugin.getMessenger().messageWithColour(player, "Click to run the /tardis update command", "#AAAAAA");
+        plugin.getMessenger().message(player, "");
         for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-            TARDISMessage.message(player, category.getName());
+            plugin.getMessenger().message(player, category.getName());
             for (Updateable updateable : Updateable.values()) {
                 if (updateable.getCategory() == category) {
+                    // TODO
                     TextComponent tcu = new TextComponent(updateable.getName());
                     tcu.setColor(category.getColour());
                     tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
@@ -52,7 +56,7 @@ public class TARDISUpdateLister {
                     player.spigot().sendMessage(tcu);
                 }
             }
-            TARDISMessage.message(player, "");
+            plugin.getMessenger().message(player, "");
         }
     }
 }

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetStandby;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -68,14 +68,14 @@ public class TARDISStandbyMode implements Runnable {
                     OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
                     if (player.isOnline()) {
                         TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
-                        TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
+                        plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_OFF_AUTO");
                     }
                     long delay = 0;
                     // if hidden, rebuild
                     if (standbyData.isHidden()) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         if (player.isOnline()) {
-                            TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
+                            plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_FAIL");
                         }
                         delay = 20L;
                     }

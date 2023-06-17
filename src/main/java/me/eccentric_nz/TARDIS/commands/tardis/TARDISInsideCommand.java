@@ -22,7 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,7 +40,7 @@ class TARDISInsideCommand {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
         int id = rs.getTardis_id();
@@ -49,7 +49,7 @@ class TARDISInsideCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
             List<UUID> data = rst.getData();
-            TARDISMessage.send(player, "INSIDE_PLAYERS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "INSIDE_PLAYERS");
             data.forEach((s) -> {
                 Player p = plugin.getServer().getPlayer(s);
                 if (p != null) {
@@ -57,7 +57,7 @@ class TARDISInsideCommand {
                 }
             });
         } else {
-            TARDISMessage.send(player, "INSIDE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "INSIDE");
         }
         return true;
     }

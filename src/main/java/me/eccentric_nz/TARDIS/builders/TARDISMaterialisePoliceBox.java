@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Color;
@@ -198,13 +198,13 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                TARDISMessage.send(p, message);
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
-                        TARDISMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
+                        plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present
                     HashMap<String, Object> whereb = new HashMap<>();

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISVoidFall;
 import org.bukkit.Location;
@@ -205,7 +205,7 @@ public class TARDISGravityWellListener implements Listener {
                 // get tardis_id
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                     return;
                 }
                 int id = rs.getTardis_id();
@@ -235,16 +235,16 @@ public class TARDISGravityWellListener implements Listener {
                                 floor = Material.valueOf(rspp.getFloor());
                             }
                             b.setBlockData(floor.createBlockData(), true);
-                            TARDISMessage.send(player, "GRAVITY_REMOVED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_REMOVED");
                         }
                     } else {
-                        TARDISMessage.send(player, "GRAVITY_NOT_FOUND");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_NOT_FOUND");
                     }
                 } else {
                     // check the wool block is the right colour
                     Material bit = woolType.get(values[0]);
                     if (!b.getType().equals(bit)) {
-                        TARDISMessage.send(player, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
                         return;
                     }
                     // add a record
@@ -283,7 +283,7 @@ public class TARDISGravityWellListener implements Listener {
                             dir = "DOWN";
                         }
                     }
-                    TARDISMessage.send(player, "GRAVITY_SET", dir);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_SET", dir);
                 }
             }
             plugin.getTrackerKeeper().getGravity().remove(uuid);

@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -46,7 +45,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -95,11 +94,11 @@ public class TARDISHandlesProcessor {
             HashMap<String, Object> where = new HashMap<>();
             where.put("program_id", pid);
             plugin.getQueryFactory().doUpdate("programs", set, where);
-            TARDISMessage.handlesSend(player, "HANDLES_RUNNING");
+            plugin.getMessenger().handlesSend(player, "HANDLES_RUNNING");
         } else {
             // TODO check conditions
             processCommand(0);
-            TARDISMessage.handlesSend(player, "HANDLES_EXECUTE");
+            plugin.getMessenger().handlesSend(player, "HANDLES_EXECUTE");
         }
     }
 
@@ -138,7 +137,7 @@ public class TARDISHandlesProcessor {
                                                 wherel.put("tardis_id", id);
                                                 // always lock / unlock both doors
                                                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
-                                                TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
+                                                plugin.getMessenger().handlesSend(player, "DOOR_LOCK", message);
                                             }
                                         }
                                     }
@@ -199,7 +198,7 @@ public class TARDISHandlesProcessor {
                                 int level = rsArtron.getArtronLevel();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
-                                    TARDISMessage.handlesSend(player, "NOT_ENOUGH_ENERGY");
+                                    plugin.getMessenger().handlesSend(player, "NOT_ENOUGH_ENERGY");
                                     continue;
                                 }
                                 ItemStack after = program.getInventory()[i + 1];
@@ -225,7 +224,7 @@ public class TARDISHandlesProcessor {
                                                 Location random = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, direction);
                                                 if (random != null) {
                                                     plugin.getTrackerKeeper().getHasRandomised().add(id);
-                                                    TARDISMessage.handlesSend(player, "RANDOMISER");
+                                                    plugin.getMessenger().handlesSend(player, "RANDOMISER");
                                                     goto_loc = random;
                                                     sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                                                 }
@@ -282,10 +281,10 @@ public class TARDISHandlesProcessor {
                                                 wherehl.put("tardis_id", id);
                                                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
                                                 if (!rsh.resultSet()) {
-                                                    TARDISMessage.handlesSend(player, "HOME_NOT_FOUND");
+                                                    plugin.getMessenger().handlesSend(player, "HOME_NOT_FOUND");
                                                     continue;
                                                 }
-                                                TARDISMessage.handlesSend(player, "TRAVEL_LOADED", "Home");
+                                                plugin.getMessenger().handlesSend(player, "TRAVEL_LOADED", "Home");
                                                 goto_loc = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                                                 nextDirection = rsh.getDirection();
                                                 sub = rsh.isSubmarine();
@@ -304,10 +303,10 @@ public class TARDISHandlesProcessor {
                                             case RECHARGER -> {
                                                 Location recharger = getRecharger(rsc.getWorld(), player);
                                                 if (recharger != null) {
-                                                    TARDISMessage.handlesSend(player, "RECHARGER_FOUND");
+                                                    plugin.getMessenger().handlesSend(player, "RECHARGER_FOUND");
                                                     goto_loc = recharger;
                                                 } else {
-                                                    TARDISMessage.handlesSend(player, "NO_MORE_SPOTS");
+                                                    plugin.getMessenger().handlesSend(player, "NO_MORE_SPOTS");
                                                     continue;
                                                 }
                                                 travelType = TravelType.RECHARGER;
@@ -322,11 +321,11 @@ public class TARDISHandlesProcessor {
                                                 wherea.put("area_name", first);
                                                 ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                                 if (!rsa.resultSet()) {
-                                                    TARDISMessage.handlesSend(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                                                    plugin.getMessenger().handlesSend(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                                                     continue;
                                                 }
                                                 if ((!TARDISPermission.hasPermission(player, "tardis.area." + first) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + first) && !player.isPermissionSet("tardis.area.*"))) {
-                                                    TARDISMessage.handlesSend(player, "TRAVEL_NO_AREA_PERM", first);
+                                                    plugin.getMessenger().handlesSend(player, "TRAVEL_NO_AREA_PERM", first);
                                                     continue;
                                                 }
                                                 Location l;
@@ -336,17 +335,17 @@ public class TARDISHandlesProcessor {
                                                     l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
                                                 }
                                                 if (l == null) {
-                                                    TARDISMessage.handlesSend(player, "NO_MORE_SPOTS");
+                                                    plugin.getMessenger().handlesSend(player, "NO_MORE_SPOTS");
                                                     continue;
                                                 }
-                                                TARDISMessage.handlesSend(player, "TRAVEL_APPROVED", first);
+                                                plugin.getMessenger().handlesSend(player, "TRAVEL_APPROVED", first);
                                                 goto_loc = l;
                                                 travelType = TravelType.AREA;
                                             }
                                             case BIOME_DISK -> {
                                                 // find a biome location
                                                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
-                                                    TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
+                                                    plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                                     continue;
                                                 }
                                                 if (current.getBlock().getBiome().toString().equals(first)) {
@@ -360,15 +359,15 @@ public class TARDISHandlesProcessor {
                                                     if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
                                                         biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
                                                     } else {
-                                                        TARDISMessage.handlesSend(player, "BIOME_NOT_VALID");
+                                                        plugin.getMessenger().handlesSend(player, "BIOME_NOT_VALID");
                                                         continue;
                                                     }
                                                 }
-                                                TARDISMessage.handlesSend(player, "BIOME_SEARCH");
+                                                plugin.getMessenger().handlesSend(player, "BIOME_SEARCH");
 //                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
                                                 Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                                 if (nsob == null) {
-                                                    TARDISMessage.handlesSend(player, "BIOME_NOT_FOUND");
+                                                    plugin.getMessenger().handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;
                                                 } else {
                                                     if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -388,7 +387,7 @@ public class TARDISHandlesProcessor {
                                                             break;
                                                         }
                                                     }
-                                                    TARDISMessage.handlesSend(player, "BIOME_SET");
+                                                    plugin.getMessenger().handlesSend(player, "BIOME_SET");
                                                     goto_loc = nsob;
                                                 }
                                                 travelType = TravelType.BIOME;
@@ -397,44 +396,44 @@ public class TARDISHandlesProcessor {
                                                 // get the player's location
                                                 if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
                                                     if (player.getName().equalsIgnoreCase(first)) {
-                                                        TARDISMessage.handlesSend(player, "TRAVEL_NO_SELF");
+                                                        plugin.getMessenger().handlesSend(player, "TRAVEL_NO_SELF");
                                                         continue;
                                                     }
                                                     // get the player
                                                     Player to = plugin.getServer().getPlayer(first);
                                                     if (to == null) {
-                                                        TARDISMessage.handlesSend(player, "NOT_ONLINE");
+                                                        plugin.getMessenger().handlesSend(player, "NOT_ONLINE");
                                                         continue;
                                                     }
                                                     UUID toUUID = to.getUniqueId();
                                                     // check the to player's DND status
                                                     ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
                                                     if (rspp.resultSet() && rspp.isDND()) {
-                                                        TARDISMessage.handlesSend(player, "DND", first);
+                                                        plugin.getMessenger().handlesSend(player, "DND", first);
                                                         continue;
                                                     }
                                                     Location player_loc = to.getLocation();
                                                     if (plugin.getTardisArea().isInExistingArea(player_loc)) {
-                                                        TARDISMessage.handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+                                                        plugin.getMessenger().handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
                                                         continue;
                                                     }
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
                                                         continue;
                                                     }
                                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
-                                                        TARDISMessage.handlesSend(player, "NO_WORLD_TRAVEL");
+                                                        plugin.getMessenger().handlesSend(player, "NO_WORLD_TRAVEL");
                                                         continue;
                                                     }
                                                     World w = player_loc.getWorld();
                                                     int[] start_loc = TARDISTimeTravel.getStartLocation(player_loc, direction);
                                                     int count = TARDISTimeTravel.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, direction);
                                                     if (count > 0) {
-                                                        TARDISMessage.handlesSend(player, "RESCUE_NOT_SAFE");
+                                                        plugin.getMessenger().handlesSend(player, "RESCUE_NOT_SAFE");
                                                         continue;
                                                     }
                                                     goto_loc = player_loc;
                                                 } else {
-                                                    TARDISMessage.handlesSend(player, "NO_PERM_PLAYER");
+                                                    plugin.getMessenger().handlesSend(player, "NO_PERM_PLAYER");
                                                     continue;
                                                 }
                                                 travelType = TravelType.PLAYER;
@@ -447,12 +446,12 @@ public class TARDISHandlesProcessor {
                                                     if (current.getWorld().getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
                                                         continue;
                                                     }
-                                                    TARDISMessage.handlesSend(player, "LOC_SET");
+                                                    plugin.getMessenger().handlesSend(player, "LOC_SET");
                                                     goto_loc = new Location(TARDISAliasResolver.getWorldFromAlias(lore.get(1)), sx, sy, sz);
                                                     nextDirection = COMPASS.valueOf(lore.get(6));
                                                     sub = Boolean.parseBoolean(lore.get(7));
                                                 } else {
-                                                    TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_SAVE");
+                                                    plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_SAVE");
                                                     continue;
                                                 }
                                             }

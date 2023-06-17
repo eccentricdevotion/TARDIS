@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -35,7 +35,7 @@ class TARDISExciteCommand {
 
     boolean excite(Player player) {
         if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-            TARDISMessage.send(player, "CMD_EXCITE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
             return true;
         }
         // get TARDIS id

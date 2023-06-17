@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,10 +33,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command /tardisbook [book].
  * <p>
- * On Alfava Metraxis in the 51st century, River had obtained a book about the Weeping Angels. She gave it to the
- * Doctor, who quickly skimmed through it. The Doctor commented that it was slow in the middle and asked River if she
- * also hated the writer's girlfriend. He asked why there were no images, to which River replied that the "image of an
- * Angel is itself an Angel".
+ * On Alfava Metraxis in the 51st century, River had obtained a book about the
+ * Weeping Angels. She gave it to the Doctor, who quickly skimmed through it.
+ * The Doctor commented that it was slow in the middle and asked River if she
+ * also hated the writer's girlfriend. He asked why there were no images, to
+ * which River replied that the "image of an Angel is itself an Angel".
  *
  * @author eccentric_nz
  */
@@ -65,14 +66,14 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    TARDISMessage.send(sender, "BOOK_RASS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "BOOK_RASS");
                     if (!books.isEmpty()) {
                         for (Map.Entry<String, String> entry : books.entrySet()) {
                             sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                             b++;
                         }
                     } else {
-                        sender.sendMessage(plugin.getLanguage().getString("BOOK_NONE"));
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "BOOK_NONE");
                     }
                     return true;
                 }
@@ -81,15 +82,15 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                     return true;
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(player, "BOOK_NEED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BOOK_NEED");
                     return false;
                 }
                 if (!books.containsKey(first)) {
-                    TARDISMessage.send(player, "BOOK_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BOOK_NOT_FOUND");
                     return true;
                 }
                 String second = args[1].toLowerCase(Locale.ENGLISH);
@@ -102,7 +103,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 }
                 if (second.equals("start")) {
                     if (plugin.getAchievementConfig().getBoolean(first + ".auto")) {
-                        TARDISMessage.send(player, "ACHIEVE_AUTO");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ACHIEVE_AUTO");
                         return true;
                     }
                     // check they have not already started the achievement
@@ -113,11 +114,11 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
                             if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {
-                                TARDISMessage.send(player, "ACHIEVE_ONCE");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "ACHIEVE_ONCE");
                                 return true;
                             }
                         } else {
-                            TARDISMessage.send(player, "ACHIEVE_ALREADY_STARTED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ACHIEVE_ALREADY_STARTED");
                             return true;
                         }
                     }
@@ -125,7 +126,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     set.put("uuid", player.getUniqueId().toString());
                     set.put("name", first);
                     plugin.getQueryFactory().doInsert("achievements", set);
-                    TARDISMessage.send(player, "ACHIEVE_STARTED", first);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ACHIEVE_STARTED", first);
                     return true;
                 }
             }

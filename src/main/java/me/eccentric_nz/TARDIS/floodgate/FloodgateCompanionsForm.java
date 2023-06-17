@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -70,8 +70,8 @@ public class FloodgateCompanionsForm {
                 String comps = tardis.getCompanions();
                 // get UUID for offline player
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
-                UUID u = op.getUniqueId();
                 if (op != null) {
+                    UUID u = op.getUniqueId();
                     TARDISCompanionGUIListener.removeCompanion(id, comps, u.toString(), player);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         if (!comps.equalsIgnoreCase("everyone")) {
@@ -79,7 +79,7 @@ public class FloodgateCompanionsForm {
                             TARDISCompanionGUIListener.removeFromRegion(data[0], tardis.getOwner(), u);
                         }
                     }
-                    TARDISMessage.send(player, "COMPANIONS_REMOVE_ONE", label);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_REMOVE_ONE", label);
                 }
             }
         }

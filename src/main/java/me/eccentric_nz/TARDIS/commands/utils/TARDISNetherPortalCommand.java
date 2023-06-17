@@ -21,7 +21,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -94,7 +94,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
         y = l.getBlockY();
         z = l.getBlockZ();
         if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(player, "O2N_Y");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "O2N_Y");
             return false;
         }
         // get player direction
@@ -109,14 +109,14 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
             dz = z * 8;
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
-        TARDISMessage.send(player, message, coords);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, message, coords);
         return true;
     }
 
     private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
         int dx, dz;
         if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(sender, "O2N_Y");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "O2N_Y");
             return false;
         }
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
@@ -129,7 +129,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
             dz = z * 8;
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
-        TARDISMessage.send(sender, message, coords);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, message, coords);
         return true;
     }
 

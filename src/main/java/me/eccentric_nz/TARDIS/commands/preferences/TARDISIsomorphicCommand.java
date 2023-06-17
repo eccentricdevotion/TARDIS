@@ -21,7 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -55,9 +55,9 @@ public class TARDISIsomorphicCommand {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
-            TARDISMessage.send(sender, onoff);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, onoff);
         } else {
-            TARDISMessage.send(sender, "NO_TARDIS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_TARDIS");
         }
         return true;
     }

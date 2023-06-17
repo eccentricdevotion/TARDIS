@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -91,9 +91,9 @@ public class TARDISArtronIndicator {
                     }
                 }, 150L);
             } else if (used > 0) {
-                TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_USED", String.format("%d", used));
             } else {
-                TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_LEVEL", String.format("%d", percent));
             }
         }
     }

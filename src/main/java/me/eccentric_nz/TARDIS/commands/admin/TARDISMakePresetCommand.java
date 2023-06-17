@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,16 +39,16 @@ class TARDISMakePresetCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
         // check they are facing east
         String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
-            TARDISMessage.send(player, "PRESET_DIRECTION");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_DIRECTION");
             return true;
         }
-        TARDISMessage.send(player, "PRESET_INFO");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_INFO");
         plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1]);
         return true;
     }

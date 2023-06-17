@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -122,7 +122,7 @@ class TARDISARSRunnable implements Runnable {
                 set.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
                 if (p.isOnline()) {
-                    TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "ARS_CANCEL", whichroom, String.format("%d", taskID));
                 }
             }
         }

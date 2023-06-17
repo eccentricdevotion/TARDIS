@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -96,11 +96,11 @@ public class TARDISBlockDamageListener implements Listener {
                             m = true;
                         }
                         if (!m) {
-                            TARDISMessage.send(p, "HADS_WARNING", String.format("%d", (plugin.getConfig().getInt("preferences.hads_damage") - damage)));
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "HADS_WARNING", String.format("%d", (plugin.getConfig().getInt("preferences.hads_damage") - damage)));
                         }
                     }
                 } else {
-                    TARDISMessage.send(p, "TARDIS_BREAK");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "TARDIS_BREAK");
                 }
                 event.setCancelled(true);
             }
@@ -146,7 +146,7 @@ public class TARDISBlockDamageListener implements Listener {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             BuildData bd = new BuildData(player.getUniqueId().toString());

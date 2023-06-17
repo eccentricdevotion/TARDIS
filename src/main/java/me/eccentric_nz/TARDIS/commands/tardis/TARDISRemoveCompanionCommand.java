@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
@@ -52,13 +52,13 @@ class TARDISRemoveCompanionCommand {
             String data;
             String owner;
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             } else {
                 Tardis tardis = rs.getTardis();
                 comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    TARDISMessage.send(player, "COMPANIONS_NONE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     return true;
                 }
                 id = tardis.getTardis_id();
@@ -66,11 +66,11 @@ class TARDISRemoveCompanionCommand {
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
-                TARDISMessage.send(player, "PLAYER_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
             } else {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
@@ -100,9 +100,9 @@ class TARDISRemoveCompanionCommand {
                                 plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, oluuid);
                             }
                         }
-                        TARDISMessage.send(player, message, args[1]);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, message, args[1]);
                     } else {
-                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                 } else {
@@ -117,7 +117,7 @@ class TARDISRemoveCompanionCommand {
                             }
                         }
                     }
-                    TARDISMessage.send(player, message);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, message);
                 }
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
@@ -127,7 +127,7 @@ class TARDISRemoveCompanionCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

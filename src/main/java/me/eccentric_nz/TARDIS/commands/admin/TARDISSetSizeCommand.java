@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -40,13 +40,13 @@ class TARDISSetSizeCommand {
         // get the player
         Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null) { // player must be online
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
         String type = args[2].toUpperCase(Locale.ENGLISH);
         // check size
         if (!Consoles.getBY_NAMES().containsKey(type)) {
-            TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
+            plugin.getMessenger().message(sender, "Not a valid console size! Try using tab completion.");
             return true;
         }
         String uuid = p.getUniqueId().toString();
@@ -55,7 +55,7 @@ class TARDISSetSizeCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
-        TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
+        plugin.getMessenger().message(sender, "Successfully set " + args[1] + "'s console size to " + type);
         return true;
     }
 }

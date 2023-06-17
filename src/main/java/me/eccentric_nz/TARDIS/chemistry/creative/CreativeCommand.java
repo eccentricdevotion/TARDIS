@@ -20,8 +20,8 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +36,7 @@ public class CreativeCommand {
 
     public boolean open(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Creative");
             return true;
         }
         Creative creative;

@@ -20,7 +20,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -42,18 +42,18 @@ public class TARDISTravelAsk {
 
     public boolean action(Player player, String[] args, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-            TARDISMessage.send(player, "NO_PERM_PLAYER");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
             return true;
         }
         Player requested = plugin.getServer().getPlayer(args[0]);
         if (requested == null) {
-            TARDISMessage.send(player, "NOT_ONLINE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
             return true;
         }
         // check the to player's DND status
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, requested.getUniqueId().toString());
         if (rspp.resultSet() && rspp.isDND()) {
-            TARDISMessage.send(player, "DND", args[0]);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DND", args[0]);
             return true;
         }
         // check the location
@@ -63,21 +63,22 @@ public class TARDISTravelAsk {
         }
         // ask if we can travel to this player
         UUID requestedUUID = requested.getUniqueId();
-        TARDISMessage.send(requested, "REQUEST_TRAVEL", player.getName());
+        plugin.getMessenger().send(requested, TardisModule.TARDIS, "REQUEST_TRAVEL", player.getName());
+        // TODO add to messengers so we can use adventure
         TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
         textComponent.setColor(net.md_5.bungee.api.ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis request accept"));
         requested.spigot().sendMessage(textComponent);
         // message asking player too
-        TARDISMessage.send(player, "REQUEST_SENT", requested.getName());
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_SENT", requested.getName());
         plugin.getTrackerKeeper().getChatRescue().put(requestedUUID, player.getUniqueId());
         Player p = player;
         String to = args[0];
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (plugin.getTrackerKeeper().getChatRescue().containsKey(requestedUUID)) {
                 plugin.getTrackerKeeper().getChatRescue().remove(requestedUUID);
-                TARDISMessage.send(p, "REQUEST_NO_RESPONSE", to);
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "REQUEST_NO_RESPONSE", to);
             }
         }, 1200L);
         return true;

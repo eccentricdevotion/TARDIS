@@ -21,7 +21,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPaperBag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,7 +71,7 @@ public class TARDISPaperBagListener implements Listener {
                                     player.updateInventory();
                                 } else {
                                     // message player
-                                    TARDISMessage.send(player, "PAPER_BAG_SLOT");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PAPER_BAG_SLOT");
                                 }
                             } else {
                                 // create a new record if one doesn't exist
@@ -81,7 +81,7 @@ public class TARDISPaperBagListener implements Listener {
                                     plugin.getQueryFactory().doSyncInsert("paper_bag", bag);
                                 }
                                 // message player
-                                TARDISMessage.send(player, "PAPER_BAG_EMPTY");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PAPER_BAG_EMPTY");
                             }
                         }
                         if (event.isShiftClick()) {

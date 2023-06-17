@@ -21,11 +21,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -61,7 +61,7 @@ public class TARDISSeedBlockPersister {
                 count += ps.executeUpdate();
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " placed seed blocks.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " placed seed blocks.");
             }
         } catch (SQLException ex) {
             plugin.debug("Insert error for seeds table: " + ex.getMessage());
@@ -101,7 +101,7 @@ public class TARDISSeedBlockPersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " placed seed blocks.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " placed seed blocks.");
             }
             // clear the portals table so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "seeds");

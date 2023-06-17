@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -30,22 +31,25 @@ import org.bukkit.command.CommandSender;
  */
 public class TARDISRecipeLister {
 
+    private final TARDIS plugin;
     private final CommandSender sender;
 
-    public TARDISRecipeLister(CommandSender sender) {
+    public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
+        this.plugin = plugin;
         this.sender = sender;
     }
 
     public void list() {
-        TARDISMessage.send(sender, "RECIPE_VIEW");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Click to view the recipe");
-        TARDISMessage.message(sender, "");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VIEW");
+        plugin.getMessenger().messageWithColour(sender, "Hover over command argument to see a description", "#AAAAAA");
+        plugin.getMessenger().messageWithColour(sender, "Click to view the recipe", "#AAAAAA");
+        plugin.getMessenger().message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
             if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE && category != RecipeCategory.CUSTOM_BLOCKS && category != RecipeCategory.ROTORS && category != RecipeCategory.MISC) {
-                TARDISMessage.message(sender, category.getName());
+                plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
+                        // TODO
                         TextComponent tci = new TextComponent(item.toTabCompletionString());
                         tci.setColor(category.getColour());
                         tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
@@ -53,7 +57,7 @@ public class TARDISRecipeLister {
                         sender.spigot().sendMessage(tci);
                     }
                 }
-                TARDISMessage.message(sender, "");
+                plugin.getMessenger().message(sender, "");
             }
         }
         TextComponent more = new TextComponent("Show more...");
@@ -63,10 +67,10 @@ public class TARDISRecipeLister {
     }
 
     public void listMore() {
-        TARDISMessage.message(sender, "");
+        plugin.getMessenger().message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
             if (category == RecipeCategory.CUSTOM_BLOCKS || category == RecipeCategory.ROTORS || category == RecipeCategory.MISC) {
-                TARDISMessage.message(sender, category.getName());
+                plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
                         TextComponent tci = new TextComponent(item.toTabCompletionString());
@@ -76,7 +80,7 @@ public class TARDISRecipeLister {
                         sender.spigot().sendMessage(tci);
                     }
                 }
-                TARDISMessage.message(sender, "");
+                plugin.getMessenger().message(sender, "");
             }
         }
     }

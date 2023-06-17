@@ -22,10 +22,10 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,7 +52,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 
     public static void removeCompanion(int id, String comps, String uuid, Player player) {
         if (comps.equalsIgnoreCase("everyone")) {
-            TARDISMessage.send(player, "COMPANIONS_ALL");
+            TARDIS.plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ALL");
         } else {
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -63,7 +63,7 @@ public class TARDISSonicDisruptor {
                 block.getLocation().getWorld().playSound(block.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
             }
         } else {
-            TARDISMessage.send(player, "SONIC_PROTECT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_PROTECT");
         }
     }
 }

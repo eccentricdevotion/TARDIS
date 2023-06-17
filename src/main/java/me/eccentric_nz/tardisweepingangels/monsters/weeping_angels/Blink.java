@@ -21,7 +21,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
 import org.bukkit.Location;
@@ -101,7 +100,7 @@ public class Blink implements Listener {
         if (skeleton != null) {
             skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, plugin.getMonstersConfig().getInt("angels.freeze_time"), 30, true, false));
             if (!player.isSneaking()) {
-                TARDISMessage.message(player, TardisModule.MONSTERS, message.get(TARDISConstants.RANDOM.nextInt(4)));
+                plugin.getMessenger().message(player, TardisModule.MONSTERS, message.get(TARDISConstants.RANDOM.nextInt(4)));
             }
         }
     }

@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -193,7 +192,7 @@ public class TARDISJoinListener implements Listener {
         }
         // notify updates
         if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {
-            TARDISMessage.message(player, String.format(TARDISMessage.JENKINS_UPDATE_READY, plugin.getBuildNumber(), plugin.getUpdateNumber()));
+            plugin.getMessenger().sendJenkinsUpdateReady(player, plugin.getBuildNumber(), plugin.getUpdateNumber());
         }
     }
 }

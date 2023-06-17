@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
@@ -57,7 +58,7 @@ public class JudoonBuilder implements Listener {
             Block south = below.getRelative(BlockFace.SOUTH);
             if ((east.getType().equals(Material.RED_NETHER_BRICK_WALL) && west.getType().equals(Material.RED_NETHER_BRICK_WALL)) || (north.getType().equals(Material.RED_NETHER_BRICK_WALL) && south.getType().equals(Material.RED_NETHER_BRICK_WALL))) {
                 if (!TARDISPermission.hasPermission(event.getPlayer(), "tardisweepingangels.build.judoon")) {
-                    event.getPlayer().sendMessage(plugin.getPluginName() + "WA_PERM_BUILD", "a Judoon!");
+                    plugin.getMessenger().send(event.getPlayer(), TardisModule.MONSTERS, "WA_PERM_BUILD", "a Judoon!");
                     return;
                 }
                 // we're building a Judoon

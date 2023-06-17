@@ -9,11 +9,10 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -100,10 +99,10 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("save_id", rss.getId());
                 plugin.getQueryFactory().doDelete("saves", where);
-                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_DELETED");
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_DELETED");
             }
         } else {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 
@@ -127,11 +126,11 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 int required = plugin.getVortexConfig().getInt("tachyon_use.travel.saved") * players.size();
                 if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
                     close(player);
-                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_REQUIRED", required);
+                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_REQUIRED", required);
                     return;
                 }
                 Location l = rss.getWarp();
-                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                 while (!l.getChunk().isLoaded()) {
                     l.getChunk().load();
                 }
@@ -140,7 +139,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                 new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
             }
         } else {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SELECT");
         }
     }
 }

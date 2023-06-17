@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ class TARDISHandlesDiskCommand {
     boolean renameDisk(Player player, String[] args) {
         // check perms
         if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;
         }
         // check if item in hand is a Handles program disk
@@ -53,7 +53,7 @@ class TARDISHandlesDiskCommand {
                 // get the name - must be 32 chars or less
                 String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
-                    TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
                     return true;
                 }
                 // rename the disk
@@ -68,7 +68,7 @@ class TARDISHandlesDiskCommand {
                 disk.setItemMeta(dim);
             }
         } else {
-            TARDISMessage.send(player, "HANDLES_DISK");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_DISK");
         }
         return true;
     }

@@ -26,10 +26,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -94,7 +94,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                         Location loc = p.getLocation();
                         loc.getWorld().dropItemNaturally(loc, stack);
                         view.setItem(i, new ItemStack(Material.AIR));
-                        TARDISMessage.send(p, "ADV_NO_STORE");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_STORE");
                     }
                 }
             }
@@ -213,7 +213,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
-                TARDISMessage.send(p, "ADV_NO_DROP");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_DROP");
             }
         }
     }

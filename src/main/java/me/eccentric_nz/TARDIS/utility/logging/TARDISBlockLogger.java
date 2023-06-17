@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility.logging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.Block;
@@ -53,7 +54,7 @@ public class TARDISBlockLogger {
             if (CoreProtect.APIVersion() < 6) {
                 return;
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Connecting to CoreProtect");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Connecting to CoreProtect");
             coreProtectAPI = CoreProtect;
             logging = true;
         }

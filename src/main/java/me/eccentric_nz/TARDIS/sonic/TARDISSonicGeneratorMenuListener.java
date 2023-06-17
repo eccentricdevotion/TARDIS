@@ -22,8 +22,8 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -246,7 +246,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
-                TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "UPGRADE_ABORT_ENERGY");
             }
         }
         close(p);

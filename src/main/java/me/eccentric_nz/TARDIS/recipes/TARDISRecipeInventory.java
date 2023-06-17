@@ -19,12 +19,12 @@ package me.eccentric_nz.TARDIS.recipes;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -85,7 +85,7 @@ public class TARDISRecipeInventory {
                     if (isShapeless(str)) {
                         ShapelessRecipe shapeless = plugin.getIncomposita().getShapelessRecipes().get(str);
                         if (shapeless == null) {
-                            plugin.getLogger().log(Level.WARNING, "Could not get shapeless recipe item: " + item);
+                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not get shapeless recipe item: " + item);
                             continue;
                         } else {
                             result = shapeless.getResult();
@@ -93,7 +93,7 @@ public class TARDISRecipeInventory {
                     } else {
                         ShapedRecipe shaped = plugin.getFigura().getShapedRecipes().get(str);
                         if (shaped == null) {
-                            plugin.getLogger().log(Level.WARNING, "Could not get shaped recipe item: " + item);
+                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not get shaped recipe item: " + item);
                             continue;
                         } else {
                             result = shaped.getResult();

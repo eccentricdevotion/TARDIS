@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -133,7 +133,7 @@ public class TARDISMinecartListener implements Listener {
                     };
                     if (shouldPrevent) {
                         if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
-                            TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
+                            plugin.getMessenger().send(plugin.getServer().getPlayer(playerUUID), TardisModule.TARDIS, "WORLD_NO_CART", bw, data[0]);
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {

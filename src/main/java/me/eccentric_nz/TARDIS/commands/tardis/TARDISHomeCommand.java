@@ -29,9 +29,9 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ class TARDISHomeCommand {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -66,7 +66,7 @@ class TARDISHomeCommand {
                         ChameleonPreset.valueOf(which);
                     } catch (IllegalArgumentException e) {
                         // abort
-                        TARDISMessage.send(player, "ARG_PRESET");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PRESET");
                         return true;
                     }
                 }
@@ -77,18 +77,18 @@ class TARDISHomeCommand {
                     HashMap<String, Object> seth = new HashMap<>();
                     seth.put("preset", which);
                     plugin.getQueryFactory().doUpdate("homes", seth, whereh);
-                    TARDISMessage.send(player, "CHAM_SET", which);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", which);
                 }
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 String world = eyeLocation.getWorld().getName();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return true;
                 }
                 if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-                    TARDISMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -101,7 +101,7 @@ class TARDISHomeCommand {
                 }
                 // check the world is not excluded
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return true;
                 }
                 TARDISCircuitChecker tcc = null;
@@ -110,7 +110,7 @@ class TARDISHomeCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
                     return true;
                 }
                 // check they are not in the tardis
@@ -119,7 +119,7 @@ class TARDISHomeCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_INSIDE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_INSIDE");
                     return true;
                 }
                 // check it is not another Time Lords home location
@@ -130,7 +130,7 @@ class TARDISHomeCommand {
                 where.put("z", eyeLocation.getBlockZ());
                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
                 if (rsh.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_HOME");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_HOME");
                     return true;
                 }
                 HashMap<String, Object> tid = new HashMap<>();
@@ -143,11 +143,11 @@ class TARDISHomeCommand {
                 set.put("direction", player_d.toString());
                 set.put("submarine", isSub(eyeLocation) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("homes", set, tid);
-                TARDISMessage.send(player, "HOME_SET");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_SET");
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

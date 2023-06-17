@@ -29,12 +29,12 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -55,14 +55,14 @@ public class TARDISRemoteComehereCommand {
     public boolean doRemoteComeHere(Player player, UUID uuid) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-            TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return true;
         }
         if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
             return true;
         }
         if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-            TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
             return true;
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
@@ -73,7 +73,7 @@ public class TARDISRemoteComehereCommand {
         // check the world is not excluded
         String world = eyeLocation.getWorld().getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-            TARDISMessage.send(player, "NO_PB_IN_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
             return true;
         }
         // check the remote player is a Time Lord
@@ -81,7 +81,7 @@ public class TARDISRemoteComehereCommand {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "PLAYER_NO_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
         Tardis tardis = rs.getTardis();
@@ -92,11 +92,11 @@ public class TARDISRemoteComehereCommand {
         wherettrav.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
         if (rst.resultSet()) {
-            TARDISMessage.send(player, "NO_PB_IN_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_TARDIS");
             return true;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-            TARDISMessage.send(player, "NOT_WHILE_MAT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
             return true;
         }
         boolean hidden = tardis.isHidden();
@@ -131,7 +131,7 @@ public class TARDISRemoteComehereCommand {
             count = 1;
         }
         if (count > 0) {
-            TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
             return true;
         }
         Location oldSave = null;
@@ -174,7 +174,7 @@ public class TARDISRemoteComehereCommand {
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
-        TARDISMessage.send(player, "TARDIS_COMING");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_COMING");
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);
         boolean hid = hidden;

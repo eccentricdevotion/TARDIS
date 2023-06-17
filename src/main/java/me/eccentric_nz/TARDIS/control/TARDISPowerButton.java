@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -67,18 +67,18 @@ public class TARDISPowerButton {
         UUID uuid = player.getUniqueId();
         if (powered) {
             if (isTravelling(id)) {
-                TARDISMessage.send(player, "POWER_NO");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_NO");
                 return;
             }
             TARDISSounds.playTARDISSound(loc, "power_down");
             // power down
             setp.put("powered_on", 0);
-            TARDISMessage.send(player, "POWER_OFF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_OFF");
             long delay = 0;
             // if hidden, rebuild
             if (hidden) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
-                TARDISMessage.send(player, "POWER_FAIL");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_FAIL");
                 delay = 20L;
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
@@ -94,18 +94,18 @@ public class TARDISPowerButton {
             // turn force field off
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-                TARDISMessage.send(player, "FORCE_FIELD", "OFF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "OFF");
             }
         } else {
             // don't power up if there is no power
             if (level <= plugin.getArtronConfig().getInt("standby")) {
-                TARDISMessage.send(player, "POWER_LOW");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                 return;
             }
             TARDISSounds.playTARDISSound(loc, "power_up");
             // power up
             setp.put("powered_on", 1);
-            TARDISMessage.send(player, "POWER_ON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
                 new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, light);

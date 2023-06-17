@@ -20,9 +20,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -82,7 +82,7 @@ public class TARDISLanguageUpdater {
             plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
         }
         if (i > 0) {
-            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
             // sort language file alphabetically if additions were made
             try {
                 List<String> lineList;
@@ -104,7 +104,7 @@ public class TARDISLanguageUpdater {
             }
         }
         if (j > 0) {
-            plugin.getLogger().log(Level.INFO, "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
         }
     }
 }

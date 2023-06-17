@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,10 +72,10 @@ public class TARDISPerceptionFilterListener implements Listener {
                                 plugin.getFilter().addPerceptionFilter(player);
                             }, 1L);
                         } else {
-                            TARDISMessage.send(player, "FILTER");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FILTER");
                         }
                     } else {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     }
                 }
             }

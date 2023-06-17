@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
@@ -59,7 +59,7 @@ class SudoUpdate {
 
     boolean initiate(Player player, String[] args, int id, UUID uuid) {
         if (args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
         String tardis_block = TARDISStringUtils.toScoredUppercase(args[2]);
@@ -67,11 +67,11 @@ class SudoUpdate {
         try {
             updateable = Updateable.valueOf(tardis_block);
         } catch (IllegalArgumentException e) {
-            new TARDISUpdateLister(player).list();
+            new TARDISUpdateLister(plugin, player).list();
             return true;
         }
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISMessage.send(player, "SIEGE_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
             return true;
         }
         // get TARDIS data
@@ -134,15 +134,15 @@ class SudoUpdate {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
                         String under = block.getRelative(BlockFace.DOWN).getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
-                        TARDISMessage.send(player, "ROTOR_UNFIXED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROTOR_UNFIXED");
                     }
                     return true;
                 }
                 TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
                 plugin.getTrackerKeeper().getUpdatePlayers().put(player.getUniqueId(), tardis_block);
-                TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
-                    TARDISMessage.send(player, "HOOK_REMIND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HOOK_REMIND");
                 }
             }
         }

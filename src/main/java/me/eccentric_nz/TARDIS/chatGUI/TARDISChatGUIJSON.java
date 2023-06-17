@@ -67,6 +67,7 @@ public class TARDISChatGUIJSON {
         }
     }
 
+    // TODO
     private TextComponent buildTextComponent(int counter, String description, String name, String command) {
         TextComponent tc = new TextComponent(counter + ". " + description);
         tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));

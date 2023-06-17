@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
@@ -228,11 +228,11 @@ public class TARDISRepair {
                         if (rsc.getBlock_count() < map.getValue()) {
                             hasRequired = false;
                             int diff = map.getValue() - rsc.getBlock_count();
-                            TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
                         }
                     } else {
                         hasRequired = false;
-                        TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
                     }
                 }
                 if (!hasRequired) {
@@ -246,7 +246,7 @@ public class TARDISRepair {
                 return true;
             }
         } else {
-            TARDISMessage.send(player, "REPAIR_FAIL", "No JSON data");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "REPAIR_FAIL", "No JSON data");
         }
         return false;
     }

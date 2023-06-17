@@ -20,7 +20,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -81,7 +80,7 @@ public class JudoonListener implements Listener {
                                 box.setItemMeta(bsm);
                                 stand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, (ammo + remove));
                                 stand.setCustomName("Ammunition: " + (ammo + remove));
-                                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_RELOADED", remove);
+                                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_RELOADED", remove);
                             }
                         }
                     } else {
@@ -90,12 +89,12 @@ public class JudoonListener implements Listener {
                         int cmd = im.getCustomModelData();
                         if (cmd == 4 && ammo > 0) {
                             if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {
-                                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_ACTION");
+                                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ACTION");
                                 // add to repeating task
                                 TARDISWeepingAngels.getGuards().add(stand.getUniqueId());
                                 TARDISWeepingAngels.getPlayersWithGuards().add(player.getUniqueId());
                             } else {
-                                TARDISMessage.send(player, TardisModule.MONSTERS, "WA_GUARD");
+                                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_GUARD");
                             }
                             // point weapon
                             cmd = 9;
@@ -105,7 +104,7 @@ public class JudoonListener implements Listener {
                             // stand easy
                             cmd = 4;
                             stand.setCustomNameVisible(false);
-                            TARDISMessage.send(player, TardisModule.MONSTERS, "WA_EASE");
+                            plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_EASE");
                             // end guarding task
                             TARDISWeepingAngels.getGuards().remove(stand.getUniqueId());
                             TARDISWeepingAngels.getPlayersWithGuards().remove(player.getUniqueId());
@@ -117,7 +116,7 @@ public class JudoonListener implements Listener {
                 } else if (judoonId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Judoon
                     stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
-                    TARDISMessage.send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Judoon");
+                    plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Judoon");
                 }
             }
         }

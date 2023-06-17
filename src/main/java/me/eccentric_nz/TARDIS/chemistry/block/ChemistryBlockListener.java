@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlock;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -89,7 +89,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
                                 menu = new ElementInventory(plugin).getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Atomic elements");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Atomic elements");
                                 return;
                             }
                         }
@@ -98,7 +98,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.compound.create")) {
                                 menu = new CompoundInventory(plugin).getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Chemical compounds");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Chemical compounds");
                                 return;
                             }
                         }
@@ -107,7 +107,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
                                 menu = new ReducerInventory(plugin).getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Material reducer");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Material reducer");
                                 return;
                             }
                         }
@@ -116,7 +116,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.construct.build")) {
                                 menu = new ConstructorInventory().getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Element constructor");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Element constructor");
                                 return;
                             }
                         }
@@ -125,7 +125,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
                                 menu = new LabInventory(plugin).getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab table");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Lab table");
                                 return;
                             }
                         }
@@ -134,7 +134,7 @@ public class ChemistryBlockListener implements Listener {
                             if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
                                 menu = new ProductInventory(plugin).getMenu();
                             } else {
-                                TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product crafting");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Product crafting");
                                 return;
                             }
                         }

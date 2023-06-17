@@ -7,10 +7,10 @@ import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -74,8 +74,8 @@ public class FloodgateAddCompanionsForm {
                     // set entry and exit flags to allow
                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                 }
-                TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
-                TARDISMessage.send(player, "COMPANIONS_EVERYONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
             } else {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
                 if (op != null) {
@@ -87,7 +87,7 @@ public class FloodgateAddCompanionsForm {
                         // set entry and exit flags to deny
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], label, false);
                     }
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + label + ChatColor.RESET);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + label + ChatColor.RESET);
                 }
             }
         }

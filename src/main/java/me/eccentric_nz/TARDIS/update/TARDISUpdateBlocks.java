@@ -16,24 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateBlocks {
 
     public static void showOptions(Player player, Updateable updateable) {
-        TARDISMessage.message(player, TardisModule.TARDIS.getName() + ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
+        TARDIS.plugin.getMessenger().message(player, TardisModule.TARDIS, ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
         for (Material m : updateable.getMaterialChoice().getChoices()) {
             String s = m.toString();
             if (s.equals("SPAWNER")) {
-                TARDISMessage.message(player, "   ANY BLOCK");
+                TARDIS.plugin.getMessenger().message(player, "   ANY BLOCK");
             } else {
-                TARDISMessage.message(player, "  - " + TARDISStringUtils.capitalise(s));
+                TARDIS.plugin.getMessenger().message(player, "  - " + TARDISStringUtils.capitalise(s));
             }
         }
     }

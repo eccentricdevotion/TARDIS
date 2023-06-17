@@ -31,8 +31,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -45,9 +45,10 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
 
 /**
- * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
- * outside a TARDIS. Chief among these is the visual signal, which is displayed on the Scanner Screen found in any of
- * the Control Rooms.
+ * The Scanner consists of a collection of thousands of instruments designed to
+ * gather information about the environment outside a Chief among these is the
+ * visual signal, which is displayed on the Scanner Screen found in any of the
+ * Control Rooms.
  *
  * @author eccentric_nz
  */
@@ -55,7 +56,7 @@ public class TARDISScanner {
 
     private final TARDIS plugin;
 
-    TARDISScanner(TARDIS plugin) {
+    public TARDISScanner(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -75,7 +76,7 @@ public class TARDISScanner {
         return radiusEntities;
     }
 
-    public static TARDISScannerData scan(Player player, int id, BukkitScheduler bsched) {
+    public TARDISScannerData scan(Player player, int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
         TARDISSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
         Location scan_loc;
@@ -83,24 +84,24 @@ public class TARDISScanner {
         COMPASS tardisDirection;
         HashMap<String, Object> wherenl = new HashMap<>();
         wherenl.put("tardis_id", id);
-        if (TARDIS.plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-            ResultSetNextLocation rsn = new ResultSetNextLocation(TARDIS.plugin, wherenl);
+        if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet()) {
-                TARDISMessage.send(player, "NEXT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NEXT_NOT_FOUND");
                 return null;
             }
             scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
             tardisDirection = rsn.getDirection();
-            whereIsIt = TARDIS.plugin.getLanguage().getString("SCAN_NEXT");
+            whereIsIt = plugin.getLanguage().getString("SCAN_NEXT");
         } else {
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherenl);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return null;
             }
             scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             tardisDirection = rsc.getDirection();
-            whereIsIt = TARDIS.plugin.getLanguage().getString("SCAN_CURRENT");
+            whereIsIt = plugin.getLanguage().getString("SCAN_CURRENT");
         }
         data.setScanLocation(scan_loc);
         data.setTardisDirection(tardisDirection);
@@ -119,7 +120,7 @@ public class TARDISScanner {
                         visible = false;
                     }
                 }
-                if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
@@ -176,7 +177,7 @@ public class TARDISScanner {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             where.put("type", 37);
-            ResultSetControls rs = new ResultSetControls(TARDIS.plugin, where, true);
+            ResultSetControls rs = new ResultSetControls(plugin, where, true);
             if (rs.resultSet()) {
                 // get the item frame
                 Location mapFrame = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
@@ -194,7 +195,7 @@ public class TARDISScanner {
                 }
                 if (itemFrame != null) {
                     if (itemFrame.getItem().getType() == Material.FILLED_MAP) {
-                        new TARDISScannerMap(TARDIS.plugin, scan_loc, itemFrame).setMap();
+                        new TARDISScannerMap(plugin, scan_loc, itemFrame).setMap();
                     }
                 }
             }
@@ -203,34 +204,37 @@ public class TARDISScanner {
         data.setTime(time);
         String dayNight = TARDISStaticUtils.getTime(time);
         // message the player
-        TARDISMessage.send(player, "SCAN_RESULT", whereIsIt);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_RESULT", whereIsIt);
         String worldName = scan_loc.getWorld().getName();
         String alias;
-        if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            alias = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            alias = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             alias = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
-        TARDISMessage.send(player, "SCAN_WORLD", alias);
-        TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", alias);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
         String biome = scan_loc.getBlock().getBiome().toString();
         data.setScannedBiome(biome);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", dayNight + " / " + time), 60L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TYPE", biome), 40L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_TIME", dayNight + " / " + time), 60L);
         // get weather
         String weather = switch (biome) {
-            case "DESERT", "DESERT_HILLS", "DESERT_LAKES", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> TARDIS.plugin.getLanguage().getString("WEATHER_DRY");
-            case "SNOWY_TUNDRA", "ICE_SPIKES", "FROZEN_OCEAN", "FROZEN_RIVER", "SNOWY_BEACH", "SNOWY_TAIGA", "SNOWY_MOUNTAINS", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> (scan_loc.getWorld().hasStorm()) ? TARDIS.plugin.getLanguage().getString("WEATHER_SNOW") : TARDIS.plugin.getLanguage().getString("WEATHER_COLD");
-            default -> (scan_loc.getWorld().hasStorm()) ? TARDIS.plugin.getLanguage().getString("WEATHER_RAIN") : TARDIS.plugin.getLanguage().getString("WEATHER_CLEAR");
+            case "DESERT", "DESERT_HILLS", "DESERT_LAKES", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" ->
+                plugin.getLanguage().getString("WEATHER_DRY");
+            case "SNOWY_TUNDRA", "ICE_SPIKES", "FROZEN_OCEAN", "FROZEN_RIVER", "SNOWY_BEACH", "SNOWY_TAIGA", "SNOWY_MOUNTAINS", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" ->
+                (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
+            default ->
+                (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
         };
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_WEATHER", weather), 80L);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WEATHER", weather), 80L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> {
             if (!scannedEntities.isEmpty()) {
-                TARDISMessage.send(player, "SCAN_ENTS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_ENTS");
                 scannedEntities.forEach((ent, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
@@ -271,15 +275,15 @@ public class TARDISScanner {
                 });
                 scannedEntities.clear();
             } else {
-                TARDISMessage.send(player, "SCAN_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NONE");
             }
             // damage the circuit if configured
-            if (TARDIS.plugin.getConfig().getBoolean("circuits.damage") && !TARDIS.plugin.getDifficulty().equals(Difficulty.EASY) && TARDIS.plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(TARDIS.plugin, id);
+            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                 tcc.getCircuits();
                 // decrement uses
                 int uses_left = tcc.getScannerUses();
-                new TARDISCircuitDamager(TARDIS.plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
+                new TARDISCircuitDamager(plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
             }
         }, 140L);
         return data;
@@ -298,11 +302,11 @@ public class TARDISScanner {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasScanner()) {
-                TARDISMessage.send(player, "SCAN_MISSING");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_MISSING");
                 return;
             }
             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                TARDISMessage.send(player, "SCAN_NO_RANDOM");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NO_RANDOM");
                 return;
             }
             BukkitScheduler bsched = plugin.getServer().getScheduler();
@@ -323,7 +327,7 @@ public class TARDISScanner {
                             }
                         }, 160L);
                     } else {
-                        TARDISMessage.send(player, "ENERGY_NO_RENDER");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_RENDER");
                     }
                 }
             }

@@ -22,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -769,7 +768,7 @@ public class TARDII implements TardisAPI {
         try {
             spawnAbandonedTARDIS(location, "BUDGET", ChameleonPreset.FACTORY, COMPASS.SOUTH);
         } catch (TARDISException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, null, ex);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, ex.getMessage());
         }
     }
 
@@ -783,7 +782,7 @@ public class TARDII implements TardisAPI {
             try {
                 return setDesktopWallAndFloor(rst.getTardis().getUuid(), wall, floor, artron);
             } catch (TARDISException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, null, ex);
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, ex.getMessage());
                 return "";
             }
         } else {

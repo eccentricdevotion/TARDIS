@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.Blink;
 import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
 import org.bukkit.Location;
@@ -50,9 +49,9 @@ public class TARDISFrameCommand {
             } else {
                 frame.getPersistentDataContainer().remove(plugin.getCustomBlockKey());
             }
-            TARDISMessage.message(player, "ItemFrame " + ((lock) ? "locked" : "unlocked") + "!");
+            plugin.getMessenger().message(player, "ItemFrame " + ((lock) ? "locked" : "unlocked") + "!");
         } else {
-            TARDISMessage.message(player, "You are not looking at an ItemFrame!");
+            plugin.getMessenger().message(player, "You are not looking at an ItemFrame!");
         }
         return true;
     }

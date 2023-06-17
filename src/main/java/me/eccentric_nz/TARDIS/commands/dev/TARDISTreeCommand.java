@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,7 +45,7 @@ public class TARDISTreeCommand {
             Block up = targetBlock.getRelative(BlockFace.UP);
             if (args.length == 1) {
                 if (!targetBlock.getType().equals(Material.GRASS_BLOCK)) {
-                    TARDISMessage.message(player, plugin.getPluginName() + "You must be targeting a grass block!");
+                    plugin.getMessenger().message(player, TardisModule.TARDIS, "You must be targeting a grass block!");
                     return true;
                 }
                 plugin.getTardisHelper().growTree("random", up.getLocation());
@@ -57,13 +57,13 @@ public class TARDISTreeCommand {
                     Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
                     Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
                     if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMatrials().contains(stem) || !plugin.getTardisHelper().getTreeMatrials().contains(hat) || !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
-                        TARDISMessage.send(player, "ARG_NOT_BLOCK");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_BLOCK");
                         return true;
                     }
                     plugin.getTardisHelper().growTree(up.getLocation(), targetBlock.getType(), stem, hat, decor);
                     return true;
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
                     return true;
                 }
             } else {
@@ -72,7 +72,7 @@ public class TARDISTreeCommand {
                 return true;
             }
         } else {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
     }

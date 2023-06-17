@@ -24,9 +24,9 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,7 +52,7 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (!plugin.getConfig().getBoolean("allow.weather_set")) {
-                TARDISMessage.send(player, "WEATHER_DISABLED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
                 return;
             }
             if (slot >= 0 && slot < 9) {
@@ -71,15 +71,15 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                             Tardis tardis = rs.getTardis();
                             // check they initialised
                             if (!tardis.isTardis_init()) {
-                                TARDISMessage.send(player, "ENERGY_NO_INIT");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                                 return;
                             }
                             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                                TARDISMessage.send(player, "POWER_DOWN");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                                 return;
                             }
                             if (!tardis.isHandbrake_on()) {
-                                TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                 return;
                             }
                             // get current location
@@ -87,7 +87,7 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                             wherec.put("tardis_id", tardis.getTardis_id());
                             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                             if (!rsc.resultSet()) {
-                                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                 close(player);
                             }
                             switch (slot) {
@@ -95,9 +95,9 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                     // clear / sun
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.clear")) {
                                         TARDISWeather.setClear(rsc.getWorld());
-                                        TARDISMessage.send(player, "WEATHER_SET", "clear");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "clear");
                                     } else {
-                                        TARDISMessage.send(player, "NO_PERMS");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                     }
                                     close(player);
                                 }
@@ -105,9 +105,9 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                     // rain
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.rain")) {
                                         TARDISWeather.setRain(rsc.getWorld());
-                                        TARDISMessage.send(player, "WEATHER_SET", "rain");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "rain");
                                     } else {
-                                        TARDISMessage.send(player, "NO_PERMS");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                     }
                                     close(player);
                                 }
@@ -115,16 +115,16 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
                                     // thunderstorm
                                     if (TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
                                         TARDISWeather.setThunder(rsc.getWorld());
-                                        TARDISMessage.send(player, "WEATHER_SET", "thunder");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "thunder");
                                     } else {
-                                        TARDISMessage.send(player, "NO_PERMS");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                     }
                                     close(player);
                                 }
                                 case 5 -> {
                                     // atmospheric excitation
                                     if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-                                        TARDISMessage.send(player, "CMD_EXCITE");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
                                         return;
                                     }
                                     new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);

@@ -5,7 +5,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,16 +21,16 @@ public class TVMCommandGive {
 
     public boolean process(CommandSender sender, String[] args) {
         if (!TARDISPermission.hasPermission(sender, "tardis.admin")) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         if (args.length < 3) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_UUID");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_UUID");
             return true;
         }
         Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null || !p.isOnline()) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
             return true;
         }
         UUID uuid = p.getUniqueId();
@@ -48,7 +47,7 @@ public class TVMCommandGive {
                 try {
                     amount = Integer.parseInt(args[2]);
                 } catch (NumberFormatException e) {
-                    TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_LAST_ARG");
+                    plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_LAST_ARG");
                     return true;
                 }
                 if (tachyon_level + amount > full) {
@@ -62,9 +61,9 @@ public class TVMCommandGive {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doUpdate("manipulator", set, where);
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_TACHYON_SET", "" + amount);
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_TACHYON_SET", "" + amount);
         } else {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_NONE", p.getName());
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_NONE", p.getName());
         }
         return true;
     }

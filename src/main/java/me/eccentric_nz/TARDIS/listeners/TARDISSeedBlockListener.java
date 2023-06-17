@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -90,7 +90,7 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setFloorType(floor);
             Location l = block.getLocation();
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
-            TARDISMessage.send(player, "SEED_PLACE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
             // now the player has to click the block with the TARDIS key
         }
     }
@@ -169,13 +169,13 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
-                        TARDISMessage.send(player, "WORLD_NO_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NO_TARDIS");
                         return;
                     }
                     if (!plugin.getConfig().getString("creation.area").equals("none")) {
                         String area = plugin.getConfig().getString("creation.area");
                         if (plugin.getTardisArea().areaCheckInExile(area, l)) {
-                            TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_ONLY_AREA", area);
                             return;
                         }
                     }

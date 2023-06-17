@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -56,7 +56,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisartron")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.store")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return true;
             }
             if (args.length < 2) {
@@ -67,27 +67,27 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return true;
             }
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is == null || !is.hasItemMeta()) {
-                TARDISMessage.send(player, "CELL_IN_HAND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
             if (is.getAmount() > 1) {
-                TARDISMessage.send(player, "CELL_ONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
                 return true;
             }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
             if (name == null || !name.equals("Artron Storage Cell")) {
-                TARDISMessage.send(player, "CELL_IN_HAND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
             String which = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(which)) {
-                TARDISMessage.send(player, "CELL_WHICH");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_WHICH");
                 return false;
             }
             // must be a timelord
@@ -96,14 +96,14 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             if (which.equals("tardis")) {
                 ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
                 if (!rs.fromUUID(playerUUID)) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtronLevel();
             } else {
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, playerUUID);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtronLevel();
@@ -112,21 +112,21 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             try {
                 amount = Integer.parseInt(args[1]);
                 if (amount < 0) {
-                    TARDISMessage.send(player, "ENERGY_NOT_NEG");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_NEG");
                     return true;
                 }
             } catch (NumberFormatException n) {
-                TARDISMessage.send(player, "ARG_SEC_NUMBER");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_SEC_NUMBER");
                 return false;
             }
             // must have sufficient energy
             if (which.equals("tardis")) {
                 if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
-                    TARDISMessage.send(player, "CELL_NO_TRANSFER");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_TRANSFER");
                     return true;
                 }
             } else if (current_level - amount < 0) {
-                TARDISMessage.send(player, "CELL_NOT_ENOUGH");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_ENOUGH");
                 return true;
             }
             List<String> lore = im.getLore();
@@ -134,7 +134,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {
-                TARDISMessage.send(player, "CELL_NO_CHARGE", String.format("%d", (max - level)));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_CHARGE", String.format("%d", (max - level)));
                 return false;
             }
             lore.set(1, "" + new_amount);
@@ -153,7 +153,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 table = "player_prefs";
             }
             plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
-            TARDISMessage.send(player, "CELL_CHARGED", String.format("%d", new_amount));
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_CHARGED", String.format("%d", new_amount));
             return true;
         }
         return false;

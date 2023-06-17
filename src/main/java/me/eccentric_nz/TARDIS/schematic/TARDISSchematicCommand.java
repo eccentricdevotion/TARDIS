@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.actions.*;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -38,7 +38,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisschematic")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return true;
             }
             Player player = null;
@@ -46,11 +46,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return true;
             }
             if (!player.hasPermission("tardis.admin")) {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
                 return true;
             }
             if (args[0].equalsIgnoreCase("paste")) {
@@ -68,7 +68,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     CSVPaster paster = new CSVPaster(plugin);
                     paster.buildLegacy(paster.arrayFromCSV(csv), eyeLocation);
                 } else {
-                    TARDISMessage.message(player, "Nice try, but it looks like you don't know what this command is for...");
+                    plugin.getMessenger().message(player, "Nice try, but it looks like you don't know what this command is for...");
                 }
                 return true;
             }
@@ -79,8 +79,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new SchematicRemoveLights().act(plugin, player);
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                TARDISMessage.send(player, "SCHM_NAME");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NAME");
                 return true;
             }
             if (args[0].equalsIgnoreCase("save")) {

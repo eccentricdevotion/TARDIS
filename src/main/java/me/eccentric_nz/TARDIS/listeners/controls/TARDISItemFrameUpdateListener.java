@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
@@ -64,14 +64,14 @@ public class TARDISItemFrameUpdateListener implements Listener {
                 try {
                     control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(player, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
                     return;
                 }
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP) || control.equals(Control.MONITOR) || control.equals(Control.MONITOR_FRAME)) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
-                        TARDISMessage.send(player, "NO_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                         return;
                     }
                     int id = rst.getTardis_id();
@@ -79,7 +79,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                         case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME -> {
                             if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                TARDISMessage.send(player, "NO_PERM_MAP");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_MAP");
                                 return;
                             }
                             Location l = frame.getLocation();
@@ -95,7 +95,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     ItemStack map = frame.getItem();
                                     if (map.getType() != Material.MAP && map.getType() != Material.FILLED_MAP) {
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                        TARDISMessage.send(player, "SCANNER_NO_MAP");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCANNER_NO_MAP");
                                         return;
                                     }
                                     which = "Scanner Map";
@@ -116,7 +116,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
 
                                     } else {
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                        TARDISMessage.send(player, "MONITOR_PLACE_MAP");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_MAP");
                                         return;
                                     }
                                     // get door location
@@ -168,18 +168,18 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                             } else {
                                                 // they haven't placed/updated a monitor first
                                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                                TARDISMessage.send(player, "MONITOR_PLACE_FIRST");
+                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_FIRST");
                                                 return;
                                             }
                                         } else {
                                             // they haven't placed/updated a monitor first
                                             plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                            TARDISMessage.send(player, "MONITOR_PLACE_FIRST");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_FIRST");
                                             return;
                                         }
                                     } else {
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                        TARDISMessage.send(player, "MONITOR_PLACE_FRAME");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_FRAME");
                                         return;
                                     }
                                     which = "Monitor Frame";
@@ -202,7 +202,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 // add control
                                 plugin.getQueryFactory().insertControl(id, control.getId(), l.toString(), 0);
                             }
-                            TARDISMessage.send(player, "FRAME_UPDATE", which);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FRAME_UPDATE", which);
                         }
                         default -> {
                             // ROTOR
@@ -213,7 +213,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             frame.setFixed(true);
                             frame.setVisible(false);
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                            TARDISMessage.send(player, "ROTOR_UPDATE");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROTOR_UPDATE");
                         }
                     }
                 }

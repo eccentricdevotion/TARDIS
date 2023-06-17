@@ -20,9 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -163,7 +163,7 @@ public class TARDISArtronUpdater {
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io.getMessage());

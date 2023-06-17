@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -92,7 +91,7 @@ public class TARDISJunkControlListener implements Listener {
                     if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NO_PERM");
                             return;
                         }
                         // get the destination
@@ -107,7 +106,7 @@ public class TARDISJunkControlListener implements Listener {
                                 junkloc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             }
                             if (junkloc == null) {
-                                TARDISMessage.send(player, "JUNK_NOT_FOUND");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NOT_FOUND");
                                 return;
                             }
                             Switch lever = (Switch) block.getBlockData();
@@ -127,7 +126,7 @@ public class TARDISJunkControlListener implements Listener {
                             // fly my pretties
                             plugin.getGeneralKeeper().setJunkTravelling(true);
                         } else {
-                            TARDISMessage.send(event.getPlayer(), "JUNK_NO_DEST");
+                            plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "JUNK_NO_DEST");
                             return;
                         }
                     }
@@ -144,7 +143,7 @@ public class TARDISJunkControlListener implements Listener {
                     if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NO_PERM");
                             return;
                         }
                         setSignWorld(id, player.getUniqueId());
@@ -162,7 +161,7 @@ public class TARDISJunkControlListener implements Listener {
                     if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NO_PERM");
                             return;
                         }
                         setSignCoords(id, 2);
@@ -180,7 +179,7 @@ public class TARDISJunkControlListener implements Listener {
                     if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
                         Player player = event.getPlayer();
                         if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NO_PERM");
                             return;
                         }
                         setSignCoords(id, 3);
@@ -204,11 +203,11 @@ public class TARDISJunkControlListener implements Listener {
                     TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
                     if (tjl.isNotHome()) {
                         plugin.getGeneralKeeper().setJunkDestination(tjl.getHome());
-                        TARDISMessage.send(p, "JUNK_RETURN");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_RETURN");
                         return;
                     }
                 }
-                TARDISMessage.send(p, "JUNK_LINES");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_LINES");
                 return;
             }
             World w;

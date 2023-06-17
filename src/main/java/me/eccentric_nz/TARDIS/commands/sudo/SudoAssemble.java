@@ -21,7 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -46,10 +46,10 @@ class SudoAssemble {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
-            TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ASSEMBLE_PLAYER", player);
             Player dispersed = plugin.getServer().getPlayer(uuid);
             if (dispersed != null) {
-                TARDISMessage.send(dispersed, "ASSEMBLE_REBUILD");
+                plugin.getMessenger().send(dispersed, TardisModule.TARDIS, "ASSEMBLE_REBUILD");
             }
         }
         return true;

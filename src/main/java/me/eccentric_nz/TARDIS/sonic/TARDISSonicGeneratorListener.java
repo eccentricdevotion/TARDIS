@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -174,7 +174,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
-                TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "UPGRADE_ABORT_ENERGY");
             }
         }
     }
@@ -263,7 +263,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             } else {
                 event.setCancelled(true);
                 // only in TARDIS
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_IN_TARDIS");
             }
         }
     }

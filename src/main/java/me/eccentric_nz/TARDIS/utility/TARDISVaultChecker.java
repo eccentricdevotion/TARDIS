@@ -23,9 +23,9 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -68,7 +68,7 @@ public class TARDISVaultChecker implements Runnable {
                 }
             }
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Removed " + i + " unused vault room drop chests!");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Removed " + i + " unused vault room drop chests!");
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for vaults table! " + e.getMessage());

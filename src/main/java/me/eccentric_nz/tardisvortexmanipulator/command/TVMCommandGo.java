@@ -21,7 +21,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
@@ -43,11 +42,11 @@ public class TVMCommandGo {
 
     public boolean execute(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_NAME");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_NAME");
             return true;
         }
         String uuid = player.getUniqueId().toString();
@@ -55,11 +54,11 @@ public class TVMCommandGo {
             // check save exists
             TVMResultSetWarpByName rsw = new TVMResultSetWarpByName(plugin, uuid, args[1]);
             if (!rsw.resultSet()) {
-                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_SAVE");
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_SAVE");
                 return true;
             }
             Location l = rsw.getWarp();
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY_TO", args[1]);
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY_TO", args[1]);
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
@@ -74,7 +73,7 @@ public class TVMCommandGo {
             }
             int required = plugin.getVortexConfig().getInt("tachyon_use.saved") * players.size();
             if (!TVMUtils.checkTachyonLevel(uuid, required)) {
-                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", required);
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", required);
                 return true;
             }
             TVMUtils.movePlayers(players, l, player.getLocation().getWorld());

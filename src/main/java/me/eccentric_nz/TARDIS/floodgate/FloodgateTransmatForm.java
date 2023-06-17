@@ -5,7 +5,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -41,7 +41,7 @@ public class FloodgateTransmatForm {
             FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
             player.sendForm(form);
         } else {
-            TARDISMessage.send(plugin.getServer().getPlayer(uuid), "TRANSMAT_NO_LIST");
+            plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "TRANSMAT_NO_LIST");
         }
     }
 
@@ -50,7 +50,7 @@ public class FloodgateTransmatForm {
         Player player = plugin.getServer().getPlayer(uuid);
         ResultSetTransmat rst = new ResultSetTransmat(plugin, id, label);
         if (rst.resultSet()) {
-            TARDISMessage.send(player, "TRANSMAT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
             Location tp_loc = rst.getLocation();
             tp_loc.setYaw(rst.getYaw());
             tp_loc.setPitch(player.getLocation().getPitch());

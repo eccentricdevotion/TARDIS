@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
@@ -51,11 +50,11 @@ public class TARDISSayCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissay")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.translate")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+                plugin.getMessenger().send(sender, TardisModule.TRANSLATOR, "NO_PERMS");
                 return false;
             }
             if (args.length < 2) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TRANSLATOR, "TOO_FEW_ARGS");
                 return false;
             }
             String preferedLang = "ENGLISH";
@@ -74,15 +73,14 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language to = Language.valueOf(lang);
                 try {
                     String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
-                    plugin.getServer().dispatchCommand(sender, "say " + TardisModule.TRANSLATOR.getName() + translatedText);
+                    plugin.getServer().dispatchCommand(sender, "say [" + TardisModule.TRANSLATOR.getName() + "] " + translatedText);
                     return true;
                 } catch (CommandException ex) {
                     plugin.debug("Could not get translation! " + ex.getMessage());
-//                    ex.printStackTrace();
-                    TARDISMessage.send(sender, "YT_UNAVAILABLE");
+                    plugin.getMessenger().send(sender, TardisModule.TRANSLATOR, "YT_UNAVAILABLE");
                 }
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, "LANG_NOT_VALID");
+                plugin.getMessenger().send(sender, TardisModule.TRANSLATOR, "LANG_NOT_VALID");
             }
         }
         return false;

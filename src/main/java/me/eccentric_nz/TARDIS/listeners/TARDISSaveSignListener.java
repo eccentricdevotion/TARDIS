@@ -26,13 +26,13 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -141,7 +141,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             if (save_dest != null) {
                                 if (lore.get(0).startsWith("TARDIS_")) {
                                     close(player);
-                                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                                     return;
                                 }
                                 // check the player is allowed!
@@ -158,7 +158,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 int level = rs.getArtronLevel();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
-                                    TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                                     close(player);
                                     return;
                                 }
@@ -172,7 +172,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheresave.put("z", lore.get(3));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
-                                        TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                         close(player);
                                         return;
                                     }
@@ -183,11 +183,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     if (resultSetTardis.resultSet()) {
                                         if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                             // check preset
-                                            TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                             return;
                                         } else if (!invisibility.equals("ALLOW")) {
                                             // force preset
-                                            TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
                                             HashMap<String, Object> wherei = new HashMap<>();
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
@@ -231,7 +231,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
-                                    TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, player).exitVortex();
                                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
@@ -243,7 +243,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 }
                             } else {
                                 close(player);
-                                TARDISMessage.send(player, "DEST_NOT_VALID", im.getDisplayName());
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", im.getDisplayName());
                             }
                         }
                     }
@@ -256,9 +256,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                     if (rs.resultSet()) {
                         plugin.getTrackerKeeper().getArrangers().add(uuid);
-                        TARDISMessage.send(player, "SAVE_ARRANGE");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_ARRANGE");
                     } else {
-                        TARDISMessage.send(player, "NOT_OWNER");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
                     }
                 }
                 ItemStack own = event.getClickedInventory().getItem(49);

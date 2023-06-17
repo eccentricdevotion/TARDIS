@@ -22,13 +22,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 
 /**
- * TARDISes prefer the environment of the Space-Time Vortex to the four dimensional world. They have Curiosity Circuits
- * to encourage them to leave the Vortex.
+ * TARDISes prefer the environment of the Space-Time Vortex to the four
+ * dimensional world. They have Curiosity Circuits to encourage them to leave
+ * the Vortex.
  *
  * @author eccentric_nz
  */
@@ -401,7 +402,7 @@ class TARDISSQLiteDatabaseUpdater {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
         }
     }
 }

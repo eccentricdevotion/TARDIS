@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -120,15 +120,15 @@ public class TARDISHandbrakeListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasMaterialisation()) {
-                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                         return;
                     }
                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                         return;
                     }
                     if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                        TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                         return;
                     }
                     HashMap<String, Object> wherei = new HashMap<>();
@@ -143,16 +143,16 @@ public class TARDISHandbrakeListener implements Listener {
                         UUID ownerUUID = tardis.getUuid();
                         if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
-                            TARDISMessage.send(player, "ISO_HANDS_OFF");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                             return;
                         }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                         String beacon = tardis.getBeacon();
                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                            TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_IN_VORTEX");
                         } else {
                             Action action = event.getAction();
                             // should the beacon turn on
@@ -168,17 +168,17 @@ public class TARDISHandbrakeListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
                                     if (preset.equals(ChameleonPreset.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
                                         return;
                                     }
                                     // check there is enough power for at last random travel
                                     if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
-                                        TARDISMessage.send(player, "ENERGY_NOT_ENOUGH");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_ENOUGH");
                                         return;
                                     }
                                     // check if door is open
                                     if (isDoorOpen(id)) {
-                                        TARDISMessage.send(player, "DOOR_CLOSE");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_CLOSE");
                                         // track handbrake clicked for takeoff when door closed
                                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                                         // give them 30 seconds to close the door
@@ -194,7 +194,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    TARDISMessage.send(player, "HANDBRAKE_OFF_ERR");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF_ERR");
                                 }
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
@@ -215,7 +215,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         toggleBeacon(beacon, false);
                                     }
                                     // Remove energy from TARDIS and sets database
-                                    TARDISMessage.send(player, "HANDBRAKE_ON");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
                                         HashMap<String, Object> wheret = new HashMap<>();
@@ -244,7 +244,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     whereh.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                                 } else {
-                                    TARDISMessage.send(player, "HANDBRAKE_ON_ERR");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_ERR");
                                 }
                             }
                         }

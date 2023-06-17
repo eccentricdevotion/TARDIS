@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
@@ -37,7 +37,7 @@ class TARDISJunkReturn {
 
     boolean recall(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
             return true;
         }
         TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
@@ -56,10 +56,10 @@ class TARDISJunkReturn {
             // fly my pretties
             plugin.getGeneralKeeper().setJunkTravelling(true);
             plugin.getGeneralKeeper().setJunkDestination(home);
-            TARDISMessage.send(sender, "JUNK_RETURN");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_RETURN");
             return true;
         } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_AT_HOME");
             return true;
         }
     }

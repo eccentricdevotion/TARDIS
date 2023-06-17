@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.chemistry.formula.FormulaCommand;
 import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -58,24 +58,24 @@ public class TARDISChemistryCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Command can only be used by a player!");
                 return true;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return true;
             }
             if (args[0].equalsIgnoreCase("formula") && TARDISPermission.hasPermission(player, "tardis.formula.show")) {
                 return new FormulaCommand(plugin).show(player, args);
             } else if (args[0].equalsIgnoreCase("gui")) {
                 if (!TARDISPermission.hasPermission(player, "tardis.chemistry.command")) {
-                    TARDISMessage.send(player, "CHEMISTRY_CMD_PERM");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_CMD_PERM");
                     return true;
                 }
                 switch (args[1].toLowerCase()) {
                     case "creative" -> {
                         if (args.length < 3) {
-                            TARDISMessage.send(player, "TOO_FEW_ARGS");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                             return true;
                         }
                         return new CreativeCommand(plugin).open(player, args);
@@ -101,12 +101,12 @@ public class TARDISChemistryCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("recipe")) {
                 if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
                 String which = args[1].toLowerCase();
                 if (!GUIS.contains(which)) {
-                    TARDISMessage.message(player, "");
+                    plugin.getMessenger().message(player, "");
                     return false;
                 }
                 showBlockRecipe(player, which);

@@ -26,10 +26,10 @@ import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -55,7 +55,7 @@ class TARDISAddCompanionCommand {
             presetinv.setContents(items);
             player.openInventory(presetinv);
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
         }
         return true;
     }
@@ -70,7 +70,7 @@ class TARDISAddCompanionCommand {
             int id;
             String owner;
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             } else {
                 Tardis tardis = rs.getTardis();
@@ -80,11 +80,11 @@ class TARDISAddCompanionCommand {
                 owner = tardis.getOwner();
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
-                TARDISMessage.send(player, "PLAYER_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
@@ -113,7 +113,7 @@ class TARDISAddCompanionCommand {
                             taf.doAchievement(1);
                         }
                     } else {
-                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                 }
@@ -135,14 +135,14 @@ class TARDISAddCompanionCommand {
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 if (addAll) {
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
-                    TARDISMessage.send(player, "COMPANIONS_EVERYONE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
                 } else {
-                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
         }
         return true;
     }

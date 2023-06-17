@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -88,11 +88,11 @@ public class TARDISRemoteKeyListener implements Listener {
             boolean powered = tardis.isPowered_on();
             ChameleonPreset preset = tardis.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                 return;
             }
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return;
             }
             boolean hidden = tardis.isHidden();
@@ -118,7 +118,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     // always lock / unlock both doors
                     plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                    TARDISMessage.send(player, "DOOR_LOCK", message);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
                     TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered, preset);
@@ -136,7 +136,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     // toggle door / portals
                     new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
                     String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
-                    TARDISMessage.send(player, message);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, message);
                 }
             } else {
                 if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(player.getUniqueId())) {
@@ -144,12 +144,12 @@ public class TARDISRemoteKeyListener implements Listener {
                     long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
                     long then = plugin.getTrackerKeeper().getRebuildCooldown().get(player.getUniqueId()) + cooldown;
                     if (now < then) {
-                        TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                        plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
                         return;
                     }
                 }
                 if (!powered) {
-                    TARDISMessage.send(player, "POWER_DOWN");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return;
                 }
                 if (hidden) {

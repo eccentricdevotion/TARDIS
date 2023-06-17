@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -158,7 +158,7 @@ public class TARDISSonicUpgradeListener implements Listener {
             ItemStack key = ci.getItem(5);
             if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("TARDIS Key")) {
                 ci.setResult(null);
-                TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
+                TARDIS.plugin.getMessenger().send(event.getView().getPlayer(), TardisModule.TARDIS, "REMOTE_KEY");
             }
         } else if (recipe instanceof SmithingRecipe) {
             TARDIS.plugin.debug("SmithingRecipe");

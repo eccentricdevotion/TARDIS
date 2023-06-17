@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.arch;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class TARDISArchCommand {
     public boolean getTime(Player player) {
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            TARDISMessage.send(player, "ARCH_NOT_VALID");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCH_NOT_VALID");
             return true;
         }
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
@@ -47,9 +47,9 @@ public class TARDISArchCommand {
         if (diff > 0) {
             String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
             String sub1 = String.format("%d", (diff / 1000) % 60);
-            TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCH_TIME", sub0, sub1);
         } else {
-            TARDISMessage.send(player, "ARCH_FREE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCH_FREE");
         }
         return true;
     }
@@ -57,22 +57,22 @@ public class TARDISArchCommand {
     public boolean whois(CommandSender sender, String[] args) {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
-                TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARCH_PLAYER", p.getName());
                 return true;
             }
         }
-        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
         return true;
     }
 
     public boolean force(CommandSender sender, String[] args) {
         if (args[2].length() < 2) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
         UUID uuid = player.getUniqueId();

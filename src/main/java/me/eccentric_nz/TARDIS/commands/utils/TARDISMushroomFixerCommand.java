@@ -19,8 +19,9 @@ package me.eccentric_nz.TARDIS.commands.utils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,6 +34,12 @@ import org.bukkit.entity.Player;
 
 public class TARDISMushroomFixerCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
+    private final TARDIS plugin;
+
+    public TARDISMushroomFixerCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     private final List<String> SUBS = Arrays.asList("red", "brown", "stem");
 
     @Override
@@ -40,7 +47,7 @@ public class TARDISMushroomFixerCommand extends TARDISCompleter implements Comma
         if (sender instanceof Player player) {
             if (cmd.getName().equalsIgnoreCase("tardismushroom")) {
                 if (!player.hasPermission("tardis.mushroom")) {
-                    TARDISMessage.send(player, "NO_PERMS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
                 if (args.length < 2) {

@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -46,12 +46,12 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisweather")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return true;
             }
             if (sender instanceof Player player) {
                 if (!plugin.getConfig().getBoolean("allow.weather_set")) {
-                    TARDISMessage.send(player, "WEATHER_DISABLED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
                     return true;
                 }
                 Location location = player.getLocation();
@@ -67,21 +67,21 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                         world = rsc.getWorld();
                     } else {
                         // can't change weather in TARDIS world
-                        TARDISMessage.send(player, "WEATHER_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_TARDIS");
                         return true;
                     }
                 }
                 Weather weather = Weather.fromString(args[0]);
                 String perm = weather.toString().toLowerCase();
                 if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
                 TARDISWeather.setWeather(world, weather);
-                TARDISMessage.send(player, "WEATHER_SET", perm);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", perm);
                 return true;
             } else {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             }
             return true;
         }

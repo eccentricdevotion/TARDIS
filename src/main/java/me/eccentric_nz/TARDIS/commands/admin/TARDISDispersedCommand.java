@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -35,7 +35,7 @@ class TARDISDispersedCommand {
         if (which.equalsIgnoreCase("clear")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();
-            TARDISMessage.send(sender, "ASSEMBLE_ALL");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ASSEMBLE_ALL");
         } else if (which.equalsIgnoreCase("list")) {
             plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
         }

@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -48,18 +48,18 @@ class TARDISSetDestinationCommand {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
-                TARDISMessage.send(player, "DEST_NAME_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NAME_NOT_VALID");
                 return false;
             } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                TARDISMessage.send(player, "SAVE_RESERVED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_RESERVED");
                 return false;
             } else {
                 int id = rs.getTardis_id();
@@ -69,7 +69,7 @@ class TARDISSetDestinationCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
                     return true;
                 }
                 // check they are not in the tardis
@@ -78,24 +78,24 @@ class TARDISSetDestinationCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    TARDISMessage.send(player, "NO_PB_IN_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_TARDIS");
                     return true;
                 }
                 // get location player is looking at
                 Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
                 Location l = b.getLocation();
                 if (plugin.getTardisArea().isInExistingArea(l)) {
-                    TARDISMessage.send(player, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 String world = l.getWorld().getName();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return true;
                 }
                 // check the world is not excluded
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-                    TARDISMessage.send(player, "NO_PB_IN_WORLD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                     return true;
                 }
                 if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -104,7 +104,7 @@ class TARDISSetDestinationCommand {
                 if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.getTardisArea().getExileArea(player);
                     if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
-                        TARDISMessage.send(player, "EXILE_NO_TRAVEL");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_TRAVEL");
                         return false;
                     }
                 }
@@ -122,12 +122,12 @@ class TARDISSetDestinationCommand {
                 if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
-                    TARDISMessage.send(player, "DEST_SAVED", args[1]);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SAVED", args[1]);
                     return true;
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

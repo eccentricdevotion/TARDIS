@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -46,7 +46,7 @@ class TARDISUpgradeCommand {
 
     boolean openUpgradeGUI(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
-            TARDISMessage.send(player, "NO_PERM_UPGRADE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE");
             return true;
         }
         // they must have an existing TARDIS
@@ -54,18 +54,18 @@ class TARDISUpgradeCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return false;
         }
         Tardis tardis = rs.getTardis();
         // console must in a TARDIS world
         if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
-            TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_ABORT_WORLD");
             return true;
         }
         // check they are not growing rooms
         if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(tardis.getTardis_id())) {
-            TARDISMessage.send(player, "NO_UPGRADE_WHILE_GROWING");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_UPGRADE_WHILE_GROWING");
             return true;
         }
         // it must be their own TARDIS
@@ -86,7 +86,7 @@ class TARDISUpgradeCommand {
             own = (current_world.equals(split[0]));
         }
         if (!own) {
-            TARDISMessage.send(player, "NOT_OWNER");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
             return true;
         }
         // get player's current console

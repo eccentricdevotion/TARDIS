@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -49,11 +49,11 @@ class TARDISEnterCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;
         }
         int tmp = -1;
@@ -140,7 +140,7 @@ class TARDISEnterCommand {
             }
         } else {
             String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
-            TARDISMessage.send(player, message);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, message);
         }
         return true;
     }

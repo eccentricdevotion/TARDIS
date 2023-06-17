@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -32,7 +31,7 @@ public class SchematicConvert {
 
     public boolean act(TARDIS plugin, Player player, String[] args) {
         if (args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         TardisLight light;
@@ -50,18 +49,18 @@ public class SchematicConvert {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-            TARDISMessage.send(player, "SCHM_NO_START");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
             return true;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-            TARDISMessage.send(player, "SCHM_NO_END");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
             return true;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
-            TARDISMessage.send(player, "SCHM_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
             return true;
         }
         // get the raw coords
@@ -96,7 +95,7 @@ public class SchematicConvert {
                 }
             }
         }
-        player.sendMessage(TardisModule.TARDIS.getName() + "Light conversion complete");
+        plugin.getMessenger().message(player, TardisModule.TARDIS, "Light conversion complete");
         return true;
     }
 }

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -66,14 +66,14 @@ public class TARDISBlockPlaceListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NOT_IN_ZERO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
             return;
         }
         Block block = event.getBlockPlaced();
         String blockStr = block.getLocation().toString();
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(blockStr)) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NO_PLACE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
         // convert old custom mushroom blocks
@@ -114,7 +114,7 @@ public class TARDISBlockPlaceListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 event.setCancelled(true);
-                TARDISMessage.send(player, "RIFT_OUTSIDE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_OUTSIDE");
                 return;
             }
             // add recharger to to config
@@ -129,7 +129,7 @@ public class TARDISBlockPlaceListener implements Listener {
             plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());
             plugin.getConfig().set("rechargers." + name + ".uuid", player.getUniqueId().toString());
             plugin.saveConfig();
-            TARDISMessage.send(player, "RIFT_SUCCESS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_SUCCESS");
         }
     }
 }

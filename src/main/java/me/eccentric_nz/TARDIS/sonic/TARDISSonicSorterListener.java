@@ -26,11 +26,11 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -168,7 +168,7 @@ public class TARDISSonicSorterListener implements Listener {
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
                             sortInventory(inventory);
-                            TARDISMessage.send(player, "CHEST_SORTED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEST_SORTED");
                         }
                     }
                 }

@@ -2,9 +2,9 @@ package me.eccentric_nz.TARDIS.database.converters;
 
 import java.io.File;
 import java.sql.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class TARDISShopTransfer {
 
@@ -45,7 +45,7 @@ public class TARDISShopTransfer {
                 }
                 if (i > 0) {
                     ps.executeBatch();
-                    plugin.getLogger().log(Level.INFO, "Transferred " + i + " shop items to database");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Transferred " + i + " shop items to database");
                 }
                 connection.commit();
                 return true;

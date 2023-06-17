@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class TARDISBellCommand {
@@ -42,14 +42,14 @@ public class TARDISBellCommand {
                 if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     stopCloisterBell(id);
                 } else {
-                    TARDISMessage.send(player, "CLOISTER_BELL_CMD", "off");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "off");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("on")) {
                 if (!plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     startCloisterBell(id);
                 } else {
-                    TARDISMessage.send(player, "CLOISTER_BELL_CMD", "on");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "on");
                 }
                 return true;
             }

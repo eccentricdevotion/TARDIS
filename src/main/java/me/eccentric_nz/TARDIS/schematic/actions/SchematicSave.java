@@ -18,9 +18,16 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -39,32 +46,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 public class SchematicSave {
 
     public boolean act(TARDIS plugin, Player player, String which) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-            TARDISMessage.send(player, "SCHM_NO_START");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
             return true;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-            TARDISMessage.send(player, "SCHM_NO_END");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
             return true;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
-            TARDISMessage.send(player, "SCHM_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
             return true;
         }
         // get the raw coords
@@ -98,11 +97,11 @@ public class SchematicSave {
         dimensions.addProperty("height", height);
         dimensions.addProperty("length", length);
         if (width != length) {
-            TARDISMessage.send(player, "SCHM_SQUARE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SQUARE");
             return true;
         }
         if ((width % 16 != 0 || length % 16 != 0) && !which.equals("zero") && !which.equals("junk") && !which.contains("dalek")) {
-            TARDISMessage.send(player, "SCHM_MULTIPLE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_MULTIPLE");
             return true;
         }
         JsonArray paintings = new JsonArray();
@@ -292,9 +291,9 @@ public class SchematicSave {
             }
             TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + which + ".tschm");
             file.delete();
-            TARDISMessage.send(player, "SCHM_SAVED", which);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SAVED", which);
         } catch (IOException e) {
-            TARDISMessage.send(player, "SCHM_ERROR");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_ERROR");
         }
         return true;
     }

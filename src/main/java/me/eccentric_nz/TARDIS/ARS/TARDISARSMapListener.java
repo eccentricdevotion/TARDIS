@@ -25,10 +25,10 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -77,7 +77,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {
-                TARDISMessage.send(player, "ARS_LOAD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -109,13 +109,13 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         if (map_data.containsKey(playerUUID)) {
                             // transmat
                             if (!selectedLocation.containsKey(playerUUID)) {
-                                TARDISMessage.send(player, "TRANSMAT_SELECT");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
                             } else if (selectedLocation.get(playerUUID).equals("TERRACOTTA")) {
                                 setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
                             } else {
                                 Location tp_loc = getRoomLocation(player);
                                 if (tp_loc != null) {
-                                    TARDISMessage.send(player, "TRANSMAT");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                                         player.teleport(tp_loc);

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -67,7 +66,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
             // we're finished
             plugin.getServer().getScheduler().cancelTask(taskId);
             taskId = 0;
-            TARDISMessage.message(owner, "ROOM Display Block conversion complete");
+            plugin.getMessenger().message(owner, "ROOM Display Block conversion complete");
         } else {
             // check a row of blocks
             for (int col = 0; col < c; col++) {

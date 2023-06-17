@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -26,8 +27,9 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -45,10 +47,6 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
-
-import java.util.*;
-
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the
@@ -231,14 +229,14 @@ public class TARDISRoomRunnable implements Runnable {
                     grammar += " WELL";
                 }
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_START", grammar);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_START", grammar);
                 }
             }
             if (level == h && row == w && col == (c - 1)) {
                 // the entire schematic has been read :)
                 if (!iceblocks.isEmpty()) {
                     if (player != null) {
-                        TARDISMessage.send(player, "ICE");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ICE");
                     }
                     // set all the ice to water
                     iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
@@ -474,7 +472,7 @@ public class TARDISRoomRunnable implements Runnable {
                 leverblocks.clear();
                 // update lamp block states
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_POWER");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_POWER");
                 }
                 lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
                 lampblocks.clear();
@@ -496,7 +494,7 @@ public class TARDISRoomRunnable implements Runnable {
                 task = 0;
                 String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_FINISHED", rname);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_FINISHED", rname);
                 }
                 plugin.getBuildKeeper().getRoomProgress().remove(uuid);
                 plugin.getTrackerKeeper().getIsGrowingRooms().remove(tardis_id);
@@ -1009,7 +1007,7 @@ public class TARDISRoomRunnable implements Runnable {
                     if (percent > 0) {
                         plugin.getBuildKeeper().getRoomProgress().put(uuid, percent);
                         if (player != null) {
-                            TARDISMessage.send(player, "ROOM_PERCENT", room, String.format("%d", percent));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_PERCENT", room, String.format("%d", percent));
                         }
                     }
                     level++;
@@ -1025,7 +1023,7 @@ public class TARDISRoomRunnable implements Runnable {
             task = 0;
             String message = ChatColor.RED + "Resumption of room growing was aborted due to: " + ChatColor.RESET + e.getMessage();
             if (player != null) {
-                TARDISMessage.message(player, message);
+                plugin.getMessenger().message(player, message);
             }
             plugin.debug(message);
         }
@@ -1038,7 +1036,7 @@ public class TARDISRoomRunnable implements Runnable {
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", p.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setpp, wherepp);
-        TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
+        plugin.getMessenger().send(p, TardisModule.TARDIS, "PREF_WAS_ON", "Mob farming");
     }
 
     private boolean checkRoomNextDoor(Block b) {

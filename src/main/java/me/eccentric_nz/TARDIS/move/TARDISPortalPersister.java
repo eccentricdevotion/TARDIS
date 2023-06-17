@@ -22,10 +22,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 
@@ -66,10 +66,10 @@ public class TARDISPortalPersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " portals.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " portals.");
             }
             if (counta > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + counta + " abandoned portals.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + counta + " abandoned portals.");
             }
             // save the players
             ps = connection.prepareStatement("INSERT INTO " + prefix + "movers (uuid) VALUES (?)");
@@ -121,10 +121,10 @@ public class TARDISPortalPersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " portals.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " portals.");
             }
             if (counta > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + counta + " abandoned portals.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + counta + " abandoned portals.");
             }
             // clear the portals table so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "portals");

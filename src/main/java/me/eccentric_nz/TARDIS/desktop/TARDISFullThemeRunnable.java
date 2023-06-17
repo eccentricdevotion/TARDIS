@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -35,7 +39,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
@@ -52,11 +56,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -135,7 +134,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -151,7 +150,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -330,7 +329,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     Player pv = plugin.getServer().getPlayer(u);
                     if (pv != null) { // may have gone offline!
                         pv.teleport(loc);
-                        TARDISMessage.send(pv, "UPGRADE_TELEPORT");
+                        plugin.getMessenger().send(pv, TardisModule.TARDIS, "UPGRADE_TELEPORT");
                     }
                 });
             }
@@ -491,7 +490,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 setr.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", refund, setr, null);
                 if (player.isOnline()) {
-                    TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_RECOVERED", String.format("%d", refund));
                 }
             } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
@@ -515,7 +514,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
-            TARDISMessage.send(player, "UPGRADE_FINISHED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_FINISHED");
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);

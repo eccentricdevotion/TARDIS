@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -42,7 +42,7 @@ class TARDISJunkFloorWall {
         String pref = args[0].toLowerCase(Locale.ENGLISH);
         // check args
         if (args.length < 2) {
-            TARDISMessage.send(sender, "PREF_WALL", pref);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREF_WALL", pref);
             return false;
         }
         String wall_mat;
@@ -54,7 +54,7 @@ class TARDISJunkFloorWall {
         }
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
-            TARDISMessage.send(sender, message, pref);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, message, pref);
             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
             return true;
         }
@@ -76,7 +76,7 @@ class TARDISJunkFloorWall {
             where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             plugin.getQueryFactory().doUpdate("player_prefs", setpp, where);
         }
-        TARDISMessage.send(sender, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

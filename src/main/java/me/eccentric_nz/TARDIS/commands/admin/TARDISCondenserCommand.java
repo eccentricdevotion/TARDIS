@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.io.File;
 import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -38,13 +38,13 @@ class TARDISCondenserCommand {
 
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player player)) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
         Material chest = b.getType();
         if (!chest.equals(Material.CHEST)) {
-            TARDISMessage.send(sender, "UPDATE_CONDENSER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "UPDATE_CONDENSER");
             return true;
         }
         String loc = b.getLocation().toString();
@@ -55,7 +55,7 @@ class TARDISCondenserCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "condenser");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "condenser");
         return true;
     }
 }

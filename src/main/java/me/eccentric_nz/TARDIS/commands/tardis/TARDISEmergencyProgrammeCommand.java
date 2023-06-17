@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.entity.Player;
 
@@ -43,14 +43,14 @@ class TARDISEmergencyProgrammeCommand {
     boolean showEP1(Player p) {
         if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
-                TARDISMessage.send(p, "CMD_IN_WORLD");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "CMD_IN_WORLD");
                 return true;
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(p, "NOT_A_TIMELORD");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             Tardis tardis = rs.getTardis();
@@ -61,11 +61,11 @@ class TARDISEmergencyProgrammeCommand {
             wherem.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_IN_TARDIS");
                 return true;
             }
             if (rsm.getTardis_id() != id) {
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_IN_TARDIS");
                 return true;
             }
             // get player prefs
@@ -89,7 +89,7 @@ class TARDISEmergencyProgrammeCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
             return true;
         } else {
-            TARDISMessage.send(p, "EP1_DISABLED");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "EP1_DISABLED");
             return true;
         }
     }

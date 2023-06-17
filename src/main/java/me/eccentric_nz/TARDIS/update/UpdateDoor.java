@@ -21,8 +21,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
@@ -72,13 +72,13 @@ public class UpdateDoor {
                 type = (secondary) ? 4 : 3;
                 // check the world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
-                    TARDISMessage.send(player, "NOT_IN_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                     return;
                 }
             } else {
                 type = 2;
                 if (plugin.getUtils().inTARDISWorld(player)) {
-                    TARDISMessage.send(player, "TARDIS_OUTSIDE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_OUTSIDE");
                     return;
                 }
             }

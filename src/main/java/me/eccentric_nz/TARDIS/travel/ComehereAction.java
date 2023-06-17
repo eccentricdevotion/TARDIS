@@ -20,8 +20,8 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -42,8 +42,8 @@ public class ComehereAction {
         SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(request.getAccepter().toString());
         int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
         if (request.getLevel() < ch) {
-            TARDISMessage.send(acceptor, "NOT_ENOUGH_ENERGY");
-            TARDISMessage.send(requester, "NOT_ENOUGH_ENERGY");
+            plugin.getMessenger().send(acceptor, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
+            plugin.getMessenger().send(requester, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
         World w = request.getCurrent().getWorld();
@@ -86,7 +86,7 @@ public class ComehereAction {
         }
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
         plugin.getTrackerKeeper().getHasDestination().put(request.getId(), new TravelCostAndType(plugin.getArtronConfig().getInt("comehere"), TravelType.COMEHERE));
-        TARDISMessage.send(acceptor, "REQUEST_RELEASE", requester.getName());
-        TARDISMessage.send(requester, "REQUEST_ACCEPTED", acceptor.getName(), "travel");
+        plugin.getMessenger().send(acceptor, TardisModule.TARDIS, "REQUEST_RELEASE", requester.getName());
+        plugin.getMessenger().send(requester, TardisModule.TARDIS, "REQUEST_ACCEPTED", acceptor.getName(), "travel");
     }
 }

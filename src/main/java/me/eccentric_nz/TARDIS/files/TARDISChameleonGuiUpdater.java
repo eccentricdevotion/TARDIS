@@ -22,9 +22,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -80,7 +80,7 @@ public class TARDISChameleonGuiUpdater {
             String chameleonPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml";
             chameleon_config.save(new File(chameleonPath));
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to chameleon_guis.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to chameleon_guis.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save chameleon_guis.yml, " + io.getMessage());

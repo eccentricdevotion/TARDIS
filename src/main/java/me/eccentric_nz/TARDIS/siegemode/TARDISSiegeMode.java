@@ -32,8 +32,8 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -83,7 +83,7 @@ public class TARDISSiegeMode {
             // must have at least 10% power
             int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
             if (min > tardis.getArtron_level()) {
-                TARDISMessage.send(p, "SIEGE_POWER");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_POWER");
                 return;
             }
             plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
@@ -139,11 +139,11 @@ public class TARDISSiegeMode {
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }
-            TARDISMessage.send(p, "SIEGE_OFF");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_OFF");
         } else {
             // make sure TARDIS is not dispersed
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return;
             }
             // destroy tardis
@@ -161,11 +161,11 @@ public class TARDISSiegeMode {
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
-            TARDISMessage.send(p, "SIEGE_ON");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_ON");
             plugin.getPM().callEvent(new TARDISSiegeEvent(p, tardis));
             // butcher hostile mobs?
             if (plugin.getConfig().getBoolean("siege.butcher")) {
-                TARDISMessage.send(p, "SIEGE_BUTCHER");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_BUTCHER");
                 for (Entity ent : p.getNearbyEntities(72d, 32d, 72d)) {
                     if (ent instanceof Monster) {
                         if (ent instanceof Creeper) {

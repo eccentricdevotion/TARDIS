@@ -21,10 +21,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -61,12 +61,12 @@ public class TARDISThemeButton {
         // check player is in own TARDIS
         int p_tid = getTardisId(player.getUniqueId().toString());
         if (p_tid != id) {
-            TARDISMessage.send(player, "UPGRADE_OWN");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_OWN");
             return;
         }
         // check they are not growing rooms
         if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(id)) {
-            TARDISMessage.send(player, "NO_UPGRADE_WHILE_GROWING");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_UPGRADE_WHILE_GROWING");
             return;
         }
         // get player's current console

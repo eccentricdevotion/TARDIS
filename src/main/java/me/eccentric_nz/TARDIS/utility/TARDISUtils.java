@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -172,7 +172,7 @@ public class TARDISUtils {
                 if (grace_count < grace) {
                     inGracePeriod = true;
                     if (update) {
-                        TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
                         // update the grace count if the TARDIS has travelled
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());

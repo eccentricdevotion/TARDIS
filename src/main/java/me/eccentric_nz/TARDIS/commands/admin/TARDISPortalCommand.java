@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -61,7 +61,7 @@ class TARDISPortalCommand {
                 plugin.debug("Error closing portals table! " + e.getMessage());
             }
         }
-        TARDISMessage.send(sender, "PURGE_PORTAL");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "PURGE_PORTAL");
         return true;
     }
 }

@@ -21,7 +21,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -98,7 +98,7 @@ class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                TARDISMessage.send(p, "ENERGY_RECOVERED", String.format("%d", amount));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_RECOVERED", String.format("%d", amount));
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {

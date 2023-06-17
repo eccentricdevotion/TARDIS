@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -35,9 +35,9 @@ public class TARDISTravelCancel {
     public boolean action(Player player, int id) {
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             plugin.getTrackerKeeper().getHasDestination().remove(id);
-            TARDISMessage.send(player, "TRAVEL_CANCEL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_CANCEL");
         } else {
-            TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
         }
         return true;
     }

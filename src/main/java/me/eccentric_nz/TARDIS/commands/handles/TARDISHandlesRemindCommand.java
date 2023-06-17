@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import java.util.Arrays;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
@@ -40,10 +39,10 @@ class TARDISHandlesRemindCommand {
         // the last argument should be a number
         long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
         if (when == 0) {
-            TARDISMessage.handlesMessage(player, "HANDLES_NUMBER");
+            plugin.getMessenger().handlesMessage(player, "HANDLES_NUMBER");
             return true;
         }
-        TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
+        plugin.getMessenger().handlesSend(player, "HANDLES_OK", "" + when);
         TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
         // convert minutes to milliseconds
         when *= 60000;

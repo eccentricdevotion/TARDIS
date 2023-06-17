@@ -22,8 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,23 +39,23 @@ class TARDISJettisonCommand {
     boolean startJettison(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             String room = args[1].toUpperCase(Locale.ENGLISH);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                TARDISMessage.send(player, "GRAVITY_INFO", ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_INFO /tardisgravity remove");
             }
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
                 StringBuilder buf = new StringBuilder(args[1]);
                 plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
                 String roomlist = buf.substring(0, buf.length() - 2);
-                TARDISMessage.send(player, "ROOM_NOT_VALID", roomlist);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NOT_VALID", roomlist);
                 return true;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             int id = rs.getTardis_id();
@@ -66,15 +65,15 @@ class TARDISJettisonCommand {
             wheret.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                 return true;
             }
             plugin.getTrackerKeeper().getJettison().put(player.getUniqueId(), room);
             String seed = plugin.getArtronConfig().getString("jettison_seed");
-            TARDISMessage.send(player, "ROOM_JETT_INFO", seed, room, seed);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT_INFO", seed, room, seed);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

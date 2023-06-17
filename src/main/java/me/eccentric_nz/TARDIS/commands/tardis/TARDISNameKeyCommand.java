@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,12 +47,12 @@ class TARDISNameKeyCommand {
         }
         Material m = Material.getMaterial(key);
         if (m.isAir()) {
-            TARDISMessage.send(player, "KEY_NO_RENAME");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_RENAME");
             return true;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().equals(m)) {
-            TARDISMessage.send(player, "KEY_ONLY");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_ONLY");
             return true;
         }
         int count = args.length;
@@ -63,7 +63,7 @@ class TARDISNameKeyCommand {
         if (!newName.isEmpty()) {
             TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
             ir.setName(newName, false);
-            TARDISMessage.send(player, "KEY_RENAMED", newName);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_RENAMED", newName);
             return true;
         } else {
             return false;

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -47,7 +47,7 @@ public class TARDISChameleonCircuit {
             wall_block = chameleonType;
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
-            TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
+            plugin.getMessenger().send(p.getPlayer(), TardisModule.TARDIS, "CHAM_NOT_ENGAGE");
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
             wall_block = TARDISConstants.changeToMaterial(chameleonType);

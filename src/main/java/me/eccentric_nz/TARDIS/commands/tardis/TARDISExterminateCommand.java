@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -41,18 +41,19 @@ class TARDISExterminateCommand {
     boolean doExterminate(Player player, boolean messagePlayer) {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
+                // TODO
                 TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"));
                 textComponent.setColor(ChatColor.AQUA);
                 textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
                 textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis exterminate 6z@3=V!Q7*/O_OB^"));
-                TARDISMessage.send(player, "EXTERMINATE_CHECK");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 player.spigot().sendMessage(textComponent);
                 return true;
             } else {
                 return new TARDISExterminator(plugin).exterminate(player);
             }
         } else {
-            TARDISMessage.send(player, "NO_PERM_DELETE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_DELETE");
             return true;
         }
     }

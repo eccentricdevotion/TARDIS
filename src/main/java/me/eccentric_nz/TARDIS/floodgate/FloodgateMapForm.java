@@ -15,7 +15,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
@@ -72,7 +72,7 @@ public class FloodgateMapForm {
         }
         Location location = getTransmatLocation(mat);
         if (location != null) {
-            TARDISMessage.send(player, "TRANSMAT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 player.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                 player.teleport(location);

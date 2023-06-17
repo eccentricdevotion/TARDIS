@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -93,7 +93,7 @@ public class TARDISInstantPreset {
         if (preset.equals(ChameleonPreset.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
             if (column == null) {
-                TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+                plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
                 return;
             }
         } else {
@@ -446,7 +446,7 @@ public class TARDISInstantPreset {
                     Player trav = plugin.getServer().getPlayer(s);
                     if (trav != null) {
                         String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                        TARDISMessage.send(trav, message);
+                        plugin.getMessenger().send(trav, TardisModule.TARDIS, message);
                         // TARDIS has travelled so add players to list so they can receive Artron on exit
                         plugin.getTrackerKeeper().getHasTravelled().add(s);
                     }

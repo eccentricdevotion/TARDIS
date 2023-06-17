@@ -21,7 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 class SudoDeadlock {
@@ -48,10 +48,10 @@ class SudoDeadlock {
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("doors", setd, whered);
-                TARDISMessage.send(sender, "DOOR_LOCK", lockedUnlocked);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "DOOR_LOCK", lockedUnlocked);
             }
         } else {
-            TARDISMessage.send(sender, "NO_TARDIS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_TARDIS");
         }
         return true;
     }

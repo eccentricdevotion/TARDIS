@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -68,7 +68,7 @@ class TARDISRemoteTravelCommand {
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
-                TARDISMessage.send(sender, "DEST_NO_LOAD");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");
                 return true;
             }
             boolean is_next_sub = rsn.isSubmarine();

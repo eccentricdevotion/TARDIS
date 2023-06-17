@@ -20,8 +20,8 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSmelterCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ class TARDISSmelterCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet() && rst.getTardis_id() != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
             return true;
         }
         Location l = b.getLocation();
@@ -78,7 +78,7 @@ class TARDISSmelterCommand {
                 plugin.getQueryFactory().doInsert("vaults", set);
             }
         }
-        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
         return true;
     }
 }

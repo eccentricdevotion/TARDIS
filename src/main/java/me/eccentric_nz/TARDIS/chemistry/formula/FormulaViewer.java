@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.chemistry.lab.LabBuilder;
 import me.eccentric_nz.TARDIS.chemistry.product.Product;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductBuilder;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

@@ -18,9 +18,10 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -37,25 +38,24 @@ class TARDISVersionCommand {
     }
 
     boolean displayVersion(CommandSender sender) {
-        String pluginName = plugin.getPluginName();
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
         String cb = Bukkit.getVersion();
         // send server and TARDIS versions
-        sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
-        sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
+        plugin.getMessenger().message(sender, TardisModule.TARDIS, "Server version: " + ChatColor.AQUA + cb);
+        plugin.getMessenger().message(sender, TardisModule.TARDIS, "TARDIS version: " + ChatColor.AQUA + tardisversion);
         // send dependent plugin versions
         for (Plugin hook : plugin.getPM().getPlugins()) {
             PluginDescriptionFile desc = hook.getDescription();
             String name = desc.getName();
             String version = desc.getVersion();
             if (hooks.contains(name)) {
-                sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, name + " version: " + ChatColor.AQUA + version);
             }
         }
         // check for new TARDIS build
         if (sender.isOp()) {
-            sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
+            plugin.getMessenger().message(sender, TardisModule.TARDIS, "Checking for new TARDIS builds...");
             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
         }
         return true;

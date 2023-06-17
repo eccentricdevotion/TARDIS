@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -95,14 +95,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return true;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                     if (TARDISPermission.isNegated(player, "tardis.prefs." + pref)) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                         return true;
                     }
                     if (pref.equals("sonic")) {
@@ -135,16 +135,16 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
                         }
                         case "eps_message" -> {
-                            return new TARDISEPSMessageCommand().setMessage(player, args);
+                            return new TARDISEPSMessageCommand(plugin).setMessage(player, args);
                         }
                         case "flight" -> {
-                            return new TARDISSetFlightCommand().setMode(player, args);
+                            return new TARDISSetFlightCommand(plugin).setMode(player, args);
                         }
                         case "hads_type" -> {
-                            return new TARDISHadsTypeCommand().setHadsPref(player, args);
+                            return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args);
                         }
                         case "hum" -> {
-                            return new TARDISHumCommand().setHumPref(player, args);
+                            return new TARDISHumCommand(plugin).setHumPref(player, args);
                         }
                         case "isomorphic" -> {
                             return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
@@ -156,14 +156,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
                         }
                         case "lights" -> {
-                            return new TARDISLightsCommand().setLightsPref(player, args);
+                            return new TARDISLightsCommand(plugin).setLightsPref(player, args);
                         }
                         case "wall", "floor", "siege_wall", "siege_floor" -> {
-                            return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
+                            return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
                         }
                         default -> {
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                                TARDISMessage.send(player, "PREF_ON_OFF", pref);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", pref);
                                 return false;
                             }
                             if (pref.equals("forcefield") && TARDISPermission.hasPermission(player, "tardis.forcefield")) {
@@ -173,19 +173,19 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                     ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid);
                                     if (rsal.resultset()) {
                                         if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
-                                            TARDISMessage.send(player, "POWER_LOW");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                             return true;
                                         }
                                         if (TARDISForceField.addToTracker(player)) {
-                                            TARDISMessage.send(player, "PREF_WAS_ON", "The TARDIS force field");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                         }
                                     } else {
-                                        TARDISMessage.send(player, "POWER_LEVEL");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LEVEL");
                                         return true;
                                     }
                                 } else {
                                     plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                    TARDISMessage.send(player, "PREF_WAS_OFF", "The TARDIS force field");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_OFF", "The TARDIS force field");
                                 }
                                 return true;
                             }
@@ -197,11 +197,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                     }
                 } else {
-                    TARDISMessage.send(player, "NO_PERMS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     return false;
                 }
             } else {
-                TARDISMessage.send(player, "PREF_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NOT_VALID");
             }
         }
         return false;

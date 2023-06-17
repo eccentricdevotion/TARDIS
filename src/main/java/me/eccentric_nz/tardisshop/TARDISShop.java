@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardisshop;
 
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemBreak;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemDespawn;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemExplode;
@@ -34,7 +34,7 @@ public class TARDISShop {
             plugin.getCommand("tardisshop").setExecutor(command);
             plugin.getCommand("tardisshop").setTabCompleter(command);
         } else {
-            plugin.getLogger().log(Level.WARNING, "This feature requires the Vault plugin to function, disabling...");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "This feature requires the Vault plugin to function, disabling...");
         }
     }
 

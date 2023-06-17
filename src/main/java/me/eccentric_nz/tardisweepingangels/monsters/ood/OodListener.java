@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -32,6 +33,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class OodListener implements Listener {
+
+    private final TARDIS plugin;
+
+    public OodListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageOod(EntityDamageByEntityEvent event) {
@@ -65,7 +72,7 @@ public class OodListener implements Listener {
                 } else if (oodId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Ood
                     stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
-                    player.sendMessage(TardisModule.MONSTERS.getName() + "WA_CLAIMED", "Ood");
+                    plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
                 }
             }
         }

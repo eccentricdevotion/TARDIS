@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
@@ -97,7 +96,7 @@ public class TARDISDisplayBlockConverter implements Runnable {
             // we're finished
             plugin.getServer().getScheduler().cancelTask(taskId);
             taskId = 0;
-            TARDISMessage.message(owner, "CONSOLE Display Block conversion complete");
+            plugin.getMessenger().message(owner, "CONSOLE Display Block conversion complete");
         } else {
             // check a row of blocks
             for (int col = 0; col < c; col++) {

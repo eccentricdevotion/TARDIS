@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -89,7 +89,7 @@ public class TARDISCraftListener implements Listener {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
                     t.put(cmat, console.toUpperCase(Locale.ENGLISH));
                 } else {
-                    plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.yml", console);
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "The custom console '" + console + "' does not have a corresponding upgrade value in artron.yml");
                 }
             }
         });

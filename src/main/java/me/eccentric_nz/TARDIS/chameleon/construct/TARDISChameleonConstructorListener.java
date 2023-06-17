@@ -36,10 +36,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
@@ -143,7 +142,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     wherecl.put("tardis_id", id);
                                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
                                     if (!rscl.resultSet()) {
-                                        TARDISMessage.send(player, "CHAM_NO_SAVE");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NO_SAVE");
                                         return;
                                     }
                                     buildConstruct(tardis.getPreset().toString(), id, player);
@@ -164,7 +163,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                             if (d != null) {
                                                 Material type = d.getType();
                                                 if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.WOOL_CARPETS.isTagged(type)) {
-                                                    TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
+                                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NOT_CUSTOM");
                                                     // return items
                                                     player.getWorld().dropItemNaturally(player.getLocation(), d);
                                                     event.getClickedInventory().clear(s + c);
@@ -222,7 +221,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         first++;
                                     }
                                     if (nullcount == 33) {
-                                        TARDISMessage.send(player, "CHAM_NOT_EMPTY");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NOT_EMPTY");
                                         return;
                                     }
                                     // add sign
@@ -336,7 +335,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         if (rsf.resultSet()) {
             new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CONSTRUCT, rsf.getLocation());
         }
-        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild
         player.performCommand("tardis rebuild");
         plugin.getTrackerKeeper().getConstructors().remove(player.getUniqueId());

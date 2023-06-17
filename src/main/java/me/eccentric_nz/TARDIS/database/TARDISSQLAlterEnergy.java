@@ -24,7 +24,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISArtronEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -90,7 +90,7 @@ class TARDISSQLAlterEnergy implements Runnable {
                         new TARDISArtronIndicator(plugin).showArtronLevel(p, id, Math.abs(amount));
                         plugin.getPM().callEvent(new TARDISArtronEvent(p, amount, id));
                     } else {
-                        TARDISMessage.send(p, "ENERGY_USED", String.format("%d", Math.abs(amount)));
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }
                 }
             }.runTask(plugin);

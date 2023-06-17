@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -184,7 +184,7 @@ public class TARDISAbandonCommand {
                     new TARDISAbandonLister(plugin).list(sender);
                     return true;
                 } else {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 }
             } else {
                 // must be a Player
@@ -193,17 +193,17 @@ public class TARDISAbandonCommand {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                     return true;
                 }
                 if (!plugin.getConfig().getBoolean("allow.power_down")) {
-                    TARDISMessage.send(sender, "ABANDON_POWER_DOWN");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDON_POWER_DOWN");
                     return true;
                 }
                 // abandon TARDIS
                 ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return true;
                 } else {
                     ChameleonPreset preset = rs.getPreset();
@@ -212,32 +212,32 @@ public class TARDISAbandonCommand {
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (!rst.resultSet()) {
-                        TARDISMessage.send(player, "NOT_IN_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                         return true;
                     }
                     if (preset.equals(ChameleonPreset.JUNK_MODE)) {
-                        TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_NOT_JUNK");
                         return true;
                     }
                     int id = rs.getTardis_id();
                     if (rst.getTardis_id() != id) {
-                        TARDISMessage.send(player, "ABANDONED_OWN");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_OWN");
                         return true;
                     }
                     if (!rs.isTardis_init()) {
-                        TARDISMessage.send(player, "ENERGY_NO_INIT");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                         return true;
                     }
                     if (!rs.isHandbrake_on()) {
-                        TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
                         return true;
                     }
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        TARDISMessage.send(player, "NOT_IN_VORTEX");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_VORTEX");
                         return true;
                     }
                     if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                        TARDISMessage.send(player, "NOT_WHILE_MAT");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                         return true;
                     }
                     new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
@@ -247,7 +247,7 @@ public class TARDISAbandonCommand {
                     }
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
-                    TARDISMessage.send(player, "ABANDONED_SUCCESS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
@@ -286,7 +286,7 @@ public class TARDISAbandonCommand {
                 }
             }
         } else {
-            TARDISMessage.send(sender, "NO_PERMS_ABANDON");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS_ABANDON");
         }
         return true;
     }

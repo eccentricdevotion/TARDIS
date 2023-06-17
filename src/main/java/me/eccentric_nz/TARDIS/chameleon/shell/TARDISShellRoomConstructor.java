@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
@@ -87,11 +87,11 @@ public class TARDISShellRoomConstructor {
                 }
             }
             if (!hasBlock && !hasDoor) {
-                TARDISMessage.send(player, "SHELL_MIN_BLOCKS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SHELL_MIN_BLOCKS");
                 return;
             }
             Tardis tardis = rs.getTardis();
-            TARDISMessage.send(player, "PRESET_SCAN");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_SCAN");
             StringBuilder sb_blue_data = new StringBuilder("[");
             StringBuilder sb_stain_data = new StringBuilder("[");
             StringBuilder sb_glass_data = new StringBuilder("[");
@@ -185,7 +185,7 @@ public class TARDISShellRoomConstructor {
         HashMap<String, Object> wheree = new HashMap<>();
         wheree.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
-        TARDISMessage.send(player, "PRESET_CONSTRUCTED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_CONSTRUCTED");
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
@@ -211,7 +211,7 @@ public class TARDISShellRoomConstructor {
         if (rsf.resultSet()) {
             new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CONSTRUCT, rsf.getLocation());
         }
-        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild
         player.performCommand("tardis rebuild");
         // damage the circuit if configured

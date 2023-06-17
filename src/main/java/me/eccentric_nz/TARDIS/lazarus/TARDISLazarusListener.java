@@ -22,10 +22,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateGeneticManipulatorForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -72,7 +72,7 @@ public class TARDISLazarusListener implements Listener {
                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
                         if (rs.fromID(rsc.getTardis_id()) && !rs.isPowered()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                     }

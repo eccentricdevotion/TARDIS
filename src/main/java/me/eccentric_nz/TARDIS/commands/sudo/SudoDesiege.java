@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
@@ -76,7 +76,7 @@ class SudoDesiege {
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetBuilder().buildPreset(bd);
-            TARDISMessage.send(sender, "SIEGE_REBUILT");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "SIEGE_REBUILT");
         }
         return true;
     }

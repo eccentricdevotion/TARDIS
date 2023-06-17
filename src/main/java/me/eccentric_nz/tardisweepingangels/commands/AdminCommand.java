@@ -58,14 +58,14 @@ public class AdminCommand {
         }
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         int m;
         try {
             m = Integer.parseInt(args[3]);
         } catch (NumberFormatException e) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "ARG_LAST_NUMBER");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "ARG_LAST_NUMBER");
             return false;
         }
         String which = args[1].toUpperCase();
@@ -95,12 +95,12 @@ public class AdminCommand {
                 plugin.getMonstersConfig().set("vashta_nerada.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("zygons.worlds." + args[2], m);
             } else {
-                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
+                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
                 return true;
             }
         }
         plugin.saveConfig();
-        TARDISMessage.send(sender,TardisModule.MONSTERS, "WA_CONFIG");
+        plugin.getMessenger().send(sender,TardisModule.MONSTERS, "WA_CONFIG");
         return true;
     }
 }

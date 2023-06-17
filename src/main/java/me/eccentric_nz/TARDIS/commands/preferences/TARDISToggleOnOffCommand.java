@@ -23,7 +23,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,27 +42,27 @@ class TARDISToggleOnOffCommand {
     public boolean toggle(Player player, String[] args) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-            TARDISMessage.send(player, "AUTO_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AUTO_DISABLED");
             return true;
         }
         if (pref.equals("auto_powerup") && !plugin.getConfig().getBoolean("allow.power_down")) {
-            TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN_DISABLED");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            TARDISMessage.send(player, "EP1_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "EP1_DISABLED");
             return true;
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-            TARDISMessage.send(player, "HADS_DISBALED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_DISBALED");
             return true;
         }
         if (pref.equals("lock_containers") && !plugin.isWorldGuardOnServer()) {
-            TARDISMessage.send(player, "WG_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WG_DISABLED");
             return true;
         }
         if (pref.equals("lock_containers") && !plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "CMD_IN_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_IN_WORLD");
             return true;
         }
         HashMap<String, Object> setp = new HashMap<>();
@@ -83,7 +83,7 @@ class TARDISToggleOnOffCommand {
                 }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
-            TARDISMessage.send(player, grammar, pref);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, grammar, pref);
         }
         if (args[1].equalsIgnoreCase("off")) {
             if (args[0].equalsIgnoreCase("lock_containers")) {
@@ -100,7 +100,7 @@ class TARDISToggleOnOffCommand {
                 }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
-            TARDISMessage.send(player, grammar, pref);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, grammar, pref);
         }
         if (!setp.isEmpty()) {
             plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);

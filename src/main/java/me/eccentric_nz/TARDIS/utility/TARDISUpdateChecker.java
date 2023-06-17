@@ -24,10 +24,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 public class TARDISUpdateChecker implements Runnable {
@@ -50,9 +48,9 @@ public class TARDISUpdateChecker implements Runnable {
         if (build.contains(":")) {
             // local build, not a Jenkins build
             if (sender == null) {
-                plugin.getLogger().log(Level.INFO, "Server is running a custom or dev version!");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Server is running a custom or dev version!");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "You are running a custom or dev version!");
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "You are running a custom or dev version!");
             }
             return;
         }
@@ -61,9 +59,9 @@ public class TARDISUpdateChecker implements Runnable {
         if (lastBuild == null || !lastBuild.has("id")) {
             // couldn't get Jenkins info
             if (sender == null) {
-                plugin.getLogger().log(Level.WARNING, "Couldn't retrieve Jenkins info!");
+                plugin.getMessenger().sendWithColour(plugin.getConsole(), TardisModule.TARDIS, "Couldn't retrieve Jenkins info!", "#FF5555");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Couldn't retrieve Jenkins info!");
+                plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "Couldn't retrieve Jenkins info!", "#FF5555");
             }
             return;
         }
@@ -71,18 +69,18 @@ public class TARDISUpdateChecker implements Runnable {
         if (newBuildNumber < buildNumber) {
             // if new build number is older
             if (sender == null) {
-                plugin.getLogger().log(Level.INFO, "Server is running a newer TARDIS version!");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Server is running a newer TARDIS version!");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "You are running a newer TARDIS version!");
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "You are running a newer TARDIS version!");
             }
             return;
         }
         if (buildNumber == newBuildNumber) {
             // if new build number is same
             if (sender == null) {
-                plugin.getLogger().log(Level.INFO, "Server is running the latest version!");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Server is running the latest version!");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "You are running the latest version!");
             }
             return;
         }
@@ -90,15 +88,16 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setBuildNumber(buildNumber);
         plugin.setUpdateNumber(newBuildNumber);
         if (sender == null) {
-            plugin.getLogger().log(Level.INFO, String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
-            plugin.getLogger().log(Level.INFO, TARDISMessage.UPDATE_COMMAND);
+            plugin.getMessenger().sendJenkinsUpdateReady(plugin.getConsole(), buildNumber, newBuildNumber);
+            plugin.getMessenger().sendUpdateCommand(plugin.getConsole());
         } else {
-            sender.sendMessage(plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
+            plugin.getMessenger().sendBuildsBehind(sender, (newBuildNumber - buildNumber));
         }
     }
 
     /**
-     * Fetches from jenkins, using the REST api the last snapshot build information
+     * Fetches from jenkins, using the REST api the last snapshot build
+     * information
      */
     private JsonObject fetchLatestJenkinsBuild() {
         try {

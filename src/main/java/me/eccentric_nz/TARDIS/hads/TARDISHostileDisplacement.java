@@ -24,10 +24,9 @@ import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.BlockFace;
@@ -150,23 +149,24 @@ class TARDISHostileDisplacement {
                         bd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // message time lord
+                        // TODO
                         String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
                         player.sendMessage(message);
                         String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                        TARDISMessage.send(player, "HADS_LOC", hads);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_LOC", hads);
                         if (player != hostile) {
                             hostile.sendMessage(message);
                         }
                         plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, fl, HADS.DISPLACEMENT));
                         break;
                     } else {
-                        TARDISMessage.send(player, "HADS_PROTECTED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_PROTECTED");
                         if (player != hostile) {
-                            TARDISMessage.send(hostile, "HADS_PROTECTED");
+                            plugin.getMessenger().send(hostile, TardisModule.TARDIS, "HADS_PROTECTED");
                         }
                     }
                 } else if (underwater) {
-                    TARDISMessage.send(player, "HADS_NOT_SAFE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NOT_SAFE");
                 } else if (count > 7) {
                     // only if count is 8 or more
                     // use dispersal instead...
@@ -174,7 +174,7 @@ class TARDISHostileDisplacement {
                 }
             } else {
                 plugin.getTrackerKeeper().getHadsDamage().remove(id);
-                TARDISMessage.send(player, "HADS_NO_WATER");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NO_WATER");
             }
         }
     }

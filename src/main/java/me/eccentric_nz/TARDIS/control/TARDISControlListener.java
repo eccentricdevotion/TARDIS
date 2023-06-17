@@ -42,13 +42,12 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.*;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -122,7 +121,7 @@ public class TARDISControlListener implements Listener {
                     int id = rsc.getTardis_id();
                     int type = rsc.getType();
                     if (plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId()) && type != 13) {
-                        TARDISMessage.send(player, "ISO_HANDS_OFF");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                         return;
                     }
                     if (!onlythese.contains(type)) {
@@ -139,25 +138,25 @@ public class TARDISControlListener implements Listener {
                         }
                         // check they initialised
                         if (!tardis.isTardis_init()) {
-                            TARDISMessage.send(player, "ENERGY_NO_INIT");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                             return;
                         }
                         // check isomorphic controls
                         if (tardis.isIso_on() && !player.getUniqueId().equals(tardis.getUuid())) {
-                            TARDISMessage.send(player, "ISO_HANDS_OFF");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                             return;
                         }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !control.allowUnpowered()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id) && control.isNoSiege()) {
-                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
                         boolean lights = tardis.isLights_on();
                         if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
                         int level = tardis.getArtron_level();
@@ -173,13 +172,13 @@ public class TARDISControlListener implements Listener {
                             switch (type) {
                                 case 1 -> { // random location button
                                     if (cooldown.contains(player.getUniqueId())) {
-                                        TARDISMessage.send(player, "SPAM_WAIT");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SPAM_WAIT");
                                         return;
                                     }
                                     cooldown.add(player.getUniqueId());
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 60L);
                                     if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -189,7 +188,7 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 8 -> { // fast return button
                                     if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -199,18 +198,18 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 9 -> { // terminal sign
                                     if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         plugin.getTrackerKeeper().getHasRandomised().add(id);
                                     }
                                     if (level < plugin.getArtronConfig().getInt("travel")) {
-                                        TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                                         return;
                                     }
                                     if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
                                         return;
                                     }
                                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
@@ -224,22 +223,22 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 10 -> { // ARS sign
                                     if (!hb) {
-                                        TARDISMessage.send(player, "ARS_NO_TRAVEL");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_NO_TRAVEL");
                                         return;
                                     }
                                     // check they're in a compatible world
                                     if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
-                                        TARDISMessage.send(player, "ROOM_OWN_WORLD");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_OWN_WORLD");
                                         return;
                                     }
                                     if (player.isSneaking()) {
                                         // check they have permission to change the desktop
                                         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
-                                            TARDISMessage.send(player, "NO_PERM_UPGRADE");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE");
                                             return;
                                         }
                                         if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
-                                            TARDISMessage.send(player, "ARS_MISSING");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
                                             return;
                                         }
                                         // upgrade menu
@@ -247,11 +246,11 @@ public class TARDISControlListener implements Listener {
                                     } else {
                                         // check they have permission to grow rooms
                                         if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
-                                            TARDISMessage.send(player, "NO_PERM_ROOMS");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ROOMS");
                                             return;
                                         }
                                         if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
-                                            TARDISMessage.send(player, "ARS_MISSING");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
                                             return;
                                         }
                                         ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
@@ -262,11 +261,11 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 11 -> { // Temporal Locator sign
                                     if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {
-                                        TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TEMPORAL");
                                         return;
                                     }
                                     if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        TARDISMessage.send(player, "TEMP_MISSING");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMP_MISSING");
                                         return;
                                     }
                                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
@@ -288,7 +287,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                     // only the time lord of this tardis
                                     if (!ownerUUID.equals(playerUUID)) {
-                                        TARDISMessage.send(player, "NOT_OWNER");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
                                         return;
                                     }
                                     // do they have a storage record?
@@ -371,7 +370,7 @@ public class TARDISControlListener implements Listener {
                                 case 21 -> {
                                     // siege lever
                                     if (tcc != null && !tcc.hasMaterialisation()) {
-                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                                         return;
                                     }
                                     new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
@@ -396,7 +395,7 @@ public class TARDISControlListener implements Listener {
                                     // shell room button
                                     if (plugin.getConfig().getBoolean("police_box.load_shells") && player.isSneaking()) {
                                         if (!TARDISPermission.hasPermission(player, "tardis.load_shells")) {
-                                            TARDISMessage.send(player, "NO_PERMS");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                             return;
                                         }
                                         // Chameleon load GUI
@@ -415,12 +414,12 @@ public class TARDISControlListener implements Listener {
                                 case 26 -> {
                                     // Handles
                                     if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                                        TARDISMessage.send(player, "NO_PERMS");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                         return;
                                     }
                                     TARDISSounds.playTARDISSound(player, "handles", 5L);
                                     if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-                                        TARDISMessage.send(player, "NO_PERMS");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                                         return;
                                     }
                                     if (player.isSneaking()) {
@@ -465,16 +464,16 @@ public class TARDISControlListener implements Listener {
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
                                             TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_down");
-                                            TARDISMessage.send(player, "FORCE_FIELD", "OFF");
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "OFF");
                                         } else {
                                             // check there is enough artron
                                             if (level <= plugin.getArtronConfig().getInt("standby")) {
-                                                TARDISMessage.send(player, "POWER_LOW");
+                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                                 return;
                                             }
                                             if (TARDISForceField.addToTracker(player)) {
                                                 TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_up");
-                                                TARDISMessage.send(player, "FORCE_FIELD", "ON");
+                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "ON");
                                             }
                                         }
                                     }
@@ -494,7 +493,7 @@ public class TARDISControlListener implements Listener {
                                         HashMap<String, Object> wheref = new HashMap<>();
                                         wheref.put("uuid", player.getUniqueId().toString());
                                         plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
-                                        TARDISMessage.send(player, "FLIGHT_TOGGLED", FlightMode.getByMode().get(mode).toString());
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_TOGGLED", FlightMode.getByMode().get(mode).toString());
                                     }
                                 }
                                 case 31 -> {
@@ -553,7 +552,7 @@ public class TARDISControlListener implements Listener {
                                     HashMap<String, Object> setr = new HashMap<>();
                                     setr.put("throttle", delay);
                                     plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
-                                    TARDISMessage.send(player, "THROTTLE", SpaceTimeThrottle.getByDelay().get(delay).toString());
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "THROTTLE", SpaceTimeThrottle.getByDelay().get(delay).toString());
                                 }
                                 default -> {
                                 }
@@ -621,12 +620,12 @@ public class TARDISControlListener implements Listener {
     private void doZero(int level, Player player, String z, int id) {
         int zero_amount = plugin.getArtronConfig().getInt("zero");
         if (level < zero_amount) {
-            TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }
         Location zero = TARDISStaticLocationGetters.getLocationFromDB(z);
         if (zero != null) {
-            TARDISMessage.send(player, "ZERO_READY");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                 plugin.getPM().callEvent(new TARDISZeroRoomEnterEvent(player, id));
@@ -636,7 +635,7 @@ public class TARDISControlListener implements Listener {
             wherez.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
         } else {
-            TARDISMessage.send(player, "NO_ZERO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
         }
     }
 

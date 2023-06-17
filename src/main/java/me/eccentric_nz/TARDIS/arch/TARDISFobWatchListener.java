@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchOffEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -65,7 +65,7 @@ public class TARDISFobWatchListener implements Listener {
             if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 // only check the permission when trying to 'fob'
                 if (!TARDISPermission.hasPermission(player, "tardis.chameleonarch")) {
-                    TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_CHAM_ARCH");
                     return;
                 }
                 String name = TARDISRandomName.name();

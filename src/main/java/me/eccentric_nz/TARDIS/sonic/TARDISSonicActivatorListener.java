@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -119,7 +119,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
                 set.put("uuid", uuid);
                 plugin.getQueryFactory().doInsert("sonic", set);
             }
-            TARDISMessage.send(p, "SONIC_ACTIVATED");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SONIC_ACTIVATED");
         } else {
             // return item stacks
             Location l = p.getLocation();
@@ -130,7 +130,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
                     w.dropItemNaturally(l, is);
                 }
             }
-            TARDISMessage.send(p, "SONIC_NOT_ACTIVATED");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "SONIC_NOT_ACTIVATED");
         }
     }
 }

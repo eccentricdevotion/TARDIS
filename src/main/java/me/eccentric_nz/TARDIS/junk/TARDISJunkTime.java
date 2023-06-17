@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -43,12 +43,12 @@ class TARDISJunkTime {
                 long mins = returnTime / 60;
                 long secs = returnTime - (mins * 60);
                 String sub = String.format("%d minutes %d seconds", mins, secs);
-                TARDISMessage.send(sender, "JUNK_RETURN_TIME", sub);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_RETURN_TIME", sub);
             } else {
-                TARDISMessage.send(sender, "JUNK_NO_RETURN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NO_RETURN");
             }
         } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_AT_HOME");
         }
         return true;
     }

@@ -21,7 +21,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
@@ -62,19 +61,24 @@ import org.bukkit.util.Vector;
 
 public class TARDISHelper {
 
+    private final TARDIS plugin;
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
     public static boolean colourSkies;
 
-    public void enable(TARDIS plugin) {
+    public TARDISHelper(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void enable() {
         // load custom biomes if they are enabled
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
-            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Gallifrey...");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Gallifrey...");
             CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Adding custom biome for planet Skaro...");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Skaro...");
             CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
@@ -84,8 +88,8 @@ public class TARDISHelper {
             // yes we should!
             String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
-            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Starting filtered logging for TARDIS plugins...");
-            plugin.getConsole().sendMessage(TardisModule.HELPER.getName() + "Log file located at 'plugins/TARDIS/filtered.log'");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Starting filtered logging for TARDIS plugins...");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Log file located at 'plugins/TARDIS/filtered.log'");
         }
         // register disguise listener
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
@@ -118,19 +122,21 @@ public class TARDISHelper {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
             try {
-                FileInputStream fileinputstream = new FileInputStream(file);
-                CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream);
-                CompoundTag data = tagCompound.getCompound("Data");
-                fileinputstream.close();
-                long random = new Random().nextLong();
-                // set RandomSeed tag
-                data.putLong("RandomSeed", random);
-                tagCompound.put("Data", data);
-                FileOutputStream fileoutputstream = new FileOutputStream(file);
-                NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                fileoutputstream.close();
+                CompoundTag tagCompound;
+                CompoundTag data;
+                try (FileInputStream fileinputstream = new FileInputStream(file)) {
+                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    data = tagCompound.getCompound("Data");
+                    long random = new Random().nextLong();
+                    // set RandomSeed tag
+                    data.putLong("RandomSeed", random);
+                    tagCompound.put("Data", data);
+                    FileOutputStream fileoutputstream = new FileOutputStream(file);
+                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                    fileoutputstream.close();
+                }
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
             }
         }
     }
@@ -139,25 +145,27 @@ public class TARDISHelper {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName + File.separator + "level.dat");
         if (file.exists()) {
             try {
-                FileInputStream fileinputstream = new FileInputStream(file);
-                CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream);
-                CompoundTag data = tagCompound.getCompound("Data");
-                fileinputstream.close();
-                // set LevelName tag
-                data.putString("LevelName", newName);
-                tagCompound.put("Data", data);
-                FileOutputStream fileoutputstream = new FileOutputStream(file);
-                NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                fileoutputstream.close();
-                Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Renamed level to " + newName);
-                // rename the directory
-                File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
-                File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
-                if (directory.renameTo(folder)) {
-                    Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Renamed directory to " + newName);
+                CompoundTag tagCompound;
+                CompoundTag data;
+                try (FileInputStream fileinputstream = new FileInputStream(file)) {
+                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    data = tagCompound.getCompound("Data");
+                    // set LevelName tag
+                    data.putString("LevelName", newName);
+                    tagCompound.put("Data", data);
+                    FileOutputStream fileoutputstream = new FileOutputStream(file);
+                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                    fileoutputstream.close();
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
+                    // rename the directory
+                    File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
+                    File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
+                    if (directory.renameTo(folder)) {
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
+                    }
                 }
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
             }
         }
     }
@@ -166,28 +174,26 @@ public class TARDISHelper {
         File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
             try {
-                FileInputStream fileinputstream = new FileInputStream(file);
-                CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream);
-                CompoundTag data = tagCompound.getCompound("Data");
-                fileinputstream.close();
-                int mode = switch (gm) {
-                    case CREATIVE ->
-                        1;
-                    case ADVENTURE ->
-                        2;
-                    case SPECTATOR ->
-                        3;
-                    default ->
-                        0; // SURVIVAL
-                };
-                // set GameType tag
-                data.putInt("GameType", mode);
-                tagCompound.put("Data", data);
-                FileOutputStream fileoutputstream = new FileOutputStream(file);
-                NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                fileoutputstream.close();
+                CompoundTag tagCompound;
+                CompoundTag data;
+                try (FileInputStream fileinputstream = new FileInputStream(file)) {
+                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    data = tagCompound.getCompound("Data");
+                    int mode = switch (gm) {
+                        case CREATIVE -> 1;
+                        case ADVENTURE -> 2;
+                        case SPECTATOR -> 3;
+                        default -> 0; // SURVIVAL
+                    };
+                    // set GameType tag
+                    data.putInt("GameType", mode);
+                    tagCompound.put("Data", data);
+                    FileOutputStream fileoutputstream = new FileOutputStream(file);
+                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                    fileoutputstream.close();
+                }
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
             }
         }
     }
@@ -204,27 +210,19 @@ public class TARDISHelper {
                 GameMode gameMode;
                 int gm = data.getInt("GameType");
                 gameMode = switch (gm) {
-                    case 1 ->
-                        GameMode.CREATIVE;
-                    case 2 ->
-                        GameMode.ADVENTURE;
-                    case 3 ->
-                        GameMode.SPECTATOR;
-                    default ->
-                        GameMode.SURVIVAL;
+                    case 1 -> GameMode.CREATIVE;
+                    case 2 -> GameMode.ADVENTURE;
+                    case 3 -> GameMode.SPECTATOR;
+                    default -> GameMode.SURVIVAL;
                 };
                 // get generatorName tag
                 WorldType worldType;
                 String wt = data.getString("generatorName");
                 worldType = switch (wt.toLowerCase(Locale.ROOT)) {
-                    case "flat" ->
-                        WorldType.FLAT;
-                    case "largebiomes" ->
-                        WorldType.LARGE_BIOMES;
-                    case "amplified" ->
-                        WorldType.AMPLIFIED;
-                    default ->
-                        WorldType.NORMAL; // default or unknown
+                    case "flat" -> WorldType.FLAT;
+                    case "largebiomes" -> WorldType.LARGE_BIOMES;
+                    case "amplified" -> WorldType.AMPLIFIED;
+                    default -> WorldType.NORMAL; // default or unknown
                 };
                 World.Environment environment = World.Environment.NORMAL;
                 File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
@@ -237,11 +235,11 @@ public class TARDISHelper {
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType);
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + ex.getMessage());
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
                 return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
             }
         }
-        Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
+        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
         return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
     }
 
@@ -254,7 +252,7 @@ public class TARDISHelper {
     }
 
     public void disguise(Player player, String name) {
-        new TARDISChameleonArchDisguiser(player).changeSkin(name);
+        new TARDISChameleonArchDisguiser(plugin, player).changeSkin(name);
     }
 
     public void disguise(Player player, UUID uuid) {
@@ -266,7 +264,7 @@ public class TARDISHelper {
     }
 
     public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(player).resetSkin();
+        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
     }
 
     public int spawnEmergencyProgrammeOne(Player player, Location location) {
@@ -331,7 +329,7 @@ public class TARDISHelper {
             TARDISTree type = TARDISTree.valueOf(tree.toUpperCase(Locale.ROOT));
             CustomTree.grow(type, location);
         } catch (IllegalArgumentException e) {
-            Bukkit.getLogger().log(Level.WARNING, TardisModule.HELPER.getName() + "Invalid TARDISTree type specified!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_WARNING, "Invalid TARDISTree type specified!");
         }
     }
 

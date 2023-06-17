@@ -2,9 +2,9 @@ package me.eccentric_nz.TARDIS.database.converters;
 
 import java.io.File;
 import java.sql.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -59,7 +59,7 @@ public class TARDISVortexManipulatorTransfer {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex beacons to database");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Transferred " + i + " vortex beacons to database");
                     i = 0;
                 }
                 statement = vm.prepareStatement(querySave);
@@ -82,7 +82,7 @@ public class TARDISVortexManipulatorTransfer {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex saves to database");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Transferred " + i + " vortex saves to database");
                     i = 0;
                 }
                 statement = vm.prepareStatement(queryManipulator);
@@ -99,7 +99,7 @@ public class TARDISVortexManipulatorTransfer {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex manipulators to database");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Transferred " + i + " vortex manipulators to database");
                     i = 0;
                 }
                 statement = vm.prepareStatement(queryMessage);
@@ -119,7 +119,7 @@ public class TARDISVortexManipulatorTransfer {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Transferred " + i + " vortex messages to database");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Transferred " + i + " vortex messages to database");
                 }
                 return true;
             } catch (SQLException e) {

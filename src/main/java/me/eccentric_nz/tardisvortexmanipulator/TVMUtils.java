@@ -6,7 +6,6 @@ package me.eccentric_nz.tardisvortexmanipulator;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetOutbox;
@@ -84,7 +83,7 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendSaveList(Player p, TVMResultSetSaves rss, int page) {
-        TARDISMessage.message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Saves (page " + page + ":");
+        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Saves (page " + page + ":");
         rss.getSaves().forEach((s) -> {
             p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ());
         });
@@ -98,7 +97,7 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendInboxList(Player p, TVMResultSetInbox rsi, int page) {
-        TARDISMessage.message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Inbox (page " + page + "):");
+        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Inbox (page " + page + "):");
         rsi.getMail().forEach((m) -> {
             ChatColor colour = (m.isRead()) ? ChatColor.DARK_GRAY : ChatColor.GRAY;
             p.sendMessage(colour + "" + m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, 12));
@@ -113,7 +112,7 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendOutboxList(Player p, TVMResultSetOutbox rso, int page) {
-        TARDISMessage.message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Outbox (page " + page + "):");
+        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Outbox (page " + page + "):");
         rso.getMail().forEach((m) -> {
             p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, 12));
         });
@@ -126,7 +125,7 @@ public class TVMUtils {
      * @param m the message to read
      */
     public static void readMessage(Player p, TVMMessage m) {
-        TARDISMessage.message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate());
+        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate());
         p.sendMessage(m.getMessage());
     }
 

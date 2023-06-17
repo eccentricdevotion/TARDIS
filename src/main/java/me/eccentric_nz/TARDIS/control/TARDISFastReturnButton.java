@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.entity.Player;
 
@@ -47,7 +47,7 @@ public class TARDISFastReturnButton {
     public void clickButton() {
         int cost = plugin.getArtronConfig().getInt("travel");
         if (level < cost) {
-            TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
         HashMap<String, Object> wherebl = new HashMap<>();
@@ -75,13 +75,13 @@ public class TARDISFastReturnButton {
                         new TARDISLand(plugin, id, player).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.BACK, id));
                     }
-                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {
-                    TARDISMessage.send(player, "TRAVEL_NO_BACK");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_BACK");
                 }
             }
         } else {
-            TARDISMessage.send(player, "PREV_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREV_NOT_FOUND");
         }
     }
 

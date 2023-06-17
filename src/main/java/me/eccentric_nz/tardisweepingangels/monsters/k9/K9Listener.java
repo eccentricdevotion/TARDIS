@@ -20,7 +20,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -93,7 +92,7 @@ public class K9Listener implements Listener {
                         }
                     }
                 } else {
-                    TARDISMessage.send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", "K9");
+                    plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", "K9");
                 }
             }
         }
@@ -111,7 +110,7 @@ public class K9Listener implements Listener {
                     Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
                     World world = location.getWorld();
                     if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + world.getName())) {
-                        TARDISMessage.send(player, TardisModule.MONSTERS, "WA_SPAWN");
+                        plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_SPAWN");
                         return;
                     }
                     // remove egg form inventory

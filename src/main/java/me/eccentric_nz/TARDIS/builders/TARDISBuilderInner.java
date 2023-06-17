@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -26,8 +27,8 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -47,8 +48,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -141,7 +140,7 @@ public class TARDISBuilderInner implements Runnable {
     public void run() {
         if (!running) {
             if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-                TARDISMessage.send(player, "CONFIG_CREATION_WORLD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONFIG_CREATION_WORLD");
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = -1;
                 return;

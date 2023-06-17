@@ -8,15 +8,15 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -77,7 +77,7 @@ public class FloodgateSavesForm {
         int level = rs.getArtronLevel();
         int travel = plugin.getArtronConfig().getInt("travel");
         if (level < travel) {
-            TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
         String dest = response.clickedButton().text();
@@ -95,7 +95,7 @@ public class FloodgateSavesForm {
                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                 if (save_dest != null) {
                     if (rsd.getWorld().startsWith("TARDIS_")) {
-                        TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                         return;
                     }
                     // check the player is allowed!
@@ -112,7 +112,7 @@ public class FloodgateSavesForm {
                         wheresave.put("z", rsd.getZ());
                         ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                         if (rsz.resultSet()) {
-                            TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                             return;
                         }
                         String invisibility = tac.getArea().getInvisibility();
@@ -122,11 +122,11 @@ public class FloodgateSavesForm {
                         if (resultSetTardis.resultSet()) {
                             if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                 // check preset
-                                TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                 return;
                             } else if (!invisibility.equals("ALLOW")) {
                                 // force preset
-                                TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
                                 HashMap<String, Object> wherei = new HashMap<>();
                                 wherei.put("tardis_id", id);
                                 HashMap<String, Object> seti = new HashMap<>();
@@ -159,16 +159,16 @@ public class FloodgateSavesForm {
                         plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.SAVE));
                         plugin.getTrackerKeeper().getRescue().remove(id);
-                        TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                             new TARDISLand(plugin, id, player).exitVortex();
                             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.SAVE, id));
                         }
                     } else {
-                        TARDISMessage.send(player, "AT_DEST", split[0]);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "AT_DEST", split[0]);
                     }
                 } else {
-                    TARDISMessage.send(player, "DEST_NOT_VALID", split[0]);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", split[0]);
                 }
             }
         } else {
@@ -198,13 +198,13 @@ public class FloodgateSavesForm {
                     plugin.getQueryFactory().doSyncUpdate("next", set, whereid);
                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, TravelType.HOME));
                     plugin.getTrackerKeeper().getRescue().remove(id);
-                    TARDISMessage.send(player, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", split[0], !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.HOME, id));
                     }
                 } else {
-                    TARDISMessage.send(player, "AT_HOME");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AT_HOME");
                 }
             }
         }

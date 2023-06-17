@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -125,7 +125,7 @@ class TARDISMaterialisePreset implements Runnable {
             if (column == null || stained_column == null || glass_column == null) {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-                TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+                plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
             }
             BlockData[][] datas;
             // get relative locations
@@ -730,13 +730,13 @@ class TARDISMaterialisePreset implements Runnable {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                TARDISMessage.send(p, message);
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
-                        TARDISMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
+                        plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present
                     HashMap<String, Object> whereb = new HashMap<>();

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -45,7 +45,7 @@ class TARDISARSRemoveCommand {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
         int id = rs.getTardis_id();
@@ -70,11 +70,11 @@ class TARDISARSRemoveCommand {
                 del.put("tardis_id", id);
                 del.put("type", 10);
                 plugin.getQueryFactory().doDelete("controls", del);
-                TARDISMessage.send(player, "ARS_REMOVED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_REMOVED");
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_ARS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ARS");
             return true;
         }
     }

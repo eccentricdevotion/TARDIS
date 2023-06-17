@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -42,7 +42,7 @@ class TARDISVaultCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet() && rst.getTardis_id() != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
             return true;
         }
         Location l = b.getLocation();

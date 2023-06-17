@@ -31,8 +31,8 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -82,7 +82,7 @@ public class TARDISSeedBlockProcessor {
                 grace_count = rsc.getGrace();
                 has_count = true;
                 if (player_count == max_count && max_count > 0) {
-                    TARDISMessage.send(player, "COUNT_QUOTA");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COUNT_QUOTA");
                     return false;
                 }
             }
@@ -99,14 +99,14 @@ public class TARDISSeedBlockProcessor {
                     where.put("z", location.getBlockZ());
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
                     if (rsh.resultSet()) {
-                        TARDISMessage.send(player, "TARDIS_NO_HOME");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_HOME");
                         return false;
                     }
                 }
                 Schematic schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
-                    TARDISMessage.send(player, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
                     return false;
                 }
                 int cx;
@@ -144,7 +144,7 @@ public class TARDISSeedBlockProcessor {
                         cw = plugin.getConfig().getString("creation.default_world_name");
                         chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
                         if (chunkworld == null) {
-                            TARDISMessage.send(player, "TARDIS_WORLD_NOT_LOADED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");
                             return false;
                         }
                         tips = true;
@@ -257,7 +257,7 @@ public class TARDISSeedBlockProcessor {
                         TARDISAchievementFactory.grantAdvancement(Advancement.TARDIS, player);
                     }
                     if (max_count > 0) {
-                        TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
                     }
                     HashMap<String, Object> setc = new HashMap<>();
                     setc.put("count", player_count + 1);
@@ -274,7 +274,7 @@ public class TARDISSeedBlockProcessor {
                     }
                     return true;
                 } else {
-                    TARDISMessage.send(player, "TARDIS_WORLD_NOT_LOADED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");
                     return false;
                 }
             } else {
@@ -282,14 +282,14 @@ public class TARDISSeedBlockProcessor {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rscl.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
                 } else {
-                    TARDISMessage.send(player, "HAVE_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HAVE_TARDIS");
                 }
                 return false;
             }
         } else {
-            TARDISMessage.send(player, "NO_PERM_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TARDIS");
             return false;
         }
     }

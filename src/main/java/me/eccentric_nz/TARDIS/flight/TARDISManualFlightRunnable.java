@@ -22,7 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -59,12 +59,12 @@ class TARDISManualFlightRunnable implements Runnable {
         if (i < LOOPS) {
             i++;
             if (target.size() < 4) {
-                TARDISMessage.send(player, "FLIGHT_BAD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_BAD");
                 return;
             }
             int r = TARDISConstants.RANDOM.nextInt(4);
             Location loc = target.get(r);
-            TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_CLICK", controls.get(r));
             loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
         } else {

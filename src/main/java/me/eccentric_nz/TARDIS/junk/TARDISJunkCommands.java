@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,7 +62,7 @@ public class TARDISJunkCommands implements CommandExecutor {
                         p = (Player) sender;
                     }
                     if (p == null) {
-                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                         return false;
                     }
                     return new TARDISJunkCreator(plugin, p).createJunkTARDIS();

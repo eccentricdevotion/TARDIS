@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * @author eccentric_nz
@@ -567,7 +567,7 @@ public class TARDISCondensablesUpdater {
             try {
                 String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
                 plugin.getCondensablesConfig().save(new File(listPath));
-                plugin.getLogger().log(Level.INFO, "Updated condensables.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Updated condensables.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save condensables.yml, " + io.getMessage());
             }

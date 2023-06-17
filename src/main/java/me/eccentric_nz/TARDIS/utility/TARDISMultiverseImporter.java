@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 public class TARDISMultiverseImporter {
@@ -49,10 +49,10 @@ public class TARDISMultiverseImporter {
                 }
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getAllowedPortals() != AllowedPortalType.NONE);
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".alias", mvw.getAlias());
-                TARDISMessage.send(sender, "MULTIVERSE_TRANSFER", mvw.getName());
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_TRANSFER", mvw.getName());
                 i++;
             } else {
-                TARDISMessage.send(sender, "MULTIVERSE_EXISTS", mvw.getName());
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_EXISTS", mvw.getName());
             }
         }
         if (i > 0) {
@@ -60,8 +60,8 @@ public class TARDISMultiverseImporter {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 plugin.getPlanetsConfig().save(new File(planetsPath));
-                plugin.getLogger().log(Level.INFO, "Added " + i + " new items to planets.yml");
-                TARDISMessage.send(sender, "MULTIVERSE_IMPORT", "" + i);
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to planets.yml");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_IMPORT", "" + i);
             } catch (IOException io) {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }

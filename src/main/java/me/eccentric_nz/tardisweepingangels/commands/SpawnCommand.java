@@ -20,7 +20,6 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -62,13 +61,13 @@ public class SpawnCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
             return true;
         }
         if (sender instanceof Player player) {
             // check player has permission for this monster
             if (!TARDISPermission.hasPermission(player, "tardisweepingangels.spawn." + monster.getPermission())) {
-                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_PERM_SPAWN", monster.toString());
+                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_PERM_SPAWN", monster.toString());
                 return true;
             }
             Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
@@ -149,7 +148,7 @@ public class SpawnCommand {
             player.playSound(a.getLocation(), sound, 1.0f, 1.0f);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(a, monster.getEntityType(), monster, eyeLocation));
         } else {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
         return true;
     }

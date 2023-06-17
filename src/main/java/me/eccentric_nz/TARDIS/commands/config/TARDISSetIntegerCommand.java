@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISChatPaginator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.command.CommandSender;
 
@@ -43,7 +43,7 @@ class TARDISSetIntegerCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String a = args[1];
         if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
-            TARDISMessage.send(sender, "ARG_TIPS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TIPS");
             return false;
         }
         int val;
@@ -51,7 +51,7 @@ class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
             return false;
         }
         if (first.equals("circuits.uses.chameleon_uses")) {
@@ -68,7 +68,7 @@ class TARDISSetIntegerCommand {
         }
         plugin.getConfig().set(first, val);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         return true;
     }
 
@@ -80,7 +80,7 @@ class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
             return false;
         }
         plugin.getArtronConfig().set(first, val);
@@ -89,7 +89,7 @@ class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         return true;
     }
 
@@ -97,7 +97,7 @@ class TARDISSetIntegerCommand {
         String first = args[0];
         String which = args[1];
         if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
-            TARDISMessage.send(sender, "ARG_DIRECTION");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DIRECTION");
             return true;
         }
         String a = args[2];
@@ -106,12 +106,12 @@ class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
             return false;
         }
         plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         return true;
     }
 }

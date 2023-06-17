@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -116,7 +116,7 @@ public class TARDISRoomBuilder {
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
-            TARDISMessage.send(p, "ROOM_CANCEL", String.format("%d", taskID));
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "ROOM_CANCEL", String.format("%d", taskID));
         }
         return true;
     }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -109,7 +109,7 @@ public class TARDISCloisterBell implements Runnable {
     @Override
     public void run() {
         if (messageOn && i == 0 && player != null && player.isOnline()) {
-            TARDISMessage.send(player, "CLOISTER_BELL_ON", reason);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_ON", reason);
         }
         if (i < loops) {
             if (centre != null) {
@@ -133,7 +133,7 @@ public class TARDISCloisterBell implements Runnable {
             task = -1;
             plugin.getTrackerKeeper().getCloisterBells().remove(id);
             if (messageOff && player != null && player.isOnline()) {
-                TARDISMessage.send(player, "CLOISTER_BELL_OFF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_OFF");
             }
         }
     }

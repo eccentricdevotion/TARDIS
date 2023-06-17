@@ -21,12 +21,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -218,7 +218,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                             } else {
                                 TARDISLazarusDisguise.removeDisguise(player);
                             }
-                            TARDISMessage.send(player, "GENETICS_RESTORED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                             plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                         }, 80L);
                         // open the door
@@ -251,7 +251,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 } else {
                                     TARDISLazarusDisguise.runImmortalityGate(player);
                                 }
-                                plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
+                                plugin.getMessenger().broadcast(TardisModule.TARDIS, "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
                                 plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
                                 // schedule a delayed task to remove the disguise
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -262,7 +262,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             TARDISLazarusDisguise.removeDisguise(p);
                                         }
                                     });
-                                    plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
+                                    plugin.getMessenger().broadcast(TardisModule.TARDIS, "Lord Rassilon has reset the Master Race back to human form.");
                                     plugin.getTrackerKeeper().setImmortalityGate("");
                                     plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                                 }, 3600L);
@@ -422,7 +422,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         new TARDISLazarusDisguise(plugin, player, dt, options).createDisguise();
                                     }
                                 }
-                                TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_MODIFIED", disguise);
                                 plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, disguise));
                             }
                         }, 80L);

@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
 import java.sql.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * @author eccentric_nz
@@ -65,7 +65,7 @@ public class TARDISSaveIconUpdate {
             if (i > 0) {
                 ps.executeBatch();
                 connection.commit();
-                plugin.getLogger().log(Level.INFO, "Added " + i + " saved destination icons");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " saved destination icons");
             }
         } catch (SQLException e) {
             plugin.debug("Update error for lowercase world name update! " + e.getMessage());

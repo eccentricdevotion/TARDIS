@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,7 +46,7 @@ public class TARDISCustardCreamDispenser {
     public void dispense() {
         // block must be a dispenser
         if (!block.getType().equals(Material.DISPENSER)) {
-            TARDISMessage.send(player, "DISPENSER_TYPE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DISPENSER_TYPE");
             return;
         }
         // check artron energy level

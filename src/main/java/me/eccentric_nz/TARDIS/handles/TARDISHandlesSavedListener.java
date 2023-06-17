@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -115,7 +115,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         player.openInventory(handlesinv);
                     }, 2L);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SELECT");
                 }
             }
             if (slot == 48) {
@@ -136,7 +136,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     is.setItemMeta(im);
                     selectedSlot.put(uuid, null);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SELECT");
                 }
             }
             if (slot == 49) {
@@ -152,7 +152,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SELECT");
                 }
             }
             if (slot == 51) {
@@ -163,7 +163,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         ItemMeta im = is.getItemMeta();
                         List<String> lore = im.getLore();
                         if (lore.get(2).equals("Checked OUT")) {
-                            TARDISMessage.send(player, "HANDLES_CHECKED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_CHECKED");
                             return;
                         }
                         lore.set(2, "Checked OUT");
@@ -182,7 +182,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         plugin.getQueryFactory().doUpdate("programs", set, where);
                     }
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SELECT");
                 }
             }
             if (slot == 53) {

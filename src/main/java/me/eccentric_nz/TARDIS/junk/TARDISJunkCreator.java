@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,11 +48,11 @@ class TARDISJunkCreator {
 
     boolean createJunkTARDIS() {
         if (!TARDISPermission.hasPermission(p, "tardis.admin")) {
-            TARDISMessage.send(p, "CMD_ADMIN");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "CMD_ADMIN");
             return true;
         }
         if (!plugin.getConfig().getBoolean("junk.enabled") || !plugin.getConfig().getBoolean("creation.default_world")) {
-            TARDISMessage.send(p, "JUNK_DISABLED");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_DISABLED");
             return true;
         }
         // check if there is a junk TARDIS already
@@ -60,7 +60,7 @@ class TARDISJunkCreator {
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            TARDISMessage.send(p, "JUNK_EXISTS");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_EXISTS");
             return true;
         }
         // get player's target block

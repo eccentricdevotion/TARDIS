@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -91,7 +91,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;

@@ -32,11 +32,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -62,15 +62,15 @@ class TARDISHandlesLandCommand {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
-                TARDISMessage.handlesSend(player, "HANDLES_JUNK");
+                plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
                 return true;
             }
             if (tardis.isHandbrake_on()) {
-                TARDISMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
+                plugin.getMessenger().handlesSend(player, "HANDBRAKE_ON_ERR");
                 return true;
             }
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
+                plugin.getMessenger().handlesSend(player, "HANDLES_VORTEX");
                 return true;
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
@@ -122,7 +122,7 @@ class TARDISHandlesLandCommand {
                                 TARDISHandbrakeListener.toggleBeacon(beacon, false);
                             }
                             // Remove energy from TARDIS and sets database
-                            TARDISMessage.send(player, "HANDBRAKE_ON");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON");
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
@@ -151,10 +151,10 @@ class TARDISHandlesLandCommand {
                         }
                     }, 400L);
                 } else {
-                    TARDISMessage.handlesSend(player, "HANDLES_NO_LOCATION");
+                    plugin.getMessenger().handlesSend(player, "HANDLES_NO_LOCATION");
                 }
             } else {
-                TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
             }
         }
         return true;

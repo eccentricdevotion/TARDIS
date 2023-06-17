@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Config;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -42,7 +42,7 @@ class TARDISReloadCommand {
         TARDISWorlds tc = new TARDISWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
-        TARDISMessage.send(sender, "RELOADED");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOADED");
         return true;
     }
 
@@ -66,16 +66,16 @@ class TARDISReloadCommand {
                 case vortex_manipulator -> plugin.getVortexConfig().load(file);
                 case weeping_angels -> plugin.getMonstersConfig().load(file);
                 default -> {
-                    TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_NOT_THESE", args[1]);
                     return true;
                 }
             }
-            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FILE_BAD", args[1]);
             return true;
         } catch (InvalidConfigurationException | IOException e) {
-            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FAIL", args[1]);
             return true;
         }
         return true;

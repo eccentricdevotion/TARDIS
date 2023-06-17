@@ -24,10 +24,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -230,7 +230,7 @@ public class TARDISPlanetsUpdater {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 planets_config.save(new File(planetsPath));
-                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }

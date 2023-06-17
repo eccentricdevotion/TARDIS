@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import me.eccentric_nz.TARDIS.universaltranslator.TranslateData;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -41,25 +41,25 @@ class TARDISSetLanguageCommand {
     boolean setLanguagePref(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, "PREF_NEED", pref);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NEED", pref);
             return false;
         }
         UUID uuid = player.getUniqueId();
         String first = args[1].toUpperCase(Locale.ENGLISH);
         if (args[0].equalsIgnoreCase("translate") && args[1].equalsIgnoreCase("off")) {
             plugin.getTrackerKeeper().getTranslators().remove(uuid);
-            TARDISMessage.send(player, "TRANSLATE_OFF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSLATE_OFF");
         } else {
             Language langFirst;
             try {
                 langFirst = Language.valueOf(first);
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(player, "LANG_NOT_VALID");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "LANG_NOT_VALID");
                 return true;
             }
             if (args[0].equalsIgnoreCase("translate")) {
                 if (args.length < 3) {
-                    TARDISMessage.send(player, "PREF_NEED", "language to translate from");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NEED", "language to translate from");
                     return false;
                 }
                 String second = args[2].toUpperCase(Locale.ENGLISH);
@@ -67,29 +67,29 @@ class TARDISSetLanguageCommand {
                 try {
                     langSecond = Language.valueOf(second);
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(player, "LANG_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LANG_NOT_VALID");
                     return true;
                 }
                 if (args.length < 4) {
-                    TARDISMessage.send(player, "PREF_NEED", "player name");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NEED", "player name");
                     return false;
                 }
                 OfflinePlayer sender = plugin.getServer().getOfflinePlayer(args[3]);
                 if (sender == null) {
-                    TARDISMessage.send(player, "PLAYER_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
                     return true;
                 }
                 String name = sender.getName();
                 TranslateData data = new TranslateData(langFirst, langSecond, name);
                 plugin.getTrackerKeeper().getTranslators().put(uuid, data);
-                TARDISMessage.send(player, "TRANSLATE_ON", name);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSLATE_ON", name);
             } else {
                 HashMap<String, Object> setl = new HashMap<>();
                 setl.put(pref, first);
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
-                TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
             }
         }
         return true;

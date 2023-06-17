@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.tool.SQL;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * MySQL database creator and updater.
@@ -57,7 +57,7 @@ public class TARDISMySQLDatabase {
             TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
             dbu.updateTables();
         } catch (SQLException e) {
-            plugin.getLogger().log(Level.INFO, "MySQL create table error: " + e);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "MySQL create table error: " + e);
         }
     }
 }

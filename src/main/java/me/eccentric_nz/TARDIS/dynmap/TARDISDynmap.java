@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -157,7 +157,7 @@ public class TARDISDynmap {
                 markerSet.setMarkerSetLabel("TARDISes");
             }
             if (markerSet == null) {
-                plugin.getLogger().log(Level.WARNING, "Error creating tardis marker set");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Error creating tardis marker set");
                 return;
             }
             markerSet.setLayerPriority(0);

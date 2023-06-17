@@ -4,7 +4,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.*;
@@ -21,11 +20,11 @@ public class TVMCommandMessage {
 
     public boolean process(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "vm.message")) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         if (args.length < 3) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_USAGE");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_USAGE");
             return false;
         }
         String first = args[1].toUpperCase();
@@ -35,14 +34,14 @@ public class TVMCommandMessage {
                 case MSG -> {
                     OfflinePlayer ofp = plugin.getServer().getOfflinePlayer(args[1]);
                     if (ofp == null) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                     String ofp_uuid = ofp.getUniqueId().toString();
                     // check they have a Vortex Manipulator
                     TVMResultSetManipulator rsofp = new TVMResultSetManipulator(plugin, ofp_uuid);
                     if (!rsofp.resultSet()) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NONE", args[2]);
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NONE", args[2]);
                         return true;
                     }
                     StringBuilder sb = new StringBuilder();
@@ -56,7 +55,7 @@ public class TVMCommandMessage {
                     whereofp.put("message", message);
                     whereofp.put("date", System.currentTimeMillis());
                     plugin.getQueryFactory().doInsert("messages", whereofp);
-                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_SENT");
+                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_SENT");
                 }
                 case LIST -> {
                     String uuid = player.getUniqueId().toString();
@@ -67,7 +66,7 @@ public class TVMCommandMessage {
                             if (rso.resultSet()) {
                                 TVMUtils.sendOutboxList(player, rso, 1);
                             } else {
-                                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_OUT");
+                                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_OUT");
                                 return true;
                             }
                         } else {
@@ -76,18 +75,18 @@ public class TVMCommandMessage {
                             if (rsi.resultSet()) {
                                 TVMUtils.sendInboxList(player, rsi, 1);
                             } else {
-                                TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_IN");
+                                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_IN");
                                 return true;
                             }
                         }
                     }
                     if (args.length < 4) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_PAGE");
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_PAGE");
                         return true;
                     }
                     int page = TARDISNumberParsers.parseInt(args[3]);
                     if (page == 0) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
                         return true;
                     }
                     int start = (page * 10) - 10;
@@ -98,7 +97,7 @@ public class TVMCommandMessage {
                         if (rso.resultSet()) {
                             TVMUtils.sendOutboxList(player, rso, page);
                         } else {
-                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_OUT");
+                            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_OUT");
                             return true;
                         }
                     } else {
@@ -107,7 +106,7 @@ public class TVMCommandMessage {
                         if (rsi.resultSet()) {
                             TVMUtils.sendInboxList(player, rsi, page);
                         } else {
-                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_IN");
+                            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_IN");
                             return true;
                         }
                     }
@@ -121,7 +120,7 @@ public class TVMCommandMessage {
                             // update read status
                             new TVMQueryFactory(plugin).setReadStatus(read_id);
                         } else {
-                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_ID");
+                            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_ID");
                             return true;
                         }
                     }
@@ -134,17 +133,17 @@ public class TVMCommandMessage {
                             HashMap<String, Object> where = new HashMap<>();
                             where.put("message_id", delete_id);
                             plugin.getQueryFactory().doDelete("messages", where);
-                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_DELETED");
+                            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_DELETED");
                         }
                     } else {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_ID");
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_ID");
                         return true;
                     }
                 }
                 default -> {
                     // clear
                     if (!args[2].toLowerCase().equals("in") && !args[2].toLowerCase().equals("out")) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_CLEAR");
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_CLEAR");
                         return true;
                     }
                     HashMap<String, Object> where = new HashMap<>();
@@ -156,14 +155,14 @@ public class TVMCommandMessage {
                         which = "Inbox";
                     }
                     plugin.getQueryFactory().doDelete("messages", where);
-                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_CLEARED", which);
+                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_CLEARED", which);
                 }
 
 
 
             }
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_USAGE");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_USAGE");
             return false;
         }
         return true;

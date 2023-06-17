@@ -20,9 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -281,7 +281,7 @@ public class TARDISRoomsUpdater {
         try {
             rooms_config.save(new File(plugin.getDataFolder(), "rooms.yml"));
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save rooms.yml, " + io.getMessage());

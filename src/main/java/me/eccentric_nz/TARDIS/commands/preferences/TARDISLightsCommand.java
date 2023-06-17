@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -28,16 +28,22 @@ import org.bukkit.entity.Player;
  */
 class TARDISLightsCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISLightsCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     boolean setLightsPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "LIGHT_NEED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NEED");
             return false;
         }
         String set_light = args[1].toUpperCase(Locale.ENGLISH);
         try {
             TardisLight.valueOf(set_light);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "LIGHT_NOT_VALID");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NOT_VALID");
             return false;
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -45,7 +51,7 @@ class TARDISLightsCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "LIGHT_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_SAVED");
         return true;
     }
 }

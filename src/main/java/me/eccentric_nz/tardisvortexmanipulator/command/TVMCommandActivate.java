@@ -4,7 +4,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,16 +18,16 @@ public class TVMCommandActivate {
 
     public boolean process(CommandSender sender, String[] args) {
         if (!TARDISPermission.hasPermission(sender, "tardis.admin")) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PLAYER");
             return true;
         }
         Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null || !p.isOnline()) {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
             return true;
         }
         String uuid = p.getUniqueId().toString();
@@ -38,9 +37,9 @@ public class TVMCommandActivate {
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid);
             plugin.getQueryFactory().doInsert("manipulator", set);
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_ACTIVATED");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_ACTIVATED");
         } else {
-            TARDISMessage.send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_DONE");
+            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_DONE");
         }
         return true;
     }

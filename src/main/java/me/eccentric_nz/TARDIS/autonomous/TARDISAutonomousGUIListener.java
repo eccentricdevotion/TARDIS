@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.autonomous;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -80,7 +80,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener implements L
                                 set.put("auto_type", "AREAS");
                                 setTypeSlots(view, 13);
                             } else {
-                                TARDISMessage.send(player, "NO_CONFIGURED_AREAS");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
                             }
                         }
                         case 5 -> {
@@ -89,7 +89,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener implements L
                                 set.put("auto_type", "CONFIGURED_AREAS");
                                 setTypeSlots(view, 14);
                             } else {
-                                TARDISMessage.send(player, "NO_CONFIGURED_AREAS");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
                             }
                         }
                         case 6 -> {

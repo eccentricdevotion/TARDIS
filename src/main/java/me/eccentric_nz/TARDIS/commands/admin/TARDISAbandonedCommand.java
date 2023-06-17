@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -45,22 +45,22 @@ class TARDISAbandonedCommand {
 
     public boolean spawn(CommandSender sender, String[] args) {
         if (!plugin.getConfig().getBoolean("abandon.enabled")) {
-            TARDISMessage.send(sender, "ABANDONED_DISABLED");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_DISABLED");
             return true;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
-            TARDISMessage.send(sender, "ABANDONED_SPAWN");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_SPAWN");
             return true;
         }
         // tardisadmin spawn_abandoned Schematic PRESET COMPASS world x y z
         if (args.length < 4) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            TARDISMessage.send(sender, "ABANDONED_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
             return true;
         }
         String schm = args[1].toUpperCase(Locale.ENGLISH);
         if (!Consoles.getBY_NAMES().containsKey(schm)) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         Schematic s = Consoles.getBY_NAMES().get(schm);
@@ -71,7 +71,7 @@ class TARDISAbandonedCommand {
             try {
                 preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, "ABANDONED_PRESET");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_PRESET");
                 return true;
             }
         }
@@ -79,7 +79,7 @@ class TARDISAbandonedCommand {
         try {
             d = COMPASS.valueOf(args[3].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "ABANDONED_COMPASS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_COMPASS");
             return true;
         }
         Location l;
@@ -87,20 +87,20 @@ class TARDISAbandonedCommand {
             l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
         } else {
             if (args.length < 8) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                TARDISMessage.send(sender, "ABANDONED_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
                 return true;
             }
             World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
             if (w == null) {
-                TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
                 return true;
             }
             int x = TARDISNumberParsers.parseInt(args[5]);
             int y = TARDISNumberParsers.parseInt(args[6]);
             int z = TARDISNumberParsers.parseInt(args[7]);
             if (x == 0 || y == 0 || z == 0) {
-                TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
                 return true;
             }
             l = new Location(w, x, y, z);

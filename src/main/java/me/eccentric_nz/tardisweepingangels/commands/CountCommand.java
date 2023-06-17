@@ -44,7 +44,7 @@ public class CountCommand {
         int count = 0;
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
         if (which.equals("g")) {
@@ -60,7 +60,7 @@ public class CountCommand {
             try {
                 monster = Monster.valueOf(which);
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
+                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
                 return true;
             }
             switch (monster) {
@@ -123,7 +123,7 @@ public class CountCommand {
                 }
             }
         }
-        TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getName());
+        plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getName());
         return true;
     }
 }

@@ -20,7 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
@@ -37,7 +37,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
@@ -350,7 +349,7 @@ public class TARDISDisguise {
             return entity;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
                  InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.SEVERE, TardisModule.HELPER.getName() + "~TARDISDisguise~ " + e.getMessage());
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER_SEVERE, "~TARDISDisguise~ " + e.getMessage());
             e.printStackTrace();
         }
         return null;

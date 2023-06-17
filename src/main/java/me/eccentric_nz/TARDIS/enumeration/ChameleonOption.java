@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * @author eccentric_nz

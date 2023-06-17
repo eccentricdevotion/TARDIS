@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -209,7 +209,7 @@ public class TARDISShapedRecipe {
                 }
             });
         } catch (IllegalArgumentException e) {
-            plugin.getLogger().log(Level.INFO, ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
         }
         if (s.contains("Bow Tie")) {
             r.setGroup("Bow Ties");

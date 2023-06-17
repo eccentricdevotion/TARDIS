@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -186,7 +186,7 @@ public class TARDISStaticUtils {
                     sign.getSide(Side.FRONT).setLine(line, text);
                     sign.update();
                 } else {
-                    TARDISMessage.send(p, "CHAM", " " + text);
+                    TARDIS.plugin.getMessenger().send(p, TardisModule.TARDIS, "CHAM", " " + text);
                 }
             }
         }

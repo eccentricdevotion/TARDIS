@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.Location;
@@ -44,7 +44,7 @@ public class TARDISBiomeFinder {
         Location tb = BiomeUtilities.searchBiome(w, biome, current);
         // cancel biome finder
         if (tb == null) {
-            TARDISMessage.send(player, "BIOME_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
             return;
         }
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -52,7 +52,7 @@ public class TARDISBiomeFinder {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
                 // cancel
-                TARDISMessage.send(player, "PROTECTED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PROTECTED");
                 return;
             }
         }
@@ -85,7 +85,7 @@ public class TARDISBiomeFinder {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.BIOME));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

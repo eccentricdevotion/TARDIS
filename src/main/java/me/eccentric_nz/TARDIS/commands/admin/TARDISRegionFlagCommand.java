@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
@@ -39,11 +38,11 @@ class TARDISRegionFlagCommand {
     boolean toggleEntryExit(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!which.contains(flag)) {
-            TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
+            plugin.getMessenger().message(sender, "You need to specify which flag type you want to change to - entry or exit.");
             return true;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
-            TARDISMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
+            plugin.getMessenger().message(sender, "This command only works if you are using a default world for TARDISes.");
             return true;
         }
         String world_name = plugin.getConfig().getString("creation.default_world_name");

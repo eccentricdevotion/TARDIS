@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
@@ -105,9 +105,9 @@ public class TARDISUpdateListener implements Listener {
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("c_id", rsc.getC_id());
                 new QueryFactory(plugin).doDelete("controls", whered);
-                TARDISMessage.send(player, "SEC_REMOVED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SEC_REMOVED");
             } else {
-                TARDISMessage.send(player, "SEC_REMOVE_NO_MATCH");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SEC_REMOVE_NO_MATCH");
             }
             plugin.getTrackerKeeper().getSecondaryRemovers().remove(playerUUID);
             return;
@@ -116,7 +116,7 @@ public class TARDISUpdateListener implements Listener {
         }
         // check they are still in the TARDIS world
         if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");
             plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             return;
         }
@@ -141,7 +141,7 @@ public class TARDISUpdateListener implements Listener {
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                 return;
             }
@@ -158,7 +158,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
                 plugin.debug(player.getName() + " tried to update a " + updateable + "... the type of block clicked was " + blockType);
-                TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", updateable.getName());
                 return;
             }
             switch (updateable) {
@@ -323,7 +323,7 @@ public class TARDISUpdateListener implements Listener {
                 default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
-                TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", updateable.getName());
             }
             TARDISSudoTracker.SUDOERS.remove(playerUUID);
         }

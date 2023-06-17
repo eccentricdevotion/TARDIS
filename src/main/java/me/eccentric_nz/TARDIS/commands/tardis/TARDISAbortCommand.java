@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,7 +33,7 @@ class TARDISAbortCommand {
 
     boolean doAbort(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "ROOM_ABORT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ABORT");
             return false;
         }
         try {
@@ -41,10 +41,10 @@ class TARDISAbortCommand {
             plugin.getServer().getScheduler().cancelTask(task);
             plugin.getTrackerKeeper().getRoomTasks().remove(task);
             plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
-            TARDISMessage.send(player, "TASK_ABORT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_ABORT");
             return true;
         } catch (NumberFormatException nfe) {
-            TARDISMessage.send(player, "TASK_NUMBER");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_NUMBER");
             return false;
         }
     }

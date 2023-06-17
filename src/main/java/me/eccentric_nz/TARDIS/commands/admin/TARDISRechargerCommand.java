@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -43,12 +43,12 @@ class TARDISRechargerCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CHARGER_NO");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHARGER_NO");
             return true;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
-            TARDISMessage.send(player, "CHARGER_BEACON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CHARGER_BEACON");
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
@@ -56,7 +56,7 @@ class TARDISRechargerCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            TARDISMessage.send(player, "ENERGY_NO_BEACON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_BEACON");
             return true;
         }
         Location l = b.getLocation();
@@ -77,7 +77,7 @@ class TARDISRechargerCommand {
             plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "recharger");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "recharger");
         return true;
     }
 }

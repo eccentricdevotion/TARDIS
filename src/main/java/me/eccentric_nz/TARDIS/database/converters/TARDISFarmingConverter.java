@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.database.converters;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class TARDISFarmingConverter {
 
@@ -98,7 +98,7 @@ public class TARDISFarmingConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Converted " + i + " farming records");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " farming records");
                 }
             }
         } catch (SQLException e) {
@@ -119,4 +119,3 @@ public class TARDISFarmingConverter {
         }
     }
 }
-

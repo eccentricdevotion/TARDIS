@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -60,11 +60,11 @@ public class TARDISSchematicListener implements Listener {
         Location l = b.getLocation();
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             plugin.getTrackerKeeper().getStartLocation().put(uuid, l);
-            TARDISMessage.send(player, "SCHM_START");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_START");
         }
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             plugin.getTrackerKeeper().getEndLocation().put(uuid, l);
-            TARDISMessage.send(player, "SCHM_END");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_END");
         }
         event.setCancelled(true);
     }

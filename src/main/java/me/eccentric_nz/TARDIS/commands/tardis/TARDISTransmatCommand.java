@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -44,17 +44,17 @@ class TARDISTransmatCommand {
 
     boolean teleportOrProcess(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;
         }
         // must be a time lord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
         // player is in TARDIS
@@ -62,19 +62,19 @@ class TARDISTransmatCommand {
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
             return false;
         }
         int id = rs.getTardis_id();
         int thisid = rst.getTardis_id();
         if (thisid != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
             return false;
         }
         if (args[1].equalsIgnoreCase("list")) {
             ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
             if (rslist.resultSet()) {
-                TARDISMessage.send(player, "TRANSMAT_LIST");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_LIST");
                 for (Transmat t : rslist.getData()) {
                     TextComponent tcg = new TextComponent(t.getName());
                     tcg.setColor(ChatColor.GREEN);
@@ -88,12 +88,12 @@ class TARDISTransmatCommand {
                     player.spigot().sendMessage(tcg);
                 }
             } else {
-                TARDISMessage.send(player, "TRANSMAT_NO_LIST");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NO_LIST");
             }
             return true;
         }
         if (args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
         if (args[1].equalsIgnoreCase("tp")) {
@@ -104,7 +104,7 @@ class TARDISTransmatCommand {
             } else {
                 ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
                 if (rsm.resultSet()) {
-                    TARDISMessage.send(player, "TRANSMAT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
                     Location tp_loc = rsm.getLocation();
                     tp_loc.setYaw(rsm.getYaw());
                     tp_loc.setPitch(player.getLocation().getPitch());
@@ -113,7 +113,7 @@ class TARDISTransmatCommand {
                         player.teleport(tp_loc);
                     }, 10L);
                 } else {
-                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");
                 }
             }
             return true;
@@ -122,18 +122,18 @@ class TARDISTransmatCommand {
             if (args[1].equalsIgnoreCase("add")) {
                 // must be in their TARDIS
                 if (!plugin.getUtils().inTARDISWorld(location)) {
-                    TARDISMessage.send(player, "CMD_IN_WORLD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_IN_WORLD");
                     return true;
                 }
                 // get the transmat name
                 if (!LETTERS_NUMBERS.matcher(args[2]).matches()) {
-                    TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
                     return true;
                 }
                 // check if transmat name exists
                 ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
                 if (rsm.resultSet()) {
-                    TARDISMessage.send(player, "TRANSMAT_EXISTS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_EXISTS");
                     return true;
                 } else {
                     HashMap<String, Object> set = new HashMap<>();
@@ -145,7 +145,7 @@ class TARDISTransmatCommand {
                     set.put("z", location.getZ());
                     set.put("yaw", location.getYaw());
                     plugin.getQueryFactory().doInsert("transmats", set);
-                    TARDISMessage.send(player, "TRANSMAT_SAVED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SAVED");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("update")) {
@@ -162,9 +162,9 @@ class TARDISTransmatCommand {
                     where.put("tardis_id", id);
                     where.put("name", args[2]);
                     plugin.getQueryFactory().doUpdate("transmats", set, where);
-                    TARDISMessage.send(player, "TRANSMAT_SAVED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SAVED");
                 } else {
-                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("remove")) {
@@ -181,9 +181,9 @@ class TARDISTransmatCommand {
                     if (rsd.resultSet()) {
                         new TARDISBoundTransmatRemoval(plugin, id, args[2]).unbind();
                     }
-                    TARDISMessage.send(player, "TRANSMAT_REMOVED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_REMOVED");
                 } else {
-                    TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");
                 }
             }
         }

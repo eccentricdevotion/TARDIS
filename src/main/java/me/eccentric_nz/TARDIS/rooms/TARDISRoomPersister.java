@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -68,7 +68,7 @@ public class TARDISRoomPersister {
                 count += ps.executeUpdate();
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " room building tasks to resume later.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " room building tasks to resume later.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

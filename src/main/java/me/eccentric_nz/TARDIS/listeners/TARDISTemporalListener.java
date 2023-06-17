@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,7 +55,7 @@ public class TARDISTemporalListener implements Listener {
             }
             p.resetPlayerTime();
             plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
-            TARDISMessage.send(p, "TEMPORAL_RESET");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "TEMPORAL_RESET");
         }
     }
 }

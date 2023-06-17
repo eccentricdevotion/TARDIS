@@ -18,7 +18,6 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
@@ -54,7 +53,7 @@ public class EquipCommand {
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
             return true;
         }
         Player player = null;
@@ -62,7 +61,7 @@ public class EquipCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
             return true;
         }
         // get the armour stand player is looking at
@@ -106,7 +105,7 @@ public class EquipCommand {
                 }, 2L);
             }
         } else {
-            TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_STAND");
+            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_STAND");
             return true;
         }
         return true;

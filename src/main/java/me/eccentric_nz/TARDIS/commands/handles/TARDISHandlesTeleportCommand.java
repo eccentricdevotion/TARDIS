@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -48,7 +47,7 @@ public class TARDISHandlesTeleportCommand {
         Location location = player.getLocation();
         // must be outside the TARDIS
         if (plugin.getUtils().inTARDISWorld(location)) {
-            TARDISMessage.handlesSend(player, "TARDIS_OUTSIDE");
+            plugin.getMessenger().handlesSend(player, "TARDIS_OUTSIDE");
             return;
         }
         // get tardis data
@@ -56,19 +55,19 @@ public class TARDISHandlesTeleportCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.handlesSend(player, "NO_TARDIS");
+            plugin.getMessenger().handlesSend(player, "NO_TARDIS");
             return;
         }
         Tardis tardis = rs.getTardis();
         int id = tardis.getTardis_id();
         if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.handlesSend(player, "NOT_WHILE_TRAVELLING");
+            plugin.getMessenger().handlesSend(player, "NOT_WHILE_TRAVELLING");
             return;
         }
         int level = tardis.getArtron_level();
         int travel = plugin.getArtronConfig().getInt("travel");
         if (level < travel) {
-            TARDISMessage.handlesSend(player, "NOT_ENOUGH_ENERGY");
+            plugin.getMessenger().handlesSend(player, "NOT_ENOUGH_ENERGY");
             return;
         }
         // plugin respect
@@ -78,13 +77,13 @@ public class TARDISHandlesTeleportCommand {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
             }
             int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
             // check destination has room for TARDIS
             int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
             if (count > 0) {
-                TARDISMessage.handlesSend(player, "RESCUE_NOT_SAFE");
+                plugin.getMessenger().handlesSend(player, "RESCUE_NOT_SAFE");
                 return;
             }
             // build current location

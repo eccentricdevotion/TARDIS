@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -71,14 +71,14 @@ public class TARDISBlockBreakListener implements Listener {
             where.put("police_box", 1);
             ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
             if (rsb.resultSet()) {
-                TARDISMessage.send(player, "TARDIS_BREAK");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_BREAK");
                 event.setCancelled(true);
                 return;
             }
         }
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NOT_IN_ZERO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
             return;
         }
         Block block = event.getBlock();
@@ -128,7 +128,7 @@ public class TARDISBlockBreakListener implements Listener {
                     if (l.equals(b)) {
                         if (plugin.getConfig().getString("rechargers." + r + ".uuid").equals(player.getUniqueId().toString())) {
                             plugin.getConfig().set("rechargers." + r, null);
-                            TARDISMessage.send(player, "RIFT_REMOVED");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_REMOVED");
                             event.setCancelled(true);
                             // drop Rift Manipulator
                             event.getBlock().setBlockData(TARDISConstants.AIR);
@@ -140,7 +140,7 @@ public class TARDISBlockBreakListener implements Listener {
                             break;
                         } else {
                             event.setCancelled(true);
-                            TARDISMessage.send(player, "RIFT_PLAYER");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_PLAYER");
                             break;
                         }
                     }

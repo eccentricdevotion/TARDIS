@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -56,7 +56,7 @@ public class TARDISEjectListener implements Listener {
         }
         // check they are still in the TARDIS world - they could have exited after running the command
         if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "EJECT_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_WORLD");
             return;
         }
         Entity ent = event.getRightClicked();
@@ -91,17 +91,17 @@ public class TARDISEjectListener implements Listener {
             case PLAYER -> {
                 Player p = (Player) ent;
                 if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
-                    TARDISMessage.send(player, "EJECT_PLAYER");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_PLAYER");
                     return;
                 }
                 // check the clicked player is in a TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(p)) {
-                    TARDISMessage.send(player, "EJECT_WORLD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_WORLD");
                     return;
                 }
                 // teleport player and remove from travellers table
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true, false);
-                TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().doDelete("travellers", where);
@@ -148,7 +148,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TARDISMessage.send(player, "EJECT_HORSE");
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_HORSE");
             case LLAMA -> {
                 event.setCancelled(true);
                 Llama ll = (Llama) ent;
@@ -376,7 +376,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            default -> TARDISMessage.send(player, "EJECT_NOT_VALID");
+            default -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_NOT_VALID");
         }
         // stop tracking player
         plugin.getTrackerKeeper().getEjecting().remove(uuid);

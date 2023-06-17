@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,9 +35,11 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISAnvilListener implements Listener {
 
+    private final TARDIS plugin;
     private final HashMap<String, Material> disallow = new HashMap<>();
 
     public TARDISAnvilListener(TARDIS plugin) {
+        this.plugin = plugin;
         plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
             String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
             disallow.put(r, Material.valueOf(result[0]));
@@ -62,7 +64,7 @@ public class TARDISAnvilListener implements Listener {
                     ItemStack one = inv.getItem(0);
                     ItemStack two = inv.getItem(1);
                     if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-                        TARDISMessage.send(player, "NO_RENAME");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_RENAME");
                         event.setCancelled(true);
                     }
                 }

@@ -20,7 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -52,7 +52,7 @@ public class TARDISResourcePackChanger {
                 plugin.getServer().getPlayer(uuid).setResourcePack(str);
             }
         } catch (MalformedURLException e) {
-            TARDISMessage.send(p, "URL", e.getMessage());
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "URL", e.getMessage());
         }
     }
 }

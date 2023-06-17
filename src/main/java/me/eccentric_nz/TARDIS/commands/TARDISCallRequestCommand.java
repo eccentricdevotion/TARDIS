@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -37,7 +37,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -61,13 +61,13 @@ public class TARDISCallRequestCommand {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "PLAYER_NO_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
         Tardis tardis = rs.getTardis();
         int id = tardis.getTardis_id();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-            TARDISMessage.send(player, "PLAYER_NOT_POWERED", requested.getName());
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_POWERED", requested.getName());
             return true;
         }
         int level = tardis.getArtron_level();
@@ -75,7 +75,7 @@ public class TARDISCallRequestCommand {
         // get location
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-            TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return true;
         }
         if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -84,16 +84,16 @@ public class TARDISCallRequestCommand {
         if (TARDISPermission.hasPermission(requested, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             String areaPerm = plugin.getTardisArea().getExileArea(requested);
             if (plugin.getTardisArea().areaCheckInExile(areaPerm, eyeLocation)) {
-                TARDISMessage.send(player, "EXILE_NO_REQUEST", requested.getName());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_REQUEST", requested.getName());
                 return true;
             }
         }
         if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-            TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED_REQUEST", requested.getName());
+            plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED_REQUEST", requested.getName());
             return true;
         }
         if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-            TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
             return true;
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
@@ -104,7 +104,7 @@ public class TARDISCallRequestCommand {
         // check the world is not excluded
         String world = eyeLocation.getWorld().getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-            TARDISMessage.send(player, "NO_PB_IN_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
             return true;
         }
         UUID playerUuid = player.getUniqueId();
@@ -113,7 +113,7 @@ public class TARDISCallRequestCommand {
         wherettrav.put("uuid", playerUuid.toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
         if (rst.resultSet()) {
-            TARDISMessage.send(player, "NO_PB_IN_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_TARDIS");
             return true;
         }
         // check the requested player IS in their tardis
@@ -121,11 +121,11 @@ public class TARDISCallRequestCommand {
         wherein.put("uuid", uuid.toString());
         ResultSetTravellers rsti = new ResultSetTravellers(plugin, wherein, false);
         if (!rsti.resultSet()) {
-            TARDISMessage.send(player, "PLAYER_NOT_IN_TARDIS", requested.getName());
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_IN_TARDIS", requested.getName());
             return true;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-            TARDISMessage.send(player, "NOT_WHILE_MAT_REQUEST");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT_REQUEST");
             return true;
         }
         // get current police box location
@@ -159,7 +159,7 @@ public class TARDISCallRequestCommand {
             count = 1;
         }
         if (count > 0) {
-            TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
             return true;
         }
         // store request data and await response
@@ -176,19 +176,20 @@ public class TARDISCallRequestCommand {
         request.setHidden(hidden);
         plugin.getTrackerKeeper().getComehereRequests().put(uuid, request);
         // send message with click event
-        TARDISMessage.send(requested, "REQUEST_COMEHERE", player.getName());
+        plugin.getMessenger().send(requested, TardisModule.TARDIS, "REQUEST_COMEHERE", player.getName());
+        // TODO add to messengers so we support Adventure
         TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
         textComponent.setColor(net.md_5.bungee.api.ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis call accept"));
         requested.spigot().sendMessage(textComponent);
         // message asking player too
-        TARDISMessage.send(player, "REQUEST_SENT", requested.getName());
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_SENT", requested.getName());
         // remove request after 60 seconds
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (plugin.getTrackerKeeper().getComehereRequests().containsKey(playerUuid)) {
                 plugin.getTrackerKeeper().getComehereRequests().remove(playerUuid);
-                TARDISMessage.send(player, "REQUEST_NO_RESPONSE", requested.getName());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_NO_RESPONSE", requested.getName());
             }
         }, 1200L);
         return true;

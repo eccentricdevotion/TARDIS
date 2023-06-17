@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,12 +30,14 @@ import org.bukkit.inventory.ItemStack;
  */
 class TARDISHandlesValidator {
 
+    private final TARDIS plugin;
     private final ItemStack[] program;
     private final Player player;
     private int endCount = 1;
     private int eventCount = 0;
 
-    TARDISHandlesValidator(ItemStack[] program, Player player) {
+    TARDISHandlesValidator(TARDIS plugin, ItemStack[] program, Player player) {
+        this.plugin = plugin;
         this.program = program;
         this.player = player;
     }
@@ -48,31 +50,31 @@ class TARDISHandlesValidator {
                 switch (thb) {
                     case FOR -> {
                         if (!validateFor(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The FOR loop does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The FOR loop does not compute!");
                             return false;
                         }
                     }
                     case IF -> {
                         if (!validateIF(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The IF statement does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The IF statement does not compute!");
                             return false;
                         }
                     }
                     case VARIABLE -> {
                         if (!validateVar(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Variable assignment does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Variable assignment does not compute!");
                             return false;
                         }
                     }
                     case X, Y, Z -> {
                         if (!validateCoordOrMath(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Coordinate assignment does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Coordinate assignment does not compute!");
                             return false;
                         }
                     }
                     case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> {
                         if (eventCount > 0) {
-                            TARDISMessage.handlesMessage(player, "You can only have one event per program!");
+                            plugin.getMessenger().handlesMessage(player, "You can only have one event per program!");
                             return false;
                         }
                         eventCount++;
@@ -80,7 +82,7 @@ class TARDISHandlesValidator {
                     case ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, MODULO, LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL -> {
                         // must be followed by a number (and maybe a variable)
                         if (!validateCoordOrMath(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Math operation does not compute!");
                             return false;
                         }
                     }
@@ -89,35 +91,35 @@ class TARDISHandlesValidator {
                         ItemStack pre = program[i - 1];
                         TARDISHandlesBlock cede = TARDISHandlesBlock.BY_NAME.get(pre.getItemMeta().getDisplayName());
                         if (!TARDISHandlesBlock.TRAVEL.equals(cede) && !validateCoordOrMath(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Math operation does not compute!");
                             return false;
                         }
                     }
                     case DOOR -> {
                         // must be followed by =, ==, OPEN, CLOSED, LOCK, UNLOCK
                         if (!validateDoor(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Door action does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Door action does not compute!");
                             return false;
                         }
                     }
                     case LIGHTS, SIEGE -> {
                         // must be followed by =, ==, ON, OFF
                         if (!validateOnOff(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The ON / OFF action does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The ON / OFF action does not compute!");
                             return false;
                         }
                     }
                     case POWER -> {
                         // must be followed by =, ==, ON, OFF, SHOW, REDSTONE
                         if (!validatePower(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Power action does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Power action does not compute!");
                             return false;
                         }
                     }
                     case TRAVEL -> {
                         // must be followed by X, Y, Z, RECHARGER, HOME, RANDOM, Biome disk, Player disk, Save disk, Area disk
                         if (!validateTravel(i + 1)) {
-                            TARDISMessage.handlesMessage(player, "The Travel destination does not compute!");
+                            plugin.getMessenger().handlesMessage(player, "The Travel destination does not compute!");
                             return false;
                         }
                     }

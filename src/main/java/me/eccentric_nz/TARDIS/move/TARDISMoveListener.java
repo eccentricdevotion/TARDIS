@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVoid;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
@@ -210,7 +210,7 @@ public class TARDISMoveListener implements Listener {
                     }, 20L);
                 }
                 if (userQuotes) {
-                    TARDISMessage.send(player, "DOOR_REMIND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_REMIND");
                 }
             }
         }

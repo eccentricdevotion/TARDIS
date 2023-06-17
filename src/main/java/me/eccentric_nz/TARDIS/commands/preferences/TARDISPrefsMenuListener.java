@@ -35,14 +35,14 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -109,23 +109,23 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
                                 if (rsal.resultset()) {
                                     if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
-                                        TARDISMessage.send(p, "POWER_LOW");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "POWER_LOW");
                                         return;
                                     }
                                     if (TARDISForceField.addToTracker(p)) {
-                                        TARDISMessage.send(p, "PREF_WAS_ON", "The TARDIS force field");
+                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                     }
                                 } else {
-                                    TARDISMessage.send(p, "POWER_LEVEL");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "POWER_LEVEL");
                                     return;
                                 }
                             } else {
                                 plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-                                TARDISMessage.send(p, "PREF_WAS_OFF", "The TARDIS force field");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "PREF_WAS_OFF", "The TARDIS force field");
                             }
                             close(p);
                         } else {
-                            TARDISMessage.send(p, "NO_PERMS");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_PERMS");
                         }
                         return;
                     }
@@ -182,7 +182,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                     tal.recharge(id);
                                     // Remove energy from TARDIS and sets database
-                                    TARDISMessage.send(p, "HANDBRAKE_ON");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                                         HashMap<String, Object> wheref = new HashMap<>();
@@ -205,13 +205,13 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                         new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
                                     }
                                 } else {
-                                    TARDISMessage.send(p, "HANDBRAKE_IN_VORTEX");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HANDBRAKE_IN_VORTEX");
                                 }
                             } else {
-                                TARDISMessage.send(p, "NO_TARDIS");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_TARDIS");
                             }
                         } else {
-                            TARDISMessage.send(p, "SONIC_HANDBRAKE_ON");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "SONIC_HANDBRAKE_ON");
                         }
                         return;
                     }
@@ -235,7 +235,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 }
                             }, 1L);
                         } else {
-                            TARDISMessage.send(p, "NOT_IN_TARDIS");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_IN_TARDIS");
                         }
                         return;
                     }
@@ -283,7 +283,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                             wheret.put("uuid", uuid);
                             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                             if (rst.resultSet()) {
-                                TARDISMessage.send(p, "JUNK_PRESET_OUTSIDE");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_PRESET_OUTSIDE");
                                 return;
                             }
                             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
@@ -291,7 +291,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
                                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                                 if (now < then) {
-                                    TARDISMessage.send(p, "COOLDOWN", String.format("%d", cooldown / 1000));
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
                                     return;
                                 }
                             }
@@ -308,11 +308,11 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 String current = tardis.getPreset().toString();
                                 // make sure is opposite
                                 if (current.equals("JUNK_MODE") && !bool) {
-                                    TARDISMessage.send(p, "JUNK_ALREADY_ON");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_ALREADY_ON");
                                     return;
                                 }
                                 if (!current.equals("JUNK_MODE") && bool) {
-                                    TARDISMessage.send(p, "JUNK_ALREADY_OFF");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_ALREADY_OFF");
                                     return;
                                 }
                                 int id = tardis.getTardis_id();
@@ -362,7 +362,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                     }
                                 }
                                 // rebuild
-                                TARDISMessage.send(p, message);
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, message);
                                 p.performCommand("tardis rebuild");
                             }
                         }

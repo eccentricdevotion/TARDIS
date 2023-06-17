@@ -20,9 +20,9 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -41,7 +41,7 @@ public class TARDISTravelExile {
 
     public boolean action(Player player, int id) {
         String permArea = plugin.getTardisArea().getExileArea(player);
-        TARDISMessage.send(player, "EXILE", permArea);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE", permArea);
         Location l;
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("area_name", permArea);
@@ -53,7 +53,7 @@ public class TARDISTravelExile {
             l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
         }
         if (l == null) {
-            TARDISMessage.send(player, "NO_MORE_SPOTS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
             return true;
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -65,7 +65,7 @@ public class TARDISTravelExile {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "TRAVEL_APPROVED", permArea);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", permArea);
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.EXILE));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,7 +88,7 @@ public class TARDISJettisonSeeder implements Listener {
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    TARDISMessage.send(player, "PLATE_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PLATE_NOT_FOUND");
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -130,12 +130,12 @@ public class TARDISJettisonSeeder implements Listener {
                             inv.addItem(is);
                             player.updateInventory();
                         }
-                        TARDISMessage.send(player, "ENERGY_AMOUNT", String.format("%d", amount));
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_AMOUNT", String.format("%d", amount));
                     } else {
-                        TARDISMessage.send(player, "ROOM_HAS_JETT");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_HAS_JETT");
                     }
                 } else {
-                    TARDISMessage.send(player, "ID_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ID_NOT_FOUND");
                 }
             }
         }

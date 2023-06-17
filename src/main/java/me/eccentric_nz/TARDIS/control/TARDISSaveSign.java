@@ -21,12 +21,12 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -46,7 +46,7 @@ class TARDISSaveSign {
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasMemory()) {
-            TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
             return;
         }
         if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
@@ -67,7 +67,7 @@ class TARDISSaveSign {
                     set_next.put("direction", lore.get(6));
                     boolean sub = Boolean.parseBoolean(lore.get(7));
                     set_next.put("submarine", (sub) ? 1 : 0);
-                    TARDISMessage.send(player, "LOC_SET", true);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET", true);
                     // update next
                     HashMap<String, Object> where_next = new HashMap<>();
                     where_next.put("tardis_id", id);

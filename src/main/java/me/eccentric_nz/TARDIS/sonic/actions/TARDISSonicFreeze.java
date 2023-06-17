@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,12 +51,12 @@ public class TARDISSonicFreeze {
         long cool = System.currentTimeMillis();
         if ((!plugin.getTrackerKeeper().getCooldown().containsKey(player.getUniqueId()) || plugin.getTrackerKeeper().getCooldown().get(player.getUniqueId()) < cool)) {
             plugin.getTrackerKeeper().getCooldown().put(player.getUniqueId(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
-            TARDISMessage.send(target, "FREEZE", player.getName());
+            plugin.getMessenger().send(target, TardisModule.TARDIS, "FREEZE", player.getName());
             UUID uuid = target.getUniqueId();
             plugin.getTrackerKeeper().getFrozenPlayers().add(uuid);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getFrozenPlayers().remove(uuid), 100L);
         } else {
-            TARDISMessage.send(player, "FREEZE_NO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "FREEZE_NO");
         }
     }
 

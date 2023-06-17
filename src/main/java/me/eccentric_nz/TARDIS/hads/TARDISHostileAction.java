@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -62,11 +62,11 @@ public class TARDISHostileAction {
                     }
                 } else {
                     plugin.getTrackerKeeper().getHadsDamage().remove(id);
-                    TARDISMessage.send(hostile, "TARDIS_BREAK");
+                    plugin.getMessenger().send(hostile, TardisModule.TARDIS, "TARDIS_BREAK");
                 }
             } else {
                 plugin.getTrackerKeeper().getHadsDamage().remove(id);
-                TARDISMessage.send(hostile, "TARDIS_BREAK");
+                plugin.getMessenger().send(hostile, TardisModule.TARDIS, "TARDIS_BREAK");
             }
         }
     }

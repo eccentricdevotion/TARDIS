@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
@@ -39,12 +39,12 @@ class TARDISReorderSavedLocationCommand {
     boolean doReorderSave(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             if (args.length < 3) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -53,15 +53,15 @@ class TARDISReorderSavedLocationCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND");
                 return false;
             }
             if (args[1].equalsIgnoreCase("home")) {
-                TARDISMessage.send(player, "SAVE_REORDER");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_REORDER");
                 return false;
             }
             if (!TARDISNumberParsers.isNumber(args[2])) {
-                TARDISMessage.send(player, "ARG_LAST_NUMBER");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_LAST_NUMBER");
                 return false;
             }
             int slot = TARDISNumberParsers.parseInt(args[2]);
@@ -71,7 +71,7 @@ class TARDISReorderSavedLocationCommand {
             wheres.put("slot", slot);
             ResultSetDestinations rss = new ResultSetDestinations(plugin, wheres, false);
             if (rss.resultSet()) {
-                TARDISMessage.send(player, "DEST_SLOT", rss.getDest_name());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SLOT", rss.getDest_name());
                 return true;
             }
             int destID = rsd.getDest_id();
@@ -80,10 +80,10 @@ class TARDISReorderSavedLocationCommand {
             HashMap<String, Object> set = new HashMap<>();
             set.put("slot", slot);
             plugin.getQueryFactory().doUpdate("destinations", set, did);
-            TARDISMessage.send(player, "DEST_REORDERED", args[2]);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_REORDERED", args[2]);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

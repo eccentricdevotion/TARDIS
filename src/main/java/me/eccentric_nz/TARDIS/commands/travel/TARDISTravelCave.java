@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
@@ -44,13 +44,13 @@ public class TARDISTravelCave {
 
     public boolean action(Player player, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
-            TARDISMessage.send(player, "TRAVEL_NO_PERM_CAVE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_CAVE");
             return true;
         }
         // find a cave
         Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);
         if (cave == null) {
-            TARDISMessage.send(player, "CAVE_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CAVE_NOT_FOUND");
             return true;
         }
         // check respect
@@ -70,7 +70,7 @@ public class TARDISTravelCave {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "TRAVEL_LOADED", "Cave", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", "Cave", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.CAVE));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

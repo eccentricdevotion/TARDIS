@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -116,7 +115,7 @@ public class Butler implements Listener {
                                 milkers.remove(uuid);
                             }, 3000L);
                         } else {
-                            TARDISMessage.send(p, TardisModule.MONSTERS, "WA_STRAX");
+                            plugin.getMessenger().send(p, TardisModule.MONSTERS, "WA_STRAX");
                         }
                     } else if (event.getHand().equals(EquipmentSlot.HAND)) {
                         p.playSound(zombie.getLocation(), "strax", 1.0f, 1.0f);

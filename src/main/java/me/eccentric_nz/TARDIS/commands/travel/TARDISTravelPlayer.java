@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.entity.Player;
 
@@ -41,35 +41,35 @@ public class TARDISTravelPlayer {
     public boolean action(Player player, String p, int id) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
             if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                TARDISMessage.send(player, "ADV_PLAYER");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_PLAYER");
                 return true;
             }
             if (player.getName().equalsIgnoreCase(p)) {
-                TARDISMessage.send(player, "TRAVEL_NO_SELF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_SELF");
                 return true;
             }
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             // check the player
             Player saved = plugin.getServer().getPlayer(p);
             if (saved == null) {
-                TARDISMessage.send(player, "NOT_ONLINE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
                 return true;
             }
             // check the to player's DND status
             ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
             if (rspp.resultSet() && rspp.isDND()) {
-                TARDISMessage.send(player, "DND", p);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DND", p);
                 return true;
             }
             new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getDirection(), false, false);
         } else {
-            TARDISMessage.send(player, "NO_PERM_PLAYER");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
         }
         return true;
     }

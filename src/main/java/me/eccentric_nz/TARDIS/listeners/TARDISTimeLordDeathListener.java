@@ -39,7 +39,6 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
@@ -388,12 +387,12 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     // update the database
                                     plugin.getQueryFactory().doUpdate("tardis", set, wheres);
                                 } else if (player.isOnline()) {
-                                    TARDISMessage.send(player, "ENERGY_NOT_AUTO");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_AUTO");
                                 }
                             }
                         }
                     } else if (player.isOnline()) {
-                        TARDISMessage.send(player, "AUTO_POWER");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "AUTO_POWER");
                     }
                 }
             }

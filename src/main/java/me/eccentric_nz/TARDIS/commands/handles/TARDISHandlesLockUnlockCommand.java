@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -56,7 +55,7 @@ class TARDISHandlesLockUnlockCommand {
                 // always lock / unlock both doors
                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                 String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
+                plugin.getMessenger().handlesSend(player, "DOOR_LOCK", message);
                 TARDISSounds.playTARDISSound(l, "tardis_lock");
             }
         }

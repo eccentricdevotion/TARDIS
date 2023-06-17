@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -43,7 +43,7 @@ class TARDISJunkDelete {
 
     public boolean delete(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -58,7 +58,7 @@ class TARDISJunkDelete {
                 bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             }
             if (bb_loc == null) {
-                TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             // destroy junk TARDIS
@@ -78,7 +78,7 @@ class TARDISJunkDelete {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);
                     TARDISDeleteCommand.cleanDatabase(id);
-                    TARDISMessage.send(sender, "JUNK_DELETED");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_DELETED");
                 }, 20L);
             }
         }

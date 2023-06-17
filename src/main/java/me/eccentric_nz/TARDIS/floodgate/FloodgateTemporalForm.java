@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITemporalLocator;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class FloodgateTemporalForm {
         String label = response.clickedButton().text();
         long ticks = getTime(label);
         plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), ticks);
-        TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", ticks));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", ticks));
         // damage the circuit if configured
         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
             int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());

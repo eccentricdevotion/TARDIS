@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import java.util.Arrays;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -38,8 +38,8 @@ class TARDISDefaultCommand {
         String sonic = String.join("_", Arrays.copyOfRange(args, 1, args.length));
         plugin.getConfig().set("preferences." + which, sonic);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "which");
-        TARDISMessage.send(sender, "RESTART");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "which");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
         return true;
     }
 }

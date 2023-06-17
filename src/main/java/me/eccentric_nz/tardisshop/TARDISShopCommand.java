@@ -8,12 +8,11 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.database.InsertShopItem;
 import me.eccentric_nz.tardisshop.database.ResultSetUpdateShop;
 import me.eccentric_nz.tardisshop.database.UpdateShopItem;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,12 +40,12 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
             if (sender instanceof Player player) {
                 // return if no arguments
                 if (args.length < 1) {
-                    TARDISMessage.send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("remove")) {
                     plugin.getShopSettings().getRemovingItem().add(player.getUniqueId());
-                    TARDISMessage.send(player, TardisModule.SHOP, "SHOP_REMOVE", plugin.getShopSettings().getBlockMaterial().toString());
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_REMOVE", plugin.getShopSettings().getBlockMaterial().toString());
                     return true;
                 } else if (args[0].equalsIgnoreCase("update")) {
                     // reload items.yml
@@ -78,24 +77,24 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                 }
                 // need at least 2 arguments from here on
                 if (args.length < 2) {
-                    TARDISMessage.send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("add")) {
                     String name = args[1].toLowerCase();
                     if (!plugin.getItemsConfig().contains(name)) {
-                    TARDISMessage.send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
                         return true;
                     }
                     double cost = plugin.getItemsConfig().getDouble(name);
                     TARDISShopItem item = new InsertShopItem(plugin).addNamedItem(TARDISStringUtils.capitalise(args[1]), cost);
                     plugin.getShopSettings().getSettingItem().put(player.getUniqueId(), item);
-                    TARDISMessage.send(player, TardisModule.SHOP, "SHOP_ADD", plugin.getShopSettings().getBlockMaterial().toString());
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_ADD", plugin.getShopSettings().getBlockMaterial().toString());
                     return true;
                 }
                 return true;
             } else {
-                TARDISMessage.send(sender, TardisModule.SHOP, "CMD_NO_CONSOLE");
+                plugin.getMessenger().send(sender, TardisModule.SHOP, "CMD_NO_CONSOLE");
                 return true;
             }
         }

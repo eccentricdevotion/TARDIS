@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chemistry.product;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;

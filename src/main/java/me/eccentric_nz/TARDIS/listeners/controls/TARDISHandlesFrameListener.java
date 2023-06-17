@@ -24,12 +24,12 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -66,7 +66,7 @@ public class TARDISHandlesFrameListener implements Listener {
             ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
             if (rsh.resultSet()) {
                 if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                    TARDISMessage.send(player, "NO_PERMS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     return;
                 }
                 ItemStack is = frame.getItem();
@@ -86,7 +86,7 @@ public class TARDISHandlesFrameListener implements Listener {
                         frame.setItem(is, false);
                     }, 20L);
                     if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                         return;
                     }
                     if (player.isSneaking()) {
@@ -124,12 +124,12 @@ public class TARDISHandlesFrameListener implements Listener {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (isHandles(is)) {
                     if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                         return;
                     }
                     // cannot place unless inside the TARDIS
                     if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
-                        TARDISMessage.handlesSend(player, "HANDLES_TARDIS");
+                        plugin.getMessenger().handlesSend(player, "HANDLES_TARDIS");
                         event.setCancelled(true);
                         return;
                     }
@@ -146,10 +146,10 @@ public class TARDISHandlesFrameListener implements Listener {
                             plugin.getQueryFactory().insertControl(rst.getTardis_id(), 26, newLocation, 0);
                         } else {
                             event.setCancelled(true);
-                            TARDISMessage.send(event.getPlayer(), "HANDLES_PLACED");
+                            plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "HANDLES_PLACED");
                         }
                     } else {
-                        TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                        plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                         event.setCancelled(true);
                     }
                 }
@@ -222,7 +222,7 @@ public class TARDISHandlesFrameListener implements Listener {
                     if (!rsc.resultSet()) {
                         return;
                     }
-                    TARDISMessage.send(player, "SCANNER_MAP");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SCANNER_MAP");
                 }
             }
         }

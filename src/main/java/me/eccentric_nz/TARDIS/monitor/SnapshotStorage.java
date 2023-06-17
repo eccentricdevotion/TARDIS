@@ -22,9 +22,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class SnapshotStorage {
 
@@ -49,7 +48,7 @@ public class SnapshotStorage {
             gson.toJson(data, writer);
             writer.close();
         } catch (IOException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "Error writing to mapId: {0}", id);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Error writing to mapId:" + id);
         }
     }
 }

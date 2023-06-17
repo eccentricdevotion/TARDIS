@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
@@ -43,7 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 /**
- * @author eccentric_nz 
+ * @author eccentric_nz
  */
 public class TARDISDoorListener {
 
@@ -161,6 +161,7 @@ public class TARDISDoorListener {
         }
         if (quotes) {
             if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                // TODO add to messengers so we can use Adventure
                 TextComponent tcg = new TextComponent("[TARDIS] ");
                 tcg.setColor(ChatColor.GOLD);
                 TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
@@ -169,7 +170,7 @@ public class TARDISDoorListener {
                 tcg.addExtra(tcl);
                 player.spigot().sendMessage(tcg);
             } else {
-                player.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+               plugin.getMessenger().message( player, TardisModule.TARDIS, plugin.getGeneralKeeper().getQuotes().get(i));
             }
         }
         if (exit) {
@@ -337,7 +338,7 @@ public class TARDISDoorListener {
                     ir.setName("TARDIS Key", true);
                     inv.addItem(is);
                     player.updateInventory();
-                    TARDISMessage.send(player, "KEY_REMIND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_REMIND");
                 }
             }
         }

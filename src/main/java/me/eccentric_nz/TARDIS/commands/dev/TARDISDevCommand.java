@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import org.bukkit.Material;
@@ -83,7 +83,7 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.contains(first)) {
-                    TARDISMessage.send(sender, "ARG_NOT_VALID");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1) {
@@ -112,12 +112,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (first.equals("plurals")) {
                     for (Material m : Material.values()) {
                         String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
-                        plugin.getLogger().log(Level.INFO, str + " --> " + Pluraliser.pluralise(str));
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, str + " --> " + Pluraliser.pluralise(str));
                     }
                 }
                 if (first.equals("chunky")) {
                     if (!plugin.getPM().isPluginEnabled("Chunky")) {
-                        plugin.getLogger().log(Level.WARNING, "Chunky plugin is not enabled!");
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Chunky plugin is not enabled!");
                         return true;
                     }
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky world " + args[1]);
@@ -140,7 +140,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     if (sender instanceof Player player) {
                         return new TARDISDisplayItemCommand(plugin).display(player, args);
                     } else {
-                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                         return true;
                     }
                 }
@@ -148,7 +148,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     if (sender instanceof Player player) {
                         return new TARDISFrameCommand(plugin).toggle(player, args[1].toLowerCase().equals("lock"));
                     } else {
-                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                         return true;
                     }
                 }
@@ -171,7 +171,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     return true;
                 }
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
                 return false;
             }
         }

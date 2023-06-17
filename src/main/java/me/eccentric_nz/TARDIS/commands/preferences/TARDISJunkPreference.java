@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 
@@ -56,7 +56,7 @@ class TARDISJunkPreference {
             wheret.put("uuid", ustr);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
-                TARDISMessage.send(player, "JUNK_PRESET_OUTSIDE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_PRESET_OUTSIDE");
                 return true;
             }
             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
@@ -64,17 +64,17 @@ class TARDISJunkPreference {
                 long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                 if (now < then) {
-                    TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                    plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
                     return true;
                 }
             }
             // make sure is opposite
             if (current.equals("JUNK_MODE") && arg.equalsIgnoreCase("on")) {
-                TARDISMessage.send(player, "JUNK_ALREADY_ON");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_ALREADY_ON");
                 return true;
             }
             if (!current.equals("JUNK_MODE") && arg.equalsIgnoreCase("off")) {
-                TARDISMessage.send(player, "JUNK_ALREADY_OFF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_ALREADY_OFF");
                 return true;
             }
             // check if they have a junk record
@@ -104,7 +104,7 @@ class TARDISJunkPreference {
                 sett.put("chameleon_demat", current);
                 // set chameleon adaption to OFF
                 sett.put("adapti_on", 0);
-                TARDISMessage.send(player, "JUNK_PRESET_ON");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_PRESET_ON");
                 cham_set = "JUNK_MODE";
             }
             if (arg.equalsIgnoreCase("off")) {
@@ -112,7 +112,7 @@ class TARDISJunkPreference {
                 String preset = (has) ? rsj.getPreset().toString() : current;
                 sett.put("chameleon_preset", preset);
                 sett.put("chameleon_demat", "JUNK_MODE");
-                TARDISMessage.send(player, "JUNK_PRESET_OFF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_PRESET_OFF");
                 cham_set = preset;
             }
             // update tardis table

@@ -24,11 +24,10 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.RegisteredListener;
@@ -52,7 +51,7 @@ class TARDISSetBooleanCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            TARDISMessage.send(sender, "TRUE_FALSE");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
             return false;
         }
         boolean bool = Boolean.parseBoolean(tf);
@@ -74,7 +73,7 @@ class TARDISSetBooleanCommand {
         } else {
             if (first.equals("abandon")) {
                 if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-                    TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+                    plugin.getMessenger().messageWithColour(sender, "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF55555");
                     return true;
                 }
                 plugin.getConfig().set("abandon.enabled", bool);
@@ -85,9 +84,9 @@ class TARDISSetBooleanCommand {
             }
             plugin.saveConfig();
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         if (require_restart.contains(tolower)) {
-            TARDISMessage.send(sender, "RESTART");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
         }
         if (register.contains(tolower)) {
             for (RegisteredListener rls : HandlerList.getRegisteredListeners(plugin)) {

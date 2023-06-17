@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -120,7 +120,7 @@ public class TARDISExterminator {
                 return true;
             }
         } catch (Exception e) {
-            plugin.getLogger().log(Level.INFO, "TARDIS exterminate by id error: " + e);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "TARDIS exterminate by id error: " + e);
             return false;
         }
         return true;
@@ -144,7 +144,7 @@ public class TARDISExterminator {
             travid.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
             if (rst.resultSet()) {
-                TARDISMessage.send(player, "TARDIS_NO_DELETE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_DELETE");
                 return false;
             }
             String owner = tardis.getOwner();
@@ -157,7 +157,7 @@ public class TARDISExterminator {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return false;
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -180,7 +180,7 @@ public class TARDISExterminator {
             }
             World cw = TARDISStaticLocationGetters.getWorldFromSplitString(chunkLoc);
             if (cw == null) {
-                TARDISMessage.send(player, "WORLD_DELETED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED");
                 return true;
             }
             if (!cw.getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
@@ -190,10 +190,10 @@ public class TARDISExterminator {
             removeZeroRoom(tips, hasZero);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 cleanDatabase(id);
-                TARDISMessage.send(player, "TARDIS_EXTERMINATED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_EXTERMINATED");
             }, 40L);
         } else {
-            TARDISMessage.send(player, "EXTERMINATE_NONE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_NONE");
         }
         return true;
     }
@@ -250,7 +250,7 @@ public class TARDISExterminator {
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
             players.forEach((p) -> {
-                TARDISMessage.send(p, "WORLD_RESET");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLD_RESET");
                 p.teleport(spawn);
             });
             if (!plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

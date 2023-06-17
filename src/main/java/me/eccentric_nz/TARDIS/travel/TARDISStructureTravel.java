@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
@@ -81,26 +81,26 @@ public class TARDISStructureTravel {
                 // check it is a valid structure type
                 structure = Registry.STRUCTURE.get(NamespacedKey.minecraft(args[1].toLowerCase(Locale.ROOT)));
                 if (structure == null) {
-                    TARDISMessage.send(p, "VILLAGE_NO_STRUCTURE", args[1]);
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_STRUCTURE", args[1]);
                     return null;
                 }
                 // check structure travel permission
                 String perm = structure.getKey().getKey();
                 if (!p.hasPermission("tardis.timetravel.structure." + perm)) {
-                    TARDISMessage.send(p, "NO_PERM_STRUCTURE", TARDISStringUtils.capitalise(perm));
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_PERM_STRUCTURE", TARDISStringUtils.capitalise(perm));
                     return null;
                 }
                 // check structure arg is appropriate for the world environment
                 if (!env.equals(Environment.NETHER) && netherStructures.contains(structure)) {
-                    TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
                 if (!env.equals(Environment.THE_END) && structure.equals(Structure.END_CITY)) {
-                    TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], "a " + TARDISStringUtils.capitalise(env.toString()));
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], "a " + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
                 if (!env.equals(Environment.NORMAL) && overworldStructures.contains(structure)) {
-                    TARDISMessage.send(p, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
             }
@@ -162,7 +162,7 @@ public class TARDISStructureTravel {
             loc.setY(b.getY());
             return new TARDISStructureLocation(loc, structure);
         } else {
-            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return null;
         }
     }

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands;
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -68,18 +68,18 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return false;
             }
             if (!TARDISPermission.hasPermission(player, "tardis.gravity")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return true;
             }
             if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
                 // check they are still in the TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     String mess_stub = (player.getLocation().getWorld().getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
-                    TARDISMessage.send(player, mess_stub);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, mess_stub);
                     return true;
                 }
             }
@@ -99,11 +99,11 @@ public class TARDISGravityCommands implements CommandExecutor {
                     try {
                         values[1] = Double.parseDouble(args[1]);
                         if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
-                            TARDISMessage.send(player, "TOO_FAR");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FAR");
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        TARDISMessage.send(player, "ARG_SEC_NUMBER");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_SEC_NUMBER");
                         return false;
                     }
                 } else {
@@ -112,7 +112,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 if (args.length == 3) {
                     values[2] = TARDISNumberParsers.parseDouble(args[2]);
                     if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
-                        TARDISMessage.send(player, "GRAVITY_FAST");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_FAST");
                         return true;
                     }
                 } else {
@@ -121,7 +121,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 UUID uuid = player.getUniqueId();
                 plugin.getTrackerKeeper().getGravity().put(uuid, values);
                 String message = (dir.equals("remove")) ? "GRAVITY_CLICK_REMOVE" : "GRAVITY_CLICK_SAVE";
-                TARDISMessage.send(player, message);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, message);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getGravity().remove(uuid), 1200L);
                 return true;
             }

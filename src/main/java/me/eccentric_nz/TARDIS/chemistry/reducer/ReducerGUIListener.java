@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
 import me.eccentric_nz.TARDIS.chemistry.element.Element;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementBuilder;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

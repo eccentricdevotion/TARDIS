@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
@@ -39,7 +39,7 @@ class TARDISSetWorldInclusionCommand {
         String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length)).replace(".", "_");
         // check the world actually exists!
         if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
-            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
             return false;
         }
         if (first.equals("include")) {
@@ -48,7 +48,7 @@ class TARDISSetWorldInclusionCommand {
             plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "time_travel");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "time_travel");
         return true;
     }
 }

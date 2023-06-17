@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesWeirdness;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -58,11 +58,11 @@ public class TARDISHandlesCommand implements CommandExecutor {
             return true;
         }
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(sender, "HANDLES_INTERNAL");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "HANDLES_INTERNAL");
             return true;
         }
         if (args[0].equals("tell")) {
@@ -72,7 +72,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
         try {
             uuid = (args[0].equals("brake")) ? UUID.fromString(args[2]) : UUID.fromString(args[1]);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "HANDLES_INTERNAL");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "HANDLES_INTERNAL");
             return true;
         }
         player = plugin.getServer().getPlayer(uuid);
@@ -84,14 +84,14 @@ public class TARDISHandlesCommand implements CommandExecutor {
                 return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
             }
             case "name" -> {
-                TARDISMessage.handlesSend(player, "HANDLES_NAME", player.getName());
+                plugin.getMessenger().handlesSend(player, "HANDLES_NAME", player.getName());
                 return true;
             }
             case "remind" -> {
                 return new TARDISHandlesRemindCommand(plugin).doReminder(player, args);
             }
             case "say" -> {
-                return new TARDISHandlesSayCommand().say(player, args);
+                return new TARDISHandlesSayCommand(plugin).say(player, args);
             }
             case "scan" -> {
                 return new TARDISHandlesScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();

@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class TARDISAutonomousAreaCommand {
@@ -34,7 +34,7 @@ public class TARDISAutonomousAreaCommand {
 
     public boolean processArea(CommandSender sender, String[] args) {
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         String area = args[1];
@@ -43,27 +43,27 @@ public class TARDISAutonomousAreaCommand {
         where.put("area_name", area);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, true);
         if (!rsa.resultSet()) {
-            TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
             return true;
         }
         List<String> autoAreas = plugin.getConfig().getStringList("autonomous_areas");
         if (args[2].equalsIgnoreCase("add")) {
             if (autoAreas.contains(area)) {
-                TARDISMessage.send(sender, "AREA_ALREADY_ADDED", area);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_ALREADY_ADDED", area);
                 return true;
             }
             autoAreas.add(area);
         } else {
             // remove
             if (!autoAreas.contains(area)) {
-                TARDISMessage.send(sender, "AREA_NOT_IN_LIST", area);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NOT_IN_LIST", area);
                 return true;
             }
             autoAreas.remove(area);
         }
         plugin.getConfig().set("autonomous_areas", autoAreas);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "AREA_LIST_UPDATED");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_LIST_UPDATED");
         return true;
     }
 }

@@ -22,9 +22,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -75,7 +75,7 @@ public class TARDISArchPersister {
                 }
                 count += ps.executeUpdate();
             }
-            plugin.getLogger().log(Level.INFO, "Saved " + count + " 'arched' players.");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " 'arched' players.");
         } catch (SQLException ex) {
             plugin.debug("Insert error for arched table: " + ex.getMessage());
         } finally {
@@ -118,7 +118,7 @@ public class TARDISArchPersister {
                 ps.setLong(3, time);
             }
             count += ps.executeUpdate();
-            plugin.getLogger().log(Level.INFO, "Saved " + count + " 'arched' player.");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " 'arched' player.");
         } catch (SQLException ex) {
             plugin.debug("Insert error for arched table: " + ex.getMessage());
         } finally {

@@ -11,9 +11,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -95,7 +94,7 @@ public class FloodgateChameleonCircuitForm {
                 if (hasFrame) {
                     tcf.updateChameleonFrame(ChameleonPreset.FACTORY, rsf.getLocation());
                 }
-                TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
             }
             case "Adaptive Biome", "Adaptive Block" -> {
                 ChameleonPreset adaptive = (preset.equals(ChameleonPreset.SUBMERGED)) ? ChameleonPreset.SUBMERGED : ChameleonPreset.FACTORY;
@@ -111,7 +110,7 @@ public class FloodgateChameleonCircuitForm {
                 tcc.getCircuits();
                 if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                     if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
-                        TARDISMessage.send(player, "INVISIBILITY_MISSING");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_MISSING");
                         break;
                     }
                 }
@@ -127,10 +126,10 @@ public class FloodgateChameleonCircuitForm {
                 if (hasFrame) {
                     tcf.updateChameleonFrame(ChameleonPreset.INVISIBLE, rsf.getLocation());
                 }
-                TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Invisibility");
             }
             case "Shorted out" -> new FloodgateChameleonPresetForm(plugin, uuid).send();
-            case "Construct" -> TARDISMessage.send(player, "CONSTRUCT_USE_SHELL");
+            case "Construct" -> plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_USE_SHELL");
             case "Lock" -> {
                 // set the current adaptive preset as shorted out - this
                 // will allow locking in a usually unavailable biome preset
@@ -152,11 +151,11 @@ public class FloodgateChameleonCircuitForm {
                                 tcf.updateChameleonFrame(which, rsf.getLocation());
                             }
                             updateChameleonSign(rsc.getData(), which.toString(), player);
-                            TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + which.getDisplayName());
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + which.getDisplayName());
                         }
                     }
                 } else {
-                    TARDISMessage.send(player, "CHAM_LOCK");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_LOCK");
                 }
             }
             default -> {

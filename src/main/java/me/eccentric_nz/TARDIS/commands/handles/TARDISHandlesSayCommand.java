@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import java.util.Arrays;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
 /**
@@ -25,9 +25,15 @@ import org.bukkit.entity.Player;
  */
 class TARDISHandlesSayCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISHandlesSayCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     boolean say(Player player, String[] args) {
         String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-        TARDISMessage.handlesMessage(player, message);
+        plugin.getMessenger().handlesMessage(player, message);
         return true;
     }
 }

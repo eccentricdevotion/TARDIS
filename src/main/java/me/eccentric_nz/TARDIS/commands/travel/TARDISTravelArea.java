@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -49,26 +49,26 @@ public class TARDISTravelArea {
         wherea.put("area_name", args[1]);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (!rsa.resultSet()) {
-            TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
             return true;
         }
         if ((!TARDISPermission.hasPermission(player, "tardis.area." + args[1]) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
-            TARDISMessage.send(player, "TRAVEL_NO_AREA_PERM", args[1]);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", args[1]);
             return true;
         }
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-            TARDISMessage.send(player, "ADV_AREA");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_AREA");
             return true;
         }
         // check whether this is a no invisibility area
         String invisibility = rsa.getArea().getInvisibility();
         if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
             // check preset
-            TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
             return true;
         } else if (!invisibility.equals("ALLOW")) {
             // force preset
-            TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
             HashMap<String, Object> wherei = new HashMap<>();
             wherei.put("tardis_id", id);
             HashMap<String, Object> seti = new HashMap<>();
@@ -84,7 +84,7 @@ public class TARDISTravelArea {
             l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
         }
         if (l == null) {
-            TARDISMessage.send(player, "NO_MORE_SPOTS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
             return true;
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -101,7 +101,7 @@ public class TARDISTravelArea {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             set.put("direction", rsc.getDirection().forPreset().toString());
@@ -110,7 +110,7 @@ public class TARDISTravelArea {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "TRAVEL_APPROVED", args[1]);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", args[1]);
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.AREA));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

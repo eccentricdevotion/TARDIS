@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
@@ -32,8 +32,8 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 
 /**
- * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
- * smell of dust after rain".
+ * The telepathic password to the TARDIS was "the colour crimson, the number
+ * eleven, the feeling of delight, and the smell of dust after rain".
  *
  * @author eccentric_nz
  */
@@ -54,12 +54,14 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
-     * borders and TARDIS areas.
+     * Checks whether a location is allowed by other plugins. This checks
+     * WorldGuard regions, Towny plots, WorldBorder borders and TARDIS areas.
      *
      * @param location the location to check.
-     * @param flag     a list of flags to check (including whether to message the player).
-     * @return true or false depending on whether the player is allowed to travel to the specified location
+     * @param flag a list of flags to check (including whether to message the
+     * player).
+     * @return true or false depending on whether the player is allowed to
+     * travel to the specified location
      */
     public boolean getRespect(Location location, Parameters flag) {
         boolean bool = true;
@@ -70,7 +72,7 @@ public class TARDISPluginRespect {
             String perm = location.getWorld().getName();
             if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM_WORLD", perm);
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NO_PERM_WORLD", perm);
                 }
                 bool = false;
             }
@@ -80,21 +82,21 @@ public class TARDISPluginRespect {
             // check if nether enabled
             if (!plugin.getConfig().getBoolean("travel.nether")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_DISABLED", "Nether");
                 }
                 bool = false;
             }
             // check permission
             if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.nether")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "NO_PERM_TRAVEL", "Nether");
                 }
                 bool = false;
             }
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "NETHER")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NOT_VISITED", "Nether");
                 }
                 bool = false;
             }
@@ -104,34 +106,34 @@ public class TARDISPluginRespect {
             // check if end enabled
             if (!plugin.getConfig().getBoolean("travel.the_end")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_DISABLED", "End");
                 }
                 bool = false;
             }
             // check permission
             if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.end")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "NO_PERM_TRAVEL", "End");
                 }
                 bool = false;
             }
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "THE_END")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NOT_VISITED", "End");
                 }
                 bool = false;
             }
         }
         if (flag.respectWorldguard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "WORLDGUARD");
             }
             bool = false;
         }
         if (flag.respectTowny() && townyOnServer && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !tychk.checkTowny(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "TOWNY");
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TOWNY");
             }
             bool = false;
         }
@@ -140,33 +142,33 @@ public class TARDISPluginRespect {
                 WorldBorder wb = location.getWorld().getWorldBorder();
                 if (!wb.isInside(location)) {
                     if (flag.messagePlayer()) {
-                        TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                        plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "WORLDBORDER");
                     }
                     bool = false;
                 }
             }
             if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(location)) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "WORLDBORDER");
                 }
                 bool = false;
             }
         }
         if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "FACTIONS");
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "FACTIONS");
             }
             bool = false;
         }
         if (flag.respectGreifPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "GRIEFPREVENTION");
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "GRIEFPREVENTION");
             }
             bool = false;
         }
         if (flag.respectRedProtect() && redProtectOnServer && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "REDPROTECT");
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "REDPROTECT");
             }
             bool = false;
         }
@@ -175,9 +177,9 @@ public class TARDISPluginRespect {
                 String area_perm = plugin.getTrackerKeeper().getPerm().get(flag.getPlayer().getUniqueId());
                 String area_name = "tardis.area." + plugin.getConfig().getString("creation.area");
                 if (area_perm.equals(area_name)) {
-                    TARDISMessage.send(flag.getPlayer(), "TARDIS_SET_HOME");
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TARDIS_SET_HOME");
                 } else {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM", area_perm);
+                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NO_PERM", area_perm);
                 }
             }
             plugin.getTrackerKeeper().getPerm().remove(flag.getPlayer().getUniqueId());
@@ -197,7 +199,8 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the WorldBorder plugin is available, and loads support if it is.
+     * Checks if the WorldBorder plugin is available, and loads support if it
+     * is.
      */
     public void loadWorldBorder() {
         if (plugin.getPM().getPlugin("WorldBorder") != null) {
@@ -213,7 +216,7 @@ public class TARDISPluginRespect {
         if (plugin.getPM().getPlugin("Factions") != null) {
             try {
                 Class.forName("com.massivecraft.factions.entity.MPlayer");
-                plugin.getLogger().log(Level.WARNING, "Factions is the wrong version!");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Factions is the wrong version!");
                 factionsOnServer = false;
             } catch (ClassNotFoundException e) {
                 factionsOnServer = true;
@@ -222,7 +225,8 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the GriefPrevention plugin is available, and loads support if it is.
+     * Checks if the GriefPrevention plugin is available, and loads support if
+     * it is.
      */
     public void loadGriefPrevention() {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {
@@ -233,7 +237,8 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the GriefPrevention plugin is available, and loads support if it is.
+     * Checks if the GriefPrevention plugin is available, and loads support if
+     * it is.
      */
     public void loadRedProtect() {
         if (plugin.getPM().getPlugin("RedProtect") != null) {

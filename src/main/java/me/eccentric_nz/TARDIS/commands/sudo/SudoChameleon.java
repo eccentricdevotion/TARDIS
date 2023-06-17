@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -48,12 +48,12 @@ public class SudoChameleon {
             try {
                 ChameleonPreset preset = ChameleonPreset.valueOf(args[2].toUpperCase());
                 if (preset.getSlot() == -1) {
-                    TARDISMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHAM_NOT_VALID", preset.toString());
                 } else {
                     chameleon = preset.toString();
                 }
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, "ABANDONED_PRESET");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_PRESET");
                 return true;
             }
         }
@@ -63,7 +63,7 @@ public class SudoChameleon {
             HashMap<String, Object> set = new HashMap<>();
             set.put("chameleon_preset", chameleon);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            TARDISMessage.send(sender, "CHAM_SET", chameleon);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHAM_SET", chameleon);
             // perform rebuild
             return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
         }

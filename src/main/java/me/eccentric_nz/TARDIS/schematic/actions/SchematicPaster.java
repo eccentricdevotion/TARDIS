@@ -18,9 +18,14 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISHeadSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
@@ -35,12 +40,6 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -75,7 +74,7 @@ public class SchematicPaster implements Runnable {
         if (!running) {
             UUID uuid = player.getUniqueId();
             if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
-                player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
+                plugin.getMessenger().message( player, TardisModule.TARDIS, "No schematic loaded! /ts load [console|room|structure|user] [name]");
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = -1;
                 return;

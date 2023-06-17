@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -81,9 +81,9 @@ public class TARDISTelepathicListener implements Listener {
                     if (rsp.isTelepathyOn()) {
                         // track player
                         plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
-                        TARDISMessage.send(player, "TELEPATHIC_COMMAND");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_COMMAND");
                     } else {
-                        TARDISMessage.send(player, "TELEPATHIC_OFF");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_OFF");
                     }
                 }
             }

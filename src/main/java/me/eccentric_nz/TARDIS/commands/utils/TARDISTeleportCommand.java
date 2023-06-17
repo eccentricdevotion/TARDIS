@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -62,7 +62,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 // get player from argument
                 player = plugin.getServer().getPlayer(args[1]);
                 if (player == null || !player.isOnline()) {
-                    TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                     return true;
                 }
             }
@@ -70,7 +70,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 return true;
             }
             if (args.length < 1) {
-                TARDISMessage.send(player, "ARG_TP");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_TP");
                 return false;
             }
             World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
@@ -94,7 +94,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 spawn.setY(highest + 1);
                 player.teleport(spawn);
             } else {
-                TARDISMessage.send(player, "WORLD_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NOT_FOUND");
             }
             return true;
         }

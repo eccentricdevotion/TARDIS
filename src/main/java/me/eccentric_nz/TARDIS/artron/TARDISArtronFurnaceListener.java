@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -153,7 +153,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!plugin.getUtils().inTARDISWorld(player)) {
             event.setCancelled(true);
             // only in TARDIS
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
         }
         if (TARDISPermission.hasPermission(player, "tardis.furnace")) {
             Block b = event.getBlock();
@@ -165,7 +165,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             TARDISDisplayItemUtils.set(TARDISDisplayItem.ARTRON_FURNACE, b);
         } else {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NO_PERM_FURNACE");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_FURNACE");
         }
     }
 

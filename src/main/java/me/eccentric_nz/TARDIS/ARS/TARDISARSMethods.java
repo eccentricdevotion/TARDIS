@@ -30,9 +30,9 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -319,7 +319,7 @@ public class TARDISARSMethods {
                         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                             if (!TARDISSudoTracker.SUDOERS.containsKey(playerUUID) && !hasCondensables(playerUUID.toString(), tap.getChanged(), ids.get(playerUUID))) {
                                 String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
-                                TARDISMessage.send(player, message);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, message);
                                 if (tap.getChanged().size() == 1) {
                                     RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), player);
                                 }
@@ -328,10 +328,10 @@ public class TARDISARSMethods {
                                 return;
                             }
                         }
-                        TARDISMessage.send(player, "ARS_START");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_START");
                         // do all jettisons first
                         if (!tap.getJettison().isEmpty()) {
-                            TARDISMessage.send(player, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                             long del = 5L;
                             for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
                                 TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(playerUUID), player);
@@ -363,13 +363,13 @@ public class TARDISARSMethods {
                         // reset map to the previous version
                         revert(playerUUID);
                         if (tap.getError().equals("ARS_LIMIT")) {
-                            TARDISMessage.send(player, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
                         } else {
-                            TARDISMessage.send(player, tap.getError());
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, tap.getError());
                         }
                     }
                 } else {
-                    TARDISMessage.send(player, "ROOM_ONLY_TL");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ONLY_TL");
                     revert(playerUUID);
                 }
                 map_data.remove(playerUUID);

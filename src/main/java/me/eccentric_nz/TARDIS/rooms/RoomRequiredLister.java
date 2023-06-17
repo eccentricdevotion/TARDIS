@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 public class RoomRequiredLister {
@@ -41,7 +41,7 @@ public class RoomRequiredLister {
         // get the TARDIS id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "CONDENSE_REQUIRE", name);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_REQUIRE", name);
             HashMap<String, Integer> item_counts = new HashMap<>();
             for (Map.Entry<String, Integer> entry : blockTypes.entrySet()) {
                 String bkey;
@@ -74,11 +74,11 @@ public class RoomRequiredLister {
                 }
             }
             if (total == 0) {
-                TARDISMessage.send(player, "CONDENSE_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NONE");
             }
-            TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
         } else {
-            TARDISMessage.send(player, "ID_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ID_NOT_FOUND");
         }
     }
 }

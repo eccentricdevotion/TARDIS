@@ -22,10 +22,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -67,7 +67,7 @@ public class TARDISHadsPersister {
                 count += ps.executeUpdate();
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " dispersed TARDISes.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " dispersed TARDISes.");
             }
         } catch (SQLException ex) {
             plugin.debug("Insert error for dispersed table: " + ex.getMessage());
@@ -100,7 +100,7 @@ public class TARDISHadsPersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " dispersed Police Boxes.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " dispersed Police Boxes.");
             }
             ps = connection.prepareStatement("DELETE FROM " + prefix + "dispersed");
             ps.executeUpdate();

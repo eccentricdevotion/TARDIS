@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -28,16 +28,22 @@ import org.bukkit.entity.Player;
  */
 class TARDISHumCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISHumCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     boolean setHumPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "HUM_NEED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NEED");
             return false;
         }
         Hum go;
         try {
             go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "HUM_NOT_VALID");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NOT_VALID");
             return false;
         }
         String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
@@ -46,7 +52,7 @@ class TARDISHumCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "HUM_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_SAVED");
         return true;
     }
 }

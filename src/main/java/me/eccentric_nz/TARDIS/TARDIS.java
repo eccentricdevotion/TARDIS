@@ -58,6 +58,9 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
+import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
+import me.eccentric_nz.TARDIS.messaging.SpigotMessage;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
@@ -195,6 +198,7 @@ public class TARDIS extends JavaPlugin {
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
+    private TARDISMessage messenger;
 
     /**
      * Constructor
@@ -209,6 +213,10 @@ public class TARDIS extends JavaPlugin {
         versions.put("Towny", "0.98");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.8");
+    }
+
+    public TARDISMessage getMessenger() {
+        return messenger;
     }
 
     @Override
@@ -232,35 +240,6 @@ public class TARDIS extends JavaPlugin {
             return new TARDISChunkGenerator();
         }
         return new TARDISChunkGenerator();
-    }
-
-    private ModuleDescriptor.Version getServerVersion(String s) {
-        Matcher mat = versionPattern.matcher(s);
-        String v = mat.find() ? mat.group(0) : "1.13";
-        return ModuleDescriptor.Version.parse(v);
-    }
-
-    private boolean checkPluginVersion(String plg, String min) {
-        if (pm.isPluginEnabled(plg)) {
-            Plugin check = pm.getPlugin(plg);
-            ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
-            String yamlVersion = check.getDescription().getVersion();
-            Matcher matcher = versionPattern.matcher(yamlVersion);
-            if (matcher.find()) {
-                String pluginVersion = matcher.group(0);
-                try {
-                    ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(pluginVersion);
-                    return (version.compareTo(minVersion) >= 0);
-                } catch (IllegalArgumentException e) {
-                    debug("Version IllegalArgumentException");
-                }
-            }
-            getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
-            getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-            getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
-            getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", yamlVersion);
-        }
-        return true;
     }
 
     @Override
@@ -343,6 +322,7 @@ public class TARDIS extends JavaPlugin {
             }
             hasVersion = true;
             PaperLib.suggestPaper(this);
+            messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
@@ -440,13 +420,13 @@ public class TARDIS extends JavaPlugin {
             startZeroHealing();
             startSiegeTicks();
             if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("modules.dynmap")) {
-                getLogger().log(Level.INFO, "Loading DynMap Module");
+                getMessenger().message(console, TardisModule.TARDIS, "Loading DynMap Module");
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
             }
             if (getConfig().getBoolean("modules.weeping_angels")) {
                 if (PaperLib.isPaper()) {
-                    getLogger().log(Level.INFO, "Loading Weeping Angels Module");
+                    getMessenger().message(console, TardisModule.TARDIS, "Loading Weeping Angels Module");
                     new TARDISWeepingAngels(this).enable();
                     if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
                         if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.MONSTERS)) {
@@ -459,7 +439,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             if (getConfig().getBoolean("modules.vortex_manipulator")) {
-                getLogger().log(Level.INFO, "Loading Vortex Manipulator Module");
+                getMessenger().message(console, TardisModule.TARDIS, "Loading Vortex Manipulator Module");
                 new TARDISVortexManipulator(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
                     boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.VORTEX_MANIPULATOR);
@@ -471,7 +451,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             if (getConfig().getBoolean("modules.shop")) {
-                getLogger().log(Level.INFO, "Loading Shop Module");
+                getMessenger().message(console, TardisModule.TARDIS, "Loading Shop Module");
                 new TARDISShop(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
                     boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.SHOP);
@@ -484,7 +464,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             if (getConfig().getBoolean("modules.sonic_blaster")) {
-                getLogger().log(Level.INFO, "Loading Sonic Blaster Module");
+                getMessenger().message(console, TardisModule.TARDIS, "Loading Sonic Blaster Module");
                 new TARDISSonicBlaster(this).enable();
                 if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
                     if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.BLASTER)) {
@@ -579,7 +559,7 @@ public class TARDIS extends JavaPlugin {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200, 200);
             getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                 if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-                    getLogger().log(Level.INFO, getLanguage().getString("ADVANCEMENT_RELOAD"));
+                    getMessenger().message(console, TardisModule.TARDIS, getLanguage().getString("ADVANCEMENT_RELOAD"));
                     getServer().reloadData();
                 }
             }, 199);
@@ -625,197 +605,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Sets up the database.
-     */
-    private void loadDatabase() {
-        String dbtype = getConfig().getString("storage.database");
-        try {
-            if (dbtype.equals("sqlite")) {
-                String path = getDataFolder() + File.separator + "TARDIS.db";
-                service.setConnection(path);
-                TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
-                sqlite.createTables();
-            } else {
-                service.setConnection();
-                TARDISMySQLDatabase mysql = new TARDISMySQLDatabase(this);
-                mysql.createTables();
-            }
-        } catch (Exception e) {
-            getLogger().log(Level.INFO, "Connection and Tables Error: " + e);
-        }
-    }
-
-    /**
-     * Closes the database.
-     */
-    private void closeDatabase() {
-        try {
-            service.connection.close();
-        } catch (SQLException e) {
-            getLogger().log(Level.WARNING, "Could not close database connection: " + e);
-        }
-    }
-
-    /**
-     * Loads the configured language file.
-     */
-    private void loadLanguage() {
-        // copy language files
-        File langDir = new File(getDataFolder() + File.separator + "language");
-        if (!langDir.exists()) {
-            boolean result = langDir.mkdir();
-            if (result && langDir.setWritable(true) && langDir.setExecutable(true)) {
-                getLogger().log(Level.INFO, "Created language directory.");
-            }
-        }
-        // always copy English default
-        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
-        // only copy ru.yml if it doesn't exist
-        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "ru.yml", getResource("ru.yml"), false);
-        // get configured language
-        String lang = getConfig().getString("preferences.language");
-        // check file exists
-        File file;
-        file = new File(getDataFolder() + File.separator + "language" + File.separator + lang + ".yml");
-        if (!file.isFile()) {
-            // load English
-            file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
-            lang = "en";
-        }
-        // load the language
-        getLogger().log(Level.INFO, "Loading language: " + Language.valueOf(lang).getLang());
-        language = YamlConfiguration.loadConfiguration(file);
-        // update the language configuration
-        new TARDISLanguageUpdater(this).update();
-    }
-
-    /**
-     * Loads the signs file.
-     */
-    private void loadSigns() {
-        // check file exists
-        File file;
-        file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
-        if (!file.exists()) {
-            // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
-            file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
-        }
-        // load the language
-        signs = YamlConfiguration.loadConfiguration(file);
-        new TARDISSignsUpdater(plugin, signs).checkSignsConfig();
-    }
-
-    /**
-     * Loads the Chameleon GUIs file.
-     */
-    private void loadChameleonGUIs() {
-        // check file exists
-        File file;
-        file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
-        if (!file.exists()) {
-            // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
-            file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
-        }
-        // load the language
-        chameleonGuis = YamlConfiguration.loadConfiguration(file);
-        new TARDISChameleonGuiUpdater(plugin, chameleonGuis).checkChameleonConfig();
-    }
-
-    /**
-     * Loads the custom configuration files.
-     */
-    private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
-                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "flat_world.yml", "handles.yml",
-                "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
-                "shop.yml", "tag.yml", "vortex_manipulator.yml");
-        for (String f : files) {
-//            debug(f);
-            tardisCopier.copy(f);
-        }
-        planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
-        new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
-        roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
-        new TARDISRoomsUpdater(this, roomsConfig).checkRoomsConfig();
-        artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
-        new TARDISArtronUpdater(this).checkArtronConfig();
-        blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
-        new TARDISBlocksUpdater(this, blocksConfig).checkBlocksConfig();
-        recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
-        new TARDISRecipesUpdater(this, recipesConfig).addRecipes();
-        condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
-        new TARDISCondensablesUpdater(this).checkCondensables();
-        customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
-        kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
-        achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
-        tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
-        handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
-        new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
-        adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
-        generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
-        if (getConfig().getBoolean("modules.weeping_angels")) {
-            monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
-        }
-        if (getConfig().getBoolean("modules.shop")) {
-            shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
-            itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
-        }
-        if (getConfig().getBoolean("modules.vortex_manipulator")) {
-            vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
-        }
-        if (getConfig().getBoolean("modules.sonic_blaster")) {
-            blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
-        }
-        customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
-    }
-
-    /**
-     * Builds the schematics used to create TARDISes and rooms. Also loads the
-     * quotes from the quotes file.
-     */
-    private void loadFiles() {
-        tardisCopier.copyRoomTemplateFile();
-        new TARDISRoomMap(this).load();
-        quotesfile = tardisCopier.copy("quotes.txt");
-    }
-
-    /**
-     * Saves the default book files to the /plugins/TARDIS/books directory.
-     */
-    private void loadBooks() {
-        // copy book files
-        File bookDir = new File(getDataFolder() + File.separator + "books");
-        if (!bookDir.exists()) {
-            boolean result = bookDir.mkdir();
-            if (result && bookDir.setWritable(true) && bookDir.setExecutable(true)) {
-                getLogger().log(Level.INFO, "Created books directory.");
-            }
-        }
-        Set<String> booknames = achievementConfig.getKeys(false);
-        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
-    }
-
-    /**
-     * Starts a repeating task that plays TARDIS sound effects to players while
-     * they are inside the TARDIS.
-     */
-    private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60, 1500);
-    }
-
-    /**
-     * Starts a repeating task that schedules reminders added to a players
-     * Handles cyberhead companion.
-     */
-    private void startReminders() {
-        if (getHandlesConfig().getBoolean("reminders.enabled")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120, getHandlesConfig().getLong("reminders.schedule"));
-        }
-    }
-
-    /**
      * Starts a repeating task that removes Artron Energy from the TARDIS while
      * it is in standby mode (ie not travelling). Only runs if `standby_time` in
      * artron.yml is greater than 0 (the default is 6000 or every 5 minutes).
@@ -831,69 +620,12 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Starts a repeating task that removes Artron Energy from the TARDIS while
-     * it is in Siege Mode. Only runs if `siege_ticks` in artron.yml is greater
-     * than 0 (the default is 1500 or every 1 minute 15 seconds).
-     */
-    private void startSiegeTicks() {
-        if (getConfig().getBoolean("siege.enabled")) {
-            long ticks = getArtronConfig().getLong("siege_ticks");
-            if (ticks <= 0) {
-                return;
-            }
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500, ticks);
-        }
-    }
-
-    /**
-     * Starts a repeating task that heals players 1/2 a heart per cycle when
-     * they are in the Zero room.
-     */
-    private void startZeroHealing() {
-        if (getConfig().getBoolean("allow.zero_room")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
-        }
-    }
-
-    /**
-     * Checks if the WorldGuard plugin is available, and loads support if it is.
-     */
-    private void loadWorldGuard() {
-        if (pm.getPlugin("WorldGuard") != null) {
-            debug("Hooking into WorldGuard!");
-            worldGuardOnServer = true;
-            worldGuardUtils = new TARDISWorldGuardUtils(this);
-        }
-    }
-
-    private void loadInventoryManager() {
-        if (pm.isPluginEnabled("Multiverse-Inventories")) {
-            invManager = InventoryManager.MULTIVERSE;
-        }
-        if (pm.isPluginEnabled("GameModeInventories")) {
-            invManager = InventoryManager.GAMEMODE;
-        }
-    }
-
-    /**
      * Gets the inventory manager that the server is using
      *
      * @return the {@link InventoryManager}
      */
     public InventoryManager getInvManager() {
         return invManager;
-    }
-
-    /**
-     * Checks if the Multiverse-Core plugin is available, and loads support if
-     * it is.
-     */
-    private void loadMultiverse() {
-        if (worldManager.equals(WorldManager.MULTIVERSE)) {
-            Plugin mvplugin = pm.getPlugin("Multiverse-Core");
-            debug("Hooking into Multiverse-Core!");
-            mvHelper = new TARDISMultiverseHelper(mvplugin);
-        }
     }
 
     /**
@@ -906,15 +638,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Loads the TARDISChunkGenerator support module
-     */
-    private void loadHelper() {
-        debug("Loading Helper module!");
-        tardisHelper = new TARDISHelper();
-        tardisHelper.enable(this);
-    }
-
-    /**
      * Gets the TARDISChunkGenerator helper utility for accessing CraftBukkit
      * and NMS methods
      *
@@ -924,222 +647,6 @@ public class TARDIS extends JavaPlugin {
         return tardisHelper;
     }
 
-    private void loadPluginRespect() {
-        pluginRespect = new TARDISPluginRespect(this);
-        pluginRespect.loadFactions();
-        pluginRespect.loadTowny();
-        pluginRespect.loadWorldBorder();
-        pluginRespect.loadGriefPrevention();
-        pluginRespect.loadRedProtect();
-    }
-
-    /**
-     * Loads the permissions handler for TARDIS worlds if the relevant
-     * permissions plugin is enabled. Currently only supports GroupManager and
-     * bPermissions (as they have per world config files).
-     */
-    private void loadPerms() {
-        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
-            // copy default permissions file if not present
-            if (getConfig().getBoolean("creation.create_worlds")) {
-                tardisCopier.copy("permissions.txt");
-                getLogger().log(Level.INFO, "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
-            }
-        }
-    }
-
-    /**
-     * Loads the quotes from a text file.
-     *
-     * @return an ArrayList of quotes
-     */
-    private ArrayList<String> quotes() {
-        ArrayList<String> quotes = new ArrayList<>();
-        if (quotesfile != null) {
-            BufferedReader bufRdr = null;
-            try {
-                bufRdr = new BufferedReader(new FileReader(quotesfile));
-                String line;
-                //read each line of text file
-                while ((line = bufRdr.readLine()) != null) {
-                    quotes.add(line);
-                }
-                if (quotes.size() < 1) {
-                    quotes.add("");
-                }
-            } catch (IOException io) {
-                getLogger().log(Level.WARNING, "Could not read quotes file");
-            } finally {
-                if (bufRdr != null) {
-                    try {
-                        bufRdr.close();
-                    } catch (IOException e) {
-                        debug("Error closing quotes reader! " + e.getMessage());
-                    }
-                }
-            }
-        }
-        return quotes;
-    }
-
-    /**
-     * Reads the config file and places the configured seed material for each
-     * room type into a HashMap.
-     */
-    private HashMap<Material, String> getSeeds() {
-        HashMap<Material, String> map = new HashMap<>();
-        Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
-        int r = 0;
-        for (String s : rooms) {
-            if (!getRoomsConfig().contains("rooms." + s + ".user")) {
-                // set user supplied rooms as `user: true`
-                getRoomsConfig().set("rooms." + s + ".user", true);
-                r++;
-            }
-            if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
-                try {
-                    Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
-                    map.put(m, s);
-                } catch (IllegalArgumentException e) {
-                    debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
-                }
-            }
-        }
-        if (r > 0) {
-            try {
-                getRoomsConfig().save(new File(getDataFolder(), "rooms.yml"));
-            } catch (IOException io) {
-                debug("Could not save rooms.yml, " + io.getMessage());
-            }
-        }
-        return map;
-    }
-
-    private void checkTCG() {
-        if (getConfig().getBoolean("creation.create_worlds")) {
-            if (getConfig().getBoolean("abandon.enabled")) {
-                getConfig().set("abandon.enabled", false);
-                saveConfig();
-                getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds is true!");
-            }
-            if (getConfig().getBoolean("creation.default_world")) {
-                getConfig().set("creation.default_world", false);
-                saveConfig();
-                getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
-            }
-            // disable TARDIS_TimeVortex world
-            getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
-            try {
-                getPlanetsConfig().save(new File(getDataFolder(), "planets.yml"));
-            } catch (IOException ex) {
-                getLogger().log(Level.SEVERE, "Couldn't save planets.yml!");
-            }
-        }
-        if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
-            getConfig().set("abandon.enabled", false);
-            saveConfig();
-            getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
-        }
-    }
-
-    private void cleanUpWorlds() {
-        getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
-    }
-
-    /**
-     * Gets the server default resource pack. Will use the Minecraft default
-     * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
-     * to Default, we'll have to host it on DropBox
-     *
-     * @return The server specified texture pack.
-     */
-    private String getServerTP() {
-        String link = "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1";
-        FileInputStream in = null;
-        try {
-            Properties properties = new Properties();
-            String path = "server.properties";
-            in = new FileInputStream(path);
-            properties.load(in);
-            String texture_pack = properties.getProperty("texture-pack");
-            return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
-        } catch (FileNotFoundException ex) {
-            debug("Could not find server.properties!");
-            return link;
-        } catch (IOException ex) {
-            debug("Could not read server.properties!");
-            return link;
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (IOException ex) {
-                debug("Could not close server.properties!");
-            }
-        }
-    }
-
-    /**
-     * Resets any player who is 'Temporally Located' back to normal time.
-     */
-    private void resetTime() {
-        trackerKeeper.getSetTime().keySet().forEach((key) -> {
-            Player p = getServer().getPlayer(key);
-            if (p != null) {
-                p.resetPlayerTime();
-            }
-        });
-    }
-
-    private void setDates() {
-        int month = getTagConfig().getInt("month") - 1;
-        int day = getTagConfig().getInt("day");
-        beforeCal = Calendar.getInstance();
-        beforeCal.set(Calendar.HOUR, 0);
-        beforeCal.set(Calendar.MINUTE, 0);
-        beforeCal.set(Calendar.SECOND, 0);
-        beforeCal.set(Calendar.MONTH, month);
-        beforeCal.set(Calendar.DATE, day);
-        afterCal = Calendar.getInstance();
-        afterCal.set(Calendar.HOUR, 23);
-        afterCal.set(Calendar.MINUTE, 59);
-        afterCal.set(Calendar.SECOND, 59);
-        afterCal.set(Calendar.MONTH, month);
-        afterCal.set(Calendar.DATE, day);
-        // reset config
-        getTagConfig().set("it", "");
-    }
-
-    private void updateTagStats() {
-        String it = getTagConfig().getString("it");
-        if (!it.equals("")) {
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("player", getTagConfig().getString("it"));
-            long time = System.currentTimeMillis() - getTagConfig().getLong("time");
-            set.put("time", time);
-            getQueryFactory().doSyncInsert("tag", set);
-        }
-    }
-
-    private void checkDefaultWorld() {
-        if (!getConfig().getBoolean("creation.default_world")) {
-            return;
-        }
-        String defWorld = getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
-        if (getServer().getWorld(defWorld) == null) {
-            getLogger().log(Level.INFO, "Default world specified, but it doesn't exist! Trying to create it now...");
-            new TARDISSpace(this).createDefaultWorld(defWorld);
-        }
-    }
-
-    /**
-     * Removes unused drop chest database records from the vaults table.
-     */
-    private void checkDropChests() {
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400);
-    }
-
     /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
@@ -1147,7 +654,7 @@ public class TARDIS extends JavaPlugin {
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            console.sendMessage(TardisModule.DEBUG.getName() + "Debug: " + o);
+            getMessenger().message(console, TardisModule.DEBUG, "Debug: " + o);
         }
     }
 
@@ -1553,7 +1060,7 @@ public class TARDIS extends JavaPlugin {
      * @return the formatted TARDIS plugin name
      */
     public String getPluginName() {
-        return TardisModule.TARDIS.getName();
+        return "[" + TardisModule.TARDIS.getName() + "] ";
     }
 
     /**
@@ -1672,12 +1179,6 @@ public class TARDIS extends JavaPlugin {
      */
     public WorldManager getWorldManager() {
         return worldManager;
-    }
-
-    private void startRecorderTask() {
-        int recorder_tick_delay = 5;
-        // we schedule it once, it will reschedule itself
-        recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
     }
 
     /**
@@ -1866,5 +1367,513 @@ public class TARDIS extends JavaPlugin {
 
     public void setBlasterSettings(BlasterSettings blasterSettings) {
         this.blasterSettings = blasterSettings;
+    }
+
+    private ModuleDescriptor.Version getServerVersion(String s) {
+        Matcher mat = versionPattern.matcher(s);
+        String v = mat.find() ? mat.group(0) : "1.13";
+        return ModuleDescriptor.Version.parse(v);
+    }
+
+    private boolean checkPluginVersion(String plg, String min) {
+        if (pm.isPluginEnabled(plg)) {
+            Plugin check = pm.getPlugin(plg);
+            ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
+            String yamlVersion = check.getDescription().getVersion();
+            Matcher matcher = versionPattern.matcher(yamlVersion);
+            if (matcher.find()) {
+                String pluginVersion = matcher.group(0);
+                try {
+                    ModuleDescriptor.Version version = ModuleDescriptor.Version.parse(pluginVersion);
+                    return (version.compareTo(minVersion) >= 0);
+                } catch (IllegalArgumentException e) {
+                    debug("Version IllegalArgumentException");
+                }
+            }
+            getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
+            getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+            getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
+            getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", yamlVersion);
+        }
+        return true;
+    }
+
+    /**
+     * Sets up the database.
+     */
+    private void loadDatabase() {
+        String dbtype = getConfig().getString("storage.database");
+        try {
+            if (dbtype.equals("sqlite")) {
+                String path = getDataFolder() + File.separator + "TARDIS.db";
+                service.setConnection(path);
+                TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
+                sqlite.createTables();
+            } else {
+                service.setConnection();
+                TARDISMySQLDatabase mysql = new TARDISMySQLDatabase(this);
+                mysql.createTables();
+            }
+        } catch (Exception e) {
+            getMessenger().message(console, TardisModule.TARDIS, "Connection and Tables Error: " + e);
+        }
+    }
+
+    /**
+     * Closes the database.
+     */
+    private void closeDatabase() {
+        try {
+            service.connection.close();
+        } catch (SQLException e) {
+            getLogger().log(Level.WARNING, "Could not close database connection: " + e);
+        }
+    }
+
+    /**
+     * Loads the configured language file.
+     */
+    private void loadLanguage() {
+        // copy language files
+        File langDir = new File(getDataFolder() + File.separator + "language");
+        if (!langDir.exists()) {
+            boolean result = langDir.mkdir();
+            if (result && langDir.setWritable(true) && langDir.setExecutable(true)) {
+                getMessenger().message(console, TardisModule.TARDIS, "Created language directory.");
+            }
+        }
+        // always copy English default
+        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+        // only copy ru.yml if it doesn't exist
+        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "ru.yml", getResource("ru.yml"), false);
+        // get configured language
+        String lang = getConfig().getString("preferences.language");
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + lang + ".yml");
+        if (!file.isFile()) {
+            // load English
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
+            lang = "en";
+        }
+        // load the language
+        getMessenger().message(console, TardisModule.TARDIS, "Loading language: " + Language.valueOf(lang).getLang());
+        language = YamlConfiguration.loadConfiguration(file);
+        // update the language configuration
+        new TARDISLanguageUpdater(this).update();
+    }
+
+    /**
+     * Loads the signs file.
+     */
+    private void loadSigns() {
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
+        if (!file.exists()) {
+            // copy sign file
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
+        }
+        // load the language
+        signs = YamlConfiguration.loadConfiguration(file);
+        new TARDISSignsUpdater(plugin, signs).checkSignsConfig();
+    }
+
+    /**
+     * Loads the Chameleon GUIs file.
+     */
+    private void loadChameleonGUIs() {
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
+        if (!file.exists()) {
+            // copy sign file
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
+        }
+        // load the language
+        chameleonGuis = YamlConfiguration.loadConfiguration(file);
+        new TARDISChameleonGuiUpdater(plugin, chameleonGuis).checkChameleonConfig();
+    }
+
+    /**
+     * Loads the custom configuration files.
+     */
+    private void loadCustomConfigs() {
+        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
+                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "flat_world.yml", "handles.yml",
+                "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
+                "shop.yml", "tag.yml", "vortex_manipulator.yml");
+        for (String f : files) {
+//            debug(f);
+            tardisCopier.copy(f);
+        }
+        planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
+        new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
+        roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
+        new TARDISRoomsUpdater(this, roomsConfig).checkRoomsConfig();
+        artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
+        new TARDISArtronUpdater(this).checkArtronConfig();
+        blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
+        new TARDISBlocksUpdater(this, blocksConfig).checkBlocksConfig();
+        recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
+        new TARDISRecipesUpdater(this, recipesConfig).addRecipes();
+        condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
+        new TARDISCondensablesUpdater(this).checkCondensables();
+        customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
+        kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
+        achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
+        tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
+        new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
+        adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
+        generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
+        if (getConfig().getBoolean("modules.weeping_angels")) {
+            monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
+        }
+        if (getConfig().getBoolean("modules.shop")) {
+            shopConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "shop.yml"));
+            itemsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "items.yml"));
+        }
+        if (getConfig().getBoolean("modules.vortex_manipulator")) {
+            vortexConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "vortex_manipulator.yml"));
+        }
+        if (getConfig().getBoolean("modules.sonic_blaster")) {
+            blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
+        }
+        customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
+    }
+
+    /**
+     * Builds the schematics used to create TARDISes and rooms. Also loads the
+     * quotes from the quotes file.
+     */
+    private void loadFiles() {
+        tardisCopier.copyRoomTemplateFile();
+        new TARDISRoomMap(this).load();
+        quotesfile = tardisCopier.copy("quotes.txt");
+    }
+
+    /**
+     * Saves the default book files to the /plugins/TARDIS/books directory.
+     */
+    private void loadBooks() {
+        // copy book files
+        File bookDir = new File(getDataFolder() + File.separator + "books");
+        if (!bookDir.exists()) {
+            boolean result = bookDir.mkdir();
+            if (result && bookDir.setWritable(true) && bookDir.setExecutable(true)) {
+                getMessenger().message(console, TardisModule.TARDIS, "Created books directory.");
+            }
+        }
+        Set<String> booknames = achievementConfig.getKeys(false);
+        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
+    }
+
+    /**
+     * Starts a repeating task that plays TARDIS sound effects to players while
+     * they are inside the TARDIS.
+     */
+    private void startSound() {
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60, 1500);
+    }
+
+    /**
+     * Starts a repeating task that schedules reminders added to a players
+     * Handles cyberhead companion.
+     */
+    private void startReminders() {
+        if (getHandlesConfig().getBoolean("reminders.enabled")) {
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120, getHandlesConfig().getLong("reminders.schedule"));
+        }
+    }
+
+    /**
+     * Starts a repeating task that removes Artron Energy from the TARDIS while
+     * it is in Siege Mode. Only runs if `siege_ticks` in artron.yml is greater
+     * than 0 (the default is 1500 or every 1 minute 15 seconds).
+     */
+    private void startSiegeTicks() {
+        if (getConfig().getBoolean("siege.enabled")) {
+            long ticks = getArtronConfig().getLong("siege_ticks");
+            if (ticks <= 0) {
+                return;
+            }
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500, ticks);
+        }
+    }
+
+    /**
+     * Starts a repeating task that heals players 1/2 a heart per cycle when
+     * they are in the Zero room.
+     */
+    private void startZeroHealing() {
+        if (getConfig().getBoolean("allow.zero_room")) {
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
+        }
+    }
+
+    /**
+     * Checks if the WorldGuard plugin is available, and loads support if it is.
+     */
+    private void loadWorldGuard() {
+        if (pm.getPlugin("WorldGuard") != null) {
+            debug("Hooking into WorldGuard!");
+            worldGuardOnServer = true;
+            worldGuardUtils = new TARDISWorldGuardUtils(this);
+        }
+    }
+
+    private void loadInventoryManager() {
+        if (pm.isPluginEnabled("Multiverse-Inventories")) {
+            invManager = InventoryManager.MULTIVERSE;
+        }
+        if (pm.isPluginEnabled("GameModeInventories")) {
+            invManager = InventoryManager.GAMEMODE;
+        }
+    }
+
+    /**
+     * Checks if the Multiverse-Core plugin is available, and loads support if
+     * it is.
+     */
+    private void loadMultiverse() {
+        if (worldManager.equals(WorldManager.MULTIVERSE)) {
+            Plugin mvplugin = pm.getPlugin("Multiverse-Core");
+            debug("Hooking into Multiverse-Core!");
+            mvHelper = new TARDISMultiverseHelper(mvplugin);
+        }
+    }
+
+    /**
+     * Loads the TARDISChunkGenerator support module
+     */
+    private void loadHelper() {
+        debug("Loading Helper module!");
+        tardisHelper = new TARDISHelper(this);
+        tardisHelper.enable();
+    }
+
+    private void loadPluginRespect() {
+        pluginRespect = new TARDISPluginRespect(this);
+        pluginRespect.loadFactions();
+        pluginRespect.loadTowny();
+        pluginRespect.loadWorldBorder();
+        pluginRespect.loadGriefPrevention();
+        pluginRespect.loadRedProtect();
+    }
+
+    /**
+     * Loads the permissions handler for TARDIS worlds if the relevant
+     * permissions plugin is enabled. Currently only supports GroupManager and
+     * bPermissions (as they have per world config files).
+     */
+    private void loadPerms() {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
+            // copy default permissions file if not present
+            if (getConfig().getBoolean("creation.create_worlds")) {
+                tardisCopier.copy("permissions.txt");
+                getMessenger().message(console, TardisModule.TARDIS, "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
+            }
+        }
+    }
+
+    /**
+     * Loads the quotes from a text file.
+     *
+     * @return an ArrayList of quotes
+     */
+    private ArrayList<String> quotes() {
+        ArrayList<String> quotes = new ArrayList<>();
+        if (quotesfile != null) {
+            BufferedReader bufRdr = null;
+            try {
+                bufRdr = new BufferedReader(new FileReader(quotesfile));
+                String line;
+                //read each line of text file
+                while ((line = bufRdr.readLine()) != null) {
+                    quotes.add(line);
+                }
+                if (quotes.size() < 1) {
+                    quotes.add("");
+                }
+            } catch (IOException io) {
+                getLogger().log(Level.WARNING, "Could not read quotes file");
+            } finally {
+                if (bufRdr != null) {
+                    try {
+                        bufRdr.close();
+                    } catch (IOException e) {
+                        debug("Error closing quotes reader! " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return quotes;
+    }
+
+    /**
+     * Reads the config file and places the configured seed material for each
+     * room type into a HashMap.
+     */
+    private HashMap<Material, String> getSeeds() {
+        HashMap<Material, String> map = new HashMap<>();
+        Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        int r = 0;
+        for (String s : rooms) {
+            if (!getRoomsConfig().contains("rooms." + s + ".user")) {
+                // set user supplied rooms as `user: true`
+                getRoomsConfig().set("rooms." + s + ".user", true);
+                r++;
+            }
+            if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
+                try {
+                    Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
+                    map.put(m, s);
+                } catch (IllegalArgumentException e) {
+                    debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
+                }
+            }
+        }
+        if (r > 0) {
+            try {
+                getRoomsConfig().save(new File(getDataFolder(), "rooms.yml"));
+            } catch (IOException io) {
+                debug("Could not save rooms.yml, " + io.getMessage());
+            }
+        }
+        return map;
+    }
+
+    private void checkTCG() {
+        if (getConfig().getBoolean("creation.create_worlds")) {
+            if (getConfig().getBoolean("abandon.enabled")) {
+                getConfig().set("abandon.enabled", false);
+                saveConfig();
+                getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds is true!");
+            }
+            if (getConfig().getBoolean("creation.default_world")) {
+                getConfig().set("creation.default_world", false);
+                saveConfig();
+                getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
+            }
+            // disable TARDIS_TimeVortex world
+            getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
+            try {
+                getPlanetsConfig().save(new File(getDataFolder(), "planets.yml"));
+            } catch (IOException ex) {
+                getLogger().log(Level.SEVERE, "Couldn't save planets.yml!");
+            }
+        }
+        if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
+            getConfig().set("abandon.enabled", false);
+            saveConfig();
+            getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
+        }
+    }
+
+    private void cleanUpWorlds() {
+        getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
+    }
+
+    /**
+     * Gets the server default resource pack. Will use the Minecraft default
+     * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
+     * to Default, we'll have to host it on DropBox
+     *
+     * @return The server specified texture pack.
+     */
+    private String getServerTP() {
+        String link = "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1";
+        FileInputStream in = null;
+        try {
+            Properties properties = new Properties();
+            String path = "server.properties";
+            in = new FileInputStream(path);
+            properties.load(in);
+            String texture_pack = properties.getProperty("texture-pack");
+            return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
+        } catch (FileNotFoundException ex) {
+            debug("Could not find server.properties!");
+            return link;
+        } catch (IOException ex) {
+            debug("Could not read server.properties!");
+            return link;
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                debug("Could not close server.properties!");
+            }
+        }
+    }
+
+    /**
+     * Resets any player who is 'Temporally Located' back to normal time.
+     */
+    private void resetTime() {
+        trackerKeeper.getSetTime().keySet().forEach((key) -> {
+            Player p = getServer().getPlayer(key);
+            if (p != null) {
+                p.resetPlayerTime();
+            }
+        });
+    }
+
+    private void setDates() {
+        int month = getTagConfig().getInt("month") - 1;
+        int day = getTagConfig().getInt("day");
+        beforeCal = Calendar.getInstance();
+        beforeCal.set(Calendar.HOUR, 0);
+        beforeCal.set(Calendar.MINUTE, 0);
+        beforeCal.set(Calendar.SECOND, 0);
+        beforeCal.set(Calendar.MONTH, month);
+        beforeCal.set(Calendar.DATE, day);
+        afterCal = Calendar.getInstance();
+        afterCal.set(Calendar.HOUR, 23);
+        afterCal.set(Calendar.MINUTE, 59);
+        afterCal.set(Calendar.SECOND, 59);
+        afterCal.set(Calendar.MONTH, month);
+        afterCal.set(Calendar.DATE, day);
+        // reset config
+        getTagConfig().set("it", "");
+    }
+
+    private void updateTagStats() {
+        String it = getTagConfig().getString("it");
+        if (!it.equals("")) {
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("player", getTagConfig().getString("it"));
+            long time = System.currentTimeMillis() - getTagConfig().getLong("time");
+            set.put("time", time);
+            getQueryFactory().doSyncInsert("tag", set);
+        }
+    }
+
+    private void checkDefaultWorld() {
+        if (!getConfig().getBoolean("creation.default_world")) {
+            return;
+        }
+        String defWorld = getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
+        if (getServer().getWorld(defWorld) == null) {
+            getMessenger().message(console, TardisModule.TARDIS, "Default world specified, but it doesn't exist! Trying to create it now...");
+            new TARDISSpace(this).createDefaultWorld(defWorld);
+        }
+    }
+
+    /**
+     * Removes unused drop chest database records from the vaults table.
+     */
+    private void checkDropChests() {
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400);
+    }
+
+    private void startRecorderTask() {
+        int recorder_tick_delay = 5;
+        // we schedule it once, it will reschedule itself
+        recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
     }
 }

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
@@ -42,7 +42,7 @@ public class TARDISZeroRoomBuilder {
 
     public boolean build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
-            TARDISMessage.send(p, "ZERO_DISABLED");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_DISABLED");
             return true;
         }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -62,7 +62,7 @@ public class TARDISZeroRoomBuilder {
         int z = pos.getCentreZ();
         World w = plugin.getServer().getWorld("TARDIS_Zero_room");
         if (w == null) {
-            TARDISMessage.send(p, "ZERO_NOT_FOUND");
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_NOT_FOUND");
             return true;
         }
         Location l = new Location(w, x, y, z);

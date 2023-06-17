@@ -20,9 +20,9 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -80,13 +80,13 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                             l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
                         }
                         if (l == null) {
-                            TARDISMessage.send(player, "NO_MORE_SPOTS");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
                             close(player);
                             return;
                         }
                         // check the player is not already in the area!
                         if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().getAreaId())) {
-                            TARDISMessage.send(player, "TRAVEL_NO_AREA");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
                             close(player);
                             return;
                         }

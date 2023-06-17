@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -96,7 +95,7 @@ public class VortexManipulatorConfig {
             try {
                 String handlesPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
                 config.save(new File(handlesPath));
-                plugin.getConsole().sendMessage(TardisModule.VORTEX_MANIPULATOR.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.VORTEX_MANIPULATOR, "Added " + i + " new items to config");
             } catch (IOException io) {
                 plugin.debug("Could not save vortex_manipulator.yml, " + io.getMessage());
             }

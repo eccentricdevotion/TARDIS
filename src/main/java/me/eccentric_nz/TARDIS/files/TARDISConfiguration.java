@@ -21,7 +21,6 @@ import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -359,7 +358,7 @@ public class TARDISConfiguration {
             i++;
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(TardisModule.TARDIS.getName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to config");
         }
         // worlds
         new TARDISWorlds(plugin).doWorlds();

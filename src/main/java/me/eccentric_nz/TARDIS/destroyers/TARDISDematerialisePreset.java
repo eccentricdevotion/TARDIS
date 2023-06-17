@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -37,7 +37,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player; 
+import org.bukkit.entity.Player;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -94,7 +94,7 @@ class TARDISDematerialisePreset implements Runnable {
         if (column == null || stained_column == null || glass_column == null) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            TARDISMessage.send(dd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+            plugin.getMessenger().send(dd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
         }
         BlockData[][] data;
         // get relative locations

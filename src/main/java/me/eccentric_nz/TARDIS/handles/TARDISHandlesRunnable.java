@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Reminder;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetReminders;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
 
@@ -43,7 +42,7 @@ public class TARDISHandlesRunnable implements Runnable {
                     Player player = plugin.getServer().getPlayer(r.getUuid());
                     if (player != null && player.isOnline()) {
                         TARDISSounds.playTARDISSound(player, "handles_reminder");
-                        TARDISMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
+                        plugin.getMessenger().handlesSend(player, "HANDLES_REMINDER", r.getReminder());
                         // remove the reminder...
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("reminder_id", r.getReminder_id());

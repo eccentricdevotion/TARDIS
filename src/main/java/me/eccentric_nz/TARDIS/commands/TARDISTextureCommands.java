@@ -25,7 +25,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -67,7 +67,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return false;
             }
             if (TARDISPermission.hasPermission(player, "tardis.texture")) {
@@ -103,7 +103,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            TARDISMessage.send(player, "URL", e.getMessage());
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "URL", e.getMessage());
                             return true;
                         }
                     }
@@ -112,7 +112,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", playerUUID);
                     plugin.getQueryFactory().doUpdate("player_prefs", upd, where);
-                    TARDISMessage.send(player, "PREF_TEXTURE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_TEXTURE");
                     return true;
                 }
             }

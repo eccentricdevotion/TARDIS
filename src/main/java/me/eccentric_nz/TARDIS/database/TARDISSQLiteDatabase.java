@@ -20,14 +20,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * SQLite database creator and updater.
  * <p>
- * Many facts, figures, and formulas are contained within the Matrix - a supercomputer and micro-universe used by the
- * High Council of the Time Lords as a storehouse of knowledge to predict future events.
+ * Many facts, figures, and formulas are contained within the Matrix - a
+ * supercomputer and micro-universe used by the High Council of the Time Lords
+ * as a storehouse of knowledge to predict future events.
  *
  * @author eccentric_nz
  */
@@ -293,14 +294,14 @@ public class TARDISSQLiteDatabase {
             String queryRaisedDemat = "UPDATE " + prefix + "tardis SET chameleon_demat = 'SWAMP' WHERE chameleon_demat = 'RAISED'";
             statement.executeUpdate(queryRaisedDemat);
         } catch (SQLException e) {
-            plugin.getLogger().log(Level.INFO, "SQLite create table error: " + e);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "SQLite create table error: " + e);
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getLogger().log(Level.INFO, "SQLite close statement error: " + e);
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "SQLite close statement error: " + e);
             }
         }
     }

@@ -20,10 +20,10 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 
 /**
@@ -792,7 +792,7 @@ public class TARDISMaterialIDConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Converted " + i + " condenser IDs to material names");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " condenser IDs to material names");
                 }
             }
             plugin.getConfig().set("conversions.condenser_materials", true);
@@ -894,7 +894,7 @@ public class TARDISMaterialIDConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Converted " + i + " player_prefs IDs to material names");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " player_prefs IDs to material names");
                 }
             }
             plugin.getConfig().set("conversions.player_prefs_materials", true);
@@ -968,7 +968,7 @@ public class TARDISMaterialIDConverter {
                     if (i > 0) {
                         ps.executeBatch();
                         connection.commit();
-                        plugin.getLogger().log(Level.INFO, "Converted " + i + " blocks IDs to material names");
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " blocks IDs to material names");
                     }
                 }
             }

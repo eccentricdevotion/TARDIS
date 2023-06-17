@@ -22,9 +22,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 
@@ -56,7 +56,7 @@ public class TARDISForceFieldPersister {
                 }
                 ps.executeBatch();
                 connection.setAutoCommit(true);
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " TARDIS force fields.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " TARDIS force fields.");
             } catch (SQLException e) {
                 plugin.debug("Insert error for force field query: " + e.getMessage());
             } finally {
@@ -83,7 +83,7 @@ public class TARDISForceFieldPersister {
                     plugin.getTrackerKeeper().getActiveForceFields().put(uuid, location);
                     count++;
                 }
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " TARDIS force fields.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " TARDIS force fields.");
             }
             // clear the table
             ps = connection.prepareStatement("DELETE FROM " + prefix + "forcefield");

@@ -24,8 +24,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -50,22 +51,22 @@ public class TARDISChecker {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not save the file (" + file + ").");
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not save the file (" + file + ").");
             } finally {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not close the output stream.");
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the output stream.");
                 }
             }
         } catch (FileNotFoundException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "Checker: File not found: " + filename);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: File not found: " + filename);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "Checker: Could not close the input stream.");
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the input stream.");
                 }
             }
         }

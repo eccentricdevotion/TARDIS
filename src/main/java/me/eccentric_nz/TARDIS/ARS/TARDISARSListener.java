@@ -20,9 +20,9 @@ import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,7 +71,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerUUID)) {
-                TARDISMessage.send(player, "ARS_LOAD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -93,7 +93,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
                             close(player);
                         } else {
-                            TARDISMessage.send(player, "ARS_ACTIVE");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_ACTIVE");
                         }
                     }
                     case 27, 28, 29 -> {

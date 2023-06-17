@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -51,7 +51,7 @@ class TARDISOccupyCommand {
                     plugin.getQueryFactory().doDelete("travellers", whered);
                     occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
                 } else {
-                    TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_OUT");
                     return true;
                 }
             } else if (plugin.getUtils().inTARDISWorld(player)) {
@@ -60,11 +60,11 @@ class TARDISOccupyCommand {
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
                     int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
                     if (!rsid.fromTIPSSlot(slot)) {
-                        TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                         return false;
                     }
                 } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                     return false;
                 }
                 int id = rsid.getTardis_id();
@@ -74,13 +74,13 @@ class TARDISOccupyCommand {
                 plugin.getQueryFactory().doInsert("travellers", wherei);
                 occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
             } else {
-                TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                 return true;
             }
-            TARDISMessage.send(player, "OCCUPY_SET", occupied);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

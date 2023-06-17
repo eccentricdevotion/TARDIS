@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ class TARDISSetKeyCommand {
 
     boolean setKeyPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "KEY_NEED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NEED");
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
@@ -54,16 +54,16 @@ class TARDISSetKeyCommand {
         try {
             go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return false;
         }
 //        if (go.isBlock() && !go.isAir()) {
         if (go.isBlock()) {
-            TARDISMessage.send(player, "KEY_NO_BLOCK");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_BLOCK");
             return true;
         }
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
-            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return true;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
@@ -72,7 +72,7 @@ class TARDISSetKeyCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
-        TARDISMessage.send(player, "KEY_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_SAVED");
         return true;
     }
 }

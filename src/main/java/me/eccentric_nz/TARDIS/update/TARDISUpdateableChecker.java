@@ -27,8 +27,8 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateableChecker {
@@ -60,31 +60,31 @@ public class TARDISUpdateableChecker {
 
     public boolean canUpdate() {
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISMessage.send(player, "SIEGE_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
             return false;
         }
         if (updateable.equals(Updateable.BEACON) && !tardis.isPowered_on()) {
-            TARDISMessage.send(player, "UPDATE_BEACON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BEACON");
             return false;
         }
         if (updateable.equals(Updateable.ADVANCED) && !TARDISPermission.hasPermission(player, "tardis.advanced")) {
-            TARDISMessage.send(player, "NO_PERM_ADV");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ADV");
             return false;
         }
         if (updateable.equals(Updateable.FORCEFIELD) && !TARDISPermission.hasPermission(player, "tardis.forcefield")) {
-            TARDISMessage.send(player, "NO_PERM_FF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_FF");
             return false;
         }
         if (updateable.equals(Updateable.STORAGE) && !TARDISPermission.hasPermission(player, "tardis.storage")) {
-            TARDISMessage.send(player, "NO_PERM_DISK");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_DISK");
             return false;
         }
         if (updateable.equals(Updateable.BACKDOOR) && !TARDISPermission.hasPermission(player, "tardis.backdoor")) {
-            TARDISMessage.send(player, "NO_PERM_BACKDOOR");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_BACKDOOR");
             return false;
         }
         if (updateable.equals(Updateable.TEMPORAL) && !TARDISPermission.hasPermission(player, "tardis.temporal")) {
-            TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TEMPORAL");
             return false;
         }
         boolean hasFarm = false;
@@ -133,29 +133,29 @@ public class TARDISUpdateableChecker {
         }
         if (updateable.equals(Updateable.VAULT)) {
             if (!TARDISPermission.hasPermission(player, "tardis.vault")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", "Vault room drop chest");
                 return false;
             }
             // must grow room first
             if (!hasVault) {
-                TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                 return false;
             }
         }
         if (updateable.equals(Updateable.FUEL) || updateable.equals(Updateable.SMELT)) {
             if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", "Smelter room drop chest");
                 return false;
             }
             // must grow room first
             if (!hasSmelt) {
-                TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                 return false;
             }
         }
         if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE) || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE)) {
             if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", tardis_block);
                 return false;
             }
             // must grow a room first
@@ -163,48 +163,48 @@ public class TARDISUpdateableChecker {
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
                 if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.IGLOO) && farming.getIgloo().isEmpty() && !hasIgloo) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.STABLE) && farming.getStable().isEmpty() && !hasStable) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.STALL) && farming.getStall().isEmpty() && !hasStall) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.VILLAGE) && farming.getVillage().isEmpty() && !hasVillage) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
             }
         }
         if (updateable.equals(Updateable.RAIL) && tardis.getRail().isEmpty()) {
-            TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
             return false;
         }
         if (updateable.equals(Updateable.ZERO) && tardis.getZero().isEmpty()) {
-            TARDISMessage.send(player, "UPDATE_ZERO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ZERO");
             return false;
         }
         if (updateable.equals(Updateable.ARS)) {
             if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
-                TARDISMessage.send(player, "NO_PERM_ARS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ARS");
                 return false;
             }
             if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
-                TARDISMessage.send(player, "ARS_OWN_WORLD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_OWN_WORLD");
                 return false;
             }
         }
         if (updateable.equals(Updateable.WEATHER)) {
             if (!TARDISPermission.hasPermission(player, "tardis.weather.clear") && !TARDISPermission.hasPermission(player, "tardis.weather.rain") && !TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
-                TARDISMessage.send(player, "NO_PERMS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                 return false;
             }
         }
@@ -213,12 +213,12 @@ public class TARDISUpdateableChecker {
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                 return false;
             }
             int thisid = rst.getTardis_id();
             if (thisid != tardis.getTardis_id()) {
-                TARDISMessage.send(player, "CMD_ONLY_TL");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                 return false;
             }
         }

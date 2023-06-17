@@ -33,8 +33,8 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -75,7 +75,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         wherenl.put("tardis_id", id);
         ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
         if (!rsn.resultSet()) {
-            TARDISMessage.send(player, "DEST_NO_LOAD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NO_LOAD");
             return;
         }
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
@@ -112,7 +112,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                            TARDISMessage.send(player, "Q_FLY");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
                         plugin.getPM().callEvent(new TARDISMalfunctionEvent(player, tardis, exit));

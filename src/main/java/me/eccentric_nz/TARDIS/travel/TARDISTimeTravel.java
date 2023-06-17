@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -331,7 +331,7 @@ public class TARDISTimeTravel {
                                     if (rsp.resultSet()) {
                                         if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getLocation().getBlock().getBiome())) {
                                             // get submarine location
-                                            TARDISMessage.send(p, "SUB_SEARCH");
+                                            plugin.getMessenger().send(p, TardisModule.TARDIS, "SUB_SEARCH");
                                             Location underwater = submarine(currentBlock, d);
                                             if (underwater != null) {
                                                 // get TARDIS id

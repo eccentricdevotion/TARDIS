@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.database.converters;
 
 import java.sql.*;
 import java.util.Locale;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class TARDISBindConverter {
 
@@ -81,7 +81,7 @@ public class TARDISBindConverter {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getLogger().log(Level.INFO, "Converted " + i + " old bind records");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " old bind records");
                 }
             }
         } catch (SQLException e) {
@@ -102,4 +102,3 @@ public class TARDISBindConverter {
         }
     }
 }
-

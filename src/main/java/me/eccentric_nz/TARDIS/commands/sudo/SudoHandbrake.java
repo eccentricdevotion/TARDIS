@@ -20,7 +20,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHandbrakeCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 public class SudoHandbrake {
@@ -33,7 +33,7 @@ public class SudoHandbrake {
 
     public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);

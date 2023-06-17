@@ -18,7 +18,6 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,7 +70,7 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                 }
                 default -> {
                     // unknown command
-                    TARDISMessage.send(sender, TardisModule.MONSTERS, "WA_INVALID_CMD");
+                    plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID_CMD");
                     return true;
                 }
 

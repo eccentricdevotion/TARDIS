@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -95,7 +95,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.contains(first)) {
-                    TARDISMessage.send(sender, "ARG_NOT_VALID");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1) {
@@ -107,13 +107,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
                             return true;
                         } catch (Exception e) {
-                            TARDISMessage.message(sender, "Database conversion failed! " + e.getMessage());
+                            plugin.getMessenger().message(sender, "Database conversion failed! " + e.getMessage());
                             return true;
                         }
                     }
                     if (first.equals("update_plugins")) {
                         if (!sender.isOp()) {
-                            TARDISMessage.message(sender, "You must be a server operator to run this command!");
+                            plugin.getMessenger().message(sender, "You must be a server operator to run this command!");
                             return true;
                         }
                         return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
@@ -130,7 +130,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("mvimport")) {
                         if (!plugin.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
-                            TARDISMessage.send(sender, "MULTIVERSE_ENABLED");
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_ENABLED");
                         }
                         plugin.getMVHelper().importWorlds(sender);
                         return true;
@@ -149,7 +149,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISDisguiseCommand(plugin).disguise(sender, args);
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return false;
                 }
                 if (first.equals("arch")) {
@@ -206,7 +206,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 return true;
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
                 return false;
             }
         }

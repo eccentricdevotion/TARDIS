@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -35,19 +35,19 @@ class TARDISSetDifficultyCommand {
 
     boolean setDiff(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("allow.player_difficulty")) {
-            TARDISMessage.send(player, "CMD_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_DISABLED");
             return true;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.difficulty")) {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
         if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
-            TARDISMessage.send(player, "ARG_DIFF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_DIFF");
             return true;
         }
         int diff = (args[1].equalsIgnoreCase("easy")) ? 1 : 0;
@@ -56,7 +56,7 @@ class TARDISSetDifficultyCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "DIFF_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "DIFF_SAVED");
         return true;
     }
 }

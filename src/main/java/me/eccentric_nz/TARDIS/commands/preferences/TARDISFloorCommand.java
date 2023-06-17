@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -30,10 +30,17 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 class TARDISFloorCommand {
+
+    private final TARDIS plugin;
+
+    public TARDISFloorCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     boolean setFloorOrWallBlock(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, "PREF_WALL", pref);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WALL", pref);
             return false;
         }
         String wall_mat;
@@ -45,7 +52,7 @@ class TARDISFloorCommand {
         }
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
-            TARDISMessage.send(player, message, pref);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, message, pref);
             TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
             return true;
         }
@@ -54,7 +61,7 @@ class TARDISFloorCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
-        TARDISMessage.send(player, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

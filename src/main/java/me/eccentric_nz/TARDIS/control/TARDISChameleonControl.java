@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -43,19 +43,19 @@ class TARDISChameleonControl {
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasChameleon()) {
-            TARDISMessage.send(player, "CHAM_MISSING");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
             return;
         }
         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
             return;
         }
         if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-            TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
             return;
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
             return;
         }
         // open Chameleon Circuit GUI

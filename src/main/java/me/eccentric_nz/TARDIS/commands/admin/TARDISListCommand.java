@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.md_5.bungee.api.ChatColor;
@@ -61,7 +61,7 @@ class TARDISListCommand {
                                 wherecl.put("tardis_id", t.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
-                                    TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
                                 String line = "ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
@@ -73,7 +73,7 @@ class TARDISListCommand {
                         plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
                     }
                 }
-                TARDISMessage.send(sender, "FILE_SAVED");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "FILE_SAVED");
                 return true;
             } else if (args[1].equalsIgnoreCase("portals")) {
                 plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
@@ -93,21 +93,22 @@ class TARDISListCommand {
             String limit = start + ", " + end;
             ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 0);
             if (rsl.resultSet()) {
-                TARDISMessage.send(sender, "TARDIS_LOCS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS");
                 if (sender instanceof Player) {
-                    TARDISMessage.message(sender, "Hover to see location (world x, y, z)");
-                    TARDISMessage.message(sender, "Click to enter the TARDIS");
+                    plugin.getMessenger().message(sender, "Hover to see location (world x, y, z)");
+                    plugin.getMessenger().message(sender, "Click to enter the TARDIS");
                 }
-                TARDISMessage.message(sender, "");
+                plugin.getMessenger().message(sender, "");
                 for (Tardis t : rsl.getData()) {
                     HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", t.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
                     String world = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+                    // TODO
                     TextComponent tct = new TextComponent(String.format("%s %s", t.getTardis_id(), t.getOwner()));
                     tct.setColor(ChatColor.GREEN);
                     tct.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, rsc.getX(), rsc.getY(), rsc.getZ()))));
@@ -115,10 +116,10 @@ class TARDISListCommand {
                     sender.spigot().sendMessage(tct);
                 }
                 if (rsl.getData().size() > 18) {
-                    TARDISMessage.send(sender, "TARDIS_LOCS_INFO");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS_INFO");
                 }
             } else {
-                TARDISMessage.send(sender, "TARDIS_LOCS_NONE");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS_NONE");
             }
             return true;
         }

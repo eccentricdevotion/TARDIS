@@ -6,10 +6,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusDisguise;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusLibs;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusRunnable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.Bukkit;
@@ -75,7 +75,7 @@ public class FloodgateGeneticManipulatorForm {
                     } else {
                         TARDISLazarusDisguise.runImmortalityGate(player);
                     }
-                    plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
                     plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
                     // schedule a delayed task to remove the disguise
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -86,7 +86,7 @@ public class FloodgateGeneticManipulatorForm {
                                 TARDISLazarusDisguise.removeDisguise(p);
                             }
                         });
-                        plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
+                        plugin.getMessenger().broadcast(TardisModule.TARDIS, "Lord Rassilon has reset the Master Race back to human form.");
                         plugin.getTrackerKeeper().setImmortalityGate("");
                         plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                     }, 3600L);
@@ -100,7 +100,7 @@ public class FloodgateGeneticManipulatorForm {
                     } else {
                         TARDISLazarusDisguise.removeDisguise(player);
                     }
-                    TARDISMessage.send(player, "GENETICS_RESTORED");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                     plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                 }, 80L);
             }

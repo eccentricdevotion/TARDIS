@@ -25,9 +25,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
 public class TARDISWallConverter {
@@ -122,7 +122,7 @@ public class TARDISWallConverter {
             if (i > 0) {
                 ps.executeBatch();
                 connection.commit();
-                plugin.getLogger().log(Level.INFO, "Converted " + i + " archive wall block data records");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " archive wall block data records");
             }
             plugin.getConfig().set("conversions.archive_wall_data", true);
             plugin.saveConfig();

@@ -28,9 +28,9 @@ import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -100,7 +100,7 @@ public class TARDISDeleteCommand {
             }
             World cw = TARDISAliasResolver.getWorldFromAlias(wname);
             if (cw == null) {
-                TARDISMessage.send(sender, "WORLD_DELETED");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DELETED");
                 return true;
             }
             // get the current location
@@ -114,7 +114,7 @@ public class TARDISDeleteCommand {
                 d = rsc.getDirection();
             }
             if (bb_loc == null) {
-                TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
@@ -155,10 +155,10 @@ public class TARDISDeleteCommand {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanDatabase(id);
-                TARDISMessage.send(sender, "TARDIS_EXTERMINATED");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_EXTERMINATED");
             }, 40L);
         } else {
-            TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", args[1]);
             return true;
         }
         return true;

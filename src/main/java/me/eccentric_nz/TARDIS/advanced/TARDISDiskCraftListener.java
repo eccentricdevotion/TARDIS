@@ -22,7 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -120,7 +120,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         plugin.debug("Could not get biome from craft item! " + e);
                                     }
                                 } else {
-                                    TARDISMessage.send(player, "DISK_BLANK_BIOME");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
                                 }
                             }
                         }
@@ -152,7 +152,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    TARDISMessage.send(player, "DISK_BLANK_PRESET");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_PRESET");
                                 }
                             }
                         }

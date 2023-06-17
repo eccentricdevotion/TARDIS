@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -54,14 +54,14 @@ public class TARDISDirectionCommand {
     public boolean changeDirection(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             if (args.length < 2) {
-                TARDISMessage.send(player, "DIRECTION_NEED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
                 return true;
             }
             COMPASS compass;
             try {
                 compass = COMPASS.valueOf(args[1].toUpperCase());
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(player, "DIRECTION_NEED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
                 return true;
             }
             UUID uuid = player.getUniqueId();
@@ -69,17 +69,17 @@ public class TARDISDirectionCommand {
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
             Tardis tardis = rs.getTardis();
             if (!tardis.getPreset().usesItemFrame()
                     && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
-                TARDISMessage.send(player, "DIRECTION_PRESET");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
                 return true;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                TARDISMessage.send(player, "POWER_DOWN");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                 return true;
             }
             int id = tardis.getTardis_id();
@@ -89,25 +89,25 @@ public class TARDISDirectionCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                 return true;
             }
             int level = tardis.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
-                TARDISMessage.send(player, "ENERGY_NO_DIRECTION");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_DIRECTION");
                 return true;
             }
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+                plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
                 return true;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                TARDISMessage.send(player, "NOT_WHILE_MAT");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                 return true;
             }
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
+                plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return true;
             }
             boolean hid = tardis.isHidden();
@@ -116,7 +116,7 @@ public class TARDISDirectionCommand {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             COMPASS old_d = rsc.getDirection();
@@ -161,7 +161,7 @@ public class TARDISDirectionCommand {
                 bd.setTardisID(id);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
-                TARDISMessage.send(player, "DIRECTION_CHANGED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_CHANGED");
             }
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
@@ -199,7 +199,7 @@ public class TARDISDirectionCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
     }

@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.sonic;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -67,7 +67,7 @@ public class TARDISSonicEntityListener implements Listener {
                 if (ent instanceof Player scanned) {
                     TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
-                        TARDISMessage.send(player, "SONIC_INV");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
                             ItemStack[] items = pinv.getStorageContents();
@@ -76,16 +76,16 @@ public class TARDISSonicEntityListener implements Listener {
                             player.openInventory(menu);
                         }, 40L);
                     } else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        TARDISMessage.send(player, "SONIC_PLAYER");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // getHealth() / getMaxHealth() * getHealthScale()
                             double mh = scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                             double health = scanned.getHealth() / mh * scanned.getHealthScale();
                             float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                            TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
-                            TARDISMessage.send(player, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
-                            TARDISMessage.send(player, "SONIC_HEALTH", String.format("%f", health));
-                            TARDISMessage.send(player, "SONIC_HUNGER", String.format("%.2f", hunger));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_NAME", scanned.getName());
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_HEALTH", String.format("%f", health));
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
                 }

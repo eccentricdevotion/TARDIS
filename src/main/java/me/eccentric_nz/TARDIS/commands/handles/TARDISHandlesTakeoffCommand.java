@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -60,11 +59,11 @@ class TARDISHandlesTakeoffCommand {
                     return true;
                 }
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                    TARDISMessage.handlesSend(player, "POWER_DOWN");
+                    plugin.getMessenger().handlesSend(player, "POWER_DOWN");
                     return true;
                 }
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                    TARDISMessage.handlesSend(player, "HANDBRAKE_IN_VORTEX");
+                    plugin.getMessenger().handlesSend(player, "HANDBRAKE_IN_VORTEX");
                     return true;
                 }
                 HashMap<String, Object> whereh = new HashMap<>();
@@ -75,12 +74,12 @@ class TARDISHandlesTakeoffCommand {
                     if (tardis.isHandbrake_on()) {
                         // check there is enough power for at last random travel
                         if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
-                            TARDISMessage.handlesSend(player, "ENERGY_NOT_ENOUGH");
+                            plugin.getMessenger().handlesSend(player, "ENERGY_NOT_ENOUGH");
                             return true;
                         }
                         // check if door is open
                         if (isDoorOpen(id)) {
-                            TARDISMessage.handlesSend(player, "DOOR_CLOSE");
+                            plugin.getMessenger().handlesSend(player, "DOOR_CLOSE");
                             // track handbrake clicked for takeoff when door closed
                             plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                             // give them 30 seconds to close the door
@@ -100,7 +99,7 @@ class TARDISHandlesTakeoffCommand {
                         }
                         new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
                     } else {
-                        TARDISMessage.handlesSend(player, "HANDBRAKE_OFF_ERR");
+                        plugin.getMessenger().handlesSend(player, "HANDBRAKE_OFF_ERR");
                     }
                 }
             }

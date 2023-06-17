@@ -40,10 +40,10 @@ public class TARDISShopDisplayConverter implements Runnable {
     @Override
     public void run() {
         if (findAndReplace()) {
-            plugin.getConsole().sendMessage(TardisModule.SHOP.getName() + "Converted " + count + " shop display items");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SHOP, "Converted " + count + " shop display items");
         } else {
             String message = (count > 0) ? "Converting shop display items failed!" : "There were no shop display items to convert";
-            plugin.getConsole().sendMessage(TardisModule.SHOP.getName() + message);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SHOP, message);
         }
     }
 

@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -44,17 +44,17 @@ class TARDISSiegeCommand {
             return true;
         }
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         if (!siegeArgs.contains(first)) {
-            TARDISMessage.send(sender, "ARG_NOT_VALID");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
             return true;
         }
         if (siegeBool.contains(first)) {
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
-                TARDISMessage.send(sender, "TRUE_FALSE");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
                 return true;
             }
             plugin.getConfig().set("siege." + first, Boolean.valueOf(tf));
@@ -65,12 +65,12 @@ class TARDISSiegeCommand {
                 val = Integer.parseInt(args[2]);
             } catch (NumberFormatException nfe) {
                 // not a number
-                TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
                 return false;
             }
             plugin.getConfig().set("siege." + first, val);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         plugin.saveConfig();
         return true;
     }

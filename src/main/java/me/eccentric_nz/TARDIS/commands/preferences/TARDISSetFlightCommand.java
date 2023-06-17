@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
 /**
@@ -28,16 +28,22 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSetFlightCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISSetFlightCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     boolean setMode(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "FLIGHT_NEED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_NEED");
             return false;
         }
         FlightMode fm;
         try {
             fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "FLIGHT_INFO");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_INFO");
             return true;
         }
         int mode = 1;
@@ -52,7 +58,7 @@ public class TARDISSetFlightCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
-        TARDISMessage.send(player, "FLIGHT_SAVED");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
         return true;
     }
 }

@@ -21,10 +21,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSiege;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Chunk;
 
 /**
@@ -79,7 +79,7 @@ public class TARDISSiegePersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " TARDISes in Siege Mode.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " TARDISes in Siege Mode.");
             }
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for tardis table: " + ex.getMessage());
@@ -131,7 +131,7 @@ public class TARDISSiegePersister {
                 i += ps.executeUpdate();
             }
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + i + " Siege Cubes");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + i + " Siege Cubes");
             }
         } catch (SQLException ex) {
             plugin.debug("Insert error for siege table: " + ex.getMessage());

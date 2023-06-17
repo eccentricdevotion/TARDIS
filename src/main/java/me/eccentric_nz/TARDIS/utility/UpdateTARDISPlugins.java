@@ -24,7 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.atomic.AtomicBoolean;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -39,10 +39,10 @@ public class UpdateTARDISPlugins {
 
     public boolean fetchFromJenkins(CommandSender sender) {
         if (updateInProgress.get()) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "An update is already in progress!");
+            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "An update is already in progress!", "#FF5555");
             return true;
         }
-        sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading TARDIS...");
+        plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS,  "Downloading TARDIS...", "#55FFFF");
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -68,7 +68,7 @@ public class UpdateTARDISPlugins {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Update success! Restart the server to finish the update.");
+                            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "Update success! Restart the server to finish the update.", "#55FFFF");
                         }
                     }.runTask(plugin);
                 } catch (Exception ex) {
@@ -76,7 +76,7 @@ public class UpdateTARDISPlugins {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Update failed, " + ex.getMessage());
+                            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS,  "Update failed, " + ex.getMessage(), "#FF5555");
                         }
                     }.runTask(plugin);
                 } finally {

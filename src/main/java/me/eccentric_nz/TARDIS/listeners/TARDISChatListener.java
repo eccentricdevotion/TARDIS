@@ -21,13 +21,13 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,7 +73,7 @@ public class TARDISChatListener implements Listener {
                     new TARDISAcceptor(plugin).doRequest(event.getPlayer(), request);
                 } else {
                     String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
-                    TARDISMessage.send(event.getPlayer(), message);
+                    plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, message);
                 }
             } else if (chat.equals("tardis call accept")) {
                 // process comehere request
@@ -83,7 +83,7 @@ public class TARDISChatListener implements Listener {
                     new ComehereAction(plugin).doTravel(request);
                     plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
                 } else {
-                    TARDISMessage.send(event.getPlayer(), "REQUEST_TIMEOUT");
+                    plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "REQUEST_TIMEOUT");
                 }
             } else if (handlesPattern.matcher(chat).lookingAt()) {
                 event.setCancelled(true);

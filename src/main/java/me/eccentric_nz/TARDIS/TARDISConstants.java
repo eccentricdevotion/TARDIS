@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import java.util.*;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
@@ -478,7 +479,7 @@ public class TARDISConstants {
         try {
             return Material.valueOf(changed);
         } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug(ChatColor.RED + "changeToMaterial() failed with the string: " + changed + " from " + original);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "changeToMaterial() failed with the string: " + changed + " from " + original);
             return Material.BLUE_WOOL;
         }
     }

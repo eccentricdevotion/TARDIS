@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -90,7 +90,7 @@ public class TARDISBindListener implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("location", l);
                     plugin.getQueryFactory().doUpdate("bind", set, where);
-                    TARDISMessage.send(player, "BIND_SAVE", m.toString());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIND_SAVE", m.toString());
                 } else if (plugin.getTrackerKeeper().getBindRemoval().containsKey(uuid)) {
                     Bind bind = plugin.getTrackerKeeper().getBindRemoval().get(uuid);
                     // get the bind record from the location and type
@@ -101,9 +101,9 @@ public class TARDISBindListener implements Listener {
                     if (rsb.resultSet()) {
                         where.put("bind_id", rsb.getBind_id());
                         plugin.getQueryFactory().doDelete("bind", where);
-                        TARDISMessage.send(player, "BIND_REMOVED", bind.toString());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIND_REMOVED", bind.toString());
                     } else {
-                        TARDISMessage.send(player, "BIND_REMOVE_NO_MATCH");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIND_REMOVE_NO_MATCH");
                     }
                     plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
                 } else {
@@ -124,21 +124,21 @@ public class TARDISBindListener implements Listener {
                             ResultSetBind rsb = new ResultSetBind(plugin, whereb);
                             if (rsb.resultSet()) {
                                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                                    TARDISMessage.send(player, "POWER_DOWN");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                                     return;
                                 }
                                 if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
-                                    TARDISMessage.send(player, "ISO_HANDS_OFF");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                                     return;
                                 }
                                 int type = rsb.getType();
                                 if (type != 6 && !tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }
                                 // make sure TARDIS is not dispersed
                                 if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                                    TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                                     return;
                                 }
                                 // what bind type is it?
@@ -147,40 +147,40 @@ public class TARDISBindListener implements Listener {
                                     case 1: // command
                                         if (name.equals("rebuild")) {
                                             player.performCommand("tardis rebuild");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis rebuild");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis rebuild");
                                         }
                                         if (name.equals("hide")) {
                                             player.performCommand("tardis hide");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis hide");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis hide");
                                         }
                                         if (name.equals("home")) {
                                             player.performCommand("tardistravel home");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel home");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel home");
                                         }
                                         if (name.equals("cave")) {
                                             player.performCommand("tardistravel cave");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel cave");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel cave");
                                         }
                                         if (name.equals("make_her_blue")) {
                                             player.performCommand("tardis make_her_blue");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis make_her_blue");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis make_her_blue");
                                         }
                                         if (name.equals("occupy")) {
                                             player.performCommand("tardis occupy");
-                                            plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis occupy");
+                                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis occupy");
                                         }
                                         break;
                                     case 2: // player
                                         player.performCommand("tardistravel " + name);
-                                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel " + name);
+                                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel " + name);
                                         break;
                                     case 3: // area
                                         player.performCommand("tardistravel area " + name);
-                                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel area " + name);
+                                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel area " + name);
                                         break;
                                     case 4: // biome
                                         player.performCommand("tardistravel biome " + name);
-                                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel biome " + name);
+                                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel biome " + name);
                                         break;
                                     case 5: // chameleon
                                         HashMap<String, Object> wherec = new HashMap<>();
@@ -202,7 +202,7 @@ public class TARDISBindListener implements Listener {
                                         wherec.put("tardis_id", id);
                                         plugin.getQueryFactory().doUpdate("tardis", set, wherec);
                                         player.performCommand("tardis rebuild");
-                                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardis rebuild" + name);
+                                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis rebuild" + name);
                                         break;
                                     case 6:
                                         // transmat player to internal destination
@@ -213,7 +213,7 @@ public class TARDISBindListener implements Listener {
                                             // look up the transmat location
                                             ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, rsb.getName());
                                             if (rsm.resultSet()) {
-                                                TARDISMessage.send(player, "TRANSMAT");
+                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
                                                 Location tp_loc = rsm.getLocation();
                                                 tp_loc.setYaw(rsm.getYaw());
                                                 tp_loc.setPitch(player.getLocation().getPitch());
@@ -226,7 +226,7 @@ public class TARDISBindListener implements Listener {
                                         break;
                                     default: // (0) save
                                         player.performCommand("tardistravel dest " + name);
-                                        plugin.getLogger().log(Level.INFO, player.getName() + " issued server command: /tardistravel dest " + name);
+                                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardistravel dest " + name);
                                 }
                             }
                         }

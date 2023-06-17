@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -88,8 +88,8 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 3) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                    TARDISMessage.message(sender, "/tardisgive [player] [item] [amount]");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    plugin.getMessenger().message(sender, "/tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase(Locale.ENGLISH);
@@ -100,15 +100,15 @@ public class TARDISGiveCommand implements CommandExecutor {
                 if (item.equals("kit")) {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                     if (!plugin.getKitsConfig().contains("kits." + args[2])) {
-                        TARDISMessage.send(sender, "ARG_KIT");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_KIT");
                         return true;
                     }
                     plugin.getKitsConfig().getStringList("kits." + args[2]).forEach((k) -> giveItem(k, p));
-                    TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }
                 if (item.equals("blueprint")) {
@@ -116,7 +116,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     if (TARDISGiveTabComplete.getBlueprints().contains(blueprint)) {
                         return giveBlueprint(sender, args, blueprint);
                     } else {
-                        TARDISMessage.send(sender, "ARG_BLUEPRINT");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_BLUEPRINT");
                         return true;
                     }
                 }
@@ -133,7 +133,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
                             Player sp = plugin.getServer().getPlayer(args[0]);
                             if (sp == null) { // player must be online
-                                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                                 return true;
                             }
                             return giveKnowledgeBook(sender, seed.toLowerCase() + "_seed", sp);
@@ -141,7 +141,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                             return giveSeed(sender, args);
                         }
                     } else {
-                        TARDISMessage.send(sender, "ARG_SEED");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_SEED");
                         return true;
                     }
                 }
@@ -157,14 +157,14 @@ public class TARDISGiveCommand implements CommandExecutor {
                         try {
                             amount = Integer.parseInt(args[2]);
                         } catch (NumberFormatException nfe) {
-                            TARDISMessage.send(sender, "ARG_GIVE");
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GIVE");
                             return true;
                         }
                     }
                 }
                 if (item.equals("artron")) {
                     if (TARDISStaticUtils.getOfflinePlayer(args[0]) == null) {
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                     return giveArtron(sender, args[0], amount);
@@ -177,7 +177,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         if (!near.isEmpty() && near.get(0) instanceof Player) {
                             player = (Player) near.get(0);
                             if (player == null) {
-                                TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_NEARBY_PLAYER");
                                 return true;
                             }
                         }
@@ -185,7 +185,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         player = plugin.getServer().getPlayer(args[0]);
                     }
                     if (player == null) { // player must be online
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
                     if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
@@ -201,7 +201,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                 }
             } else {
-                TARDISMessage.send(sender, "NO_PERMS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return true;
             }
         }
@@ -210,13 +210,13 @@ public class TARDISGiveCommand implements CommandExecutor {
 
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
-            TARDISMessage.send(sender, "ARG_MAX");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_MAX");
             return true;
         }
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            TARDISMessage.send(sender, "RECIPE_VORTEX");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
             return true;
         }
         if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
@@ -227,7 +227,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
         }
         if (item.equals("vortex-manipulator")) {
-            TARDISMessage.send(sender, "GIVE_VORTEX", player.getName());
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "GIVE_VORTEX", player.getName());
         }
         if (item.equals("invisibility-circuit")) {
             // set the second line of lore
@@ -260,7 +260,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         result.setAmount(amount);
         player.getInventory().addItem(result);
         player.updateInventory();
-        TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), amount + " " + item_to_give);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " " + item_to_give);
         return true;
     }
 
@@ -309,7 +309,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             } else {
                 // always fill to full and no more
                 if (level >= full && amount > 0) {
-                    TARDISMessage.send(sender, "GIVE_FULL", player);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "GIVE_FULL", player);
                     return true;
                 }
                 if ((full - level) < amount) {
@@ -323,7 +323,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-            sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
+            plugin.getMessenger().message(sender, TardisModule.TARDIS, player + "'s Artron Energy Level was set to " + set_level);
         }
         return true;
     }
@@ -337,14 +337,14 @@ public class TARDISGiveCommand implements CommandExecutor {
             if (!near.isEmpty() && near.get(0) instanceof Player) {
                 player = (Player) near.get(0);
                 if (player == null) {
-                    TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_NEARBY_PLAYER");
                     return true;
                 }
             }
         } else {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                 return true;
             }
         }
@@ -352,7 +352,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             ItemStack bp = plugin.getTardisAPI().getTARDISBlueprintItem(blueprint, player);
             player.getInventory().addItem(bp);
             player.updateInventory();
-            TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");
         }
         return true;
     }
@@ -366,14 +366,14 @@ public class TARDISGiveCommand implements CommandExecutor {
             if (!near.isEmpty() && near.get(0) instanceof Player) {
                 player = (Player) near.get(0);
                 if (player == null) {
-                    TARDISMessage.send(sender, "COULD_NOT_NEARBY_PLAYER");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_NEARBY_PLAYER");
                     return true;
                 }
             }
         } else {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                 return true;
             }
         }
@@ -386,7 +386,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     wall = Material.valueOf(args[3].toUpperCase()).toString();
                     floor = Material.valueOf(args[4].toUpperCase()).toString();
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(sender, "SEED_MAT_NOT_VALID");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID");
                     return true;
                 }
             }
@@ -402,7 +402,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         is = new ItemStack(tdi.getMaterial(), 1);
                         model = tdi.getCustomModelData();
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(player, "SEED_NOT_VALID");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_NOT_VALID");
                         return true;
                     }
                 }
@@ -420,7 +420,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 is.setItemMeta(im);
                 player.getInventory().addItem(is);
                 player.updateInventory();
-                TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
             }
         }
         return true;
@@ -428,11 +428,11 @@ public class TARDISGiveCommand implements CommandExecutor {
 
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            TARDISMessage.send(sender, "RECIPE_VORTEX");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
             return true;
         }
         if (TARDISStaticUtils.getOfflinePlayer(player) == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
         // Look up this player's UUID
@@ -441,14 +441,14 @@ public class TARDISGiveCommand implements CommandExecutor {
             UUID uuid = offlinePlayer.getUniqueId();
             plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
         } else {
-            TARDISMessage.send(sender, "PLAYER_NOT_FOUND");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND");
         }
         return true;
     }
 
     private boolean giveFullCell(CommandSender sender, int amount, Player player) {
         if (amount > 64) {
-            TARDISMessage.send(sender, "ARG_MAX");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_MAX");
             return true;
         }
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
@@ -465,7 +465,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         result.setItemMeta(im);
         player.getInventory().addItem(result);
         player.updateInventory();
-        TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");
         return true;
     }
 
@@ -499,7 +499,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         book.setItemMeta(kbm);
         player.getInventory().addItem(book);
         player.updateInventory();
-        TARDISMessage.send(player, "GIVE_KNOWLEDGE", sender.getName(), "all TARDIS recipes");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_KNOWLEDGE", sender.getName(), "all TARDIS recipes");
         return true;
     }
 
@@ -533,14 +533,14 @@ public class TARDISGiveCommand implements CommandExecutor {
         book.setItemMeta(kbm);
         player.getInventory().addItem(book);
         player.updateInventory();
-        TARDISMessage.send(player, "GIVE_KNOWLEDGE", sender.getName(), message);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_KNOWLEDGE", sender.getName(), message);
         return true;
     }
 
     private boolean grantRecipes(CommandSender sender, String[] args) {
         Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) { // player must be online
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
         Set<NamespacedKey> keys = new HashSet<>();
@@ -575,7 +575,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean grantRecipe(CommandSender sender, String[] args) {
         Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) { // player must be online
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
         String item = args[2].toLowerCase(Locale.ROOT);

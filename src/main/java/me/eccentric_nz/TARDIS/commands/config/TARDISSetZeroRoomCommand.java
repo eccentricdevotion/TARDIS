@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import org.bukkit.command.CommandSender;
 
@@ -37,16 +37,16 @@ class TARDISSetZeroRoomCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            TARDISMessage.send(sender, "TRUE_FALSE");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
             return false;
         }
         plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "zero_room");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "zero_room");
         if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
-            TARDISMessage.send(sender, "ZERO_CREATE");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_CREATE");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
-            TARDISMessage.send(sender, "ZERO_RESTART");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_RESTART");
         }
         return true;
     }

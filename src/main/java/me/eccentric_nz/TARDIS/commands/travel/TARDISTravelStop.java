@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -59,7 +59,7 @@ public class TARDISTravelStop {
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (!rsh.resultSet()) {
-            TARDISMessage.send(player, "HOME_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
             return true;
         }
         // update current, next and back tables

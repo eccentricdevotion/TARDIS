@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
@@ -57,7 +57,7 @@ public class TARDISMonstersCommand {
             }
             if (l != null) {
                 plugin.getTrackerKeeper().getPortals().remove(l);
-                TARDISMessage.send(player, "PORTAL_RESET");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PORTAL_RESET");
                 return true;
             }
         } else if (args[1].equalsIgnoreCase("kill")) {
@@ -80,7 +80,7 @@ public class TARDISMonstersCommand {
                         }
                     }
                 }
-                TARDISMessage.send(player, "MONSTERS_RESET");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "MONSTERS_RESET");
                 return true;
             }
         }

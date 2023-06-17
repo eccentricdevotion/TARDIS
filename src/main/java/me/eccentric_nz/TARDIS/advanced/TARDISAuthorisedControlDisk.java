@@ -29,11 +29,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -156,7 +156,7 @@ public class TARDISAuthorisedControlDisk {
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                TARDISMessage.send(player, "HANDBRAKE_OFF");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 // show emergency program one
                 HashMap<String, Object> wherev = new HashMap<>();

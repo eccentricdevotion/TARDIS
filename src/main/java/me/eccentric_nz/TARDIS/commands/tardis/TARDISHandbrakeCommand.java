@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -37,12 +37,12 @@ public class TARDISHandbrakeCommand {
 
     public boolean toggle(Player player, int id, String[] args, boolean admin) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         String tf = args[1];
         if (!admin && !tf.equalsIgnoreCase("on") && !tf.equalsIgnoreCase("off")) {
-            TARDISMessage.send(player, "PREF_ON_OFF", "the handbrake");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", "the handbrake");
             return true;
         }
         // actually toggle the lever block
@@ -69,7 +69,7 @@ public class TARDISHandbrakeCommand {
                 plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
             }
             if (!admin) {
-                TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
             }
         }
         return true;

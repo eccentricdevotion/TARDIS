@@ -22,7 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -61,7 +61,7 @@ public class TARDISTeleportListener implements Listener {
                 where.put("uuid", uuid);
                 plugin.getQueryFactory().doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    TARDISMessage.send(player, "OCCUPY_AUTO");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_AUTO");
                 }
                 // stop tracking telepaths
                 plugin.getTrackerKeeper().getTelepaths().remove(player.getUniqueId());

@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.commands.travel;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.entity.Player;
 
@@ -43,7 +43,7 @@ public class TARDISTravelHome {
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (!rsh.resultSet()) {
-            TARDISMessage.send(player, "HOME_NOT_FOUND");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
             return true;
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -66,7 +66,7 @@ public class TARDISTravelHome {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "TRAVEL_LOADED", "Home", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", "Home", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.HOME));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

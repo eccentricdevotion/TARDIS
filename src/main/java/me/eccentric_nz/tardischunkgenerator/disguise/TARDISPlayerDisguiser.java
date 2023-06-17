@@ -28,8 +28,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
-import java.util.logging.Level;
 import javax.net.ssl.HttpsURLConnection;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -76,7 +76,7 @@ public class TARDISPlayerDisguiser {
                 profile.getProperties().removeAll("textures");
                 return profile.getProperties().put("textures", new Property("textures", skin, signature));
             } else {
-                Bukkit.getLogger().log(Level.INFO, TardisModule.HELPER.getName() + "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER_WARNING, "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
                 return false;
             }
         } catch (IOException e) {

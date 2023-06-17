@@ -56,7 +56,7 @@ public class TARDISShopItemInteract implements Listener {
                     new TARDISShopItemSpawner(plugin).setItem(location, item);
                     // update location in database
                     new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
-                    TARDISMessage.send(player, TardisModule.SHOP, "SHOP_LOCATION_ADDED");
+                    plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_LOCATION_ADDED");
                     plugin.getShopSettings().getSettingItem().remove(uuid);
                 } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
                     BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
@@ -70,9 +70,9 @@ public class TARDISShopItemInteract implements Listener {
                     }
                     // remove database record
                     if (new DeleteShopItem(plugin).removeByLocation(location.toString()) > 0) {
-                        TARDISMessage.send(player, TardisModule.SHOP, "SHOP_ITEM_REMOVED");
+                        plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_ITEM_REMOVED");
                     } else {
-                        TARDISMessage.send(player, TardisModule.SHOP, "SHOP_NOT_FOUND");
+                        plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_NOT_FOUND");
                     }
                     plugin.getShopSettings().getRemovingItem().remove(uuid);
                 } else {
@@ -95,7 +95,7 @@ public class TARDISShopItemInteract implements Listener {
                             // no credit
                             message = "SHOP_NO_FUNDS";
                         }
-                        TARDISMessage.send(player, TardisModule.SHOP, message);
+                        plugin.getMessenger().send(player, TardisModule.SHOP, message);
                     }
                 }
             } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {

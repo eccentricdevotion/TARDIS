@@ -31,7 +31,7 @@ import static me.eccentric_nz.TARDIS.enumeration.COMPASS.NORTH;
 import static me.eccentric_nz.TARDIS.enumeration.COMPASS.SOUTH;
 import static me.eccentric_nz.TARDIS.enumeration.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
@@ -66,11 +66,11 @@ public class DisplayItemDoorMover {
         if (rsd.resultSet()) {
             int id = rsd.getTardis_id();
             if (rsd.isLocked()) {
-                TARDISMessage.send(player, "DOOR_DEADLOCKED");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
                 return;
             }
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
                 return;
             }
             HashMap<String, Object> tid = new HashMap<>();
@@ -79,7 +79,7 @@ public class DisplayItemDoorMover {
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
                 if (!tardis.isHandbrake_on()) {
-                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
                     return;
                 }
                 ChameleonPreset preset = tardis.getPreset();
@@ -116,12 +116,12 @@ public class DisplayItemDoorMover {
                 }
                 // is the TARDIS materialising?
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                    TARDISMessage.send(player, "LOST_IN_VORTEX");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LOST_IN_VORTEX");
                     return;
                 }
                 // Can't SHIFT-click if INVISIBLE preset
                 if (preset.equals(ChameleonPreset.INVISIBLE)) {
-                    TARDISMessage.send(player, "INVISIBILITY_SNEAK");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_SNEAK");
                     return;
                 }
                 Location exitLoc;
@@ -185,7 +185,7 @@ public class DisplayItemDoorMover {
                     wheret.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().doSyncDelete("travellers", wheret);
                 } else {
-                    TARDISMessage.send(player, "LOST_IN_VORTEX");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LOST_IN_VORTEX");
                 }
             }
         }

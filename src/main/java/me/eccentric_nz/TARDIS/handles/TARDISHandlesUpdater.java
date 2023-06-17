@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.handles;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class TARDISHandlesUpdater {
@@ -38,7 +38,7 @@ public class TARDISHandlesUpdater {
             try {
                 String handlesPath = plugin.getDataFolder() + File.separator + "handles.yml";
                 handlesConfig.save(new File(handlesPath));
-                plugin.getLogger().log(Level.INFO, "Updated handles.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Updated handles.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save handles.yml, " + io.getMessage());
             }

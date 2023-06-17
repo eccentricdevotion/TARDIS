@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,7 +41,7 @@ public class TARDISEmergencyRelocation {
     }
 
     public void relocate(int id, Player p) {
-        TARDISMessage.send(p, "EMERGENCY");
+        plugin.getMessenger().send(p, TardisModule.TARDIS, "EMERGENCY");
         // get the TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -85,7 +85,7 @@ public class TARDISEmergencyRelocation {
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
                 plugin.getQueryFactory().doUpdate("current", setb, whereb);
-                TARDISMessage.send(p, "EMERGENCY_DONE");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "EMERGENCY_DONE");
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class TARDISHandlesWeirdness {
@@ -170,6 +170,6 @@ public class TARDISHandlesWeirdness {
 
     public static void say(Player player) {
         String sentence = start[TARDISConstants.RANDOM.nextInt(70)] + " " + end[TARDISConstants.RANDOM.nextInt(70)];
-        TARDISMessage.handlesMessage(player, sentence);
+        TARDIS.plugin.getMessenger().handlesMessage(player, sentence);
     }
 }

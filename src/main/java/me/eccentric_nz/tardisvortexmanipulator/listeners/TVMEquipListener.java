@@ -9,12 +9,11 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -101,10 +100,10 @@ public class TVMEquipListener implements Listener {
                     int required = plugin.getVortexConfig().getInt("tachyon_use.travel.to_block");
                     int actual = required * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                        TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
+                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                         return;
                     }
-                    TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                     // Random malfunction
                     Random rnd = new Random();
                     if (rnd.nextInt(100) < plugin.getVortexConfig().getInt("block_travel_malfunction_chance")) {
@@ -124,7 +123,7 @@ public class TVMEquipListener implements Listener {
                         // check to ensure we have a valid alternate location before triggering the malfunction
                         // for this reason the actual malfunction rate may be lower than configured
                         if (_bl != null) {
-                            TARDISMessage.send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MALFUNCTION");
+                            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MALFUNCTION");
                             bl = _bl;
                         }
                     }

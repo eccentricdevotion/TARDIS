@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -70,7 +69,7 @@ public class TARDISLazarusLibs {
             try {
                 livingWatcher = mobDisguise.getWatcher();
             } catch (NoSuchMethodError e) {
-                TARDISMessage.message(player, "LIBS");
+                TARDIS.plugin.getMessenger().message(player, "LIBS");
                 return;
             }
             switch (dt) {

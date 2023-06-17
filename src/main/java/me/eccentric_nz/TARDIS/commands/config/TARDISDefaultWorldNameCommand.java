@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -41,7 +41,7 @@ class TARDISDefaultWorldNameCommand {
         String nodots = DOTS.matcher(t).replaceAll("_");
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED", "default_world_name");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "default_world_name");
         return true;
     }
 }

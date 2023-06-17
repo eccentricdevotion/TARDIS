@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -51,7 +51,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardistravel")) {
             if (sender instanceof Player player) {
                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-                    TARDISMessage.send(player, "NO_PERMS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
                 if (args.length < 1) {
@@ -63,7 +63,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return true;
                 }
                 Tardis tardis = rs.getTardis();
@@ -75,7 +75,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return new TARDISTravelCosts(plugin).action(player);
                 }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                    TARDISMessage.send(player, "SIEGE_NO_CMD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CMD");
                     return true;
                 }
                 if (args.length == 1 && args[0].equalsIgnoreCase("stop")) {
@@ -84,28 +84,28 @@ public class TARDISTravelCommands implements CommandExecutor {
                 int level = tardis.getArtron_level();
                 boolean powered = tardis.isPowered_on();
                 if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                    TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                     return true;
                 }
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
-                    TARDISMessage.send(player, "NOT_IN_TARDIS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                     return true;
                 }
                 int tardis_id = rst.getTardis_id();
                 if (tardis_id != id) {
-                    TARDISMessage.send(player, "CMD_ONLY_TL");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                     return true;
                 }
                 if (plugin.getConfig().getBoolean("allow.power_down") && !powered) {
-                    TARDISMessage.send(player, "POWER_DOWN");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return true;
                 }
                 int travel = plugin.getArtronConfig().getInt("travel");
                 if (level < travel) {
-                    TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
                 if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
@@ -159,7 +159,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return new TARDISTravelArea(plugin).action(player, args, id, tardis.getPreset());
                 }
                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel.location")) {
-                    TARDISMessage.send(player, "TRAVEL_NO_PERM_COORDS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_COORDS");
                     return true;
                 }
                 // coords of some sort
@@ -167,7 +167,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             return false;
         } else {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
             return true;
         }
     }

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -72,7 +72,7 @@ public class TARDISSaveSignPageTwo {
                 if (map.get("type").equals("0")) {
                     count++;
                     if (count > 90) {
-                        TARDISMessage.send(player, "TOO_MANY_SAVES");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_MANY_SAVES");
                         break;
                     }
                     int slot;

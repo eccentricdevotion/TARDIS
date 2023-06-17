@@ -24,11 +24,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -127,7 +127,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             ItemMeta im = choice.getItemMeta();
                             List<String> lore = im.getLore();
                             if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
-                                TARDISMessage.send(p, "ARCHIVE_NOT_CURRENT");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "ARCHIVE_NOT_CURRENT");
                                 return;
                             }
                             int upgrade = plugin.getArtronConfig().getInt("upgrades.archive.tall");

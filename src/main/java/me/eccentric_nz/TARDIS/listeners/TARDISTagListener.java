@@ -26,7 +26,8 @@ import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,13 +61,13 @@ public class TARDISTagListener implements Listener {
             if (eggcal.get(Calendar.MONTH) == Calendar.NOVEMBER && eggcal.get(Calendar.DATE) == 23) { // zero based month
                 int age = ((eggcal.get(Calendar.YEAR)) - 1963);
                 String ordinal = getOrdinal(age);
-                event.getPlayer().sendMessage(plugin.getPluginName() + "Happy " + age + ordinal + " Birthday Doctor Who!");
+                plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "Happy " + age + ordinal + " Birthday Doctor Who!");
             }
-            event.getPlayer().sendMessage(plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
-            event.getPlayer().sendMessage(plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
+            plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "Today, and today only, you can play 'Tag the OOD'!");
+            plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
             if (plugin.getTagConfig().get("it").equals("")) {
                 Player startit = getRandomPlayer();
-                plugin.getServer().broadcastMessage(plugin.getPluginName() + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                plugin.getMessenger().broadcast(TardisModule.TARDIS, startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 setConfig(startit.getName());
                 setConfig(System.currentTimeMillis());
             }
@@ -84,13 +85,13 @@ public class TARDISTagListener implements Listener {
                 // find a new player to make it
                 Player newit = getRandomPlayer();
                 if (TARDISPermission.hasPermission(p, "tardis.tag")) {
-                    plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
                 if (TARDISPermission.hasPermission(p, "tardis.tag")) {
-                    plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);
                 updateTagStats(p.getName(), timewasit);
@@ -108,13 +109,13 @@ public class TARDISTagListener implements Listener {
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();
                 if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
-                    plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
                 if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
-                    plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);
                 updateTagStats(p, timewasit);

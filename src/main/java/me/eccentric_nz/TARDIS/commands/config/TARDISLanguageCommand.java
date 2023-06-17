@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Language;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -39,7 +39,7 @@ class TARDISLanguageCommand {
 
     boolean setLanguage(CommandSender sender, String[] args) {
         if (!codes.contains(args[1])) {
-            TARDISMessage.send(sender, "LANG_NOT_VALID");
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "LANG_NOT_VALID");
             return true;
         }
         // check file exists
@@ -47,12 +47,12 @@ class TARDISLanguageCommand {
         file = new File(plugin.getDataFolder() + File.separator + "language" + File.separator + args[1] + ".yml");
         if (!file.isFile()) {
             // file not found
-            TARDISMessage.send(sender, "LANG_NOT_FOUND", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "LANG_NOT_FOUND", args[1]);
             return true;
         }
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
-        TARDISMessage.send(sender, "LANG_SET", Language.valueOf(args[1]).getLang());
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "LANG_SET", Language.valueOf(args[1]).getLang());
         // set and save the config
         plugin.getConfig().set("preferences.language", args[1]);
         plugin.saveConfig();

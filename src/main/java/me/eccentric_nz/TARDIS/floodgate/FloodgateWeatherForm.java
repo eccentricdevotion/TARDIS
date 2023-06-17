@@ -10,8 +10,8 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
@@ -45,7 +45,7 @@ public class FloodgateWeatherForm {
         Player player = plugin.getServer().getPlayer(uuid);
         String label = response.clickedButton().text();
         if (!plugin.getConfig().getBoolean("allow.weather_set")) {
-            TARDISMessage.send(player, "WEATHER_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
             return;
         }
         // get the TARDIS the player is in
@@ -61,15 +61,15 @@ public class FloodgateWeatherForm {
                 Tardis tardis = rs.getTardis();
                 // check they initialised
                 if (!tardis.isTardis_init()) {
-                    TARDISMessage.send(player, "ENERGY_NO_INIT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                     return;
                 }
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                    TARDISMessage.send(player, "POWER_DOWN");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return;
                 }
                 if (!tardis.isHandbrake_on()) {
-                    TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                     return;
                 }
                 // get current location
@@ -77,12 +77,12 @@ public class FloodgateWeatherForm {
                 wherec.put("tardis_id", tardis.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 }
                 if (label.equals("excite")) {
                     // atmospheric excitation
                     if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-                        TARDISMessage.send(player, "CMD_EXCITE");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
                         return;
                     }
                     new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
@@ -92,10 +92,10 @@ public class FloodgateWeatherForm {
                     Weather weather = Weather.fromString(label);
                     String perm = weather.toString().toLowerCase();
                     if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     }
                     TARDISWeather.setWeather(rsc.getWorld(), weather);
-                    TARDISMessage.send(player, "WEATHER_SET", perm);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", perm);
                 }
             }
         }

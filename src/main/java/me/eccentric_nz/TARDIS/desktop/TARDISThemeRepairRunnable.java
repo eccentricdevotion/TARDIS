@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -32,7 +33,7 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -50,8 +51,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
-
-import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -126,7 +125,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -401,7 +400,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
             String message = (clean) ? "REPAIR_CLEAN" : "REPAIR_DONE";
-            TARDISMessage.send(player, message);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, message);
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);

@@ -35,8 +35,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -71,19 +71,19 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
         if (cmd.getName().equalsIgnoreCase("tardissudo")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
                 // must be a player name
                 OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[0]);
                 if (offlinePlayer == null) {
-                    TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                     return true;
                 }
                 UUID uuid = offlinePlayer.getUniqueId();
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(uuid.toString())) {
-                    TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
                     return true;
                 }
                 String which = args[1].toLowerCase();
@@ -91,7 +91,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                     switch (which) {
                         case "ars" -> {
                             if (sender instanceof ConsoleCommandSender) {
-                                TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
                             // does the player have an ARS record yet?
@@ -152,7 +152,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                         }
                         case "comehere" -> {
                             if (sender instanceof ConsoleCommandSender) {
-                                TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
                             return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
@@ -165,7 +165,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             if (offlinePlayer.isOnline()) {
                                 return new SudoDesiege(plugin).restore(sender, uuid, rs.getTardis_id());
                             } else {
-                                TARDISMessage.send(sender, "NOT_ONLINE");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_ONLINE");
                                 return true;
                             }
                         }
@@ -191,7 +191,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                         }
                         default -> { // update
                             if (sender instanceof ConsoleCommandSender) {
-                                TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
                             return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardis_id(), uuid);
@@ -199,7 +199,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                     }
                 }
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
             }
             return true;
         }

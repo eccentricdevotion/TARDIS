@@ -24,12 +24,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -177,7 +177,7 @@ public class ConstructsConverter {
             if (i > 0) {
                 update.executeBatch();
                 connection.commit();
-                plugin.getLogger().log(Level.INFO, "Converted " + i + " Chameleon Construct records");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " Chameleon Construct records");
             }
             plugin.getConfig().set("conversions.constructs", true);
             plugin.saveConfig();

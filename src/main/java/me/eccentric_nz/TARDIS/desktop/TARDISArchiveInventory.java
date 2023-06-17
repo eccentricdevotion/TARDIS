@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIArchive;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

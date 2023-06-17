@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -48,7 +48,7 @@ public class TARDISRemoteBackCommand {
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (!rsb.resultSet()) {
             if (sender instanceof Player) {
-                TARDISMessage.send((Player) sender, "PREV_NOT_FOUND");
+                plugin.getMessenger().send((Player) sender, TardisModule.TARDIS, "PREV_NOT_FOUND");
             }
             return true;
         }
@@ -65,7 +65,7 @@ public class TARDISRemoteBackCommand {
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             if (sender instanceof Player) {
-                TARDISMessage.send((Player) sender, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send((Player) sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
             return true;
         }

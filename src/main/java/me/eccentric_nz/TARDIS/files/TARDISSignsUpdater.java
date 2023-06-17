@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.files;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -59,7 +59,7 @@ public class TARDISSignsUpdater {
             String signPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "signs.yml";
             signs_config.save(new File(signPath));
             if (i > 0) {
-                plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to signs.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to signs.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save signs.yml, " + io.getMessage());

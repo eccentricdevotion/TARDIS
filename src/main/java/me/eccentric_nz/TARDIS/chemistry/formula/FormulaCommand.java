@@ -33,7 +33,7 @@ public class FormulaCommand {
 
     public boolean show(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
+            plugin.getMessenger().message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
             return false;
         }
         // do stuff
@@ -52,7 +52,7 @@ public class FormulaCommand {
                     new FormulaViewer(plugin, player).getLabFormula(lab);
                     return true;
                 } catch (IllegalArgumentException le) {
-                    TARDISMessage.message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
+                    plugin.getMessenger().message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
                     return true;
                 }
             }

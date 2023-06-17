@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -133,7 +133,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             // we're finished cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
-            TARDISMessage.send(player, "UPGRADE_FINISHED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_FINISHED");
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);

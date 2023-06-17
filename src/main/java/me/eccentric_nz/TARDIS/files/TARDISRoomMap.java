@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.block.data.BlockData;
 
 /**
@@ -79,7 +79,7 @@ public class TARDISRoomMap {
         // get JSON
         JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", fileName, user);
         if (obj == null) {
-            plugin.getConsole().sendMessage(TardisModule.TARDIS.getName() + ChatColor.RED + "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             return false;
         } else {
             // get dimensions
@@ -97,7 +97,7 @@ public class TARDISRoomMap {
                     for (int col = 0; col < l; col++) {
                         JsonObject c = r.get(col).getAsJsonObject();
                         if (!(c.get("data").getAsString().contains("minecraft"))) {
-                            plugin.getLogger().log(Level.INFO, ChatColor.RED + "The supplied file [" + fileName + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, ChatColor.RED + "The supplied file [" + fileName + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
                             plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
                             try {
                                 plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));

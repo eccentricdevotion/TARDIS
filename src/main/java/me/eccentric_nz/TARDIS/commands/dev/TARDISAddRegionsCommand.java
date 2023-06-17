@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
@@ -54,11 +55,11 @@ class TARDISAddRegionsCommand {
 
     boolean doCheck(CommandSender sender) {
         if (!plugin.isWorldGuardOnServer()) {
-            sender.sendMessage(plugin.getPluginName() + "WorldGuard is not enabled on this server!");
+            plugin.getMessenger().message(sender, TardisModule.TARDIS, "WorldGuard is not enabled on this server!");
             return true;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
-            sender.sendMessage(plugin.getPluginName() + "This command only works if TARDISes are created in a default world!");
+            plugin.getMessenger().message(sender, TardisModule.TARDIS,  "This command only works if TARDISes are created in a default world!");
             return true;
         }
         // get default world name

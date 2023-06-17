@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISInstantPoliceBox;
@@ -36,6 +35,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -70,7 +70,7 @@ public class TARDISVortexPersister {
                 count += ps.executeUpdate();
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Saved " + count + " TARDISes floating around in the time vortex.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " TARDISes floating around in the time vortex.");
             }
         } catch (SQLException ex) {
             plugin.debug("Insert error for vortex table: " + ex.getMessage());
@@ -178,10 +178,10 @@ public class TARDISVortexPersister {
                 }
             }
             if (count > 0) {
-                plugin.getLogger().log(Level.INFO, "Loaded " + count + " TARDISes floating in the time vortex.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " TARDISes floating in the time vortex.");
             }
             if (land > 0) {
-                plugin.getLogger().log(Level.INFO, "Landed " + land + " TARDISes that never got to materialise.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Landed " + land + " TARDISes that never got to materialise.");
             }
             ps = connection.prepareStatement("DELETE FROM " + prefix + "vortex");
             ps.executeUpdate();

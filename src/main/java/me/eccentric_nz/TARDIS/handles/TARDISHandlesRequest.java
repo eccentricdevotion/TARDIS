@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
@@ -61,7 +61,7 @@ public class TARDISHandlesRequest {
             return;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-            TARDISMessage.send(player, "NO_PERMS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return;
         }
         // must have a TARDIS
@@ -78,13 +78,13 @@ public class TARDISHandlesRequest {
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     // player must have communicator
                     if (!TARDISPermission.hasPermission(player, "tardis.handles.communicator")) {
-                        TARDISMessage.send(player, "NO_PERM_COMMUNICATOR");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_COMMUNICATOR");
                         return;
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
                     if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !communicator.getItemMeta().getDisplayName().equals("TARDIS Communicator")) {
-                        TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_COMMUNICATOR");
                         return;
                     }
                 }
@@ -100,7 +100,7 @@ public class TARDISHandlesRequest {
                     }
                 }
                 if (!found) {
-                    TARDISMessage.send(player, "HANDLES_INVENTORY");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_INVENTORY");
                     return;
                 }
             }
@@ -153,12 +153,12 @@ public class TARDISHandlesRequest {
                                 return;
                             }
                             // don't understand
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                         }
                     }
                     case "remind" -> {
                         if (!plugin.getHandlesConfig().getBoolean("reminders.enabled")) {
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                             return;
                         }
                         if (groups != null) {
@@ -263,7 +263,7 @@ public class TARDISHandlesRequest {
                     case "travel.player" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-                                TARDISMessage.handlesSend(player, "NO_PERM_PLAYER");
+                                plugin.getMessenger().handlesSend(player, "NO_PERM_PLAYER");
                                 return;
                             }
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
@@ -273,7 +273,7 @@ public class TARDISHandlesRequest {
                                     return;
                                 }
                                 // don't understand
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                                plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
                     }
@@ -290,14 +290,14 @@ public class TARDISHandlesRequest {
                                     }
                                 }
                                 // don't understand
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                                plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
                     }
                     case "travel.biome" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
-                                TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
+                                plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                 return;
                             }
                             String gb = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
@@ -310,19 +310,19 @@ public class TARDISHandlesRequest {
                                 }
                             }
                             // don't understand
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                         }
                     }
                     case "travel.cave" -> {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
-                            TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_CAVE");
+                            plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_CAVE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave"), 1L);
                     }
                     case "travel.village" -> {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
-                            TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
+                            plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village"), 1L);
@@ -336,20 +336,20 @@ public class TARDISHandlesRequest {
                     case "transmat" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
-                                TARDISMessage.handlesSend(player, "NO_PERMS");
+                                plugin.getMessenger().handlesSend(player, "NO_PERMS");
                                 return;
                             }
                             Location location = player.getLocation();
                             // must be in their TARDIS
                             if (!plugin.getUtils().inTARDISWorld(location)) {
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
+                                plugin.getMessenger().handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
                                 return;
                             }
                             ResultSetHandlesTransmat rst = new ResultSetHandlesTransmat(plugin, id);
                             if (rst.findSite(groups.get(0))) {
                                 new TARDISHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
                             } else {
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT");
+                                plugin.getMessenger().handlesSend(player, "HANDLES_NO_TRANSMAT");
                             }
                         }
                     }
@@ -403,7 +403,7 @@ public class TARDISHandlesRequest {
                     TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
                 } else {
                     // don't understand
-                    TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                    plugin.getMessenger().handlesSend(player, "HANDLES_NO_COMMAND");
                 }
             }
         }

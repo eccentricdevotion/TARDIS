@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -59,7 +59,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
             if (args.length == 1) {
                 processInput(p, uuid, args[0]);
             } else {
-                TARDISMessage.send(p, "TIS_EXIT");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "TIS_EXIT");
             }
         }
         return true;
@@ -86,7 +86,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
             if (chat.length() == 1) {
                 processInput(p, uuid, chat);
             } else {
-                TARDISMessage.send(p, "TIS_EXIT");
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "TIS_EXIT");
             }
         }
     }
@@ -1422,6 +1422,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
     private void exit(Player p) {
         plugin.getTrackerKeeper().getInfoMenu().remove(p.getUniqueId());
         p.sendMessage(ChatColor.GOLD + "---");
-        TARDISMessage.send(p, "LOGGED_OUT_INFO");
+        plugin.getMessenger().send(p, TardisModule.TARDIS, "LOGGED_OUT_INFO");
     }
 }

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.custommodeldata;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 
 public enum GUISonicGenerator {

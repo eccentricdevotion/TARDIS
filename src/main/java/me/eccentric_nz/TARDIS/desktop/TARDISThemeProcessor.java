@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -65,7 +65,7 @@ public class TARDISThemeProcessor {
             whereh.put("tardis_id", tardis.getTardis_id());
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
             if (rsc.resultSet()) {
-                TARDISMessage.send(player, "UPGRADE_REMOVE_HANDLES");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_REMOVE_HANDLES");
                 return;
             }
         }
@@ -87,7 +87,7 @@ public class TARDISThemeProcessor {
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                 return;
             }
         } else {
@@ -118,7 +118,7 @@ public class TARDISThemeProcessor {
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                 return;
             }
         } else {
@@ -141,9 +141,9 @@ public class TARDISThemeProcessor {
                 return;
             } else if (!check.allow()) {
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_REASON");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_REASON");
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1
                     new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
@@ -155,7 +155,7 @@ public class TARDISThemeProcessor {
         if (w < pw || h < ph) {
             // we need more space!
             if (checkARSGrid(size_prev, size_next, uuid)) {
-                TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
+                plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1

@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -262,7 +262,7 @@ public class TARDISDisplayBlockListener implements Listener {
                             where.put("uuid", uuid);
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (!rs.resultSet()) {
-                                TARDISMessage.send(player, "NO_TARDIS");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                                 return;
                             }
@@ -271,7 +271,7 @@ public class TARDISDisplayBlockListener implements Listener {
                             new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                             TARDISSudoTracker.SUDOERS.remove(playerUUID);
-                            TARDISMessage.send(player, "UPDATE_SET", "double door");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", "double door");
                             return;
                         }
                         if (player.isSneaking()) {

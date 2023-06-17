@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -80,7 +80,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             setr.put("hum", "");
                             plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
                             close(p);
-                            TARDISMessage.send(p, "HUM_SAVED");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
                         }
                         case 15 -> {
                             // toggle play save
@@ -98,7 +98,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 long now = System.currentTimeMillis();
                                 if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
                                     close(p);
-                                    TARDISMessage.send(p, "HUM_WAIT");
+                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_WAIT");
                                 } else {
                                     TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
                                     last.put(uuid, slot);
@@ -111,7 +111,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                 plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                                 close(p);
-                                TARDISMessage.send(p, "HUM_SAVED");
+                                plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
                             }
                         }
                     }

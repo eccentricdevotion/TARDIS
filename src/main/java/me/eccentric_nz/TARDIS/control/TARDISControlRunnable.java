@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;

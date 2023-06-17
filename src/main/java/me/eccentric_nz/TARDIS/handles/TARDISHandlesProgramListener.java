@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -144,9 +144,9 @@ public class TARDISHandlesProgramListener implements Listener {
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         player.getWorld().dropItemNaturally(player.getLocation(), is);
-                        TARDISMessage.send(player, "HANDLES_SAVED");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SAVED");
                     } else {
-                        TARDISMessage.send(player, "HANDLES_NOTHING");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_NOTHING");
                     }
                 }
                 case 45, 46, 47, 48, 49, 50, 51 -> {
@@ -268,7 +268,7 @@ public class TARDISHandlesProgramListener implements Listener {
         // there should be a minimum size for a valid program e.g. selector + command
         if (pid > 1) {
             // validate the program
-            TARDISHandlesValidator validator = new TARDISHandlesValidator(stack, player);
+            TARDISHandlesValidator validator = new TARDISHandlesValidator(plugin, stack, player);
             if (validator.validateDisk()) {
                 String serialized = TARDISSerializeInventory.itemStacksToString(stack);
                 HashMap<String, Object> set = new HashMap<>();

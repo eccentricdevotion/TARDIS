@@ -21,7 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -39,7 +39,7 @@ class TARDISBuildCommand {
 
     boolean toggleCompanionBuilding(Player player, String[] args) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
-            TARDISMessage.send(player, "CMD_DISABLED");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_DISABLED");
             return true;
         }
         String playerNameStr = player.getName();
@@ -48,7 +48,7 @@ class TARDISBuildCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return true;
         }
         Tardis tardis = rs.getTardis();
@@ -59,7 +59,7 @@ class TARDISBuildCommand {
         if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_ON")) || args[1].equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
             plugin.getTrackerKeeper().getAntiBuild().remove(id);
-            TARDISMessage.send(player, "ANTIBUILD_ON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ANTIBUILD_ON");
         }
         if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_OFF")) || args[1].equalsIgnoreCase("off")) {
             setp.put("build_on", 0);
@@ -68,7 +68,7 @@ class TARDISBuildCommand {
             // get region vectors
             ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[0], playerNameStr);
             if (pr == null) {
-                TARDISMessage.send(player, "WG_NOT_FOUND");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WG_NOT_FOUND");
                 return true;
             }
             Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
@@ -77,7 +77,7 @@ class TARDISBuildCommand {
             tab.setMax(max);
             tab.setTimelord(playerNameStr);
             plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
-            TARDISMessage.send(player, "ANTIBUILD_OFF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ANTIBUILD_OFF");
         }
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         return true;

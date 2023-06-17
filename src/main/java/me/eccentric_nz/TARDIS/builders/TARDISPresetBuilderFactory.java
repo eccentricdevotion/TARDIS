@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -98,7 +98,7 @@ public class TARDISPresetBuilderFactory {
                 // disable force field
                 if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
-                    TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
+                    plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "FORCE_FIELD", "OFF");
                 }
             }
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
@@ -122,7 +122,7 @@ public class TARDISPresetBuilderFactory {
             // get submarine preferences
             if (bd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = ChameleonPreset.YELLOW;
-                TARDISMessage.send(bd.getPlayer().getPlayer(), "SUB_UNSUITED");
+                plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "SUB_UNSUITED");
             }
             /*
              * We can always add the chunk, as List.remove() only removes the
@@ -221,7 +221,7 @@ public class TARDISPresetBuilderFactory {
             default -> BlockFace.WEST;
         };
     }
-    
+
     public boolean checkForSpace(Block b, COMPASS d) {
         BlockFace face = getOppositeFace(d);
         return (b.getRelative(face).getType().isAir() && b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());

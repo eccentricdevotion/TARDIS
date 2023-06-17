@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -54,7 +53,7 @@ public class TVMRecipe {
                 r.setIngredient(c, m);
             });
         } catch (IllegalArgumentException e) {
-            plugin.getConsole().sendMessage(TardisModule.VORTEX_MANIPULATOR.getName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.VORTEX_MANIPULATOR, "Recipe failed! Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getFigura().getShapedRecipes().put("Vortex Manipulator", r);

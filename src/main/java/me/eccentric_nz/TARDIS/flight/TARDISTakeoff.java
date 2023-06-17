@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -58,7 +58,7 @@ public class TARDISTakeoff {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-        TARDISMessage.send(player, "HANDBRAKE_OFF");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         // check if we should malfunction
         if (!plugin.getTrackerKeeper().getMalfunction().containsKey(id)) {
@@ -114,7 +114,7 @@ public class TARDISTakeoff {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-            TARDISMessage.send(player, "HANDBRAKE_OFF");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
             plugin.getTrackerKeeper().getInVortex().add(id);
             // check if we should malfunction
             boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();

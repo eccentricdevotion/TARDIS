@@ -20,7 +20,7 @@ import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISTinter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import org.bukkit.Material;
@@ -44,7 +44,7 @@ public class TARDISSonicPainter {
     public static void paint(TARDIS plugin, Player player, Block b) {
         // must be in TARDIS world
         if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");
             return;
         }
         // not protected blocks - WorldGuard / GriefPrevention / Towny
@@ -74,7 +74,7 @@ public class TARDISSonicPainter {
                 return;
             }
             if (dye == null || !TARDISMaterials.dyes.contains(dye.getType())) {
-                TARDISMessage.send(player, "SONIC_DYE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
                 return;
             }
             // don't do anything if it is the same colour
@@ -167,7 +167,7 @@ public class TARDISSonicPainter {
                 }
             }
         } else {
-            TARDISMessage.send(player, "SONIC_PROTECT");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_PROTECT");
         }
     }
 

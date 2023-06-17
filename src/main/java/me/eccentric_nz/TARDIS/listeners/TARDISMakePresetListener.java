@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -79,7 +79,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                TARDISMessage.send(player, "PRESET_SCAN");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_SCAN");
                 StringBuilder sb_blue_data = new StringBuilder("[");
                 StringBuilder sb_stain_data = new StringBuilder("[");
                 StringBuilder sb_glass_data = new StringBuilder("[");
@@ -160,7 +160,7 @@ public class TARDISMakePresetListener implements Listener {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
                 plugin.getTrackerKeeper().getPreset().remove(uuid);
-                TARDISMessage.send(player, "PRESET_DONE", filename);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_DONE", filename);
             }
         }
     }

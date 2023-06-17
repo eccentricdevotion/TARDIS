@@ -24,10 +24,10 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -106,7 +106,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return true;
             }
             Player player = null;
@@ -115,9 +115,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (player == null) {
                 if (args.length == 0) {
-                    new TARDISRecipeLister(sender).list();
+                    new TARDISRecipeLister(plugin, sender).list();
                 } else {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 }
                 return true;
             }
@@ -131,19 +131,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (!recipeItems.containsKey(args[0].toLowerCase(Locale.ENGLISH))) {
                 if (args[0].equalsIgnoreCase("list_more")) {
-                    new TARDISRecipeLister(sender).listMore();
+                    new TARDISRecipeLister(plugin, sender).listMore();
                 } else {
-                    new TARDISRecipeLister(sender).list();
+                    new TARDISRecipeLister(plugin, sender).list();
                 }
                 return true;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return true;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length == 2) {
                 if (!t.containsKey(args[1].toUpperCase(Locale.ENGLISH))) {
-                    TARDISMessage.send(player, "ARG_NOT_VALID");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return true;
                 }
                 showTARDISRecipe(player, args[1].toUpperCase(Locale.ENGLISH));

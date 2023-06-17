@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
@@ -61,7 +61,7 @@ public class TARDISDisplayItemCommand {
         switch (args[1].toLowerCase()) {
             case "add" -> {
                 if (args.length < 3) {
-                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
                 Material material;
@@ -123,7 +123,7 @@ public class TARDISDisplayItemCommand {
             case "place" -> {
                 // tdev displayitem place [block]
                 if (args.length < 3) {
-                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
                 TARDISDisplayItem tdi = TARDISDisplayItem.getBY_NAME().get(args[2]);

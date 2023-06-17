@@ -20,8 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -88,7 +87,7 @@ public class TARDISConfigMenuListener implements Listener {
                     boolean bool = plugin.getConfig().getBoolean(option);
                     if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                         Player p = (Player) event.getWhoClicked();
-                        TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+                        plugin.getMessenger().messageWithColour(p, "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
                         return;
                     }
                     plugin.getConfig().set(option, !bool);

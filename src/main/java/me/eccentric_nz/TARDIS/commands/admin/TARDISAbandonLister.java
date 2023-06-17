@@ -61,6 +61,7 @@ public class TARDISAbandonLister {
                     String w = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
+                        // TODO add to messengers so we can use Adventure
                         TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);
                         TextComponent tce = new TextComponent(" < Enter > ");
                         tce.setColor(ChatColor.GREEN);

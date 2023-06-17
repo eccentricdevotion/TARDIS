@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,7 +66,7 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
                     plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
-                    TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", time));
                     // damage the circuit if configured
                     if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
                         int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());

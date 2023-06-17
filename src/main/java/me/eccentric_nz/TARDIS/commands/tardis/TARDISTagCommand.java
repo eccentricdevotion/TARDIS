@@ -21,8 +21,9 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,7 +39,7 @@ class TARDISTagCommand {
 
     boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
-        player.sendMessage(plugin.getPluginName() + "Here are the stats:");
+        plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
         player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
         player.sendMessage("-----------");
