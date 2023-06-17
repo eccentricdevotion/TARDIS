@@ -1432,7 +1432,7 @@ commands:
       usage: /<command> save [name]
     load:
       description: Load a TARDIS schematic.
-      usage: /<command> load [name]
+      usage: /<command> load [console|room|structure|user] [name]
     paste:
       description: Paste a loaded TARDIS schematic.
       usage: /<command> paste
