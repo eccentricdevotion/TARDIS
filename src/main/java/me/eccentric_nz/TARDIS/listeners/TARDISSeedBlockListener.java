@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -91,6 +92,12 @@ public class TARDISSeedBlockListener implements Listener {
             Location l = block.getLocation();
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
+            // send fake block change for bedrock players
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    player.sendBlockChange(l, is.getType().createBlockData());
+                }, 3L);
+            }
             // now the player has to click the block with the TARDIS key
         }
     }
@@ -190,6 +197,12 @@ public class TARDISSeedBlockListener implements Listener {
                         TARDISDisplayItemUtils.remove(block);
                         block.setBlockData(TARDISConstants.BARRIER);
                         TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block);
+                        // send fake block change for bedrock players
+                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData());
+                            }, 3L);
+                        }
                     }
                 }
             }
