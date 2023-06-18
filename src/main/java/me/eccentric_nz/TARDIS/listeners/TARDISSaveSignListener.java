@@ -172,7 +172,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheresave.put("z", lore.get(3));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
                                         close(player);
                                         return;
                                     }

@@ -83,7 +83,7 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendSaveList(Player p, TVMResultSetSaves rss, int page) {
-        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Saves (page " + page + ":");
+        TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Saves (page " + page + ":", "#55FFFF");
         rss.getSaves().forEach((s) -> {
             p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ());
         });
@@ -97,10 +97,10 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendInboxList(Player p, TVMResultSetInbox rsi, int page) {
-        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Inbox (page " + page + "):");
+        TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Inbox (page " + page + "):", "#55FFFF");
         rsi.getMail().forEach((m) -> {
-            ChatColor colour = (m.isRead()) ? ChatColor.DARK_GRAY : ChatColor.GRAY;
-            p.sendMessage(colour + "" + m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, 12));
+            String colour = (m.isRead()) ? "#555555" : "#AAAAAA";
+            TARDIS.plugin.getMessenger().messageWithColour(p, m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, 12), colour);
         });
     }
 
@@ -112,7 +112,7 @@ public class TVMUtils {
      * @param page the page number of this list
      */
     public static void sendOutboxList(Player p, TVMResultSetOutbox rso, int page) {
-        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + "Outbox (page " + page + "):");
+        TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Outbox (page " + page + "):", "#55FFFF");
         rso.getMail().forEach((m) -> {
             p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, 12));
         });
@@ -125,7 +125,7 @@ public class TVMUtils {
      * @param m the message to read
      */
     public static void readMessage(Player p, TVMMessage m) {
-        TARDIS.plugin.getMessenger().message(p, TardisModule.VORTEX_MANIPULATOR, ChatColor.AQUA + Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate());
+        TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate(), "#55FFFF");
         p.sendMessage(m.getMessage());
     }
 

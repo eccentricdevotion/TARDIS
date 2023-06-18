@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -85,7 +84,7 @@ class TARDISSetDestinationCommand {
                 Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
                 Location l = b.getLocation();
                 if (plugin.getTardisArea().isInExistingArea(l)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
+                    plugin.getMessenger().sendColouredCommand(player, "AREA_NO_SETDEST", "/tardistravel area [area name]", plugin);
                     return true;
                 }
                 String world = l.getWorld().getName();

@@ -67,7 +67,7 @@ public class TARDISTagListener implements Listener {
             plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
             if (plugin.getTagConfig().get("it").equals("")) {
                 Player startit = getRandomPlayer();
-                plugin.getMessenger().broadcast(TardisModule.TARDIS, startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                plugin.getMessenger().broadcast(TardisModule.TARDIS, startit.getName() + " is now the 'OOD'!");
                 setConfig(startit.getName());
                 setConfig(System.currentTimeMillis());
             }
@@ -85,7 +85,7 @@ public class TARDISTagListener implements Listener {
                 // find a new player to make it
                 Player newit = getRandomPlayer();
                 if (TARDISPermission.hasPermission(p, "tardis.tag")) {
-                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the 'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
@@ -109,7 +109,7 @@ public class TARDISTagListener implements Listener {
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();
                 if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
-                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                    plugin.getMessenger().broadcast(TardisModule.TARDIS, newit.getName() + " is now the 'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();

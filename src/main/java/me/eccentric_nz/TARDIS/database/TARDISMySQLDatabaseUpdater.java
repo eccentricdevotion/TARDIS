@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four
@@ -332,7 +331,7 @@ class TARDISMySQLDatabaseUpdater {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + " " + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " fields to the MySQL database!");
         }
     }
 }

@@ -16,7 +16,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Bukkit;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -112,7 +111,7 @@ public class FloodgateSavesForm {
                         wheresave.put("z", rsd.getZ());
                         ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                         if (rsz.resultSet()) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                            plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
                             return;
                         }
                         String invisibility = tac.getArea().getInvisibility();

@@ -59,7 +59,7 @@ public class TARDISSignsUpdater {
             String signPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "signs.yml";
             signs_config.save(new File(signPath));
             if (i > 0) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to signs.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to signs.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save signs.yml, " + io.getMessage());

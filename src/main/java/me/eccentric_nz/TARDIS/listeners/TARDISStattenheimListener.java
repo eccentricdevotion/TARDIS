@@ -37,7 +37,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -132,7 +131,7 @@ public class TARDISStattenheimListener implements Listener {
                             }
                         }
                         if (plugin.getTardisArea().isInExistingArea(remoteLocation)) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_STAT", ChatColor.AQUA + "/tardistravel area [area name]");
+                            plugin.getMessenger().sendColouredCommand(player, "AREA_NO_STAT", "/tardistravel area [area name]", plugin);
                             return;
                         }
                         if (!useless.contains(m)) {

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -46,17 +45,13 @@ public class TARDISRecipeLister {
                 plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        // TODO
-                        TextComponent tci = SpigotComponents.getRunCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
-                        sender.spigot().sendMessage(tci);
+                        plugin.getMessenger().sendRunCommand(sender, item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                     }
                 }
                 plugin.getMessenger().message(sender, "");
             }
         }
-        // TODO
-        TextComponent more = SpigotComponents.getShowMore("tardisrecipe");
-        sender.spigot().sendMessage(more);
+        plugin.getMessenger().sendShowMore(sender, "tardisrecipe");
     }
 
     public void listMore() {
@@ -66,8 +61,7 @@ public class TARDISRecipeLister {
                 plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        TextComponent tci = SpigotComponents.getRunCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
-                        sender.spigot().sendMessage(tci);
+                        plugin.getMessenger().sendRunCommand(sender, item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                     }
                 }
                 plugin.getMessenger().message(sender, "");

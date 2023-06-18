@@ -26,9 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 /**
@@ -90,9 +88,7 @@ class TARDISRescueCommand {
                     }, 2L);
                 } else {
                     plugin.getMessenger().send(destPlayer, TardisModule.TARDIS, "RESCUE_REQUEST", who);
-                    // TODO
-                    TextComponent textComponent = SpigotComponents.getRescue(plugin);
-                    destPlayer.spigot().sendMessage(textComponent);
+                    plugin.getMessenger().sendRescue(destPlayer, plugin);
                     plugin.getTrackerKeeper().getChatRescue().put(savedUUID, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {

@@ -25,10 +25,9 @@ package me.eccentric_nz.TARDIS.arch;
 import java.io.IOException;
 import java.sql.*;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -89,7 +88,7 @@ public class TARDISArchInventory {
                     p.getInventory().setContents(i);
                     p.getInventory().setArmorContents(a);
                 } catch (IOException ex) {
-                    Bukkit.getLogger().log(Level.WARNING, "Could not restore inventory on Chameleon Arch change, " + ex);
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not restore inventory on Chameleon Arch change, " + ex);
                 }
             } else {
                 // start with an empty inventory and armour
@@ -113,7 +112,7 @@ public class TARDISArchInventory {
             statement.close();
             p.updateInventory();
         } catch (SQLException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not save inventory on Chameleon Arch change, " + e);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not save inventory on Chameleon Arch change, " + e);
         } finally {
             try {
                 if (rsToInv != null) {
@@ -129,7 +128,7 @@ public class TARDISArchInventory {
                     statement.close();
                 }
             } catch (SQLException ex) {
-                Bukkit.getLogger().log(Level.WARNING, "Could not close resources: " + ex.getMessage());
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not close resources: " + ex.getMessage());
             }
         }
     }
@@ -144,13 +143,13 @@ public class TARDISArchInventory {
             ps.setString(1, uuid.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not save inventory on Chameleon Arch change, " + e);
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not save inventory on Chameleon Arch change, " + e);
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    Bukkit.getLogger().log(Level.WARNING, "Could not clear inventory on Chameleon Arch death, " + e);
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not clear inventory on Chameleon Arch death, " + e);
                 }
             }
         }

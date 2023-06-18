@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -56,7 +55,7 @@ public class TARDISTravelSave {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND");
+                plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                 return true;
             }
             World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
@@ -83,7 +82,7 @@ public class TARDISTravelSave {
                     wheres.put("z", rsd.getZ());
                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
                     if (rsz.resultSet()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET);
+                        plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
                         return true;
                     }
                     String invisibility = tac.getArea().getInvisibility();

@@ -39,7 +39,7 @@ public class TARDISDisplayListener implements Listener {
             if (event.getFrom().getWorld().getName().contains("TARDIS")) {
                 return;
             }
-            // TODO
+            // TODO action bar
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.getUtils().actionBarFormat(player)));
         }
     }

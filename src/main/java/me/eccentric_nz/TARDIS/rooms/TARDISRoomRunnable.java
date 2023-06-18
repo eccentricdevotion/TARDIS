@@ -1021,9 +1021,9 @@ public class TARDISRoomRunnable implements Runnable {
             // abort room growing task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            String message = ChatColor.RED + "Resumption of room growing was aborted due to: " + ChatColor.RESET + e.getMessage();
+            String message = "Resumption of room growing was aborted due to: " + e.getMessage();
             if (player != null) {
-                plugin.getMessenger().message(player, message);
+                plugin.getMessenger().messageWithColour(player, message, "#FF5555");
             }
             plugin.debug(message);
         }

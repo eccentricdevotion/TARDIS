@@ -21,7 +21,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -67,7 +66,7 @@ public class TARDISAreaListener implements Listener {
                 if (!plugin.getTardisArea().isInExistingArea(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
+                    plugin.getMessenger().sendColouredCommand(player, "AREA_END_INFO", "/tardisarea end", plugin);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getTrackerKeeper().getArea().remove(uuid);
                         plugin.getTrackerKeeper().getAreaStartBlock().remove(uuid);

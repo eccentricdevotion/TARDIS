@@ -18,11 +18,7 @@ package me.eccentric_nz.TARDIS.chatGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
@@ -31,16 +27,6 @@ public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
 
     public TARDISUpdateChatGUIAdventure(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    @Override
-    public void sendTextComponent(String first, String value, String split, Player player) {
-        TextComponent tcf = Component.text(first, NamedTextColor.GOLD)
-                .append(Component.text(value, NamedTextColor.WHITE))
-                .append(Component.text(split, NamedTextColor.GOLD))
-                .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
-                .clickEvent(ClickEvent.runCommand("/tardisinfo " + value));
-        player.sendMessage(tcf);
     }
 
     @Override
@@ -53,7 +39,7 @@ public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
             return true;
         }
         if (args[1].equalsIgnoreCase("controls")) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SECTION");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CONTROL");
             player.sendMessage("------");
             plugin.getJsonKeeper().getControls().forEach((c) -> player.sendMessage((TextComponent) c));
             player.sendMessage("------");

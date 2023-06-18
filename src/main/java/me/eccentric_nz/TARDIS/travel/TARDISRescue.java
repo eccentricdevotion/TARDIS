@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -69,7 +68,7 @@ public class TARDISRescue {
         }
         Location player_loc = plugin.getServer().getPlayer(saved).getLocation();
         if (plugin.getTardisArea().isInExistingArea(player_loc)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+            plugin.getMessenger().sendColouredCommand(player, "PLAYER_IN_AREA", "/tardistravel area [area name]", plugin);
             return false;
         }
         if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {

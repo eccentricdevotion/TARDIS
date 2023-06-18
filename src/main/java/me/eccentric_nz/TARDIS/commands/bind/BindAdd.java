@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -52,7 +51,7 @@ class BindAdd {
                 whered.put("name", which);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+                    plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                     return true;
                 } else {
                     set.put("type", 0);
@@ -85,7 +84,7 @@ class BindAdd {
                 wherea.put("area_name", which);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                 if (!rsa.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                    plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                     return true;
                 }
                 if (!TARDISPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {

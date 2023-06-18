@@ -135,7 +135,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         if (hasFrame) {
                                             tcf.updateChameleonFrame(ChameleonPreset.FACTORY, rsf.getLocation());
                                         }
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
+                                        plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Factory Fresh", plugin);
                                     } else {
                                         set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         toggleOthers(ChameleonOption.PRESET, view);
@@ -204,7 +204,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         if (hasFrame) {
                                             tcf.updateChameleonFrame(ChameleonPreset.INVISIBLE, rsf.getLocation());
                                         }
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Invisibility");
+                                        plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Invisibility", plugin);
                                     } else {
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         // default to Blue Police Box
@@ -262,7 +262,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                                 // remove button
                                                 view.setItem(3, null);
                                                 TARDISStaticUtils.setSign(chameleon, 3, which.toString(), player);
-                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + which.getDisplayName());
+                                                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", which.getDisplayName(), plugin);
                                             }
                                         }
                                     } else {
@@ -291,7 +291,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         pim.setDisplayName(ChatColor.GREEN + "POLICE_BOX_BLUE");
         p.setItemMeta(pim);
         TARDISStaticUtils.setSign(chameleon, 3, "POLICE_BOX_BLUE", player);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Blue Police Box");
+        plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Blue Police Box", plugin);
     }
 
     private void toggleOthers(ChameleonOption c, InventoryView view) {

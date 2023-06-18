@@ -211,7 +211,7 @@ public class TARDISShellRoomConstructor {
         if (rsf.resultSet()) {
             new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CONSTRUCT, rsf.getLocation());
         }
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + "Construct");
+        plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Construct", plugin);
         // rebuild
         player.performCommand("tardis rebuild");
         // damage the circuit if configured

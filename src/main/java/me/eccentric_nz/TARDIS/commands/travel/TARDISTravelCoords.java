@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -238,7 +237,7 @@ public class TARDISTravelCoords {
             return 1;
         }
         if (plugin.getTardisArea().isInExistingArea(location)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+            plugin.getMessenger().sendColouredCommand(player, "TRAVEL_IN_AREA", "/tardistravel area [area name]", plugin);
             return 1;
         }
         if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))) {

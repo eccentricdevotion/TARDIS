@@ -141,7 +141,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             wherea.put("area_name", first);
                                             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                             if (!rsa.resultSet()) {
-                                                plugin.getMessenger().send(p, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                                                plugin.getMessenger().sendColouredCommand(p, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                                                 continue;
                                             }
                                             if ((!TARDISPermission.hasPermission(p, "tardis.area." + first) && !TARDISPermission.hasPermission(p, "tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -26,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISSign;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -43,8 +41,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
- * then this should take us right to the heart of the trouble. And they don't make sentences like that anymore.
+ * Now, if the trachoid crystal contrafibulations are in synchronic resonance
+ * with the referential difference index, then this should take us right to the
+ * heart of the trouble. And they don't make sentences like that anymore.
  *
  * @author eccentric_nz
  */
@@ -74,7 +73,7 @@ public class TARDISKeyboardListener implements Listener {
             Player player = event.getPlayer();
             Sign sign = (Sign) b.getState();
             if (sign.getSide(Side.FRONT).getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
-                TARDISSign.sendSignLink(player);
+                plugin.getMessenger().sendSign(player);
                 return;
             }
             String loc = event.getClickedBlock().getLocation().toString();
@@ -113,7 +112,7 @@ public class TARDISKeyboardListener implements Listener {
         if (rs.resultSet()) {
             // wiki?
             if (event.getLine(0).equalsIgnoreCase("wiki")) {
-                TARDISSign.sendSignLink(p);
+                plugin.getMessenger().sendSign(p);
                 return;
             }
             int id = rs.getTardis_id();

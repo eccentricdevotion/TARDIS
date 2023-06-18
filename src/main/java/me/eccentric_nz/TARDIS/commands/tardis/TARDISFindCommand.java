@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -62,7 +61,7 @@ class TARDISFindCommand {
                     return true;
                 }
             } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+                plugin.getMessenger().sendColouredCommand(player, "DIFF_HARD_FIND", "/tardisrecipe locator", plugin);
                 return true;
             }
         } else {

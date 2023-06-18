@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 class TARDISBlueprintsLister {
 
     void listBlueprints(CommandSender sender) {
-        sender.sendMessage(ChatColor.GOLD + "[TARDIS]" + ChatColor.RESET + " Blueprints:");
+        TARDIS.plugin.getMessenger().message(sender, TardisModule.TARDIS, "Blueprints:");
         for (BlueprintBase base : BlueprintBase.values()) {
             sender.sendMessage("BLUEPRINT_BASE_" + base.toString() + "(\"" + TARDISStringUtils.capitalise(base.toString()) + "\", Material.MUSIC_DISC_MELLOHI, 10000001, ShopItemRecipe.BLUEPRINT),");
         }

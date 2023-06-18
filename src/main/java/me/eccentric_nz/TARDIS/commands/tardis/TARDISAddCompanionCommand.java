@@ -135,10 +135,10 @@ class TARDISAddCompanionCommand {
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 if (addAll) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                    plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
                 } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
+                    plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", args[1], plugin);
                 }
             }
         } else {

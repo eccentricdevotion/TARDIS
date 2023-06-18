@@ -31,8 +31,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * The TARDIS information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
- * and Tegan from a readout in the control room. The Fifth Doctor called it the TARDIS databank.
+ * The TARDIS information system is a searchable database which was discovered
+ * by the Fifth Doctor's companions Nyssa and Tegan from a readout in the
+ * control room. The Fifth Doctor called it the TARDIS databank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -65,8 +66,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Listens for player typing a TARDIS Information System key code. The player must be found in the trackInfoMenu
-     * HashMap, where their position in the TIS is stored. The key code is then processed.
+     * Listens for player typing a TARDIS Information System key code. The
+     * player must be found in the trackInfoMenu HashMap, where their position
+     * in the TIS is stored. The key code is then processed.
      *
      * @param event a player typing in chat
      */
@@ -1324,10 +1326,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Displays the next menu level based on the parent menu item that was selected. Automatically pulls the key code
-     * and highlights it.
+     * Displays the next menu level based on the parent menu item that was
+     * selected. Automatically pulls the key code and highlights it.
      *
-     * @param p    the player to show the menu to
+     * @param p the player to show the menu to
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
@@ -1337,47 +1339,49 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
             String[] split = key.split(value, 2);
             String first = "> " + split[0];
-            plugin.getUpdateGUI().sendTextComponent(first, value, split[1], p);
+            plugin.getMessenger().sendInfo(p, first, value, split[1]);
         });
-        plugin.getUpdateGUI().sendTextComponent("> ", "E", "xit", p);
+        plugin.getMessenger().sendInfo(p, "> ", "E", "xit");
     }
 
     /**
-     * Displays information about a TARDIS room. Descriptions are stored in the TARDISDescription enum. Other values are
-     * pulled directly from the rooms.yml configuration file.
+     * Displays information about a TARDIS room. Descriptions are stored in the
+     * TARDISDescription enum. Other values are pulled directly from the
+     * rooms.yml configuration file.
      *
-     * @param p    the player to show the room information to
+     * @param p the player to show the room information to
      * @param item the room to display
      */
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage(ChatColor.GOLD + "" + TARDISDescription.valueOf(item.toString()).getDesc());
+        plugin.getMessenger().messageWithColour(p, TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
         String r = item.toString();
-        p.sendMessage(ChatColor.GOLD + "Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
-        p.sendMessage(ChatColor.GOLD + "Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-        p.sendMessage(ChatColor.GOLD + "Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-        p.sendMessage(ChatColor.GOLD + "Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+        plugin.getMessenger().messageWithColour(p, "Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"), "#FFAA00");
+        plugin.getMessenger().messageWithColour(p, "Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"), "#FFAA00");
+        plugin.getMessenger().messageWithColour(p, "Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"), "#FFAA00");
+        plugin.getMessenger().messageWithColour(p, "Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"), "#FFAA00");
         exit(p);
     }
 
     /**
-     * Displays information about an item or TARDIS type. Descriptions are stored in the TARDISDescription enum.
+     * Displays information about an item or TARDIS type. Descriptions are
+     * stored in the TARDISDescription enum.
      *
-     * @param p    the player to show the information to
+     * @param p the player to show the information to
      * @param item the item or TARDIS type to display
      */
     private void showInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage(ChatColor.GOLD + "" + TARDISDescription.valueOf(item.toString()).getDesc());
+        plugin.getMessenger().messageWithColour(p, "" + TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
         exit(p);
     }
 
     /**
      * Displays the workbench recipe for an item or component.
      *
-     * @param p    the player to show the recipe to
+     * @param p the player to show the recipe to
      * @param item the recipe to display
      */
     private void showRecipe(Player p, TARDISInfoMenu item) {
@@ -1389,10 +1393,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
     }
 
     /**
-     * Displays the description and usage of a command. Values are pulled directly from the plugin.yml configuration
-     * file.
+     * Displays the description and usage of a command. Values are pulled
+     * directly from the plugin.yml configuration file.
      *
-     * @param p    the player to show the command information to
+     * @param p the player to show the command information to
      * @param item the command to display
      */
     private void showCommand(Player p, TARDISInfoMenu item) {
@@ -1408,8 +1412,8 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         }
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage(ChatColor.GOLD + "Description: " + desc);
-        p.sendMessage(ChatColor.GOLD + "Usage: " + usage);
+        plugin.getMessenger().messageWithColour(p, "Description: " + desc, "#FFAA00");
+        plugin.getMessenger().messageWithColour(p, "Usage: " + usage, "#FFAA00");
         exit(p);
     }
 
@@ -1420,7 +1424,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
      */
     private void exit(Player p) {
         plugin.getTrackerKeeper().getInfoMenu().remove(p.getUniqueId());
-        p.sendMessage(ChatColor.GOLD + "---");
+        plugin.getMessenger().messageWithColour(p, "---", "#FFAA00");
         plugin.getMessenger().send(p, TardisModule.TARDIS, "LOGGED_OUT_INFO");
     }
 }

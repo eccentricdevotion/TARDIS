@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.chatGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateChatGUISpigot implements TARDISUpdateChatGUI {
@@ -30,22 +27,6 @@ public class TARDISUpdateChatGUISpigot implements TARDISUpdateChatGUI {
 
     public TARDISUpdateChatGUISpigot(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    @Override
-    public void sendTextComponent(String first, String value, String split, Player player) {
-        // TODO
-        TextComponent tcf = new TextComponent(first);
-        tcf.setColor(net.md_5.bungee.api.ChatColor.GOLD);
-        TextComponent tck = new TextComponent(value);
-        tck.setColor(net.md_5.bungee.api.ChatColor.WHITE);
-        tcf.addExtra(tck);
-        TextComponent tcl = new TextComponent(split);
-        tcl.setColor(net.md_5.bungee.api.ChatColor.GOLD);
-        tcf.addExtra(tcl);
-        tcf.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        tcf.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisinfo " + value));
-        player.spigot().sendMessage(tcf);
     }
 
     @Override

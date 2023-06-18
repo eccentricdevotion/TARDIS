@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -53,7 +52,7 @@ public class TARDISTravelBack {
         set.put("z", rsb.getZ());
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-        String which = "Fast Return to " + ChatColor.GREEN + "(" + rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")" + ChatColor.RESET;
+        String which = "Fast Return to (" + rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")";
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
@@ -62,7 +61,6 @@ public class TARDISTravelBack {
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
-
         }
         return true;
     }

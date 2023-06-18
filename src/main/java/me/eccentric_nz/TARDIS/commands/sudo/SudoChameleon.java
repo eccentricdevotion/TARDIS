@@ -63,7 +63,7 @@ public class SudoChameleon {
             HashMap<String, Object> set = new HashMap<>();
             set.put("chameleon_preset", chameleon);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHAM_SET", chameleon);
+            plugin.getMessenger().sendInsertedColour(sender, "CHAM_SET", chameleon, plugin);
             // perform rebuild
             return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
         }

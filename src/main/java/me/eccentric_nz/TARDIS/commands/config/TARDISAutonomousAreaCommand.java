@@ -21,7 +21,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class TARDISAutonomousAreaCommand {
@@ -43,7 +42,7 @@ public class TARDISAutonomousAreaCommand {
         where.put("area_name", area);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, true);
         if (!rsa.resultSet()) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+            plugin.getMessenger().sendColouredCommand(sender, "AREA_NOT_FOUND", "/tardis list areas", plugin);
             return true;
         }
         List<String> autoAreas = plugin.getConfig().getStringList("autonomous_areas");

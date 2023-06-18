@@ -27,13 +27,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -74,7 +72,7 @@ public class TARDISDoorListener {
      * Get door location data for teleport entry and exit of the TARDIS.
      *
      * @param doortype a reference to the door_type field in the doors table
-     * @param id       the unique TARDIS identifier i the database
+     * @param id the unique TARDIS identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
     public static TARDISDoorLocation getDoor(int doortype, int id) {
@@ -123,15 +121,15 @@ public class TARDISDoorListener {
     /**
      * A method to teleport the player into and out of the TARDIS.
      *
-     * @param player   the player to teleport
+     * @param player the player to teleport
      * @param location the location to teleport to
-     * @param exit     whether the player is entering or exiting the TARDIS, if true
-     *                 they are exiting
-     * @param from     the world they are teleporting from
-     * @param quotes   whether the player will receive a TARDIS quote message
-     * @param sound    an integer representing the sound to play
+     * @param exit whether the player is entering or exiting the TARDIS, if true
+     * they are exiting
+     * @param from the world they are teleporting from
+     * @param quotes whether the player will receive a TARDIS quote message
+     * @param sound an integer representing the sound to play
      * @param minecart whether to play the resource pack sound
-     * @param instant  whether to teleport the player out in this tick
+     * @param instant whether to teleport the player out in this tick
      */
     public void movePlayer(Player player, Location location, boolean exit, World from, boolean quotes, int sound, boolean minecart, boolean instant) {
         // teleport player on this tick if instant is true
@@ -158,11 +156,9 @@ public class TARDISDoorListener {
         }
         if (quotes) {
             if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-                // TODO add to messengers so we can use Adventure
-                TextComponent tcg = SpigotComponents.getEyebrows();
-                player.spigot().sendMessage(tcg);
+                plugin.getMessenger().sendEyebrows(player);
             } else {
-               plugin.getMessenger().message( player, TardisModule.TARDIS, plugin.getGeneralKeeper().getQuotes().get(i));
+                plugin.getMessenger().message(player, TardisModule.TARDIS, plugin.getGeneralKeeper().getQuotes().get(i));
             }
         }
         if (exit) {
@@ -216,11 +212,11 @@ public class TARDISDoorListener {
      * A method to transport player pets (tamed mobs) into and out of the
      * TARDIS.
      *
-     * @param pets      a list of the player's pets found nearby
-     * @param location  the location to teleport pets to
-     * @param player    the player who owns the pets
+     * @param pets a list of the player's pets found nearby
+     * @param location the location to teleport pets to
+     * @param player the player who owns the pets
      * @param direction the direction of the police box
-     * @param enter     whether the pets are entering (true) or exiting (false)
+     * @param enter whether the pets are entering (true) or exiting (false)
      */
     public void movePets(List<TARDISPet> pets, Location location, Player player, COMPASS direction, boolean enter) {
         Location pl = location.clone();
@@ -345,20 +341,25 @@ public class TARDISDoorListener {
      */
     public float adjustYaw(COMPASS d1, COMPASS d2) {
         return switch (d1) {
-            case EAST -> adjustYaw[0][d2.ordinal() / 2];
-            case SOUTH -> adjustYaw[1][d2.ordinal() / 2];
-            case WEST -> adjustYaw[2][d2.ordinal() / 2];
-            default -> adjustYaw[3][d2.ordinal() / 2];
+            case EAST ->
+                adjustYaw[0][d2.ordinal() / 2];
+            case SOUTH ->
+                adjustYaw[1][d2.ordinal() / 2];
+            case WEST ->
+                adjustYaw[2][d2.ordinal() / 2];
+            default ->
+                adjustYaw[3][d2.ordinal() / 2];
         };
     }
 
     /**
      * Plays a door sound when the TARDIS door is clicked.
      *
-     * @param player   a player to play the sound for
-     * @param sound    the sound to play
+     * @param player a player to play the sound for
+     * @param sound the sound to play
      * @param location a location to play the sound at
-     * @param minecart whether to play the TARDIS sound or a Minecraft substitute
+     * @param minecart whether to play the TARDIS sound or a Minecraft
+     * substitute
      */
     private void playDoorSound(Player player, int sound, Location location, boolean minecart) {
         switch (sound) {
@@ -393,7 +394,7 @@ public class TARDISDoorListener {
      * /ptime command.
      *
      * @param player the player to set the time for
-     * @param ticks  the ticks to set the time to
+     * @param ticks the ticks to set the time to
      */
     private void setTemporalLocation(Player player, long ticks, boolean relative) {
         if (player.isOnline()) {

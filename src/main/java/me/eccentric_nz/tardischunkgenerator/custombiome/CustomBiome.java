@@ -3,7 +3,8 @@ package me.eccentric_nz.tardischunkgenerator.custombiome;
 import com.mojang.serialization.Lifecycle;
 import java.lang.reflect.Field;
 import java.util.IdentityHashMap;
-import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.WritableRegistry;
@@ -65,7 +66,7 @@ public class CustomBiome {
             frozen.set(registrywritable, true);
 
         } catch (IllegalAccessException | NoSuchFieldException ignored) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not unlock biome registry!");
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not unlock biome registry!");
         }
     }
 }

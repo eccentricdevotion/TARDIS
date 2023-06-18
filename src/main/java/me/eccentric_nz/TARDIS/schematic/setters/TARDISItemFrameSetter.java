@@ -18,9 +18,11 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -32,10 +34,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 /**
  *
@@ -74,7 +72,7 @@ public class TARDISItemFrameSetter {
                 is.setItemMeta(im);
                 frame.setItem(is, false);
             } catch (IllegalArgumentException e) {
-                Bukkit.getLogger().log(Level.WARNING, "Could not create item stack for schematic item frame!");
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING,"Could not create item stack for schematic item frame!");
             }
         }
         if (json.has("rotor") && id != -1) {

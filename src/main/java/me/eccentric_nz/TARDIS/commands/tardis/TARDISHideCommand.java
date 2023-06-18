@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
@@ -130,7 +129,7 @@ public class TARDISHideCommand {
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
             plugin.getTrackerKeeper().getInVortex().add(id);
-            plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "TARDIS_HIDDEN", ChatColor.GREEN + "/tardis rebuild " + ChatColor.RESET);
+            plugin.getMessenger().sendColouredCommand(player.getPlayer(), "TARDIS_HIDDEN", "/tardis rebuild ", plugin);
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());

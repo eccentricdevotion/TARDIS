@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.*;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly
@@ -55,22 +54,22 @@ public class TARDISFileCopier {
                         out.write(buf, 0, len);
                     }
                 } catch (IOException io) {
-                    Bukkit.getLogger().log(Level.WARNING, "Copier: Could not save the file (" + file + ").");
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Copier: Could not save the file (" + file + ").");
                 } finally {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        Bukkit.getLogger().log(Level.WARNING, "Copier: Could not close the output stream.");
+                        TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Copier: Could not close the output stream.");
                     }
                 }
             } catch (FileNotFoundException e) {
-                Bukkit.getLogger().log(Level.WARNING, "Copier: File not found: " + filepath);
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Copier: File not found: " + filepath);
             } finally {
                 if (in != null) {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        Bukkit.getLogger().log(Level.WARNING, "Copier: Could not close the input stream.");
+                        TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Copier: Could not close the input stream.");
                     }
                 }
             }
@@ -89,7 +88,7 @@ public class TARDISFileCopier {
             if (useResult) {
                 userDir.setWritable(true);
                 userDir.setExecutable(true);
-                Bukkit.getLogger().log(Level.INFO, "Created user_schematics directory.");
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.TARDIS, "Created user_schematics directory.");
             }
         }
         // copy the template file if it doesn't exist

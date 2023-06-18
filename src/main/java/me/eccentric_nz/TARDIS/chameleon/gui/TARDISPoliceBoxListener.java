@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -101,7 +100,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     if (hasFrame) {
                                         new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                                     }
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
+                                    plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
                                     if (slot == 18) {
                                         // any colour - open the colour picker
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -141,7 +140,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     if (hasFrame) {
                                         new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.ITEM, rsf.getLocation());
                                     }
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", ChatColor.AQUA + custom);
+                                    plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", custom, plugin);
                                 }
 
                             }

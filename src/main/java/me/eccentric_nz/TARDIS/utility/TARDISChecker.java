@@ -21,12 +21,9 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Bukkit;
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -81,7 +78,7 @@ public class TARDISChecker {
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
         File tardisDir = new File(dataPacksRoot);
         if (!tardisDir.exists()) {
-            Bukkit.getLogger().log(Level.INFO, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
             tardisDir.mkdirs();
         }
         // update root advancement
@@ -93,16 +90,16 @@ public class TARDISChecker {
             String json = advancement.getConfigName() + ".json";
             File jfile = new File(dataPacksRoot, json);
             if (!jfile.exists()) {
-                Bukkit.getLogger().log(Level.INFO, ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
-                Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
                 copy(json, jfile);
             }
         }
         String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
         if (!mcmeta.exists()) {
-            Bukkit.getLogger().log(Level.INFO, ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
-            Bukkit.getLogger().log(Level.INFO, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
         } else {
             // update the format - 15 is the latest for 1.20

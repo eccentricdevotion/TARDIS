@@ -45,7 +45,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -55,9 +54,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Programming is a process used by Cybermen to control humans. To program a human, the person has to be dead. A control
- * is installed in the person, powered by electricity, turning the person into an agent of the Cybermen. Control over
- * programmed humans can be shorted out by another signal, but that kills whatever might be left of the person.
+ * Programming is a process used by Cybermen to control humans. To program a
+ * human, the person has to be dead. A control is installed in the person,
+ * powered by electricity, turning the person into an agent of the Cybermen.
+ * Control over programmed humans can be shorted out by another signal, but that
+ * kills whatever might be left of the person.
  *
  * @author eccentric_nz
  */
@@ -81,8 +82,7 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON ->
-                            event = thb.toString();
+                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> event = thb.toString();
                     default -> {
                     }
                 }
@@ -321,7 +321,7 @@ public class TARDISHandlesProcessor {
                                                 wherea.put("area_name", first);
                                                 ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                                 if (!rsa.resultSet()) {
-                                                    plugin.getMessenger().handlesSend(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                                                    plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                                                     continue;
                                                 }
                                                 if ((!TARDISPermission.hasPermission(player, "tardis.area." + first) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + first) && !player.isPermissionSet("tardis.area.*"))) {
@@ -414,7 +414,7 @@ public class TARDISHandlesProcessor {
                                                     }
                                                     Location player_loc = to.getLocation();
                                                     if (plugin.getTardisArea().isInExistingArea(player_loc)) {
-                                                        plugin.getMessenger().handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+                                                        plugin.getMessenger().sendColouredCommand(player, "PLAYER_IN_AREA","/tardistravel area [area name]", plugin);
                                                         continue;
                                                     }
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -551,7 +551,7 @@ public class TARDISHandlesProcessor {
                             case HIDE -> player.performCommand("tardis hide");
                             case REBUILD -> player.performCommand("tardis rebuild");
                             case SCAN ->
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
                             case COMEHERE -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
                             case TAKE_OFF -> {
                                 // player must be in TARDIS
@@ -560,7 +560,7 @@ public class TARDISHandlesProcessor {
                                 }
                             }
                             case LAND ->
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
                         }
                     }
                 }
@@ -594,8 +594,7 @@ public class TARDISHandlesProcessor {
                                     case LESS_THAN_EQUAL -> (level <= rs.getArtronLevel());
                                     case GREATER_THAN -> (level > rs.getArtronLevel());
                                     case GREATER_THAN_EQUAL -> (level >= rs.getArtronLevel());
-                                    default -> // EQUALS
-                                            (level == rs.getArtronLevel());
+                                    default -> (level == rs.getArtronLevel()); // EQUALS
                                 };
                                 if (!process) {
                                     return;

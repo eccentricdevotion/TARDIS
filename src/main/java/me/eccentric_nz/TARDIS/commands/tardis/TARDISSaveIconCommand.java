@@ -51,7 +51,7 @@ class TARDISSaveIconCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND");
+                plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                 return false;
             }
             Material material;

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -34,7 +33,7 @@ class TARDISDechargeCommand {
 
     boolean removeChargerStatus(CommandSender sender, String[] args) {
         if (!plugin.getConfig().contains("rechargers." + args[1])) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
+            plugin.getMessenger().sendColouredCommand(sender, "CHARGER_NOT_FOUND", "/tardis list rechargers", plugin);
             return true;
         }
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

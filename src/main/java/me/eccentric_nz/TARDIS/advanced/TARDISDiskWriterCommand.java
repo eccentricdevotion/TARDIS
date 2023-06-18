@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -263,7 +262,7 @@ public class TARDISDiskWriterCommand {
                         wherename.put("type", 0);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                         if (!rsd.resultSet()) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+                            plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                             return true;
                         }
                         save = args[1];

@@ -27,10 +27,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -105,9 +103,7 @@ class TARDISListCommand {
                         return true;
                     }
                     String world = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-                    // TODO
-                    TextComponent tct = SpigotComponents.getTARDISForList(t, world, rsc.getX(), rsc.getY(), rsc.getZ());
-                    sender.spigot().sendMessage(tct);
+                    plugin.getMessenger().sendTARDISForList(sender, t, world, rsc.getX(), rsc.getY(), rsc.getZ());
                 }
                 if (rsl.getData().size() > 18) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS_INFO");

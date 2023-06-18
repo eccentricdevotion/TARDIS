@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -84,9 +83,7 @@ public class TARDISLister {
                     String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
                     String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
                     String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
-                    // TODO
-                    TextComponent tcr = SpigotComponents.getRecharger((n + ". " + s), world, x, y, z, (TARDISPermission.hasPermission(player, "tardis.admin")));
-                    player.spigot().sendMessage(tcr);
+                    plugin.getMessenger().sendRecharger(player, (n + ". " + s), world, x, y, z, (TARDISPermission.hasPermission(player, "tardis.admin")));
                     n++;
                 }
             }
@@ -102,9 +99,7 @@ public class TARDISLister {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "AREAS");
                     plugin.getMessenger().message(player, "");
                 }
-                // TODO
-                TextComponent tca = SpigotComponents.getArea(a, n, (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")));
-                player.spigot().sendMessage(tca);
+                plugin.getMessenger().sendArea(player, a, n, (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")));
                 n++;
             }
         } else {
@@ -126,9 +121,7 @@ public class TARDISLister {
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
                     String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
-                    // TODO
-                    TextComponent tch = SpigotComponents.getHome(plugin, homeWorld, rsh.getX(), rsh.getY(), rsh.getZ());
-                    player.spigot().sendMessage(tch);
+                    plugin.getMessenger().sendHome(player, plugin, homeWorld, rsh.getX(), rsh.getY(), rsh.getZ());
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
@@ -138,9 +131,7 @@ public class TARDISLister {
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
                                 String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.get("world") + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
-                                // TODO
-                                TextComponent tcd = SpigotComponents.getSave(map, world);
-                                player.spigot().sendMessage(tcd);
+                                plugin.getMessenger().sendSave(player, map, world);
                             }
                         }
                     }

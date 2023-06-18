@@ -21,12 +21,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.EnumMap;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.Bukkit;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
@@ -68,7 +67,7 @@ public class TARDISCustomPreset {
                 }
             }
         } catch (IOException io) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not read custom preset file! " + io.getMessage());
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not read custom preset file! " + io.getMessage());
         } finally {
             if (bufRdr != null) {
                 try {

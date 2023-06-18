@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -60,34 +59,34 @@ class TARDISConfigOptionsCommand {
         String section = args[1].toLowerCase(Locale.ENGLISH);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
-            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
             Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);
             options.forEach((o) -> {
                 if (plugin.getConfig().isConfigurationSection(section + "." + o)) {
-                    sender.sendMessage("    " + ChatColor.GREEN + o + ":");
+                    plugin.getMessenger().messageWithColour(sender, "    " + o + ":", "#55FF55");
                     for (String indent : plugin.getConfig().getConfigurationSection(section + "." + o).getKeys(false)) {
-                        sender.sendMessage("        " + ChatColor.GREEN + indent + ": " + plugin.getConfig().getString(section + "." + o + "." + indent));
+                        plugin.getMessenger().messageWithColour(sender, "        " + indent + ": " + plugin.getConfig().getString(section + "." + o + "." + indent), "#55FF55");
                     }
                 } else {
-                    sender.sendMessage("    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
+                    plugin.getMessenger().messageWithColour(sender, "    " + o + ": " + plugin.getConfig().getString(section + "." + o), "#55FF55");
                 }
             });
             return true;
         }
         if (section.equals("worlds")) {
-            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
             Set<String> worldNames = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
             worldNames.forEach((wname) -> {
                 String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
-                sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
+                plugin.getMessenger().sendWithColours(sender, "    " + wname + ": ", "#55FF55", enabled, "#FFFFFF");
             });
             return true;
         }
         if (section.equals("rechargers")) {
-            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
             Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             chargerNames.forEach((charname) -> {
-                sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
+                plugin.getMessenger().messageWithColour(sender, "    " + charname + ":", "#55FF55");
                 sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
                 sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
                 sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
@@ -96,10 +95,10 @@ class TARDISConfigOptionsCommand {
             return true;
         }
         if (section.equals("rooms")) {
-            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
             Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
             roomNames.forEach((r) -> {
-                sender.sendMessage("    " + ChatColor.GREEN + r + ":");
+                plugin.getMessenger().messageWithColour(sender, "    " + r + ":", "#55FF55");
                 sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
                 sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
                 sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));

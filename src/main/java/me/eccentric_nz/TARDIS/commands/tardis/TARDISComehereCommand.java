@@ -37,7 +37,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -97,7 +96,7 @@ class TARDISComehereCommand {
                     return true;
                 }
                 if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
+                    plugin.getMessenger().sendColouredCommand(player, "AREA_NO_COMEHERE", "/tardistravel area [area name]", plugin);
                     return true;
                 }
                 Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
@@ -247,7 +246,7 @@ class TARDISComehereCommand {
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
             } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
+                plugin.getMessenger().sendColouredCommand(player, "DIFF_HARD_REMOTE", "/tardisrecipe remote", plugin);
             }
             return true;
         } else {

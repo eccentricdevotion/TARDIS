@@ -20,8 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,10 +36,8 @@ class TARDISExterminateCommand {
     boolean doExterminate(Player player, boolean messagePlayer) {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
-                // TODO
-                TextComponent textComponent = SpigotComponents.getExterminate(plugin);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
-                player.spigot().sendMessage(textComponent);
+                plugin.getMessenger().sendExterminate(player, plugin);
                 return true;
             } else {
                 return new TARDISExterminator(plugin).exterminate(player);

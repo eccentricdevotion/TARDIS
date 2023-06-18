@@ -18,9 +18,8 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 
 /**
@@ -38,7 +37,7 @@ public class TARDISWalls {
             try {
                 BLOCKS.add(Material.valueOf(m));
             } catch (IllegalArgumentException e) {
-                Bukkit.getLogger().log(Level.WARNING, "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
             }
         }
     }

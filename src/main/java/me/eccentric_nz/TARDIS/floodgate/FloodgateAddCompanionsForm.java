@@ -10,7 +10,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -74,7 +73,7 @@ public class FloodgateAddCompanionsForm {
                     // set entry and exit flags to allow
                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                 }
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + "everyone" + ChatColor.RESET);
+                plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
             } else {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
@@ -87,7 +86,7 @@ public class FloodgateAddCompanionsForm {
                         // set entry and exit flags to deny
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], label, false);
                     }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ADD", ChatColor.GREEN + label + ChatColor.RESET);
+                    plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", label, plugin);
                 }
             }
         }

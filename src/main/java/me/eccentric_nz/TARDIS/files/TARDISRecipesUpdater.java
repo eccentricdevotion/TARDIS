@@ -1011,7 +1011,7 @@ public class TARDISRecipesUpdater {
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
             if (i > 0) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to recipes.yml");
             }
             String key = recipes_config.getString("shaped.TARDIS Key.result");
             if (!key.equals(plugin.getConfig().getString("preferences.key"))) {

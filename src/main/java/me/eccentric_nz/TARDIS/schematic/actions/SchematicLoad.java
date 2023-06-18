@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Load;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 public class SchematicLoad {
@@ -51,7 +50,7 @@ public class SchematicLoad {
         JsonObject sch = TARDISSchematicGZip.getObject(plugin, load.getPath(), args[2], !load.isFromJar());
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getPastes().put(uuid, sch);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
+        plugin.getMessenger().sendColouredCommand(player, "SCHM_LOADED", "/ts paste", plugin);
         return true;
     }
 }

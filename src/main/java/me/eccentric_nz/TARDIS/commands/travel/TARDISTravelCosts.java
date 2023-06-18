@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,7 +39,7 @@ public class TARDISTravelCosts {
         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_COSTS");
         for (String s : costs) {
             String c = (s.equals("rebuild")) ? plugin.getArtronConfig().getString("random") : plugin.getArtronConfig().getString(s);
-            plugin.getMessenger().message(player, "    " + s + ": " + ChatColor.AQUA + c);
+            plugin.getMessenger().sendWithColours(player, "    " + s + ": ", "#FFFFFF",  c, "#55FFFF");
         }
         return true;
     }

@@ -61,7 +61,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaLi
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
 import me.eccentric_nz.tardisweepingangels.utils.*;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -104,7 +103,6 @@ public class TARDISWeepingAngels {
     private static final List<UUID> guards = new ArrayList<>();
     private static final List<UUID> playersWithGuards = new ArrayList<>();
     private static final HashMap<UUID, Integer> followTasks = new HashMap<>();
-    public String pluginName;
     private static boolean steal;
     private static boolean citizensEnabled = false;
 
@@ -113,7 +111,6 @@ public class TARDISWeepingAngels {
     }
 
     public void enable() {
-        pluginName = ChatColor.GOLD + "[Weeping Angels]" + ChatColor.RESET + " ";
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
         api = new MonsterEquipment();
         // update the config

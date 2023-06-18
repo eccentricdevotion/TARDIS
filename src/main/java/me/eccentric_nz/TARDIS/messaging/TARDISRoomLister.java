@@ -22,7 +22,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 /**
@@ -48,18 +47,14 @@ public class TARDISRoomLister {
             player.sendMessage(key);
             if (!value.isEmpty()) {
                 value.forEach((s) -> {
-                    // TODO
-                    TextComponent tcr = SpigotComponents.getRoom(s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())));
-                    player.spigot().sendMessage(tcr);
+                    plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())));
                 });
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NONE");
             }
         });
         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_GALLERY");
-        // TODO
-        TextComponent tcg = SpigotComponents.getRoomGallery();
-        player.spigot().sendMessage(tcg);
+        plugin.getMessenger().sendRoomGallery(player);
     }
 
     private LinkedHashMap<String, List<String>> createRoomOptions() {

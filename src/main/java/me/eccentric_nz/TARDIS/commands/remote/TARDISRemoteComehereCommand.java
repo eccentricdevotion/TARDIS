@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,7 +61,7 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+            plugin.getMessenger().sendColouredCommand(player, "AREA_NO_COMEHERE", "/tardisremote [player] travel area [area name]", plugin);
             return true;
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();

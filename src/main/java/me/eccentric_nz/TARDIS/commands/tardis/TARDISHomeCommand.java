@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -77,7 +76,7 @@ class TARDISHomeCommand {
                     HashMap<String, Object> seth = new HashMap<>();
                     seth.put("preset", which);
                     plugin.getQueryFactory().doUpdate("homes", seth, whereh);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_SET", which);
+                    plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", which, plugin);
                 }
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
@@ -88,7 +87,7 @@ class TARDISHomeCommand {
                     return true;
                 }
                 if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
+                    plugin.getMessenger().sendColouredCommand(player, "AREA_NO_HOME", "/tardistravel area [area name]", plugin);
                     return true;
                 }
                 if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {

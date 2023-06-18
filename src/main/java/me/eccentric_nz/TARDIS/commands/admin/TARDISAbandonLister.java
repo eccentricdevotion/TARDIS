@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -42,7 +39,7 @@ public class TARDISAbandonLister {
 
     public void list(CommandSender sender) {
         ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
-        sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
+        plugin.getMessenger().messageWithColour(sender, plugin.getLanguage().getString("ABANDONED_LIST"), "#AAAAAA");
         if (rst.resultSet()) {
             boolean click = (sender instanceof Player);
             if (click) {
@@ -59,9 +56,7 @@ public class TARDISAbandonLister {
                     String w = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
-                        // TODO add to messengers so we can use Adventure
-                        TextComponent tcg = SpigotComponents.getAbandoned(i, owner, l, t.getTardis_id());
-                        sender.spigot().sendMessage(tcg);
+                        plugin.getMessenger().sendAbandoned(sender, i, owner, l, t.getTardis_id());
                     } else {
                         sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
                     }

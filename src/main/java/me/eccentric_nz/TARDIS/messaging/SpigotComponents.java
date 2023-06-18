@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -32,6 +33,16 @@ import net.md_5.bungee.api.chat.hover.content.Text;
  * @author macgeek
  */
 public class SpigotComponents {
+
+    public static final TextComponent getModule(TardisModule module) {
+        ChatColor colour = ChatColor.of(module.getHex());
+        TextComponent textComponent = new TextComponent("[" + module.getName() + "]");
+        textComponent.setColor(colour);
+        TextComponent r = new TextComponent(" ");
+        r.setColor(ChatColor.RESET);
+        textComponent.addExtra(r);
+        return textComponent;
+    }
 
     public static final TextComponent getJenkinsUpdateReady(int current, int latest) {
         TextComponent textComponent = new TextComponent("There is a new TARDIS build! You are using ");
@@ -68,10 +79,15 @@ public class SpigotComponents {
     }
 
     public static final TextComponent getBuildsBehind(int behind) {
-        TextComponent textComponent = new TextComponent("You are %s builds behind! Type ");
+        TextComponent textComponent = new TextComponent("[TARDIS] ");
+        textComponent.setColor(ChatColor.GOLD);
+        TextComponent y = new TextComponent("You are %s builds behind! Type ");
+        y.setColor(ChatColor.WHITE);
         TextComponent p = new TextComponent("/tadmin update_plugins");
         p.setColor(ChatColor.AQUA);
         TextComponent u = new TextComponent(" to update!");
+        u.setColor(ChatColor.WHITE);
+        textComponent.addExtra(y);
         textComponent.addExtra(p);
         textComponent.addExtra(u);
         return textComponent;
@@ -217,7 +233,7 @@ public class SpigotComponents {
         textComponent.addExtra(tcl);
         return tcl;
     }
-    
+
     public static final TextComponent getSign() {
         TextComponent textComponent = new TextComponent("Click the link to view the TARDIS wiki: ");
         TextComponent link = new TextComponent("https://eccentricdevotion.github.io/TARDIS/site-map.html");
@@ -226,5 +242,84 @@ public class SpigotComponents {
         link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://eccentricdevotion.github.io/TARDIS/site-map.html"));
         textComponent.addExtra(link);
         return textComponent;
+    }
+
+    public static final TextComponent getUpdate(String first, String value, String split) {
+        TextComponent textComponent = new TextComponent(first);
+        textComponent.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+        TextComponent tck = new TextComponent(value);
+        tck.setColor(net.md_5.bungee.api.ChatColor.WHITE);
+        textComponent.addExtra(tck);
+        TextComponent tcl = new TextComponent(split);
+        tcl.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+        textComponent.addExtra(tcl);
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisinfo " + value));
+        return textComponent;
+    }
+
+    public static final TextComponent getHADS(TARDIS plugin) {
+        TextComponent textComponent = new TextComponent("[TARDIS]");
+        textComponent.setColor(ChatColor.GOLD);
+        TextComponent H = new TextComponent("H");
+        H.setColor(ChatColor.RED);
+        TextComponent o = new TextComponent("ostile ");
+        o.setColor(ChatColor.WHITE);
+        TextComponent A = new TextComponent("A");
+        A.setColor(ChatColor.RED);
+        TextComponent c = new TextComponent("ction ");
+        c.setColor(ChatColor.WHITE);
+        TextComponent D = new TextComponent("D");
+        D.setColor(ChatColor.RED);
+        TextComponent i = new TextComponent("isplacement ");
+        i.setColor(ChatColor.WHITE);
+        TextComponent S = new TextComponent("S");
+        S.setColor(ChatColor.RED);
+        TextComponent y = new TextComponent("ystem " + plugin.getLanguage().getString("HADS_ENGAGED"));
+        y.setColor(ChatColor.WHITE);
+        textComponent.addExtra(o);
+        textComponent.addExtra(A);
+        textComponent.addExtra(c);
+        textComponent.addExtra(D);
+        textComponent.addExtra(i);
+        textComponent.addExtra(S);
+        textComponent.addExtra(y);
+        return textComponent;
+    }
+
+    public static final TextComponent getColouredCommand(String which, String command, TARDIS plugin) {
+        TextComponent textComponent = getModule(TardisModule.TARDIS);
+        String[] split = plugin.getLanguage().getString(which).split("%s");
+        TextComponent first = new TextComponent(split[0]);
+        first.setColor(ChatColor.WHITE);
+        TextComponent c = new TextComponent(command);
+        c.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        c.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
+        c.setColor(ChatColor.GREEN);
+        TextComponent last = new TextComponent(split[1]);
+        last.setColor(ChatColor.WHITE);
+        textComponent.addExtra(first);
+        textComponent.addExtra(c);
+        textComponent.addExtra(last);
+        return textComponent;
+    }
+
+    public static final TextComponent getInsertColour(String local, String which, TARDIS plugin) {
+        TextComponent textComponent = getModule(TardisModule.TARDIS);
+        String[] split = plugin.getLanguage().getString(local).split("%s");
+        TextComponent first = new TextComponent(split[0]);
+        first.setColor(ChatColor.WHITE);
+        TextComponent w = new TextComponent(which);
+        w.setColor(ChatColor.AQUA);
+        TextComponent last = new TextComponent(split[1]);
+        last.setColor(ChatColor.WHITE);
+        textComponent.addExtra(first);
+        textComponent.addExtra(w);
+        textComponent.addExtra(last);
+        return textComponent;
+    }
+
+    public static final TextComponent getWithColours(String first, String colour, String last, String hue) {
+
     }
 }

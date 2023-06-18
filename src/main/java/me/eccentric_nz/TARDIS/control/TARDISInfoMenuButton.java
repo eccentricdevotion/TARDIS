@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,18 +35,18 @@ public class TARDISInfoMenuButton {
 
     public void clickButton() {
         plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
-        player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
+        plugin.getMessenger().messageWithColour(player, "-----------TARDIS Information System-----------", "#FFAA00");
         player.sendMessage(plugin.getLanguage().getString("TIS_INFO"));
-        plugin.getUpdateGUI().sendTextComponent("> TARDIS ", "M", "anual", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "I", "tems", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "C", "omponents", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "S", "onic Components", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "D", "isks", player);
-        plugin.getUpdateGUI().sendTextComponent("> C", "o", "mmands", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "T", "ARDIS Types", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "R", "ooms", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "F", "ood & Accessories", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "P", "lanets", player);
-        plugin.getUpdateGUI().sendTextComponent("> ", "E", "xit", player);
+        plugin.getMessenger().sendInfo(player, "> TARDIS ", "M", "anual");
+        plugin.getMessenger().sendInfo(player, "> ", "I", "tems");
+        plugin.getMessenger().sendInfo(player, "> ", "C", "omponents");
+        plugin.getMessenger().sendInfo(player, "> ", "S", "onic Components");
+        plugin.getMessenger().sendInfo(player, "> ", "D", "isks");
+        plugin.getMessenger().sendInfo(player, "> C", "o", "mmands");
+        plugin.getMessenger().sendInfo(player, "> ", "T", "ARDIS Types");
+        plugin.getMessenger().sendInfo(player, "> ", "R", "ooms");
+        plugin.getMessenger().sendInfo(player, "> ", "F", "ood & Accessories");
+        plugin.getMessenger().sendInfo(player, "> ", "P", "lanets");
+        plugin.getMessenger().sendInfo(player, "> ", "E", "xit");
     }
 }

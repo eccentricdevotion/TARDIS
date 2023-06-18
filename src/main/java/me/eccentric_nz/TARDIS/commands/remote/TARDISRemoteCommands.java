@@ -39,7 +39,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -227,7 +226,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     wherea.put("area_name", args[3]);
                                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                     if (!rsa.resultSet()) {
-                                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                                        plugin.getMessenger().sendColouredCommand(sender, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                                         return true;
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
@@ -328,7 +327,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     Location location = new Location(w, x, y, z);
                                     // check location
                                     if (plugin.getTardisArea().isInExistingArea(location)) {
-                                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+                                        plugin.getMessenger().sendColouredCommand(sender, "TRAVEL_IN_AREA", "/tardisremote [player] travel area [area name]", plugin);
                                         return true;
                                     }
                                     // check respect if not admin

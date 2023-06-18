@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -51,9 +50,7 @@ public class TARDISGiveLister {
         plugin.getMessenger().message(sender, "");
         plugin.getMessenger().message(sender, "Admin & development");
         for (Map.Entry<String, String> entry : dev.entrySet()) {
-            // TODO add to messengers so we can use Adventure
-            TextComponent tcd = SpigotComponents.getSuggestCommand(entry.getKey(), entry.getValue(), "#FFFF55");
-            sender.spigot().sendMessage(tcd);
+            plugin.getMessenger().sendSuggestCommand(sender, entry.getKey(), entry.getValue(), "#FFFF55");
         }
         plugin.getMessenger().message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
@@ -61,17 +58,13 @@ public class TARDISGiveLister {
                 plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        // TODO
-                        TextComponent tci = SpigotComponents.getSuggestCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
-                        sender.spigot().sendMessage(tci);
+                        plugin.getMessenger().sendSuggestCommand(sender, item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                     }
                 }
                 plugin.getMessenger().message(sender, "");
             }
         }
-        // TODO
-        TextComponent more = SpigotComponents.getShowMore("tardisgive");
-        sender.spigot().sendMessage(more);
+        plugin.getMessenger().sendShowMore(sender, "tardisgive");
     }
 
     public void listMore() {
@@ -81,9 +74,7 @@ public class TARDISGiveLister {
                 plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        // TODO
-                        TextComponent tci = SpigotComponents.getSuggestCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
-                        sender.spigot().sendMessage(tci);
+                        plugin.getMessenger().sendSuggestCommand(sender, item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                     }
                 }
                 plugin.getMessenger().message(sender, "");

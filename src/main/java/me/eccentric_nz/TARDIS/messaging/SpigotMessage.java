@@ -16,9 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Area;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,40 +34,33 @@ import org.bukkit.entity.Player;
  */
 public class SpigotMessage implements TARDISMessage {
 
-    private final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
-    private final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
-    private final String BUILDS_BEHIND = "You are %s builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!";
-
-    private final String getModule(TardisModule module) {
-        ChatColor colour = ChatColor.of(module.getHex());
-        return colour + "[" + module.getName() + "]" + ChatColor.RESET + " ";
-    }
-
     @Override
     public void sendJenkinsUpdateReady(CommandSender cs, int current, int latest) {
-        message(cs, TardisModule.TARDIS, String.format(JENKINS_UPDATE_READY, current, latest));
+        cs.sendMessage(SpigotComponents.getJenkinsUpdateReady(current, latest));
     }
 
     @Override
     public void sendUpdateCommand(CommandSender cs) {
-        message(cs, TardisModule.TARDIS, UPDATE_COMMAND);
+        cs.sendMessage(SpigotComponents.getUpdateCommand());
     }
 
     @Override
     public void sendBuildsBehind(CommandSender cs, int behind) {
-        message(cs, TardisModule.TARDIS, String.format(BUILDS_BEHIND, behind));
+        cs.sendMessage(SpigotComponents.getBuildsBehind(behind));
     }
 
     @Override
     public void message(CommandSender cs, TardisModule module, String message) {
         if (cs != null) {
-            String concat = getModule(module) + message;
-            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-                String[] multiline = TARDISChatPaginator.wordWrap(concat);
-                cs.sendMessage(multiline);
-            } else {
-                cs.sendMessage(concat);
-            }
+            TextComponent textComponent = SpigotComponents.getModule(module);
+            TextComponent m = new TextComponent(message);
+            textComponent.addExtra(m);
+//            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+//                String[] multiline = TARDISChatPaginator.wordWrap(concat);
+//                cs.sendMessage(multiline);
+//            } else {
+            cs.sendMessage(textComponent);
+//            }
         }
     }
 
@@ -111,20 +109,27 @@ public class SpigotMessage implements TARDISMessage {
 
     @Override
     public void broadcast(TardisModule module, String message) {
-        TARDIS.plugin.getServer().broadcastMessage(getModule(module) + message);
+        TextComponent textComponent = SpigotComponents.getModule(module);
+        TextComponent m = new TextComponent(message);
+        textComponent.addExtra(m);
+        TARDIS.plugin.getServer().broadcast(textComponent);
     }
 
     @Override
     public void sendWithColour(CommandSender cs, TardisModule module, String message, String hex) {
         if (cs != null) {
+            TextComponent textComponent = SpigotComponents.getModule(module);
+            TextComponent m = new TextComponent(message);
             ChatColor colour = ChatColor.of(hex);
-            String concat = getModule(module) + colour + message;
-            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-                String[] multiline = TARDISChatPaginator.wordWrap(concat);
-                cs.sendMessage(multiline);
-            } else {
-                cs.sendMessage(concat);
-            }
+            m.setColor(colour);
+            textComponent.addExtra(m);
+//            String concat = getModule(module) + colour + message;
+//            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+//                String[] multiline = TARDISChatPaginator.wordWrap(concat);
+//                cs.sendMessage(multiline);
+//            } else {
+            cs.sendMessage(textComponent);
+//            }
         }
     }
 
@@ -137,5 +142,115 @@ public class SpigotMessage implements TARDISMessage {
         } else {
             cs.sendMessage(message);
         }
+    }
+
+    @Override
+    public void sendRequestComehereAccept(CommandSender cs, String key, String command) {
+        cs.sendMessage(SpigotComponents.getRequestComehereAccept(key, command));
+    }
+
+    @Override
+    public void sendAbandoned(CommandSender cs, int i, String owner, String location, int id) {
+        cs.sendMessage(SpigotComponents.getAbandoned(i, owner, location, id));
+    }
+
+    @Override
+    public void sendTransmat(CommandSender cs, Transmat t) {
+        cs.sendMessage(SpigotComponents.getTransmat(t));
+    }
+
+    @Override
+    public void sendTARDISForList(CommandSender cs, Tardis t, String world, int x, int y, int z) {
+        cs.sendMessage(SpigotComponents.getTARDISForList(t, world, x, y, z));
+    }
+
+    @Override
+    public void sendExterminate(CommandSender cs, TARDIS plugin) {
+        cs.sendMessage(SpigotComponents.getExterminate(plugin));
+    }
+
+    @Override
+    public void sendRescue(CommandSender cs, TARDIS plugin) {
+        cs.sendMessage(SpigotComponents.getRescue(plugin));
+    }
+
+    @Override
+    public void sendSuggestCommand(CommandSender cs, String item, String hover, String colour) {
+        cs.sendMessage(SpigotComponents.getSuggestCommand(item, hover, colour));
+    }
+
+    @Override
+    public void sendRunCommand(CommandSender cs, String item, String hover, String colour) {
+        cs.sendMessage(SpigotComponents.getRunCommand(item, hover, colour));
+    }
+
+    @Override
+    public void sendShowMore(CommandSender cs, String command) {
+        cs.sendMessage(SpigotComponents.getShowMore(command));
+    }
+
+    @Override
+    public void sendRecharger(CommandSender cs, String recharger, String world, String x, String y, String z, boolean hasPerm) {
+        cs.sendMessage(SpigotComponents.getRecharger(recharger, world, x, y, z, hasPerm));
+    }
+
+    @Override
+    public void sendHome(CommandSender cs, TARDIS plugin, String world, int x, int y, int z) {
+        cs.sendMessage(SpigotComponents.getHome(plugin, world, x, y, z));
+    }
+
+    @Override
+    public void sendSave(CommandSender cs, HashMap<String, String> map, String world) {
+        cs.sendMessage(SpigotComponents.getSave(map, world));
+    }
+
+    @Override
+    public void sendArea(CommandSender cs, Area a, int n, boolean hasPerm) {
+        cs.sendMessage(SpigotComponents.getArea(a, n, hasPerm));
+    }
+
+    @Override
+    public void sendRoom(CommandSender cs, String room, boolean hasPerm) {
+        cs.sendMessage(SpigotComponents.getRoom(room, hasPerm));
+    }
+
+    @Override
+    public void sendRoomGallery(CommandSender cs) {
+        cs.sendMessage(SpigotComponents.getRoomGallery());
+    }
+
+    @Override
+    public void sendEyebrows(CommandSender cs) {
+        cs.sendMessage(SpigotComponents.getEyebrows());
+    }
+
+    @Override
+    public void sendSign(CommandSender cs) {
+        cs.sendMessage(SpigotComponents.getSign());
+    }
+
+    @Override
+    public void sendInfo(CommandSender cs, String first, String value, String split) {
+        cs.sendMessage(SpigotComponents.getUpdate(first, value, split));
+    }
+
+    @Override
+    public void sendHADS(CommandSender cs, TARDIS plugin) {
+        cs.sendMessage(SpigotComponents.getHADS(plugin));
+    }
+
+    @Override
+    public void sendColouredCommand(CommandSender cs, String which, String command, TARDIS plugin) {
+        cs.sendMessage(SpigotComponents.getColouredCommand(which, command, plugin));
+    }
+
+    @Override
+    public void sendInsertedColour(CommandSender cs, String local, String which, TARDIS plugin) {
+        cs.sendMessage(SpigotComponents.getInsertColour(local, which, plugin));
+    }
+
+    @Override
+    public void sendWithColours(CommandSender cs, String first, String colour, String last, String hue) {
+        cs.sendMessage(SpigotComponents.getWithColours(first, colour, last, hue));
     }
 }

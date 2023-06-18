@@ -1,10 +1,10 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import java.util.Random;
-import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.CustomTree;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
@@ -30,7 +30,7 @@ public class TARDISTreeBlockPopulator extends BlockPopulator {
         int treeZ = z * 16 + random.nextInt(16);
         int treeY = 128;
         if (!limitedRegion.isInRegion(treeX, treeY, treeZ)) {
-            Bukkit.getLogger().log(Level.INFO, TREE + " tree location (" + treeX + "," + treeY + "," + treeZ + ") is not in limited region!");
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, TREE + " tree location (" + treeX + "," + treeY + "," + treeZ + ") is not in limited region!");
             return;
         }
         for (int i = 128; i > 60; i--) {
