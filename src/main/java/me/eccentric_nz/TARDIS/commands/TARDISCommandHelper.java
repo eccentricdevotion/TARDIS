@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RootCommand;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -40,8 +39,8 @@ public class TARDISCommandHelper {
     public void getCommand(String c, CommandSender sender) {
         if (c.isEmpty()) {
             sender.sendMessage("------");
-            sender.sendMessage(ChatColor.GOLD + "TARDIS commands - use " + ChatColor.AQUA + "/tardis? <command> " + ChatColor.RESET + "for more info");
-            sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + "https://eccentricdevotion.github.io/TARDIS/commands.html");
+            plugin.getMessenger().sendCommand(sender, "TARDIS", "/tardis? <command>");
+            plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", "https://eccentricdevotion.github.io/TARDIS/commands.html", "#FFFFFF");
             plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false).forEach((o) -> {
                 if (!o.equals("tardis?")) {
                     sender.sendMessage("/" + o);
@@ -55,17 +54,17 @@ public class TARDISCommandHelper {
                 if (split.length > 1) {
                     if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH))) {
                         sender.sendMessage("------");
-                        sender.sendMessage("Command: " + ChatColor.GOLD + "/" + c.toLowerCase(Locale.ENGLISH));
-                        sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".description"));
+                        plugin.getMessenger().sendWithColours(sender, "Command: ", "#FFFFFF", "/" + c.toLowerCase(Locale.ENGLISH), "#FFAA00");
+                        plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".description"), "#FFFFFF");
                         if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage")) {
-                            sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage").replace("<command>", root.toString()));
+                            plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage").replace("<command>", root.toString()), "#FFFFFF");
                         }
                         if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission")) {
-                            sender.sendMessage(ChatColor.GRAY + "Permission: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission"));
+                            plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission"), "#FFFFFF");
                         } else if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + ".permission")) {
-                            sender.sendMessage(ChatColor.GRAY + "Permission: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"));
+                            plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"), "#FFFFFF");
                         } else {
-                            sender.sendMessage(ChatColor.GRAY + "Permission: " + ChatColor.RESET + "None required");
+                            plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", "None required", "#FFFFFF");
                         }
                         sender.sendMessage("------");
                     } else {
@@ -75,12 +74,12 @@ public class TARDISCommandHelper {
                     sender.sendMessage("------");
                     Set<String> args = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + root).getKeys(false);
                     if (args.size() > 5) {
-                        sender.sendMessage(ChatColor.GOLD + "/" + root + ChatColor.RESET + " commands - use " + ChatColor.AQUA + "/tardis? " + root + " <argument> " + ChatColor.RESET + "for more info");
-                        sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
-                        sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".description"));
-                        sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".aliases"));
+                        plugin.getMessenger().sendCommand(sender, "/" + root, "/tardis? " + root + " <argument>");
+                        plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", root.URL, "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".description"), "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Aliases: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".aliases"), "#FFFFFF");
                         if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + ".usage")) {
-                            sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".usage").replace("<command>", root.toString()));
+                            plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".usage").replace("<command>", root.toString()), "#FFFFFF");
                         }
                         args.forEach((m) -> {
                             if (!notThese.contains(m)) {
@@ -88,12 +87,12 @@ public class TARDISCommandHelper {
                             }
                         });
                     } else {
-                        sender.sendMessage("Command: " + ChatColor.GOLD + "/" + root);
-                        sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
-                        sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".description"));
-                        sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".aliases"));
-                        sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".usage").replace("<command>", root.toString()));
-                        sender.sendMessage(ChatColor.GRAY + "Permission: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"));
+                        plugin.getMessenger().sendWithColours(sender, "Command: ", "#FFFFFF", "/" + root, "#FFAA00");
+                        plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", root.URL, "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".description"), "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Aliases: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".aliases"), "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".usage").replace("<command>", root.toString()), "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"), "#FFFFFF");
                     }
                     sender.sendMessage("------");
                 }

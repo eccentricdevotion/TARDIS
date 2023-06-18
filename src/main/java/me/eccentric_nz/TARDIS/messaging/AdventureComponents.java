@@ -270,4 +270,22 @@ public class AdventureComponents {
                 .append(Component.text(last, TextColor.fromHexString(hue)));
         return textComponent;
     }
+
+    public static final TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
+        TextComponent textComponent = getModule(module)
+                .append(Component.text(first, TextColor.fromHexString(colour)))
+                .append(Component.text(last, TextColor.fromHexString(hue)));
+        return textComponent;
+    }
+
+    public static final TextComponent getCommand(String root, String command) {
+        TextComponent textComponent = Component.text(root, NamedTextColor.GOLD)
+                .append(Component.text(" commands - use ", NamedTextColor.WHITE))
+                .append(Component.text(command + " ", NamedTextColor.AQUA)
+                        .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
+                        .clickEvent(ClickEvent.suggestCommand(command))
+                )
+                .append(Component.text("for more info", NamedTextColor.WHITE));
+        return textComponent;
+    }
 }

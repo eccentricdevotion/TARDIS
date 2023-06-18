@@ -26,7 +26,6 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
 
 public class TARDISSpigotChecker implements Runnable {
 
@@ -60,7 +59,7 @@ public class TARDISSpigotChecker implements Runnable {
                         // if new build number is same
                         return;
                     }
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
+                    plugin.getMessenger().sendWithColours(plugin.getConsole(), TardisModule.TARDIS, "There is a new Spigot build! ", "#FF5555", "You should update so TARDIS doesn't bug out :)", "#55FFFF");
                 }
             }
         }

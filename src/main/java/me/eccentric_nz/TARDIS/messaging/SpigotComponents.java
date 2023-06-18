@@ -39,7 +39,6 @@ public class SpigotComponents {
         TextComponent textComponent = new TextComponent("[" + module.getName() + "]");
         textComponent.setColor(colour);
         TextComponent r = new TextComponent(" ");
-        r.setColor(ChatColor.RESET);
         textComponent.addExtra(r);
         return textComponent;
     }
@@ -320,6 +319,36 @@ public class SpigotComponents {
     }
 
     public static final TextComponent getWithColours(String first, String colour, String last, String hue) {
+        TextComponent textComponent = new TextComponent(first);
+        textComponent.setColor(ChatColor.of(colour));
+        TextComponent l = new TextComponent(last);
+        l.setColor(ChatColor.of(hue));
+        textComponent.addExtra(l);
+        return textComponent;
+    }
 
+    public static final TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
+        TextComponent textComponent = getModule(module);
+        TextComponent f = new TextComponent(first);
+        f.setColor(ChatColor.of(colour));
+        TextComponent l = new TextComponent(last);
+        l.setColor(ChatColor.of(hue));
+        textComponent.addExtra(f);
+        textComponent.addExtra(l);
+        return textComponent;
+    }
+
+    public static final TextComponent getCommand(String root, String command) {
+        TextComponent textComponent = new TextComponent(root);
+        textComponent.setColor(ChatColor.GOLD);
+        TextComponent c = new TextComponent(" commands - use ");
+        c.setColor(ChatColor.WHITE);
+        TextComponent t = new TextComponent(command + " ");
+        t.setColor(ChatColor.AQUA);
+        t.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        t.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
+        TextComponent f = new TextComponent("for more info");
+        f.setColor(ChatColor.WHITE);
+        return textComponent;
     }
 }

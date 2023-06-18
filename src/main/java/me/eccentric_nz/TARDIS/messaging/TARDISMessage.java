@@ -101,4 +101,8 @@ public interface TARDISMessage {
     public void sendInsertedColour(CommandSender cs, String local, String which, TARDIS plugin);
 
     public void sendWithColours(CommandSender cs, String first, String colour, String last, String hue);
+
+    public void sendWithColours(CommandSender cs, TardisModule module, String first, String colour, String last, String hue);
+
+    public void sendCommand(CommandSender cs, String root, String command);
 }

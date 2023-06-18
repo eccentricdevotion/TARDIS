@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -42,15 +41,15 @@ class TARDISVersionCommand {
         String tardisversion = plugin.getDescription().getVersion();
         String cb = Bukkit.getVersion();
         // send server and TARDIS versions
-        plugin.getMessenger().message(sender, TardisModule.TARDIS, "Server version: " + ChatColor.AQUA + cb);
-        plugin.getMessenger().message(sender, TardisModule.TARDIS, "TARDIS version: " + ChatColor.AQUA + tardisversion);
+        plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, "Server version: ", "#FFFFFF", cb, "#55FFFF");
+        plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, "TARDIS version: ", "#FFFFFF", tardisversion, "#55FFFF");
         // send dependent plugin versions
         for (Plugin hook : plugin.getPM().getPlugins()) {
             PluginDescriptionFile desc = hook.getDescription();
             String name = desc.getName();
             String version = desc.getVersion();
             if (hooks.contains(name)) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, name + " version: " + ChatColor.AQUA + version);
+                plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, name + " version: ", "#FFFFFF", version, "#55FFFF");
             }
         }
         // check for new TARDIS build

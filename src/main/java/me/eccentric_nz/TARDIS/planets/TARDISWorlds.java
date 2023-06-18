@@ -44,7 +44,7 @@ public class TARDISWorlds {
                 worldCreator.type(worldType);
                 worldCreator.seed(TARDISConstants.RANDOM.nextLong());
             } catch (IllegalArgumentException iae) {
-                TARDIS.plugin.debug(ChatColor.RED + "Invalid World Type specified for '" + world + "'! " + iae.getMessage());
+                TARDIS.plugin.getMessenger().sendWithColour(TARDIS.plugin.getConsole(), TardisModule.DEBUG, "Invalid World Type specified for '" + world + "'! " + iae.getMessage(), "#FF5555");
             }
             String g = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
@@ -75,7 +75,7 @@ public class TARDISWorlds {
                 w.setKeepSpawnInMemory(keepSpawnInMemory);
             }
         } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'! " + e.getMessage());
+            TARDIS.plugin.getMessenger().sendWithColour(TARDIS.plugin.getConsole(), TardisModule.DEBUG, "Could not load world '" + world + "'! " + e.getMessage(), "#FF5555");
         }
     }
 

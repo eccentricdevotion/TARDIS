@@ -241,4 +241,14 @@ public class AdventureMessage implements TARDISMessage {
     public void sendWithColours(CommandSender cs, String first, String colour, String last, String hue) {
         cs.sendMessage(AdventureComponents.getWithColours(first, colour, last, hue));
     }
+
+    @Override
+    public void sendWithColours(CommandSender cs, TardisModule module, String first, String colour, String last, String hue) {
+        cs.sendMessage(AdventureComponents.getWithColours(module, first, colour, last, hue));
+    }
+
+    @Override
+    public void sendCommand(CommandSender cs, String root, String command) {
+        cs.sendMessage(AdventureComponents.getCommand(root, command));
+    }
 }

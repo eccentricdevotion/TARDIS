@@ -20,14 +20,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateBlocks {
 
     public static void showOptions(Player player, Updateable updateable) {
-        TARDIS.plugin.getMessenger().message(player, TardisModule.TARDIS, ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
+        TARDIS.plugin.getMessenger().sendWithColours(player, TardisModule.TARDIS, "'" + updateable.getName() + "'", "#55FFFF", " valid blocks:", "#FFFFFF");
         for (Material m : updateable.getMaterialChoice().getChoices()) {
             String s = m.toString();
             if (s.equals("SPAWNER")) {
