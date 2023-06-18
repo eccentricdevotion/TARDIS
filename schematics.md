@@ -52,7 +52,7 @@ right in!
 | `Iron door`         | TARDIS interior door                                           |
 | `Spawner`           | Scanner                                                        |
 | `Bedrock`           | To block off the Beacon beam (used when turning off the power) |
-| `Jukebox`           | Advanced Sonsole                                               |
+| `Jukebox`           | Advanced Console                                               |
 | `Note block`        | Disk Storage                                                   |
 | `Command block`     | Artron charged creeper spawn location                          |
 | `Daylight detector` | Telepathic Circuit                                             |
