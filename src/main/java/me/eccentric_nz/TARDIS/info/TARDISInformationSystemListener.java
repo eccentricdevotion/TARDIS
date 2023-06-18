@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.info;
 import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
@@ -1338,9 +1337,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
             String[] split = key.split(value, 2);
             String first = "> " + split[0];
-            TARDISUpdateChatGUI.sendTextComponent(first, value, split[1], p);
+            plugin.getUpdateGUI().sendTextComponent(first, value, split[1], p);
         });
-        TARDISUpdateChatGUI.sendTextComponent("> ", "E", "xit", p);
+        plugin.getUpdateGUI().sendTextComponent("> ", "E", "xit", p);
     }
 
     /**

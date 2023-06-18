@@ -21,11 +21,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 /**
@@ -65,10 +63,7 @@ public class TARDISTravelAsk {
         UUID requestedUUID = requested.getUniqueId();
         plugin.getMessenger().send(requested, TardisModule.TARDIS, "REQUEST_TRAVEL", player.getName());
         // TODO add to messengers so we can use adventure
-        TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
-        textComponent.setColor(net.md_5.bungee.api.ChatColor.AQUA);
-        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis request accept"));
+        TextComponent textComponent = SpigotComponents.getRequestComehereAccept("REQUEST_COMEHERE_ACCEPT", "/tardis request accept");
         requested.spigot().sendMessage(textComponent);
         // message asking player too
         plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_SENT", requested.getName());

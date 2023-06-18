@@ -27,16 +27,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -162,12 +159,7 @@ public class TARDISDoorListener {
         if (quotes) {
             if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                 // TODO add to messengers so we can use Adventure
-                TextComponent tcg = new TextComponent("[TARDIS] ");
-                tcg.setColor(ChatColor.GOLD);
-                TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
-                tcl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-                tcl.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis egg"));
-                tcg.addExtra(tcl);
+                TextComponent tcg = SpigotComponents.getEyebrows();
                 player.spigot().sendMessage(tcg);
             } else {
                plugin.getMessenger().message( player, TardisModule.TARDIS, plugin.getGeneralKeeper().getQuotes().get(i));

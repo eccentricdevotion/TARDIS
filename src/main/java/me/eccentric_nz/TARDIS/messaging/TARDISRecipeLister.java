@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -50,19 +47,15 @@ public class TARDISRecipeLister {
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
                         // TODO
-                        TextComponent tci = new TextComponent(item.toTabCompletionString());
-                        tci.setColor(category.getColour());
-                        tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
-                        tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe " + item.toTabCompletionString()));
+                        TextComponent tci = SpigotComponents.getRunCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                         sender.spigot().sendMessage(tci);
                     }
                 }
                 plugin.getMessenger().message(sender, "");
             }
         }
-        TextComponent more = new TextComponent("Show more...");
-        more.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        more.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe list_more"));
+        // TODO
+        TextComponent more = SpigotComponents.getShowMore("tardisrecipe");
         sender.spigot().sendMessage(more);
     }
 
@@ -73,10 +66,7 @@ public class TARDISRecipeLister {
                 plugin.getMessenger().message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        TextComponent tci = new TextComponent(item.toTabCompletionString());
-                        tci.setColor(category.getColour());
-                        tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
-                        tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe " + item.toTabCompletionString()));
+                        TextComponent tci = SpigotComponents.getRunCommand(item.toTabCompletionString(), item.toRecipeString(), category.getColour());
                         sender.spigot().sendMessage(tci);
                     }
                 }

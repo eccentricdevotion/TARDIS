@@ -20,15 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISChatGUIJSON {
+public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
 
     private final List<TextComponent> sections = new ArrayList<>();
     private final List<TextComponent> controls = new ArrayList<>();
@@ -36,7 +36,7 @@ public class TARDISChatGUIJSON {
     private final List<TextComponent> locations = new ArrayList<>();
     private final List<TextComponent> others = new ArrayList<>();
 
-    public TARDISChatGUIJSON() {
+    public TARDISChatGUIAdventure() {
         int s = 1;
         int c = 1;
         int i = 1;
@@ -67,30 +67,34 @@ public class TARDISChatGUIJSON {
         }
     }
 
-    // TODO
     private TextComponent buildTextComponent(int counter, String description, String name, String command) {
-        TextComponent tc = new TextComponent(counter + ". " + description);
-        tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis " + command + " " + name));
+        TextComponent tc = Component.text(counter + ". " + description)
+                .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
+                .clickEvent(ClickEvent.runCommand("/tardis " + command + " " + name));
         return tc;
     }
 
+    @Override
     public List<TextComponent> getSections() {
         return sections;
     }
 
+    @Override
     public List<TextComponent> getControls() {
         return controls;
     }
 
-    List<TextComponent> getInterfaces() {
+    @Override
+    public List<TextComponent> getInterfaces() {
         return interfaces;
     }
 
+    @Override
     public List<TextComponent> getLocations() {
         return locations;
     }
 
+    @Override
     public List<TextComponent> getOthers() {
         return others;
     }

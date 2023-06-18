@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -39,16 +38,16 @@ public class TARDISInfoMenuButton {
         plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
         player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
         player.sendMessage(plugin.getLanguage().getString("TIS_INFO"));
-        TARDISUpdateChatGUI.sendTextComponent("> TARDIS ", "M", "anual", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "I", "tems", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "C", "omponents", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "S", "onic Components", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "D", "isks", player);
-        TARDISUpdateChatGUI.sendTextComponent("> C", "o", "mmands", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "T", "ARDIS Types", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "R", "ooms", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "F", "ood & Accessories", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "P", "lanets", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "E", "xit", player);
+        plugin.getUpdateGUI().sendTextComponent("> TARDIS ", "M", "anual", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "I", "tems", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "C", "omponents", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "S", "onic Components", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "D", "isks", player);
+        plugin.getUpdateGUI().sendTextComponent("> C", "o", "mmands", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "T", "ARDIS Types", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "R", "ooms", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "F", "ood & Accessories", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "P", "lanets", player);
+        plugin.getUpdateGUI().sendTextComponent("> ", "E", "xit", player);
     }
 }

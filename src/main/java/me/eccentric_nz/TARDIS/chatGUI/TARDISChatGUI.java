@@ -14,29 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.update;
+package me.eccentric_nz.TARDIS.chatGUI;
 
+import java.util.List;
 
-public enum TARDISUpdateableCategory {
+/**
+ *
+ * @author macgeek
+ */
+public interface TARDISChatGUI<T> {
 
-    CONTROLS("#55FF55", "TARDIS Controls"),
-    INTERFACES("#FF5555", "TARDIS User Interfaces"),
-    LOCATIONS("#55FFFF", "TARDIS Internal Spawn Locations"),
-    OTHERS("#FF55FF", "Others");
+    public List<T> getSections();
 
-    private final String colour;
-    private final String name;
+    public List<T> getControls();
 
-    TARDISUpdateableCategory(String colour, String name) {
-        this.colour = colour;
-        this.name = name;
-    }
+    public List<T> getInterfaces();
 
-    public String getColour() {
-        return colour;
-    }
+    public List<T> getLocations();
 
-    public String getName() {
-        return name;
-    }
+    public List<T> getOthers();
 }

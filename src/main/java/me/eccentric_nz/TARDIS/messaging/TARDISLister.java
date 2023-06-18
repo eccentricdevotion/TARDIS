@@ -32,17 +32,14 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * The Zygons are a race of metamorphic humanoids. They originated from the planet Zygor, but often tried to migrate
- * away from it.
+ * The Zygons are a race of metamorphic humanoids. They originated from the
+ * planet Zygor, but often tried to migrate away from it.
  *
  * @author eccentric_nz
  */
@@ -58,8 +55,8 @@ public class TARDISLister {
      * Retrieves various lists from the database.
      *
      * @param player an instance of a player.
-     * @param list   is the String name of the list type to retrieve. Possible values are areas, saves, rechargers and
-     *               companions.
+     * @param list is the String name of the list type to retrieve. Possible
+     * values are areas, saves, rechargers and companions.
      */
     public void list(Player player, String list) {
         if (list.equals("rechargers")) {
@@ -88,12 +85,7 @@ public class TARDISLister {
                     String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
                     String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
                     // TODO
-                    TextComponent tcr = new TextComponent(n + ". " + s);
-                    tcr.setColor(ChatColor.GREEN);
-                    tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", w, x, y, z))));
-                    if (TARDISPermission.hasPermission(player, "tardis.admin")) {
-                        tcr.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardisteleport %s %s %s not_for_players", w, x, z)));
-                    }
+                    TextComponent tcr = SpigotComponents.getRecharger((n + ". " + s), world, x, y, z, (TARDISPermission.hasPermission(player, "tardis.admin")));
                     player.spigot().sendMessage(tcr);
                     n++;
                 }
@@ -110,11 +102,8 @@ public class TARDISLister {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "AREAS");
                     plugin.getMessenger().message(player, "");
                 }
-                TextComponent tca = new TextComponent(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
-                if (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")) {
-                    tca.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to /tardistravel here")));
-                    tca.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardistravel area %s", a.getAreaName())));
-                }
+                // TODO
+                TextComponent tca = SpigotComponents.getArea(a, n, (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")));
                 player.spigot().sendMessage(tca);
                 n++;
             }
@@ -138,10 +127,7 @@ public class TARDISLister {
                     rsh.resultSet();
                     String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
                     // TODO
-                    TextComponent tch = new TextComponent(plugin.getLanguage().getString("HOME"));
-                    tch.setColor(ChatColor.GREEN);
-                    tch.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", homeWorld, rsh.getX(), rsh.getY(), rsh.getZ()))));
-                    tch.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardistravel home"));
+                    TextComponent tch = SpigotComponents.getHome(plugin, homeWorld, rsh.getX(), rsh.getY(), rsh.getZ());
                     player.spigot().sendMessage(tch);
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();
@@ -152,10 +138,8 @@ public class TARDISLister {
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
                                 String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.get("world") + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
-                                TextComponent tcd = new TextComponent(map.get("dest_name"));
-                                tcd.setColor(ChatColor.GREEN);
-                                tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));
-                                tcd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardistravel save " + map.get("dest_name")));
+                                // TODO
+                                TextComponent tcd = SpigotComponents.getSave(map, world);
                                 player.spigot().sendMessage(tcd);
                             }
                         }

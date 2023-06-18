@@ -22,12 +22,10 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -62,12 +60,7 @@ public class TARDISAbandonLister {
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
                         // TODO add to messengers so we can use Adventure
-                        TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);
-                        TextComponent tce = new TextComponent(" < Enter > ");
-                        tce.setColor(ChatColor.GREEN);
-                        tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to enter this TARDIS")));
-                        tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardis_id()));
-                        tcg.addExtra(tce);
+                        TextComponent tcg = SpigotComponents.getAbandoned(i, owner, l, t.getTardis_id());
                         sender.spigot().sendMessage(tcg);
                     } else {
                         sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);

@@ -24,11 +24,8 @@ import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -76,15 +73,7 @@ class TARDISTransmatCommand {
             if (rslist.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_LIST");
                 for (Transmat t : rslist.getData()) {
-                    TextComponent tcg = new TextComponent(t.getName());
-                    tcg.setColor(ChatColor.GREEN);
-                    TextComponent tcl = new TextComponent(String.format("X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
-                    TextComponent tce = new TextComponent(" < Transmat > ");
-                    tce.setColor(ChatColor.AQUA);
-                    tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Transmat to this location")));
-                    tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.getName()));
-                    tcg.addExtra(tcl);
-                    tcg.addExtra(tce);
+                    TextComponent tcg = SpigotComponents.getTransmat(t);
                     player.spigot().sendMessage(tcg);
                 }
             } else {

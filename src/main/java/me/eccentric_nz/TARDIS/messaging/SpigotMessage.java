@@ -29,9 +29,9 @@ import org.bukkit.entity.Player;
  */
 public class SpigotMessage implements TARDISMessage {
 
-    public final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
-    public final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
-    public final String BUILDS_BEHIND = "You are %s builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!";
+    private final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
+    private final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
+    private final String BUILDS_BEHIND = "You are %s builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!";
 
     private final String getModule(TardisModule module) {
         ChatColor colour = ChatColor.of(module.getHex());

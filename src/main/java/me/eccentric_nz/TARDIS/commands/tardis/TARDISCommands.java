@@ -21,7 +21,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -244,7 +243,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
                 }
                 case section -> {
-                    return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                    return plugin.getUpdateGUI().showInterface(player, args);
                 }
                 case setdest -> {
                     return new TARDISSetDestinationCommand(plugin).doSetDestination(player, args);

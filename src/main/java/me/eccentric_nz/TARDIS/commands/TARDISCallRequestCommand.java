@@ -28,16 +28,14 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
-import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -178,10 +176,7 @@ public class TARDISCallRequestCommand {
         // send message with click event
         plugin.getMessenger().send(requested, TardisModule.TARDIS, "REQUEST_COMEHERE", player.getName());
         // TODO add to messengers so we support Adventure
-        TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
-        textComponent.setColor(net.md_5.bungee.api.ChatColor.AQUA);
-        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis call accept"));
+        TextComponent textComponent = SpigotComponents.getRequestComehereAccept("REQUEST_COMEHERE_ACCEPT", "/tardis call accept");
         requested.spigot().sendMessage(textComponent);
         // message asking player too
         plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_SENT", requested.getName());

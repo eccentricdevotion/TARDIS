@@ -17,31 +17,30 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 
 public enum RecipeCategory {
 
-    CUSTOM_BLOCKS(Material.ANVIL, 1, 8, ChatColor.DARK_RED),
-    ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, ChatColor.GREEN),
-    CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, ChatColor.LIGHT_PURPLE),
-    FOOD(Material.MELON_SLICE, 10000002, 13, ChatColor.GRAY),
-    ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, ChatColor.RED),
-    ITEMS(Material.GOLD_NUGGET, 12, 17, ChatColor.BLUE),
-    ROTORS(Material.LIGHT_GRAY_DYE, 10000002, 18, ChatColor.GOLD),
-    SONIC_CIRCUITS(Material.GLOWSTONE_DUST, 10001971, 20, ChatColor.GREEN),
-    SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, ChatColor.LIGHT_PURPLE),
-    STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, ChatColor.AQUA),
-    MISC(Material.WATER_BUCKET, 1, 26, ChatColor.GRAY),
-    UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, ChatColor.DARK_RED),
-    UNUSED(Material.STONE, 1, -1, ChatColor.BLACK);
+    CUSTOM_BLOCKS(Material.ANVIL, 1, 8, "#AA0000"),
+    ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, "#55FF55"),
+    CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, "#FF55FF"),
+    FOOD(Material.MELON_SLICE, 10000002, 13, "#AAAAAA"),
+    ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, "#FF5555"),
+    ITEMS(Material.GOLD_NUGGET, 12, 17, "#5555FF"),
+    ROTORS(Material.LIGHT_GRAY_DYE, 10000002, 18, "#FFAA00"),
+    SONIC_CIRCUITS(Material.GLOWSTONE_DUST, 10001971, 20, "#55FF55"),
+    SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, "#FF55FF"),
+    STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, "#55FFFF"),
+    MISC(Material.WATER_BUCKET, 1, 26, "#AAAAAA"),
+    UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, "#AA0000"),
+    UNUSED(Material.STONE, 1, -1, "#000000");
 
     private final Material material;
     private final int customModelData;
     private final int slot;
-    private final ChatColor colour;
+    private final String colour;
 
-    RecipeCategory(Material material, int customModelData, int slot, ChatColor colour) {
+    RecipeCategory(Material material, int customModelData, int slot, String colour) {
         this.material = material;
         this.customModelData = customModelData;
         this.slot = slot;
@@ -65,7 +64,7 @@ public enum RecipeCategory {
         return slot;
     }
 
-    public ChatColor getColour() {
+    public String getColour() {
         return colour;
     }
 }

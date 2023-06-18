@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 /**
@@ -49,10 +46,7 @@ public class TARDISUpdateLister {
             for (Updateable updateable : Updateable.values()) {
                 if (updateable.getCategory() == category) {
                     // TODO
-                    TextComponent tcu = new TextComponent(updateable.getName());
-                    tcu.setColor(category.getColour());
-                    tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
-                    tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis update " + updateable.getName()));
+                    TextComponent tcu = SpigotComponents.getSuggestCommand(updateable.getName(), updateable.getDescription(), category.getColour());
                     player.spigot().sendMessage(tcu);
                 }
             }

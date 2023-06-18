@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -33,39 +32,6 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class AdventureMessage implements TARDISMessage {
-
-    public TextComponent getJenkinsUpdateReady(int current, int latest) {
-        return Component.text("There is a new TARDIS build! You are using ", NamedTextColor.RED)
-                .append(Component.text("#" + current, NamedTextColor.GOLD))
-                .append(Component.text(", the latest build is ", NamedTextColor.RED))
-                .append(Component.text("#" + latest, NamedTextColor.GOLD))
-                .append(Component.text("!", NamedTextColor.RED));
-    }
-
-    public TextComponent getUpdateCommand() {
-        return Component.text("Visit ", NamedTextColor.GOLD)
-                .append(Component.text("http://tardisjenkins.duckdns.org:8080/job/TARDIS/")
-                        .clickEvent(ClickEvent.openUrl("http://tardisjenkins.duckdns.org:8080/job/TARDIS/"))
-                )
-                .append(Component.text(" or run the "))
-                .append(Component.text("'/tardisadmin update_plugins'")
-                        .color(NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tardisadmin update_plugins"))
-                )
-                .append(Component.text(" command"));
-    }
-
-    public TextComponent getBuildsBehind(int behind) {
-        return Component.text("[TARDIS]", NamedTextColor.GOLD)
-                .color(NamedTextColor.WHITE)
-                .append(Component.text("You are "))
-                .append(Component.text(behind))
-                .append(Component.text(" builds behind! Type "))
-                .append(Component.text("/tadmin update_plugins", NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tadmin update_plugins"))
-                )
-                .append(Component.text("to update!"));
-    }
 
     private TextComponent getModule(TardisModule module) {
         TextColor colour = TextColor.fromHexString(module.getHex());
@@ -81,17 +47,17 @@ public class AdventureMessage implements TARDISMessage {
 
     @Override
     public void sendJenkinsUpdateReady(CommandSender cs, int current, int latest) {
-        cs.sendMessage(getJenkinsUpdateReady(current, latest));
+        cs.sendMessage(AdventureComponents.getJenkinsUpdateReady(current, latest));
     }
 
     @Override
     public void sendUpdateCommand(CommandSender cs) {
-        cs.sendMessage(getUpdateCommand());
+        cs.sendMessage(AdventureComponents.getUpdateCommand());
     }
 
     @Override
     public void sendBuildsBehind(CommandSender cs, int behind) {
-        cs.sendMessage(getBuildsBehind(behind));
+        cs.sendMessage(AdventureComponents.getBuildsBehind(behind));
     }
 
     public void message(Audience audience, TardisModule module, String message) {

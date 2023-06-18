@@ -22,11 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 /**
@@ -53,11 +49,7 @@ public class TARDISRoomLister {
             if (!value.isEmpty()) {
                 value.forEach((s) -> {
                     // TODO
-                    TextComponent tcr = new TextComponent("    " + s);
-                    ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
-                    tcr.setColor(colour);
-                    tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-                    tcr.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis room " + s));
+                    TextComponent tcr = SpigotComponents.getRoom(s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())));
                     player.spigot().sendMessage(tcr);
                 });
             } else {
@@ -65,10 +57,8 @@ public class TARDISRoomLister {
             }
         });
         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_GALLERY");
-        TextComponent tcg = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
-        tcg.setColor(ChatColor.AQUA);
-        tcg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        tcg.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://eccentricdevotion.github.io/TARDIS/room-gallery"));
+        // TODO
+        TextComponent tcg = SpigotComponents.getRoomGallery();
         player.spigot().sendMessage(tcg);
     }
 

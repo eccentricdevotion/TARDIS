@@ -36,7 +36,12 @@ import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIAdventure;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUISpigot;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUIAdventure;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUISpigot;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
 import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
@@ -125,7 +130,8 @@ public class TARDIS extends JavaPlugin {
     private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
-    private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
+    private TARDISChatGUI jsonKeeper;
+    private TARDISUpdateChatGUI updateChatGUI;
     private final List<String> cleanUpWorlds = new ArrayList<>();
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
@@ -323,6 +329,8 @@ public class TARDIS extends JavaPlugin {
             hasVersion = true;
             PaperLib.suggestPaper(this);
             messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
+            jsonKeeper = (PaperLib.isPaper()) ? new TARDISChatGUIAdventure() : new TARDISChatGUISpigot();
+            updateChatGUI = (PaperLib.isPaper()) ? new TARDISUpdateChatGUIAdventure(this) : new TARDISUpdateChatGUISpigot(this);
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
@@ -1041,8 +1049,17 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Chat GUI JSON class
      */
-    public TARDISChatGUIJSON getJsonKeeper() {
+    public TARDISChatGUI getJsonKeeper() {
         return jsonKeeper;
+    }
+
+    /**
+     * Gets the TARDIS Update Chat GUI JSON class
+     *
+     * @return the TARDIS Chat GUI JSON class
+     */
+    public TARDISUpdateChatGUI getUpdateGUI() {
+        return updateChatGUI;
     }
 
     /**

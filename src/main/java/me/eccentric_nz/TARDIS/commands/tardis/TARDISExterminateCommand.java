@@ -20,11 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
+import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,10 +39,7 @@ class TARDISExterminateCommand {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
                 // TODO
-                TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"));
-                textComponent.setColor(ChatColor.AQUA);
-                textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-                textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis exterminate 6z@3=V!Q7*/O_OB^"));
+                TextComponent textComponent = SpigotComponents.getExterminate(plugin);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 player.spigot().sendMessage(textComponent);
                 return true;

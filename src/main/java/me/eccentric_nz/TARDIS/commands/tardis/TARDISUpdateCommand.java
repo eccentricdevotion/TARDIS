@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
@@ -68,7 +67,7 @@ class TARDISUpdateCommand {
     boolean startUpdate(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
-                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                return plugin.getUpdateGUI().showInterface(player, args);
             } else if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
