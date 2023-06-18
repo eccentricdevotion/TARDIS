@@ -105,4 +105,6 @@ public interface TARDISMessage {
     public void sendWithColours(CommandSender cs, TardisModule module, String first, String colour, String last, String hue);
 
     public void sendCommand(CommandSender cs, String root, String command);
+
+    public void sendHeadsUpDisplay(Player player, TARDIS plugin);
 }

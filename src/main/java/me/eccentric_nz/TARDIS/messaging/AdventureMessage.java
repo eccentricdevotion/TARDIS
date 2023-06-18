@@ -27,6 +27,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -250,5 +251,11 @@ public class AdventureMessage implements TARDISMessage {
     @Override
     public void sendCommand(CommandSender cs, String root, String command) {
         cs.sendMessage(AdventureComponents.getCommand(root, command));
+    }
+
+    @Override
+    public void sendHeadsUpDisplay(Player player, TARDIS plugin) {
+        TextComponent actionBar = LegacyComponentSerializer.legacyAmpersand().deserialize(plugin.getUtils().actionBarFormat(player));
+        player.sendActionBar(actionBar);
     }
 }

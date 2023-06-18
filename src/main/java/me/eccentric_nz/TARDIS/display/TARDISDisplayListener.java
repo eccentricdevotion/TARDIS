@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.display;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,8 +37,7 @@ public class TARDISDisplayListener implements Listener {
             if (event.getFrom().getWorld().getName().contains("TARDIS")) {
                 return;
             }
-            // TODO action bar
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.getUtils().actionBarFormat(player)));
+            plugin.getMessenger().sendHeadsUpDisplay(player, plugin);
         }
     }
 }

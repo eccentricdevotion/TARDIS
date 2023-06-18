@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -258,5 +259,10 @@ public class SpigotMessage implements TARDISMessage {
     @Override
     public void sendCommand(CommandSender cs, String root, String command) {
         cs.spigot().sendMessage(SpigotComponents.getCommand(root, command));
+    }
+
+    @Override
+    public void sendHeadsUpDisplay(Player player, TARDIS plugin) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.getUtils().actionBarFormat(player)));
     }
 }
