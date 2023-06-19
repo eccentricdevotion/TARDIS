@@ -48,6 +48,8 @@ public interface TARDISMessage {
 
     public void handlesSend(Player p, String key, Object... subs);
 
+    public void send(CommandSender cs, TardisModule module, String key);
+
     public void send(CommandSender cs, TardisModule module, String key, Object... subs);
 
     public void send(CommandSender cs, TardisModule module, String key, boolean handbrake);

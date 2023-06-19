@@ -108,6 +108,12 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
+    public void send(CommandSender cs, TardisModule module, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, module, local);
+    }
+
+    @Override
     public void send(CommandSender cs, TardisModule module, String key, Object... subs) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, module, String.format(local, subs));

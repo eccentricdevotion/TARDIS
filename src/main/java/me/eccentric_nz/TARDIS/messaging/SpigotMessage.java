@@ -99,9 +99,15 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
-    public void send(CommandSender p, TardisModule module, String key, Object... subs) {
+    public void send(CommandSender cs, TardisModule module, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, module, String.format(local, subs));
+        message(cs, module, local);
+    }
+
+    @Override
+    public void send(CommandSender cs, TardisModule module, String key, Object... subs) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, module, String.format(local, subs));
     }
 
     @Override
@@ -120,13 +126,7 @@ public class SpigotMessage implements TARDISMessage {
             ChatColor colour = ChatColor.of(hex);
             m.setColor(colour);
             textComponent.addExtra(m);
-//            String concat = getModule(module) + colour + message;
-//            if (concat.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-//                String[] multiline = TARDISChatPaginator.wordWrap(concat);
-//                cs.spigot().sendMessage(multiline);
-//            } else {
             cs.spigot().sendMessage(textComponent);
-//            }
         }
     }
 
