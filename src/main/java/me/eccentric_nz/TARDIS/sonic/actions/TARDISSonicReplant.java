@@ -139,6 +139,7 @@ public class TARDISSonicReplant implements Runnable {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SWEET_BERRIES));
                 }
             }
+            // TODO add pitcher / torch flower crops
             default -> {
             }
         }

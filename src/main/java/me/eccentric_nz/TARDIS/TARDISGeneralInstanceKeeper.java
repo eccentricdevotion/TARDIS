@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -282,39 +283,18 @@ public class TARDISGeneralInstanceKeeper {
     private Set<Material> buildTransparent() {
         Set<Material> trans = new HashSet<>();
         // add transparent blocks
-        trans.add(Material.ACACIA_SAPLING);
-        trans.add(Material.AIR);
-        trans.add(Material.CAVE_AIR);
-        trans.add(Material.VOID_AIR);
-        trans.add(Material.ALLIUM);
-        trans.add(Material.AZURE_BLUET);
-        trans.add(Material.BIRCH_SAPLING);
-        trans.add(Material.BLUE_ORCHID);
-        trans.add(Material.DARK_OAK_SAPLING);
-        trans.add(Material.DEAD_BUSH);
         trans.add(Material.END_ROD);
-        trans.add(Material.FERN);
-        trans.add(Material.GRASS);
         trans.add(Material.IRON_BARS);
-        trans.add(Material.JUNGLE_SAPLING);
-        trans.add(Material.LARGE_FERN);
-        trans.add(Material.LILAC);
-        trans.add(Material.OAK_SAPLING);
-        trans.add(Material.ORANGE_TULIP);
-        trans.add(Material.OXEYE_DAISY);
-        trans.add(Material.PEONY);
-        trans.add(Material.PINK_TULIP);
-        trans.add(Material.POPPY);
+        trans.add(Material.MOSS_CARPET);
+        trans.add(Material.PINK_PETALS);
         trans.add(Material.REDSTONE_WIRE);
-        trans.add(Material.RED_TULIP);
-        trans.add(Material.ROSE_BUSH);
-        trans.add(Material.SNOW);
-        trans.add(Material.SPRUCE_SAPLING);
-        trans.add(Material.SUNFLOWER);
-        trans.add(Material.TALL_GRASS);
-        trans.add(Material.VINE);
-        trans.add(Material.WATER);
-        trans.add(Material.WHITE_TULIP);
+        trans.addAll(Tag.CROPS.getValues());
+        trans.addAll(Tag.PRESSURE_PLATES.getValues());
+        trans.addAll(Tag.REPLACEABLE.getValues());
+        trans.addAll(Tag.SAPLINGS.getValues());
+        trans.addAll(Tag.SMALL_FLOWERS.getValues());
+        trans.addAll(Tag.TALL_FLOWERS.getValues());
+        trans.addAll(Tag.WOOL_CARPETS.getValues());
         return trans;
     }
 

@@ -3,7 +3,7 @@
 ## Current version `5.0.0`
 
 1. Remove use of ChatColor in sonic screwdrivers - we should be able to use their custom model data
-2. ?
+2. Add pitcher / torch flower crops to sonic replanter
 
 ## Next version `5.1.0`
 
