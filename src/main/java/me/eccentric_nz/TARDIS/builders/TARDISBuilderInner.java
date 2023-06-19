@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -315,7 +317,12 @@ public class TARDISBuilderInner implements Runnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
+                    // set regular blocks for bedrock players
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
+                    } else {
+                        TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
+                    }
                 }
             }
             // remove dropped items
@@ -369,10 +376,12 @@ public class TARDISBuilderInner implements Runnable {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
-                // set block data to BARRIER
-                data = TARDISConstants.BARRIER;
-                // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    // set block data to BARRIER
+                    data = TARDISConstants.BARRIER;
+                    // spawn an item display entity
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
+                }
             }
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
@@ -382,9 +391,11 @@ public class TARDISBuilderInner implements Runnable {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
                                 default -> {
-                                    data = TARDISConstants.BARRIER;
-                                    // spawn an item display entity
-                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                        data = TARDISConstants.BARRIER;
+                                        // spawn an item display entity
+                                        TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                                    }
                                 }
                             }
                         } else {
@@ -421,9 +432,11 @@ public class TARDISBuilderInner implements Runnable {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
                             default -> {
-                                data = TARDISConstants.BARRIER;
-                                // spawn an item display entity
-                                TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                    data = TARDISConstants.BARRIER;
+                                    // spawn an item display entity
+                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                                }
                             }
                         }
                     }
@@ -454,14 +467,18 @@ public class TARDISBuilderInner implements Runnable {
                 }
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
-                data = TARDISConstants.BARRIER;
-                // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    data = TARDISConstants.BARRIER;
+                    // spawn an item display entity
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                }
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
-                data = TARDISConstants.BARRIER;
-                // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    data = TARDISConstants.BARRIER;
+                    // spawn an item display entity
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                }
             }
             if (type.equals(Material.SPAWNER)) { // scanner button
                 /*
@@ -503,10 +520,12 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, dbID);
-                // set block data to correct BARRIER + Item Display
-                data = TARDISConstants.BARRIER;
-                // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    // set block data to correct BARRIER + Item Display
+                    data = TARDISConstants.BARRIER;
+                    // spawn an item display entity
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
+                }
             }
             if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                 /*

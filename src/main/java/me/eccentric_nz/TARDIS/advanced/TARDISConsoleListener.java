@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
@@ -83,10 +84,12 @@ public class TARDISConsoleListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (rsc.resultSet()) {
                     event.setCancelled(true);
-                    // update block if it's not a display item entity
-                    if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
-                        block.setType(Material.BARRIER);
-                        TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block);
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) {
+                        // update block if it's not a display item entity
+                        if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                            block.setType(Material.BARRIER);
+                            TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block);
+                        }
                     }
                     int id = rsc.getTardis_id();
                     // determine key item

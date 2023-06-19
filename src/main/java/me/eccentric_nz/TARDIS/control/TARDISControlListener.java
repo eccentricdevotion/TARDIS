@@ -351,9 +351,11 @@ public class TARDISControlListener implements Listener {
                                     inv.setContents(stack);
                                     player.openInventory(inv);
                                     // update note block if it's not BARRIER + Item Display
-                                    if (blockType.equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
-                                        block.setBlockData(TARDISConstants.BARRIER, true);
-                                        TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
+                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                        if (blockType.equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+                                            block.setBlockData(TARDISConstants.BARRIER, true);
+                                            TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
+                                        }
                                     }
                                 }
                                 case 16 -> // enter zero room

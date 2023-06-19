@@ -40,6 +40,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
@@ -437,7 +439,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
+                    // set regular blocks for bedrock players
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), wg1, id);
+                    } else {
+                        TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
+                    }
                 }
             }
             // finished processing - update tardis table!
@@ -559,15 +566,20 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        data = TARDISConstants.BARRIER;
-                        TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                        // set regular blocks for bedrock players
+                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                            data = TARDISConstants.BARRIER;
+                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                        }
                     } else {
                         data = wall_type.createBlockData();
                     }
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    data = TARDISConstants.BARRIER;
-                    TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        data = TARDISConstants.BARRIER;
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                    }
                 }
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(b);
@@ -584,12 +596,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postLightBlocks.add(world.getBlockAt(x, y - 1, z));
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
-                    data = TARDISConstants.BARRIER;
-                    TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        data = TARDISConstants.BARRIER;
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                    }
                 }
                 if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
-                    data = TARDISConstants.BARRIER;
-                    TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        data = TARDISConstants.BARRIER;
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                    }
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     data = floor_type.createBlockData();
