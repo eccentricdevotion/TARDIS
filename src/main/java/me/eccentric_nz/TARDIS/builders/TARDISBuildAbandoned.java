@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -45,11 +49,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -572,7 +571,7 @@ class TARDISBuildAbandoned implements Runnable {
                 postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.LEVER)) {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-            } else if (Tag.SIGNS.isTagged(type)) {
+            } else if (Tag.ALL_SIGNS.isTagged(type)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), c);
             } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);

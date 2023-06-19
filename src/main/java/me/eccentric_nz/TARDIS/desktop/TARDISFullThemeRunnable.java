@@ -845,7 +845,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postPistonBaseBlocks.put(b, data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(b, data);
-                } else if (Tag.SIGNS.isTagged(type)) {
+                } else if (Tag.ALL_SIGNS.isTagged(type)) {
                     postSignBlocks.put(b, bb);
                 } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                     postDripstoneBlocks.put(b, data);

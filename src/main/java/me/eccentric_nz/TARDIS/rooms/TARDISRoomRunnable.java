@@ -212,7 +212,7 @@ public class TARDISRoomRunnable implements Runnable {
                                 case LEVER -> leverblocks.put(postBlock, postData);
                                 case IRON_TRAPDOOR -> trapdoorblocks.put(postBlock, postData);
                                 default -> {
-                                    if (Tag.SIGNS.isTagged(postData.getMaterial())) {
+                                    if (Tag.ALL_SIGNS.isTagged(postData.getMaterial())) {
                                        signblocks.put(postBlock, postData);
                                     }
                                 }
@@ -554,7 +554,7 @@ public class TARDISRoomRunnable implements Runnable {
                         data = floor_type.createBlockData();
                     }
                 }
-                if (Tag.SIGNS.isTagged(type)) {
+                if (Tag.ALL_SIGNS.isTagged(type)) {
                     Block sign = world.getBlockAt(startx, starty, startz);
                     postSignBlocks.put(sign, v);
                     signblocks.put(sign, data);

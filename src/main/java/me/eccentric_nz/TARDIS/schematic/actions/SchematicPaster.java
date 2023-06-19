@@ -190,7 +190,7 @@ public class SchematicPaster implements Runnable {
                             TARDISBannerData tbd = new TARDISBannerData(data, state);
                             postBanners.put(block, tbd);
                         }
-                    } else if (Tag.SIGNS.isTagged(data.getMaterial())) {
+                    } else if (Tag.ALL_SIGNS.isTagged(data.getMaterial())) {
                         JsonObject state = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
                         if (state != null) {
                             block.setBlockData(data, true);

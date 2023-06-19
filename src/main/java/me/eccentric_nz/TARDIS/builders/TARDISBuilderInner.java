@@ -674,7 +674,7 @@ public class TARDISBuilderInner implements Runnable {
                 postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.LEVER)) {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-            } else if (Tag.SIGNS.isTagged(type)) {
+            } else if (Tag.ALL_SIGNS.isTagged(type)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), c);
             } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
