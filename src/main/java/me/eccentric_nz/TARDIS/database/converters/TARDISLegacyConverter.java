@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TARDISLegacyConverter {
 

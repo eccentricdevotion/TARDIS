@@ -28,7 +28,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class HeadlessProjectileListener implements Listener {
     

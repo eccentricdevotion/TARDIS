@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TVMCommandCoords {
 

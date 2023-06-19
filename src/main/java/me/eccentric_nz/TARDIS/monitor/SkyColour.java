@@ -20,7 +20,7 @@ import java.awt.Color;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class SkyColour {
     

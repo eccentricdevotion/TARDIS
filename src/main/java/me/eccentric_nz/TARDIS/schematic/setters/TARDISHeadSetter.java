@@ -29,7 +29,7 @@ import org.bukkit.profile.PlayerTextures;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TARDISHeadSetter {
 

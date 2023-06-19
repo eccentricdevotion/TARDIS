@@ -26,7 +26,7 @@ import org.bukkit.NamespacedKey;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class ShopSettings {
     

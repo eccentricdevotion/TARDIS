@@ -33,7 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * @author macgeek
+ * @author eccentric_nz
  */
 public class MonsterMoveListener implements Listener {
 

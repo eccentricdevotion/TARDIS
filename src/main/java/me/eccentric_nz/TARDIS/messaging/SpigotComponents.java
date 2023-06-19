@@ -30,7 +30,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class SpigotComponents {
 

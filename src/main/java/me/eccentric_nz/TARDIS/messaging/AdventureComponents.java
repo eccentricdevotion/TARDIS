@@ -31,7 +31,7 @@ import net.kyori.adventure.text.format.TextColor;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class AdventureComponents {
 

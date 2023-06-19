@@ -29,7 +29,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * @author macgeek
+ * @author eccentric_nz
  */
 public class Equipper {
 

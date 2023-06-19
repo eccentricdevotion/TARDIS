@@ -37,7 +37,7 @@ import org.bukkit.util.BoundingBox;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TARDISItemFrameSetter {
 

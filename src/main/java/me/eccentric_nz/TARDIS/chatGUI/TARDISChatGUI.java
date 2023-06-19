@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public interface TARDISChatGUI<T> {
 

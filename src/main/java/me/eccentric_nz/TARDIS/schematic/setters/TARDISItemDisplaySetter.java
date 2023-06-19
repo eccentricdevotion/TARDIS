@@ -32,7 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 
 /**
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TARDISItemDisplaySetter {
 

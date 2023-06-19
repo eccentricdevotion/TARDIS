@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  *
- * @author macgeek
+ * @author eccentric_nz
  */
 public class TVMCommandGUI {
 
