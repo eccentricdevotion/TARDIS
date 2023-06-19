@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISHeadSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
@@ -74,7 +75,7 @@ public class SchematicPaster implements Runnable {
         if (!running) {
             UUID uuid = player.getUniqueId();
             if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
-                plugin.getMessenger().message( player, TardisModule.TARDIS, "No schematic loaded! /ts load [console|room|structure|user] [name]");
+                plugin.getMessenger().message(player, TardisModule.TARDIS, "No schematic loaded! /ts load [console|room|structure|user] [name]");
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = -1;
                 return;
@@ -133,11 +134,17 @@ public class SchematicPaster implements Runnable {
                     }
                 }
             }
+            Location start = new Location(world, x, y, z);
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
-                Location start = new Location(world, x, y, z);
                 for (int i = 0; i < frames.size(); i++) {
                     TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
+                }
+            }
+            if (obj.has("item_displays")) {
+                JsonArray displays = obj.get("item_displays").getAsJsonArray();
+                for (int i = 0; i < displays.size(); i++) {
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, -1);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
@@ -164,13 +171,6 @@ public class SchematicPaster implements Runnable {
                     }
                 }
                 case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
-                case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
-                    JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
-                    if (state != null) {
-                        TARDISBannerData tbd = new TARDISBannerData(data, state);
-                        postBanners.put(block, tbd);
-                    }
-                }
                 case PLAYER_HEAD, PLAYER_WALL_HEAD -> {
                     block.setBlockData(data, true);
                     JsonObject head = col.has("head") ? col.get("head").getAsJsonObject() : null;
@@ -183,17 +183,25 @@ public class SchematicPaster implements Runnable {
                         }
                     }
                 }
-                case ACACIA_SIGN, BAMBOO_SIGN, CHERRY_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, MANGROVE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN,
-                        ACACIA_WALL_SIGN, BAMBOO_WALL_SIGN, CHERRY_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, MANGROVE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN,
-                        ACACIA_HANGING_SIGN, BAMBOO_HANGING_SIGN, CHERRY_HANGING_SIGN, BIRCH_HANGING_SIGN, CRIMSON_HANGING_SIGN, DARK_OAK_HANGING_SIGN, JUNGLE_HANGING_SIGN, MANGROVE_HANGING_SIGN, OAK_HANGING_SIGN, SPRUCE_HANGING_SIGN, WARPED_HANGING_SIGN,
-                        ACACIA_WALL_HANGING_SIGN, BAMBOO_WALL_HANGING_SIGN, CHERRY_WALL_HANGING_SIGN, BIRCH_WALL_HANGING_SIGN, CRIMSON_WALL_HANGING_SIGN, DARK_OAK_WALL_HANGING_SIGN, JUNGLE_WALL_HANGING_SIGN, MANGROVE_WALL_HANGING_SIGN, OAK_WALL_HANGING_SIGN, SPRUCE_WALL_HANGING_SIGN, WARPED_WALL_HANGING_SIGN -> {
-                    block.setBlockData(data, true);
-                    TARDISSignSetter.setSign(block, col, null, 0);
-                }
                 default -> {
-                    block.setBlockData(data, true);
-                    if (plugin.getBlockLogger().isLogging()) {
-                        plugin.getBlockLogger().logPlacement(block);
+                    if (Tag.BANNERS.isTagged(data.getMaterial())) {
+                        JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
+                        if (state != null) {
+                            TARDISBannerData tbd = new TARDISBannerData(data, state);
+                            postBanners.put(block, tbd);
+                        }
+                    } else if (Tag.SIGNS.isTagged(data.getMaterial())) {
+                        JsonObject state = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
+                        plugin.debug(col.toString());
+                        if (state != null) {
+                            block.setBlockData(data, true);
+                            TARDISSignSetter.setSign(block, state, null, 0);
+                        }
+                    } else {
+                        block.setBlockData(data, true);
+                        if (plugin.getBlockLogger().isLogging()) {
+                            plugin.getBlockLogger().logPlacement(block);
+                        }
                     }
                 }
             }

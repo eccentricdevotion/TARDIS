@@ -32,18 +32,16 @@ import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.block.data.type.SeaPickle;
-import org.bukkit.block.sign.Side;
-import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
@@ -78,7 +76,6 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<Block> melonblocks = new ArrayList<>();
     private final List<Block> potatoblocks = new ArrayList<>();
     private final List<Block> pumpkinblocks = new ArrayList<>();
-    private final List<Block> signblocks = new ArrayList<>();
     private final List<Block> wheatblocks = new ArrayList<>();
     private final List<Material> notThese = new ArrayList<>();
     private final List<BlockData> flora = new ArrayList<>();
@@ -88,9 +85,11 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> propagules = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> seagrass = new HashMap<>();
+    private final HashMap<Block, BlockData> signblocks = new HashMap<>();
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> trapdoorblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
+    private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
@@ -208,11 +207,13 @@ public class TARDISRoomRunnable implements Runnable {
                                 case PUMPKIN_STEM -> pumpkinblocks.add(postBlock);
                                 case WHEAT -> wheatblocks.add(postBlock);
                                 case FARMLAND -> farmlandblocks.add(postBlock);
-                                case SPRUCE_SIGN -> signblocks.add(postBlock);
                                 case OAK_DOOR -> doorblocks.put(postBlock, postData);
                                 case LEVER -> leverblocks.put(postBlock, postData);
                                 case IRON_TRAPDOOR -> trapdoorblocks.put(postBlock, postData);
                                 default -> {
+                                    if (Tag.SIGNS.isTagged(postData.getMaterial())) {
+                                       signblocks.put(postBlock, postData);
+                                    }
                                 }
                             }
                         }
@@ -242,25 +243,17 @@ public class TARDISRoomRunnable implements Runnable {
                     iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                     iceblocks.clear();
                 }
-                if (room.equals("CHEMISTRY") && !signblocks.isEmpty()) {
-                    boolean first = true;
-                    for (Block b : signblocks) {
-                        Sign sign = (Sign) b.getState();
-                        SignSide front = sign.getSide(Side.FRONT);
-                        if (first) {
-                            front.setLine(1, "Chemistry");
-                            front.setLine(2, "Lab");
-                            first = false;
-                        } else {
-                            front.setLine(1, "Science");
-                            front.setLine(2, "is fun!");
-                        }
-                        sign.update();
-                    }
+                if (!postSignBlocks.isEmpty()) {
+                    TARDISSignSetter.setSigns(postSignBlocks, null, 0);
                 }
                 if (!propagules.isEmpty()) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
+                    }
+                }
+                if (!signblocks.isEmpty()) {
+                    for (Map.Entry<Block, BlockData> sign : signblocks.entrySet()) {
+                        sign.getKey().setBlockData(sign.getValue());
                     }
                 }
                 if (!trapdoorblocks.isEmpty()) {
@@ -558,9 +551,10 @@ public class TARDISRoomRunnable implements Runnable {
                         data = floor_type.createBlockData();
                     }
                 }
-                if (type.equals(Material.SPRUCE_SIGN) && room.equals("CHEMISTRY")) {
+                if (Tag.SIGNS.isTagged(type)) {
                     Block sign = world.getBlockAt(startx, starty, startz);
-                    signblocks.add(sign);
+                    postSignBlocks.put(sign, v);
+                    signblocks.put(sign, data);
                 }
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
