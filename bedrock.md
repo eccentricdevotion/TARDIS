@@ -90,3 +90,8 @@ Click a button to genetic modify your appearance. _Probably won’t work as you'
 
 ![Floodgate genetic manipulator](images/floodgate/genetic.jpg)
 
+## Exterminate
+
+Opens when a player runs the `/tardis exterminate` command. Click the button to confirm you want to delete your TARDIS.
+
+![Floodgate exterminate](images/floodgate/exterminate.jpg)
