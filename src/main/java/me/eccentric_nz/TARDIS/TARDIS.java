@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -36,12 +29,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIAdventure;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUISpigot;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUIAdventure;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUISpigot;
+import me.eccentric_nz.TARDIS.chatGUI.*;
 import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
 import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
@@ -106,6 +94,14 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The main class where everything is enabled and disabled.
  * <p>
@@ -130,12 +126,12 @@ public class TARDIS extends JavaPlugin {
     private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
-    private TARDISChatGUI jsonKeeper;
-    private TARDISUpdateChatGUI updateChatGUI;
     private final List<String> cleanUpWorlds = new ArrayList<>();
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
+    private TARDISChatGUI jsonKeeper;
+    private TARDISUpdateChatGUI updateChatGUI;
     //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -314,6 +310,13 @@ public class TARDIS extends JavaPlugin {
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
                 getLogger().log(Level.SEVERE, "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
+                hasVersion = false;
+                pm.disablePlugin(this);
+                return;
+            }
+            // don't start if TARDISChunkGenerator is present
+            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+                getLogger().log(Level.SEVERE, "This plugin no longer requires TARDISChunkGenerator please remove and try again, disabling...");
                 hasVersion = false;
                 pm.disablePlugin(this);
                 return;
