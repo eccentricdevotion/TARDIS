@@ -192,7 +192,6 @@ public class SchematicPaster implements Runnable {
                         }
                     } else if (Tag.SIGNS.isTagged(data.getMaterial())) {
                         JsonObject state = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
-                        plugin.debug(col.toString());
                         if (state != null) {
                             block.setBlockData(data, true);
                             TARDISSignSetter.setSign(block, state, null, 0);
