@@ -382,6 +382,8 @@ Adds, updates, removes and teleports to an internal TARDIS transmat location.
 
 Stand at the location where you want to add a transmat location, then run the command `/tardis transmat add [name]`.
 
+See [TARDIS Transmats](transmat.html) for more info.
+
 * * *
 
 ## ???
