@@ -24,8 +24,6 @@ import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.messaging.SpigotComponents;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -73,8 +71,7 @@ class TARDISTransmatCommand {
             if (rslist.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_LIST");
                 for (Transmat t : rslist.getData()) {
-                    TextComponent tcg = SpigotComponents.getTransmat(t);
-                    player.spigot().sendMessage(tcg);
+                    plugin.getMessenger().sendTransmat(player, t);
                 }
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NO_LIST");

@@ -3,7 +3,8 @@
 ## Current version `5.0.0`
 
 1. Remove use of ChatColor in sonic screwdrivers - we should be able to use their custom model data
-2. ?
+2. Fix Chemistry room growing
+3. ?
 
 ## Next version `5.1.0`
 

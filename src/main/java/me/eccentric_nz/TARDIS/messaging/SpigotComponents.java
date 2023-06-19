@@ -113,8 +113,9 @@ public class SpigotComponents {
     public static final TextComponent getTransmat(Transmat t) {
         TextComponent textComponent = new TextComponent(t.getName());
         textComponent.setColor(ChatColor.GREEN);
-        TextComponent tcl = new TextComponent(String.format("X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
-        TextComponent tce = new TextComponent(" < Transmat > ");
+        TextComponent tcl = new TextComponent(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
+        tcl.setColor(ChatColor.WHITE);
+        TextComponent tce = new TextComponent(" <Transmat>");
         tce.setColor(ChatColor.AQUA);
         tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Transmat to this location")));
         tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.getName()));

@@ -100,8 +100,8 @@ public class AdventureComponents {
 
     public static final TextComponent getTransmat(Transmat t) {
         TextComponent textComponent = Component.text(t.getName(), NamedTextColor.GREEN)
-                .append(Component.text(String.format("X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw())))
-                .append(Component.text(" < Transmat > ", NamedTextColor.AQUA)
+                .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()), NamedTextColor.WHITE))
+                .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
                         .hoverEvent(HoverEvent.showText(Component.text("Transmat to this location")))
                         .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.getName()))
                 );
