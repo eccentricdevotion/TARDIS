@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
@@ -535,8 +536,10 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wall_type.equals(Material.LIME_WOOL) || wall_type.equals(Material.PINK_WOOL)))) {
                         if (ow.equals(Material.ORANGE_WOOL)) {
-                            data = TARDISConstants.BARRIER;
-                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                            if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                data = TARDISConstants.BARRIER;
+                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                            }
                         } else {
                             data = ow.createBlockData();
                         }
@@ -830,9 +833,11 @@ public class TARDISRoomRunnable implements Runnable {
                         data = TARDISConstants.AIR;
                     } else {
                         if (ow.equals(Material.ORANGE_WOOL) && wall_type.equals(Material.ORANGE_WOOL)) {
-                            data = TARDISConstants.BARRIER;
-                            // set hexagon item display
-                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                            if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                data = TARDISConstants.BARRIER;
+                                // set hexagon item display
+                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                            }
                         } else {
                             data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
                         }
