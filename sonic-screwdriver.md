@@ -47,7 +47,7 @@ crafting table. Each circuit has an associated permission, see the
 
 ### Player Pref Menu
 
-Right-clicking AIR with any sonic screwdriver opens the Player Pref Menu GUI
+Right-clicking AIR while sneaking with any sonic screwdriver opens the Player Pref Menu GUI
 where you can click preference items to toggle them on and off. The preferences
 menu also has a map button to open the [TARDIS Map](map.html) and the [Sonic Configurator](sonic-configurator.hml).
 
@@ -123,6 +123,12 @@ Right-click the arrow, then step towards to pick it up.
 ### Knockback
 
 The Knockback upgraded Sonic allows you repel monsters when right-clicking them.
+
+### Brush
+
+The Brush upgraded Sonic allows you sonically brush suspicious blocks to get their hidden items.
+Right-click the block until the item pops out. _Note:_ Due to the current limitations of the 
+Bukkit API the item will not emerge slowly like it would with a vanilla brush.
 
 ### Server Admin
 
