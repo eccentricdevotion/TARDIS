@@ -14,6 +14,8 @@ from: [http://tardisjenkins.duckdns.org:8080/view/TARDIS/](http://tardisjenkins.
 
 You install TARDIS just like you would any other Spigot/Paper plugin, by dropping it into the Bukkit plugins folder and starting the server.
 
+#### v5.x.x does NOT need TARDISChunkGenerator - do not install it!
+
 > For versions before 5.0.0, see [Legacy installation](installation-old.html)
 
 The TARDIS database, configuration, schematic and advancement files will be created automatically.
