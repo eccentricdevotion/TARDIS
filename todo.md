@@ -2,9 +2,8 @@
 
 ## Current version `5.0.0`
 
-1. Fix TARDIS extermination for Bedrock players
-2. Remove use of ChatColor in sonic screwdrivers - we should be able to use their custom model data
-3. ?
+1. Remove use of ChatColor in sonic screwdrivers - we should be able to use their custom model data
+2. ?
 
 ## Next version `5.1.0`
 

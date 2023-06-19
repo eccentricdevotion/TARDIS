@@ -55,7 +55,5 @@ public class FloodgateTextures {
         lookup.put("WHITE_WOOL", "blocks/wool_colored_white");
         lookup.put("YELLOW_CONCRETE", "blocks/concrete_yellow");
         lookup.put("YELLOW_WOOL", "blocks/wool_colored_yellow");
-
     }
-
 }

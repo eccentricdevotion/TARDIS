@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateExterminateForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,6 +40,12 @@ class TARDISExterminateCommand {
             if (messagePlayer) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 plugin.getMessenger().sendExterminate(player, plugin);
+                // open floodgate gui
+                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        new FloodgateExterminateForm(plugin, player.getUniqueId()).send();
+                    }, 2L);
+                }
                 return true;
             } else {
                 return new TARDISExterminator(plugin).exterminate(player);
