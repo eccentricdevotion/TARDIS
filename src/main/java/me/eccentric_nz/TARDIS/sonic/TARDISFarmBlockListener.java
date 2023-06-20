@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicReplant;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -30,6 +29,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISFarmBlockListener implements Listener {
@@ -48,6 +48,9 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material ss = Material.WHEAT_SEEDS;
     private final Material sb = Material.SWEET_BERRIES;
     private final Material ca = Material.CACTUS;
+    private final Material pp = Material.PITCHER_POD;
+    private final Material tfs = Material.TORCHFLOWER_SEEDS;
+    private final Material tf = Material.TORCHFLOWER;
     private final Material sonic;
 
     public TARDISFarmBlockListener(TARDIS plugin) {
@@ -67,63 +70,72 @@ public class TARDISFarmBlockListener implements Listener {
         if (!TARDISMaterials.crops.contains(material)) {
             return;
         }
-        ItemStack stack = player.getInventory().getItemInMainHand();
+        PlayerInventory inv = player.getInventory();
+        ItemStack stack = inv.getItemInMainHand();
         if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
             ItemMeta im = stack.getItemMeta();
-            if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
-                if ((material.equals(sc)) && player.getInventory().contains(sc)) {
+            if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
+                if ((material.equals(sc)) && inv.contains(sc)) {
                     // SUGAR_CANE
                     processHarvest(player, sc, block);
-                } else if (material.equals(ca) && player.getInventory().contains(ca)) {
+                } else if (material.equals(ca) && inv.contains(ca)) {
                     // CACTUS
                     processHarvest(player, ca, block);
+                } else if (material.equals(tf) && inv.contains(tf)) {
+                    // TORCHFLOWER
+                    processHarvest(player, tf, block);
                 } else {
                     Ageable ageable = (Ageable) block.getBlockData();
                     if (ageable.getAge() == ageable.getMaximumAge()) {
                         switch (material) {
                             case BEETROOTS -> {
-                                if (player.getInventory().contains(bs)) {
+                                if (inv.contains(bs)) {
                                     processHarvest(player, bs, block);
                                 }
                             }
                             case CARROTS -> {
-                                if (player.getInventory().contains(ci)) {
+                                if (inv.contains(ci)) {
                                     processHarvest(player, ci, block);
                                 }
                             }
                             case COCOA -> {
-                                if (player.getInventory().contains(is)) {
+                                if (inv.contains(is)) {
                                     processHarvest(player, is, block);
                                 }
                             }
                             case WHEAT -> {
-                                if (player.getInventory().contains(ss)) {
+                                if (inv.contains(ss)) {
                                     processHarvest(player, ss, block);
                                 }
                             }
                             case MELON_STEM -> {
-                                if (player.getInventory().contains(ms)) {
+                                if (inv.contains(ms)) {
                                     processHarvest(player, ms, block);
                                 }
                             }
                             case NETHER_WART -> {
-                                if (player.getInventory().contains(nw)) {
+                                if (inv.contains(nw)) {
                                     processHarvest(player, nw, block);
                                 }
                             }
                             case POTATOES -> {
-                                if (player.getInventory().contains(pi)) {
+                                if (inv.contains(pi)) {
                                     processHarvest(player, pi, block);
                                 }
                             }
                             case PUMPKIN_STEM -> {
-                                if (player.getInventory().contains(ps)) {
+                                if (inv.contains(ps)) {
                                     processHarvest(player, ps, block);
                                 }
                             }
                             case SWEET_BERRY_BUSH -> {
-                                if (player.getInventory().contains(sb)) {
+                                if (inv.contains(sb)) {
                                     processHarvest(player, sb, block);
+                                }
+                            }
+                            case PITCHER_CROP -> {
+                                if (inv.contains(pp)) {
+                                    processHarvest(player, pp, block);
                                 }
                             }
                             default -> {

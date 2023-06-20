@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -26,6 +23,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISSonicReplant implements Runnable {
 
@@ -139,8 +140,22 @@ public class TARDISSonicReplant implements Runnable {
                     block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SWEET_BERRIES));
                 }
             }
-            // TODO add pitcher / torch flower crops
+            case PITCHER_POD -> {
+                if (under.getType().equals(soil) && block.getType().equals(air)) {
+                    block.setBlockData(Material.PITCHER_CROP.createBlockData());
+                } else {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.PITCHER_PLANT));
+                }
+            }
+            case TORCHFLOWER, TORCHFLOWER_SEEDS -> {
+                if (under.getType().equals(soil) && block.getType().equals(air)) {
+                    block.setBlockData(Material.TORCHFLOWER_CROP.createBlockData());
+                } else {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.TORCHFLOWER));
+                }
+            }
             default -> {
+
             }
         }
     }
