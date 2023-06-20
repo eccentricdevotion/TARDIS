@@ -279,7 +279,7 @@ Item Frame. They have custom block models for the materialisation animation as w
 
 ![weeping angel](images/presets/weeping.jpg)
 
-**ANY COLOUR** - Mix your own colour police box! Use the colour picker to mix yor own favourite colour.
+**ANY COLOUR** - Mix your own colour police box! Use the colour picker to mix your own favourite colour.
 
 ![colour picker](images/docs/colour_picker_gui.jpg)
 
