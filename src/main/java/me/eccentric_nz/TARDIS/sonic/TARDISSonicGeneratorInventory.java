@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -59,14 +58,13 @@ class TARDISSonicGeneratorInventory {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(sonic.getChatColor() + "Sonic Screwdriver");
+                im.setDisplayName("Sonic Screwdriver");
                 im.setLore(Collections.singletonList(sonic.getName()));
                 im.setCustomModelData(sonic.getCustomModelData());
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
             }
         }
-        // \u00a7 = § (ChatColor code)
         // brush upgrade
         if (TARDISPermission.hasPermission(player, "tardis.sonic.brush")) {
             ItemStack brush = new ItemStack(Material.BOWL, 1);
@@ -209,8 +207,7 @@ class TARDISSonicGeneratorInventory {
         // players preferred sonic
         ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta screw = sonic.getItemMeta();
-        String dn = (data.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : data.getSonicType() + "Sonic Screwdriver";
-        screw.setDisplayName(dn);
+        screw.setDisplayName("Sonic Screwdriver");
         screw.setCustomModelData(data.getCustomModelData());
         List<String> upgrades = new ArrayList<>();
         double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;

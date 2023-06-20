@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import java.util.UUID;
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -26,7 +25,6 @@ public class Sonic {
 
     private final UUID uuid;
     private final boolean activated;
-    private final ChatColor sonicType;
     private final int customModelData;
     private final boolean bio;
     private final boolean diamond;
@@ -38,10 +36,9 @@ public class Sonic {
     private final boolean knockback;
     private final boolean brush;
 
-    public Sonic(UUID uuid, boolean activated, ChatColor sonicType, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush) {
+    public Sonic(UUID uuid, boolean activated, int customModelData, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush) {
         this.uuid = uuid;
         this.activated = activated;
-        this.sonicType = sonicType;
         this.customModelData = customModelData;
         this.bio = bio;
         this.diamond = diamond;
@@ -60,10 +57,6 @@ public class Sonic {
 
     public boolean isActivated() {
         return activated;
-    }
-
-    public ChatColor getSonicType() {
-        return sonicType;
     }
 
     public int getCustomModelData() {

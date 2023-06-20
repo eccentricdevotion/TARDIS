@@ -30,6 +30,7 @@ public enum GUISonicConfigurator {
     IGNITE_UPGRADE(56, 5, Material.BOWL, ""),
     PICKUP_ARROWS_UPGRADE(68, 6, Material.BOWL, ""),
     KNOCKBACK_UPGRADE(134, 7, Material.BOWL, ""),
+    BRUSH_UPGRADE(150, 8, Material.BOWL, ""),
     INSTRUCTIONS_1_OF_2(1, 23, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
     INSTRUCTIONS_2_OF_2(1, 24, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
     NOT_UPGRADED(1, -1, Material.GRAY_WOOL, ""),

@@ -51,7 +51,7 @@ class TARDISKeyMenuInventory {
             if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
                 im.setDisplayName(key.getName());
             } else {
-                im.setDisplayName(key.getChatColor() + "TARDIS Key");
+                im.setDisplayName("TARDIS Key");
             }
             if (!key.getLore().isEmpty()) {
                 if (key.getLore().contains("~")) {

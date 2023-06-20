@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -23,10 +26,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class TARDISSonicReplant implements Runnable {
 

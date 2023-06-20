@@ -2,8 +2,7 @@
 
 ## Current version `5.0.0`
 
-1. Remove use of ChatColor in sonic screwdrivers - we should be able to use their custom model data
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 
@@ -12,7 +11,8 @@
 3. Fix laggy Silurian cave finder
 4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
 5. Animated models for player disguises
-6. Custom Control models #703 #355
+6. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 7. Sonic Blaster
 
 ## Future versions

@@ -26,7 +26,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a Time Lord's preferred sonic
@@ -89,12 +88,9 @@ public class ResultSetSonic {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                String colour = rs.getString("sonic_type");
-                ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
                         UUID.fromString(rs.getString("uuid")),
                         rs.getBoolean("activated"),
-                        cc,
                         rs.getInt("model"),
                         rs.getBoolean("bio"),
                         rs.getBoolean("diamond"),

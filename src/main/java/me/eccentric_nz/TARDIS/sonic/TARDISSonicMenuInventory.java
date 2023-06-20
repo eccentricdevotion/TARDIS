@@ -61,7 +61,6 @@ public class TARDISSonicMenuInventory {
                 stack[sonic.getSlot()] = is;
             }
         }
-        // \u00a7 = § (ChatColor code)
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();

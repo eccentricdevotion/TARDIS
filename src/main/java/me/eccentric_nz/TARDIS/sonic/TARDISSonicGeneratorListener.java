@@ -116,8 +116,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             int level = rs.getArtronLevel();
             ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
-            String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : s.getSonicType() + "Sonic Screwdriver";
-            screw.setDisplayName(dn);
+            screw.setDisplayName("Sonic Screwdriver");
             List<String> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
                 upgrades.add("Knockback Upgrade");

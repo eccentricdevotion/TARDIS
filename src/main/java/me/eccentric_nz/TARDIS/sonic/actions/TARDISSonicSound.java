@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -25,9 +27,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class TARDISSonicSound {
 

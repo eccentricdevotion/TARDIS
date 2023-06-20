@@ -44,49 +44,49 @@ public class TARDISShapedRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapedRecipe> shapedRecipes;
-    private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
-    private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
-    private ChatColor keyDisplay;
-    private ChatColor sonicDisplay;
+    private final HashMap<String, Integer> sonicModelLookup = new HashMap<>();
+    private final HashMap<String, Integer> keyModelLookup = new HashMap<>();
+    private int keyModel = -1;
+    private int sonicModel = -1;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         shapedRecipes = new HashMap<>();
-        sonic_colour_lookup.put("mark_1", ChatColor.DARK_GRAY);
-        sonic_colour_lookup.put("mark_2", ChatColor.YELLOW);
-        sonic_colour_lookup.put("mark_3", ChatColor.DARK_PURPLE);
-        sonic_colour_lookup.put("mark_4", ChatColor.GRAY);
-        sonic_colour_lookup.put("eighth", ChatColor.BLUE);
-        sonic_colour_lookup.put("ninth", ChatColor.GREEN);
-        sonic_colour_lookup.put("ninth_open", ChatColor.DARK_GREEN);
-        sonic_colour_lookup.put("tenth", ChatColor.AQUA);
-        sonic_colour_lookup.put("tenth_open", ChatColor.DARK_AQUA);
-        sonic_colour_lookup.put("eleventh", null);
-        sonic_colour_lookup.put("eleventh_open", ChatColor.LIGHT_PURPLE);
-        sonic_colour_lookup.put("master", ChatColor.DARK_BLUE);
-        sonic_colour_lookup.put("sarah_jane", ChatColor.RED);
-        sonic_colour_lookup.put("river_song", ChatColor.GOLD);
-        sonic_colour_lookup.put("twelfth", ChatColor.UNDERLINE);
-        sonic_colour_lookup.put("thirteenth", ChatColor.BLACK);
-        sonic_colour_lookup.put("war", ChatColor.DARK_RED);
-        key_colour_lookup.put("first", ChatColor.AQUA);
-        key_colour_lookup.put("second", ChatColor.DARK_BLUE);
-        key_colour_lookup.put("third", ChatColor.LIGHT_PURPLE);
-        key_colour_lookup.put("fifth", ChatColor.DARK_RED);
-        key_colour_lookup.put("seventh", ChatColor.GRAY);
-        key_colour_lookup.put("ninth", ChatColor.DARK_PURPLE);
-        key_colour_lookup.put("tenth", ChatColor.GREEN);
-        key_colour_lookup.put("eleventh", null);
-        key_colour_lookup.put("susan", ChatColor.YELLOW);
-        key_colour_lookup.put("rose", ChatColor.RED);
-        key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
-        key_colour_lookup.put("perception", ChatColor.BLUE);
-        key_colour_lookup.put("gold", ChatColor.GOLD);
+        sonicModelLookup.put("mark_1", 10000001);
+        sonicModelLookup.put("mark_2", 10000002);
+        sonicModelLookup.put("mark_3", 10000003);
+        sonicModelLookup.put("mark_4", 10000004);
+        sonicModelLookup.put("eighth", 10000008);
+        sonicModelLookup.put("ninth", 10000009);
+        sonicModelLookup.put("ninth_open", 12000009);
+        sonicModelLookup.put("tenth", 10000010);
+        sonicModelLookup.put("tenth_open", 12000010);
+        sonicModelLookup.put("eleventh", 10000011);
+        sonicModelLookup.put("eleventh_open", 12000011);
+        sonicModelLookup.put("master", 10000032);
+        sonicModelLookup.put("sarah_jane", 10000033);
+        sonicModelLookup.put("river_song", 10000031);
+        sonicModelLookup.put("twelfth", 10000012);
+        sonicModelLookup.put("thirteenth", 10000013);
+        sonicModelLookup.put("war", 10000085);
+        keyModelLookup.put("first", 1);
+        keyModelLookup.put("second", 2);
+        keyModelLookup.put("third", 3);
+        keyModelLookup.put("fifth", 4);
+        keyModelLookup.put("seventh", 5);
+        keyModelLookup.put("ninth", 6);
+        keyModelLookup.put("tenth", 7);
+        keyModelLookup.put("eleventh", 8);
+        keyModelLookup.put("rose", 9);
+        keyModelLookup.put("sally", 10);
+        keyModelLookup.put("perception", 11);
+        keyModelLookup.put("susan", 12);
+        keyModelLookup.put("gold", 13);
     }
 
     public void addShapedRecipes() {
-        keyDisplay = key_colour_lookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
-        sonicDisplay = sonic_colour_lookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
+        keyModel = keyModelLookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
+        sonicModel = sonicModelLookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
         shaped.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
     }
@@ -104,14 +104,14 @@ public class TARDISShapedRecipe {
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
-        if (s.equals("TARDIS Key") && keyDisplay != null) {
-            im.setDisplayName(keyDisplay + s);
-        } else if (s.equals("Sonic Screwdriver") && sonicDisplay != null) {
-            im.setDisplayName(sonicDisplay + s);
+        if (s.equals("TARDIS Key") && keyModel != -1) {
+            im.setCustomModelData(keyModel);
+        } else if (s.equals("Sonic Screwdriver") && sonicModel != -1) {
+            im.setCustomModelData(sonicModel);
         } else {
-            im.setDisplayName(s);
+            im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
         }
-        im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
+        im.setDisplayName(s);
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             if (mat.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(s)) {
                 // which circuit is it?
