@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -35,6 +34,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -312,7 +313,7 @@ public class TARDISStaticUtils {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
+                return (im.getDisplayName().endsWith("Sonic Screwdriver"));
             }
         }
         return false;

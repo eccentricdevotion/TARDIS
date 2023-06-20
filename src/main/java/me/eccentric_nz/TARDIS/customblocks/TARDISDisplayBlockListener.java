@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
@@ -50,6 +47,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -359,7 +360,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
+                if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                     List<String> lore = im.getLore();
                     return lore != null && lore.contains("Redstone Upgrade");
                 }
