@@ -102,6 +102,9 @@ public class FloodgateAreasForm {
             } else {
                 set_next.put("direction", rsc.getDirection().toString());
             }
+            HashMap<String, Object> wheren = new HashMap<>();
+            wheren.put("tardis_id", id);
+            plugin.getQueryFactory().doUpdate("next", set_next, wheren);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", label);
             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.AREA));
         }
