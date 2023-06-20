@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -31,6 +31,8 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -263,5 +265,10 @@ public class AdventureMessage implements TARDISMessage {
     public void sendHeadsUpDisplay(Player player, TARDIS plugin) {
         TextComponent actionBar = LegacyComponentSerializer.legacyAmpersand().deserialize(plugin.getUtils().actionBarFormat(player));
         player.sendActionBar(actionBar);
+    }
+
+    @Override
+    public void sendWikiLink(Player player, WikiLink wikiLink) {
+        player.sendMessage(AdventureComponents.getWikiLink(wikiLink));
     }
 }

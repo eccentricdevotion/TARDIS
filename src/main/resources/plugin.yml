@@ -10,6 +10,8 @@ url: http://eccentricdevotion.github.io/TARDIS/
 version: ${project.version}-b${project.build.number}
 build-number: ${project.build.number}
 api-version: '1.20'
+libraries:
+  - org.jsoup:jsoup:1.16.1
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -1585,6 +1587,10 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     usage: /<command> disk [disk name]
+    wiki:
+      description: Search the TARDIS wiki for plugin documentation
+      permission: tardis.help
+      usage: /<command> wiki [search query]
     takeoff:
       description: Make the TARDIS enter the Time Vortex
       usage: Internal use only - use "hey handles takeoff" instead

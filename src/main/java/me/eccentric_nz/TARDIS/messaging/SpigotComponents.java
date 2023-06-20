@@ -16,17 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+
+import java.util.HashMap;
 
 /**
  *
@@ -34,7 +36,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
  */
 public class SpigotComponents {
 
-    public static final TextComponent getModule(TardisModule module) {
+    public static TextComponent getModule(TardisModule module) {
         ChatColor colour = ChatColor.of(module.getHex());
         TextComponent textComponent = new TextComponent("[" + module.getName() + "]");
         textComponent.setColor(colour);
@@ -43,7 +45,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getJenkinsUpdateReady(int current, int latest) {
+    public static TextComponent getJenkinsUpdateReady(int current, int latest) {
         TextComponent textComponent = new TextComponent("There is a new TARDIS build! You are using ");
         textComponent.setColor(ChatColor.RED);
         TextComponent c = new TextComponent("#" + current);
@@ -60,7 +62,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getUpdateCommand() {
+    public static TextComponent getUpdateCommand() {
         TextComponent textComponent = new TextComponent("Visit ");
         textComponent.setColor(ChatColor.GOLD);
         TextComponent u = new TextComponent("http://tardisjenkins.duckdns.org:8080/job/TARDIS/");
@@ -77,7 +79,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getBuildsBehind(int behind) {
+    public static TextComponent getBuildsBehind(int behind) {
         TextComponent textComponent = new TextComponent("[TARDIS] ");
         textComponent.setColor(ChatColor.GOLD);
         TextComponent y = new TextComponent("You are %s builds behind! Type ");
@@ -92,7 +94,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRequestComehereAccept(String key, String command) {
+    public static TextComponent getRequestComehereAccept(String key, String command) {
         TextComponent textComponent = new TextComponent(key);
         textComponent.setColor(ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
@@ -100,7 +102,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getAbandoned(int i, String owner, String location, int id) {
+    public static TextComponent getAbandoned(int i, String owner, String location, int id) {
         TextComponent textComponent = new TextComponent(i + ". Abandoned by: " + owner + ", " + location);
         TextComponent tce = new TextComponent(" < Enter > ");
         tce.setColor(ChatColor.GREEN);
@@ -110,7 +112,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getTransmat(Transmat t) {
+    public static TextComponent getTransmat(Transmat t) {
         TextComponent textComponent = new TextComponent(t.getName());
         textComponent.setColor(ChatColor.GREEN);
         TextComponent tcl = new TextComponent(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
@@ -124,7 +126,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
+    public static TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
         TextComponent textComponent = new TextComponent(String.format("%s %s", t.getTardis_id(), t.getOwner()));
         textComponent.setColor(ChatColor.GREEN);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, x, y, z))));
@@ -132,7 +134,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getExterminate(TARDIS plugin) {
+    public static TextComponent getExterminate(TARDIS plugin) {
         TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"));
         textComponent.setColor(ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
@@ -140,7 +142,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRescue(TARDIS plugin) {
+    public static TextComponent getRescue(TARDIS plugin) {
         TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"));
         textComponent.setColor(ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
@@ -148,7 +150,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getSuggestCommand(String item, String hover, String colour) {
+    public static TextComponent getSuggestCommand(String item, String hover, String colour) {
         TextComponent textComponent = new TextComponent(item);
         textComponent.setColor(ChatColor.of(colour));
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hover)));
@@ -156,7 +158,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRunCommand(String item, String hover, String colour) {
+    public static TextComponent getRunCommand(String item, String hover, String colour) {
         TextComponent textComponent = new TextComponent(item);
         textComponent.setColor(ChatColor.of(colour));
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hover)));
@@ -164,14 +166,14 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getShowMore(String command) {
+    public static TextComponent getShowMore(String command) {
         TextComponent textComponent = new TextComponent("Show more...");
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + command + " list_more"));
         return textComponent;
     }
 
-    public static final TextComponent getRecharger(String recharger, String world, String x, String y, String z, boolean hasPerm) {
+    public static TextComponent getRecharger(String recharger, String world, String x, String y, String z, boolean hasPerm) {
         TextComponent textComponent = new TextComponent(recharger);
         textComponent.setColor(ChatColor.GREEN);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, x, y, z))));
@@ -181,7 +183,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getHome(TARDIS plugin, String world, int x, int y, int z) {
+    public static TextComponent getHome(TARDIS plugin, String world, int x, int y, int z) {
         TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("HOME"));
         textComponent.setColor(ChatColor.GREEN);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, x, y, z))));
@@ -189,7 +191,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getSave(HashMap<String, String> map, String world) {
+    public static TextComponent getSave(HashMap<String, String> map, String world) {
         TextComponent textComponent = new TextComponent(map.get("dest_name"));
         textComponent.setColor(ChatColor.GREEN);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));
@@ -197,7 +199,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getArea(Area a, int n, boolean hasPerm) {
+    public static TextComponent getArea(Area a, int n, boolean hasPerm) {
         TextComponent textComponent = new TextComponent(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
         if (hasPerm) {
             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to /tardistravel here")));
@@ -206,7 +208,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRoom(String room, boolean hasPerm) {
+    public static TextComponent getRoom(String room, boolean hasPerm) {
         TextComponent textComponent = new TextComponent("    " + room);
         ChatColor colour = (hasPerm) ? ChatColor.GREEN : ChatColor.RED;
         textComponent.setColor(colour);
@@ -215,7 +217,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRoomGallery() {
+    public static TextComponent getRoomGallery() {
         TextComponent textComponent = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
         textComponent.setColor(ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
@@ -223,7 +225,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getEyebrows() {
+    public static TextComponent getEyebrows() {
         // TODO ?
         TextComponent textComponent = new TextComponent("[TARDIS] ");
         textComponent.setColor(ChatColor.GOLD);
@@ -234,7 +236,7 @@ public class SpigotComponents {
         return tcl;
     }
 
-    public static final TextComponent getSign() {
+    public static TextComponent getSign() {
         TextComponent textComponent = new TextComponent("Click the link to view the TARDIS wiki: ");
         TextComponent link = new TextComponent("https://eccentricdevotion.github.io/TARDIS/site-map.html");
         link.setColor(ChatColor.GREEN);
@@ -244,7 +246,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getUpdate(String first, String value, String split) {
+    public static TextComponent getUpdate(String first, String value, String split) {
         TextComponent textComponent = new TextComponent(first);
         textComponent.setColor(net.md_5.bungee.api.ChatColor.GOLD);
         TextComponent tck = new TextComponent(value);
@@ -258,7 +260,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getHADS(TARDIS plugin) {
+    public static TextComponent getHADS(TARDIS plugin) {
         TextComponent textComponent = new TextComponent("[TARDIS]");
         textComponent.setColor(ChatColor.GOLD);
         TextComponent H = new TextComponent("H");
@@ -287,7 +289,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getColouredCommand(String which, String command, TARDIS plugin) {
+    public static TextComponent getColouredCommand(String which, String command, TARDIS plugin) {
         TextComponent textComponent = getModule(TardisModule.TARDIS);
         String[] split = plugin.getLanguage().getString(which).split("%s");
         TextComponent first = new TextComponent(split[0]);
@@ -304,7 +306,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getInsertColour(String local, String which, TARDIS plugin) {
+    public static TextComponent getInsertColour(String local, String which, TARDIS plugin) {
         TextComponent textComponent = getModule(TardisModule.TARDIS);
         String[] split = plugin.getLanguage().getString(local).split("%s");
         TextComponent first = new TextComponent(split[0]);
@@ -319,7 +321,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getWithColours(String first, String colour, String last, String hue) {
+    public static TextComponent getWithColours(String first, String colour, String last, String hue) {
         TextComponent textComponent = new TextComponent(first);
         textComponent.setColor(ChatColor.of(colour));
         TextComponent l = new TextComponent(last);
@@ -328,7 +330,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
+    public static TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
         TextComponent textComponent = getModule(module);
         TextComponent f = new TextComponent(first);
         f.setColor(ChatColor.of(colour));
@@ -339,7 +341,7 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static final TextComponent getCommand(String root, String command) {
+    public static TextComponent getCommand(String root, String command) {
         TextComponent textComponent = new TextComponent(root);
         textComponent.setColor(ChatColor.GOLD);
         TextComponent c = new TextComponent(" commands - use ");
@@ -350,6 +352,17 @@ public class SpigotComponents {
         t.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
         TextComponent f = new TextComponent("for more info");
         f.setColor(ChatColor.WHITE);
+        textComponent.addExtra(c);
+        textComponent.addExtra(t);
+        textComponent.addExtra(f);
+        return textComponent;
+    }
+
+    public static TextComponent getWikiLink(WikiLink wikiLink) {
+        TextComponent textComponent = new TextComponent(wikiLink.getTitle());
+        textComponent.setColor(ChatColor.BLUE);
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, wikiLink.getURL()));
         return textComponent;
     }
 }

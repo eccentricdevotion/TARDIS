@@ -16,18 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+
+import java.util.HashMap;
 
 /**
  *
@@ -47,7 +49,7 @@ public class AdventureComponents {
                 .build();
     }
 
-    public static final TextComponent getJenkinsUpdateReady(int current, int latest) {
+    public static TextComponent getJenkinsUpdateReady(int current, int latest) {
         return Component.text("There is a new TARDIS build! You are using ", NamedTextColor.RED)
                 .append(Component.text("#" + current, NamedTextColor.GOLD))
                 .append(Component.text(", the latest build is ", NamedTextColor.RED))
@@ -55,7 +57,7 @@ public class AdventureComponents {
                 .append(Component.text("!", NamedTextColor.RED));
     }
 
-    public static final TextComponent getUpdateCommand() {
+    public static TextComponent getUpdateCommand() {
         return Component.text("Visit ", NamedTextColor.GOLD)
                 .append(Component.text("http://tardisjenkins.duckdns.org:8080/job/TARDIS/")
                         .clickEvent(ClickEvent.openUrl("http://tardisjenkins.duckdns.org:8080/job/TARDIS/"))
@@ -68,7 +70,7 @@ public class AdventureComponents {
                 .append(Component.text(" command"));
     }
 
-    public static final TextComponent getBuildsBehind(int behind) {
+    public static TextComponent getBuildsBehind(int behind) {
         // TODO check this
         return getModule(TardisModule.TARDIS)
                 .color(NamedTextColor.WHITE)
@@ -81,14 +83,14 @@ public class AdventureComponents {
                 .append(Component.text("to update!"));
     }
 
-    public static final TextComponent getRequestComehereAccept(String key, String command) {
+    public static TextComponent getRequestComehereAccept(String key, String command) {
         TextComponent textComponent = Component.text(key, NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.runCommand(command));
         return textComponent;
     }
 
-    public static final TextComponent getAbandoned(int i, String owner, String location, int id) {
+    public static TextComponent getAbandoned(int i, String owner, String location, int id) {
         TextComponent textComponent = Component.text(i + ". Abandoned by: " + owner + ", " + location)
                 .append(Component.text(" < Enter > ")
                         .color(NamedTextColor.GREEN)
@@ -98,7 +100,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getTransmat(Transmat t) {
+    public static TextComponent getTransmat(Transmat t) {
         TextComponent textComponent = Component.text(t.getName(), NamedTextColor.GREEN)
                 .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()), NamedTextColor.WHITE))
                 .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
@@ -108,49 +110,49 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
+    public static TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
         TextComponent textComponent = Component.text(String.format("%s %s", t.getTardis_id(), t.getOwner()), NamedTextColor.GREEN)
                 .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))
                 .clickEvent(ClickEvent.runCommand("/tardisadmin enter " + t.getTardis_id()));
         return textComponent;
     }
 
-    public static final TextComponent getExterminate(TARDIS plugin) {
+    public static TextComponent getExterminate(TARDIS plugin) {
         TextComponent textComponent = Component.text(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"), NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.runCommand("/tardis exterminate 6z@3=V!Q7*/O_OB^"));
         return textComponent;
     }
 
-    public static final TextComponent getRescue(TARDIS plugin) {
+    public static TextComponent getRescue(TARDIS plugin) {
         TextComponent textComponent = Component.text(plugin.getLanguage().getString("REQUEST_COMEHERE_ACCEPT"), NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.runCommand("tardis rescue accept"));
         return textComponent;
     }
 
-    public static final TextComponent getSuggestCommand(String item, String hover, String colour) {
+    public static TextComponent getSuggestCommand(String item, String hover, String colour) {
         TextComponent textComponent = Component.text(item, TextColor.fromHexString(colour))
                 .hoverEvent(HoverEvent.showText(Component.text(hover)))
                 .clickEvent(ClickEvent.suggestCommand("/tardisgive [player] " + item + " "));
         return textComponent;
     }
 
-    public static final TextComponent getRunCommand(String item, String hover, String colour) {
+    public static TextComponent getRunCommand(String item, String hover, String colour) {
         TextComponent textComponent = Component.text(item, TextColor.fromHexString(colour))
                 .hoverEvent(HoverEvent.showText(Component.text(hover)))
                 .clickEvent(ClickEvent.runCommand("/tardisrecipe " + item + " "));
         return textComponent;
     }
 
-    public static final TextComponent getShowMore(String command) {
+    public static TextComponent getShowMore(String command) {
         TextComponent textComponent = Component.text("Show more...")
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.runCommand("/" + command + " list_more"));
         return textComponent;
     }
 
-    public static final TextComponent getRecharger(String recharger, String world, String x, String y, String z, boolean hasPerm) {
+    public static TextComponent getRecharger(String recharger, String world, String x, String y, String z, boolean hasPerm) {
         TextComponent textComponent;
         if (hasPerm) {
             textComponent = Component.text(recharger, NamedTextColor.GREEN)
@@ -163,21 +165,21 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getHome(TARDIS plugin, String world, int x, int y, int z) {
+    public static TextComponent getHome(TARDIS plugin, String world, int x, int y, int z) {
         TextComponent textComponent = Component.text(plugin.getLanguage().getString("HOME"), NamedTextColor.GREEN)
                 .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))
                 .clickEvent(ClickEvent.runCommand("/tardistravel home"));
         return textComponent;
     }
 
-    public static final TextComponent getSave(HashMap<String, String> map, String world) {
+    public static TextComponent getSave(HashMap<String, String> map, String world) {
         TextComponent textComponent = Component.text(map.get("dest_name"), NamedTextColor.GREEN)
                 .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))))
                 .clickEvent(ClickEvent.runCommand("/tardistravel save " + map.get("dest_name")));
         return textComponent;
     }
 
-    public static final TextComponent getArea(Area a, int n, boolean hasPerm) {
+    public static TextComponent getArea(Area a, int n, boolean hasPerm) {
         TextComponent textComponent;
         if (hasPerm) {
             textComponent = Component.text(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld())
@@ -189,7 +191,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRoom(String room, boolean hasPerm) {
+    public static TextComponent getRoom(String room, boolean hasPerm) {
         NamedTextColor colour = (hasPerm) ? NamedTextColor.GREEN : NamedTextColor.RED;
         TextComponent textComponent = Component.text("    " + room, colour)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
@@ -197,14 +199,14 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getRoomGallery() {
+    public static TextComponent getRoomGallery() {
         TextComponent textComponent = Component.text("https://eccentricdevotion.github.io/TARDIS/room-gallery", NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.openUrl("https://eccentricdevotion.github.io/TARDIS/room-gallery"));
         return textComponent;
     }
 
-    public static final TextComponent getEyebrows() {
+    public static TextComponent getEyebrows() {
         TextComponent textComponent = getModule(TardisModule.TARDIS)
                 .append(Component.text("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!")
                         .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
@@ -212,7 +214,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getSign() {
+    public static TextComponent getSign() {
         TextComponent textComponent = Component.text("Click the link to view the TARDIS wiki: ")
                 .append(Component.text("https://eccentricdevotion.github.io/TARDIS/site-map.html")
                         .color(NamedTextColor.GREEN)
@@ -222,7 +224,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getUpdate(String first, String value, String split) {
+    public static TextComponent getUpdate(String first, String value, String split) {
         TextComponent textComponent = Component.text(first, NamedTextColor.GOLD)
                 .append(Component.text(value, NamedTextColor.WHITE))
                 .append(Component.text(split, NamedTextColor.GOLD))
@@ -231,7 +233,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getHADS(TARDIS plugin) {
+    public static TextComponent getHADS(TARDIS plugin) {
         TextComponent textComponent = getModule(TardisModule.TARDIS)
                 .append(Component.text("H", NamedTextColor.RED))
                 .append(Component.text("ostile ", NamedTextColor.WHITE))
@@ -244,7 +246,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getColouredCommand(String which, String command, TARDIS plugin) {
+    public static TextComponent getColouredCommand(String which, String command, TARDIS plugin) {
         String[] split = plugin.getLanguage().getString(which).split("%s");
         TextComponent textComponent = getModule(TardisModule.TARDIS)
                 .append(Component.text(split[0], NamedTextColor.WHITE))
@@ -256,7 +258,7 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getInsertColour(String local, String which, TARDIS plugin) {
+    public static TextComponent getInsertColour(String local, String which, TARDIS plugin) {
         String[] split = plugin.getLanguage().getString(local).split("%s");
         TextComponent textComponent = getModule(TardisModule.TARDIS)
                 .append(Component.text(split[0], NamedTextColor.WHITE))
@@ -265,20 +267,20 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static final TextComponent getWithColours(String first, String colour, String last, String hue) {
+    public static TextComponent getWithColours(String first, String colour, String last, String hue) {
         TextComponent textComponent = Component.text(first, TextColor.fromHexString(colour))
                 .append(Component.text(last, TextColor.fromHexString(hue)));
         return textComponent;
     }
 
-    public static final TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
+    public static TextComponent getWithColours(TardisModule module, String first, String colour, String last, String hue) {
         TextComponent textComponent = getModule(module)
                 .append(Component.text(first, TextColor.fromHexString(colour)))
                 .append(Component.text(last, TextColor.fromHexString(hue)));
         return textComponent;
     }
 
-    public static final TextComponent getCommand(String root, String command) {
+    public static TextComponent getCommand(String root, String command) {
         TextComponent textComponent = Component.text(root, NamedTextColor.GOLD)
                 .append(Component.text(" commands - use ", NamedTextColor.WHITE))
                 .append(Component.text(command + " ", NamedTextColor.AQUA)
@@ -286,6 +288,13 @@ public class AdventureComponents {
                         .clickEvent(ClickEvent.suggestCommand(command))
                 )
                 .append(Component.text("for more info", NamedTextColor.WHITE));
+        return textComponent;
+    }
+
+    public static TextComponent getWikiLink(WikiLink wikiLink) {
+        TextComponent textComponent = Component.text(wikiLink.getTitle(), NamedTextColor.BLUE)
+                .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
+                .clickEvent(ClickEvent.openUrl(wikiLink.getURL()));
         return textComponent;
     }
 }

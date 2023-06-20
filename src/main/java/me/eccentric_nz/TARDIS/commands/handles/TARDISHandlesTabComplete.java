@@ -17,19 +17,20 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * TabCompleter for /handles
  */
 public class TARDISHandlesTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("disk", "remove", "takeoff", "land", "scan", "lock", "unlock", "remind", "say", "name", "time", "tell", "weird");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("disk", "remove", "takeoff", "land", "scan", "lock", "unlock", "remind", "say", "name", "time", "tell", "weird", "wiki");
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
