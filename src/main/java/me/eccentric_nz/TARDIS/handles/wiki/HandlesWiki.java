@@ -46,7 +46,7 @@ public class HandlesWiki {
                 plugin.getMessenger().sendWikiLink(player, w);
             }
         } else {
-            plugin.getMessenger().message(player,"No results");
+            plugin.getMessenger().message(player, "No results");
         }
     }
 }

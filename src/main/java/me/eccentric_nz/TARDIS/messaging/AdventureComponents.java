@@ -32,7 +32,6 @@ import net.kyori.adventure.text.format.TextColor;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class AdventureComponents {
@@ -293,7 +292,7 @@ public class AdventureComponents {
 
     public static TextComponent getWikiLink(WikiLink wikiLink) {
         TextComponent textComponent = Component.text(wikiLink.getTitle(), NamedTextColor.BLUE)
-                .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
+                .hoverEvent(HoverEvent.showText(Component.text("Open link")))
                 .clickEvent(ClickEvent.openUrl(wikiLink.getURL()));
         return textComponent;
     }

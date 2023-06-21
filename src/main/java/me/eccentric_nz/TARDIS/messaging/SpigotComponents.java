@@ -31,7 +31,6 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class SpigotComponents {
@@ -361,8 +360,8 @@ public class SpigotComponents {
     public static TextComponent getWikiLink(WikiLink wikiLink) {
         TextComponent textComponent = new TextComponent(wikiLink.getTitle());
         textComponent.setColor(ChatColor.BLUE);
-        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, wikiLink.getURL()));
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Open link")));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiLink.getURL()));
         return textComponent;
     }
 }
