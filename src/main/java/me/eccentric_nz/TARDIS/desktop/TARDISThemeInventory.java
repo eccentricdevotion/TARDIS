@@ -41,7 +41,12 @@ public class TARDISThemeInventory {
     /**
      * Constructs an item stack for the Desktop Theme GUI.
      *
-     * @return an ItemStack
+     * @param plugin an instance of the TARDIS plugin
+     * @param schematic the console schematic to get the item stack for
+     * @param currentConsole the players current console
+     * @param player the player using the GUI
+     * @param level the player's Artron level
+     * @return an ItemStack with the console information
      */
     public ItemStack getConsoleStack(TARDIS plugin, Schematic schematic, String currentConsole, Player player, int level) {
         ItemStack is = null;

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 /**
  * @author eccentric_nz
  */
-class TARDISRandomArchiveName {
+public class TARDISRandomArchiveName {
 
     private static final List<String> NAMES = new ArrayList<>();
 
@@ -389,7 +389,7 @@ class TARDISRandomArchiveName {
         NAMES.add("Zygon");
     }
 
-    static String getRandomName() {
+    public static String getRandomName() {
         return NAMES.get(TARDISConstants.RANDOM.nextInt(NAMES.size())).replace(' ', '_');
     }
 }

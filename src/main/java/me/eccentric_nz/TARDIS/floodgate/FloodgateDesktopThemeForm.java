@@ -72,6 +72,7 @@ public class FloodgateDesktopThemeForm {
                 builder.button(a.getKey(), FormImage.Type.URL, String.format(path, blocks.get(a.getKey())));
             }
         }
+        builder.button("Archive Consoles", FormImage.Type.URL, "https://raw.githubusercontent.com/eccentricdevotion/TARDIS-Resource-Pack/master/assets/tardis/textures/item/gui/theme/archive.png");
         builder.validResultHandler(response -> handleResponse(response));
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
@@ -80,29 +81,33 @@ public class FloodgateDesktopThemeForm {
 
     private void handleResponse(SimpleFormResponse response) {
         String label = response.clickedButton().text();
-        Schematic schm = Consoles.getBY_NAMES().get(label);
-        if (schm != null) {
-            Player player = plugin.getServer().getPlayer(uuid);
-            // get permission based on choice
-            String perm = schm.getPermission();
-            if (TARDISPermission.hasPermission(player, "tardis." + perm)) {
-                // remember the upgrade choice
-                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
-                int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
-                if (tud.getLevel() >= needed) {
-                    tud.setSchematic(schm);
-                    plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-                    if (tud.getPrevious().getPermission().equals("archive")) {
-                        new ArchiveUpdate(plugin, player.getUniqueId().toString(), "ª°º").setInUse();
+        if (label.equals("Archive Consoles")) {
+            new FloodgateDesktopArchiveForm(plugin, uuid).send();
+        } else {
+            Schematic schm = Consoles.getBY_NAMES().get(label);
+            if (schm != null) {
+                Player player = plugin.getServer().getPlayer(uuid);
+                // get permission based on choice
+                String perm = schm.getPermission();
+                if (TARDISPermission.hasPermission(player, "tardis." + perm)) {
+                    // remember the upgrade choice
+                    TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                    int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
+                    int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
+                    if (tud.getLevel() >= needed) {
+                        tud.setSchematic(schm);
+                        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+                        if (tud.getPrevious().getPermission().equals("archive")) {
+                            new ArchiveUpdate(plugin, player.getUniqueId().toString(), "ª°º").setInUse();
+                        }
+                        // open wall form
+                        new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_ENERGY", label);
                     }
-                    // open wall form
-                    new FloodgateWallFloorForm(plugin, uuid, "Wall").send();
                 } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_ENERGY", label);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE_CONSOLE");
                 }
-            } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE_CONSOLE");
             }
         }
     }
