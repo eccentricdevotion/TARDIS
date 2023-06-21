@@ -2,18 +2,18 @@
 
 ## Current version `5.0.0`
 
-1. ?
+1. Use `sendColouredCommand()` for messages that contain commands
+2. ?
 
 ## Next version `5.1.0`
 
-1. Vortex Manipulator predictive text
-2. Pandorica custom model
-3. Fix laggy Silurian cave finder
-4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
-5. Animated models for player disguises
-6. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Pandorica custom model
+2. Fix laggy Silurian cave finder
+3. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
+4. Animated models for player disguises
+5. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-7. Sonic Blaster
+6. Sonic Blaster
 
 ## Future versions
 

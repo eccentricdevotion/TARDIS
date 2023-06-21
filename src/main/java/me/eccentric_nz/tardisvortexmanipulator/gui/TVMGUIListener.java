@@ -86,6 +86,10 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
+                    case 6 -> {
+                        // predictive world
+                        usePredictive(view);
+                    }
                     case 11 -> {
                         // world
                         which = 0;
@@ -287,6 +291,34 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
         }
     }
 
+    private void usePredictive(InventoryView view) {
+        ItemStack is = view.getItem(6);
+        ItemMeta im = is.getItemMeta();
+        String world = im.getLore().get(0);
+        components.set(0, world);
+        ItemStack display = view.getItem(4);
+        ItemMeta dim = display.getItemMeta();
+        List<String> lore = Arrays.asList(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3));
+        dim.setLore(lore);
+        display.setItemMeta(dim);
+        // move the cursor to the end of the string
+        which = 1;
+    }
+
+    private void setPredictive(String stub, InventoryView view) {
+        ItemStack is = view.getItem(6);
+        ItemMeta im = is.getItemMeta();
+        for (World w : plugin.getServer().getWorlds()) {
+            String world = w.getName();
+            if (w.getName().toLowerCase().startsWith(stub)) {
+                List<String> lore = Arrays.asList(world);
+                im.setLore(lore);
+                is.setItemMeta(im);
+                break;
+            }
+        }
+    }
+
     private void updateDisplay(InventoryView view, char s) {
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
@@ -304,7 +336,10 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
         String comp = new String(chars);
         String combined;
         switch (which) {
-            case 0 -> combined = comp + " " + components.get(1) + " " + components.get(2) + " " + components.get(3);
+            case 0 -> {
+                setPredictive(comp.toLowerCase(), view);
+                combined = comp + " " + components.get(1) + " " + components.get(2) + " " + components.get(3);
+            }
             case 1 -> combined = components.get(0) + " " + comp + " " + components.get(2) + " " + components.get(3);
             case 2 -> combined = components.get(0) + " " + components.get(1) + " " + comp + " " + components.get(3);
             case 3 -> combined = components.get(0) + " " + components.get(1) + " " + components.get(2) + " " + comp;
@@ -653,7 +688,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
                 plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                 return;
             }
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY");
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }

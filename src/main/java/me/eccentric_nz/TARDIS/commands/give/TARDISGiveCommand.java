@@ -16,16 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.give;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
@@ -44,6 +39,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -227,7 +224,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
         }
         if (item.equals("vortex-manipulator")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "GIVE_VORTEX", player.getName());
+            plugin.getMessenger().sendColouredCommand(sender, "GIVE_VORTEX", "/vm activate " + player.getName(), plugin);
         }
         if (item.equals("invisibility-circuit")) {
             // set the second line of lore
