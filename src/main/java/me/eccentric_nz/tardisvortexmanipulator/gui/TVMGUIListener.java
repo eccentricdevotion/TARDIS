@@ -3,7 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -27,11 +26,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -39,7 +39,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TVMGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    List<String> titles = Arrays.asList(ChatColor.DARK_RED + "Vortex Manipulator", ChatColor.DARK_RED + "VM Messages", ChatColor.DARK_RED + "VM Saves");
     List<String> components = Arrays.asList("", "", "", "", "", "");
     List<Integer> letters = Arrays.asList(0, 4, 5);
     char[] two = new char[]{'2', 'a', 'b', 'c'};
@@ -662,23 +661,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
             // remove tachyons
             qf.alterTachyons(uuid.toString(), -actual);
         } else {
-            //close(p);
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PARAMETERS");
         }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onMenuDrag(InventoryDragEvent event) {
-        InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!titles.contains(title)) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        slots.forEach((slot) -> {
-            if ((slot >= 0 && slot < 81)) {
-                event.setCancelled(true);
-            }
-        });
     }
 }

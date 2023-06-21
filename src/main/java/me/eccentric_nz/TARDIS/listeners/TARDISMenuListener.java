@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -31,6 +29,9 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -137,6 +138,10 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS saves", 90);
         map.put(ChatColor.DARK_RED + "TARDIS transmats", 90);
         map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
+        // Vortex Manipulator
+        map.put(ChatColor.DARK_RED + "Vortex Manipulator", 81);
+        map.put(ChatColor.DARK_RED + "VM Messages", 81);
+        map.put(ChatColor.DARK_RED + "VM Saves", 81);
         for (Storage s : Storage.values()) {
             map.put(s.getTitle(), 54);
         }
