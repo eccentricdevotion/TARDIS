@@ -28,7 +28,7 @@ the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Reso
 
 ## Requirements
 
-**From version 4.0.0 this plugin requires Paper server or a compatible fork.**
+**From version 4.0.0 this plugin/module requires Paper server or a compatible fork.**
 
 For the full experience (textures and sounds), you'll need
 the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/)
@@ -404,7 +404,7 @@ The `spawn_rate` section sets monster spawning options
 
 The `worlds` section allows you to list the worlds you want the monsters to spawn in.
 
-`drops` sets a list of items that drop when the monsters is killed.
+`drops` sets a list of items that drop when the monster is killed.
 
 #### Angel specific
 
