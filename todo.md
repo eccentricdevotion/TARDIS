@@ -2,8 +2,15 @@
 
 ## Current version `5.0.0`
 
-1. Update TARDIS Information System with correct recipe names for the `/trecipe` command
-2. ?
+1. Do an ascii type TARDIS startup splash
+
+```
+‗‗≡‗‗
+|‡|‡|    ▀█▀ ▄▀▄ █▀▄ █▀▄ █ ▄▀▀
+|☒|•|     █  █▀█ █▀▄ █▄▀ █ ▄▄▀
+| | |    It’s bigger on the inside
+═════
+```
 
 ## Next version `5.1.0`
 
