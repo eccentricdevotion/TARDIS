@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
+
+import java.io.File;
 
 /**
  * @author eccentric_nz
@@ -38,7 +39,7 @@ class TARDISPruneCommand {
     boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_INFO");
+            plugin.getMessenger().sendColouredCommand(sender, "PRUNE_INFO", "/tardisadmin prunelist", plugin);
             return true;
         }
         try {

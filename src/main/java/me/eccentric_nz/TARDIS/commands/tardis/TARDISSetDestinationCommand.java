@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -30,6 +28,9 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -58,7 +59,7 @@ class TARDISSetDestinationCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NAME_NOT_VALID");
                 return false;
             } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_RESERVED");
+                plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
                 int id = rs.getTardis_id();

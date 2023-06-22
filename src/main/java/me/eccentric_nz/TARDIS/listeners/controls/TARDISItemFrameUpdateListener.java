@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
@@ -40,6 +38,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -116,7 +117,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
 
                                     } else {
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_MAP");
+                                        plugin.getMessenger().sendColouredCommand(player, "MONITOR_PLACE_MAP", "/trecipe monitor", plugin);
                                         return;
                                     }
                                     // get door location
@@ -179,7 +180,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                         }
                                     } else {
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "MONITOR_PLACE_FRAME");
+                                        plugin.getMessenger().sendColouredCommand(player, "MONITOR_PLACE_FRAME", "/trecipe monitor-frame", plugin);
                                         return;
                                     }
                                     which = "Monitor Frame";

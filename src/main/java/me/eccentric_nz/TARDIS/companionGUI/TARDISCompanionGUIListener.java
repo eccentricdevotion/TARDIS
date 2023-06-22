@@ -16,13 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.md_5.bungee.api.ChatColor;
@@ -36,6 +32,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -52,7 +52,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 
     public static void removeCompanion(int id, String comps, String uuid, Player player) {
         if (comps.equalsIgnoreCase("everyone")) {
-            TARDIS.plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_ALL");
+            TARDIS.plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_ALL", "/tardis remove all", TARDIS.plugin);
         } else {
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import com.google.common.collect.ImmutableList;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -31,11 +30,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.Remote;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -45,6 +40,8 @@ import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -306,7 +303,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     int x, y, z;
                                     World w = TARDISAliasResolver.getWorldFromAlias(args[2]);
                                     if (w == null) {
-                                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                                        plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
                                         return true;
                                     }
                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {

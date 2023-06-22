@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -38,6 +35,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -262,7 +263,7 @@ public class TARDISTravelCoords {
             w_str = TARDISStringUtils.getQuotedString(args);
         }
         if (TARDISNumberParsers.isSimpleNumber(args[0])) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+            plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             return null;
         }
         // must be at least a world name/~ and x, z
@@ -294,7 +295,7 @@ public class TARDISTravelCoords {
             }
         }
         if (w == null) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+            plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             return null;
         }
         if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {

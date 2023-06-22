@@ -1,13 +1,11 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -16,6 +14,8 @@ import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.*;
 
 public class FloodgateAddCompanionsForm {
 
@@ -74,7 +74,7 @@ public class FloodgateAddCompanionsForm {
                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                 }
                 plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
+                plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);
             } else {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
                 if (op != null) {

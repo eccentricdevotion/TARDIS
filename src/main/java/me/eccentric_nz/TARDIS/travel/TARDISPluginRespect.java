@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
@@ -177,7 +176,7 @@ public class TARDISPluginRespect {
                 String area_perm = plugin.getTrackerKeeper().getPerm().get(flag.getPlayer().getUniqueId());
                 String area_name = "tardis.area." + plugin.getConfig().getString("creation.area");
                 if (area_perm.equals(area_name)) {
-                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TARDIS_SET_HOME");
+                    plugin.getMessenger().sendColouredCommand(flag.getPlayer(), "TARDIS_SET_HOME", "/tardis home", plugin);
                 } else {
                     plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NO_PERM", area_perm);
                 }

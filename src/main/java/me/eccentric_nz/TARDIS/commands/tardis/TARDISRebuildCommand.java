@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -32,6 +30,9 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -106,7 +107,7 @@ public class TARDISRebuildCommand {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "REBUILD_FAIL");
+                plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis comehere", plugin);
                 return true;
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

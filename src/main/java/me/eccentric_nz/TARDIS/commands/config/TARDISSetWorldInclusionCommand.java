@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
 
 /**
  * @author eccentric_nz
@@ -39,7 +40,7 @@ class TARDISSetWorldInclusionCommand {
         String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length)).replace(".", "_");
         // check the world actually exists!
         if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+            plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
             return false;
         }
         if (first.equals("include")) {

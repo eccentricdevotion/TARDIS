@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -31,6 +26,12 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -106,7 +107,7 @@ class TARDISListCommand {
                     plugin.getMessenger().sendTARDISForList(sender, t, world, rsc.getX(), rsc.getY(), rsc.getZ());
                 }
                 if (rsl.getData().size() > 18) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS_INFO");
+                    plugin.getMessenger().sendColouredCommand(sender, "TARDIS_LOCS_INFO", "/tardisadmin list 2", plugin);
                 }
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_LOCS_NONE");

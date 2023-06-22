@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.areas;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -44,6 +39,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Command /tardisarea [arguments].
@@ -290,7 +291,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         if (dir.equals("NONE")) {
                             dir = "";
                         } else {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_DIRECTION");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_COMPASS");
                             return false;
                         }
                     }

@@ -16,14 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -31,6 +26,8 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -93,14 +90,14 @@ class TARDISAbandonedCommand {
             }
             World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
             if (w == null) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
                 return true;
             }
             int x = TARDISNumberParsers.parseInt(args[5]);
             int y = TARDISNumberParsers.parseInt(args[6]);
             int z = TARDISNumberParsers.parseInt(args[7]);
             if (x == 0 || y == 0 || z == 0) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
                 return true;
             }
             l = new Location(w, x, y, z);

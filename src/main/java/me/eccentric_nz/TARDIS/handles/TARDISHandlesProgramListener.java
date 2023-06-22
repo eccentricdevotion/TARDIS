@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -35,6 +31,11 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -144,7 +145,7 @@ public class TARDISHandlesProgramListener implements Listener {
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         player.getWorld().dropItemNaturally(player.getLocation(), is);
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SAVED");
+                        plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_NOTHING");
                     }

@@ -2,7 +2,7 @@
 
 ## Current version `5.0.0`
 
-1. Use `sendColouredCommand()` for messages that contain commands
+1. Update TARDIS Information System with correct recipe names for the `/trecipe` command
 2. ?
 
 ## Next version `5.1.0`
@@ -14,6 +14,7 @@
 5. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 6. Sonic Blaster
+7. Add support for Pl3xMap and BlueMap
 
 ## Future versions
 

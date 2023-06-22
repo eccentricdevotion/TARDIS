@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -33,6 +31,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Teleport to the spawn point of worlds on the server
@@ -94,7 +95,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 spawn.setY(highest + 1);
                 player.teleport(spawn);
             } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             }
             return true;
         }

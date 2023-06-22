@@ -154,7 +154,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         try {
                             amount = Integer.parseInt(args[2]);
                         } catch (NumberFormatException nfe) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GIVE");
+                            plugin.getMessenger().sendColouredCommand(sender, "ARG_GIVE", "/tardisgive [player] [item] [amount]", plugin);
                             return true;
                         }
                     }

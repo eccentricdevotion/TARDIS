@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -40,6 +38,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
  * @author eccentric_nz
  */
@@ -61,7 +62,7 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
-            plugin.getMessenger().sendColouredCommand(player, "AREA_NO_COMEHERE", "/tardisremote [player] travel area [area name]", plugin);
+            plugin.getMessenger().sendColouredCommand(player, "AREA_NO_REMOTE", "/tardisremote [player] travel area [area name]", plugin);
             return true;
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();

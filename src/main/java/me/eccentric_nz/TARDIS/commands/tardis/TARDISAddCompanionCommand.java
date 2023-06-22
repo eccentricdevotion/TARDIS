@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -35,6 +32,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -136,7 +137,7 @@ class TARDISAddCompanionCommand {
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 if (addAll) {
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_EVERYONE");
+                    plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);
                 } else {
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", args[1], plugin);
                 }

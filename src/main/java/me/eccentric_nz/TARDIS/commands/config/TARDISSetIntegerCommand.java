@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISChatPaginator;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.command.CommandSender;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -97,7 +98,7 @@ class TARDISSetIntegerCommand {
         String first = args[0];
         String which = args[1];
         if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DIRECTION");
+            plugin.getMessenger().sendColouredCommand(sender, "ARG_DIRECTION", "/tconfig random_circuit [x|z] [distance]", plugin);
             return true;
         }
         String a = args[2];

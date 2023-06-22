@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
@@ -34,6 +33,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 /**
  * Load and unload worlds on the server
@@ -82,7 +83,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             if (args[0].equalsIgnoreCase("update")) {
                 String world = args[1].toLowerCase(Locale.ROOT);
                 if (!PLANET_SUBS.contains(world)) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                    plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                     return true;
                 }
                 new TARDISWorldNameConverter(plugin, world).update();
@@ -93,7 +94,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 if (args[0].equalsIgnoreCase("disable")) {
                     // is the world in the config?
                     if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                        plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
@@ -114,7 +115,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 }
                 if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_WORLD_RENAME");
+                        plugin.getMessenger().sendColouredCommand(sender, "ARG_WORLD_RENAME", "/tardisworld rename [old name] [new name]", plugin);
                         return true;
                     }
                     // remove players from world
@@ -173,7 +174,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 if (args[0].equalsIgnoreCase("enable")) {
                     // is the world in the config?
                     if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                        plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
                     plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", true);
@@ -218,7 +219,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("gm")) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                    plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("load")) {
@@ -256,7 +257,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         creator.generator(args[4]);
                     }
                     if (creator.createWorld() == null) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_NOT_FOUND");
+                        plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
                     plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
