@@ -272,4 +272,9 @@ public class SpigotMessage implements TARDISMessage {
     public void sendWikiLink(Player player, WikiLink wikiLink) {
         player.spigot().sendMessage(SpigotComponents.getWikiLink(wikiLink));
     }
+
+    @Override
+    public void sendStartBanner(CommandSender cs) {
+        cs.spigot().sendMessage(SpigotComponents.getStartBanner());
+    }
 }

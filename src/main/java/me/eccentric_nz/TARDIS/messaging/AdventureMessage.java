@@ -271,4 +271,9 @@ public class AdventureMessage implements TARDISMessage {
     public void sendWikiLink(Player player, WikiLink wikiLink) {
         player.sendMessage(AdventureComponents.getWikiLink(wikiLink));
     }
+
+    @Override
+    public void sendStartBanner(CommandSender cs) {
+        cs.sendMessage(AdventureComponents.getStartupBanner());
+    }
 }

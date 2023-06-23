@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -34,6 +35,8 @@ import java.util.HashMap;
  * @author eccentric_nz
  */
 public class SpigotComponents {
+
+    private static final String[] quotes = new String[]{"It's bigger on the inside", "It's smaller on the outside", "May contain bugs!"};
 
     public static TextComponent getModule(TardisModule module) {
         ChatColor colour = ChatColor.of(module.getHex());
@@ -363,5 +366,75 @@ public class SpigotComponents {
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Open link")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiLink.getURL()));
         return textComponent;
+    }
+
+    public static TextComponent getStartBanner() {
+        TextComponent tardisTop = new TextComponent("▀█▀ ▄▀▄ █▀▄ █▀▄ █ ▄▀▀");
+        tardisTop.setColor(ChatColor.GOLD);
+        TextComponent tardisBottom = new TextComponent(" █  █▀█ █▀▄ █▄▀ █ ▄▄▀");
+        tardisBottom.setColor(ChatColor.GOLD);
+        String quote = quotes[TARDISConstants.RANDOM.nextInt(3)];
+        TextComponent tardisQuote = new TextComponent(quote);
+        tardisQuote.setColor(ChatColor.AQUA);
+
+        // "  ‗‗≡‗‗    "
+        // "  |‡|‡|    "
+        // "  |☒|•|       "
+        // "  | | |       "
+        // "  ═════       "
+        TextComponent roofLeft = new TextComponent("  ‗‗");
+        roofLeft.setColor(ChatColor.BLUE);
+        TextComponent lamp = new TextComponent("≡");
+        lamp.setColor(ChatColor.WHITE);
+        TextComponent roofRight = new TextComponent("‗‗    ");
+        roofRight.setColor(ChatColor.BLUE);
+        TextComponent line1 = new TextComponent();
+        line1.addExtra(roofLeft);
+        line1.addExtra(lamp);
+        line1.addExtra(roofRight);
+        TextComponent sideLeft = new TextComponent("  |");
+        sideLeft.setColor(ChatColor.BLUE);
+        TextComponent window = new TextComponent("≡");
+        window.setColor(ChatColor.WHITE);
+        TextComponent pipe = new TextComponent("|");
+        pipe.setColor(ChatColor.BLUE);
+        TextComponent sideRight = new TextComponent("|    ");
+        sideRight.setColor(ChatColor.BLUE);
+        TextComponent line2 = new TextComponent("\n");
+        line2.addExtra(sideLeft);
+        line2.addExtra(window);
+        line2.addExtra(pipe);
+        line2.addExtra(window);
+        line2.addExtra(sideRight);
+        line2.addExtra(tardisTop);
+        TextComponent sign = new TextComponent("☒");
+        sign.setColor(ChatColor.DARK_GRAY);
+        TextComponent stjohns = new TextComponent("•");
+        stjohns.setColor(ChatColor.WHITE);
+        TextComponent line3 = new TextComponent("\n");
+        line3.addExtra(sideLeft);
+        line3.addExtra(sign);
+        line3.addExtra(pipe);
+        line3.addExtra(stjohns);
+        line3.addExtra(sideRight);
+        line3.addExtra(tardisBottom);
+        TextComponent line4 = new TextComponent("\n");
+        line4.addExtra(sideLeft);
+        line4.addExtra(" ");
+        line4.addExtra(pipe);
+        line4.addExtra(" ");
+        line4.addExtra(sideRight);
+        line4.addExtra(tardisQuote);
+        TextComponent base = new TextComponent("  ═════");
+        base.setColor(ChatColor.BLUE);
+        TextComponent line5 = new TextComponent("\n");
+        line5.addExtra(base);
+        TextComponent newLine = new TextComponent("\n");
+        newLine.addExtra(line1);
+        newLine.addExtra(line2);
+        newLine.addExtra(line3);
+        newLine.addExtra(line4);
+        newLine.addExtra(line5);
+        return newLine;
     }
 }

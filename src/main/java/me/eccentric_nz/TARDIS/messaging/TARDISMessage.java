@@ -113,4 +113,6 @@ public interface TARDISMessage {
     public void sendHeadsUpDisplay(Player player, TARDIS plugin);
 
     public void sendWikiLink(Player player, WikiLink wikiLink);
+
+    public void sendStartBanner(CommandSender cs);
 }

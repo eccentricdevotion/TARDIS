@@ -321,6 +321,11 @@ public class TARDIS extends JavaPlugin {
                 pm.disablePlugin(this);
                 return;
             }
+            PaperLib.suggestPaper(this);
+            messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
+            jsonKeeper = (PaperLib.isPaper()) ? new TARDISChatGUIAdventure() : new TARDISChatGUISpigot();
+            updateChatGUI = (PaperLib.isPaper()) ? new TARDISUpdateChatGUIAdventure(this) : new TARDISUpdateChatGUISpigot(this);
+            messenger.sendStartBanner(console);
             for (Map.Entry<String, String> plg : versions.entrySet()) {
                 if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
                     getLogger().log(Level.SEVERE, "This plugin requires " + plg.getKey() + " to be v" + plg.getValue() + " or higher, disabling...");
@@ -330,10 +335,6 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             hasVersion = true;
-            PaperLib.suggestPaper(this);
-            messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
-            jsonKeeper = (PaperLib.isPaper()) ? new TARDISChatGUIAdventure() : new TARDISChatGUISpigot();
-            updateChatGUI = (PaperLib.isPaper()) ? new TARDISUpdateChatGUIAdventure(this) : new TARDISUpdateChatGUISpigot(this);
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
