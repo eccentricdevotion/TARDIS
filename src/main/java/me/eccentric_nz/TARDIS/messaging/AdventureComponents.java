@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -24,14 +26,11 @@ import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -301,7 +300,8 @@ public class AdventureComponents {
         return textComponent;
     }
 
-    public static Component getStartupBanner() {
+    public static LinkedHashSet<Component> getStartupBanner() {
+        LinkedHashSet<Component> banner = new LinkedHashSet<>();
         Component tardisTop = Component.text()
                 .append(Component.text("▀█▀ ▄▀▄ █▀▄ █▀▄ █ ▄▀▀", NamedTextColor.GOLD))
                 .build();
@@ -316,37 +316,39 @@ public class AdventureComponents {
         // "  |☒|•|    "
         // "  | | |    "
         // "  ═════"
-
-        return Component.join(JoinConfiguration.newlines(),
-                Component.newline()
-                        .append(Component.text("  ‗‗", NamedTextColor.BLUE))
-                        .append(Component.text("≡", NamedTextColor.WHITE))
-                        .append(Component.text("‗‗", NamedTextColor.BLUE)),
-                Component.text()
-                        .append(Component.text("  |", NamedTextColor.BLUE))
-                        .append(Component.text("‡", NamedTextColor.WHITE))
-                        .append(Component.text("|", NamedTextColor.BLUE))
-                        .append(Component.text("‡", NamedTextColor.WHITE))
-                        .append(Component.text("|    ", NamedTextColor.BLUE))
-                        .append(tardisTop)
-                        .build(),
-                Component.text()
-                        .append(Component.text("  |", NamedTextColor.BLUE))
-                        .append(Component.text("☒", NamedTextColor.DARK_GRAY))
-                        .append(Component.text("|", NamedTextColor.BLUE))
-                        .append(Component.text("•", NamedTextColor.WHITE))
-                        .append(Component.text("|    ", NamedTextColor.BLUE))
-                        .append(tardisBottom)
-                        .build(),
-                Component.text()
-                        .append(Component.text("  | | |    ", NamedTextColor.BLUE))
-                        .append(tardisQuote)
-                        .build(),
-                Component.text()
-                        .append(Component.text("  ═════", NamedTextColor.BLUE))
-                        .build(),
-                Component.empty()
+        banner.add(Component.text()
+                .append(Component.text("  ‗‗", NamedTextColor.BLUE))
+                .append(Component.text("≡", NamedTextColor.WHITE))
+                .append(Component.text("‗‗", NamedTextColor.BLUE))
+                .build()
         );
+        banner.add(Component.text()
+                .append(Component.text("  |", NamedTextColor.BLUE))
+                .append(Component.text("‡", NamedTextColor.WHITE))
+                .append(Component.text("|", NamedTextColor.BLUE))
+                .append(Component.text("‡", NamedTextColor.WHITE))
+                .append(Component.text("|    ", NamedTextColor.BLUE))
+                .append(tardisTop)
+                .build()
+        );
+        banner.add(Component.text()
+                .append(Component.text("  |", NamedTextColor.BLUE))
+                .append(Component.text("¤", NamedTextColor.DARK_GRAY))
+                .append(Component.text("|", NamedTextColor.BLUE))
+                .append(Component.text("•", NamedTextColor.WHITE))
+                .append(Component.text("|    ", NamedTextColor.BLUE))
+                .append(tardisBottom)
+                .build()
+        );
+        banner.add(Component.text()
+                .append(Component.text("  | | |    ", NamedTextColor.BLUE))
+                .append(tardisQuote)
+                .build()
+        );
+        banner.add(Component.text()
+                .append(Component.text("  ═════", NamedTextColor.BLUE))
+                .build()
+        );
+        return banner;
     }
 }
-

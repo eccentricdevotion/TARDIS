@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -28,8 +30,6 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -368,7 +368,8 @@ public class SpigotComponents {
         return textComponent;
     }
 
-    public static TextComponent getStartBanner() {
+    public static LinkedHashSet<TextComponent> getStartBanner() {
+        LinkedHashSet<TextComponent> banner = new LinkedHashSet<>();
         TextComponent tardisTop = new TextComponent("▀█▀ ▄▀▄ █▀▄ █▀▄ █ ▄▀▀");
         tardisTop.setColor(ChatColor.GOLD);
         TextComponent tardisBottom = new TextComponent(" █  █▀█ █▀▄ █▄▀ █ ▄▄▀");
@@ -377,9 +378,9 @@ public class SpigotComponents {
         TextComponent tardisQuote = new TextComponent(quote);
         tardisQuote.setColor(ChatColor.AQUA);
 
-        // "  ‗‗≡‗‗    "
-        // "  |‡|‡|    "
-        // "  |☒|•|       "
+        // "  __0__    "
+        // "  |#|#|    "
+        // "  |¤|•|       "
         // "  | | |       "
         // "  ═════       "
         TextComponent roofLeft = new TextComponent("  ‗‗");
@@ -394,31 +395,31 @@ public class SpigotComponents {
         line1.addExtra(roofRight);
         TextComponent sideLeft = new TextComponent("  |");
         sideLeft.setColor(ChatColor.BLUE);
-        TextComponent window = new TextComponent("≡");
+        TextComponent window = new TextComponent("‡");
         window.setColor(ChatColor.WHITE);
         TextComponent pipe = new TextComponent("|");
         pipe.setColor(ChatColor.BLUE);
         TextComponent sideRight = new TextComponent("|    ");
         sideRight.setColor(ChatColor.BLUE);
-        TextComponent line2 = new TextComponent("\n");
+        TextComponent line2 = new TextComponent("");
         line2.addExtra(sideLeft);
         line2.addExtra(window);
         line2.addExtra(pipe);
         line2.addExtra(window);
         line2.addExtra(sideRight);
         line2.addExtra(tardisTop);
-        TextComponent sign = new TextComponent("☒");
+        TextComponent sign = new TextComponent("¤");
         sign.setColor(ChatColor.DARK_GRAY);
         TextComponent stjohns = new TextComponent("•");
         stjohns.setColor(ChatColor.WHITE);
-        TextComponent line3 = new TextComponent("\n");
+        TextComponent line3 = new TextComponent("");
         line3.addExtra(sideLeft);
         line3.addExtra(sign);
         line3.addExtra(pipe);
         line3.addExtra(stjohns);
         line3.addExtra(sideRight);
         line3.addExtra(tardisBottom);
-        TextComponent line4 = new TextComponent("\n");
+        TextComponent line4 = new TextComponent("");
         line4.addExtra(sideLeft);
         line4.addExtra(" ");
         line4.addExtra(pipe);
@@ -427,14 +428,11 @@ public class SpigotComponents {
         line4.addExtra(tardisQuote);
         TextComponent base = new TextComponent("  ═════");
         base.setColor(ChatColor.BLUE);
-        TextComponent line5 = new TextComponent("\n");
-        line5.addExtra(base);
-        TextComponent newLine = new TextComponent("\n");
-        newLine.addExtra(line1);
-        newLine.addExtra(line2);
-        newLine.addExtra(line3);
-        newLine.addExtra(line4);
-        newLine.addExtra(line5);
-        return newLine;
+        banner.add(line1);
+        banner.add(line2);
+        banner.add(line3);
+        banner.add(line4);
+        banner.add(base);
+        return banner;
     }
 }

@@ -2,15 +2,7 @@
 
 ## Current version `5.0.0`
 
-1. Do an ascii type TARDIS startup splash
-
-```
-‗‗≡‗‗
-|‡|‡|    ▀█▀ ▄▀▄ █▀▄ █▀▄ █ ▄▀▀
-|☒|•|     █  █▀█ █▀▄ █▄▀ █ ▄▄▀
-| | |    It’s bigger on the inside
-═════
-```
+1. ?
 
 ## Next version `5.1.0`
 

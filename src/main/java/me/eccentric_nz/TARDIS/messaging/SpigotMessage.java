@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -28,8 +29,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  *
@@ -275,6 +274,8 @@ public class SpigotMessage implements TARDISMessage {
 
     @Override
     public void sendStartBanner(CommandSender cs) {
-        cs.spigot().sendMessage(SpigotComponents.getStartBanner());
+        for (TextComponent c : SpigotComponents.getStartBanner()) {
+            cs.spigot().sendMessage(c);
+        }
     }
 }
