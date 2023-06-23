@@ -511,12 +511,16 @@ public class TARDISCondensablesUpdater {
             list.put("TORCHFLOWER", 20);
             list.put("TORCHFLOWER_SEEDS", 20);
             list.put("WARPED_HANGING_SIGN", 2);
-
+            int i = 0;
             for (Map.Entry<String, Object> entry : list.entrySet()) {
-                plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
+                if (!plugin.getCondensablesConfig().contains(entry.getKey())) {
+                    plugin.getCondensablesConfig().set(entry.getKey(), entry.getValue());
+                    i++;
+                }
             }
             if (plugin.getCondensablesConfig().contains("Material")) {
                 plugin.getCondensablesConfig().set("Material", null);
+                i++;
             }
             // fix BRICK_STAIRS
             if (plugin.getCondensablesConfig().getInt("BRICK_STAIRS") == 121) {
@@ -524,6 +528,7 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("BRICK_SLAB", 10);
                 plugin.getCondensablesConfig().set("BRICK_STAIRS", 30);
                 plugin.getCondensablesConfig().set("BRICK_WALL", 20);
+                i++;
             }
             // fix Material.
             if (plugin.getCondensablesConfig().contains("Material.TADPOLE_BUCKET")) {
@@ -553,6 +558,7 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("DISC_FRAGMENT_5", 20);
                 plugin.getCondensablesConfig().set("GOAT_HORN", 20);
                 plugin.getCondensablesConfig().set("ECHO_SHARD", 20);
+                i++;
             }
             // fix sherds
             if (plugin.getCondensablesConfig().contains("POTTERY_SHARD_ARCHER")) {
@@ -560,16 +566,20 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("POTTERY_SHARD_PRIZE", null);
                 plugin.getCondensablesConfig().set("POTTERY_SHARD_ARMS_UP", null);
                 plugin.getCondensablesConfig().set("POTTERY_SHARD_SKULL", null);
+                i++;
             }
             if (plugin.getCondensablesConfig().contains("ARMS_POTTERY_SHERD UP")) {
                 plugin.getCondensablesConfig().set("ARMS_POTTERY_SHERD UP", null);
+                i++;
             }
-            try {
-                String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
-                plugin.getCondensablesConfig().save(new File(listPath));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Updated condensables.yml");
-            } catch (IOException io) {
-                plugin.debug("Could not save condensables.yml, " + io.getMessage());
+            if (i > 0) {
+                try {
+                    String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
+                    plugin.getCondensablesConfig().save(new File(listPath));
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added/updated " + i + " new items to condensables.yml");
+                } catch (IOException io) {
+                    plugin.debug("Could not save condensables.yml, " + io.getMessage());
+                }
             }
         }
     }
