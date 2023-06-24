@@ -20,15 +20,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.chameleon.preset.*;
 import me.eccentric_nz.TARDIS.chameleon.preset.biome.*;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISBlockDataRotator;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISRenderPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISDirectionalRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMultipleFacingRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRailRecalculator;
-import me.eccentric_nz.TARDIS.utility.recalculators.TARDISRotatableRecalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.block.data.*;
 
@@ -283,15 +280,16 @@ public class TARDISChameleonPreset {
     private static BlockData[][] convertData(BlockData[][] data, COMPASS d) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
-                if (data[col][block] instanceof Directional) {
-                    data[col][block] = new TARDISDirectionalRecalculator().recalculate(data[col][block], d);
-                } else if (data[col][block] instanceof Rail) {
-                    data[col][block] = new TARDISRailRecalculator().recalculate(data[col][block], d);
-                } else if (data[col][block] instanceof Rotatable) {
-                    data[col][block] = new TARDISRotatableRecalculator().recalculate(data[col][block], d);
-                } else if (data[col][block] instanceof MultipleFacing) {
-                    data[col][block] = new TARDISMultipleFacingRecalculator().recalculate(data[col][block], d);
-                }
+                data[col][block] = TARDISBlockDataRotator.rotate(data[col][block], d);
+//                if (data[col][block] instanceof Directional) {
+//                    data[col][block] = new TARDISDirectionalRecalculator().recalculate(data[col][block], d);
+//                } else if (data[col][block] instanceof Rail) {
+//                    data[col][block] = new TARDISRailRecalculator().recalculate(data[col][block], d);
+//                } else if (data[col][block] instanceof Rotatable) {
+//                    data[col][block] = new TARDISRotatableRecalculator().recalculate(data[col][block], d);
+//                } else if (data[col][block] instanceof MultipleFacing) {
+//                    data[col][block] = new TARDISMultipleFacingRecalculator().recalculate(data[col][block], d);
+//                }
             }
         }
         return data;

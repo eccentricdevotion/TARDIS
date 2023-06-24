@@ -8,12 +8,11 @@
 
 1. Pandorica custom model
 2. Fix laggy Silurian cave finder
-3. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
-4. Animated models for player disguises
-5. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+3. Animated models for player disguises
+4. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-6. Sonic Blaster
-7. Add support for Pl3xMap and BlueMap
+5. Sonic Blaster
+6. Add support for Pl3xMap and BlueMap
 
 ## Future versions
 
