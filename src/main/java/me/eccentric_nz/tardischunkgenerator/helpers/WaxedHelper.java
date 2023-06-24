@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
+import io.papermc.lib.PaperLib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
@@ -30,9 +31,13 @@ import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 public class WaxedHelper {
 
     public static void setWaxed(Sign sign) {
-        Location l = sign.getLocation();
-        ServerLevel world = ((CraftWorld)sign.getWorld()).getHandle();
-        SignBlockEntity sbe = (SignBlockEntity) world.getBlockEntity(new BlockPos(l.getBlockX(), l.getBlockY(), l.getBlockZ()));
-        sbe.setWaxed(true);
+        if (PaperLib.isPaper()) {
+            Location l = sign.getLocation();
+            ServerLevel world = ((CraftWorld) sign.getWorld()).getHandle();
+            SignBlockEntity sbe = (SignBlockEntity) world.getBlockEntity(new BlockPos(l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+            sbe.setWaxed(true);
+        } else {
+            sign.setWaxed(true);
+        }
     }
 }
