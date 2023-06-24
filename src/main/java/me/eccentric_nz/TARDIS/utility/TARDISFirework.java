@@ -20,8 +20,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Firework;
@@ -31,7 +31,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TARDISFirework {
 
-    private static final Random RANDOM = new Random();
     private static final Color[] COLORS;
 
     static {
@@ -56,7 +55,7 @@ public class TARDISFirework {
 
     public static TARDISFirework randomize() {
         FireworkMeta meta = getCleanMeta();
-        meta.setPower(RANDOM.nextInt(3) + 1);
+        meta.setPower(TARDISConstants.RANDOM.nextInt(3) + 1);
         meta.addEffects(randomizeEffects(1, 2, 1, 2));
         return new TARDISFirework(meta, true);
     }
@@ -69,13 +68,13 @@ public class TARDISFirework {
         } else if (max < min) {
             throw new IllegalArgumentException("Max value can not be lower than min value");
         }
-        return min == max ? min : RANDOM.nextInt((max - min) + 1) + min;
+        return min == max ? min : TARDISConstants.RANDOM.nextInt((max - min) + 1) + min;
     }
 
     private static List<Color> randomizeColors(int min, int max) {
         List<Color> colors = new ArrayList<>();
         for (int a = 1; a <= calculateRandom(min, max); a++) {
-            Color c = COLORS[RANDOM.nextInt(COLORS.length)];
+            Color c = COLORS[TARDISConstants.RANDOM.nextInt(COLORS.length)];
             if (!colors.contains(c)) {
                 colors.add(c);
             }
@@ -86,7 +85,14 @@ public class TARDISFirework {
     private static List<FireworkEffect> randomizeEffects(int min, int max, int minColors, int maxColors) {
         List<FireworkEffect> effects = new ArrayList<>();
         for (int a = 1; a <= calculateRandom(min, max); a++) {
-            effects.add(FireworkEffect.builder().flicker(RANDOM.nextBoolean()).with(Type.values()[RANDOM.nextInt(Type.values().length)]).trail(RANDOM.nextBoolean()).withColor(randomizeColors(minColors, maxColors)).withFade(randomizeColors(minColors, maxColors)).build());
+            effects.add(FireworkEffect.builder()
+                    .flicker(TARDISConstants.RANDOM.nextBoolean())
+                    .with(Type.values()[TARDISConstants.RANDOM.nextInt(Type.values().length)])
+                    .trail(TARDISConstants.RANDOM.nextBoolean())
+                    .withColor(randomizeColors(minColors, maxColors))
+                    .withFade(randomizeColors(minColors, maxColors))
+                    .build()
+            );
         }
         return effects;
     }

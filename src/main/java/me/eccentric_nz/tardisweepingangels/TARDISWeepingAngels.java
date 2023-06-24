@@ -67,7 +67,6 @@ import org.bukkit.persistence.PersistentDataType;
 public class TARDISWeepingAngels {
 
     private final TARDIS plugin;
-    public static Random random = new Random();
     public static NamespacedKey ANGEL;
     public static NamespacedKey CYBERMAN;
     public static NamespacedKey DALEK;

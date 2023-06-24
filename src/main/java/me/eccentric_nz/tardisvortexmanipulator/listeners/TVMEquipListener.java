@@ -5,6 +5,7 @@ package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -105,8 +106,7 @@ public class TVMEquipListener implements Listener {
                     }
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
                     // Random malfunction
-                    Random rnd = new Random();
-                    if (rnd.nextInt(100) < plugin.getVortexConfig().getInt("block_travel_malfunction_chance")) {
+                    if (TARDISConstants.RANDOM.nextInt(100) < plugin.getVortexConfig().getInt("block_travel_malfunction_chance")) {
                         plugin.debug(player.getDisplayName() + " has malfunctioned");
                         Parameters params = new Parameters(player, Flag.getAPIFlags());
                         Location _bl = null;

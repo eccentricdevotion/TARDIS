@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.maze;
 
 import java.util.ArrayDeque;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 
 public class TARDISMazeGenerator {
@@ -48,15 +47,14 @@ public class TARDISMazeGenerator {
     }
 
     private static int[] mix(int[] arr) {
-        Random rand = new Random(); // a random number generator
         int temp; // a temp variable for swapping
         int place1; // one location to be swapped
         int place2;
         // shuffle seven times
         for (int i = 0; i < 7; i++) {
             // pick two random indices of the array
-            place1 = rand.nextInt(arr.length);
-            place2 = rand.nextInt(arr.length);
+            place1 = TARDISConstants.RANDOM.nextInt(arr.length);
+            place2 = TARDISConstants.RANDOM.nextInt(arr.length);
             // swap the two random indices
             temp = arr[place1];
             arr[place1] = arr[place2];

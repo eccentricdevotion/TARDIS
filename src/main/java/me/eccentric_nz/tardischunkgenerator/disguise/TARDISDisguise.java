@@ -18,9 +18,9 @@ package me.eccentric_nz.tardischunkgenerator.disguise;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
@@ -250,7 +250,7 @@ public class TARDISDisguise {
                     }
                     if (disguise.getEntityType().equals(EntityType.HORSE) && o instanceof org.bukkit.entity.Horse.Color hc) {
                         Horse horse = (Horse) entity;
-                        horse.setVariantAndMarkings(Variant.values()[hc.ordinal()], Markings.values()[new Random().nextInt(Markings.values().length)]);
+                        horse.setVariantAndMarkings(Variant.values()[hc.ordinal()], Markings.values()[TARDISConstants.RANDOM.nextInt(Markings.values().length)]);
                     }
                     if (disguise.getEntityType().equals(EntityType.LLAMA) && o instanceof org.bukkit.entity.Llama.Color lc) {
                         Llama llama = (Llama) entity;

@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
@@ -127,7 +128,7 @@ public class TARDISHelper {
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream);
                     data = tagCompound.getCompound("Data");
-                    long random = new Random().nextLong();
+                    long random = TARDISConstants.RANDOM.nextLong();
                     // set RandomSeed tag
                     data.putLong("RandomSeed", random);
                     tagCompound.put("Data", data);
