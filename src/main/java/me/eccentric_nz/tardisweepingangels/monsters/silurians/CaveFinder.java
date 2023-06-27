@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import me.eccentric_nz.TARDIS.travel.Check;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -25,68 +27,65 @@ import org.bukkit.block.BlockFace;
 
 public class CaveFinder {
 
-    public static Location searchCave(Location random) {
-        Location l = null;
-        World w = random.getWorld();
-        int startX = random.getBlockX();
-        int startZ = random.getBlockZ();
+    private static final List<BlockFace> directions = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
+
+    public static Location searchSpawnPoint(Location playerLocation) {
+        World w = playerLocation.getWorld();
+        int startx = playerLocation.getBlockX();
+        int starty = playerLocation.getBlockY();
+        int startz = playerLocation.getBlockZ();
         if (worldCheck(w)) {
-            int plusX = startX + 2000;
-            int plusZ = startZ + 2000;
-            int minusX = startX - 2000;
-            int minusZ = startZ - 2000;
-            int step = 25;
+            int plusx = startx + 24;
+            int plusz = startz + 24;
+            int minusx = startx - 24;
+            int minusz = startz - 24;
+            int step = 4;
             // search in a random direction
-            Integer[] directions = new Integer[]{0, 1, 2, 3};
-            Collections.shuffle(Arrays.asList(directions));
-            for (int i = 0; i < 4; i++) {
-                switch (directions[i]) {
-                    case 0 -> {
-                        // east
-                        for (int east = startX; east < plusX; east += step) {
-                            Check chk = isThereRoom(w, east, startZ);
-                            if (chk.isSafe()) {
-                                return new Location(w, east, chk.getY(), startZ);
+            Collections.shuffle(directions);
+                    for (int i = 0; i < 4; i++) {
+                        switch (directions.get(i)) {
+                            case EAST -> {
+                                for (int east = plusx; east > startx; east -= step) {
+                                    Check chk = isThereRoom(w, east, startz, starty);
+                                    if (chk.isSafe()) {
+                                        return new Location(w, east, chk.getY(), startz);
+                                    }
+                                }
+                            }
+                            case SOUTH -> {
+                                for (int south = plusz; south > startz; south -= step) {
+                                    Check chk = isThereRoom(w, startx, south, starty);
+                                    if (chk.isSafe()) {
+                                        return new Location(w, startx, chk.getY(), south);
+                                    }
+                                }
+                            }
+                            case WEST -> {
+                                for (int west = minusx; west < startx; west += step) {
+                                    Check chk = isThereRoom(w, west, startz, starty);
+                                    if (chk.isSafe()) {
+                                        return new Location(w, west, chk.getY(), startz);
+                                    }
+                                }
+                            }
+                            default -> { // NORTH
+                                for (int north = minusz; north < startz; north += step) {
+                                    Check chk = isThereRoom(w, startx, north, starty);
+                                    if (chk.isSafe()) {
+                                        return new Location(w, startx, chk.getY(), north);
+                                    }
+                                }
                             }
                         }
                     }
-                    case 1 -> {
-                        // south
-                        for (int south = startZ; south < plusZ; south += step) {
-                            Check chk = isThereRoom(w, startX, south);
-                            if (chk.isSafe()) {
-                                return new Location(w, startX, chk.getY(), south);
-                            }
-                        }
-                    }
-                    case 2 -> {
-                        // west
-                        for (int west = startX; west > minusX; west -= step) {
-                            Check chk = isThereRoom(w, west, startZ);
-                            if (chk.isSafe()) {
-                                return new Location(w, west, chk.getY(), startZ);
-                            }
-                        }
-                    }
-                    case 3 -> {
-                        // north
-                        for (int north = startZ; north > minusZ; north -= step) {
-                            Check chk = isThereRoom(w, startX, north);
-                            if (chk.isSafe()) {
-                                return new Location(w, startX, chk.getY(), north);
-                            }
-                        }
-                    }
-                }
-            }
         }
-        return l;
+        return null;
     }
 
-    private static Check isThereRoom(World w, int x, int z) {
+    private static Check isThereRoom(World w, int x, int z, int sy) {
         Check ret = new Check();
         ret.setSafe(false);
-        for (int y = 35; y > w.getMinHeight() + 14; y--) {
+        for (int y = sy + 8; y > sy - 8; y--) {
             if (w.getBlockAt(x, y, z).getType().isAir()) {
                 int yy = getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the Silurian
@@ -135,28 +134,6 @@ public class CaveFinder {
             spawn.setZ(spawn.getBlockZ() + 20);
             int sy = w.getHighestBlockYAt(spawn);
             return (y != ny && y != ey && y != sy);
-        }
-    }
-
-    private static class Check {
-
-        private boolean safe;
-        private int y;
-
-        public boolean isSafe() {
-            return safe;
-        }
-
-        public void setSafe(boolean safe) {
-            this.safe = safe;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
         }
     }
 }

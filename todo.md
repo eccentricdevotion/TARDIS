@@ -7,7 +7,7 @@
 ## Next version `5.1.0`
 
 1. Pandorica custom model
-2. Fix laggy Silurian cave finder
+2. Fix laggy `/ttravel` cave finder
 3. Animated models for player disguises
 4. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)

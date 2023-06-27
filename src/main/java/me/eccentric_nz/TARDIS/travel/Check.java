@@ -25,19 +25,19 @@ package me.eccentric_nz.TARDIS.travel;
         private boolean safe;
         private int y;
 
-        boolean isSafe() {
+        public boolean isSafe() {
             return safe;
         }
 
-        void setSafe(boolean safe) {
+        public void setSafe(boolean safe) {
             this.safe = safe;
         }
 
-        int getY() {
+        public int getY() {
             return y;
         }
 
-        void setY(int y) {
+        public void setY(int y) {
             this.y = y;
         }
     }
