@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -35,17 +36,17 @@ import org.bukkit.entity.Player;
 public class TARDISCaveFinder {
 
     private final TARDIS plugin;
+    private final List<BlockFace> directions = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
 
     public TARDISCaveFinder(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public static int getLowestAirBlock(World w, int x, int y, int z) {
-        int yy = y;
-        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir() && yy > w.getMinHeight() + 7) {
-            yy--;
+        while (w.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType().isAir() && y > w.getMinHeight() + 7) {
+            y--;
         }
-        return yy;
+        return y;
     }
 
     public Location searchCave(Player p, int id) {
@@ -58,22 +59,20 @@ public class TARDISCaveFinder {
             int startx = rsc.getX();
             int startz = rsc.getZ();
             COMPASS d = rsc.getDirection();
-            // Assume all non-nether/non-end world environments are NORMAL
+            // assume all non-nether/non-end world environments are NORMAL
             boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
                 if (worldCheck(w)) {
-                    int plusx = startx + 2000;
-                    int plusz = startz + 2000;
-                    int minusx = startx - 2000;
-                    int minusz = startz - 2000;
-                    int step = 25;
+                    int plusx = startx + 2048;
+                    int plusz = startz + 2048;
+                    int minusx = startx - 2048;
+                    int minusz = startz - 2048;
+                    int step = 32;
                     // search in a random direction
-                    Integer[] directions = new Integer[]{0, 1, 2, 3};
-                    Collections.shuffle(Arrays.asList(directions));
+                    Collections.shuffle(directions);
                     for (int i = 0; i < 4; i++) {
-                        switch (directions[i]) {
-                            case 0 -> {
-                                // east
+                        switch (directions.get(i)) {
+                            case EAST -> {
                                 plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_E");
                                 for (int east = startx; east < plusx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
@@ -83,8 +82,7 @@ public class TARDISCaveFinder {
                                     }
                                 }
                             }
-                            case 1 -> {
-                                // south
+                            case SOUTH -> {
                                 plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_S");
                                 for (int south = startz; south < plusz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
@@ -94,8 +92,7 @@ public class TARDISCaveFinder {
                                     }
                                 }
                             }
-                            case 2 -> {
-                                // west
+                            case WEST -> {
                                 plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_W");
                                 for (int west = startx; west > minusx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
@@ -105,8 +102,7 @@ public class TARDISCaveFinder {
                                     }
                                 }
                             }
-                            case 3 -> {
-                                // north
+                            default -> { // NORTH
                                 plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_N");
                                 for (int north = startz; north > minusz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
@@ -197,28 +193,6 @@ public class TARDISCaveFinder {
             int sy = w.getHighestBlockYAt(spawn);
             // possibly a flat world too
             return (y != ny || y != ey || y != sy);
-        }
-    }
-
-    public static class Check {
-
-        private boolean safe;
-        private int y;
-
-        boolean isSafe() {
-            return safe;
-        }
-
-        void setSafe(boolean safe) {
-            this.safe = safe;
-        }
-
-        int getY() {
-            return y;
-        }
-
-        void setY(int y) {
-            this.y = y;
         }
     }
 }

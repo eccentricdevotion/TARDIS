@@ -133,7 +133,7 @@ public class TARDISStructureTravel {
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
                     // if ANCIENT_CITY, get underground location
                     if (loc != null && structure.equals(Structure.ANCIENT_CITY)) {
-                        TARDISCaveFinder.Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+                        Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
                         if (check.isSafe()) {
                             loc.setY(check.getY());
                         }
@@ -167,8 +167,8 @@ public class TARDISStructureTravel {
         }
     }
 
-    private TARDISCaveFinder.Check isThereRoom(World w, int x, int starty, int z) {
-        TARDISCaveFinder.Check ret = new TARDISCaveFinder.Check();
+    private Check isThereRoom(World w, int x, int starty, int z) {
+        Check ret = new Check();
         ret.setSafe(false);
         for (int y = starty; y > w.getMinHeight() + 14; y--) {
             if (w.getBlockAt(x, y, z).getType().isAir()) {
