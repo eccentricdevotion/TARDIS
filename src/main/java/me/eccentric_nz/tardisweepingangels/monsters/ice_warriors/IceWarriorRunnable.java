@@ -91,6 +91,11 @@ public class IceWarriorRunnable implements Runnable {
     }
 
     private void spawnIceWarrior(World world) {
+        int players = world.getPlayers().size();
+        // don't bother spawning if there are no players in the world
+        if (players == 0) {
+            return;
+        }
         Chunk[] chunks = world.getLoadedChunks();
         if (chunks.length > 0) {
             Chunk chunk = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];

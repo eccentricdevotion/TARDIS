@@ -17,20 +17,18 @@
 package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
 import java.util.Collection;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -53,26 +51,19 @@ public class SilurianRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("silurians.worlds." + name) > 0) {
-                // check the world generator
-                if (w.getGenerator() != null) {
-                    plugin.getMonstersConfig().set("silurians.worlds." + name, 0);
-                    plugin.saveConfig();
-                    plugin.getServer().getLogger().log(Level.WARNING, "TARDISWeepingAngels cannot safely spawn Silurians in custom worlds!");
-                } else {
-                    // get the current silurian count
-                    int silurians = 0;
-                    Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
-                    for (Skeleton s : skeletons) {
-                        PersistentDataContainer pdc = s.getPersistentDataContainer();
-                        if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
-                            silurians++;
-                        }
+                // get the current silurian count
+                int silurians = 0;
+                Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
+                for (Skeleton s : skeletons) {
+                    PersistentDataContainer pdc = s.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
+                        silurians++;
                     }
-                    if (silurians < plugin.getMonstersConfig().getInt("silurians.worlds." + name)) {
-                        // if less than maximum, spawn some more
-                        for (int i = 0; i < spawn_rate; i++) {
-                            spawnSilurian(w);
-                        }
+                }
+                if (silurians < plugin.getMonstersConfig().getInt("silurians.worlds." + name)) {
+                    // if less than maximum, spawn some more
+                    for (int i = 0; i < spawn_rate; i++) {
+                        spawnSilurian(w);
                     }
                 }
             }
@@ -80,26 +71,32 @@ public class SilurianRunnable implements Runnable {
     }
 
     private void spawnSilurian(World world) {
-        Chunk[] chunks = world.getLoadedChunks();
-        if (chunks.length > 0) {
-            Chunk chunk = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
-            int x = chunk.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
-            int z = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
-            int y = world.getHighestBlockYAt(x, z);
-            Location l = new Location(world, x, y + 1, z);
-            Location search = CaveFinder.searchCave(l);
-            Location cave = ((search == null)) ? l : search;
-            if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(cave)) {
-                return;
+        Collection<Player> players = world.getPlayers();
+        // don't bother spawning if there are no players in the world
+        if (players.isEmpty()) {
+            return;
+        }
+        for (Player p : players) {
+            Location playerLocation = p.getLocation();
+            int y = playerLocation.blockY();
+            // caves mostly occur between y = -56 and y = 44
+            if (y > -55 && y < 48) {
+                Location cave = CaveFinder.searchSpawnPoint(playerLocation);
+                if (cave == null) {
+                    continue;
+                }
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(cave)) {
+                    continue;
+                }
+                LivingEntity s = (LivingEntity) world.spawnEntity(cave, EntityType.SKELETON);
+                s.setSilent(true);
+                PotionEffect potionEffect = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
+                s.addPotionEffect(potionEffect);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    new Equipper(Monster.SILURIAN, s, false, true).setHelmetAndInvisibilty();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(s, EntityType.SKELETON, Monster.SILURIAN, cave));
+                }, 5L);
             }
-            LivingEntity s = (LivingEntity) world.spawnEntity(cave, EntityType.SKELETON);
-            s.setSilent(true);
-            PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-            s.addPotionEffect(p);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(Monster.SILURIAN, s, false, true).setHelmetAndInvisibilty();
-                plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(s, EntityType.SKELETON, Monster.SILURIAN, cave));
-            }, 5L);
         }
     }
 }

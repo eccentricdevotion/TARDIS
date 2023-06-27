@@ -65,19 +65,24 @@ public class JudoonRunnable implements Runnable {
         });
     }
 
-    private void spawnJudoon(World w) {
-        Chunk[] chunks = w.getLoadedChunks();
+    private void spawnJudoon(World world) {
+        int players = world.getPlayers().size();
+        // don't bother spawning if there are no players in the world
+        if (players == 0) {
+            return;
+        }
+        Chunk[] chunks = world.getLoadedChunks();
         if (chunks.length > 0) {
             Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
             int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
-            int y = w.getHighestBlockYAt(x, z);
-            Location l = new Location(w, x, y + 1, z);
+            int y = world.getHighestBlockYAt(x, z);
+            Location l = new Location(world, x, y + 1, z);
             if (WaterChecker.isNotWater(l)) {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                Entity e = w.spawnEntity(l, EntityType.ARMOR_STAND);
+                Entity e = world.spawnEntity(l, EntityType.ARMOR_STAND);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     JudoonEquipment.set(null, e, false);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ARMOR_STAND, Monster.JUDOON, l));
