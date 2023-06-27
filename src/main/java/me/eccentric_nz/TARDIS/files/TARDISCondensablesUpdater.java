@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -35,44 +37,24 @@ public class TARDISCondensablesUpdater {
     }
 
     public void checkCondensables() {
-        if (!plugin.getConfig().getBoolean("preferences.use_default_list")) {
+        if (!plugin.getConfig().getBoolean("preferences.use_default_condensables")) {
             HashMap<String, Object> list = new HashMap<>();
             // 1.13
-            list.put("ACACIA_BARK", null);
             list.put("ACACIA_WOOD", 2);
-            list.put("BANNER", null);
-            list.put("BED", null);
-            list.put("BIRCH_BARK", null);
             list.put("BIRCH_STAIRS", 11);
             list.put("BIRCH_WOOD", 2);
-            list.put("BIRCH_WOOD_STAIRS", null);
             list.put("CHEST_MINECART", 30);
-            list.put("CHORUS_FRUIT_POPPED", null);
-            list.put("CLOWNFISH", null);
-            list.put("DARK_OAK_BARK", null);
             list.put("DARK_OAK_WOOD", 2);
-            list.put("END_BRICKS", null);
             list.put("END_STONE_BRICKS", 21);
             list.put("GLISTERING_MELON_SLICE", 22);
             list.put("GUNPOWDER", 20);
-            list.put("JUNGLE_BARK", null);
             list.put("JUNGLE_STAIRS", 11);
             list.put("JUNGLE_WOOD", 2);
-            list.put("JUNGLE_WOOD_STAIRS", null);
-            list.put("MUSHROOM_SOUP", null);
-            list.put("NETHER_STALK", null);
-            list.put("OAK_BARK", null);
             list.put("OAK_WOOD", 2);
             list.put("POPPED_CHORUS_FRUIT", 8);
             list.put("POPPY", 2);
-            list.put("RED_ROSE", null);
-            list.put("SEA_GRASS", null);
             list.put("SEAGRASS", 2);
-            list.put("SPECKLED_MELON", null);
             list.put("SPRUCE_STAIRS", 11);
-            list.put("SPRUCE_WOOD_STAIRS", null);
-            list.put("STONE_PLATE", null);
-            list.put("STORAGE_MINECART", null);
             list.put("STRIPPED_ACACIA_LOG", 2);
             list.put("STRIPPED_ACACIA_WOOD", 2);
             list.put("STRIPPED_BIRCH_LOG", 2);
@@ -85,7 +67,6 @@ public class TARDISCondensablesUpdater {
             list.put("STRIPPED_OAK_WOOD", 2);
             list.put("STRIPPED_SPRUCE_LOG", 2);
             list.put("STRIPPED_SPRUCE_WOOD", 2);
-            list.put("SULPHUR", null);
             list.put("TROPICAL_FISH", 5);
             // 1.14
             list.put("ACACIA_SIGN", 2);
@@ -506,11 +487,33 @@ public class TARDISCondensablesUpdater {
             list.put("STRIPPED_BAMBOO_BLOCK", 2);
             list.put("STRIPPED_CHERRY_LOG", 2);
             list.put("STRIPPED_CHERRY_WOOD", 2);
-//            list.put("SUSPICIOUS_GRAVEL", 2); // unobtainable
-//            list.put("SUSPICIOUS_SAND", 2); // unobtainable
             list.put("TORCHFLOWER", 20);
             list.put("TORCHFLOWER_SEEDS", 20);
             list.put("WARPED_HANGING_SIGN", 2);
+            //
+            List<String> remove = new ArrayList();
+            remove.add("ACACIA_BARK");
+            remove.add("BANNER");
+            remove.add("BED");
+            remove.add("BIRCH_BARK");
+            remove.add("BIRCH_WOOD_STAIRS");
+            remove.add("CHORUS_FRUIT_POPPED");
+            remove.add("CLOWNFISH");
+            remove.add("DARK_OAK_BARK");
+            remove.add("END_BRICKS");
+            remove.add("JUNGLE_BARK");
+            remove.add("JUNGLE_WOOD_STAIRS");
+            remove.add("MUSHROOM_SOUP");
+            remove.add("NETHER_STALK");
+            remove.add("OAK_BARK");
+            remove.add("RED_ROSE");
+            remove.add("SEA_GRASS");
+            remove.add("SPECKLED_MELON");
+            remove.add("SPRUCE_WOOD_STAIRS");
+            remove.add("STONE_PLATE");
+            remove.add("STORAGE_MINECART");
+            remove.add("SULPHUR");
+
             int i = 0;
             for (Map.Entry<String, Object> entry : list.entrySet()) {
                 if (!plugin.getCondensablesConfig().contains(entry.getKey())) {
@@ -518,6 +521,13 @@ public class TARDISCondensablesUpdater {
                     i++;
                 }
             }
+            for (String r : remove) {
+                if (plugin.getCondensablesConfig().contains(r)) {
+                    plugin.getCondensablesConfig().set(r, null);
+                    i++;
+                }
+            }
+            // fix Material
             if (plugin.getCondensablesConfig().contains("Material")) {
                 plugin.getCondensablesConfig().set("Material", null);
                 i++;
@@ -530,21 +540,20 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("BRICK_WALL", 20);
                 i++;
             }
-            // fix Material.
             if (plugin.getCondensablesConfig().contains("Material.TADPOLE_BUCKET")) {
                 // remove
-                plugin.getCondensablesConfig().set("Material.TADPOLE_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.POWDER_SNOW_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.PUFFERFISH_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.SALMON_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.COD_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.TROPICAL_FISH_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.AXOLOTL_BUCKET", null);
-                plugin.getCondensablesConfig().set("Material.RECOVERY_COMPASS", null);
-                plugin.getCondensablesConfig().set("Material.MUSIC_DISC_5", null);
-                plugin.getCondensablesConfig().set("Material.DISC_FRAGMENT_5", null);
-                plugin.getCondensablesConfig().set("Material.GOAT_HORN", null);
-                plugin.getCondensablesConfig().set("Material.ECHO_SHARD", null);
+                plugin.getCondensablesConfig().set("Material m = Material.TADPOLE_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.POWDER_SNOW_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.PUFFERFISH_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.SALMON_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.COD_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.TROPICAL_FISH_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.AXOLOTL_BUCKET", null);
+                plugin.getCondensablesConfig().set("Material m = Material.RECOVERY_COMPASS", null);
+                plugin.getCondensablesConfig().set("Material m = Material.MUSIC_DISC_5", null);
+                plugin.getCondensablesConfig().set("Material m = Material.DISC_FRAGMENT_5", null);
+                plugin.getCondensablesConfig().set("Material m = Material.GOAT_HORN", null);
+                plugin.getCondensablesConfig().set("Material m = Material.ECHO_SHARD", null);
                 // correct
                 plugin.getCondensablesConfig().set("TADPOLE_BUCKET", 40);
                 plugin.getCondensablesConfig().set("POWDER_SNOW_BUCKET", 40);
