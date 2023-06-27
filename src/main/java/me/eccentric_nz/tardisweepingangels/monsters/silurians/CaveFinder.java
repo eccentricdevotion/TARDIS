@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import me.eccentric_nz.TARDIS.travel.Check;
+import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -34,7 +35,7 @@ public class CaveFinder {
         int startx = playerLocation.getBlockX();
         int starty = playerLocation.getBlockY();
         int startz = playerLocation.getBlockZ();
-        if (worldCheck(w)) {
+        if (TARDISCaveFinder.worldCheck(w)) {
             int plusx = startx + 24;
             int plusz = startz + 24;
             int minusx = startx - 24;
@@ -87,7 +88,7 @@ public class CaveFinder {
         ret.setSafe(false);
         for (int y = sy + 8; y > sy - 8; y--) {
             if (w.getBlockAt(x, y, z).getType().isAir()) {
-                int yy = getLowestAirBlock(w, x, y, z);
+                int yy = TARDISCaveFinder.getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the Silurian
                 if (yy <= y - 2 && Tag.BASE_STONE_OVERWORLD.isTagged(w.getBlockAt(x - 1, yy - 1, z - 1).getType())) {
                     // check there is room for the Silurian
@@ -106,34 +107,5 @@ public class CaveFinder {
             }
         }
         return ret;
-    }
-
-    private static int getLowestAirBlock(World w, int x, int y, int z) {
-        int yy = y;
-        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().isAir()) {
-            yy--;
-        }
-        return yy;
-    }
-
-    private static boolean worldCheck(World w) {
-        if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
-            // caves not generated
-            return false;
-        }
-        Location spawn = w.getSpawnLocation();
-        int y = w.getHighestBlockYAt(spawn);
-        if (y < 15) {
-            return false;
-        } else {
-            // move 20 blocks north
-            spawn.setZ(spawn.getBlockZ() - 20);
-            int ny = w.getHighestBlockYAt(spawn);
-            spawn.setX(spawn.getBlockZ() + 20);
-            int ey = w.getHighestBlockYAt(spawn);
-            spawn.setZ(spawn.getBlockZ() + 20);
-            int sy = w.getHighestBlockYAt(spawn);
-            return (y != ny && y != ey && y != sy);
-        }
     }
 }

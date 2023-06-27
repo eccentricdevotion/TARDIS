@@ -128,6 +128,7 @@ public class TARDISCaveFinder {
     private Check isThereRoom(World w, int x, int z, COMPASS d) {
         Check ret = new Check();
         ret.setSafe(false);
+        // the probability of cave generation is higher at y=-56 —> y=47
         for (int y = 35; y > w.getMinHeight() + 14; y--) {
             if (w.getBlockAt(x, y, z).getType().isAir()) {
                 int yy = getLowestAirBlock(w, x, y, z);
@@ -170,7 +171,7 @@ public class TARDISCaveFinder {
         return ret;
     }
 
-    private boolean worldCheck(World w) {
+    public static boolean worldCheck(World w) {
         if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
             // caves not generated
             return false;
