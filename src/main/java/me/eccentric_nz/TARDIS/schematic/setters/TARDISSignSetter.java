@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -36,7 +35,8 @@ public class TARDISSignSetter {
             if (plugin != null && line1.equals("Control")) {
                 String controlLocation = block.getLocation().toString();
                 plugin.getQueryFactory().insertSyncControl(id, 22, controlLocation, 0);
-                WaxedHelper.setWaxed(signState);
+                signState.setWaxed(true);
+                signState.update();
             }
             front.setLine(0, json.get("line0").getAsString());
             front.setLine(1, line1);

@@ -24,7 +24,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -87,8 +86,8 @@ public class UpdateARS {
             front.setLine(1, plugin.getSigns().getStringList("ars").get(0));
             front.setLine(2, plugin.getSigns().getStringList("ars").get(1));
             front.setLine(3, plugin.getSigns().getStringList("ars").get(2));
+            as.setWaxed(true);
             as.update();
-            WaxedHelper.setWaxed(as);
         }
     }
 }

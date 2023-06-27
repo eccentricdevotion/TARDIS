@@ -33,7 +33,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.helpers.WaxedHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -203,8 +202,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     front.setLine(2, "");
                     front.setLine(3, tardis.getPreset().toString());
+                    cs.setWaxed(true);
                     cs.update();
-                    WaxedHelper.setWaxed(cs);
                 }
                 case KEYBOARD -> {
                     plugin.getQueryFactory().insertControl(id, 7, blockLocStr, secondary ? 1 : 0);
@@ -226,8 +225,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("saves").get(0));
                     front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     front.setLine(3, "");
+                    ss.setWaxed(true);
                     ss.update();
-                    WaxedHelper.setWaxed(ss);
                 }
                 case TERMINAL -> {
                     plugin.getQueryFactory().insertControl(id, 9, blockLocStr, secondary ? 1 : 0);
@@ -238,8 +237,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
                     front.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     front.setLine(3, "");
+                    ts.setWaxed(true);
                     ts.update();
-                    WaxedHelper.setWaxed(ts);
                 }
                 case CONTROL -> {
                     plugin.getQueryFactory().insertControl(id, 22, blockLocStr, secondary ? 1 : 0);
@@ -250,8 +249,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("control").get(0));
                     front.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     front.setLine(3, "");
+                    os.setWaxed(true);
                     os.update();
-                    WaxedHelper.setWaxed(os);
                 }
                 case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
                 case BACK -> {
@@ -282,8 +281,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
                     front.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     front.setLine(3, "");
+                    es.setWaxed(true);
                     es.update();
-                    WaxedHelper.setWaxed(es);
                 }
                 case ADVANCED, STORAGE -> {
                     plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
@@ -304,8 +303,8 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, "TARDIS");
                     front.setLine(2, plugin.getSigns().getStringList("info").get(0));
                     front.setLine(3, plugin.getSigns().getStringList("info").get(1));
+                    s.setWaxed(true);
                     s.update();
-                    WaxedHelper.setWaxed(s);
                 }
                 case ZERO -> plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                 case THROTTLE -> {
