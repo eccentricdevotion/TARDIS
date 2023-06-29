@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+
+import java.util.HashMap;
 
 public class TARDISAliasResolver {
 
@@ -42,6 +44,11 @@ public class TARDISAliasResolver {
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getWorld();
                 }
+            }
+            // fall back to Multiverse
+            if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                world = TARDIS.plugin.getMVHelper().getWorld(alias);
+                return world;
             }
         }
         return null;
