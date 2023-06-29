@@ -3,7 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -25,6 +24,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -104,7 +108,7 @@ public class TVMEquipListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
                         return;
                     }
-                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY");
                     // Random malfunction
                     if (TARDISConstants.RANDOM.nextInt(100) < plugin.getVortexConfig().getInt("block_travel_malfunction_chance")) {
                         plugin.debug(player.getDisplayName() + " has malfunctioned");

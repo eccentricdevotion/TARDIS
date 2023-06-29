@@ -3,9 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -22,6 +19,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -130,7 +131,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener implements Listener 
                     return;
                 }
                 Location l = rss.getWarp();
-                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY");
                 while (!l.getChunk().isLoaded()) {
                     l.getChunk().load();
                 }

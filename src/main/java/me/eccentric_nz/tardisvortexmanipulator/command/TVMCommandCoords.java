@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -30,6 +28,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -142,7 +143,7 @@ public class TVMCommandCoords {
             return true;
         }
         if (l != null) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDY");
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY");
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
