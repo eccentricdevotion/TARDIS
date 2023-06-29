@@ -1755,5 +1755,20 @@ commands:
     aliases: [tshop]
     description: Add and remove TARDISShop items.
     usage: /<command> [add|remove|update] [item_name]
+    add:
+      description: Add a new shop item block.
+      usage: /<command> add [item]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    remove:
+      description: Remove a shop item block.
+      usage: /<command> remove
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    update:
+      description: Reloads shop prices from items.yml and update all shop blocks.
+      usage: /<command> update
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command

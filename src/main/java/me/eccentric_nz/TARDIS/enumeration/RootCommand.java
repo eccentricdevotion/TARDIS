@@ -49,7 +49,10 @@ public enum RootCommand {
     tardistravel("https://eccentricdevotion.github.io/TARDIS/travel-commands.html"),
     tardisweather("https://eccentricdevotion.github.io/TARDIS/misc-commands.html#tardisweather"),
     tardisworld("https://eccentricdevotion.github.io/TARDIS/world-management.html"),
-    handles("https://eccentricdevotion.github.io/TARDIS/handles.html");
+    handles("https://eccentricdevotion.github.io/TARDIS/handles.html"),
+    twa("https://eccentricdevotion.github.io/TARDIS/weeping-angels.html"),
+    vm("https://eccentricdevotion.github.io/TARDIS/vortex-manipulator.html"),
+    tardisshop("https://eccentricdevotion.github.io/TARDIS/tardis-shop.html");
 
     public final String URL;
 
