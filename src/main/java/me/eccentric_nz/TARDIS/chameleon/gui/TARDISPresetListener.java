@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -36,6 +34,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -91,7 +92,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> set = new HashMap<>();
                             switch (slot) {
-                                case 47, 49, 50 -> {
+                                case 45, 46, 47, 49, 50 -> {
                                     // do nothing
                                 }
                                 case 48 -> {

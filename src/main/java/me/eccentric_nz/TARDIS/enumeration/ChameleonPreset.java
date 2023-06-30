@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
 
 /**
  * @author eccentric_nz
@@ -29,24 +30,24 @@ import org.bukkit.Material;
 public enum ChameleonPreset {
 
     ADAPTIVE(Material.BLUE_WOOL, Material.BLUE_WOOL, 0, "ADAPTIVE", "BOX", true, true, "Adaptive Box"),
-    ANDESITE(Material.GOLD_INGOT, Material.ANDESITE, 43, "ANDESITE", "BOX", true, true),
+    ANDESITE(Material.GOLD_INGOT, Material.ANDESITE, 42, "ANDESITE", "BOX", true, true),
     ANGEL(Material.FEATHER, 8, "WEEPING", "ANGELS HAVE", false, false, "Weeping Angel"),
     APPERTURE(Material.STICK, Material.IRON_TRAPDOOR, 34, "APERTURE", "SCIENCE", false, false),
     CAKE(Material.CAKE, Material.BROWN_WOOL, 28, "CAKE AND", "EAT IT TOO", true, true, "Birthday Cake"),
     CANDY(Material.SUGAR, Material.RED_TERRACOTTA, 21, "", "", false, false, "Candy Cane"),
     CHALICE(Material.QUARTZ, Material.QUARTZ_BLOCK, 12, "", "", false, false, "Chalice"),
-    CHORUS(Material.CHORUS_FLOWER, 42, "", "", true, true, "Chorus Flower"),
+    CHORUS(Material.CHORUS_FLOWER, 41, "", "", true, true, "Chorus Flower"),
     CREEPY(Material.STRING, Material.COBWEB, 18, "HAUNTED", "HOUSE", true, true, "Creepy"),
     DESERT(Material.SAND, Material.SANDSTONE, 13, "DESERT", "TEMPLE", true, true),
-    DIORITE(Material.EMERALD, Material.DIORITE, 44, "DIORITE", "BOX", true, true),
+    DIORITE(Material.EMERALD, Material.DIORITE, 43, "DIORITE", "BOX", true, true),
     DUCK(Material.OAK_BUTTON, Material.YELLOW_CONCRETE, 16, "", "", false, false, "Rubber Ducky"),
     FACTORY(Material.IRON_INGOT, -1, "", "", true, true, "Factory"),
     FENCE(Material.IRON_BARS, Material.BRICKS, 32, "RANDOM", "FENCE", false, false),
     FLOWER(Material.POPPY, Material.WHITE_WOOL, 10, "", "", false, false, "Daisy Flower"),
     GAZEBO(Material.OAK_FENCE, 33, "CHILLED OUT", "GAZEBO", false, false, "Gazebo"),
-    GRANITE(Material.REDSTONE, Material.GRANITE, 45, "GRANITE", "BOX", true, true),
+    GRANITE(Material.REDSTONE, Material.GRANITE, 44, "GRANITE", "BOX", true, true),
     GRAVESTONE(Material.END_STONE, 29, "HERE", "LIES", false, false, "Gravestone"),
-    HELIX(Material.STONE_BRICK_STAIRS, 40, "INDUSTRIAL", "DOUBLE HELIX", false, false, "Double Helix"),
+    HELIX(Material.STONE_BRICK_STAIRS, 39, "INDUSTRIAL", "DOUBLE HELIX", false, false, "Double Helix"),
     INVISIBLE(Material.BARRIER, -1, "", "", true, true, "Invisible"),
     JAIL(Material.STONE_BRICKS, Material.IRON_BARS, 38, "$50,000", "REWARD FOR", false, false, "Jail"),
     JUNGLE(Material.VINE, Material.MOSSY_COBBLESTONE, 1, "JUNGLE", "TEMPLE", true, true),
@@ -55,12 +56,11 @@ public enum ChameleonPreset {
     LIGHTHOUSE(Material.TORCH, Material.LANTERN, 35, "TINY", "LIGHTHOUSE", true, true),
     MINESHAFT(Material.RAIL, 17, "ROAD TO", "EL DORADO", false, false, "Mineshaft"),
     NETHER(Material.NETHERRACK, Material.NETHER_BRICKS, 2, "", "", true, true, "Nether Fortress"),
-    PANDORICA(Material.COAL, Material.BLACKSTONE, 39, "PANDORICA", "", false, false),
     PARTY(Material.FIREWORK_ROCKET, Material.GREEN_WOOL, 4, "PARTY", "TENT", true, true),
     PEANUT(Material.TERRACOTTA, 19, "JAR OF", "PEANUT BUTTER", true, false, "Peanut Butter Jar"),
     PINE(Material.SPRUCE_LEAVES, Material.SPRUCE_LEAVES, 25, "PINE", "TREE", false, false),
     PORTAL(Material.OAK_DOOR, Material.NETHER_QUARTZ_ORE, 27, "PORTAL TO", "SOMEWHERE", true, false, "Nether Portal"),
-    PRISMARINE(Material.PRISMARINE, Material.PRISMARINE, 41, "GUARDIAN", "TEMPLE", true, true),
+    PRISMARINE(Material.PRISMARINE, Material.PRISMARINE, 40, "GUARDIAN", "TEMPLE", true, true),
     PUNKED(Material.PISTON, Material.COAL_BLOCK, 26, "JUST GOT", "PUNKED", false, false, "Steam Punked"),
     RENDER(Material.FIRE, -1, "", "", false, false, "For Render Room Only"),
     ROBOT(Material.COBBLESTONE_WALL, Material.IRON_BLOCK, 23, "WILL BE", "DELETED", false, false, "Robot"),
@@ -115,6 +115,7 @@ public enum ChameleonPreset {
     POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, true, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
     COLOURED(Material.LEATHER_HORSE_ARMOR, 18, "", "", false, true, "Pick a colour"),
+    PANDORICA(Material.ENDER_CHEST, 19, "", "", false, false, "Pandorica"),
 
     ITEM(Material.BARRIER, -1, "", "", false, true, "Item");
 
@@ -238,7 +239,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED,
-                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, ITEM -> true;
+                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, PANDORICA, ITEM -> true;
             default -> false;
         };
     }
@@ -247,7 +248,7 @@ public enum ChameleonPreset {
         return switch (this) {
             case ADAPTIVE, ANDESITE, ANGEL, APPERTURE, CAKE, CANDY, CHALICE, CHORUS, CREEPY, DESERT, DIORITE,
                 DUCK, FACTORY, FENCE, FLOWER, GAZEBO, GRANITE, GRAVESTONE, HELIX, JAIL, JUNGLE, LAMP, LIBRARY,
-                LIGHTHOUSE, MINESHAFT, NETHER, PANDORICA, PARTY, PEANUT, PINE, PORTAL, PRISMARINE, PUNKED,
+                LIGHTHOUSE, MINESHAFT, NETHER, PARTY, PEANUT, PINE, PORTAL, PRISMARINE, PUNKED,
                 ROBOT, SHROOM, SNOWMAN, STONE, SUBMERGED, SWAMP, TELEPHONE, TOILET, TOPSYTURVEY, TORCH,
                 VILLAGE, WELL, WINDMILL, YELLOW, CUSTOM -> true;
             default -> false;

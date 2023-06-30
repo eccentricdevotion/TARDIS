@@ -418,7 +418,7 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
                 ents.forEach((k) -> {
                     EntityType et = k.getType();
                     if (TARDISConstants.ENTITY_TYPES.contains(et)) {
-                        Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
+                        int entity_count = scannedentities.getOrDefault(et, 0);
                         boolean visible = true;
                         if (et.equals(EntityType.PLAYER)) {
                             Player entPlayer = (Player) k;
@@ -433,16 +433,16 @@ public class TVMGUIListener extends TARDISMenuListener implements Listener {
                         }
                     }
                 });
-                scannedentities.entrySet().forEach((entry) -> {
+                scannedentities.forEach((key, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && !playernames.isEmpty()) {
+                    if (key.equals(EntityType.PLAYER) && !playernames.isEmpty()) {
                         playernames.forEach((pn) -> {
                             buf.append(", ").append(pn);
                         });
                         message = " (" + buf.toString().substring(2) + ")";
                     }
-                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                    player.sendMessage("    " + key + ": " + value + message);
                 });
                 scannedentities.clear();
             } else {

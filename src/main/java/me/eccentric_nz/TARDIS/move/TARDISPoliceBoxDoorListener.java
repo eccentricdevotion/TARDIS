@@ -16,12 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.chameleon.utils.PandoricaOpens;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
@@ -51,6 +49,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
 
@@ -180,9 +182,14 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                 } else {
                                                     // create portal & open inner door
                                                     new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
-                                                    dim.setCustomModelData(1002);
-                                                    dye.setItemMeta(dim);
-                                                    frame.setItem(dye, false);
+                                                    if (dye.getType() == Material.ENDER_CHEST) {
+                                                        // animate pandorica opening
+                                                        new PandoricaOpens(plugin).animate(frame, true);
+                                                    } else {
+                                                        dim.setCustomModelData(1002);
+                                                        dye.setItemMeta(dim);
+                                                        frame.setItem(dye, false);
+                                                    }
                                                 }
                                                 playDoorSound(true, location);
                                             } else if (TARDISStaticUtils.isSonic(hand) && TARDISMaterials.dyes.contains(dye.getType()) && tardis.getUuid().equals(playerUUID)) {
@@ -231,10 +238,14 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             }
                                             // close portal & inner door
                                             new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
-                                            dim.setCustomModelData(1001);
-                                            dye.setItemMeta(dim);
-                                            frame.setItem(dye, false);
-                                            playDoorSound(false, location);
+                                            if (dye.getType() == Material. ENDER_CHEST) {
+                                                new PandoricaOpens(plugin).animate(frame, false);
+                                            } else {
+                                                dim.setCustomModelData(1001);
+                                                dye.setItemMeta(dim);
+                                                frame.setItem(dye, false);
+                                                playDoorSound(false, location);
+                                            }
                                         }
                                     } else if (!tardis.getUuid().equals(playerUUID)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
