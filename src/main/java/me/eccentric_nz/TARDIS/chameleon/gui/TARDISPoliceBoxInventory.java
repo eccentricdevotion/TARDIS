@@ -85,11 +85,19 @@ public class TARDISPoliceBoxInventory {
         is.setItemMeta(im);
         boxes[i] = is;
         i++;
+        // pandorica
+        ItemStack pan = new ItemStack(Material.ENDER_CHEST, 1);
+        ItemMeta ica = pan.getItemMeta();
+        ica.setDisplayName("Pandorica");
+        ica.setCustomModelData(1001);
+        pan.setItemMeta(ica);
+        boxes[i] = pan;
+        i++;
         // any colour
         ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         ItemMeta colour = any.getItemMeta();
         colour.setDisplayName("Pick a colour Police Box");
-        colour.setCustomModelData(1);
+        colour.setCustomModelData(1001);
         any.setItemMeta(colour);
         boxes[i] = any;
         i++;
@@ -98,7 +106,7 @@ public class TARDISPoliceBoxInventory {
                 try {
                     Material cm = Material.valueOf(plugin.getCustomModelConfig().getString("models." + custom + ".item"));
                     ItemStack cis = new ItemStack(cm);
-                    ItemMeta cim = is.getItemMeta();
+                    ItemMeta cim = cis.getItemMeta();
                     cim.setDisplayName(custom);
                     cim.setCustomModelData(1001);
                     cis.setItemMeta(cim);
