@@ -109,6 +109,7 @@ public class TARDISPrefsMenuInventory {
         } else {
             values.add(false);
         }
+        values.add(rsp.isAnnounceRepeatersOn());
         // make a stack
         ItemStack[] stack = new ItemStack[36];
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {

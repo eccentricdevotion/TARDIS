@@ -278,4 +278,9 @@ public class SpigotMessage implements TARDISMessage {
             cs.spigot().sendMessage(c);
         }
     }
+
+    @Override
+    public void announceRepeater(Player player, String value) {
+        player.sendTitle("", value, 5, 20, 5);
+    }
 }

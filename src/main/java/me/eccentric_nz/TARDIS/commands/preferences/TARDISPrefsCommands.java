@@ -39,16 +39,17 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command /tardisprefs [arguments].
  * <p>
- * Children begin instruction at the Time Lord Academy, at the age of 8, in a special ceremony. The Gallifreyans are
- * forced to look into the Untempered Schism, which shows the entirety of the Time Vortex and the power that the Time
- * Lords have.
+ * Children begin instruction at the Time Lord Academy, at the age of 8, in a
+ * special ceremony. The Gallifreyans are forced to look into the Untempered
+ * Schism, which shows the entirety of the Time Vortex and the power that the
+ * Time Lords have.
  *
  * @author eccentric_nz
  */
 public class TARDISPrefsCommands implements CommandExecutor {
 
     private static final ImmutableList<String> firstArgs = ImmutableList.of(
-            "auto", "auto_powerup", "auto_rescue", "auto_siege",
+            "announce_repeaters", "auto", "auto_powerup", "auto_rescue", "auto_siege",
             "beacon", "build",
             "close_gui",
             "difficulty", "dnd",
@@ -83,125 +84,118 @@ public class TARDISPrefsCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        Player player = null;
-        if (sender instanceof Player) {
-            player = (Player) sender;
-        }
-        // If the player typed /tardisprefs then do the following...
-        // check there is the right number of arguments
-        if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
-            if (args.length == 0) {
-                new TARDISCommandHelper(plugin).getCommand("tardisprefs", sender);
-                return true;
-            }
-            if (player == null) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-                return true;
-            }
-            String pref = args[0].toLowerCase(Locale.ENGLISH);
-            if (firstArgs.contains(pref)) {
-                if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-                    if (TARDISPermission.isNegated(player, "tardis.prefs." + pref)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                        return true;
+        if (sender instanceof Player player) {
+            // If the player typed /tardisprefs then do the following...
+            // check there is the right number of arguments
+            if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
+                if (args.length == 0) {
+                    new TARDISCommandHelper(plugin).getCommand("tardisprefs", sender);
+                    return true;
+                }
+                String pref = args[0].toLowerCase(Locale.ENGLISH);
+                if (!firstArgs.contains(pref)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NOT_VALID");
+                    return true;
+                }
+                if (!TARDISPermission.hasPermission(player, "tardis.timetravel")
+                        || TARDISPermission.isNegated(player, "tardis.prefs." + pref)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
+                    return true;
+                }
+                if (pref.equals("sonic")) {
+                    // open sonic prefs menu
+                    ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
+                    Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
+                    sim.setContents(sonics);
+                    player.openInventory(sim);
+                    return true;
+                }
+                if (pref.equals("key_menu")) {
+                    // open sonic prefs menu
+                    ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
+                    Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
+                    sim.setContents(keys);
+                    player.openInventory(sim);
+                    return true;
+                }
+                String uuid = player.getUniqueId().toString();
+                // get the players preferences
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+                HashMap<String, Object> set = new HashMap<>();
+                // if no prefs record found, make one
+                if (!rsp.resultSet()) {
+                    set.put("uuid", uuid);
+                    plugin.getQueryFactory().doInsert("player_prefs", set);
+                }
+                switch (pref) {
+                    case "difficulty" -> {
+                        return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
                     }
-                    if (pref.equals("sonic")) {
-                        // open sonic prefs menu
-                        ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
-                        Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
-                        sim.setContents(sonics);
-                        player.openInventory(sim);
-                        return true;
+                    case "eps_message" -> {
+                        return new TARDISEPSMessageCommand(plugin).setMessage(player, args);
                     }
-                    if (pref.equals("key_menu")) {
-                        // open sonic prefs menu
-                        ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
-                        Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
-                        sim.setContents(keys);
-                        player.openInventory(sim);
-                        return true;
+                    case "flight" -> {
+                        return new TARDISSetFlightCommand(plugin).setMode(player, args);
                     }
-                    String uuid = player.getUniqueId().toString();
-                    // get the players preferences
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-                    HashMap<String, Object> set = new HashMap<>();
-                    // if no prefs record found, make one
-                    if (!rsp.resultSet()) {
-                        set.put("uuid", uuid);
-                        plugin.getQueryFactory().doInsert("player_prefs", set);
+                    case "hads_type" -> {
+                        return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args);
                     }
-                    switch (pref) {
-                        case "difficulty" -> {
-                            return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
+                    case "hum" -> {
+                        return new TARDISHumCommand(plugin).setHumPref(player, args);
+                    }
+                    case "isomorphic" -> {
+                        return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                    }
+                    case "key" -> {
+                        return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
+                    }
+                    case "language", "translate" -> {
+                        return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
+                    }
+                    case "lights" -> {
+                        return new TARDISLightsCommand(plugin).setLightsPref(player, args);
+                    }
+                    case "wall", "floor", "siege_wall", "siege_floor" -> {
+                        return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
+                    }
+                    default -> {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", pref);
+                            return false;
                         }
-                        case "eps_message" -> {
-                            return new TARDISEPSMessageCommand(plugin).setMessage(player, args);
-                        }
-                        case "flight" -> {
-                            return new TARDISSetFlightCommand(plugin).setMode(player, args);
-                        }
-                        case "hads_type" -> {
-                            return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args);
-                        }
-                        case "hum" -> {
-                            return new TARDISHumCommand(plugin).setHumPref(player, args);
-                        }
-                        case "isomorphic" -> {
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
-                        }
-                        case "key" -> {
-                            return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
-                        }
-                        case "language", "translate" -> {
-                            return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
-                        }
-                        case "lights" -> {
-                            return new TARDISLightsCommand(plugin).setLightsPref(player, args);
-                        }
-                        case "wall", "floor", "siege_wall", "siege_floor" -> {
-                            return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
-                        }
-                        default -> {
-                            if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", pref);
-                                return false;
-                            }
-                            if (pref.equals("forcefield") && TARDISPermission.hasPermission(player, "tardis.forcefield")) {
-                                // add tardis + location
-                                if (args[1].equalsIgnoreCase("on")) {
-                                    // check power
-                                    ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid);
-                                    if (rsal.resultset()) {
-                                        if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
-                                            return true;
-                                        }
-                                        if (TARDISForceField.addToTracker(player)) {
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
-                                        }
-                                    } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LEVEL");
+                        if (pref.equals("forcefield") && TARDISPermission.hasPermission(player, "tardis.forcefield")) {
+                            // add tardis + location
+                            if (args[1].equalsIgnoreCase("on")) {
+                                // check power
+                                ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid);
+                                if (rsal.resultset()) {
+                                    if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                         return true;
                                     }
+                                    if (TARDISForceField.addToTracker(player)) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
+                                    }
                                 } else {
-                                    plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_OFF", "The TARDIS force field");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LEVEL");
+                                    return true;
                                 }
-                                return true;
+                            } else {
+                                plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_OFF", "The TARDIS force field");
                             }
-                            return switch (pref) {
-                                case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                                case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
-                                default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
-                            };
+                            return true;
                         }
+                        return switch (pref) {
+                            case "build" ->
+                                new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                            case "junk" ->
+                                new TARDISJunkPreference(plugin).toggle(player, args[1]);
+                            default ->
+                                new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+                        };
                     }
-                } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                    return false;
                 }
-            } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NOT_VALID");
             }
         }
         return false;

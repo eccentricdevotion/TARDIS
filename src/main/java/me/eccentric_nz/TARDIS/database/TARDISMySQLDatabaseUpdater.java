@@ -74,6 +74,7 @@ class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("rotor varchar(48) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
+        prefsupdates.add("announce_repeaters_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_type varchar(32) DEFAULT 'CLOSEST'");
         prefsupdates.add("auto_default varchar(12) DEFAULT 'HOME'");
         prefsupdates.add("auto_rescue_on int(1) DEFAULT '0'");

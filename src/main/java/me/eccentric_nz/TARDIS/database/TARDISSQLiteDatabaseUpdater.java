@@ -74,6 +74,7 @@ class TARDISSQLiteDatabaseUpdater {
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
         portalsupdates.add("abandoned INTEGER DEFAULT 0");
+        prefsupdates.add("announce_repeaters_on INTEGER DEFAULT 0");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_type TEXT DEFAULT 'CLOSEST'");

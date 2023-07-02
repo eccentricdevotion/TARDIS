@@ -22,6 +22,7 @@ import org.bukkit.Material;
 public enum GUIPlayerPreferences {
 
     // Player Prefs Menu
+    ANNOUNCE_REPEATERS(53, 25, Material.REPEATER),
     AUTONOMOUS(20, 0, Material.REPEATER),
     AUTONOMOUS_SIEGE(21, 1, Material.REPEATER),
     AUTO_RESCUE(22, 2, Material.REPEATER),
@@ -47,12 +48,12 @@ public enum GUIPlayerPreferences {
     MINECART_SOUNDS(45, 22, Material.REPEATER),
     EASY_DIFFICULTY(46, 23, Material.REPEATER),
     LOCK_CONTAINERS(49, 24, Material.REPEATER),
-    FLIGHT_MODE(1, 25, Material.ELYTRA),
-    INTERIOR_HUM_SOUND(58, 26, Material.BOWL),
-    HANDBRAKE(1, 27, Material.LEVER),
-    TARDIS_MAP(3, 28, Material.MAP),
-    AUTONOMOUS_PREFERENCES(145, 29, Material.BOWL),
-    SONIC_CONFIGURATOR(135, 30, Material.BOWL),
+    FLIGHT_MODE(1, 26, Material.ELYTRA),
+    INTERIOR_HUM_SOUND(58, 27, Material.BOWL),
+    HANDBRAKE(1, 28, Material.LEVER),
+    TARDIS_MAP(3, 29, Material.MAP),
+    AUTONOMOUS_PREFERENCES(145, 30, Material.BOWL),
+    SONIC_CONFIGURATOR(135, 31, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;

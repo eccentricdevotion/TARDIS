@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -24,8 +25,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * Send messages.
@@ -115,4 +114,6 @@ public interface TARDISMessage {
     public void sendWikiLink(Player player, WikiLink wikiLink);
 
     public void sendStartBanner(CommandSender cs);
+
+    public void announceRepeater(Player player, String value);
 }

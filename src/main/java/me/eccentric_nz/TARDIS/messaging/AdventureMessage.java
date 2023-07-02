@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
+import java.time.Duration;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -29,6 +30,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -276,5 +278,12 @@ public class AdventureMessage implements TARDISMessage {
         for (Component c : AdventureComponents.getStartupBanner()) {
             cs.sendMessage(c);
         }
+    }
+
+    @Override
+    public void announceRepeater(Player player, String value) {
+        Title.Times times = Title.Times.times(Duration.ofMillis(250), Duration.ofMillis(1000), Duration.ofMillis(250));
+        Title title = Title.title(Component.empty(), Component.text(value), times);
+        player.showTitle(title);
     }
 }

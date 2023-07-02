@@ -42,6 +42,7 @@ public class ResultSetPlayerPrefs {
     private final String prefix;
     private int pp_id;
     private UUID uuid;
+    private boolean announceRepeatersOn;
     private boolean autoOn;
     private Autonomous autoType;
     private Autonomous.Default autoDefault;
@@ -111,6 +112,7 @@ public class ResultSetPlayerPrefs {
                     key = (plugin.getConfig().getString("storage.database", "sqlite").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                     sfxOn = rs.getBoolean("sfx_on");
                     quotesOn = rs.getBoolean("quotes_on");
+                    announceRepeatersOn = rs.getBoolean("announce_repeaters_on");
                     autoOn = rs.getBoolean("auto_on");
                     try {
                         autoType = Autonomous.valueOf(rs.getString("auto_type"));
@@ -199,6 +201,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isQuotesOn() {
         return quotesOn;
+    }
+
+    public boolean isAnnounceRepeatersOn() {
+        return announceRepeatersOn;
     }
 
     public boolean isAutoOn() {

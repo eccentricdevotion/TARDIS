@@ -63,6 +63,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
     public TARDISPrefsMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
+        lookup.put("Announce Repeaters", "announce_repeaters_on");
         lookup.put("Auto Power Up", "auto_powerup_on");
         lookup.put("Auto-rescue", "auto_rescue_on");
         lookup.put("Autonomous Siege", "auto_siege_on");
@@ -387,6 +388,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                                 value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                                 set.put("hads_type", value);
                             } else {
+                                plugin.debug(lookup.get(im.getDisplayName()));
+                                plugin.debug(b);
                                 set.put(lookup.get(im.getDisplayName()), b);
                             }
                             plugin.getQueryFactory().doUpdate("player_prefs", set, where);
