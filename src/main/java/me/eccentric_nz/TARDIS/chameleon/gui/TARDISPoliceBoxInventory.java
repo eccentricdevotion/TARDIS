@@ -86,7 +86,7 @@ public class TARDISPoliceBoxInventory {
         boxes[i] = is;
         i++;
         // pandorica
-        ItemStack pan = new ItemStack(Material.ENDER_CHEST, 1);
+        ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
         ItemMeta ica = pan.getItemMeta();
         ica.setDisplayName("Pandorica");
         ica.setCustomModelData(1001);

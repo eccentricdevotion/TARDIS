@@ -68,7 +68,7 @@ public class TARDISBuilderUtility {
             case WEEPING_ANGEL -> { return Material.GRAY_STAINED_GLASS_PANE; }
             case POLICE_BOX_TENNANT -> { return Material.CYAN_STAINED_GLASS_PANE; }
             case COLOURED -> { return Material.LEATHER_HORSE_ARMOR; }
-            case PANDORICA -> { return Material.ENDER_CHEST; }
+            case PANDORICA -> { return Material.ENDER_PEARL; }
             default -> {
                 String split = preset.toString().replace("POLICE_BOX_", "");
                 String dye = split + "_DYE";
