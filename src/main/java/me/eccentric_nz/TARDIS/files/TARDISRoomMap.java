@@ -131,7 +131,7 @@ public class TARDISRoomMap {
             BlockData block = plugin.getServer().createBlockData(data);
             bid = block.getMaterial().toString();
         } catch (IllegalArgumentException e) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The supplied file [" + fileName + ".tschm] contains invalid block data! " + data);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The supplied file [" + fileName + ".tschm] contains invalid block data!");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The invalid data was: " + data);
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "Please remake the room schematic!");
             // invalid data string - could be legacy material or levelled cauldron
