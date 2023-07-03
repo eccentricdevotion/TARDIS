@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
-import java.sql.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
+
+import java.sql.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -33,11 +34,11 @@ public class TARDISMaterialIDConverter {
 
     public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
     public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
+    public final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
     private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
 
     public TARDISMaterialIDConverter(TARDIS plugin) {

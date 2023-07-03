@@ -18,14 +18,18 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import org.bukkit.block.data.BlockData;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import org.bukkit.block.data.BlockData;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The Unified Intelligence Taskforce — formerly known as the United Nations
@@ -103,7 +107,7 @@ public class TARDISRoomMap {
                             }
                             return false;
                         }
-                        String bid = getMaterialAsString(c.get("data").getAsString());
+                        String bid = getMaterialAsString(c.get("data").getAsString(), fileName);
                         if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
                         }
@@ -121,9 +125,29 @@ public class TARDISRoomMap {
         }
     }
 
-    private String getMaterialAsString(String data) {
-        BlockData block = plugin.getServer().createBlockData(data);
-        String bid = block.getMaterial().toString();
+    private String getMaterialAsString(String data, String fileName) {
+        String bid = "STONE";
+        try {
+            BlockData block = plugin.getServer().createBlockData(data);
+            bid = block.getMaterial().toString();
+        } catch (IllegalArgumentException e) {
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The supplied file [" + fileName + ".tschm] contains invalid block data! " + data);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The invalid data was: " + data);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "Please remake the room schematic!");
+            // invalid data string - could be legacy material or levelled cauldron
+            if (data.contains("cauldron[level")) {
+                bid = "WATER_CAULDRON";
+            } else {
+                // legacy lookup
+                Pattern regex = Pattern.compile(":([a-z_])+");
+                Matcher matcher = regex.matcher(data);
+                if (matcher.matches()) {
+                    String mat = matcher.group(0).toUpperCase();
+                    TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
+                    bid = tmic.LEGACY_TYPE_LOOKUP.getOrDefault(mat, "STONE");
+                }
+            }
+        }
         if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
             bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
         }
