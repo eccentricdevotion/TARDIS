@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.files;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyTypeTable;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.block.data.BlockData;
@@ -132,7 +132,7 @@ public class TARDISRoomMap {
             bid = block.getMaterial().toString();
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The supplied file [" + fileName + ".tschm] contains invalid block data!");
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "The invalid data was: " + data);
+            plugin.getMessenger().sendWithColours(plugin.getConsole(), TardisModule.SEVERE, "The invalid data was: ", "#FFFFFF", data, "#00AAAA");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "Please remake the room schematic!");
             // invalid data string - could be legacy material or levelled cauldron
             if (data.contains("cauldron[level")) {
@@ -143,8 +143,7 @@ public class TARDISRoomMap {
                 Matcher matcher = regex.matcher(data);
                 if (matcher.matches()) {
                     String mat = matcher.group(0).toUpperCase();
-                    TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
-                    bid = tmic.LEGACY_TYPE_LOOKUP.getOrDefault(mat, "STONE");
+                    bid = LegacyTypeTable.LOOKUP.getOrDefault(mat, "STONE");
                 }
             }
         }
