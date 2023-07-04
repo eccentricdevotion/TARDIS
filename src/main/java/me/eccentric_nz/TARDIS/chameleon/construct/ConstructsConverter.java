@@ -20,21 +20,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyColourTable;
+import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyIdTable;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ConstructsConverter {
 
@@ -49,7 +51,6 @@ public class ConstructsConverter {
     }
 
     public void convertConstructs() {
-        TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
         PreparedStatement query = null;
         PreparedStatement update = null;
         ResultSet rs = null;
@@ -84,7 +85,7 @@ public class ConstructsConverter {
                             JsonArray bpDATAX = bpDataJson.get(y).getAsJsonArray();
                             JsonArray glIDX = glIDJson.get(y).getAsJsonArray();
                             for (int x = 0; x < 4; x++) {
-                                Material material = tmic.LEGACY_ID_LOOKUP.get(bpIDX.get(x).getAsInt());
+                                Material material = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt());
                                 bpGrid[y][x] = material.createBlockData().getAsString();
                                 switch (material) {
                                     case WHITE_CARPET:
@@ -94,7 +95,7 @@ public class ConstructsConverter {
                                     case GREEN_TERRACOTTA:
                                         // get correct colour
                                         String[] split = material.toString().split("_");
-                                        split[0] = tmic.COLOUR_LOOKUP.get(bpDATAX.get(x).getAsInt());
+                                        split[0] = LegacyColourTable.LOOKUP.get(bpDATAX.get(x).getAsInt());
                                         StringBuilder sb = new StringBuilder();
                                         for (int s = 0; s < split.length; s++) {
                                             sb.append(split[s]);
@@ -148,7 +149,7 @@ public class ConstructsConverter {
                                     case SPRUCE_WALL_SIGN:
                                     case TORCH:
                                     case WALL_TORCH:
-                                        stGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
+                                        stGrid[y][x] = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
                                         break;
                                     default:
                                         try {
@@ -158,7 +159,7 @@ public class ConstructsConverter {
                                         }
                                         break;
                                 }
-                                glGrid[y][x] = tmic.LEGACY_ID_LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
+                                glGrid[y][x] = LegacyIdTable.LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
                             }
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();

@@ -20,14 +20,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyIdTable;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * @author eccentric_nz
@@ -45,7 +46,6 @@ public class ARSConverter {
     }
 
     public void convertARS() {
-        TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
         PreparedStatement query = null;
         PreparedStatement update = null;
         ResultSet rs = null;
@@ -77,7 +77,7 @@ public class ARSConverter {
                                 if (jsonz.get(z).getAsInt() == 46) {
                                     grid[y][x][z] = "STONE";
                                 } else {
-                                    grid[y][x][z] = tmic.LEGACY_ID_LOOKUP.get(jsonz.get(z).getAsInt()).toString();
+                                    grid[y][x][z] = LegacyIdTable.LOOKUP.get(jsonz.get(z).getAsInt()).toString();
                                 }
                             }
                         }
