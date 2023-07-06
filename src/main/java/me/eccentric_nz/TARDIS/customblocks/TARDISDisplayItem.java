@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  *
@@ -75,6 +76,7 @@ public enum TARDISDisplayItem {
     BLUE_BOX(10001, Material.BLUE_WOOL, Material.BLUE_DYE),
     COG(10001, Material.GRAY_WOOL, Material.GRAY_DYE),
     DISK_STORAGE(10001, Material.NOTE_BLOCK, null),
+    HANDBRAKE(1001, Material.LEVER, Material.LEVER),
     HEXAGON(10001, Material.ORANGE_WOOL, Material.ORANGE_DYE),
     ROUNDEL(10001, Material.WHITE_WOOL, Material.WHITE_DYE),
     ROUNDEL_OFFSET(10002, Material.WHITE_WOOL, Material.LIGHT_GRAY_DYE),
@@ -85,6 +87,7 @@ public enum TARDISDisplayItem {
     DOOR_OPEN(10002, Material.IRON_DOOR, null),
     DOOR_BOTH_OPEN(10003, Material.IRON_DOOR, null),
     SONIC_GENERATOR(10000001, Material.FLOWER_POT, null),
+    THROTTLE(1001, Material.REPEATER, Material.REPEATER),
     // chemistry lamps off
     BLUE_LAMP(10001, Material.REDSTONE_LAMP, null),
     GREEN_LAMP(10002, Material.REDSTONE_LAMP, null),
@@ -129,50 +132,7 @@ public enum TARDISDisplayItem {
     CONSOLE_5(1005, Material.AMETHYST_SHARD, null),
     CONSOLE_6(1006, Material.AMETHYST_SHARD, null);
 
-    private int customModelData;
-    private final Material material;
-    private final Material craftMaterial;
-
-    private TARDISDisplayItem(Material item) {
-        this.customModelData = 1;
-        this.material = item;
-        this.craftMaterial = null;
-    }
-
-    private TARDISDisplayItem(int customModelData, Material item, Material craftMaterial) {
-        this.customModelData = customModelData;
-        this.material = item;
-        this.craftMaterial = craftMaterial;
-    }
-
     private static final HashMap<String, TARDISDisplayItem> BY_NAME = new HashMap<>();
-
-    static {
-        for (TARDISDisplayItem tdi : values()) {
-            BY_NAME.put(tdi.toString().toLowerCase(), tdi);
-        }
-    }
-
-    public String getName() {
-        return this.toString().toLowerCase();
-    }
-
-    public String getDisplayName() {
-        return TARDISStringUtils.capitalise(this.getName());
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public Material getCraftMaterial() {
-        return craftMaterial;
-    }
-
     private static final HashMap<Integer, TARDISDisplayItem> BY_MUSHROOM_STEM = new HashMap<>() {
         {
             put(1, BLUE_LAMP);
@@ -193,7 +153,6 @@ public enum TARDISDisplayItem {
             put(54, BLUE_BOX);
         }
     };
-
     private static final HashMap<Integer, TARDISDisplayItem> BY_RED_MUSHROOM = new HashMap<>() {
         {
             put(40, CREATIVE);
@@ -205,28 +164,26 @@ public enum TARDISDisplayItem {
         }
     };
 
-    public boolean isLight() {
-        switch (this) {
-            case LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN,
-                    LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON
-                    -> {
-                return true;
-            }
-            default -> {
-                return false;
-            }
+    static {
+        for (TARDISDisplayItem tdi : values()) {
+            BY_NAME.put(tdi.toString().toLowerCase(), tdi);
         }
     }
 
-    public boolean isLit() {
-        switch (this) {
-            case LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> {
-                return true;
-            }
-            default -> {
-                return false;
-            }
-        }
+    private final Material material;
+    private final Material craftMaterial;
+    private int customModelData;
+
+    private TARDISDisplayItem(Material item) {
+        this.customModelData = 1;
+        this.material = item;
+        this.craftMaterial = null;
+    }
+
+    private TARDISDisplayItem(int customModelData, Material item, Material craftMaterial) {
+        this.customModelData = customModelData;
+        this.material = item;
+        this.craftMaterial = craftMaterial;
     }
 
     public static TARDISDisplayItem getByMaterialAndData(Material m, int cmd) {
@@ -259,5 +216,49 @@ public enum TARDISDisplayItem {
 
     public static HashMap<Integer, TARDISDisplayItem> getBY_RED_MUSHROOM() {
         return BY_RED_MUSHROOM;
+    }
+
+    public String getName() {
+        return this.toString().toLowerCase();
+    }
+
+    public String getDisplayName() {
+        return TARDISStringUtils.capitalise(this.getName());
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public Material getCraftMaterial() {
+        return craftMaterial;
+    }
+
+    public boolean isLight() {
+        switch (this) {
+            case LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN,
+                    LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON
+                    -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isLit() {
+        switch (this) {
+            case LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 }
