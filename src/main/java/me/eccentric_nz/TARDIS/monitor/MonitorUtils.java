@@ -123,7 +123,8 @@ public class MonitorUtils {
                     door.setZ(getz + 1.5);
                     yaw = (in) ? 0.05f : 180.05f;
                 }
-                case WEST -> {
+                // WEST
+                default -> {
                     // x -ve
                     door.setX(getx - 0.5);
                     door.setZ(getz + 0.5);

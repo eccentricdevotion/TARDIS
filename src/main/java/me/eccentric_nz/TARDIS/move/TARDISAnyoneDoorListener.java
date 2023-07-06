@@ -382,7 +382,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         exitLoc.setX(ex + 0.5);
                                                         exitLoc.setZ(ez - 1.5);
                                                     }
-                                                    case WEST -> {
+                                                    // WEST
+                                                    default -> {
                                                         exitLoc.setX(ex + 2.5);
                                                         exitLoc.setZ(ez + 0.5);
                                                     }

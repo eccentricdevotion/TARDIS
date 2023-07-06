@@ -154,7 +154,8 @@ public class TARDISDoorOpener {
                             tmp_loc.setX(getx + 0.5);
                             tmp_loc.setZ(getz + 1.5);
                         }
-                        case WEST -> {
+                        // WEST
+                        default -> {
                             // x -ve
                             tmp_loc.setX(getx - 0.5);
                             tmp_loc.setZ(getz + 0.5);

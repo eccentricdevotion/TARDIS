@@ -103,7 +103,8 @@ class TARDISEnterCommand {
                         tardis_loc.setX(getx + 0.5);
                         tardis_loc.setZ(getz + 1.5);
                     }
-                    case WEST -> {
+                    // WEST
+                    default -> {
                         // x -ve
                         tardis_loc.setX(getx - 0.5);
                         tardis_loc.setZ(getz + 0.5);
@@ -125,7 +126,8 @@ class TARDISEnterCommand {
                         case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
                         case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
                         case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
-                        case EAST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
+                        // EAST
+                        default -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
                     }
                 }
                 tardis_loc.setYaw(yaw);

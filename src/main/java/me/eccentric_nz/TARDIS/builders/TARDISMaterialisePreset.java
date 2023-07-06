@@ -207,7 +207,8 @@ class TARDISMaterialisePreset implements Runnable {
                             signx = x;
                             signz = (plusz + 1);
                         }
-                        case WEST -> {
+                        // WEST
+                        default -> {
                             // if (yaw >= 45 && yaw < 135)
                             signx = (plusx + 1);
                             signz = z;

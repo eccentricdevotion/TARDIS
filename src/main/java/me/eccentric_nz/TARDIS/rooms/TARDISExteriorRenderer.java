@@ -270,7 +270,8 @@ public class TARDISExteriorRenderer {
                 loc.setX(ex + 0.5);
                 loc.setZ(ez - 1.5);
             }
-            case WEST -> {
+            // WEST
+            default -> {
                 loc.setX(ex + 2.5);
                 loc.setZ(ez + 0.5);
             }

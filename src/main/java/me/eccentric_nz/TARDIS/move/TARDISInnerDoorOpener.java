@@ -144,8 +144,9 @@ public class TARDISInnerDoorOpener {
                         case NORTH -> indoor.add(0.5d, 0.0d, -0.5d); // z -ve
                         case EAST -> indoor.add(1.5d, 0.0d, 0.5d); // x +ve
                         case SOUTH -> indoor.add(0.5d, 0.0d, 1.5d); // z +ve
-                        case WEST -> indoor.add(-0.5d, 0.0d, 0.5d);  // x -ve
-                        }
+                        // WEST
+                        default -> indoor.add(-0.5d, 0.0d, 0.5d); // x -ve
+                    }
                 } else {
                     // outer door
                     exdirection = COMPASS.valueOf(map.get("door_direction"));

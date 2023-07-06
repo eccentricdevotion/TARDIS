@@ -81,7 +81,8 @@ public class MonitorSnapshot {
                         doorBottom.setZ(getz + 1.5);
                         yaw = (in) ? 0.05f : 180.05f;
                     }
-                    case WEST -> {
+                    // WEST
+                    default -> {
                         // x -ve
                         doorBottom.setX(getx - 0.5);
                         doorBottom.setZ(getz + 0.5);
@@ -141,7 +142,8 @@ public class MonitorSnapshot {
                     dz = -1;
                     bx = true;
                 }
-                case WEST -> {
+                // WEST
+                default -> {
                     dx = 1;
                     bz = true;
                 }

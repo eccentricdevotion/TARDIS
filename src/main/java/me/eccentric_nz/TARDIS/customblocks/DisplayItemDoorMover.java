@@ -26,10 +26,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.EAST;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.NORTH;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.SOUTH;
-import static me.eccentric_nz.TARDIS.enumeration.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -160,7 +156,8 @@ public class DisplayItemDoorMover {
                                 exitLoc.setX(ex + 0.5);
                                 exitLoc.setZ(ez - 1.5);
                             }
-                            case WEST -> {
+                            // WEST
+                            default -> {
                                 exitLoc.setX(ex + 2.5);
                                 exitLoc.setZ(ez + 0.5);
                             }

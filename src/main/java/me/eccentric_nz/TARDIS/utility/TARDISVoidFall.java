@@ -66,7 +66,8 @@ public class TARDISVoidFall {
                     tardis_loc.setX(getx + 0.5);
                     tardis_loc.setZ(getz + 1.5);
                 }
-                case WEST -> {
+                // WEST
+                default -> {
                     // x -ve
                     tardis_loc.setX(getx - 0.5);
                     tardis_loc.setZ(getz + 0.5);
