@@ -1030,6 +1030,9 @@ commands:
     list:
       description: List TARDISs and their locations (or save them to file), plus list open portals / abandoned TARDISes.
       usage: /<command> list [page no.|save|portals|abandoned]
+    find:
+      description: Searches for hidden TARDISs around a player's location with an optional distance parameter.
+      usage: /<command> find [distance]
     chunks:
       description: List chunks that are being kept loaded by TARDIS.
       usage: /<command> chunks

@@ -64,6 +64,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("disguise");
         firstsStr.add("dispersed");
         firstsStr.add("enter");
+        firstsStr.add("find");
         firstsStr.add("list");
         firstsStr.add("make_preset");
         firstsStr.add("maze");
@@ -138,6 +139,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("create")) {
                     return new TARDISCreateCommand(plugin).buildTARDIS(sender, args);
+                }
+                if (first.equals("find")) {
+                    return new TARDISFindHiddenCommand().search(plugin, sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISListCommand(plugin).listStuff(sender, args);
