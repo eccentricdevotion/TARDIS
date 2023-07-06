@@ -27,7 +27,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -37,7 +36,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesSavedListener extends TARDISMenuListener implements Listener {
+public class TARDISHandlesSavedListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();

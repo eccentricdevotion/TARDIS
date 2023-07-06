@@ -29,12 +29,11 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-public class TARDISWeatherListener extends TARDISMenuListener implements Listener {
+public class TARDISWeatherListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
 

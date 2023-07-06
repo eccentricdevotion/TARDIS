@@ -26,7 +26,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -40,7 +39,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISCompanionGUIListener extends TARDISMenuListener implements Listener {
+public class TARDISCompanionGUIListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, Integer> selected_head = new HashMap<>();

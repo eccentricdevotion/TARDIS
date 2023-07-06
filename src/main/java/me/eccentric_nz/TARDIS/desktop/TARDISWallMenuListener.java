@@ -28,7 +28,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -42,7 +41,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISWallMenuListener extends TARDISMenuListener implements Listener {
+public class TARDISWallMenuListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<>();

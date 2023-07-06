@@ -35,7 +35,6 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Cat.Type;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -46,7 +45,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISLazarusGUIListener extends TARDISMenuListener implements Listener {
+public class TARDISLazarusGUIListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, Boolean> snowmen = new HashMap<>();

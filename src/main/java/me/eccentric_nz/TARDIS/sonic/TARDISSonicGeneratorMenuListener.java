@@ -31,7 +31,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
@@ -45,7 +44,7 @@ import org.bukkit.util.Vector;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener implements Listener {
+public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<String, Integer> costs;

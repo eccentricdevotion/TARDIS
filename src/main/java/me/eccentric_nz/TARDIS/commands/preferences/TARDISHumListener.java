@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +35,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISHumListener extends TARDISMenuListener implements Listener {
+public class TARDISHumListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<Integer, Long> sounds = new HashMap<>();

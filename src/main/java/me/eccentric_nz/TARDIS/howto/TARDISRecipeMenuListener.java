@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -34,7 +33,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISRecipeMenuListener extends TARDISMenuListener implements Listener {
+public class TARDISRecipeMenuListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
 

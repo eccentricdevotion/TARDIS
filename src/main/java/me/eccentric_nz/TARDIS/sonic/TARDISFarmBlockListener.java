@@ -49,7 +49,6 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material sb = Material.SWEET_BERRIES;
     private final Material ca = Material.CACTUS;
     private final Material pp = Material.PITCHER_POD;
-    private final Material tfs = Material.TORCHFLOWER_SEEDS;
     private final Material tf = Material.TORCHFLOWER;
     private final Material sonic;
 

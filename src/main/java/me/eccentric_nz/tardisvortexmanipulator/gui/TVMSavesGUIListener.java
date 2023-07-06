@@ -13,7 +13,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -27,7 +26,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TVMSavesGUIListener extends TARDISMenuListener implements Listener {
+public class TVMSavesGUIListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     int selectedSlot = -1;

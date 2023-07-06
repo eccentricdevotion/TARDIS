@@ -34,7 +34,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -51,7 +50,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISStorageListener extends TARDISMenuListener implements Listener {
+public class TARDISStorageListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final List<String> inv_titles = new ArrayList<>();

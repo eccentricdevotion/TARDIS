@@ -38,7 +38,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -50,7 +49,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
+public class TARDISSaveSignListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
 

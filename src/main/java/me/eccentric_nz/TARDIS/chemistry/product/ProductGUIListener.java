@@ -25,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -33,7 +32,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ProductGUIListener extends TARDISMenuListener implements Listener {
+public class ProductGUIListener extends TARDISMenuListener {
 
     //    private final TARDIS plugin;
     private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);

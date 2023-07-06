@@ -48,7 +48,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -58,7 +57,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author eccentric_nz
  */
-public class TARDISChameleonConstructorListener extends TARDISMenuListener implements Listener {
+public class TARDISChameleonConstructorListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final List<Material> doors = new ArrayList<>();
