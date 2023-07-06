@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import java.util.HashMap;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;

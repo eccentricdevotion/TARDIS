@@ -89,11 +89,12 @@ public class SnapshotRenderer extends MapRenderer {
                         switch (world.getEnvironment()) {
                             case NETHER -> {
                                 switch (location.getBlock().getBiome()) {
-                                    case NETHER_WASTES -> c = new Color(50, 15, 15);
                                     case BASALT_DELTAS -> c = new Color(90, 80, 95);
                                     case CRIMSON_FOREST -> c = new Color(35, 5, 5);
                                     case WARPED_FOREST -> c = new Color(10, 10, 50);
                                     case SOUL_SAND_VALLEY -> c = new Color(35, 90, 80);
+                                    // NETHER_WASTES
+                                    default -> c = new Color(50, 15, 15);
                                 }
                             }
                             case THE_END ->  c = new Color(30, 20, 50);

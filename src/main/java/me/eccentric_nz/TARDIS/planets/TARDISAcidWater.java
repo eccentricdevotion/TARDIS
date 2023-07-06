@@ -80,7 +80,6 @@ public class TARDISAcidWater implements Listener {
         if (player.isDead()) {
             return;
         }
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // Check that they are in the Skaro world
         if (!player.getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
@@ -233,7 +232,6 @@ public class TARDISAcidWater implements Listener {
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
         if (!p.getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
         }

@@ -69,7 +69,6 @@ public class ResultSetRepeaters {
      * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
-        int i = 0;
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT DISTINCT location, type FROM " + prefix + "controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";

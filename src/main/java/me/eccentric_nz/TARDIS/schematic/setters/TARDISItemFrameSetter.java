@@ -63,7 +63,7 @@ public class TARDISItemFrameSetter {
                     im.setDisplayName(json.get("name").getAsString());
                 }
                 if (json.has("lore")) {
-                    List<String> lore = new ArrayList();
+                    List<String> lore = new ArrayList<>();
                     for (JsonElement element : json.get("lore").getAsJsonArray()) {
                         lore.add(element.getAsString());
                     }

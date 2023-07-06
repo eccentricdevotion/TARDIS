@@ -141,6 +141,8 @@ public class TARDISHandlesProcessor {
                                             }
                                         }
                                     }
+                                    default -> {
+                                    }
                                 }
                             }
                             case LIGHTS -> {
@@ -181,6 +183,8 @@ public class TARDISHandlesProcessor {
                                             }
                                             block.setBlockData(button, true);
                                         }
+                                    }
+                                    default -> {
                                     }
                                 }
                             }
@@ -455,6 +459,8 @@ public class TARDISHandlesProcessor {
                                                     continue;
                                                 }
                                             }
+                                            default -> {
+                                            }
                                         }
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
@@ -559,8 +565,10 @@ public class TARDISHandlesProcessor {
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
                                 }
                             }
-                            case LAND ->
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
+                            case LAND -> plugin.getServer().dispatchCommand(plugin.getConsole(),
+                                    "handles land " + uuid + " " + id);
+                            default -> {
+                            }
                         }
                     }
                 }
@@ -604,6 +612,8 @@ public class TARDISHandlesProcessor {
                         }
                     }
                     case DO -> processCommand(i);
+                    default -> {
+                    }
                 }
             }
         }

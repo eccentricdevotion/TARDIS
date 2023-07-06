@@ -53,6 +53,8 @@ public class TARDISHandlesEventListener implements Listener {
                             processor.processCommand(i + 1);
                             return;
                         }
+                        default -> {
+                        }
                     }
                 }
                 i++;

@@ -40,9 +40,8 @@ class TARDISHadsTypeCommand {
             return false;
         }
         String hads_type = args[1].toUpperCase(Locale.ENGLISH);
-        HADS go;
         try {
-            go = HADS.valueOf(hads_type);
+            HADS.valueOf(hads_type);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NOT_VALID");
             return false;

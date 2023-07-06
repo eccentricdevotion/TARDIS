@@ -25,7 +25,6 @@ public class FloodgatePlayerPrefsForm {
     public void send() {
         // get player prefs
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-        List<Boolean> values = new ArrayList<>();
         if (!rsp.resultSet()) {
             // make a new record
             HashMap<String, Object> set = new HashMap<>();

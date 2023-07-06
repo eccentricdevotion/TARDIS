@@ -178,6 +178,8 @@ public class TARDISMalfunction {
                             damage(circuit, usesLeft, id, p);
                         }
                     }
+                    default -> {
+                    }
                 }
             }
             // get player prefs

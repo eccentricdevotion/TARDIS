@@ -29,8 +29,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISStructureLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
-import static org.bukkit.World.Environment.NETHER;
-import static org.bukkit.World.Environment.THE_END;
 import org.bukkit.entity.Player;
 
 /**

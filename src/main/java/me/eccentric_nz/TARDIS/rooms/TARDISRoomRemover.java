@@ -69,7 +69,7 @@ class TARDISRoomRemover {
         // calculate values for downy and upy from schematic dimensions / config
         // get JSON
         JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
-        if (obj != null) {
+        if (obj == null) {
             return false;
         }
         // get dimensions

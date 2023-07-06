@@ -37,7 +37,7 @@ public class K9Equipment {
         headMeta.setDisplayName("K9 Head");
         headMeta.setCustomModelData(1);
         head.setItemMeta(headMeta);
-        if (entity instanceof ArmorStand stand && player != null) {
+        if (entity instanceof ArmorStand stand) {
             UUID uuid;
             if (player != null) {
                 uuid = player.getUniqueId();

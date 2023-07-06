@@ -73,6 +73,7 @@ public class CSVPaster {
                     System.arraycopy(strArr, 0, blocks[level][row], 0, 11);
                 }
             }
+            bufRdr.close();
         } catch (IOException io) {
             plugin.debug("Could not read csv file" + io.getMessage());
         }

@@ -174,42 +174,41 @@ public class TARDISHandlesFrameListener implements Listener {
                     }
                     // set this handles id to its tardis id
                     Integer handlesId = rsc.getTardis_id();
-                    if (player != null) {
-                        if (player.isSneaking()) {
-                            talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses (by tardis id)
-                            event.setCancelled(true);
-                            TARDISSounds.playTARDISSound(player, "handles", 5L);
-                            ItemMeta im = is.getItemMeta();
-                            im.setCustomModelData(10000002);
+                    if (player.isSneaking()) {
+                        talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses
+                                                       // (by tardis id)
+                        event.setCancelled(true);
+                        TARDISSounds.playTARDISSound(player, "handles", 5L);
+                        ItemMeta im = is.getItemMeta();
+                        im.setCustomModelData(10000002);
+                        is.setItemMeta(im);
+                        frame.setItem(is, false);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
+                            im.setCustomModelData(10000001);
                             is.setItemMeta(im);
                             frame.setItem(is, false);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
-                                im.setCustomModelData(10000001);
-                                is.setItemMeta(im);
-                                frame.setItem(is, false);
-                            }, 40L);
-                        } else {
-                            // is the handles currently talking?
-                            // match by predicate in case multiple entries are in list. can happen when handles is clicked many times repeatedly
-                            if (talkingHandles.stream().anyMatch(id -> id.equals(handlesId))) {
-                                event.setCancelled(true);
-                                plugin.debug(String.format("Cancelling breaking handles ID %d because he is still talking", handlesId));
-                                return;
-                            }
-                            // is it the players handles?
-                            ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                            if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardis_id()) {
-                                // remove control record
-                                HashMap<String, Object> wherec = new HashMap<>();
-                                wherec.put("c_id", rsc.getC_id());
-                                plugin.getQueryFactory().doDelete("controls", wherec);
-                            } else {
-                                event.setCancelled(true);
-                            }
-                        }
+                        }, 40L);
                     } else {
-                        event.setCancelled(true);
+                        // is the handles currently talking?
+                        // match by predicate in case multiple entries are in list. can happen when
+                        // handles is clicked many times repeatedly
+                        if (talkingHandles.stream().anyMatch(id -> id.equals(handlesId))) {
+                            event.setCancelled(true);
+                            plugin.debug(String.format("Cancelling breaking handles ID %d because he is still talking",
+                                    handlesId));
+                            return;
+                        }
+                        // is it the players handles?
+                        ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                        if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardis_id()) {
+                            // remove control record
+                            HashMap<String, Object> wherec = new HashMap<>();
+                            wherec.put("c_id", rsc.getC_id());
+                            plugin.getQueryFactory().doDelete("controls", wherec);
+                        } else {
+                            event.setCancelled(true);
+                        }
                     }
                 } else if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(event.getEntity().getLocation().getBlock().getLocation().toString())) {
                     event.setCancelled(true);
@@ -224,6 +223,8 @@ public class TARDISHandlesFrameListener implements Listener {
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SCANNER_MAP");
                 }
+            } else {
+                event.setCancelled(true);
             }
         }
     }

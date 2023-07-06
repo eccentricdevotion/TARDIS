@@ -50,10 +50,6 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                 return true;
             }
             if (sender instanceof Player player) {
-                if (player == null) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-                    return true;
-                }
                 if (!player.hasPermission("tardis.admin")) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;
@@ -89,6 +85,9 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                 }
                 world.setTime(ticks);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getName());
+                return true;
+            } else {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return true;
             }
         }

@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.SONIC_ADMIN;
 import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;

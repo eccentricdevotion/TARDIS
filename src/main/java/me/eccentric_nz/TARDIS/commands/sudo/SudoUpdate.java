@@ -123,6 +123,8 @@ class SudoUpdate {
                             im.setDisplayName("Monitor Frame");
                             glass.setItemMeta(im);
                         }
+                        default -> {
+                        }
                     }
                     if (itemFrame != null) {
                         TARDISTimeRotor.unlockItemFrame(itemFrame);

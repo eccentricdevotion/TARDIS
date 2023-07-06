@@ -27,7 +27,6 @@ import org.bukkit.Material;
 
 import java.sql.*;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -134,9 +133,8 @@ public class TARDISMaterialIDConverter {
                     String newFloor = rs.getString("floor");
                     String newSiegeWall = rs.getString("siege_wall");
                     String newSiegeFloor = rs.getString("siege_floor");
-                    Material material;
                     try {
-                        material = Material.valueOf(wall);
+                        Material.valueOf(wall);
                     } catch (IllegalArgumentException e) {
                         // look up blockData to get the correct material...
                         String mat = LegacyTypeTable.LOOKUP.get(wall);
@@ -145,7 +143,7 @@ public class TARDISMaterialIDConverter {
                         }
                     }
                     try {
-                        material = Material.valueOf(floor);
+                        Material.valueOf(floor);
                     } catch (IllegalArgumentException e) {
                         // look up blockData to get the correct material...
                         String mat = LegacyTypeTable.LOOKUP.get(floor);
@@ -154,7 +152,7 @@ public class TARDISMaterialIDConverter {
                         }
                     }
                     try {
-                        material = Material.valueOf(siegeWall);
+                        Material.valueOf(siegeWall);
                     } catch (IllegalArgumentException e) {
                         // look up blockData to get the correct material...
                         String mat = LegacyTypeTable.LOOKUP.get(siegeWall);
@@ -163,7 +161,7 @@ public class TARDISMaterialIDConverter {
                         }
                     }
                     try {
-                        material = Material.valueOf(siegeFloor);
+                        Material.valueOf(siegeFloor);
                     } catch (IllegalArgumentException e) {
                         // look up blockData to get the correct material...
                         String mat = LegacyTypeTable.LOOKUP.get(siegeFloor);

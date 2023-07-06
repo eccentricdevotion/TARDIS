@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;

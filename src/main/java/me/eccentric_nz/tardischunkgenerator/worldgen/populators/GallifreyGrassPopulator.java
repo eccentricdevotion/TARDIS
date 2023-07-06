@@ -5,9 +5,6 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.feature.GrassPlacer;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.DiskFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.DiskConfiguration;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.CraftRegionAccessor;
 import org.bukkit.generator.BlockPopulator;
@@ -30,9 +27,7 @@ public class GallifreyGrassPopulator extends BlockPopulator {
                 }
             }
             if (grassY > 60 && limitedRegion.isInRegion(grassX, grassY, grassZ) && !limitedRegion.getType(grassX, grassY, grassZ).equals(Material.WATER)) {
-                DiskFeature base = new DiskFeature(DiskConfiguration.CODEC);
                 WorldGenLevel level = ((CraftRegionAccessor) limitedRegion).getHandle();
-                ChunkGenerator generator = level.getMinecraftWorld().getChunkSource().getGenerator();
                 new GrassPlacer().place(TARDISFeatures.GRASS, level, new BlockPos(grassX, grassY, grassZ));
             }
         }

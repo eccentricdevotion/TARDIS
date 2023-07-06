@@ -69,7 +69,6 @@ public class TARDISWorldNameConverter {
                 connection.setAutoCommit(false);
                 // get records
                 ResultSet rsw = statement.executeQuery(worldQuery);
-                String location;
                 if (rsw.isBeforeFirst()) {
                     while (rsw.next()) {
                         // if there is a record

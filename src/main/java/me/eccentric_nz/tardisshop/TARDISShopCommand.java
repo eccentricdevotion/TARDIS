@@ -30,7 +30,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
 
     public TARDISShopCommand(TARDIS plugin) {
         this.plugin = plugin;
-        ITEM_SUBS = new ArrayList(this.plugin.getItemsConfig().getKeys(false));
+        ITEM_SUBS = new ArrayList<>(this.plugin.getItemsConfig().getKeys(false));
     }
 
     @Override

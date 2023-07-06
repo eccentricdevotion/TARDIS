@@ -283,6 +283,8 @@ public class TARDISCommands implements CommandExecutor {
                 case saveicon -> {
                     return new TARDISSaveIconCommand(plugin).changeIcon(player, args);
                 }
+                default -> {
+                }
             }
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.

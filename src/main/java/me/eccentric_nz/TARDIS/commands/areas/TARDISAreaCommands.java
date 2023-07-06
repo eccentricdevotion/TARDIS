@@ -365,7 +365,6 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                     return true;
                 }
-
                 default -> {
                     return false;
                 }

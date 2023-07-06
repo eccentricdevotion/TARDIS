@@ -88,7 +88,7 @@ public class TARDISShellScanner {
                                 directional.setFacing(face);
                             }
                             default -> {
-                                // don nothing
+                                // do nothing
                             }
                         }
                     }

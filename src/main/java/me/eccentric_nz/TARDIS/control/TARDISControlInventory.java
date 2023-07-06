@@ -80,7 +80,6 @@ public class TARDISControlInventory {
             if (rsc.resultSet()) {
                 direction = rsc.getDirection().toString();
             }
-            HashMap<String, Object> wherep = new HashMap<>();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, rs.getTardis().getUuid().toString());
             if (rsp.resultSet()) {
                 delay = rsp.getThrottle();

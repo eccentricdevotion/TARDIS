@@ -119,7 +119,6 @@ public class FloodgateDestinationTerminalForm {
                         }
                         case NETHER -> {
                             if (tt.safeNether(w, x, z, rsc.getDirection(), player)) {
-                                String save = world + ":" + x + ":" + plugin.getUtils().getHighestNetherBlock(w, x, z) + ":" + z;
                                 location = new Location(w, x, plugin.getUtils().getHighestNetherBlock(w, x, z), z);
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET");
                             } else {

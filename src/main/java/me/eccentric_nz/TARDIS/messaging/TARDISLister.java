@@ -83,7 +83,7 @@ public class TARDISLister {
                     String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
                     String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
                     String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
-                    plugin.getMessenger().sendRecharger(player, (n + ". " + s), world, x, y, z, (TARDISPermission.hasPermission(player, "tardis.admin")));
+                    plugin.getMessenger().sendRecharger(player, (n + ". " + s), w, x, y, z, (TARDISPermission.hasPermission(player, "tardis.admin")));
                     n++;
                 }
             }

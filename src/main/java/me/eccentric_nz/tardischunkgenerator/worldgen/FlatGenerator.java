@@ -12,14 +12,12 @@ import org.bukkit.generator.WorldInfo;
 
 public class FlatGenerator extends ChunkGenerator {
 
-    private final TARDIS plugin;
     private final Material bottom;
     private final Material rock;
     private final Material middle;
     private final Material surface;
 
     public FlatGenerator(TARDIS plugin) {
-        this.plugin = plugin;
         this.bottom = Material.valueOf(plugin.getGeneratorConfig().getString("bottom"));
         this.rock = Material.valueOf(plugin.getGeneratorConfig().getString("rock"));
         this.middle = Material.valueOf(plugin.getGeneratorConfig().getString("middle"));

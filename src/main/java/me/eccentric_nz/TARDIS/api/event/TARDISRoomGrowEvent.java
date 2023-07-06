@@ -64,5 +64,4 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
     private TARDISRoomData getRoomData() {
         return roomData;
     }
-
 }

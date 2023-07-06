@@ -49,7 +49,7 @@ public class TARDISFloodgateDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            if (material == material.REDSTONE_LAMP || material == Material.SEA_LANTERN) {
+            if (material == Material.REDSTONE_LAMP || material == Material.SEA_LANTERN) {
                 material = Material.LIGHT;
             }
             TARDISBlockSetters.setBlock(start.getWorld(), px, py, pz, material);

@@ -491,7 +491,7 @@ public class TARDISCondensablesUpdater {
             list.put("TORCHFLOWER_SEEDS", 20);
             list.put("WARPED_HANGING_SIGN", 2);
             //
-            List<String> remove = new ArrayList();
+            List<String> remove = new ArrayList<>();
             remove.add("ACACIA_BARK");
             remove.add("BANNER");
             remove.add("BED");

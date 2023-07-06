@@ -131,7 +131,7 @@ public class TARDISWeepingAngels {
             plugin.getPM().registerEvents(new K9Builder(plugin), plugin);
         }
         plugin.getPM().registerEvents(new MonsterMoveListener(), plugin);
-        plugin.getPM().registerEvents(new DalekGlideListener(plugin), plugin);
+        plugin.getPM().registerEvents(new DalekGlideListener(), plugin);
         plugin.getPM().registerEvents(new Damage(plugin), plugin);
         plugin.getPM().registerEvents(new VashtaNeradaListener(plugin), plugin);
         plugin.getPM().registerEvents(new Death(plugin), plugin);
