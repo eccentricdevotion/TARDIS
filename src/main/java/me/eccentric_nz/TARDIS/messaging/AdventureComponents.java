@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -31,6 +29,9 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 /**
  * @author eccentric_nz
@@ -297,6 +298,13 @@ public class AdventureComponents {
         TextComponent textComponent = Component.text(wikiLink.getTitle(), NamedTextColor.BLUE)
                 .hoverEvent(HoverEvent.showText(Component.text("Open link")))
                 .clickEvent(ClickEvent.openUrl(wikiLink.getURL()));
+        return textComponent;
+    }
+
+    public static TextComponent getRemoveProtected(String xyz, String location, int id) {
+        TextComponent textComponent = Component.text(xyz)
+            .hoverEvent(HoverEvent.showText(Component.text("Remove protection")))
+            .clickEvent(ClickEvent.runCommand("/tardisadmin remove_protection " + id + " " + location));
         return textComponent;
     }
 

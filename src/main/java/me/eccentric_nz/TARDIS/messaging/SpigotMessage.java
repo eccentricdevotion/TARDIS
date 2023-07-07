@@ -280,6 +280,11 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendProtected(CommandSender cs, String xyz, String location, int id) {
+        cs.spigot().sendMessage(SpigotComponents.getRemoveProtected(xyz, location, id));
+    }
+
+    @Override
     public void announceRepeater(Player player, String value) {
         player.sendTitle("", value, 5, 20, 5);
     }

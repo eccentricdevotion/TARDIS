@@ -281,6 +281,11 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendProtected(CommandSender cs, String xyz, String location, int id) {
+        cs.sendMessage(AdventureComponents.getRemoveProtected(xyz, location, id));
+    }
+
+    @Override
     public void announceRepeater(Player player, String value) {
         Title.Times times = Title.Times.times(Duration.ofMillis(250), Duration.ofMillis(1000), Duration.ofMillis(250));
         Title title = Title.title(Component.empty(), Component.text(value), times);

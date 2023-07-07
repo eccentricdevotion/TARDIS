@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Hidden;
+import me.eccentric_nz.TARDIS.database.data.ProtectedBlock;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -35,13 +36,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class ResultSetFindHidden {
+public class ResultSetFindProtected {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final List<Hidden> data = new ArrayList<>();
+    private final List<ProtectedBlock> data = new ArrayList<>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from
@@ -49,44 +50,46 @@ public class ResultSetFindHidden {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetFindHidden(TARDIS plugin) {
+    public ResultSetFindProtected(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Searches for hidden or invisible TARDISes in the given range.
+     * Searches protected TARDIS blocks inn the given range.
      *
-     * @return a list of TARDISes and their location.
+     * @return a list of hidden blocks.
      */
-    public List<Hidden> search(Location location, int range) {
+    public List<ProtectedBlock> search(Location location, int range) {
         int maxX = location.getBlockX() + range;
         int minX = location.getBlockX() - range;
         int maxZ = location.getBlockZ() + range;
         int minZ = location.getBlockZ() - range;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "current.*, " + prefix + "tardis.hidden, " + prefix + "tardis.owner FROM "
-                + prefix + "current, " + prefix + "tardis WHERE ("
-                + prefix + "tardis.hidden = 1 OR "
-                + prefix + "tardis.chameleon_preset = 'INVISIBLE') AND "
-                + prefix + "current.world = '" + location.getWorld().getName() + "' AND "
-                + prefix + "current.x < " + maxX + " AND "
-                + prefix + "current.x > " + minX + " AND "
-                + prefix + "current.z < " + maxZ + " AND "
-                + prefix + "current.z > " + minZ + " AND "
-                + prefix + "current.tardis_id = " + prefix + "tardis.tardis_id";
-        // plugin.debug(query);
+        String query = "SELECT b_id, location FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name="
+                + location.getWorld().getName() + "%' AND police_box = 1";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             while (rs.next()) {
-                String status = (rs.getBoolean("hidden")) ? "HIDDEN" : "INVISIBLE";
-                data.add(new Hidden(rs.getString("owner"), status, rs.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+                // break down location
+                // Location{world=CraftWorld{name=jin},x=-304.0,y=63.0,z=-378.0,pitch=0.0,yaw=0.0}
+                String loc = rs.getString("location");
+                String[] bukkit = loc.split(",");
+                String[] xPart = bukkit[1].split("=");
+                String[] yPart = bukkit[2].split("=");
+                String[] zPart = bukkit[3].split("=");
+                int x = (int) TARDISNumberParsers.parseFloat(xPart[1]);
+                int y = (int) TARDISNumberParsers.parseFloat(yPart[1]);
+                int z = (int) TARDISNumberParsers.parseFloat(zPart[1]);
+                if (x < maxX && x > minX && z < maxZ && z > minZ) {
+                    data.add(new ProtectedBlock(loc, x, y, z, rs.getInt("b_id")));
+                }
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for find hidden! " + e.getMessage());
+            plugin.debug("ResultSet error for find protected! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -96,7 +99,7 @@ public class ResultSetFindHidden {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing find hidden! " + e.getMessage());
+                plugin.debug("Error closing find protected! " + e.getMessage());
             }
         }
         return data;

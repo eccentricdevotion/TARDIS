@@ -77,6 +77,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("recharger");
         firstsStr.add("region_flag");
         firstsStr.add("reload");
+        firstsStr.add("remove_protection");
         firstsStr.add("repair");
         firstsStr.add("revoke");
         firstsStr.add("set_size");
@@ -142,6 +143,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("find")) {
                     return new TARDISFindHiddenCommand().search(plugin, sender, args);
+                }
+                if (first.equals("remove_protection")) {
+                    return new TARDISRemoveProtectionCommand(plugin).remove(sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISListCommand(plugin).listStuff(sender, args);

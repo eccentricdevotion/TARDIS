@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -30,6 +28,9 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 /**
  * @author eccentric_nz
@@ -365,6 +366,13 @@ public class SpigotComponents {
         textComponent.setColor(ChatColor.BLUE);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Open link")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiLink.getURL()));
+        return textComponent;
+    }
+
+    public static TextComponent getRemoveProtected(String xyz, String location, int id) {
+        TextComponent textComponent = new TextComponent(xyz);
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Remove protection")));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin remove_protection " + id + " " + location));
         return textComponent;
     }
 

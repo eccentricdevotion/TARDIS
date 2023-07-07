@@ -115,5 +115,7 @@ public interface TARDISMessage {
 
     public void sendStartBanner(CommandSender cs);
 
+    public void sendProtected(CommandSender cs, String xyz, String location, int id);
+
     public void announceRepeater(Player player, String value);
 }
