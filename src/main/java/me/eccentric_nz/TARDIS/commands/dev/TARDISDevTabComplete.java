@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,15 +35,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem", "frame", "brushable");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunky", "list", "plurals", "stats", "tree", "snapshot", "displayitem", "frame", "brushable", "box");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
+    private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
     private final ImmutableList<String> FRAME_SUBS = ImmutableList.of("lock", "unlock");
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break", "convert", "chunk", "block", "console");
     private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> TRANSFORM_SUBS = new ArrayList<>();
     private final List<String> ITEM_SUBS = new ArrayList<>();
+    private final List<String> PRESET_SUBS = new ArrayList<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
@@ -55,6 +58,11 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         for (Material m : Material.values()) {
             if (m.isItem()) {
                 ITEM_SUBS.add(m.toString());
+            }
+        }
+        for (ChameleonPreset c : ChameleonPreset.values()) {
+            if (c.usesItemFrame()) {
+                PRESET_SUBS.add(c.toString());
             }
         }
     }
@@ -71,6 +79,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 if (sub.equals("list")) {
                     return partial(lastArg, LIST_SUBS);
                 }
+                if (sub.equals("box")) {
+                    return partial(lastArg, PRESET_SUBS);
+                }
                 if (sub.equals("tree")) {
                     return partial(lastArg, MAT_SUBS);
                 }
@@ -82,6 +93,11 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 }
                 if (sub.equals("frame")) {
                     return partial(lastArg, FRAME_SUBS);
+                }
+            }
+            case 3 -> {
+                if (sub.equals("box")) {
+                    return partial(lastArg, STATE_SUBS);
                 }
             }
             case 4 -> {

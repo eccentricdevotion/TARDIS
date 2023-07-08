@@ -24,6 +24,8 @@
 
 ## Wiki Documentation
 
+* `/tadmin find` command
+* Pandorica preset
 * ?
 
 ## Resource Pack / Monsters

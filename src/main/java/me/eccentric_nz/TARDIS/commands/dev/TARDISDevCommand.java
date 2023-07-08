@@ -63,7 +63,8 @@ public class TARDISDevCommand implements CommandExecutor {
             "snapshot",
             "displayitem",
             "frame",
-            "brushable"
+            "brushable",
+            "box"
     );
     private final TARDIS plugin;
 
@@ -101,6 +102,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (first.equals("advancements")) {
                     TARDISAchievementFactory.checkAdvancement(args[1]);
                     return true;
+                }
+                if (first.equals("box")) {
+                    return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISDevListCommand(plugin).listStuff(sender, args);
