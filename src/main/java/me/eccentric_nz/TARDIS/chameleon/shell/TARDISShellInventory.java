@@ -61,7 +61,7 @@ public class TARDISShellInventory {
         ItemStack[] stacks = new ItemStack[54];
 
         for (ChameleonPreset preset : ChameleonPreset.values()) {
-            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
+            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();

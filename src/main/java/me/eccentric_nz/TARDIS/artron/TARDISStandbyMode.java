@@ -80,7 +80,7 @@ public class TARDISStandbyMode implements Runnable {
                         delay = 20L;
                     }
                     // police box lamp, delay it incase the TARDIS needs rebuilding
-                    if (standbyData.getPreset().equals(ChameleonPreset.ADAPTIVE) || standbyData.getPreset().usesItemFrame()) {
+                    if (standbyData.getPreset().equals(ChameleonPreset.ADAPTIVE) || standbyData.getPreset().usesArmourStand()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.getPreset()), delay);
                     }
                     // if lights are on, turn them off

@@ -212,7 +212,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     return;
                                 }
                                 if (!rsd.isLocked()) {
-                                    boolean isPoliceBox = (rs.getTardis().getPreset().usesItemFrame());
+                                    boolean isPoliceBox = (rs.getTardis().getPreset().usesArmourStand());
                                     // toggle the door open/closed
                                     if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
                                         if (doortype == 0 || doortype == 1) {

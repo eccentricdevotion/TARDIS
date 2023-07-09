@@ -226,7 +226,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                 if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                                     if (!rsd.isLocked()) {
-                                        boolean isPoliceBox = (rs.getTardis().getPreset().usesItemFrame());
+                                        boolean isPoliceBox = (rs.getTardis().getPreset().usesArmourStand());
                                         // toggle the door open/closed
                                         if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
                                             if (doortype == 0 || doortype == 1) {

@@ -99,7 +99,7 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
+                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off

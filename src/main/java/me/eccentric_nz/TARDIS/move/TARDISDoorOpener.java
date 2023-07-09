@@ -166,7 +166,7 @@ public class TARDISDoorOpener {
                     exdoor = tmp_loc.clone();
                     exdirection = COMPASS.valueOf(map.get("door_direction"));
                     // adjust for teleport
-                    if (preset.usesItemFrame()) {
+                    if (preset.usesArmourStand()) {
                         switch (rsc.getDirection()) {
                             case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
                             case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);
@@ -204,7 +204,7 @@ public class TARDISDoorOpener {
                     }
                 }
                 plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
-                if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesItemFrame()) {
+                if (plugin.getConfig().getBoolean("police_box.view_interior") && !preset.usesArmourStand()) {
                     ConsoleSize consoleSize = (tardis == null) ? ConsoleSize.SMALL : tardis.getSchematic().getConsoleSize();
                     plugin.getTrackerKeeper().getCasters().put(uuid, new CastData(inportal, exportal, exdirection, tardis.getRotor(), consoleSize));
                     // get distance from door

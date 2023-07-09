@@ -128,7 +128,7 @@ public enum ChameleonPreset {
         for (ChameleonPreset preset : values()) {
             if (!NOT_THESE.contains(preset.getCraftMaterial())) {
                 BY_MATERIAL.put(preset.getCraftMaterial(), preset);
-                if (preset.usesItemFrame()) {
+                if (preset.usesArmourStand()) {
                     IF_BY_SLOT.put(preset.getSlot(), preset);
                 } else {
                     BY_SLOT.put(preset.getSlot(), preset);
@@ -234,7 +234,7 @@ public enum ChameleonPreset {
         return displayName;
     }
 
-    public boolean usesItemFrame() {
+    public boolean usesArmourStand() {
         return switch (this) {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,

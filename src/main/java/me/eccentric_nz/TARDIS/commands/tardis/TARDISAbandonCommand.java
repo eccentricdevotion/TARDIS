@@ -255,12 +255,12 @@ public class TARDISAbandonCommand {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
                         // always clear sign
-                        if (preset.usesItemFrame()) {
+                        if (preset.usesArmourStand()) {
                             World world = rsc.getWorld();
                             // remove name from the item frame item
                             for (Entity e : world.getNearbyEntities(current, 1.0d, 1.0d, 1.0d)) {
                                 if (e instanceof ItemFrame frame) {
-                                    Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, id, true);
+                                    Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, id, true);
                                     ItemStack is = new ItemStack(dye, 1);
                                     ItemMeta im = is.getItemMeta();
                                     im.setCustomModelData(1001);

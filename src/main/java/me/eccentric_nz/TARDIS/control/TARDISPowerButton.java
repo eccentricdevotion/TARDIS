@@ -82,7 +82,7 @@ public class TARDISPowerButton {
                 delay = 20L;
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
-            if (isAdaptive || preset.usesItemFrame()) {
+            if (isAdaptive || preset.usesArmourStand()) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
             }
             // if lights are on, turn them off
@@ -121,7 +121,7 @@ public class TARDISPowerButton {
                 new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
-            if (isAdaptive || preset.usesItemFrame()) {
+            if (isAdaptive || preset.usesArmourStand()) {
                 new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
             }
         }

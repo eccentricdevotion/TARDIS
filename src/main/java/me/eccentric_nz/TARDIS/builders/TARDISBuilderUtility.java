@@ -54,7 +54,7 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getMaterialForItemFrame(ChameleonPreset preset, int id, boolean isMaterialisation) {
+    public static Material getMaterialForArmourStand(ChameleonPreset preset, int id, boolean isMaterialisation) {
         switch (preset) {
             case ITEM -> {
                 ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);

@@ -257,7 +257,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setcurrent.put("y", final_location.getBlockY());
                         setcurrent.put("z", final_location.getBlockZ());
                         String direction;
-                        if (preset.usesItemFrame()) {
+                        if (preset.usesArmourStand()) {
                             direction = bd.getDirection().toString();
                         } else {
                             direction = bd.getDirection().forPreset().toString();

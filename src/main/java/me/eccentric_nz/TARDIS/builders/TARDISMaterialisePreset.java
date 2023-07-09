@@ -617,12 +617,12 @@ class TARDISMaterialisePreset implements Runnable {
                                 }
                             }
                             case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors
-                                if (preset.usesItemFrame() || preset.equals(ChameleonPreset.PANDORICA)) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-                                    // remember the door location
-                                    saveDoorLocation(world, xx, y, yy, zz);
-                                }
-                                // else don't change the door
+//                                if (preset.usesArmourStand()) { // normal presets don't use armour stands so never called here...
+//                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+//                                    // remember the door location
+//                                    saveDoorLocation(world, xx, y, yy, zz);
+//                                }
+                                // don't change the door
                             }
                             case LEVER -> {
                                 // remember this block and do at end

@@ -37,10 +37,12 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -54,6 +56,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private int task;
     private int i;
     private ItemFrame frame;
+    private ArmorStand stand;
     private ItemStack is;
     private Material dye;
     private Color colour = null;
@@ -99,22 +102,29 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
                     boolean found = false;
                     for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-                        if (e instanceof ItemFrame) {
-                            frame = (ItemFrame) e;
+                        if (e instanceof ArmorStand a) {
+                            stand = a;
+                            found = true;
+                            break;
+                        }
+                        if (e instanceof ItemFrame f) {
+                            frame = f;
                             found = true;
                             break;
                         }
                     }
-                    if (!found) {
+                    if (!found || (stand == null && frame != null)) {
+                        if (frame != null) {
+                            frame.remove();
+                        }
                         Block under = block.getRelative(BlockFace.DOWN);
                         block.setBlockData(TARDISConstants.AIR);
                         TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
-                        // spawn item frame
-                        frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
+                        // spawn armour stand
+                        stand = (ArmorStand) world.spawnEntity(bd.getLocation(), EntityType.ARMOR_STAND);
                     }
-                    frame.setFacingDirection(BlockFace.UP);
-                    frame.setRotation(bd.getDirection().getRotation());
-                    dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, bd.getTardisID(), true);
+                    stand.setRotation(bd.getDirection().getYaw(), 0.0f);
+                    dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
@@ -124,8 +134,9 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             } else {
                                 sound = switch (bd.getThrottle()) {
                                     case WARP, RAPID, FASTER ->
-                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                    default -> "tardis_land"; // NORMAL
+                                        "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    default ->
+                                        "tardis_land"; // NORMAL
                                 };
                             }
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
@@ -167,9 +178,10 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 } else {
                     is.setItemMeta(im);
                 }
-                frame.setItem(is, false);
-                frame.setFixed(true);
-                frame.setVisible(false);
+                EntityEquipment ee = stand.getEquipment();
+                ee.setHelmet(is);
+                stand.setInvulnerable(true);
+                stand.setInvisible(true);
             } else {
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));

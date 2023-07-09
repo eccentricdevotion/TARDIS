@@ -61,7 +61,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             }
         }
         for (ChameleonPreset c : ChameleonPreset.values()) {
-            if (c.usesItemFrame()) {
+            if (c.usesArmourStand()) {
                 PRESET_SUBS.add(c.toString());
             }
         }

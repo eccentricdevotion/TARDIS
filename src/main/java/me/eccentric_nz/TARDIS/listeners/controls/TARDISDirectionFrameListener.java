@@ -89,7 +89,7 @@ public class TARDISDirectionFrameListener implements Listener {
                             player.performCommand("tardis direction " + direction);
                             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis direction " + direction);
                         } else {
-                            boolean isPreset = !tardis.getPreset().usesItemFrame();
+                            boolean isPreset = !tardis.getPreset().usesArmourStand();
                             Rotation r;
                             // set the rotation
                             switch (frame.getRotation()) {

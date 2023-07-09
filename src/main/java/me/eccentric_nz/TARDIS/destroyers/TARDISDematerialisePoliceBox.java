@@ -91,7 +91,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 frame.setFacingDirection(BlockFace.UP);
                 frame.setRotation(dd.getDirection().getRotation());
-                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, dd.getTardisID(), false);
+                Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, dd.getTardisID(), false);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {

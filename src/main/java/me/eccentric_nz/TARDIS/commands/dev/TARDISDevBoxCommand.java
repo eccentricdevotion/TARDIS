@@ -51,7 +51,7 @@ public class TARDISDevBoxCommand {
     public boolean setPreset(CommandSender sender, String[] args) {
         try {
             ChameleonPreset preset = ChameleonPreset.valueOf(args[1]);
-            if (!preset.usesItemFrame()) {
+            if (!preset.usesArmourStand()) {
                 plugin.getMessenger().message(sender, "The specified Chameleon preset must be a custom model!");
                 return true;
             }
@@ -78,7 +78,7 @@ public class TARDISDevBoxCommand {
                     plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_STAND");
                     return true;
                 }
-                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset, -1, true);
+                Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
                 ItemStack is = new ItemStack(dye, 1);
                 ItemMeta im = is.getItemMeta();
                 int cmd = 1001;
