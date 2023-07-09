@@ -24,9 +24,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -59,15 +60,16 @@ public class TARDISCustomModelDataChanger {
         while (!outer.getChunk().isLoaded()) {
             outer.getChunk().load();
         }
-        ItemFrame itemFrame = null;
+        ArmorStand stand = null;
         for (Entity e : outer.getWorld().getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
-            if (e instanceof ItemFrame frame) {
-                itemFrame = frame;
+            if (e instanceof ArmorStand s) {
+                stand = s;
                 break;
             }
         }
-        if (itemFrame != null) {
-            ItemStack is = itemFrame.getItem();
+        if (stand != null) {
+            EntityEquipment ee = stand.getEquipment();
+            ItemStack is = ee.getHelmet();
             if ((TARDISConstants.DYES.contains(is.getType()) || plugin.getUtils().isCustomModel(is)) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasCustomModelData()) {
@@ -85,7 +87,7 @@ public class TARDISCustomModelDataChanger {
                         playDoorSound(open, block.getLocation());
                         im.setCustomModelData(newData);
                         is.setItemMeta(im);
-                        itemFrame.setItem(is, false);
+                        ee.setHelmet(is, true);
                     }
                 }
             }

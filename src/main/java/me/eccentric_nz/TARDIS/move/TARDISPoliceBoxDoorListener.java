@@ -43,12 +43,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,20 +60,22 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         super(plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onItemFrameClick(PlayerInteractEntityEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onArmourStandClick(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
-        if (event.getRightClicked() instanceof ItemFrame frame) {
+        if (event.getRightClicked() instanceof ArmorStand stand) {
             UUID uuid = player.getUniqueId();
-            ItemStack dye = frame.getItem();
+            EntityEquipment ee = stand.getEquipment();
+            ItemStack dye = ee.getHelmet();
             if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
+                event.setCancelled(true);
                 ItemMeta dim = dye.getItemMeta();
                 if (dim.hasCustomModelData()) {
                     int cmd = dim.getCustomModelData();
                     if ((cmd == 1001 || cmd == 1002) && TARDISPermission.hasPermission(player, "tardis.enter")) {
                         UUID playerUUID = player.getUniqueId();
                         // get TARDIS from location
-                        Location location = frame.getLocation();
+                        Location location = stand.getLocation();
                         String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", doorloc);
@@ -183,11 +186,11 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
                                                     if (dye.getType() == Material.ENDER_PEARL) {
                                                         // animate pandorica opening
-                                                        new PandoricaOpens(plugin).animate(frame, true);
+                                                        new PandoricaOpens(plugin).animate(stand, true);
                                                     } else {
                                                         dim.setCustomModelData(1002);
                                                         dye.setItemMeta(dim);
-                                                        frame.setItem(dye, false);
+                                                        ee.setHelmet(dye, true);
                                                     }
                                                 }
                                                 playDoorSound(true, location);
@@ -210,7 +213,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     long now = System.currentTimeMillis();
                                                     TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                                                     dye.setType(colour.getType());
-                                                    frame.setItem(dye, false);
+                                                    ee.setHelmet(dye, true);
                                                     // remove one dye
                                                     int a = colour.getAmount();
                                                     int a2 = a - 1;
@@ -237,12 +240,12 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             }
                                             // close portal & inner door
                                             new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
-                                            if (dye.getType() == Material. ENDER_PEARL) {
-                                                new PandoricaOpens(plugin).animate(frame, false);
+                                            if (dye.getType() == Material.ENDER_PEARL) {
+                                                new PandoricaOpens(plugin).animate(stand, false);
                                             } else {
                                                 dim.setCustomModelData(1001);
                                                 dye.setItemMeta(dim);
-                                                frame.setItem(dye, false);
+                                                ee.setHelmet(dye, true);
                                                 playDoorSound(false, location);
                                             }
                                         }
