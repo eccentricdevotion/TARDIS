@@ -96,7 +96,8 @@ import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
 
 /**
- * Registers all the listeners for the various events required to use the TARDIS.
+ * Registers all the listeners for the various events required to use the
+ * TARDIS.
  *
  * @author eccentric_nz
  */
@@ -109,7 +110,8 @@ class TARDISListenerRegisterer {
     }
 
     /**
-     * Registers all the listeners for the various events required to use the TARDIS.
+     * Registers all the listeners for the various events required to use the
+     * TARDIS.
      */
     TARDISInformationSystemListener registerListeners() {
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
@@ -210,6 +212,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
+        plugin.getPM().registerEvents(new MonsterFireListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }
