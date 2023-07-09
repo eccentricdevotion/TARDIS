@@ -34,8 +34,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame; 
+import org.bukkit.entity.ItemFrame;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -83,6 +84,9 @@ public class TARDISDeinstantPreset {
                 if (e instanceof ItemFrame frame) {
                     frame.setItem(null, false);
                     frame.remove();
+                }
+                if (e instanceof ArmorStand stand) {
+                    stand.remove();
                 }
             }
             if (!hide) {

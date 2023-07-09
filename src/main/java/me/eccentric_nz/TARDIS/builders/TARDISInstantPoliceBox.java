@@ -101,7 +101,7 @@ public class TARDISInstantPoliceBox {
             block.setBlockData(TARDISConstants.AIR);
             TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
             // spawn armour stand
-            stand = (ArmorStand) world.spawnEntity(bd.getLocation(), EntityType.ARMOR_STAND);
+            stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0,0.5d), EntityType.ARMOR_STAND);
         }
         stand.setRotation(bd.getDirection().getYaw(), 0.0f);
         Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
@@ -123,7 +123,10 @@ public class TARDISInstantPoliceBox {
                 }
                 default -> pb = "Police Box";
             }
-            im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
+            String name = bd.getPlayer().getName() + "'s " + pb;
+            im.setDisplayName(name);
+            stand.setCustomName(name);
+            stand.setCustomNameVisible(true);
         }
         if (preset == ChameleonPreset.COLOURED) {
             // get the colour
@@ -137,7 +140,7 @@ public class TARDISInstantPoliceBox {
             is.setItemMeta(im);
         }
         EntityEquipment ee = stand.getEquipment();
-        ee.setHelmet(is);
+        ee.setHelmet(is, true);
         stand.setInvulnerable(true);
         stand.setInvisible(true);
         // set a light block

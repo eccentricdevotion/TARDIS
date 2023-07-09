@@ -29,6 +29,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -44,6 +45,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     private int task;
     private int i;
     private ItemFrame frame;
+    private ArmorStand stand;
     private ItemStack is;
 
     TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, ChameleonPreset preset) {
@@ -80,17 +82,24 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             if (i == 1) {
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-                    if (e instanceof ItemFrame) {
-                        frame = (ItemFrame) e;
+                    if (e instanceof ArmorStand a) {
+                        stand = a;
+                        found = true;
+                        break;
+                    }
+                    if (e instanceof ItemFrame f) {
+                        frame = f;
                         found = true;
                     }
                 }
-                if (!found) {
-                    // spawn item frame
-                    frame = (ItemFrame) world.spawnEntity(dd.getLocation(), EntityType.ITEM_FRAME);
+                if (!found || (stand == null && frame != null)) {
+                    if (frame != null) {
+                        frame.remove();
+                    }
+                    // spawn armour stand
+                    stand = (ArmorStand) world.spawnEntity(dd.getLocation().clone().add(0.5d, 0,0.5d), EntityType.ARMOR_STAND);
                 }
-                frame.setFacingDirection(BlockFace.UP);
-                frame.setRotation(dd.getDirection().getRotation());
+                stand.setRotation(dd.getDirection().getYaw(), 0.0f);
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, dd.getTardisID(), false);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
@@ -119,9 +128,9 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(cmd);
                 is.setItemMeta(im);
-                frame.setItem(is, false);
-                frame.setFixed(true);
-                frame.setVisible(false);
+                stand.getEquipment().setHelmet(is, true);
+                stand.setInvulnerable(true);
+                stand.setInvisible(true);
             }
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
