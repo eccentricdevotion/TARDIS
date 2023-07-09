@@ -55,6 +55,9 @@ public class TARDISTeleportListener implements Listener {
             String world_from = event.getFrom().getWorld().getName();
             String world_to = event.getTo().getWorld().getName();
             Player player = event.getPlayer();
+            if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+                return;
+            }
             String uuid = player.getUniqueId().toString();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 HashMap<String, Object> where = new HashMap<>();

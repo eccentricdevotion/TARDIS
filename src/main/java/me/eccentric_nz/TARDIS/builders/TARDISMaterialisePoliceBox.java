@@ -17,17 +17,11 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.FlightEnd;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Color;
@@ -41,7 +35,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -205,40 +198,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 }
                 // message travellers in tardis
                 if (loops > 3) {
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", bd.getTardisID());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
-                    if (rst.resultSet()) {
-                        List<UUID> travellers = rst.getData();
-                        travellers.forEach((s) -> {
-                            Player p = plugin.getServer().getPlayer(s);
-                            if (p != null) {
-                                String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, message);
-                                // TARDIS has travelled so add players to list so they can receive Artron on exit
-                                plugin.getTrackerKeeper().getHasTravelled().add(s);
-                            }
-                        });
-                    } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
-                        plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "JUNK_HANDBRAKE_LEFT_CLICK");
-                    }
-                    // restore beacon up block if present
-                    HashMap<String, Object> whereb = new HashMap<>();
-                    whereb.put("tardis_id", bd.getTardisID());
-                    whereb.put("police_box", 2);
-                    ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
-                    rs.resultSetAsync((hasResult, resultSetBlocks) -> {
-                        if (hasResult) {
-                            ReplacedBlock rb = resultSetBlocks.getReplacedBlock();
-                            TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
-                            HashMap<String, Object> whered = new HashMap<>();
-                            whered.put("tardis_id", bd.getTardisID());
-                            whered.put("police_box", 2);
-                            plugin.getQueryFactory().doDelete("blocks", whered);
-                        }
-                    });
-                    // tardis has moved so remove HADS damage count
-                    plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
+                    new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());
                     // update demat field in database
                     String update = preset.toString();
                     if (preset == ChameleonPreset.ITEM) {

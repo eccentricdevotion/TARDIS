@@ -134,7 +134,7 @@ public class TARDISPacketListener {
                                     ee.setItemInMainHand(null);
                                     ee.setHelmet(is);
                                     // teleport player back to the TARDIS interior
-                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlight(player, stand.getLocation());
+                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlight(player, as);
                                 });
                             }
                         }

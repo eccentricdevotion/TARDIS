@@ -79,7 +79,7 @@ public class TARDISHandbrakeListener implements Listener {
      */
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || event.getPlayer().isSneaking()) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Player player = event.getPlayer();
@@ -188,17 +188,17 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
-                                    if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly")) {
+                                    if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // fly the TARDIS exterior
-                                        new TARDISExteriorFlight(plugin).startFlying(player, id);
+                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, beac_on, beacon);
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
-                                        // start time rotor?
-                                        if (tardis.getRotor() != null) {
-                                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                                            if (itemFrame != null) {
-                                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
-                                            }
+                                    }
+                                    // start time rotor?
+                                    if (tardis.getRotor() != null) {
+                                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                        if (itemFrame != null) {
+                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
                                         }
                                     }
                                 } else {

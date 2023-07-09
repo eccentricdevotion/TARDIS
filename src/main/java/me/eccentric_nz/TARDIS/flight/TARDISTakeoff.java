@@ -135,7 +135,7 @@ public class TARDISTakeoff {
         }
     }
 
-    private void toggleBeacon(String str) {
+    public static void toggleBeacon(String str) {
         Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
         Block b = bl.getBlock();
         b.setBlockData(TARDISConstants.GLASS);
