@@ -64,6 +64,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                             if (cost != item.getCost()) {
                                 // update database
                                 new UpdateShopItem(plugin).updateCost(cost, item.getId());
+                                // TODO should be updating the test display entity!
                                 // find armor stand and update display name
                                 for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation(), 0.5d, 1.0d, 0.5d)) {
                                     if (e instanceof ArmorStand) {

@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiser;
@@ -132,7 +133,8 @@ public class TARDISPacketListener {
                                     ItemStack is = ee.getItemInMainHand().clone();
                                     ee.setItemInMainHand(null);
                                     ee.setHelmet(is);
-                                    // TODO teleport player back to the TARDIS interior - also TODO remember their last location
+                                    // teleport player back to the TARDIS interior
+                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlight(player, stand.getLocation());
                                 });
                             }
                         }

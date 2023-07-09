@@ -39,6 +39,7 @@ public enum Table {
     dispersed,
     doors,
     farming,
+    flight,
     forcefield,
     gravity_well,
     homes,

@@ -50,8 +50,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 /**
- * The handbrake was a utensil on the TARDIS used for quick stops. River song once claimed that the TARDIS made it's
- * "whoosh" noise because the Doctor had left the handbrake on.
+ * The handbrake was a utensil on the TARDIS used for quick stops. River song
+ * once claimed that the TARDIS made it's "whoosh" noise because the Doctor had
+ * left the handbrake on.
  *
  * @author eccentric_nz
  */
@@ -69,8 +70,10 @@ public class TARDISHandbrakeListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the handbrake (lever) on the TARDIS console. If the button is right-clicked
-     * the handbrake is set off, if right-clicked while sneaking it is set on.
+     * Listens for player interaction with the handbrake (lever) on the TARDIS
+     * console. If the button is right-clicked the handbrake is set off, if
+     * left-clicked it is set on. If right-clicked while sneaking the TARDIS
+     * enters exterior flight mode.
      *
      * @param event the player clicking the handbrake
      */
@@ -171,7 +174,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
                                         return;
                                     }
-                                    // check there is enough power for at last random travel
+                                    // check there is enough power for at least random travel
                                     if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_ENOUGH");
                                         return;
@@ -185,12 +188,17 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
-                                    new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
-                                    // start time rotor?
-                                    if (tardis.getRotor() != null) {
-                                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                                        if (itemFrame != null) {
-                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
+                                    if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly")) {
+                                        // fly the TARDIS exterior
+                                        new TARDISExteriorFlight(plugin).startFlying(player, id);
+                                    } else {
+                                        new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
+                                        // start time rotor?
+                                        if (tardis.getRotor() != null) {
+                                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                            if (itemFrame != null) {
+                                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
+                                            }
                                         }
                                     }
                                 } else {

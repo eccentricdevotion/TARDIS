@@ -127,6 +127,9 @@ permissions:
       tardis.preset.police_box_tennant: true
       tardis.preset.weeping_angel: true
     default: op
+  tardis.fly:
+    description: Allow players to fly their TARDIS exterior.
+    default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
     default: false
