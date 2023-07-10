@@ -19,7 +19,9 @@ package me.eccentric_nz.TARDIS.enumeration;
 public enum Config {
 
     achievements,
+    adaptive,
     artron,
+    blaster,
     blocks,
     chameleon_guis,
     condensables,
@@ -28,12 +30,12 @@ public enum Config {
     handles,
     items,
     kits,
+    monsters,
     planets,
     recipes,
     rooms,
     shop,
     signs,
     tag,
-    vortex_manipulator,
-    weeping_angels
+    vortex_manipulator
 }

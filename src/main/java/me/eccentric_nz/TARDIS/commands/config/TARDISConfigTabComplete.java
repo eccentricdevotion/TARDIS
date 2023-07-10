@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Config;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -40,11 +41,11 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("abandon", "allow", "arch", "archive", "autonomous_areas", "blueprints", "circuits", "conversions", "creation", "desktop", "dynmap", "growth", "junk", "police_box", "preferences", "rechargers", "siege", "storage", "travel");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
-    private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
+    private final List<String> FILE_SUBS = new ArrayList<>();
     private final ImmutableList<String> FLAG_SUBS;
     private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
     private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
-    private final ImmutableList<String> PRESETS;
+    private final List<String> PRESETS = new ArrayList<>();
     private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
     private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war", "twelfth");
@@ -53,7 +54,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
-    private final ImmutableList<String> WORLD_SUBS;
+    private final List<String> WORLD_SUBS = new ArrayList<>();
 
     public TARDISConfigTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,14 +64,13 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
         } else {
             FLAG_SUBS = ImmutableList.of("none", "build", "entry");
         }
-        List<String> tmpPresets = new ArrayList<>();
         for (ChameleonPreset p : ChameleonPreset.values()) {
-            tmpPresets.add(p.toString());
+            PRESETS.add(p.toString());
         }
-        PRESETS = ImmutableList.copyOf(tmpPresets);
-        List<String> worlds = new ArrayList<>();
-        plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
-        WORLD_SUBS = ImmutableList.copyOf(worlds);
+        for (Config c : Config.values()) {
+            FILE_SUBS.add(c.toString());
+        }
+        plugin.getServer().getWorlds().forEach((w) -> WORLD_SUBS.add(w.getName()));
     }
 
     @Override

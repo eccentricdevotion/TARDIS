@@ -52,19 +52,21 @@ class TARDISReloadCommand {
             File file = new File(plugin.getDataFolder(), config + ".yml");
             switch (config) {
                 case achievements -> plugin.getAchievementConfig().load(file);
+                case adaptive -> plugin.getAdaptiveConfig().load(file);
                 case artron -> plugin.getArtronConfig().load(file);
+                case blaster -> plugin.getBlasterConfig().load(file);
                 case blocks -> plugin.getBlocksConfig().load(file);
-                case chameleon_guis -> plugin.getChameleonGuis().load(file);
+                case chameleon_guis -> plugin.getChameleonGuis().load(new File(plugin.getDataFolder(), "language" + File.separator + "chameleon_guis.yml"));
                 case condensables -> plugin.getCondensablesConfig().load(file);
                 case flat_world -> plugin.getGeneratorConfig().load(file);
                 case handles -> plugin.getHandlesConfig().load(file);
                 case items -> plugin.getItemsConfig().load(file);
                 case kits -> plugin.getKitsConfig().load(file);
+                case monsters -> plugin.getMonstersConfig().load(file);
                 case rooms -> plugin.getRoomsConfig().load(file);
                 case shop -> plugin.getShopConfig().load(file);
-                case signs -> plugin.getSigns().load(file);
+                case signs -> plugin.getSigns().load(new File(plugin.getDataFolder(), "language" + File.separator + "signs.yml"));
                 case vortex_manipulator -> plugin.getVortexConfig().load(file);
-                case weeping_angels -> plugin.getMonstersConfig().load(file);
                 default -> {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_NOT_THESE", args[1]);
                     return true;
