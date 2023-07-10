@@ -2,9 +2,7 @@
 
 ## Current version `5.0.0`
 
-1. Add new armour to AcidWater in Skaro world
-2. Fix `/tshop update` command
-3. Fix opening/closing double doors
+1. ?
 
 ## Next version `5.1.0`
 

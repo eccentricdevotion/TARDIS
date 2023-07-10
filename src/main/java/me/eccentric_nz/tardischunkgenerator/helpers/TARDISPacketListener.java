@@ -40,6 +40,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.CraftChunk;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
@@ -48,6 +49,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class TARDISPacketListener {
@@ -130,7 +132,11 @@ public class TARDISPacketListener {
                                     // remove item in hand, set item in head slot
                                     ArmorStand as = (ArmorStand) stand;
                                     EntityEquipment ee = as.getEquipment();
-                                    ItemStack is = ee.getItemInMainHand().clone();
+//                                    ItemStack is = ee.getItemInMainHand().clone();
+                                    ItemStack is = new ItemStack(Material.BLUE_DYE);
+                                    ItemMeta im = is.getItemMeta();
+                                    im.setCustomModelData(1001);
+                                    is.setItemMeta(im);
                                     ee.setItemInMainHand(null);
                                     ee.setHelmet(is);
                                     // teleport player back to the TARDIS interior

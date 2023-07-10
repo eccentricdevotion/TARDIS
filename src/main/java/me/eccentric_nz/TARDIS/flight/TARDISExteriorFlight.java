@@ -19,12 +19,14 @@ package me.eccentric_nz.TARDIS.flight;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -33,6 +35,7 @@ import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -63,6 +66,8 @@ public class TARDISExteriorFlight {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", data.getId());
         plugin.getQueryFactory().doUpdate("current", set, where);
+        // update door location
+        TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
         // telport player to interior
         Location interior = data.getLocation();
         player.teleport(interior);
@@ -86,9 +91,6 @@ public class TARDISExteriorFlight {
     }
 
     void startFlying(Player player, int id, Block block, boolean beac_on, String beacon) {
-        // save player's current location so we can teleport them back to it when they finish flying
-        Location playerLocation = player.getLocation();
-        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation));
         // get TARDISes current location
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -113,16 +115,25 @@ public class TARDISExteriorFlight {
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
-        Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
+        }, 5L, 280L);
+        // save player's current location so we can teleport them back to it when they finish flying
+        Location playerLocation = player.getLocation();
+        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, task));
         // teleport player to exterior
+        Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
         player.teleport(location);
         // get the armour stand
         for (Entity e : location.getWorld().getNearbyEntities(location, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
             if (e instanceof ArmorStand stand) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     EntityEquipment ee = stand.getEquipment();
-                    ItemStack is = ee.getHelmet().clone();
-                    // switch the custom model - makes TARDIS bigger to hide player model
+                    ItemStack is = new ItemStack(Material.ENDER_PEARL);
+                    ItemMeta im = is.getItemMeta();
+                    im.setCustomModelData(1008);
+                    is.setItemMeta(im);
+                    // switch the slot for the custom model - makes TARDIS bigger to hide player model
                     ee.setHelmet(null);
                     ee.setItemInMainHand(is);
                     // spawn a phantom

@@ -26,10 +26,12 @@ public class FlightReturnData {
 
     private final int id;
     private final Location location;
+    private final int task;
 
-    public FlightReturnData(int id, Location location) {
+    public FlightReturnData(int id, Location location, int task) {
         this.id = id;
         this.location = location;
+        this.task = task;
     }
 
     public int getId() {
@@ -38,5 +40,9 @@ public class FlightReturnData {
 
     public Location getLocation() {
         return location;
+    }
+
+    public int getTask() {
+        return task;
     }
 }

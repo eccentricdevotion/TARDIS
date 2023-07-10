@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.flight;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -214,6 +215,14 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
                                         }
                                     }
+                                    // if player if flying TARDIS exterior stop sound loop
+                                    Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
+                                        player.stopAllSounds();
+                                        if (value.getTask() != -1) {
+                                            plugin.getServer().getScheduler().cancelTask(value.getTask());
+                                        }
+                                        plugin.getTrackerKeeper().getFlyingReturnLocation().remove(uuid);
+                                    });
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     TARDISHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);

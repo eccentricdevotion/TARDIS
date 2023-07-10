@@ -85,7 +85,7 @@ public class FlightPersister {
                 UUID uuid = UUID.fromString(rs.getString("uuid"));
                 int id = rs.getInt("tardis_id");
                 Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location));
+                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1));
                 count++;
             }
             if (count > 0) {
