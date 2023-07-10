@@ -18,9 +18,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 
 public class TARDISShopCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -64,11 +64,10 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                             if (cost != item.getCost()) {
                                 // update database
                                 new UpdateShopItem(plugin).updateCost(cost, item.getId());
-                                // TODO should be updating the test display entity!
-                                // find armor stand and update display name
-                                for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation(), 0.5d, 1.0d, 0.5d)) {
-                                    if (e instanceof ArmorStand) {
-                                        e.setCustomName(ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
+                                // find text display and update the etxt
+                                for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation().add(0.5d, 1.0d, 0.5d), 0.5d, 1.0d, 0.5d)) {
+                                    if (e instanceof TextDisplay text) {
+                                        text.setText(item.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
                                     }
                                 }
                             }
@@ -84,7 +83,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                 if (args[0].equalsIgnoreCase("add")) {
                     String name = args[1].toLowerCase();
                     if (!plugin.getItemsConfig().contains(name)) {
-                    plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
+                        plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
                         return true;
                     }
                     double cost = plugin.getItemsConfig().getDouble(name);
