@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.flight;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -27,6 +28,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -50,7 +53,7 @@ public class TARDISExteriorFlight {
         this.plugin = plugin;
     }
 
-    public void stopFlight(Player player, ArmorStand stand) {
+    public void stopFlying(Player player, ArmorStand stand) {
         FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
         // update the TARDISes current location
         Location location = stand.getLocation();
@@ -67,6 +70,10 @@ public class TARDISExteriorFlight {
         plugin.getQueryFactory().doUpdate("current", set, where);
         // update door location
         TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
+        // set the light
+        Levelled light = TARDISConstants.LIGHT;
+        light.setLevel(7);
+        location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
         // telport player to interior
         Location interior = data.getLocation();
         player.teleport(interior);
@@ -144,6 +151,8 @@ public class TARDISExteriorFlight {
                     phantom.setInvulnerable(true);
                     phantom.setNoDamageTicks(Integer.MAX_VALUE);
                     phantom.setFireTicks(0);
+                    // remove the light
+                    location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                 }, 2L);
                 break;
             }
