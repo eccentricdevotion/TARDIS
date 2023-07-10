@@ -2,7 +2,7 @@
 
 ## Current version `5.0.0`
 
-1. Add new armour to AcidWater
+1. ?
 
 ## Next version `5.1.0`
 
@@ -24,6 +24,8 @@
 
 ## Wiki Documentation
 
+* `/tadmin find` command
+* Pandorica preset
 * ?
 
 ## Resource Pack / Monsters

@@ -101,7 +101,7 @@ public class TARDISPresetDestroyerFactory {
                         destroyDoor(dd.getTardisID());
                     }
                     int taskID;
-                    if (demat.usesItemFrame()) {
+                    if (demat.usesArmourStand()) {
                         TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);

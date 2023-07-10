@@ -320,7 +320,7 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
-                        if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
+                        if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {
                             new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

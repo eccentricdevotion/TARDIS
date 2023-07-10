@@ -179,25 +179,28 @@ public class TARDISAcidWater implements Listener {
         ItemStack helmet = inv.getHelmet();
         ItemStack chest = inv.getChestplate();
         ItemStack pants = inv.getLeggings();
-        double red = 0.0;
+        double reduction = 0.0;
         if (helmet != null) {
             switch (helmet.getType()) {
-                case LEATHER_HELMET -> red += 0.04;
-                case GOLDEN_HELMET -> red += 0.06;
-                case CHAINMAIL_HELMET -> red += 0.08;
-                case IRON_HELMET -> red += 0.10;
-                case DIAMOND_HELMET -> red += 0.12;
+                case TURTLE_HELMET -> reduction += 0.02;
+                case LEATHER_HELMET -> reduction += 0.04;
+                case GOLDEN_HELMET -> reduction += 0.06;
+                case CHAINMAIL_HELMET -> reduction += 0.08;
+                case IRON_HELMET -> reduction += 0.10;
+                case DIAMOND_HELMET -> reduction += 0.12;
+                case NETHERITE_HELMET -> reduction += 0.14;
                 default -> {
                 }
             }
         }
         if (boots != null) {
             switch (boots.getType()) {
-                case LEATHER_BOOTS -> red += 0.04;
-                case GOLDEN_BOOTS -> red += 0.06;
-                case CHAINMAIL_BOOTS -> red += 0.08;
-                case IRON_BOOTS -> red += 0.10;
-                case DIAMOND_BOOTS -> red += 0.12;
+                case LEATHER_BOOTS -> reduction += 0.04;
+                case GOLDEN_BOOTS -> reduction += 0.06;
+                case CHAINMAIL_BOOTS -> reduction += 0.08;
+                case IRON_BOOTS -> reduction += 0.10;
+                case DIAMOND_BOOTS -> reduction += 0.12;
+                case NETHERITE_BOOTS -> reduction += 0.14;
                 default -> {
                 }
             }
@@ -205,11 +208,12 @@ public class TARDISAcidWater implements Listener {
         // Pants
         if (pants != null) {
             switch (pants.getType()) {
-                case LEATHER_LEGGINGS -> red += 0.08;
-                case GOLDEN_LEGGINGS -> red += 0.12;
-                case CHAINMAIL_LEGGINGS -> red += 0.16;
-                case IRON_LEGGINGS -> red += 0.20;
-                case DIAMOND_LEGGINGS -> red += 0.24;
+                case LEATHER_LEGGINGS -> reduction += 0.08;
+                case GOLDEN_LEGGINGS -> reduction += 0.12;
+                case CHAINMAIL_LEGGINGS -> reduction += 0.16;
+                case IRON_LEGGINGS -> reduction += 0.20;
+                case DIAMOND_LEGGINGS -> reduction += 0.24;
+                case NETHERITE_LEGGINGS -> reduction += 0.28;
                 default -> {
                 }
             }
@@ -217,16 +221,17 @@ public class TARDISAcidWater implements Listener {
         // Chest plate
         if (chest != null) {
             switch (chest.getType()) {
-                case LEATHER_CHESTPLATE -> red += 0.12;
-                case GOLDEN_CHESTPLATE -> red += 0.20;
-                case CHAINMAIL_CHESTPLATE -> red += 0.22;
-                case IRON_CHESTPLATE -> red += 0.24;
-                case DIAMOND_CHESTPLATE -> red += 0.32;
+                case LEATHER_CHESTPLATE -> reduction += 0.12;
+                case GOLDEN_CHESTPLATE -> reduction += 0.16;
+                case CHAINMAIL_CHESTPLATE -> reduction += 0.20;
+                case IRON_CHESTPLATE -> reduction += 0.24;
+                case DIAMOND_CHESTPLATE -> reduction += 0.28;
+                case NETHERITE_CHESTPLATE -> reduction += 0.32;
                 default -> {
                 }
             }
         }
-        return red;
+        return reduction;
     }
 
     @EventHandler

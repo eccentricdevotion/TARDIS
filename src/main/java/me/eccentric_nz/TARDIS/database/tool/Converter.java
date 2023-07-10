@@ -173,6 +173,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("mangrove"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                         sb.append(str);
                                     }
+                                    case flight -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("f_id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("location")) + end;
+                                        sb.append(str);
+                                    }
                                     case forcefield -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("location")) + end;
                                         sb.append(str);

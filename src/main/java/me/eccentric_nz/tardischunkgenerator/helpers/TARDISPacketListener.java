@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiser;
@@ -28,6 +29,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -37,11 +39,17 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R1.CraftChunk;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 public class TARDISPacketListener {
 
@@ -73,6 +81,69 @@ public class TARDISPacketListener {
 
             @Override
             public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
+                if (packet instanceof ServerboundPlayerInputPacket steerPacket) {
+                    Entity stand = player.getVehicle();
+                    if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
+                        Entity phantom = stand.getVehicle();
+                        if (phantom != null) {
+                            float sideways = steerPacket.getXxa();
+                            float forward = steerPacket.getZza();
+//                            boolean jump = steerPacket.isJumping();
+//                            boolean mount = steerPacket.isShiftKeyDown();
+                            if (!steerPacket.isShiftKeyDown()) {
+                                // don't move if the phantom is on the ground
+                                if (phantom.isOnGround()) {
+                                    phantom.setVelocity(new Vector(0, 0, 0));
+                                } else {
+                                    Location playerLocation = player.getLocation();
+                                    float yaw = playerLocation.getYaw();
+                                    float pitch = playerLocation.getPitch();
+                                    phantom.setRotation(yaw, pitch);
+                                    stand.setRotation(yaw, pitch);
+                                    double radians = Math.toRadians(yaw);
+                                    double x = -forward * Math.sin(radians) + sideways * Math.cos(radians);
+                                    double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
+                                    Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
+                                    velocity.setY(phantom.getVelocity().getY());
+                                    if (!Double.isFinite(velocity.getX())) {
+                                        velocity.setX(0);
+                                    }
+                                    if (!Double.isFinite(velocity.getZ())) {
+                                        velocity.setZ(0);
+                                    }
+                                    if (pitch < 0) {
+                                        // go up
+                                        double up = Math.abs(pitch / 100.0d);
+                                        velocity.setY(up);
+                                    } else {
+                                        double down = -Math.abs(pitch / 100.0d);
+                                        velocity.setY(down);
+                                    }
+                                    velocity.checkFinite();
+                                    phantom.setVelocity(velocity);
+                                }
+                            } else {
+                                phantom.setVelocity(new Vector(0, 0, 0));
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                                    // kill phantom
+                                    phantom.removePassenger(stand);
+                                    phantom.remove();
+                                    // remove item in hand, set item in head slot
+                                    ArmorStand as = (ArmorStand) stand;
+                                    EntityEquipment ee = as.getEquipment();
+                                    ItemStack is = ee.getItemInMainHand().clone();
+                                    ItemMeta im = is.getItemMeta();
+                                    im.setCustomModelData(1001);
+                                    is.setItemMeta(im);
+                                    ee.setItemInMainHand(null);
+                                    ee.setHelmet(is);
+                                    // teleport player back to the TARDIS interior
+                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
+                                });
+                            }
+                        }
+                    }
+                }
                 super.channelRead(channelHandlerContext, packet);
             }
 

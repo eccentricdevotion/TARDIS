@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.flight;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -50,8 +51,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 /**
- * The handbrake was a utensil on the TARDIS used for quick stops. River song once claimed that the TARDIS made it's
- * "whoosh" noise because the Doctor had left the handbrake on.
+ * The handbrake was a utensil on the TARDIS used for quick stops. River song
+ * once claimed that the TARDIS made it's "whoosh" noise because the Doctor had
+ * left the handbrake on.
  *
  * @author eccentric_nz
  */
@@ -69,14 +71,16 @@ public class TARDISHandbrakeListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the handbrake (lever) on the TARDIS console. If the button is right-clicked
-     * the handbrake is set off, if right-clicked while sneaking it is set on.
+     * Listens for player interaction with the handbrake (lever) on the TARDIS
+     * console. If the button is right-clicked the handbrake is set off, if
+     * left-clicked it is set on. If right-clicked while sneaking the TARDIS
+     * enters exterior flight mode.
      *
      * @param event the player clicking the handbrake
      */
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || event.getPlayer().isSneaking()) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Player player = event.getPlayer();
@@ -171,7 +175,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
                                         return;
                                     }
-                                    // check there is enough power for at last random travel
+                                    // check there is enough power for at least random travel
                                     if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_ENOUGH");
                                         return;
@@ -185,7 +189,12 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
-                                    new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
+                                    if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
+                                        // fly the TARDIS exterior
+                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, beac_on, beacon);
+                                    } else {
+                                        new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
+                                    }
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
@@ -206,6 +215,14 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
                                         }
                                     }
+                                    // if player if flying TARDIS exterior stop sound loop
+                                    Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
+                                        player.stopAllSounds();
+                                        if (value.getTask() != -1) {
+                                            plugin.getServer().getScheduler().cancelTask(value.getTask());
+                                        }
+                                        plugin.getTrackerKeeper().getFlyingReturnLocation().remove(uuid);
+                                    });
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     TARDISHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);

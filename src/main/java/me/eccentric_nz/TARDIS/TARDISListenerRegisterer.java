@@ -62,6 +62,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
+import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
@@ -96,7 +97,8 @@ import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
 
 /**
- * Registers all the listeners for the various events required to use the TARDIS.
+ * Registers all the listeners for the various events required to use the
+ * TARDIS.
  *
  * @author eccentric_nz
  */
@@ -109,7 +111,8 @@ class TARDISListenerRegisterer {
     }
 
     /**
-     * Registers all the listeners for the various events required to use the TARDIS.
+     * Registers all the listeners for the various events required to use the
+     * TARDIS.
      */
     TARDISInformationSystemListener registerListeners() {
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
@@ -178,10 +181,11 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISDisplayListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISExplosionListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISExplosionAndDamageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFakeChatListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFireListener(plugin), plugin);
+        plugin.getPM().registerEvents(new FlightGamemodeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGlassesListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGameModeSwitcher(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGravityWellListener(plugin), plugin);
@@ -210,6 +214,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
+        plugin.getPM().registerEvents(new MonsterFireListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }

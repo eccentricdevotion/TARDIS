@@ -60,7 +60,7 @@ public class TARDISEmergencyRelocation {
                 bd.setSubmarine(false);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 Tardis tardis = rs.getTardis();
-                if (tardis.getPreset().usesItemFrame()) {
+                if (tardis.getPreset().usesArmourStand()) {
                     new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
                 } else {
                     new TARDISInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();

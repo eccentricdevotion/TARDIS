@@ -23,23 +23,29 @@ import org.bukkit.Rotation;
  */
 public enum COMPASS {
 
-    EAST(Rotation.FLIPPED),
-    SOUTH_EAST(Rotation.FLIPPED_45),
-    SOUTH(Rotation.COUNTER_CLOCKWISE),
-    SOUTH_WEST(Rotation.COUNTER_CLOCKWISE_45),
-    WEST(Rotation.NONE),
-    NORTH_WEST(Rotation.CLOCKWISE_45),
-    NORTH(Rotation.CLOCKWISE),
-    NORTH_EAST(Rotation.COUNTER_CLOCKWISE_45);
+    EAST(Rotation.FLIPPED, 90.0f),
+    SOUTH_EAST(Rotation.FLIPPED_45, 135.0f),
+    SOUTH(Rotation.COUNTER_CLOCKWISE, 180.0f),
+    SOUTH_WEST(Rotation.COUNTER_CLOCKWISE_45, -135.0f),
+    WEST(Rotation.NONE, -90.0f),
+    NORTH_WEST(Rotation.CLOCKWISE_45, -45.0f),
+    NORTH(Rotation.CLOCKWISE, 0.0f),
+    NORTH_EAST(Rotation.COUNTER_CLOCKWISE_45, 45.0f);
 
     private final Rotation rotation;
+    private final float yaw;
 
-    COMPASS(Rotation rotation) {
+    COMPASS(Rotation rotation, float yaw) {
         this.rotation = rotation;
+        this.yaw = yaw;
     }
 
     public Rotation getRotation() {
         return rotation;
+    }
+
+    public float getYaw() {
+        return yaw;
     }
 
     public COMPASS forPreset() {

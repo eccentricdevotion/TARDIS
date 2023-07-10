@@ -21,12 +21,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 
 public class TARDISBuilderUtility {
 
-    static void saveDoorLocation(BuildData bd) {
+    public static void saveDoorLocation(BuildData bd) {
         World world = bd.getLocation().getWorld();
         int x = bd.getLocation().getBlockX();
         int y = bd.getLocation().getBlockY();
@@ -54,7 +55,42 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getMaterialForItemFrame(ChameleonPreset preset, int id, boolean isMaterialisation) {
+    /**
+     * Saves/updates the door location after the TARDIS exterior has been flown
+     *
+     * @param location the location of the TARDIS
+     * @param id the id of the TARDIS database record
+     * @param direction the direction the TARDIS is facing
+     */
+    public static void saveDoorLocation(Location location, int id, String direction) {
+        World world = location.getWorld();
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+        // remember the door location
+        String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
+        String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
+        TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, id);
+        // should insert the door when tardis is first made, and then update location there after!
+        HashMap<String, Object> whered = new HashMap<>();
+        whered.put("door_type", 0);
+        whered.put("tardis_id", id);
+        ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, whered, false);
+        HashMap<String, Object> setd = new HashMap<>();
+        setd.put("door_location", doorloc);
+        setd.put("door_direction", direction);
+        if (rsd.resultSet()) {
+            HashMap<String, Object> whereid = new HashMap<>();
+            whereid.put("door_id", rsd.getDoor_id());
+            TARDIS.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
+        } else {
+            setd.put("tardis_id", id);
+            setd.put("door_type", 0);
+            TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+        }
+    }
+
+    public static Material getMaterialForArmourStand(ChameleonPreset preset, int id, boolean isMaterialisation) {
         switch (preset) {
             case ITEM -> {
                 ResultSetTardisModel rstm = new ResultSetTardisModel(TARDIS.plugin);

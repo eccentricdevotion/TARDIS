@@ -115,7 +115,7 @@ public class TARDISDoorCloser {
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);
             plugin.getTrackerKeeper().getPortals().remove(inportal);
-            if (plugin.getConfig().getBoolean("police_box.view_interior") && (preset != null && !preset.usesItemFrame())) {
+            if (plugin.getConfig().getBoolean("police_box.view_interior") && (preset != null && !preset.usesArmourStand())) {
                 plugin.getTrackerKeeper().getCasters().remove(uuid);
                 // remove fake blocks
                 if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {

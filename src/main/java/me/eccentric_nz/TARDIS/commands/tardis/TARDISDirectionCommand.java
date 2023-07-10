@@ -73,7 +73,7 @@ public class TARDISDirectionCommand {
                 return true;
             }
             Tardis tardis = rs.getTardis();
-            if (!tardis.getPreset().usesItemFrame()
+            if (!tardis.getPreset().usesArmourStand()
                     && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
                 return true;

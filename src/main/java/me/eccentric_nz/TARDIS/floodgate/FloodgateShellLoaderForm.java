@@ -50,7 +50,7 @@ public class FloodgateShellLoaderForm {
         builder.button("Current preset", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/chameleon_button.png");
         builder.button("Saved construct", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/construct_button.png");
         for (ChameleonPreset preset : ChameleonPreset.values()) {
-            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
+            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     String path = String.format("textures/blocks/%s.png", preset.getGuiDisplay().toString().toLowerCase(Locale.ROOT));
                     builder.button(preset.getDisplayName(), FormImage.Type.PATH, path);

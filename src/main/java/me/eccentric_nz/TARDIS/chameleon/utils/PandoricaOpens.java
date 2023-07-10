@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -46,8 +47,9 @@ public class PandoricaOpens {
       5, 6, 7, 2 // opening
       7, 6, 5, 1 // closing
      */
-    public void animate(ItemFrame frame, boolean open) {
-        ItemStack is = frame.getItem();
+    public void animate(ArmorStand stand, boolean open) {
+        EntityEquipment ee = stand.getEquipment();
+        ItemStack is = ee.getHelmet();
         ItemMeta im = is.getItemMeta();
         long delay = 5;
         for (int i = 0; i < 4; i++) {
@@ -55,7 +57,7 @@ public class PandoricaOpens {
             scheduler.scheduleSyncDelayedTask(plugin, () -> {
                 im.setCustomModelData(cmd);
                 is.setItemMeta(im);
-                frame.setItem(is, false);
+                ee.setHelmet(is, true);
             }, delay * i);
         }
     }

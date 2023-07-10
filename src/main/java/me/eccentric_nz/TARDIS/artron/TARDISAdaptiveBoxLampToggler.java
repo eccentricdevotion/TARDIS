@@ -44,7 +44,7 @@ public class TARDISAdaptiveBoxLampToggler {
         if (rs.resultSet()) {
             Location location = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
             Block light = location.getBlock().getRelative(BlockFace.UP, 2);
-            if (preset.usesItemFrame()) {
+            if (preset.usesArmourStand()) {
                 if (on) {
                     light.setBlockData(TARDISConstants.LIGHT);
                 } else {

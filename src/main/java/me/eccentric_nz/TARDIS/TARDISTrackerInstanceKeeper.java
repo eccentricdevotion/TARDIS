@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -42,9 +43,10 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
- * A central repository used to store various data values required to track what Time lords and TARDIS are doing
- * in-game, and provide easy access to the data in other classes. For example the spectacleWearers List tracks which
- * Time Lords are currently wearing 3d_glasses.
+ * A central repository used to store various data values required to track what
+ * Time lords and TARDIS are doing in-game, and provide easy access to the data
+ * in other classes. For example the spectacleWearers List tracks which Time
+ * Lords are currently wearing 3d_glasses.
  *
  * @author eccentric_nz
  */
@@ -87,6 +89,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Location> junkRelog = new HashMap<>();
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
     private final HashMap<UUID, Location> startLocation = new HashMap<>();
+    private final HashMap<UUID, FlightReturnData> flyingReturnLocation = new HashMap<>();
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Long> brushCooldown = new HashMap<>();
     private final HashMap<UUID, Long> hideCooldown = new HashMap<>();
@@ -150,7 +153,8 @@ public class TARDISTrackerInstanceKeeper {
     private String immortalityGate = "";
 
     /**
-     * Gets the Move Session for a player, this is used to see if they have actually moved
+     * Gets the Move Session for a player, this is used to see if they have
+     * actually moved
      *
      * @param p the player to track
      * @return the session for the player
@@ -174,7 +178,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Gets a map of uuids with Blocks to restore for the open door portal interior projection.
+     * Gets a map of uuids with Blocks to restore for the open door portal
+     * interior projection.
      *
      * @return a map of uuids with Blocks to restore
      */
@@ -183,7 +188,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Gets a map of player uuids with item frame ids to remove from the open door portal interior projection.
+     * Gets a map of player uuids with item frame ids to remove from the open
+     * door portal interior projection.
      *
      * @return a map of uuids with ids
      */
@@ -194,7 +200,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks who is using the the immortality gate
      *
-     * @return the name of the player using the immortality gate or an empty string if not in use
+     * @return the name of the player using the immortality gate or an empty
+     * string if not in use
      */
     public String getImmortalityGate() {
         return immortalityGate;
@@ -273,9 +280,11 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks room growing tasks, so they can be resumed in the event of a server restart
+     * Tracks room growing tasks, so they can be resumed in the event of a
+     * server restart
      *
-     * @return a Map of Bukkit task ids and the associated {@link TARDISRoomData}
+     * @return a Map of Bukkit task ids and the associated
+     * {@link TARDISRoomData}
      */
     public HashMap<Integer, TARDISRoomData> getRoomTasks() {
         return roomTasks;
@@ -300,7 +309,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks TARDIS areas that are in siege mode so that animals have a chance of having twins instead of a single birth
+     * Tracks TARDIS areas that are in siege mode so that animals have a chance
+     * of having twins instead of a single birth
      *
      * @return a Map of world names and siege areas
      */
@@ -336,7 +346,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players whose TARDIS is invisible and the config option <code>allow.3d_doors</code> is true
+     * Tracks players whose TARDIS is invisible and the config option
+     * <code>allow.3d_doors</code> is true
      *
      * @return a Map of player UUIDs and the door block of their TARDIS
      */
@@ -345,7 +356,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks the block that triggered opening the Lazarus Device GUI, the block is used to determine the location of the genetic manipulator walls
+     * Tracks the block that triggered opening the Lazarus Device GUI, the block
+     * is used to determine the location of the genetic manipulator walls
      *
      * @return a Map of player UUIDs and the pressure plate block
      */
@@ -356,8 +368,9 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using Manual or Regulator flight modes
      *
-     * @return a Map of player UUIDs and the TARDIS {@link BuildData}.
-     * The location stored in the BuildData is adjusted depending on how well the player flys their TARDIS
+     * @return a Map of player UUIDs and the TARDIS {@link BuildData}. The
+     * location stored in the BuildData is adjusted depending on how well the
+     * player flys their TARDIS
      */
     public HashMap<UUID, BuildData> getFlightData() {
         return flightData;
@@ -490,7 +503,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players who logged out while traveklling in the Junk TARDIS
      *
-     * @return a Map of player UUIDs and the location the Junk TARDIS was travelling to
+     * @return a Map of player UUIDs and the location the Junk TARDIS was
+     * travelling to
      */
     public HashMap<UUID, Location> getJunkRelog() {
         return junkRelog;
@@ -515,9 +529,20 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
+     * Remembers a player's interior location so we can return them to it after
+     * flying the TARDIS exterior
+     *
+     * @return a Map of player UUIDs and the player location
+     */
+    public HashMap<UUID, FlightReturnData> getFlyingReturnLocation() {
+        return flyingReturnLocation;
+    }
+
+    /**
      * Tracks players using the sonc screwdriver freeze player function
      *
-     * @return a Map of player UUIDs and the time in milliseconds they last used the freeze function
+     * @return a Map of player UUIDs and the time in milliseconds they last used
+     * the freeze function
      */
     public HashMap<UUID, Long> getCooldown() {
         return cooldown;
@@ -526,7 +551,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the <code>/tardis hide</code> command
      *
-     * @return a Map of player UUIDs and the time in milliseconds they last used the command
+     * @return a Map of player UUIDs and the time in milliseconds they last used
+     * the command
      */
     public HashMap<UUID, Long> getHideCooldown() {
         return hideCooldown;
@@ -535,7 +561,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the sonic screwdriver brush upgrade
      *
-     * @return a Map of player UUIDs and the time in milliseconds they last used the brush
+     * @return a Map of player UUIDs and the time in milliseconds they last used
+     * the brush
      */
     public HashMap<UUID, Long> getBrushCooldown() {
         return brushCooldown;
@@ -544,7 +571,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the <code>/tardis rebuild</code> command
      *
-     * @return a Map of player UUIDs and the time in milliseconds they last used the command
+     * @return a Map of player UUIDs and the time in milliseconds they last used
+     * the command
      */
     public HashMap<UUID, Long> getRebuildCooldown() {
         return rebuildCooldown;
@@ -616,7 +644,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the <code>/tardis update</code> command
      *
-     * @return a Map of player UUIDs and the control name they are trying to update
+     * @return a Map of player UUIDs and the control name they are trying to
+     * update
      */
     public HashMap<UUID, String> getUpdatePlayers() {
         return updatePlayers;
@@ -652,7 +681,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the TARDIS HUD
      *
-     * @return a Map of player UUIDs and the {@link TARDISDisplayType} they are using
+     * @return a Map of player UUIDs and the {@link TARDISDisplayType} they are
+     * using
      */
     public HashMap<UUID, TARDISDisplayType> getDisplay() {
         return display;
@@ -706,7 +736,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players using the <code>/tardis secondary</code> command
      *
-     * @return a Map of player UUIDs and the secondary control name they are trying to update
+     * @return a Map of player UUIDs and the secondary control name they are
+     * trying to update
      */
     public HashMap<UUID, Updateable> getSecondary() {
         return secondary;
@@ -715,7 +746,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Track players using the <code>/tardis rescue</code> command
      *
-     * @return a Map of player UUIDs and the UUID of the player they are trying to rescue
+     * @return a Map of player UUIDs and the UUID of the player they are trying
+     * to rescue
      */
     public HashMap<UUID, UUID> getChatRescue() {
         return chatRescue;
@@ -724,7 +756,8 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks performing a telepathic rescue
      *
-     * @return a Map of player UUIDs and the UUID of the player they are trying to rescue
+     * @return a Map of player UUIDs and the UUID of the player they are trying
+     * to rescue
      */
     public HashMap<UUID, UUID> getTelepathicRescue() {
         return telepathicRescue;
@@ -776,7 +809,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks TARDISes that dematerialised to the Time Vortex (no travel destination set)
+     * Tracks TARDISes that dematerialised to the Time Vortex (no travel
+     * destination set)
      *
      * @return a collection of TARDIS ids
      */
@@ -812,7 +846,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks TARDISes that have had their destination set randomly (these TARDIS es will not be able to scan the random destination)
+     * Tracks TARDISes that have had their destination set randomly (these
+     * TARDIS es will not be able to scan the random destination)
      *
      * @return a collection of TARDIS ids
      */
@@ -911,7 +946,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players that have discovered the TARDIS easter egg. Used for cooldown purposes
+     * Tracks players that have discovered the TARDIS easter egg. Used for
+     * cooldown purposes
      *
      * @return a collection of player UUIDs
      */
@@ -920,7 +956,8 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players that have used TARDIS atmospheric excitation to make it snow. Used for cooldown purposes
+     * Tracks players that have used TARDIS atmospheric excitation to make it
+     * snow. Used for cooldown purposes
      *
      * @return a collection of player UUIDs
      */

@@ -144,10 +144,10 @@ public class TARDISPresetBuilderFactory {
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
                 int taskID;
-                if (preset.usesItemFrame()) {
-                    TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
-                    taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
-                    frame.setTask(taskID);
+                if (preset.usesArmourStand()) {
+                    TARDISMaterialisePoliceBox stand = new TARDISMaterialisePoliceBox(plugin, bd, preset);
+                    taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, stand, 10L, 20L);
+                    stand.setTask(taskID);
                 } else {
                     TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
@@ -165,10 +165,10 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 } else {
                     int taskID;
-                    if (preset.usesItemFrame()) {
-                        TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
-                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
-                        frame.setTask(taskID);
+                    if (preset.usesArmourStand()) {
+                        TARDISMaterialisePoliceBox stand = new TARDISMaterialisePoliceBox(plugin, bd, preset);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, stand, 10L, 20L);
+                        stand.setTask(taskID);
                     } else {
                         TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);

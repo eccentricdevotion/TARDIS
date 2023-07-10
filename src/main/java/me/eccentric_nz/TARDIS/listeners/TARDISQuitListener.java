@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
@@ -60,7 +61,10 @@ public class TARDISQuitListener implements Listener {
             }
             plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
         }
-        // if
+        // if player if flying TARDIS exterior stop sound loop
+        Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
+            plugin.getServer().getScheduler().cancelTask(value.getTask());
+        });
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
@@ -99,7 +103,7 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesItemFrame()) {
+                    if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off

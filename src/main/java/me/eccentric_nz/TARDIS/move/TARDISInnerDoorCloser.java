@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -29,7 +31,10 @@ import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -67,6 +72,19 @@ class TARDISInnerDoorCloser {
             Openable closeable = (Openable) block.getBlockData();
             closeable.setOpen(false);
             block.setBlockData(closeable, true);
+        } else {
+            // get and close display door
+            ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
+            if (display != null) {
+                TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
+                if (tdi != null && (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {
+                    ItemStack itemStack = display.getItemStack();
+                    ItemMeta im = itemStack.getItemMeta();
+                    im.setCustomModelData(10001);
+                    itemStack.setItemMeta(im);
+                    display.setItemStack(itemStack);
+                }
+            }
         }
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // get all companion UUIDs

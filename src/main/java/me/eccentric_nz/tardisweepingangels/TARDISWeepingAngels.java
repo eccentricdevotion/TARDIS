@@ -140,7 +140,6 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new Sounds(plugin), plugin);
         plugin.getPM().registerEvents(new GasMask(plugin), plugin);
         plugin.getPM().registerEvents(new Butler(plugin), plugin);
-        plugin.getPM().registerEvents(new HelmetChecker(), plugin);
         plugin.getPM().registerEvents(new HeadlessTarget(plugin), plugin);
         plugin.getPM().registerEvents(new HeadlessProjectileListener(), plugin);
         plugin.getPM().registerEvents(new K9Listener(plugin), plugin);
