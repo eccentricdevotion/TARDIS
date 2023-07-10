@@ -111,6 +111,7 @@ tr.child code { font-size: 11px; }
     <tr><td><code>tardis.create</code></td><td colspan="2">Allow players to create a TARDIS.</td><td>op</td></tr>
     <tr><td><code>tardis.create_world</code></td><td colspan="2">Allow players to create a TARDIS in it's own world. This is only used in conjuction with the <code>create_worlds_with_perms</code> config option.</td><td>op</td></tr>
     <tr><td><code>tardis.exterminate</code></td><td colspan="2">Allow players to delete their own TARDIS.</td><td>op</td></tr>
+    <tr><td><code>tardis.fly</code></td><td colspan="2">Allow players to ply the TARDIS exterior.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel</code></td><td colspan="2">Allow players to travel to random locations and saved destinations.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel.player</code></td><td colspan="2">Allow players to travel to player locations.</td><td>op</td></tr>
     <tr><td><code>tardis.timetravel.rescue</code></td><td colspan="2">Allow players to rescue other players.</td><td>op</td></tr>

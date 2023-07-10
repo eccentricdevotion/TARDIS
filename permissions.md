@@ -168,6 +168,10 @@ To use the Architectural Reconfiguration System, pl;ayers will need:
 
 There are a some time travel specific nodes:
 
+Allow player's to fly the TARDIS exterior
+
+    tardis.fly
+
 Allow travel to player locations
 
     tardis.timetravel.player
