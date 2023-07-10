@@ -76,9 +76,8 @@ public class DisplayItemDoorToggler {
                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                 if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                     if (!rsd.isLocked()) {
-                        boolean isPoliceBox = (rs.getTardis().getPreset().usesArmourStand());
                         // toggle the door
-                        if (isPoliceBox) {
+                        if (rs.getTardis().getPreset().usesArmourStand()) {
                             new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                         }
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
