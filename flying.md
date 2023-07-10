@@ -8,7 +8,7 @@ title: Flying the TARDIS
 # Flying the TARDIS
 
 From version 5 of the TARDIS plugin, you can fly the TARDIS exterior around your worlds.
-_The feature only works with the custom model police box presets_, so yopu will also need to use the 
+_The feature only works with the custom model police box presets_, so you will also need to use the 
 [TARDIS Resource Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/).
 
 ### Permission
@@ -21,7 +21,7 @@ You will need the permission `tardis.fly` to pilot your TARDIS.
 - Use the movement keys (__WASD__) to navigate
 - Look up to go up
 - Look down to go down
-- Press the __Shift__ ket to stop flying (best to do when on the ground!)
+- Press the __Shift__ key to stop flying (best to do this when on the ground!)
 
 When you click the handbrake, you will be teleported to the TARDIS exterior - you will most 
 likely want to switch your view to third-person mode by pressing the __F5__ key on the keyboard.
