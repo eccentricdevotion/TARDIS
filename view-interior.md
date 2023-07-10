@@ -8,7 +8,7 @@ title: View Interior
 As of TARDIS v4.11.0 you can view the interior of the TARDIS through the open Chameleon preset door). This feature is
 currently a work in progress.
 
-The Chameleon preset must be one with an _actual door block_, not a trapdoor or one of the coloured item frame Police
+The Chameleon preset must be one with an _actual door block_, not a trapdoor or one of the coloured item frame / armour stand Police
 Boxes.
 
 To enable/disable the viewing of interiors:

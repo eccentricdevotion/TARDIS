@@ -14,7 +14,7 @@ Custom model presets are defined in _plugins/TARDIS/custom\_models.yml_:
 models:
   # model name
   Type 40:
-    # the item that is placed in the item frame
+    # the item that is placed on the armour stand
     item: CLAY_BALL
   Bad Wolf:
     item: WOLF_SPAWN_EGG

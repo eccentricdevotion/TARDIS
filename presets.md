@@ -202,8 +202,8 @@ with its surroundings.
 
 ## Page two
 
-Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models in an
-Item Frame. They have custom block models for the materialisation animation as well.
+Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models on an
+Armour Stand. They have custom block models for the materialisation animation as well.
 
 ![tarnsparent coloured police box](images/presets/stained.jpg)
 
