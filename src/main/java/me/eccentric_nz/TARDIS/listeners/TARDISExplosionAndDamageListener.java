@@ -41,11 +41,11 @@ import org.bukkit.event.entity.EntityExplodeEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISExplosionListener implements Listener {
+public class TARDISExplosionAndDamageListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISExplosionListener(TARDIS plugin) {
+    public TARDISExplosionAndDamageListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -53,17 +53,17 @@ public class TARDISExplosionListener implements Listener {
      * Listens for explosions around the TARDIS Police Box. If the explosion affects any of the Police Box blocks, then
      * those blocks are removed from the effect of the explosion, there by protecting the Police box from damage.
      *
-     * @param e an entity exploding
+     * @param event an entity exploding
      */
     @EventHandler(priority = EventPriority.LOW)
-    public void onEntityExplode(EntityExplodeEvent e) {
-        if (e.getEntityType().equals(EntityType.ENDER_DRAGON)) {
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if (event.getEntityType().equals(EntityType.ENDER_DRAGON)) {
             return;
         }
-        Location explode = e.getLocation();
+        Location explode = event.getLocation();
         // check if the explosion is in a TARDIS world
-        if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
-            e.setCancelled(true);
+        if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && event.getEntity() instanceof Creeper) {
+            event.setCancelled(true);
             // check it is not the Artron creeper
             String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
             if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
@@ -80,15 +80,17 @@ public class TARDISExplosionListener implements Listener {
                 if (loc != null) {
                     Block block = loc.getBlock();
                     // if the block is a TARDIS block then remove it
-                    e.blockList().remove(block);
+                    event.blockList().remove(block);
                 }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof ItemFrame frame && e.getDamager() instanceof Player) {
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player player && plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+            event.setCancelled(true);
+        } else if (event.getEntity() instanceof ItemFrame frame && event.getDamager() instanceof Player) {
             // check if it is a TARDIS Chameleon item frame
             String l = frame.getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();
@@ -96,15 +98,15 @@ public class TARDISExplosionListener implements Listener {
             where.put("type", 27);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
-                e.setCancelled(true);
+                event.setCancelled(true);
             }
         }
-        if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
+        if (event.getCause() != DamageCause.ENTITY_EXPLOSION) {
             return;
         }
-        String l = e.getDamager().getLocation().getWorld().getName();
+        String l = event.getDamager().getLocation().getWorld().getName();
         if (l.contains("TARDIS") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
     }
 }
