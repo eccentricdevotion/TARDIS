@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -129,9 +128,9 @@ public class TARDISExteriorFlight {
             if (e instanceof ArmorStand stand) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     EntityEquipment ee = stand.getEquipment();
-                    ItemStack is = new ItemStack(Material.ENDER_PEARL);
+                    ItemStack is = ee.getHelmet().clone();
                     ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData(1008);
+                    im.setCustomModelData(1005);
                     is.setItemMeta(im);
                     // switch the slot for the custom model - makes TARDIS bigger to hide player model
                     ee.setHelmet(null);
