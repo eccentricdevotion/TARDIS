@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -996,6 +997,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("smithing.Knockback Repair.base", "BLAZE_ROD");
             recipes_config.set("smithing.Knockback Repair.addition", "GLOWSTONE_DUST=Knockback Circuit");
             recipes_config.set("smithing.Knockback Repair.result", "BLAZE_ROD");
+        }
+        if (!recipes_config.contains("smithing.Brush Repair")) {
+            recipes_config.set("smithing.Brush Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Brush Repair.addition", "GLOWSTONE_DUST=Brush Circuit");
+            recipes_config.set("smithing.Brush Repair.result", "BLAZE_ROD");
         }
         if (!recipes_config.contains("furnace.Nuclear Wool.experience")) {
             recipes_config.set("furnace.Nuclear Wool.experience", 0);

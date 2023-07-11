@@ -1277,6 +1277,10 @@ smithing:
     base: BLAZE_ROD
     addition: GLOWSTONE_DUST=Knockback Circuit
     result: BLAZE_ROD
+  Brush Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Brush Circuit
+    result: BLAZE_ROD
 # -------------------
 ## furnace recipes are not used yet...
 # -------------------
