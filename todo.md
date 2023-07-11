@@ -2,15 +2,15 @@
 
 ## Current version `5.0.0`
 
-1. ?
+1. Fix door breaking when landing the TARDIS on non-solid blocks (e.g. grass) after flying exterior - 
+   the armour stand drops to the solid block below...
 
 ## Next version `5.1.0`
 
-1. Improve laggy `/ttravel` cave finder
-2. Animated models for player disguises
-3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-4. Sonic Blaster
+2. Animated models for player disguises
+3. Sonic Blaster
 
 ## Future versions
 
@@ -26,6 +26,7 @@
 
 * `/tadmin find` command
 * Pandorica preset
+* `/tprefs announce_repeaters [on|off]`
 * ?
 
 ## Resource Pack / Monsters
