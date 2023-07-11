@@ -39,8 +39,8 @@ td{vertical-align:top;}
 | Knockback Circuit           | `/tardisrecipe knockback-circuit`           | `tardis.sonic.arrow`                               |
 | Server Admin Circuit        | `/tardisrecipe server-admin-circuit`        | `tardis.sonic.admin`                               |
 
-To upgrade your Sonic Screwdriver, you combine it with a new circuit in the
-crafting table. Each circuit has an associated permission, see the
+To upgrade your Sonic Screwdriver, you combine it with a new circuit in a crafting table or smithing table (though
+the smithing table requires an extra redstone template item). Each circuit has an associated permission, see the
 [permissions page](permissions.html) for more details.
 
 ## Sonic abilities
