@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -30,6 +29,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+
 /**
  * @author eccentric_nz
  */
@@ -38,6 +39,11 @@ public class TARDISAnvilListener implements Listener {
     private final TARDIS plugin;
     private final HashMap<String, Material> disallow = new HashMap<>();
 
+    /**
+     * Prevents renaming TARDIS items
+     *
+     * @param plugin an instance of the TARDIS plugin
+     */
     public TARDISAnvilListener(TARDIS plugin) {
         this.plugin = plugin;
         plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {

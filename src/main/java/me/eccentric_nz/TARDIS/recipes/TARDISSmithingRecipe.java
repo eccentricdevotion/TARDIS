@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
@@ -26,7 +23,12 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
+import org.bukkit.inventory.SmithingTransformRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 
 public class TARDISSmithingRecipe {
 
@@ -45,6 +47,7 @@ public class TARDISSmithingRecipe {
 
     private SmithingRecipe makeRecipe(String s) {
         /*
+         template: REDSTONE
          base: BLAZE_ROD
          addition: GLOWSTONE_DUST
          result: BLAZE_ROD
@@ -54,6 +57,8 @@ public class TARDISSmithingRecipe {
         Material mat = Material.valueOf(result);
         ItemStack is = new ItemStack(mat, 1);
         NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+        // template
+        RecipeChoice template = new RecipeChoice.MaterialChoice(Material.REDSTONE);
         // base material to upgrade
         Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
         RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
@@ -66,7 +71,7 @@ public class TARDISSmithingRecipe {
         im.setCustomModelData(RecipeItem.getByName(split[1]).getCustomModelData());
         isa.setItemMeta(im);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
-        SmithingRecipe r = new SmithingRecipe(key, is, base, addition);
+        SmithingRecipe r = new SmithingTransformRecipe(key, is, template, base, addition);
         smithingRecipes.put(s, r);
         return r;
     }

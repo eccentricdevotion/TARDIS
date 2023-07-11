@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
@@ -30,6 +27,10 @@ import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmithingInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISSmithingListener implements Listener {
 
@@ -72,13 +73,13 @@ public class TARDISSmithingListener implements Listener {
         if (is != null && !is.getType().isAir()) {
             SmithingInventory inventory = event.getInventory();
             // get the current sonic
-            ItemStack sonic = inventory.getItem(0);
+            ItemStack sonic = inventory.getItem(1);
             if (TARDISStaticUtils.isSonic(sonic)) {
                 ItemMeta im = sonic.getItemMeta();
                 // get the upgrade
                 boolean found = false;
                 String upgrade = "";
-                ItemStack glowstone = inventory.getItem(1);
+                ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
                     upgrade = customModelData.get(rm.getCustomModelData());
