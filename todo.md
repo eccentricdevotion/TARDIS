@@ -2,8 +2,11 @@
 
 ## Current version `5.0.0`
 
-1. Fix door breaking when landing the TARDIS on non-solid blocks (e.g. grass) after flying exterior - 
-   the armour stand drops to the solid block below...
+1. More modules
+   * Handles
+   * Chemistry
+   * Sonic Screwdriver
+   * Junk TARDIS
 
 ## Next version `5.1.0`
 
@@ -31,14 +34,24 @@
 
 ## Resource Pack / Monsters
 
-1. New mobs and sounds for Resource pack
-    * Whispermen
-    * Clockwork Droid
-    * Endermites -> Cybermats
-    * Iron Golem -> Gunslinger
-    * Slimes -> Adipose
-    * Husk -> Sycorax
-    * Stray -> Scarecrows
+1. Modularise the resource pack
+   * TARDIS-Display-Items
+   * TARDIS-GUIs
+   * TARDIS-Sounds
+   * TARDIS-Chemistry
+   * TARDIS-Exterior-Models
+   * TARDIS-Items (Sonic/Keys/Perception Filter/Fob Watch/Food/Accessories/etc)
+   * TARDIS-Sonic-Blaster
+   * TARDIS-Vortex-Manipulator
+   * Handles
+2. New mobs and sounds for Resource pack
+   * Whispermen
+   * Clockwork Droid
+   * Endermites -> Cybermats
+   * Iron Golem -> Gunslinger
+   * Slimes -> Adipose
+   * Husk -> Sycorax
+   * Stray -> Scarecrows
 
 ## Minecraft Bedrock Edition?
 

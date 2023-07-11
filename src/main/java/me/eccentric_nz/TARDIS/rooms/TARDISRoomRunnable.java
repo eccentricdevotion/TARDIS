@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -30,7 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
+import me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
@@ -46,6 +45,8 @@ import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+
+import java.util.*;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the
@@ -245,7 +246,7 @@ public class TARDISRoomRunnable implements Runnable {
                     iceblocks.clear();
                 }
                 if (!postSignBlocks.isEmpty()) {
-                    TARDISSignSetter.setSigns(postSignBlocks, null, 0);
+                    TARDISSignSetter.setSigns(postSignBlocks, plugin, 0);
                 }
                 if (!propagules.isEmpty()) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
@@ -477,7 +478,7 @@ public class TARDISRoomRunnable implements Runnable {
                 redstoneTorchblocks.forEach((key, value) -> key.setBlockData(value, true));
                 torchblocks.clear();
                 // set banners
-                setBanners(bannerblocks);
+                TARDISBannerSetter.setBanners(bannerblocks);
                 // remove the chunks, so they can unload as normal again
                 if (!chunkList.isEmpty()) {
                     chunkList.forEach((ch) -> ch.setForceLoaded(false));
