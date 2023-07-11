@@ -143,6 +143,7 @@ public class TARDISInstantPoliceBox {
         ee.setHelmet(is, true);
         stand.setInvulnerable(true);
         stand.setInvisible(true);
+        stand.setGravity(false);
         // set a light block
         Levelled levelled = TARDISConstants.LIGHT;
         levelled.setLevel(7);

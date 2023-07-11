@@ -145,6 +145,7 @@ public class TARDISExteriorFlight {
                     // spawn a phantom
                     Phantom phantom = (Phantom) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.PHANTOM);
                     stand.addPassenger(player);
+                    stand.setGravity(false);
                     phantom.addPassenger(stand);
                     phantom.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
                     phantom.setSilent(true);

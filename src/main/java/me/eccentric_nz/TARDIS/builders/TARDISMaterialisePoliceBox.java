@@ -178,6 +178,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 ee.setHelmet(is, true);
                 stand.setInvulnerable(true);
                 stand.setInvisible(true);
+                stand.setGravity(false);
             } else {
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
