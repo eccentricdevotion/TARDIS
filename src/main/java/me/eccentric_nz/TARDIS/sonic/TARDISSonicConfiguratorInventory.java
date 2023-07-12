@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 public class TARDISSonicConfiguratorInventory {
 
@@ -61,7 +62,7 @@ public class TARDISSonicConfiguratorInventory {
         wim.setDisplayName(" ");
         wim.setCustomModelData(GUISonicConfigurator.WAITING.getCustomModelData());
         wool.setItemMeta(wim);
-        for (int i = 10; i < 17; i++) {
+        for (int i = 10; i < 18; i++) {
             stack[i] = wool;
         }
         return stack;

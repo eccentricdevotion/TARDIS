@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
@@ -37,6 +33,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
 
@@ -58,27 +59,15 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(slot != 18);
                 switch (slot) {
-                    case 18 -> {
-                        // load configured sonic
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            loadSonic(view.getItem(18), player, view);
-                            setOptions(player, view);
-                        }, 1L);
-                    }
-                    case 9, 10, 11, 12, 13, 14, 15, 16 -> {
-                        // toggle option enabled / disabled
-                        toggleOption(view.getItem(slot));
-                    }
-                    case 25 -> {
-                        // save selected options
-                        saveConfiguredSonic(player, view);
-                    }
-                    case 26 -> {
-                        close(player);
-                    }
-                    default -> {
-                        event.setCancelled(true);
-                    }
+                    // load configured sonic
+                    case 18 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                loadSonic(view.getItem(18), player, view);
+                                setOptions(player, view);
+                            }, 1L);
+                    case 9, 10, 11, 12, 13, 14, 15, 16, 17 -> toggleOption(view.getItem(slot)); // toggle option enabled / disabled
+                    case 25 -> saveConfiguredSonic(player, view); // save selected options
+                    case 26 -> close(player);
+                    default -> event.setCancelled(true);
                 }
             } else {
                 ClickType click = event.getClick();
@@ -156,6 +145,12 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
             kim.setDisplayName(configuredSonic.getKnockback().getName());
             kim.setCustomModelData(configuredSonic.getKnockback().getCustomModelData());
             kno.setItemMeta(kim);
+            ItemStack bru = view.getItem(17);
+            bru.setType(configuredSonic.getBrush().getMaterial());
+            ItemMeta sh = bru.getItemMeta();
+            sh.setDisplayName(configuredSonic.getBrush().getName());
+            sh.setCustomModelData(configuredSonic.getBrush().getCustomModelData());
+            bru.setItemMeta(sh);
         }
     }
 
