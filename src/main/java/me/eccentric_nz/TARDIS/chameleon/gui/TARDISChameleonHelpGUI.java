@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonHelp;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
 
 /**
  * @author eccentric_nz
@@ -42,6 +43,7 @@ public class TARDISChameleonHelpGUI {
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CONSTRUCT"));
+        bk.setCustomModelData(GUIChameleonHelp.BACK_CHAM_OPTS.getCustomModelData());
         back.setItemMeta(bk);
         // help
         ItemStack info = new ItemStack(Material.BOWL, 1);

@@ -172,15 +172,15 @@ public enum TARDISDisplayItem {
 
     private final Material material;
     private final Material craftMaterial;
-    private int customModelData;
+    private final int customModelData;
 
-    private TARDISDisplayItem(Material item) {
+    TARDISDisplayItem(Material item) {
         this.customModelData = 1;
         this.material = item;
         this.craftMaterial = null;
     }
 
-    private TARDISDisplayItem(int customModelData, Material item, Material craftMaterial) {
+    TARDISDisplayItem(int customModelData, Material item, Material craftMaterial) {
         this.customModelData = customModelData;
         this.material = item;
         this.craftMaterial = craftMaterial;
