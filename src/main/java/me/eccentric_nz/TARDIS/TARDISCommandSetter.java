@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.io.File;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.commands.*;
@@ -51,6 +50,8 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
+
+import java.io.File;
 
 /**
  * Loads all TARDIS command executors and tab completers.
@@ -142,7 +143,7 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisinfo").setExecutor(info);
         plugin.getCommand("handles").setExecutor(new TARDISHandlesCommand(plugin));
         plugin.getCommand("handles").setTabCompleter(new TARDISHandlesTabComplete());
-        if (plugin.getConfig().getBoolean("allow.chemistry")) {
+        if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
             plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
         }

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.time.Duration;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -34,6 +32,9 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
+import java.util.HashMap;
 
 /**
  *
@@ -54,14 +55,6 @@ public class AdventureMessage implements TARDISMessage {
     @Override
     public void sendBuildsBehind(CommandSender cs, int behind) {
         cs.sendMessage(AdventureComponents.getBuildsBehind(behind));
-    }
-
-    public void message(Audience audience, TardisModule module, String message) {
-        if (audience != null) {
-            TextComponent textComponent = AdventureComponents.getModule(module)
-                    .append(Component.text(message, NamedTextColor.WHITE));
-            audience.sendMessage(textComponent);
-        }
     }
 
     @Override
@@ -101,16 +94,6 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
-    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        if (handbrake) {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
-        } else {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
-        }
-    }
-
-    @Override
     public void send(CommandSender cs, TardisModule module, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, module, local);
@@ -120,6 +103,16 @@ public class AdventureMessage implements TARDISMessage {
     public void send(CommandSender cs, TardisModule module, String key, Object... subs) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, module, String.format(local, subs));
+    }
+
+    @Override
+    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        if (handbrake) {
+            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        } else {
+            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+        }
     }
 
     @Override
@@ -290,5 +283,13 @@ public class AdventureMessage implements TARDISMessage {
         Title.Times times = Title.Times.times(Duration.ofMillis(250), Duration.ofMillis(1000), Duration.ofMillis(250));
         Title title = Title.title(Component.empty(), Component.text(value), times);
         player.showTitle(title);
+    }
+
+    public void message(Audience audience, TardisModule module, String message) {
+        if (audience != null) {
+            TextComponent textComponent = AdventureComponents.getModule(module)
+                    .append(Component.text(message, NamedTextColor.WHITE));
+            audience.sendMessage(textComponent);
+        }
     }
 }

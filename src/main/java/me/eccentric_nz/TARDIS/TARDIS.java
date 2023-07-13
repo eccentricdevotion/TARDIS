@@ -17,13 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import java.io.*;
-import java.lang.module.ModuleDescriptor;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -37,10 +30,6 @@ import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.*;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
-import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
-import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
-import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.converters.*;
@@ -78,6 +67,10 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
+import me.eccentric_nz.tardischemistry.block.ChemistryBlockRecipes;
+import me.eccentric_nz.tardischemistry.lab.BleachRecipe;
+import me.eccentric_nz.tardischemistry.lab.HeatBlockRunnable;
+import me.eccentric_nz.tardischemistry.product.GlowStickRunnable;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisshop.ShopSettings;
@@ -100,6 +93,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.io.*;
+import java.lang.module.ModuleDescriptor;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -218,29 +219,6 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISMessage getMessenger() {
         return messenger;
-    }
-
-    @Override
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-        if (id != null) {
-            if (id.equalsIgnoreCase("flat")) {
-                return new FlatGenerator(this);
-            }
-            if (id.equalsIgnoreCase("water")) {
-                return new WaterGenerator();
-            }
-            if (id.equalsIgnoreCase("gallifrey")) {
-                return new GallifreyGenerator(this);
-            }
-            if (id.equalsIgnoreCase("siluria")) {
-                return new SiluriaGenerator(this);
-            }
-            if (id.equalsIgnoreCase("skaro")) {
-                return new SkaroGenerator(this);
-            }
-            return new TARDISChunkGenerator();
-        }
-        return new TARDISChunkGenerator();
     }
 
     @Override
@@ -531,7 +509,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISTimeRotorLoader(this).load();
             // load the custom map renderer for TARDIS monitor maps
             new SnapshotLoader(this).load();
-            if (getConfig().getBoolean("allow.chemistry")) {
+            if (getConfig().getBoolean("modules.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
                 new BleachRecipe(this).setRecipes();
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200, 200);
@@ -605,6 +583,29 @@ public class TARDIS extends JavaPlugin {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
+    }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        if (id != null) {
+            if (id.equalsIgnoreCase("flat")) {
+                return new FlatGenerator(this);
+            }
+            if (id.equalsIgnoreCase("water")) {
+                return new WaterGenerator();
+            }
+            if (id.equalsIgnoreCase("gallifrey")) {
+                return new GallifreyGenerator(this);
+            }
+            if (id.equalsIgnoreCase("siluria")) {
+                return new SiluriaGenerator(this);
+            }
+            if (id.equalsIgnoreCase("skaro")) {
+                return new SkaroGenerator(this);
+            }
+            return new TARDISChunkGenerator();
+        }
+        return new TARDISChunkGenerator();
     }
 
     /**

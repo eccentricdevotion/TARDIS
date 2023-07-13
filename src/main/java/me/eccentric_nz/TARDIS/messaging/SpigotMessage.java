@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -29,6 +28,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -90,16 +91,6 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
-    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        if (handbrake) {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
-        } else {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
-        }
-    }
-
-    @Override
     public void send(CommandSender cs, TardisModule module, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, module, local);
@@ -109,6 +100,16 @@ public class SpigotMessage implements TARDISMessage {
     public void send(CommandSender cs, TardisModule module, String key, Object... subs) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         message(cs, module, String.format(local, subs));
+    }
+
+    @Override
+    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        if (handbrake) {
+            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        } else {
+            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+        }
     }
 
     @Override

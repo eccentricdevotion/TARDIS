@@ -16,20 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlock;
-import me.eccentric_nz.TARDIS.chemistry.block.RecipeData;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundCommand;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructCommand;
-import me.eccentric_nz.TARDIS.chemistry.creative.CreativeCommand;
-import me.eccentric_nz.TARDIS.chemistry.formula.FormulaCommand;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.tardischemistry.block.ChemistryBlock;
+import me.eccentric_nz.tardischemistry.block.RecipeData;
+import me.eccentric_nz.tardischemistry.compound.CompoundCommand;
+import me.eccentric_nz.tardischemistry.constructor.ConstructCommand;
+import me.eccentric_nz.tardischemistry.creative.CreativeCommand;
+import me.eccentric_nz.tardischemistry.formula.FormulaCommand;
+import me.eccentric_nz.tardischemistry.lab.LabCommand;
+import me.eccentric_nz.tardischemistry.product.ProductCommand;
+import me.eccentric_nz.tardischemistry.reducer.ReduceCommand;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -40,6 +38,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TARDISChemistryCommand implements CommandExecutor {
 

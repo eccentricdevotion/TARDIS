@@ -28,23 +28,6 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorList
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorOpenCloseListener;
 import me.eccentric_nz.TARDIS.chameleon.gui.*;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockListener;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.compound.GlueListener;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.creative.CreativeGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.formula.FormulaViewerListener;
-import me.eccentric_nz.TARDIS.chemistry.inventory.InventoryHelper;
-import me.eccentric_nz.TARDIS.chemistry.lab.CureBrewingListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.IceBombListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.SuperFertisliserListener;
-import me.eccentric_nz.TARDIS.chemistry.product.BalloonListener;
-import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
 import me.eccentric_nz.TARDIS.commands.areas.TARDISEditAreasGUIListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
@@ -95,6 +78,23 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
+import me.eccentric_nz.tardischemistry.block.ChemistryBlockListener;
+import me.eccentric_nz.tardischemistry.compound.CompoundGUIListener;
+import me.eccentric_nz.tardischemistry.compound.GlueListener;
+import me.eccentric_nz.tardischemistry.constructor.ConstructorGUIListener;
+import me.eccentric_nz.tardischemistry.creative.CreativeGUIListener;
+import me.eccentric_nz.tardischemistry.element.ElementGUIListener;
+import me.eccentric_nz.tardischemistry.formula.FormulaViewerListener;
+import me.eccentric_nz.tardischemistry.inventory.InventoryHelper;
+import me.eccentric_nz.tardischemistry.lab.CureBrewingListener;
+import me.eccentric_nz.tardischemistry.lab.IceBombListener;
+import me.eccentric_nz.tardischemistry.lab.LabGUIListener;
+import me.eccentric_nz.tardischemistry.lab.SuperFertisliserListener;
+import me.eccentric_nz.tardischemistry.product.BalloonListener;
+import me.eccentric_nz.tardischemistry.product.GlowStickListener;
+import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
+import me.eccentric_nz.tardischemistry.product.SparklerListener;
+import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
 
 /**
  * Registers all the listeners for the various events required to use the
@@ -320,7 +320,7 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISItemSpawnListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAccessoryListener(plugin), plugin);
-        if (plugin.getConfig().getBoolean("allow.chemistry")) {
+        if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getPM().registerEvents(new ChemistryBlockListener(plugin), plugin);
             plugin.getPM().registerEvents(new CreativeGUIListener(plugin), plugin);
             plugin.getPM().registerEvents(new ElementGUIListener(plugin), plugin);

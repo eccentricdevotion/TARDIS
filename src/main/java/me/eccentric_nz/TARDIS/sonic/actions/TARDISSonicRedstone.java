@@ -17,11 +17,9 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import com.google.common.collect.Sets;
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chemistry.product.LampToggler;
+import me.eccentric_nz.TARDIS.customblocks.LampToggler;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlock;
@@ -36,6 +34,9 @@ import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Set;
 
 public class TARDISSonicRedstone {
 

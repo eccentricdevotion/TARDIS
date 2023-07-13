@@ -7,6 +7,7 @@ modules:
   weeping_angels: false
   vortex_manipulator: false
   dynmap: false
+  chemistry: false
   shop: false
   sonic_blaster: false
   # blueprints
@@ -173,7 +174,6 @@ allow:
   village_travel: false
   perception_filter: true
   repair: true
-  chemistry: true
   weather_set: false
   force_field: 8
   admin_bypass: false

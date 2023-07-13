@@ -17,16 +17,17 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
-import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
-import me.eccentric_nz.TARDIS.chemistry.product.Product;
+import me.eccentric_nz.tardischemistry.compound.Compound;
+import me.eccentric_nz.tardischemistry.lab.Lab;
+import me.eccentric_nz.tardischemistry.product.Product;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
 
