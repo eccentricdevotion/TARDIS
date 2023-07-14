@@ -60,7 +60,7 @@ public class TreePlacer {
                     if (isReplaceable(level, mutableBlockPos, true)) {
                         if (data.isPlanted()) {
                             if (!level.getBlockState(mutableBlockPos.below()).isAir()) {
-                                level.destroyBlock(mutableBlockPos, true);
+                                level.destroyBlock(mutableBlockPos, false);
                             }
                             level.setBlock(mutableBlockPos, stem, 3);
                         } else if (edge) {
@@ -100,7 +100,7 @@ public class TreePlacer {
                     pos.setWithOffset(blockPos, x, h, z);
                     if (isReplaceable(level, pos, false)) {
                         if (data.isPlanted() && !level.getBlockState(pos.below()).isAir()) {
-                            level.destroyBlock(pos, true);
+                            level.destroyBlock(pos, false);
                         }
                         if (notTop) {
                             if (!notEdge) {
