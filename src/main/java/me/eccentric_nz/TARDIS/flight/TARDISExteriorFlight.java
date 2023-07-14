@@ -54,6 +54,14 @@ public class TARDISExteriorFlight {
     }
 
     public void stopFlying(Player player, ArmorStand stand) {
+        // remove item in hand, set item in head slot
+        EntityEquipment ee = stand.getEquipment();
+        ItemStack is = ee.getItemInMainHand().clone();
+        ItemMeta im = is.getItemMeta();
+        im.setCustomModelData(1001);
+        is.setItemMeta(im);
+        ee.setItemInMainHand(null);
+        ee.setHelmet(is);
         FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
         // update the TARDISes current location
         Location location = stand.getLocation();

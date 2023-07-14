@@ -56,6 +56,7 @@ public class TARDISTeleportListener implements Listener {
             String world_to = event.getTo().getWorld().getName();
             Player player = event.getPlayer();
             if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+                player.resetPlayerTime();
                 return;
             }
             String uuid = player.getUniqueId().toString();

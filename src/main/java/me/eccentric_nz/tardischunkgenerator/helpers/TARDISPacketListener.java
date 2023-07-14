@@ -46,9 +46,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class TARDISPacketListener {
@@ -128,15 +125,7 @@ public class TARDISPacketListener {
                                     // kill phantom
                                     phantom.removePassenger(stand);
                                     phantom.remove();
-                                    // remove item in hand, set item in head slot
                                     ArmorStand as = (ArmorStand) stand;
-                                    EntityEquipment ee = as.getEquipment();
-                                    ItemStack is = ee.getItemInMainHand().clone();
-                                    ItemMeta im = is.getItemMeta();
-                                    im.setCustomModelData(1001);
-                                    is.setItemMeta(im);
-                                    ee.setItemInMainHand(null);
-                                    ee.setHelmet(is);
                                     // teleport player back to the TARDIS interior
                                     new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
                                 });
