@@ -118,7 +118,10 @@ public class TARDISControlListener implements Listener {
                 // get tardis from control block location
                 String locStr = blockLocation.toString();
                 if (blockType.equals(Material.REPEATER)) {
-                    locStr = blockLocation.getWorld().getName() + ":" + blockLocation.blockX() + ":" + blockLocation.blockY() + ":" + blockLocation.blockZ();
+                    Repeater repeater = (Repeater) block.getBlockData();
+                    if (!repeater.isLocked()) {
+                        locStr = blockLocation.getWorld().getName() + ":" + blockLocation.blockX() + ":" + blockLocation.blockY() + ":" + blockLocation.blockZ();
+                    }
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("location", locStr);
@@ -579,7 +582,8 @@ public class TARDISControlListener implements Listener {
                             }
                         } else if (action.equals(Action.PHYSICAL)) {
                             switch (type) {
-                                case 16 -> doZero(level, player, tardis.getZero(), id);
+                                case 16 ->
+                                    doZero(level, player, tardis.getZero(), id);
                                 case 40 -> // WEST
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         // has player moved out of the maze in a northerly direction
