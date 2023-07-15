@@ -44,7 +44,7 @@ import java.util.*;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name");
+    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
@@ -72,12 +72,31 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 plugin.debug("Sender was null!");
                 return true;
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             if (!ROOT_SUBS.contains(args[0])) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LOAD_UNLOAD");
+                return false;
+            }
+            // info
+            if (args[0].equalsIgnoreCase("info") && sender instanceof Player player) {
+                World world = player.getWorld();
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_INFO", world.getName());
+                plugin.getMessenger().message(player, "Gamemode -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode"));
+                plugin.getMessenger().message(player, "Environment -> " + world.getEnvironment());
+                plugin.getMessenger().message(player, "Generator -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".generator"));
+                plugin.getMessenger().message(player, "Difficulty -> " + world.getDifficulty());
+                plugin.getMessenger().message(player, "Gamerules -> ");
+                for (String s : world.getGameRules()) {
+                    GameRule rule = GameRule.getByName(s);
+                    if (rule != null) {
+                        plugin.getMessenger().message(player, "     " + s + " -> " + world.getGameRuleValue(rule));
+                    }
+                }
+                plugin.getMessenger().message(player, "Keep spawn in memory -> " + world.getKeepSpawnInMemory());
+                plugin.getMessenger().message(player, "Time travel -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".time_travel"));
+                return true;
+            }
+            if (args.length < 2) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {

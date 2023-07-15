@@ -1503,7 +1503,7 @@ commands:
     description: Load or unload TARDIS worlds
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [load|unload|gm|enable|disable|update ] [world] <WorldType> <Environment> <generator>
+    usage: /<command> [load|unload|gm|enable|disable|update|info] [world] <WorldType> <Environment> <generator>
   tardisgamemode:
     aliases: [ tgm, tgms, tgmc, tgma, tgmsp ]
     description: Set a player's gamemode
