@@ -23,7 +23,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Phantom;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustByBlockEvent;
@@ -44,9 +43,6 @@ public class MonsterFireListener implements Listener {
             return;
         }
         Entity e = event.getEntity();
-        if (e instanceof Phantom phantom && phantom.getPassengers().size()>0) {
-            event.setCancelled(true);
-        }
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             // is it a TARDISWeepingAngels monster?
             Monster monster = MonsterEquipment.getMonsterType(e);

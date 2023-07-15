@@ -25,11 +25,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Phantom;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -87,6 +83,7 @@ public class TARDISDevBoxCommand {
                         case "open" -> cmd = 1002;
                         case "stained" -> cmd = 1003;
                         case "glass" -> cmd = 1004;
+                        case "fly" -> cmd = 1005;
                         default -> cmd = 1001;
                     }
                 }
@@ -99,13 +96,13 @@ public class TARDISDevBoxCommand {
                     stand.setInvisible(true);
                     stand.setInvulnerable(true);
                     if (args[2].equals("fly")) {
-                        // spawn a phantom
-                        Phantom phantom = (Phantom) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.PHANTOM);
+                        // spawn a chicken
+                        Chicken chicken = (Chicken) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.CHICKEN);
                         stand.addPassenger(player);
-                        phantom.addPassenger(stand);
-                        phantom.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-                        phantom.setSilent(true);
-                        phantom.setInvulnerable(true);
+                        chicken.addPassenger(stand);
+                        chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+                        chicken.setSilent(true);
+                        chicken.setInvulnerable(true);
                     }
                 }, 2L);
             }

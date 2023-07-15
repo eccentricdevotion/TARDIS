@@ -17,8 +17,6 @@
 package me.eccentric_nz.tardischunkgenerator.helpers;
 
 import io.netty.channel.*;
-import java.lang.reflect.Field;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
@@ -47,6 +45,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.lang.reflect.Field;
+import java.util.UUID;
 
 public class TARDISPacketListener {
 
@@ -81,27 +82,27 @@ public class TARDISPacketListener {
                 if (packet instanceof ServerboundPlayerInputPacket steerPacket) {
                     Entity stand = player.getVehicle();
                     if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
-                        Entity phantom = stand.getVehicle();
-                        if (phantom != null) {
+                        Entity chicken = stand.getVehicle();
+                        if (chicken != null) {
                             float sideways = steerPacket.getXxa();
                             float forward = steerPacket.getZza();
 //                            boolean jump = steerPacket.isJumping();
 //                            boolean mount = steerPacket.isShiftKeyDown();
                             if (!steerPacket.isShiftKeyDown()) {
-                                // don't move if the phantom is on the ground
-                                if (phantom.isOnGround()) {
-                                    phantom.setVelocity(new Vector(0, 0, 0));
+                                // don't move if the chicken is on the ground
+                                if (chicken.isOnGround()) {
+                                    chicken.setVelocity(new Vector(0, 0, 0));
                                 } else {
                                     Location playerLocation = player.getLocation();
                                     float yaw = playerLocation.getYaw();
                                     float pitch = playerLocation.getPitch();
-                                    phantom.setRotation(yaw, pitch);
+                                    chicken.setRotation(yaw, pitch);
                                     stand.setRotation(yaw, pitch);
                                     double radians = Math.toRadians(yaw);
                                     double x = -forward * Math.sin(radians) + sideways * Math.cos(radians);
                                     double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
                                     Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
-                                    velocity.setY(phantom.getVelocity().getY());
+                                    velocity.setY(chicken.getVelocity().getY());
                                     if (!Double.isFinite(velocity.getX())) {
                                         velocity.setX(0);
                                     }
@@ -117,14 +118,14 @@ public class TARDISPacketListener {
                                         velocity.setY(down);
                                     }
                                     velocity.checkFinite();
-                                    phantom.setVelocity(velocity);
+                                    chicken.setVelocity(velocity);
                                 }
                             } else {
-                                phantom.setVelocity(new Vector(0, 0, 0));
+                                chicken.setVelocity(new Vector(0, 0, 0));
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                                    // kill phantom
-                                    phantom.removePassenger(stand);
-                                    phantom.remove();
+                                    // kill chicken
+                                    chicken.removePassenger(stand);
+                                    chicken.remove();
                                     ArmorStand as = (ArmorStand) stand;
                                     // teleport player back to the TARDIS interior
                                     new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);

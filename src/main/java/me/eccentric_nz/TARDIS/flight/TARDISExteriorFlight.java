@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
@@ -30,19 +28,17 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Phantom;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISExteriorFlight {
@@ -62,46 +58,48 @@ public class TARDISExteriorFlight {
         is.setItemMeta(im);
         ee.setItemInMainHand(null);
         ee.setHelmet(is);
-        FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-        // update the TARDISes current location
         Location location = stand.getLocation();
         String direction = player.getFacing().getOppositeFace().toString();
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("world", location.getWorld().getName());
-        set.put("x", location.getBlockX());
-        set.put("y", location.getBlockY());
-        set.put("z", location.getBlockZ());
-        set.put("direction", direction);
-        set.put("submarine", (player.isInWater()) ? 1 : 0);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", data.getId());
-        plugin.getQueryFactory().doUpdate("current", set, where);
-        // update door location
-        TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
-        // set the light
-        Levelled light = TARDISConstants.LIGHT;
-        light.setLevel(7);
-        location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
-        // telport player to interior
-        Location interior = data.getLocation();
-        player.teleport(interior);
+        FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+        if (data != null) {
+            // update the TARDISes current location
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("world", location.getWorld().getName());
+            set.put("x", location.getBlockX());
+            set.put("y", location.getBlockY());
+            set.put("z", location.getBlockZ());
+            set.put("direction", direction);
+            set.put("submarine", (player.isInWater()) ? 1 : 0);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", data.getId());
+            plugin.getQueryFactory().doUpdate("current", set, where);
+            // update door location
+            TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
+            // set the light
+            Levelled light = TARDISConstants.LIGHT;
+            light.setLevel(7);
+            location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
+            // telport player to interior
+            Location interior = data.getLocation();
+            player.teleport(interior);
+            // remove trackers
+            plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.getId()));
+            plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.getId()));
+            plugin.getTrackerKeeper().getMalfunction().remove(data.getId());
+            if (plugin.getTrackerKeeper().getDidDematToVortex().contains(data.getId())) {
+                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(data.getId()));
+            }
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(data.getId())) {
+                int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(data.getId());
+                plugin.getServer().getScheduler().cancelTask(taskID);
+                plugin.getTrackerKeeper().getDestinationVortex().remove(data.getId());
+            }
+            new FlightEnd(plugin).process(data.getId(), player, false);
+        }
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             COMPASS compass = COMPASS.valueOf(direction);
             stand.teleport(new Location(location.getWorld(), location.getBlockX() + 0.5d, location.blockY(), location.getBlockZ() + 0.5d, compass.getYaw(), 0.0f));
         });
-        // remove trackers
-        plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.getId()));
-        plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.getId()));
-        plugin.getTrackerKeeper().getMalfunction().remove(data.getId());
-        if (plugin.getTrackerKeeper().getDidDematToVortex().contains(data.getId())) {
-            plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(data.getId()));
-        }
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(data.getId())) {
-            int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(data.getId());
-            plugin.getServer().getScheduler().cancelTask(taskID);
-            plugin.getTrackerKeeper().getDestinationVortex().remove(data.getId());
-        }
-        new FlightEnd(plugin).process(data.getId(), player, false);
     }
 
     void startFlying(Player player, int id, Block block, boolean beac_on, String beacon) {
@@ -150,16 +148,16 @@ public class TARDISExteriorFlight {
                     // switch the slot for the custom model - makes TARDIS bigger to hide player model
                     ee.setHelmet(null);
                     ee.setItemInMainHand(is);
-                    // spawn a phantom
-                    Phantom phantom = (Phantom) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.PHANTOM);
+                    // spawn a chicken
+                    Chicken chicken = (Chicken) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.CHICKEN);
                     stand.addPassenger(player);
                     stand.setGravity(false);
-                    phantom.addPassenger(stand);
-                    phantom.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-                    phantom.setSilent(true);
-                    phantom.setInvulnerable(true);
-                    phantom.setNoDamageTicks(Integer.MAX_VALUE);
-                    phantom.setFireTicks(0);
+                    chicken.addPassenger(stand);
+                    chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+                    chicken.setSilent(true);
+                    chicken.setInvulnerable(true);
+                    chicken.setNoDamageTicks(Integer.MAX_VALUE);
+                    chicken.setFireTicks(0);
                     // remove the light
                     location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                 }, 2L);
