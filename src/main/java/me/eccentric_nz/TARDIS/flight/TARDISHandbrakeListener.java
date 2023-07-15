@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -30,11 +26,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -49,6 +41,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The handbrake was a utensil on the TARDIS used for quick stops. River song
@@ -146,7 +143,7 @@ public class TARDISHandbrakeListener implements Listener {
                         }
                         UUID ownerUUID = tardis.getUuid();
                         if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                            // check if cancelled so we don't get double messages from the bind listener
+                            // check if cancelled, so we don't get double messages from the bind listener
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                             return;
                         }
@@ -191,7 +188,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // fly the TARDIS exterior
-                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, beac_on, beacon);
+                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
                                     }
@@ -215,11 +212,11 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
                                         }
                                     }
-                                    // if player if flying TARDIS exterior stop sound loop
+                                    // if player is flying TARDIS exterior stop sound loop
                                     Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
                                         player.stopAllSounds();
-                                        if (value.getTask() != -1) {
-                                            plugin.getServer().getScheduler().cancelTask(value.getTask());
+                                        if (value.getSound() != -1) {
+                                            plugin.getServer().getScheduler().cancelTask(value.getSound());
                                         }
                                         plugin.getTrackerKeeper().getFlyingReturnLocation().remove(uuid);
                                     });

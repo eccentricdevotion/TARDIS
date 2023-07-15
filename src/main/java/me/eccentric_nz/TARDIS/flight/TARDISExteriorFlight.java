@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -50,19 +51,21 @@ public class TARDISExteriorFlight {
     }
 
     public void stopFlying(Player player, ArmorStand stand) {
-        // remove item in hand, set item in head slot
-        EntityEquipment ee = stand.getEquipment();
-        ItemStack is = ee.getItemInMainHand().clone();
-        ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1001);
-        is.setItemMeta(im);
-        ee.setItemInMainHand(null);
-        ee.setHelmet(is);
+        UUID uuid = player.getUniqueId();
         Location location = stand.getLocation();
         String direction = player.getFacing().getOppositeFace().toString();
-        FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+        FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
         if (data != null) {
-            // update the TARDISes current location
+            // stop animation runnable
+            plugin.getServer().getScheduler().cancelTask(data.getAnimation());
+            // reset police box model
+            EntityEquipment ee = stand.getEquipment();
+            ItemStack is = ee.getHelmet();
+            ItemMeta im = is.getItemMeta();
+            im.setCustomModelData(1001);
+            is.setItemMeta(im);
+            ee.setHelmet(is);
+            // update the TARDIS's current location
             HashMap<String, Object> set = new HashMap<>();
             set.put("world", location.getWorld().getName());
             set.put("x", location.getBlockX());
@@ -79,9 +82,14 @@ public class TARDISExteriorFlight {
             Levelled light = TARDISConstants.LIGHT;
             light.setLevel(7);
             location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
-            // telport player to interior
+            // teleport player to interior
             Location interior = data.getLocation();
             player.teleport(interior);
+            // add player to travellers
+            HashMap<String, Object> sett = new HashMap<>();
+            sett.put("tardis_id", data.getId());
+            sett.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doSyncInsert("travellers", sett);
             // remove trackers
             plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.getId()));
             plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.getId()));
@@ -102,8 +110,8 @@ public class TARDISExteriorFlight {
         });
     }
 
-    void startFlying(Player player, int id, Block block, boolean beac_on, String beacon) {
-        // get TARDISes current location
+    void startFlying(Player player, int id, Block block, boolean beac_on, String beacon, boolean pandorica) {
+        // get the TARDIS's current location
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
@@ -127,12 +135,7 @@ public class TARDISExteriorFlight {
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
-        }, 5L, 280L);
-        // save player's current location so we can teleport them back to it when they finish flying
         Location playerLocation = player.getLocation();
-        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, task));
         // teleport player to exterior
         Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
         player.teleport(location);
@@ -140,14 +143,12 @@ public class TARDISExteriorFlight {
         for (Entity e : location.getWorld().getNearbyEntities(location, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
             if (e instanceof ArmorStand stand) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    EntityEquipment ee = stand.getEquipment();
-                    ItemStack is = ee.getHelmet().clone();
-                    ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData(1005);
-                    is.setItemMeta(im);
-                    // switch the slot for the custom model - makes TARDIS bigger to hide player model
-                    ee.setHelmet(null);
-                    ee.setItemInMainHand(is);
+                    int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
+                    int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+                        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
+                    }, 5L, 280L);
+                    // save player's current location, so we can teleport them back to it when they finish flying
+                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, sound, animation));
                     // spawn a chicken
                     Chicken chicken = (Chicken) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.CHICKEN);
                     stand.addPassenger(player);

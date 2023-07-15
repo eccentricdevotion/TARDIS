@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -50,6 +46,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -387,8 +388,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                                 value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                                 set.put("hads_type", value);
                             } else {
-                                plugin.debug(lookup.get(im.getDisplayName()));
-                                plugin.debug(b);
                                 set.put(lookup.get(im.getDisplayName()), b);
                             }
                             plugin.getQueryFactory().doUpdate("player_prefs", set, where);
