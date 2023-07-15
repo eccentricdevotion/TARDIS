@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
@@ -37,8 +36,9 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class DisplayItemDoorMover {
@@ -90,7 +90,6 @@ public class DisplayItemDoorMover {
                     new TARDISEmergencyRelocation(plugin).relocate(id, player);
                     return;
                 }
-                COMPASS d_backup = rsc.getDirection();
                 // get quotes player prefs
                 boolean userQuotes = true;
                 boolean minecart = false;
@@ -100,15 +99,15 @@ public class DisplayItemDoorMover {
                     minecart = rsp.isMinecartOn();
                 }
                 // get the other door direction
-                COMPASS d;
+                COMPASS exitDirection;
                 HashMap<String, Object> other = new HashMap<>();
                 other.put("tardis_id", id);
-                other.put("door_type", 1);
+                other.put("door_type", 0);
                 ResultSetDoors rsexit = new ResultSetDoors(plugin, other, false);
                 if (rsexit.resultSet()) {
-                    d = rsexit.getDoor_direction();
+                    exitDirection = rsexit.getDoor_direction();
                 } else {
-                    d = d_backup;
+                    exitDirection = rsc.getDirection(); // current direction
                 }
                 // is the TARDIS materialising?
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -129,10 +128,10 @@ public class DisplayItemDoorMover {
                     exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
                 }
                 if (hb && exitLoc != null) {
-                    COMPASS dd = rsd.getDoor_direction();
+                    COMPASS interiorDirection = rsd.getDoor_direction();
                     // change the yaw if the door directions are different
-                    if (!dd.equals(d)) {
-                        yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(dd, d);
+                    if (!interiorDirection.equals(exitDirection)) {
+                        yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(interiorDirection, exitDirection);
                     }
                     exitLoc.setYaw(yaw);
                     // get location from database
@@ -143,7 +142,7 @@ public class DisplayItemDoorMover {
                         exitLoc.setX(ex + 0.5);
                         exitLoc.setZ(ez + 0.5);
                     } else {
-                        switch (d) {
+                        switch (exitDirection.forPreset()) {
                             case NORTH -> {
                                 exitLoc.setX(ex + 0.5);
                                 exitLoc.setZ(ez + 2.5);
@@ -170,10 +169,10 @@ public class DisplayItemDoorMover {
                         TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
                         if (petsAndFollowers != null) {
                             if (!petsAndFollowers.getPets().isEmpty()) {
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), exitLoc, player, exitDirection, false), 10L);
                             }
                             if (!petsAndFollowers.getFollowers().isEmpty()) {
-                                new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
+                                new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, exitDirection, false);
                             }
                         }
                     }
