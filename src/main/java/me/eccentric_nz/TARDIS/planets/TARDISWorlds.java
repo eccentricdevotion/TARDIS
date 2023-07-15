@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.io.File;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
+
+import java.io.File;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 public class TARDISWorlds {
 
@@ -73,6 +74,14 @@ public class TARDISWorlds {
                 }
                 boolean keepSpawnInMemory = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
                 w.setKeepSpawnInMemory(keepSpawnInMemory);
+                String d = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".difficulty");
+                if (d != null) {
+                    try {
+                        Difficulty difficulty = Difficulty.valueOf(d.toUpperCase());
+                        w.setDifficulty(difficulty);
+                    } catch (IllegalArgumentException ex) {
+                    }
+                }
             }
         } catch (IllegalArgumentException e) {
             TARDIS.plugin.getMessenger().sendWithColour(TARDIS.plugin.getConsole(), TardisModule.DEBUG, "Could not load world '" + world + "'! " + e.getMessage(), "#FF5555");
@@ -92,6 +101,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.getWorldType().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.getEnvironment().toString());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.getDifficulty().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".keep_spawn_in_memory", false);
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);

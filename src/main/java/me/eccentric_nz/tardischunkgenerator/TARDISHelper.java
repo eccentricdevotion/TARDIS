@@ -234,14 +234,23 @@ public class TARDISHelper {
                 if (dimOne.exists() && !dimDashOne.exists()) {
                     environment = World.Environment.THE_END;
                 }
-                return new TARDISPlanetData(gameMode, environment, worldType);
+                Difficulty difficulty = Difficulty.NORMAL;
+                // 0 is Peaceful, 1 is Easy, 2 is Normal, and 3 is Hard
+                int diff = data.getInt("Difficulty");
+                switch (diff) {
+                    case 0 -> difficulty = Difficulty.PEACEFUL;
+                    case 1 -> difficulty = Difficulty.EASY;
+                    case 3 -> difficulty = Difficulty.HARD;
+                    default -> { }
+                }
+                return new TARDISPlanetData(gameMode, environment, worldType, difficulty);
             } catch (IOException ex) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
-                return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
+                return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL, Difficulty.NORMAL);
             }
         }
         plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Defaulted to GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL");
-        return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL);
+        return new TARDISPlanetData(GameMode.SURVIVAL, World.Environment.NORMAL, WorldType.NORMAL, Difficulty.NORMAL);
     }
 
     public void disguise(EntityType entityType, Player player) {

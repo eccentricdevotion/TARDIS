@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,10 +29,6 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -57,6 +58,7 @@ public class TARDISPlanetsUpdater {
                     planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
                     planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
                     planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
+                    planets_config.set("planets." + w + ".difficulty", data.getDifficulty().toString());
                     if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         planets_config.set("planets." + w + ".generator", "TARDIS:void");
                     } else {
@@ -66,16 +68,18 @@ public class TARDISPlanetsUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
-            if (planets_config.contains("planets.TARDIS_Zero_Room")) {
+            if (!planets_config.contains("planets.TARDIS_Zero_Room")) {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
                 planets_config.set("planets.TARDIS_Zero_Room.resource_pack", "default");
                 planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
                 planets_config.set("planets.TARDIS_Zero_Room.world_type", "FLAT");
                 planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
+                planets_config.set("planets.TARDIS_Zero_Room.difficulty", "NORMAL");
                 planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
                 planets_config.set("planets.TARDIS_Zero_Room.void", true);
                 planets_config.set("planets.TARDIS_Zero_Room.keep_spawn_in_memory", false);
+                save++;
             }
             planets_config.set("planets." + dn + ".enabled", true);
             planets_config.set("planets." + dn + ".time_travel", false);
@@ -83,6 +87,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
             planets_config.set("planets." + dn + ".world_type", "FLAT");
             planets_config.set("planets." + dn + ".environment", "NORMAL");
+            planets_config.set("planets." + dn + ".difficulty", "NORMAL");
             planets_config.set("planets." + dn + ".generator", "TARDIS:void");
             planets_config.set("planets." + dn + ".void", true);
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
@@ -114,6 +119,14 @@ public class TARDISPlanetsUpdater {
                 } else {
                     planets_config.set("planets." + w + ".alias", w);
                 }
+            }
+        }
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.difficulty")) {
+            Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
+            // get server.properties value
+            String d = getDifficulty();
+            for (String w : worlds) {
+                planets_config.set("planets." + w + ".difficulty", d);
             }
         }
         if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle")) {
@@ -245,6 +258,18 @@ public class TARDISPlanetsUpdater {
             return props.getProperty("level-name");
         } catch (IOException e) {
             return "world"; // minecraft / spigot default
+        }
+    }
+
+    private String getDifficulty() {
+        try {
+            BufferedReader is = new BufferedReader(new FileReader("server.properties"));
+            Properties props = new Properties();
+            props.load(is);
+            is.close();
+            return props.getProperty("difficulty").toUpperCase();
+        } catch (IOException e) {
+            return "EASY"; // minecraft / spigot default
         }
     }
 }
