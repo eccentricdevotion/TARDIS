@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.commands.TARDISWeepingAngelsCommand;
 import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
@@ -64,9 +63,19 @@ import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 public class TARDISWeepingAngels {
 
-    private final TARDIS plugin;
+    public static final HashMap<Monster, NamespacedKey> PDC_KEYS = new HashMap<>();
+    private static final List<UUID> empty = new ArrayList<>();
+    private static final List<UUID> timesUp = new ArrayList<>();
+    private static final List<UUID> guards = new ArrayList<>();
+    private static final List<UUID> playersWithGuards = new ArrayList<>();
+    private static final HashMap<UUID, Integer> followTasks = new HashMap<>();
     public static NamespacedKey ANGEL;
     public static NamespacedKey CYBERMAN;
     public static NamespacedKey DALEK;
@@ -97,16 +106,42 @@ public class TARDISWeepingAngels {
     public static PersistentDataType<byte[], UUID> PersistentDataTypeUUID;
     public static UUID UNCLAIMED = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
     public static MonsterEquipment api;
-    private static final List<UUID> empty = new ArrayList<>();
-    private static final List<UUID> timesUp = new ArrayList<>();
-    private static final List<UUID> guards = new ArrayList<>();
-    private static final List<UUID> playersWithGuards = new ArrayList<>();
-    private static final HashMap<UUID, Integer> followTasks = new HashMap<>();
     private static boolean steal;
     private static boolean citizensEnabled = false;
+    private final TARDIS plugin;
 
     public TARDISWeepingAngels(TARDIS plugin) {
         this.plugin = plugin;
+        // initialise namespaced keys
+        initKeys(this.plugin);
+    }
+
+    public static boolean angelsCanSteal() {
+        return steal;
+    }
+
+    public static List<UUID> getEmpty() {
+        return empty;
+    }
+
+    public static List<UUID> getTimesUp() {
+        return timesUp;
+    }
+
+    public static boolean isCitizensEnabled() {
+        return citizensEnabled;
+    }
+
+    public static List<UUID> getGuards() {
+        return guards;
+    }
+
+    public static List<UUID> getPlayersWithGuards() {
+        return playersWithGuards;
+    }
+
+    public static HashMap<UUID, Integer> getFollowTasks() {
+        return followTasks;
     }
 
     public void enable() {
@@ -114,8 +149,6 @@ public class TARDISWeepingAngels {
         api = new MonsterEquipment();
         // update the config
         new MonstersConfig(plugin).updateConfig();
-        // initialise namespaced keys
-        initKeys(plugin);
         // register listeners
         plugin.getPM().registerEvents(new Blink(plugin), plugin);
         if (plugin.getMonstersConfig().getBoolean("angels.can_build")) {
@@ -197,65 +230,60 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new WorldProcessor(plugin), 200L);
     }
 
-    public static boolean angelsCanSteal() {
-        return steal;
-    }
-
-    public static List<UUID> getEmpty() {
-        return empty;
-    }
-
-    public static List<UUID> getTimesUp() {
-        return timesUp;
-    }
-
-    public static boolean isCitizensEnabled() {
-        return citizensEnabled;
-    }
-
     public MonsterEquipment getWeepingAngelsAPI() {
         return api;
     }
 
-    public static List<UUID> getGuards() {
-        return guards;
-    }
-
-    public static List<UUID> getPlayersWithGuards() {
-        return playersWithGuards;
-    }
-
-    public static HashMap<UUID, Integer> getFollowTasks() {
-        return followTasks;
-    }
-
     private void initKeys(TARDIS plugin) {
         ANGEL = new NamespacedKey(plugin, "angel");
+        PDC_KEYS.put(Monster.WEEPING_ANGEL, ANGEL);
         CYBERMAN = new NamespacedKey(plugin, "cyberman");
+        PDC_KEYS.put(Monster.CYBERMAN, CYBERMAN);
         DALEK = new NamespacedKey(plugin, "dalek");
+        PDC_KEYS.put(Monster.DALEK, DALEK);
         DALEK_SEC = new NamespacedKey(plugin, "dalek_sec");
+        PDC_KEYS.put(Monster.DALEK_SEC, DALEK_SEC);
         DAVROS = new NamespacedKey(plugin, "davros");
+        PDC_KEYS.put(Monster.DAVROS, DAVROS);
         DEVIL = new NamespacedKey(plugin, "devil");
+        PDC_KEYS.put(Monster.SEA_DEVIL, DEVIL);
         EMPTY = new NamespacedKey(plugin, "empty");
+        PDC_KEYS.put(Monster.EMPTY_CHILD, EMPTY);
         HATH = new NamespacedKey(plugin, "hath");
+        PDC_KEYS.put(Monster.HATH, HATH);
         JUDOON = new NamespacedKey(plugin, "judoon");
+        PDC_KEYS.put(Monster.JUDOON, JUDOON);
         K9 = new NamespacedKey(plugin, "k9");
+        PDC_KEYS.put(Monster.K9, K9);
         MIRE = new NamespacedKey(plugin, "mire");
+        PDC_KEYS.put(Monster.MIRE, MIRE);
         MONK = new NamespacedKey(plugin, "monk");
+        PDC_KEYS.put(Monster.HEADLESS_MONK, MONK);
         FLAME_TASK = new NamespacedKey(plugin, "flame_task");
         HEADLESS_TASK = new NamespacedKey(plugin, "headless_task");
         OOD = new NamespacedKey(plugin, "ood");
+        PDC_KEYS.put(Monster.OOD, OOD);
         OWNER_UUID = new NamespacedKey(plugin, "owner_uuid");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
+        PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
         SILENT = new NamespacedKey(plugin, "silent");
+        PDC_KEYS.put(Monster.SILENT, SILENT);
         SILURIAN = new NamespacedKey(plugin, "silurian");
+        PDC_KEYS.put(Monster.SILURIAN, SILURIAN);
         SLITHEEN = new NamespacedKey(plugin, "slitheen");
+        PDC_KEYS.put(Monster.SLITHEEN, SLITHEEN);
         SONTARAN = new NamespacedKey(plugin, "sontaran");
+        PDC_KEYS.put(Monster.SONTARAN, SONTARAN);
         STRAX = new NamespacedKey(plugin, "strax");
+        PDC_KEYS.put(Monster.STRAX, STRAX);
         TOCLAFANE = new NamespacedKey(plugin, "toclafane");
+        PDC_KEYS.put(Monster.TOCLAFANE, TOCLAFANE);
         VASHTA = new NamespacedKey(plugin, "vashta");
+        PDC_KEYS.put(Monster.VASHTA_NERADA, VASHTA);
         WARRIOR = new NamespacedKey(plugin, "warrior");
+        PDC_KEYS.put(Monster.ICE_WARRIOR, WARRIOR);
         ZYGON = new NamespacedKey(plugin, "zygon");
+        PDC_KEYS.put(Monster.ZYGON, ZYGON);
         MONSTER_HEAD = new NamespacedKey(plugin, "monster_head");
         PersistentDataTypeUUID = new UUIDDataType();
     }

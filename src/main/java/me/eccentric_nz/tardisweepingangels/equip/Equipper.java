@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -65,7 +66,7 @@ public class Equipper {
     }
 
     public void setHelmetAndInvisibilty() {
-        // make an monster item
+        // make a monster item
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
@@ -112,7 +113,7 @@ public class Equipper {
             // don't pickup items
             le.setCanPickupItems(false);
             // set TWA data
-            le.getPersistentDataContainer().set(monster.getKey(), PersistentDataType.INTEGER, monster.getPersist());
+            le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.getPersist());
         }
     }
 }
