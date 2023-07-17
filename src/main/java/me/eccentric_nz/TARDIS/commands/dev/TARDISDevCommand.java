@@ -17,9 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.common.collect.Sets;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
@@ -34,10 +31,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Command /tardisadmin [arguments].
@@ -64,7 +65,8 @@ public class TARDISDevCommand implements CommandExecutor {
             "displayitem",
             "frame",
             "brushable",
-            "box"
+            "box",
+            "nms"
     );
     private final TARDIS plugin;
 
@@ -105,6 +107,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("box")) {
                     return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
+                }
+                if (first.equals("nms")) {
+                    return new TARDISDevNMSCommand(plugin).spawn(sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISDevListCommand(plugin).listStuff(sender, args);
