@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -43,16 +44,16 @@ public class ImageHolder implements Listener {
         if (message.toLowerCase().contains("angel") && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("angels.spawn_from_chat.chance")) {
             int dist = plugin.getMonstersConfig().getInt("angels.spawn_from_chat.distance_from_player");
             Block b = event.getPlayer().getLocation().getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(TARDISConstants.RANDOM.nextInt(4)), dist);
-            // get highest block in a random direction
+            // get the highest block in a random direction
             Location highest = b.getWorld().getHighestBlockAt(b.getLocation()).getLocation();
             Location l = highest.add(0, 1, 0);
             // spawn an angel
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                LivingEntity e = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                e.setSilent(true);
+                LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
+//                LivingEntity angel = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.WEEPING_ANGEL, e, false, false).setHelmetAndInvisibilty();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
+                    new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibilty();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
                 }, 5L);
             }, 20L);
         }

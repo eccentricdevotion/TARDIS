@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silent;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -34,6 +34,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class SilentRunnable implements Runnable {
 
@@ -87,13 +89,12 @@ public class SilentRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity s = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
-                s.setSilent(true);
-                s.setCanPickupItems(false);
+                LivingEntity silent = new MonsterSpawner().create(l, Monster.SILENT);
+//                LivingEntity s = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SILENT, s, false, false).setHelmetAndInvisibilty();
-                    SilentEquipment.setGuardian(s);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(s, EntityType.SKELETON, Monster.SILENT, l));
+                    new Equipper(Monster.SILENT, silent, false, false).setHelmetAndInvisibilty();
+                    SilentEquipment.setGuardian(silent);
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silent, EntityType.SKELETON, Monster.SILENT, l));
                 }, 5L);
             }
         }

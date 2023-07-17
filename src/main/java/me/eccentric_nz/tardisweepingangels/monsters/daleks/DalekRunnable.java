@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -34,8 +33,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class DalekRunnable implements Runnable {
 
@@ -106,9 +105,6 @@ public class DalekRunnable implements Runnable {
                     monster = Monster.DALEK;
                 }
                 LivingEntity e = (LivingEntity) world.spawnEntity(l, dalek);
-                e.setSilent(true);
-                PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-                e.addPotionEffect(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (sec) {
                         new Equipper(monster, e, false).setHelmetAndInvisibilty();

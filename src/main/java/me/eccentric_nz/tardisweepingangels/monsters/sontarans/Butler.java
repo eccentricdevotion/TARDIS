@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.sontarans;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,6 +36,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The seemingly male Sontarans could be genespliced to produce milk. Strax was
@@ -79,17 +81,15 @@ public class Butler implements Listener {
                             // switch the armour to a butler uniform
                             Location l = zombie.getLocation();
                             zombie.remove();
-                            PigZombie pz = (PigZombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);
-                            pz.setSilent(true);
-                            pz.setAngry(false);
-                            Ageable pzageable = (Ageable) pz;
-                            pzageable.setAdult();
+                            PigZombie strax = (PigZombie) new MonsterSpawner().create(l, Monster.STRAX);
+//                            PigZombie strax = (PigZombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);
+                            strax.setAngry(false);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                new Equipper(Monster.STRAX, pz, false, false).setHelmetAndInvisibilty();
-                                pz.setCustomName("Strax");
-                                pz.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.getPersist());
-                                pz.getPersistentDataContainer().remove(TARDISWeepingAngels.SONTARAN);
-                                plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(pz, EntityType.ZOMBIFIED_PIGLIN, Monster.STRAX, l));
+                                new Equipper(Monster.STRAX, strax, false, false).setHelmetAndInvisibilty();
+                                strax.setCustomName("Strax");
+                                strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.getPersist());
+                                strax.getPersistentDataContainer().remove(TARDISWeepingAngels.SONTARAN);
+                                plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(strax, EntityType.ZOMBIFIED_PIGLIN, Monster.STRAX, l));
                             }, 2L);
                         }
                     }

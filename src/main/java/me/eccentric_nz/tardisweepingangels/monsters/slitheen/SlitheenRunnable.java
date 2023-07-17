@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.slitheen;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -34,6 +34,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class SlitheenRunnable implements Runnable {
 
@@ -87,8 +89,8 @@ public class SlitheenRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity slitheen = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
-                slitheen.setSilent(true);
+                LivingEntity slitheen = new MonsterSpawner().create(l, Monster.SLITHEEN);
+//                LivingEntity slitheen = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SLITHEEN, slitheen, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(slitheen, EntityType.ZOMBIE, Monster.SLITHEEN, l));

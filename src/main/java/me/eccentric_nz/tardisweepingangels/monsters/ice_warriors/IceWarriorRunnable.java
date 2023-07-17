@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ice_warriors;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -37,8 +35,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class IceWarriorRunnable implements Runnable {
 
@@ -107,16 +107,12 @@ public class IceWarriorRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity i = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);
-                i.setSilent(true);
-                PigZombie warrior = (PigZombie) i;
-                warrior.setAngry(true);
-                warrior.setAnger(Integer.MAX_VALUE);
-                PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-                warrior.addPotionEffect(p);
+                LivingEntity warrior = new MonsterSpawner().create(l, Monster.ICE_WARRIOR);
+//                LivingEntity warrior = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.ICE_WARRIOR, i, false, false).setHelmetAndInvisibilty();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(i, EntityType.ZOMBIFIED_PIGLIN, Monster.ICE_WARRIOR, l));
+                    new Equipper(Monster.ICE_WARRIOR, warrior, false, false).setHelmetAndInvisibilty();
+                    IceWarriorEquipment.setAnger(warrior);
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(warrior, EntityType.ZOMBIFIED_PIGLIN, Monster.ICE_WARRIOR, l));
                 }, 5L);
             }
         }

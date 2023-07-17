@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -29,12 +29,13 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Ageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class EmptyChildRunnable implements Runnable {
 
@@ -89,14 +90,12 @@ public class EmptyChildRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity e = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
-                e.setSilent(true);
-                Ageable child = (Ageable) e;
-                child.setBaby();
+                LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD);
+//                LivingEntity child = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.EMPTY_CHILD, e, false, false).setHelmetAndInvisibilty();
-                    EmptyChildEquipment.setSpeed(e);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.EMPTY_CHILD, l));
+                    new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibilty();
+                    EmptyChildEquipment.setSpeed(child);
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(child, EntityType.ZOMBIE, Monster.EMPTY_CHILD, l));
                 }, 5L);
             }
         }

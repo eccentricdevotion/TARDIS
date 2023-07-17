@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.sea_devils;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
@@ -33,8 +33,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class SeaDevilRunnable implements Runnable {
 
@@ -87,11 +87,8 @@ public class SeaDevilRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity devil = (LivingEntity) world.spawnEntity(l, EntityType.DROWNED);
-            devil.setSilent(true);
-            ((Drowned) devil).setAdult();
-            PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-            devil.addPotionEffect(p);
+            LivingEntity devil = new MonsterSpawner().create(l, Monster.SEA_DEVIL);
+//            LivingEntity devil = (LivingEntity) world.spawnEntity(l, EntityType.DROWNED);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.SEA_DEVIL, devil, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(devil, EntityType.DROWNED, Monster.SEA_DEVIL, l));

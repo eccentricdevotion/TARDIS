@@ -50,6 +50,8 @@ public class DalekEquipment {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             le.addPotionEffect(invisibility);
+            PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
+            le.addPotionEffect(resistance);
         });
         if (!disguise) {
             ee.setHelmetDropChance(0);
