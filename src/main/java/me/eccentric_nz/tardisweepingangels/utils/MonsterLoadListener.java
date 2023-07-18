@@ -19,16 +19,14 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWASkeleton;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.EntitiesLoadEvent;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -52,18 +50,11 @@ public class MonsterLoadListener implements Listener {
         if (!MonsterEquipment.isMonster(entity)) {
             return;
         }
-        Bukkit.getLogger().log(Level.INFO, "is TWA monster");
         Location location = entity.getLocation();
         Monster monster = MonsterEquipment.getMonsterType(entity);
-        if (monster != null) {
-            Bukkit.getLogger().log(Level.INFO, "monster = " + monster);
+        if (monster != null && entity.getType() != EntityType.ARMOR_STAND) {
             entity.remove();
             new MonsterSpawner().create(location, monster);
-        } else {
-            Bukkit.getLogger().log(Level.INFO, "Monster was null");
-            for (NamespacedKey key : entity.getPersistentDataContainer().getKeys()) {
-                Bukkit.getLogger().log(Level.INFO, "Key = " + key.asString());
-            }
         }
     }
 }
