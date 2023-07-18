@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.headless_monks;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -34,6 +34,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class HeadlessMonkRunnable implements Runnable {
 
@@ -87,13 +89,12 @@ public class HeadlessMonkRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity h = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
-                h.setSilent(true);
-                h.setCanPickupItems(false);
+                LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK);
+//                LivingEntity monk = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.HEADLESS_MONK, h, false, false).setHelmetAndInvisibilty();
-                    HeadlessMonkEquipment.setTasks(h);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(h, EntityType.SKELETON, Monster.HEADLESS_MONK, l));
+                    new Equipper(Monster.HEADLESS_MONK, monk, false, false).setHelmetAndInvisibilty();
+                    HeadlessMonkEquipment.setTasks(monk);
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(monk, EntityType.SKELETON, Monster.HEADLESS_MONK, l));
                 }, 5L);
             }
         }

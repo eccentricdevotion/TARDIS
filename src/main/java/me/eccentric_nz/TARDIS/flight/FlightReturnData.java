@@ -26,12 +26,14 @@ public class FlightReturnData {
 
     private final int id;
     private final Location location;
-    private final int task;
+    private final int sound;
+    private final int animation;
 
-    public FlightReturnData(int id, Location location, int task) {
+    public FlightReturnData(int id, Location location, int sound, int animation) {
         this.id = id;
         this.location = location;
-        this.task = task;
+        this.sound = sound;
+        this.animation = animation;
     }
 
     public int getId() {
@@ -42,7 +44,11 @@ public class FlightReturnData {
         return location;
     }
 
-    public int getTask() {
-        return task;
+    public int getSound() {
+        return sound;
+    }
+
+    public int getAnimation() {
+        return animation;
     }
 }

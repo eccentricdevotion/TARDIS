@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -38,6 +36,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Damage implements Listener {
 
@@ -133,7 +134,7 @@ public class Damage implements Listener {
                             inv.setItem(slot, new ItemStack(Material.AIR));
                         }
                         p.updateInventory();
-                        plugin.getMessenger().send(p, TardisModule.MONSTERS, "The Weeping Angels stole your TARDIS Key");
+                        plugin.getMessenger().message(p, TardisModule.MONSTERS, "The Weeping Angels stole your TARDIS Key");
                         break;
                     }
                 }

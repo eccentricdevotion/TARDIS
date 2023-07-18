@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
@@ -32,8 +32,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class SilurianRunnable implements Runnable {
 
@@ -88,13 +88,11 @@ public class SilurianRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(cave)) {
                     continue;
                 }
-                LivingEntity s = (LivingEntity) world.spawnEntity(cave, EntityType.SKELETON);
-                s.setSilent(true);
-                PotionEffect potionEffect = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-                s.addPotionEffect(potionEffect);
+                LivingEntity silurian = new MonsterSpawner().create(cave, Monster.SILURIAN);
+//                LivingEntity silurian = (LivingEntity) world.spawnEntity(cave, EntityType.SKELETON);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SILURIAN, s, false, true).setHelmetAndInvisibilty();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(s, EntityType.SKELETON, Monster.SILURIAN, cave));
+                    new Equipper(Monster.SILURIAN, silurian, false, true).setHelmetAndInvisibilty();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silurian, EntityType.SKELETON, Monster.SILURIAN, cave));
                 }, 5L);
             }
         }

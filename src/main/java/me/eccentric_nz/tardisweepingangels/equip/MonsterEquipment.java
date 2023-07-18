@@ -156,6 +156,17 @@ public class MonsterEquipment {
                 return Monster.WEEPING_ANGEL;
             }
         }
+        if (entity instanceof ArmorStand stand) {
+            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                return Monster.OOD;
+            }
+            if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                return Monster.JUDOON;
+            }
+            if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                return Monster.K9;
+            }
+        }
         if (entity instanceof Drowned && pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
             return Monster.SEA_DEVIL;
         }

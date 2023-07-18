@@ -16,15 +16,17 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class CountCommand {
 
@@ -71,7 +73,7 @@ public class CountCommand {
                     };
                     Collection<Skeleton> angels = w.getEntitiesByClass(Skeleton.class);
                     for (Skeleton a : angels) {
-                        if (a.getPersistentDataContainer().has(monster.getKey(), PersistentDataType.INTEGER)) {
+                        if (a.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }
@@ -86,7 +88,7 @@ public class CountCommand {
                     };
                     Collection<Zombie> cybermen = w.getEntitiesByClass(Zombie.class);
                     for (Zombie c : cybermen) {
-                        if (c.getPersistentDataContainer().has(monster.getKey(), PersistentDataType.INTEGER)) {
+                        if (c.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }
@@ -95,7 +97,7 @@ public class CountCommand {
                     what = (monster.equals(Monster.ICE_WARRIOR)) ? "Ice Warriors" : monster.getName();
                     Collection<PigZombie> fish = w.getEntitiesByClass(PigZombie.class);
                     for (PigZombie h : fish) {
-                        if (h.getPersistentDataContainer().has(monster.getKey(), PersistentDataType.INTEGER)) {
+                        if (h.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }
@@ -104,7 +106,7 @@ public class CountCommand {
                     what = (monster.equals(Monster.K9)) ? "K9s" : monster.getName();
                     Collection<ArmorStand> galactic_police = w.getEntitiesByClass(ArmorStand.class);
                     for (ArmorStand g : galactic_police) {
-                        if (g.getPersistentDataContainer().has(monster.getKey(), PersistentDataType.INTEGER)) {
+                        if (g.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }
@@ -113,7 +115,7 @@ public class CountCommand {
                     what = monster.getName() + "s";
                     Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                     for (Drowned d : drowned) {
-                        if (d.getPersistentDataContainer().has(monster.getKey(), PersistentDataType.INTEGER)) {
+                        if (d.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }

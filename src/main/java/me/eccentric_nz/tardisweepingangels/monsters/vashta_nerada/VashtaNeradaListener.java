@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Location;
@@ -30,12 +31,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class VashtaNeradaListener implements Listener {
 
@@ -75,15 +73,11 @@ public class VashtaNeradaListener implements Listener {
     }
 
     private void spawnVashtaNerada(Location l) {
-        LivingEntity v = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
-        v.setSilent(true);
-        Zombie vashta = (Zombie) v;
-        vashta.setAdult();
-        PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-        v.addPotionEffect(p);
+        LivingEntity vashta = new MonsterSpawner().create(l, Monster.VASHTA_NERADA);
+//        LivingEntity vashta = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            new Equipper(Monster.VASHTA_NERADA, v, false, false).setHelmetAndInvisibilty();
-            plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(v, EntityType.ZOMBIE, Monster.VASHTA_NERADA, l));
+            new Equipper(Monster.VASHTA_NERADA, vashta, false, false).setHelmetAndInvisibilty();
+            plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(vashta, EntityType.ZOMBIE, Monster.VASHTA_NERADA, l));
         }, 5L);
     }
 }

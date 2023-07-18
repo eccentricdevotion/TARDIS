@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -36,6 +33,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -63,7 +64,7 @@ public class TARDISQuitListener implements Listener {
         }
         // if player if flying TARDIS exterior stop sound loop
         Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
-            plugin.getServer().getScheduler().cancelTask(value.getTask());
+            plugin.getServer().getScheduler().cancelTask(value.getSound());
         });
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();

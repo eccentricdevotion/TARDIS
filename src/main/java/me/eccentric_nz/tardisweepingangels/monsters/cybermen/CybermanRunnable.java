@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.cybermen;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -29,14 +29,13 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Ageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class CybermanRunnable implements Runnable {
 
@@ -90,15 +89,11 @@ public class CybermanRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity c = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
-                c.setSilent(true);
-                Ageable cyber = (Ageable) c;
-                cyber.setAdult();
-                PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-                cyber.addPotionEffect(p);
+                LivingEntity cyberman = new MonsterSpawner().create(l, Monster.CYBERMAN);
+//                LivingEntity cyberman = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.CYBERMAN, c, false, false).setHelmetAndInvisibilty();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(c, EntityType.ZOMBIE, Monster.CYBERMAN, l));
+                    new Equipper(Monster.CYBERMAN, cyberman, false, false).setHelmetAndInvisibilty();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(cyberman, EntityType.ZOMBIE, Monster.CYBERMAN, l));
                 }, 5L);
             }
         }

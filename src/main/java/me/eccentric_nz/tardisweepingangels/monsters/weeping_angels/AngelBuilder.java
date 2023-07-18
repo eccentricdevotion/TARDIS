@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -75,11 +76,11 @@ public class AngelBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation();
-                    LivingEntity e = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                    e.setSilent(true);
+                    LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
+//                    LivingEntity angel = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        new Equipper(Monster.WEEPING_ANGEL, e, false, false).setHelmetAndInvisibilty();
-                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
+                        new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibilty();
+                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
                     }, 5L);
                 }, 20L);
             }

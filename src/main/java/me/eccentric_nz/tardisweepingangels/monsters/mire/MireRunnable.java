@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.mire;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
@@ -33,8 +33,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class MireRunnable implements Runnable {
 
@@ -87,10 +87,8 @@ public class MireRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity mire = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
-            mire.setSilent(true);
-            PotionEffect p = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
-            mire.addPotionEffect(p);
+            LivingEntity mire = new MonsterSpawner().create(l, Monster.MIRE);
+//            LivingEntity mire = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.MIRE, mire, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(mire, EntityType.SKELETON, Monster.MIRE, l));

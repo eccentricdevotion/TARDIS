@@ -16,15 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Rotor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * The time rotor, sometimes called the time column is a component in the central column of the TARDIS console. While
@@ -33,18 +35,7 @@ import org.bukkit.persistence.PersistentDataType;
  */
 public class TARDISTimeRotor {
 
-    private static final HashMap<String, Integer> BY_NAME = new HashMap<>() {
-        {
-            put("early", 10000002);
-            put("rotor", 10000003);
-            put("copper", 10000004);
-            put("round", 10000005);
-            put("delta", 10000006);
-            put("engine", 10000007);
-            put("engine_rotor", 10000008);
-            put("hospital", 10000009);
-        }
-    };
+    public static HashMap<UUID, Integer> ANIMATED_ROTORS = new HashMap<>();
 
     public static void updateRotorRecord(int id, String uuid) {
         HashMap<String, Object> where = new HashMap<>();
@@ -54,9 +45,8 @@ public class TARDISTimeRotor {
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 
-    public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {
-        Material material = (animated) ? Material.LIGHT_BLUE_DYE : Material.LIGHT_GRAY_DYE;
-        ItemStack is = new ItemStack(material, 1);
+    public static void setRotor(int which, ItemFrame itemFrame) {
+        ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Time Rotor");
         im.setCustomModelData(which);
@@ -65,6 +55,24 @@ public class TARDISTimeRotor {
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
         itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+    }
+
+    public static void setRotor(Rotor which, ItemFrame itemFrame) {
+        ItemStack is = new ItemStack(which.getMaterial(), 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("Time Rotor");
+        im.setCustomModelData(1021);
+        is.setItemMeta(im);
+        itemFrame.setItem(is, false);
+        itemFrame.setFixed(true);
+        itemFrame.setVisible(false);
+        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getOffModelData());
+        if (which != Rotor.TWELFTH) {
+            // start repeating animation task
+            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.getFrames()), which.getFrameTick(), which.getFrameTick());
+            // add item frame uuid and task id to map for tracking
+            ANIMATED_ROTORS.put(itemFrame.getUniqueId(), task);
+        }
     }
 
     public static void unlockItemFrame(ItemFrame itemFrame) {
@@ -85,5 +93,12 @@ public class TARDISTimeRotor {
             }
         }
         return 10000002;
+    }
+
+    public static int getRotorOffModelData(ItemFrame itemFrame) {
+        ItemStack is = itemFrame.getItem();
+        Material material = is.getType();
+        Rotor rotor = Rotor.getByMaterial(material);
+        return rotor.getOffModelData();
     }
 }

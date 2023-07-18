@@ -17,9 +17,11 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +40,6 @@ public class Equipper {
     private final boolean disguise;
     private final boolean bow;
     private final boolean trident;
-
 
     public Equipper(Monster monster, LivingEntity le, boolean disguise) {
         this.monster = monster;
@@ -65,12 +66,12 @@ public class Equipper {
     }
 
     public void setHelmetAndInvisibilty() {
-        // make an monster item
+        // make a monster item
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
         // 9 = static model
-        headMeta.setCustomModelData(9);
+        headMeta.setCustomModelData(405);
         helmet.setItemMeta(headMeta);
         // set equipment
         EntityEquipment ee = le.getEquipment();
@@ -80,10 +81,20 @@ public class Equipper {
         ee.setBoots(null);
         // set the helmet to the static monster model
         ee.setHelmet(helmet);
+        // set age
+        if (le instanceof Ageable ageable) {
+            if (monster == Monster.EMPTY_CHILD) {
+                ageable.setBaby();
+            } else {
+                ageable.setAdult();
+            }
+        }
         // make the entity invisible
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             le.addPotionEffect(invisibility);
+            PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
+            le.addPotionEffect(resistance);
         });
         if (!disguise) {
             // make sure the monster doesn't spawn with items in hand unless should have a bow
@@ -111,8 +122,10 @@ public class Equipper {
             ee.setHelmetDropChance(0);
             // don't pickup items
             le.setCanPickupItems(false);
+            // make silent
+            le.setSilent(true);
             // set TWA data
-            le.getPersistentDataContainer().set(monster.getKey(), PersistentDataType.INTEGER, monster.getPersist());
+            le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.getPersist());
         }
     }
 }
