@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -32,15 +31,20 @@ import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Set;
 
 public class SpawnCommand {
 
@@ -74,8 +78,7 @@ public class SpawnCommand {
             eyeLocation.add(0.5, 1.0, 0.5);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
             World world = eyeLocation.getWorld();
-            LivingEntity a = (LivingEntity) world.spawnEntity(eyeLocation, monster.getEntityType());
-            a.setSilent(true);
+            LivingEntity a = new MonsterSpawner().create(eyeLocation, monster);
             a.setNoDamageTicks(75);
             switch (monster) {
                 case DALEK -> {
@@ -92,8 +95,6 @@ public class SpawnCommand {
                     }
                 }
                 case EMPTY_CHILD -> {
-                    Ageable child = (Ageable) a;
-                    child.setBaby();
                     new Equipper(monster, a, false).setHelmetAndInvisibilty();
                     EmptyChildEquipment.setSpeed(a);
                 }
@@ -114,9 +115,7 @@ public class SpawnCommand {
                 case K9 -> K9Equipment.set(player, a, false);
                 case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
                 case OOD -> OodEquipment.set(null, a, false);
-                case SEA_DEVIL -> {
-                    new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
-                }
+                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
                 case SILENT -> {
                     new Equipper(monster, a, false, false).setHelmetAndInvisibilty();
                     SilentEquipment.setGuardian(a);
@@ -130,10 +129,6 @@ public class SpawnCommand {
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
                 // WEEPING_ANGEL, CYBERMAN, HATH, SLITHEEN, SONTARAN, VASHTA_NERADA, ZYGON
                 default -> new Equipper(monster, a, false).setHelmetAndInvisibilty();
-            }
-            if ((monster.getEntityType() == EntityType.ZOMBIE || monster.getEntityType() == EntityType.ZOMBIFIED_PIGLIN || monster.getEntityType() == EntityType.DROWNED) && monster != Monster.EMPTY_CHILD) {
-                Ageable ageable = (Ageable) a;
-                ageable.setAdult();
             }
             String sound = switch (monster) {
                 case EMPTY_CHILD -> "empty";
