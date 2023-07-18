@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -32,8 +30,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelStop {
@@ -107,7 +107,10 @@ public class TARDISTravelStop {
             if (tardis.getRotor() != null) {
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                 if (itemFrame != null) {
-                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
+                    // cancel the animation
+                    int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
+                    plugin.getServer().getScheduler().cancelTask(task);
+                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
                 }
             }
         }

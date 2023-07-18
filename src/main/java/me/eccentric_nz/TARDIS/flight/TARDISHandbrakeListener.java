@@ -196,7 +196,9 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
-                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, true);
+                                            // get the rotor type
+                                            Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                            TARDISTimeRotor.setRotor(rotor, itemFrame);
                                         }
                                     }
                                 } else {
@@ -209,7 +211,10 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (tardis.getRotor() != null) {
                                         ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                         if (itemFrame != null) {
-                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
+                                            // cancel the animation
+                                            int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
+                                            plugin.getServer().getScheduler().cancelTask(task);
+                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
                                         }
                                     }
                                     // if player is flying TARDIS exterior stop sound loop
