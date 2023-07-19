@@ -93,7 +93,7 @@ public class CountCommand {
                         }
                     }
                 }
-                case HATH, ICE_WARRIOR, STRAX -> {
+                case HATH, ICE_WARRIOR, STRAX, DAVROS, DALEK_SEC -> {
                     what = (monster.equals(Monster.ICE_WARRIOR)) ? "Ice Warriors" : monster.getName();
                     Collection<PigZombie> fish = w.getEntitiesByClass(PigZombie.class);
                     for (PigZombie h : fish) {
@@ -116,6 +116,24 @@ public class CountCommand {
                     Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                     for (Drowned d : drowned) {
                         if (d.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                            count++;
+                        }
+                    }
+                }
+                case RACNOSS -> {
+                    what = monster.getName();
+                    Collection<PiglinBrute> brutes = w.getEntitiesByClass(PiglinBrute.class);
+                    for (PiglinBrute b : brutes) {
+                        if (b.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                            count++;
+                        }
+                    }
+                }
+                case TOCLAFANE -> {
+                    what = monster.getName();
+                    Collection<Bee> bees = w.getEntitiesByClass(Bee.class);
+                    for (Bee b : bees) {
+                        if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().get(0) instanceof ArmorStand) {
                             count++;
                         }
                     }
