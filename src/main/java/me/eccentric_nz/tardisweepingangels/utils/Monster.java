@@ -101,4 +101,15 @@ public enum Monster {
     public int getHeadModelData() {
         return headModelData;
     }
+
+    public boolean isCustom() {
+        switch (this) {
+            case DAVROS, OOD, K9, JUDOON, DALEK, TOCLAFANE -> {
+                return false;
+            }
+            default -> {
+                return true;
+            }
+        }
+    }
 }
