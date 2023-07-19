@@ -99,7 +99,6 @@ public class RacnossRunnable implements Runnable {
                 return;
             }
             LivingEntity racnoss = new MonsterSpawner().create(l, Monster.RACNOSS);
-//            LivingEntity racnoss = (LivingEntity) world.spawnEntity(l, EntityType.PIGLIN_BRUTE);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.RACNOSS, racnoss, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(racnoss, EntityType.PIGLIN_BRUTE, Monster.RACNOSS, l));

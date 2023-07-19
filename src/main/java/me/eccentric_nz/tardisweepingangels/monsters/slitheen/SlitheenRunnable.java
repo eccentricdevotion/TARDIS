@@ -90,7 +90,6 @@ public class SlitheenRunnable implements Runnable {
                     return;
                 }
                 LivingEntity slitheen = new MonsterSpawner().create(l, Monster.SLITHEEN);
-//                LivingEntity slitheen = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SLITHEEN, slitheen, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(slitheen, EntityType.ZOMBIE, Monster.SLITHEEN, l));

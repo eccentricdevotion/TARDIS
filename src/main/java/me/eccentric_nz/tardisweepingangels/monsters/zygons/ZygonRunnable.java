@@ -90,7 +90,6 @@ public class ZygonRunnable implements Runnable {
                     return;
                 }
                 LivingEntity zygon = new MonsterSpawner().create(l, Monster.ZYGON);
-//                LivingEntity zygon = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.ZYGON, zygon, false, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(zygon, EntityType.ZOMBIE, Monster.ZYGON, l));

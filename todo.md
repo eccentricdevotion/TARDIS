@@ -2,8 +2,7 @@
 
 ## Current version `5.0.0-no-animated-textures`
 
-1. Make time rotors multiple models with a runnable
-2. Make monsters animations multiple models with a runnable - similare to Ood, Judoon & K9
+1. ?
 
 ## Next version `5.1.0`
 

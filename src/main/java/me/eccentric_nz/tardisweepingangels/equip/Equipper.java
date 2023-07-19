@@ -70,7 +70,7 @@ public class Equipper {
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
-        // 9 = static model
+        // 405 = static model
         headMeta.setCustomModelData(405);
         helmet.setItemMeta(headMeta);
         // set equipment

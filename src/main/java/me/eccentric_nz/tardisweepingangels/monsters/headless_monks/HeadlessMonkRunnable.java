@@ -90,7 +90,6 @@ public class HeadlessMonkRunnable implements Runnable {
                     return;
                 }
                 LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK);
-//                LivingEntity monk = (LivingEntity) world.spawnEntity(l, EntityType.SKELETON);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.HEADLESS_MONK, monk, false, false).setHelmetAndInvisibilty();
                     HeadlessMonkEquipment.setTasks(monk);

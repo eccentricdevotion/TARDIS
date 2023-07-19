@@ -21,18 +21,6 @@ public class MonsterSpawner {
             default -> entity = new TWASkeleton(EntityType.SKELETON, world);
         }
         entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
-//                org.bukkit.entity.Entity b = entity.getBukkitEntity();
-//        MobEffect effect = MobEffect.byId(14);
-//        MobEffectInstance instance = new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION, 1, true, false);
-//        entity.activeEffects.put(effect, instance);
-//        entity.setItemSlot(EquipmentSlot.HEAD, Heads.STILL.get(monster), true);
-//        CompoundTag tag = new CompoundTag();
-//        entity.saveWithoutId(tag);
-//        CompoundTag bukkit = new CompoundTag();
-//        bukkit.putInt(TARDISWeepingAngels.PDC_KEYS.get(monster).asString(), monster.getPersist());
-//        tag.put("BukkitValues", bukkit);
-//        entity.load(tag);
-
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return (LivingEntity) entity.getBukkitEntity();
     }

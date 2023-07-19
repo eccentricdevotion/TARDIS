@@ -91,7 +91,6 @@ public class EmptyChildRunnable implements Runnable {
                     return;
                 }
                 LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD);
-//                LivingEntity child = (LivingEntity) world.spawnEntity(l, EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibilty();
                     EmptyChildEquipment.setSpeed(child);
