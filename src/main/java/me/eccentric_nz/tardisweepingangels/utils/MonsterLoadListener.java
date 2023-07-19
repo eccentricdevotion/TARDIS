@@ -66,11 +66,11 @@ public class MonsterLoadListener implements Listener {
     }
 
     public void resetMonster(Entity entity) {
-        if (!justThese.contains(entity.getType()) && !MonsterEquipment.isMonster(entity)) {
+        if (!justThese.contains(entity.getType()) || !MonsterEquipment.isMonster(entity)) {
             return;
         }
         Monster monster = MonsterEquipment.getMonsterType(entity);
-        if (monster != null && entity.getType() != EntityType.ARMOR_STAND) {
+        if (monster != null) {
             if (!monster.isCustom()) {
                 return;
             }
@@ -94,14 +94,10 @@ public class MonsterLoadListener implements Listener {
                 }
                 case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
                 case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
-                case SILENT -> {
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibilty();
-                    SilentEquipment.setGuardian(a);
-                }
+                case SILENT -> SilentEquipment.setGuardian(a);
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibilty();
                     a.setCustomName("Strax");
                 }
                 default -> {
