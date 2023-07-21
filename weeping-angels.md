@@ -112,6 +112,18 @@ Daleks come in different colours, but mostly spawn in their typical bronze colou
 
 ![Dalek](images/docs/dalek.jpg)
 
+### Dalek Sec
+
+Dalek Sec just looks fabulous! He's passive unless you annoy him.
+
+![Dalek](images/docs/dalek_sec.jpg)
+
+### Davros
+
+Davros doesn't do much yet, but probably best not to get in his way.
+
+![Dalek](images/docs/davros.jpg)
+
 ### Empty Children
 
 Empty Children spawn anytime, and are of course child size. If you are killed by an Empty Child you get a gas mask

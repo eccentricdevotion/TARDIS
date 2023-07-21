@@ -25,8 +25,8 @@ You will need the permission `tardis.fly` to pilot your TARDIS.
 
 When you click the handbrake, you will be teleported to the TARDIS exterior - you will most 
 likely want to switch your view to third-person mode by pressing the __F5__ key on the keyboard.
-Pressing the Shift key will teleport you back into the TARDIS interior - left-click the handbrake
-to park the TARDIS and exit.
+Pressing the Shift key will teleport you back into the TARDIS interior - you'll probably want to be on the ground at 
+the time, though the TARDIS will happily stop in mid-air. Left-click the handbrake to park the TARDIS and exit.
 
 ### Video
 

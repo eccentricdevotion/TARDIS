@@ -120,10 +120,6 @@ with its surroundings.
 
 ![old police box](images/presets/old.jpg)
 
-**PANDORICA** — The Pandorica.
-
-![pandorica](images/presets/pandorica.jpg)
-
 **PARTY** — A party tent. Bring on the disco sheep. This preset turns a random colour each time it materialises.
 
 ![party tent](images/presets/party.jpg)
@@ -203,7 +199,8 @@ with its surroundings.
 ## Page two
 
 Page two contains mostly police box presets in all the Minecraft colours. All these presets use custom item models on an
-Armour Stand. They have custom block models for the materialisation animation as well.
+Armour Stand. They have custom block models for the materialisation animation as well. These presets can be used to fly 
+the TARDIS exterior see [Flying the TARDIS](flying.html).
 
 ![tarnsparent coloured police box](images/presets/stained.jpg)
 
@@ -285,11 +282,18 @@ Armour Stand. They have custom block models for the materialisation animation as
 
 ![any colour](images/docs/any_colour_police_box.jpg)
 
+**PANDORICA** — The Pandorica. This preset has animated opening doors.
+
+![pandorica](images/presets/pandorica.jpg)
+
+![pandorica opens](images/presets/pandorica_open.gif)
+
 ## Custom model presets
 
-You can add your own custom models to the plugin - see the [Custom model presets](custom-model-presets.html) page for more details. These presets will appear on page two.
+You can add your own custom models to the plugin - see the [Custom model presets](custom-model-presets.html) page for 
+more details. These presets will appear on page two.
 
-The plugin includes two example models:
+The plugin includes two example models (both of which can be flown):
 
 **Type 40** — A Type 40 time travel capsule.
 

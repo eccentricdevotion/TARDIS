@@ -33,6 +33,7 @@ There are a number of specific player preferences that you can change:
 - `@Deprecated` Lanterns
 - Junk Mode
 - Interior hum sound effects
+- Announce repeater settings
 
 Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a
 Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).
@@ -102,6 +103,10 @@ If the server admin has disabled sound effects in the plugin config, these last 
 To toggle the Who quotes on or off, type:
 
     /tardisprefs quotes [on|off]
+
+To toggle announcing (i.e. showing a title in-game) of the TARDIS console travel repeater settings when you click them, type:
+
+    /tprefs announce_repeaters [on|off]
 
 To change the block room walls and floors are grown with, type:
 

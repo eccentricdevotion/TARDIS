@@ -199,3 +199,10 @@ Remove a disguise from a player.
 ```
 /tardisadmin undisguise [player]
 ```
+
+Find hidden TARDISes, or empty blocks with TARDIS protection on them. 
+If protected blocks are found, click the listing in chat to remove the protection.
+
+```
+/tardisadmin find [radius]
+```
