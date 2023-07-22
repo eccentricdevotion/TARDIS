@@ -97,7 +97,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         for (Map.Entry<String, Integer> entry : arsRoomCounts.getRoomCounts().entrySet()) {
                             plugin.debug(entry.getKey() + ": " + entry.getValue());
                         }
-                        plugin.debug(arsRoomCounts.getMedian());
+                        plugin.debug("Median per TARDIS: " + arsRoomCounts.getMedian());
                         return true;
                     }
                 }
