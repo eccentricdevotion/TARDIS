@@ -26,34 +26,11 @@
 * `/tadmin find` command
 * Pandorica preset
 * `/tprefs announce_repeaters [on|off]`
-* Modular resource pack
 * ?
 
 ## Resource Pack / Monsters
 
-1. Modularise the resource pack - order of adding to client will be important (add wiki page)
-   * TARDIS-Sounds
-   * TARDIS-GUIs - CMD range: 1-200
-     * Handles GUIs
-   * TARDIS-Items - CMD range: 201-400
-     * Sonic Screwdriver
-     * Circuits
-     * Keys
-     * Perception Filter
-     * Fob Watch
-     * Sonic Blaster
-     * Food
-     * Accessories
-     * Handles
-     * etc
-   * TARDIS-Monsters - CMD range: 401-600
-   * TARDIS-Vortex-Manipulator - CMD range: 601-800
-   * TARDIS-Chemistry - CMD range: 801-1000
-   * TARDIS-Exterior-Models - CMD range: 1001-1004
-   * TARDIS-Animated-Models - CMD range: 1005
-   * TARDIS-Display-Items - CMD range: 10001-10200
-
-2. New mobs and sounds for Resource pack
+1. New mobs and sounds for Resource pack
    * Whispermen
    * Clockwork Droid
    * Endermites -> Cybermats

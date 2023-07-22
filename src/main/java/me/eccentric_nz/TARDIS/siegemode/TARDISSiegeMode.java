@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -42,6 +40,10 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
@@ -89,6 +91,7 @@ public class TARDISSiegeMode {
             plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
             // remove siege block
             siege.setBlockData(TARDISConstants.AIR);
+            TARDISDisplayItemUtils.remove(siege);
             // rebuild preset
             BuildData bd = new BuildData(p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
