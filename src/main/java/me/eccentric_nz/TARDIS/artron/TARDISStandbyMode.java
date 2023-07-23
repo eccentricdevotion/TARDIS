@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -26,6 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -79,7 +80,7 @@ public class TARDISStandbyMode implements Runnable {
                         }
                         delay = 20L;
                     }
-                    // police box lamp, delay it incase the TARDIS needs rebuilding
+                    // police box lamp, delay it in case the TARDIS needs rebuilding
                     if (standbyData.getPreset().equals(ChameleonPreset.ADAPTIVE) || standbyData.getPreset().usesArmourStand()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.getPreset()), delay);
                     }

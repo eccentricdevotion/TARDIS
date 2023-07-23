@@ -30,6 +30,8 @@ public class TARDISStats {
     public void startMetrics() {
         // start bStats metrics
         Metrics metrics = new Metrics(plugin, pluginId);
+        // bedrock users
+        metrics.addCustomChart(new Metrics.SingleLineChart("bedrock_users", () -> new BedrockCount(plugin).getCount()));
         // console types
         metrics.addCustomChart(new Metrics.AdvancedPie("console_types", () -> new ConsoleTypes(plugin).getMap()));
         // chameleon presets

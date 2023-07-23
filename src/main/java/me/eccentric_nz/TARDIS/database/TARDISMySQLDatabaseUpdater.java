@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four
@@ -65,6 +66,7 @@ class TARDISMySQLDatabaseUpdater {
         areaupdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
         areaupdates.add("direction varchar(5) DEFAULT ''");
         areaupdates.add("grid int(1) DEFAULT '1'");
+        tardisupdates.add("bedrock int(1) DEFAULT '0'");
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("monsters int(2) DEFAULT '0'");

@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four
@@ -115,6 +116,7 @@ class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
+        tardisupdates.add("bedrock INTEGER DEFAULT 0");
         tardisupdates.add("chameleon_demat TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("creeper TEXT DEFAULT ''");
