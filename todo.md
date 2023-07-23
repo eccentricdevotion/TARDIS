@@ -1,21 +1,15 @@
 # TODO
 
-## Current version `4.14.0`
+## Current version `5.0.0`
 
-## Version 5.0.0
-
-1. Documentation of new/changed features
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 
-1. Vortex Manipulator predictive text
-2. Pandorica custom model
-3. Fix laggy Silurian cave finder
-4. Use `BlockData#rotate` and `BlockData#mirror` in blockdata recalculators
-5. Animated models for player disguises
-6. Custom Control models #703 #355
-7. Sonic Blaster
+1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
+2. Animated models for player disguises
+3. Sonic Blaster
 
 ## Future versions
 
@@ -24,22 +18,23 @@
 3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
 5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-6. All the things...
+6. Add support for Pl3xMap and BlueMap?
+7. All the things...
 
 ## Wiki Documentation
 
-?
+* ?
 
 ## Resource Pack / Monsters
 
-1. Re-skin mobs for Resource pack, and add new mob sounds
-    * Whispermen
-    * Clockwork Droid
-    * Endermites -> Cybermats
-    * Iron Golem -> Gunslinger
-    * Slimes -> Adipose
-    * Husk -> Sycorax
-    * Stray -> Scarecrows
+1. New mobs and sounds for Resource pack
+   * Whispermen
+   * Clockwork Droid
+   * Endermites -> Cybermats
+   * Iron Golem -> Gunslinger
+   * Slimes -> Adipose
+   * Husk -> Sycorax
+   * Stray -> Scarecrows
 
 ## Minecraft Bedrock Edition?
 

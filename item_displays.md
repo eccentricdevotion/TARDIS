@@ -21,7 +21,7 @@ You can craft most of the custom blocks in SURVIVAL gamemode - use the `/tardisr
 
 ## Placing / breaking
 
-You can place TARDIS custom blocks like any other block... except for lights
+You can place TARDIS custom blocks like any other block... except for lights.
 
 Usually when trying to place a block onto one of a light block's faces the Interaction entity gets in the way, to get around this:
 

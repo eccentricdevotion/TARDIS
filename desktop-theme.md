@@ -30,6 +30,8 @@ To open the desktop theme GUI using a command type one of the following:
     /tardis theme
     /tardis upgrade
 
+![TARDIS Upgrade Menu](images/docs/desktop_theme_gui.jpg)
+
 ### How it works
 
 1. Run the command, or right-shift-click the ARS sign to open the GUI.
@@ -43,6 +45,18 @@ To open the desktop theme GUI using a command type one of the following:
 6. The TARDIS starts reconfiguring — you should be able to stay inside the TARDIS (if needed you will be teleported to a
    safe location).
 7. Watch in amazement as the TARDIS changes before your eyes.
+
+![TARDIS Wall Menu](images/docs/wall_menu.jpg)
+
+### Archiving, repairing and cleaning
+
+THe TARDIS Upgrade GUI also contains three other buttons to aid keeping your console in tip-top shape.
+
+| Button     | Icon                                                                                                                            | Action                                                                                                                                                                                                                                                          |
+|------------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Archive    | ![size](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/theme/archive.png) | Use this to save a copy of a modified console - see the [Archiving consoles](archive.html) page for more details.                                                                                                                                               |
+| Repair     | ![size](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/theme/repair.png)  | Use this to repair a damaged console. It resets the console back to the original console schematic. Players must condense all missing blocks - unless the `/tardisadmin repair [player] [amount]` command has been run, assigning the player a 'free' repair(s) |
+| Clean      | ![size](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/theme/clean.png)   | Use this to remove any blocks in the console that are not in the original schematic (missing blocks will not be restored) - good if someone has griefed your interior by filling it with cobwebs.                                                               |
 
 ### Config options
 
