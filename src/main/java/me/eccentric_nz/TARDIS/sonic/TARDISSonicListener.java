@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
@@ -43,6 +40,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author eccentric_nz
  */
@@ -65,24 +66,8 @@ public class TARDISSonicListener implements Listener {
         diamond.add(Material.SNOW);
         diamond.add(Material.SNOW_BLOCK);
         diamond.addAll(TARDISMaterials.glass);
-        doors.add(Material.ACACIA_DOOR);
-        doors.add(Material.ACACIA_TRAPDOOR);
-        doors.add(Material.BIRCH_DOOR);
-        doors.add(Material.BIRCH_TRAPDOOR);
-        doors.add(Material.CRIMSON_DOOR);
-        doors.add(Material.CRIMSON_TRAPDOOR);
-        doors.add(Material.DARK_OAK_DOOR);
-        doors.add(Material.DARK_OAK_TRAPDOOR);
-        doors.add(Material.IRON_DOOR);
-        doors.add(Material.IRON_TRAPDOOR);
-        doors.add(Material.JUNGLE_DOOR);
-        doors.add(Material.JUNGLE_TRAPDOOR);
-        doors.add(Material.OAK_DOOR);
-        doors.add(Material.OAK_TRAPDOOR);
-        doors.add(Material.SPRUCE_DOOR);
-        doors.add(Material.SPRUCE_TRAPDOOR);
-        doors.add(Material.WARPED_DOOR);
-        doors.add(Material.WARPED_TRAPDOOR);
+        doors.addAll(Tag.DOORS.getValues());
+        doors.addAll(Tag.TRAPDOORS.getValues());
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.IRON_DOOR);
         redstone.add(Material.IRON_TRAPDOOR);
@@ -92,7 +77,6 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.POWERED_RAIL);
         redstone.add(Material.REDSTONE_LAMP);
         redstone.add(Material.REDSTONE_WIRE);
-        redstone.add(Material.IRON_TRAPDOOR);
         ignite.addAll(Tag.CAMPFIRES.getValues());
         ignite.addAll(Tag.CANDLES.getValues());
         ignite.addAll(Tag.CANDLE_CAKES.getValues());

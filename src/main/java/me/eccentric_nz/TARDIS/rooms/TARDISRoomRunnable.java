@@ -132,13 +132,9 @@ public class TARDISRoomRunnable implements Runnable {
         repeaterOrder.put(3, 2);
         repeaterOrder.put(4, 5);
         repeaterOrder.put(5, 4);
-        notThese.add(Material.ACACIA_DOOR);
-        notThese.add(Material.BIRCH_DOOR);
         notThese.add(Material.CARROTS);
         notThese.add(Material.COCOA);
-        notThese.add(Material.DARK_OAK_DOOR);
         notThese.add(Material.IRON_TRAPDOOR);
-        notThese.add(Material.JUNGLE_DOOR);
         notThese.add(Material.LEVER);
         notThese.add(Material.MANGROVE_PROPAGULE);
         notThese.add(Material.MELON_STEM);
@@ -148,7 +144,6 @@ public class TARDISRoomRunnable implements Runnable {
         notThese.add(Material.PUMPKIN_STEM);
         notThese.add(Material.REDSTONE_TORCH);
         notThese.add(Material.SEAGRASS);
-        notThese.add(Material.SPRUCE_DOOR);
         notThese.add(Material.SUGAR_CANE);
         notThese.add(Material.TORCH);
         notThese.add(Material.WHEAT);

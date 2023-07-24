@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -42,6 +39,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -71,59 +72,55 @@ public class TARDISMinecartListener implements Listener {
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();
                 String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
-                switch (material) {
-                    // is it a TARDIS door?
-                    case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("door_location", db_loc);
-                        where.put("door_type", 0);
-                        ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-                        if (rsd.resultSet()) {
-                            if (rsd.isLocked()) {
-                                return;
-                            }
-                            // get RAIL room location
-                            id = rsd.getTardis_id();
-                            HashMap<String, Object> whereid = new HashMap<>();
-                            whereid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
-                            if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-                                Tardis tardis = rs.getTardis();
-                                data = tardis.getRail().split(":");
-                                playerUUID = tardis.getUuid();
-                                plugin.getTrackerKeeper().getMinecart().add(id);
-                            }
+                // is it a TARDIS door?
+                if (Tag.DOORS.isTagged(material)) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("door_location", db_loc);
+                    where.put("door_type", 0);
+                    ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+                    if (rsd.resultSet()) {
+                        if (rsd.isLocked()) {
+                            return;
                         }
-                    }
-                    // is it a RAIL room fence?
-                    case ACACIA_FENCE, BIRCH_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, OAK_FENCE, SPRUCE_FENCE -> {
-                        // get police box location
-                        HashMap<String, Object> wherep = new HashMap<>();
-                        wherep.put("rail", db_loc);
-                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
-                        if (rsp.resultSet()) {
-                            Tardis tardis = rsp.getTardis();
+                        // get RAIL room location
+                        id = rsd.getTardis_id();
+                        HashMap<String, Object> whereid = new HashMap<>();
+                        whereid.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
+                        if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
+                            Tardis tardis = rs.getTardis();
+                            data = tardis.getRail().split(":");
                             playerUUID = tardis.getUuid();
-                            id = tardis.getTardis_id();
-                            HashMap<String, Object> whereinner = new HashMap<>();
-                            whereinner.put("tardis_id", id);
-                            whereinner.put("door_type", 1);
-                            ResultSetDoors rsdinner = new ResultSetDoors(plugin, whereinner, false);
-                            if (rsdinner.resultSet() && rsdinner.isLocked()) {
-                                return;
-                            }
-                            HashMap<String, Object> whered = new HashMap<>();
-                            whered.put("tardis_id", id);
-                            whered.put("door_type", 0);
-                            ResultSetDoors rspb = new ResultSetDoors(plugin, whered, false);
-                            if (rspb.resultSet()) {
-                                data = rspb.getDoor_location().split(":");
-                                d = switchDirection(rspb.getDoor_direction());
-                                plugin.getTrackerKeeper().getMinecart().remove(id);
-                            }
+                            plugin.getTrackerKeeper().getMinecart().add(id);
                         }
                     }
-                    default -> {
+                }
+                // is it a RAIL room fence?
+                if (Tag.FENCES.isTagged(material)) {
+                    // get police box location
+                    HashMap<String, Object> wherep = new HashMap<>();
+                    wherep.put("rail", db_loc);
+                    ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
+                    if (rsp.resultSet()) {
+                        Tardis tardis = rsp.getTardis();
+                        playerUUID = tardis.getUuid();
+                        id = tardis.getTardis_id();
+                        HashMap<String, Object> whereinner = new HashMap<>();
+                        whereinner.put("tardis_id", id);
+                        whereinner.put("door_type", 1);
+                        ResultSetDoors rsdinner = new ResultSetDoors(plugin, whereinner, false);
+                        if (rsdinner.resultSet() && rsdinner.isLocked()) {
+                            return;
+                        }
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        whered.put("door_type", 0);
+                        ResultSetDoors rspb = new ResultSetDoors(plugin, whered, false);
+                        if (rspb.resultSet()) {
+                            data = rspb.getDoor_location().split(":");
+                            d = switchDirection(rspb.getDoor_direction());
+                            plugin.getTrackerKeeper().getMinecart().remove(id);
+                        }
                     }
                 }
                 if (data != null && data.length > 3) {

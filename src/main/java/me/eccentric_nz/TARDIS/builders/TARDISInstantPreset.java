@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
@@ -50,6 +49,8 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+
+import java.util.*;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -262,7 +263,7 @@ public class TARDISInstantPreset {
                             }
                         }
                     }
-                    case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
+                    case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CHERRY_DOOR, CHERRY_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, MANGROVE_DOOR, MANGROVE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
                         boolean door = false;
                         if (Tag.DOORS.isTagged(mat)) {
                             Bisected bisected = (Bisected) colData[yy];

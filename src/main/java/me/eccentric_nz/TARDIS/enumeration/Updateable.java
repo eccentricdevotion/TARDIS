@@ -22,10 +22,13 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.RecipeChoice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Updateable {
 
-    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX, Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "TARDIS Advanced Console"),
-    ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
+    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX, Material.BARRIER), me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory.INTERFACES, "TARDIS Advanced Console"),
+    ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
     ARTRON(true, true, TARDISUpdateableCategory.CONTROLS, "Artron Energy Capacitor button"),
     BACK(true, true, TARDISUpdateableCategory.CONTROLS, "Previous Location button"),
     BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR), TARDISUpdateableCategory.OTHERS, "TARDIS back door"),
@@ -85,12 +88,13 @@ public enum Updateable {
     private final RecipeChoice.MaterialChoice materialChoice;
     private final TARDISUpdateableCategory category;
     private final String description;
+    private final List<Material> choices = concat();
 
     Updateable(boolean control, boolean secondary, TARDISUpdateableCategory category, String description) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
-        materialChoice = new RecipeChoice.MaterialChoice(Material.ACACIA_BUTTON, Material.ACACIA_PRESSURE_PLATE, Material.ACACIA_WALL_SIGN, Material.BIRCH_BUTTON, Material.BIRCH_PRESSURE_PLATE, Material.BIRCH_WALL_SIGN, Material.COMPARATOR, Material.CRIMSON_BUTTON, Material.CRIMSON_PRESSURE_PLATE, Material.DARK_OAK_BUTTON, Material.DARK_OAK_PRESSURE_PLATE, Material.DARK_OAK_WALL_SIGN, Material.JUNGLE_BUTTON, Material.JUNGLE_PRESSURE_PLATE, Material.JUNGLE_WALL_SIGN, Material.LEVER, Material.OAK_BUTTON, Material.OAK_PRESSURE_PLATE, Material.OAK_WALL_SIGN, Material.POLISHED_BLACKSTONE_BUTTON, Material.POLISHED_BLACKSTONE_PRESSURE_PLATE, Material.SPRUCE_BUTTON, Material.SPRUCE_PRESSURE_PLATE, Material.SPRUCE_WALL_SIGN, Material.STONE_BUTTON, Material.STONE_PRESSURE_PLATE, Material.WARPED_BUTTON, Material.WARPED_PRESSURE_PLATE);
+        materialChoice = new RecipeChoice.MaterialChoice(choices);
         this.category = category;
         this.description = description;
     }
@@ -143,5 +147,15 @@ public enum Updateable {
 
     public String getDescription() {
         return description;
+    }
+
+    private List<Material> concat() {
+        List<Material> choices = new ArrayList<>();
+        choices.addAll(Tag.BUTTONS.getValues());
+        choices.addAll(Tag.PRESSURE_PLATES.getValues());
+        choices.addAll(Tag.WALL_SIGNS.getValues());
+        choices.add(Material.COMPARATOR);
+        choices.add(Material.REPEATER);
+        return choices;
     }
 }
