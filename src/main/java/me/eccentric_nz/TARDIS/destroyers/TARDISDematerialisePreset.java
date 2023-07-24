@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -39,10 +38,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
- * enabled it to dematerialise from normal space into the Time Vortex and
- * rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
+ * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -62,13 +63,12 @@ class TARDISDematerialisePreset implements Runnable {
     private BlockData stain_colour;
 
     /**
-     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic
-     * the transparency of dematerialisation by building the Police Box first
-     * with GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic the transparency of dematerialisation by
+     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
-     * @param plugin instance of the TARDIS plugin
-     * @param dd the DestroyData
-     * @param preset the Chameleon preset currently in use by the TARDIS
+     * @param plugin  instance of the TARDIS plugin
+     * @param dd      the DestroyData
+     * @param preset  the Chameleon preset currently in use by the TARDIS
      * @param cham_id the chameleon block id for the police box
      */
     TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, ChameleonPreset preset, BlockData cham_id) {
@@ -294,7 +294,7 @@ class TARDISDematerialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                             }
                             // wood, iron & trap doors
-                            case ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR, CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, IRON_DOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR, SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
+                            case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BAMBOO_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN, CHERRY_DOOR, CHERRY_TRAPDOOR, CHERRY_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR, CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, JUNGLE_DOOR, JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, MANGROVE_DOOR, MANGROVE_TRAPDOOR, MANGROVE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR, SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
                                 if (preset.equals(ChameleonPreset.SWAMP) || preset.equals(ChameleonPreset.TOPSYTURVEY) || preset.equals(ChameleonPreset.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
@@ -308,7 +308,7 @@ class TARDISDematerialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chap);
                             }
                             case LIGHT_GRAY_STAINED_GLASS -> {
-                                BlockData cham = (preset.equals(ChameleonPreset.FACTORY)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id.getMaterial()).createBlockData() : colData[yy];
+                                BlockData cham = (preset.equals(ChameleonPreset.FACTORY)) ? TARDISStainedGlassLookup.stainedGlassFromMaterial(world, cham_id.getMaterial()).createBlockData() : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham);
                             }
                             case LIGHT_GRAY_TERRACOTTA -> {

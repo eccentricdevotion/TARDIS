@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyColourTable;
 import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyIdTable;
@@ -88,11 +89,7 @@ public class ConstructsConverter {
                                 Material material = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt());
                                 bpGrid[y][x] = material.createBlockData().getAsString();
                                 switch (material) {
-                                    case WHITE_CARPET:
-                                    case WHITE_STAINED_GLASS:
-                                    case WHITE_STAINED_GLASS_PANE:
-                                    case WHITE_WOOL:
-                                    case GREEN_TERRACOTTA:
+                                    case WHITE_CARPET, WHITE_STAINED_GLASS, WHITE_STAINED_GLASS_PANE, WHITE_WOOL, GREEN_TERRACOTTA -> {
                                         // get correct colour
                                         String[] split = material.toString().split("_");
                                         split[0] = LegacyColourTable.LOOKUP.get(bpDATAX.get(x).getAsInt());
@@ -106,15 +103,9 @@ public class ConstructsConverter {
                                         String implode = sb.toString();
                                         material = Material.valueOf(implode);
                                         bpGrid[y][x] = material.createBlockData().getAsString();
-                                        stGrid[y][x] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).createBlockData().getAsString();
-                                        break;
-                                    case ACACIA_DOOR:
-                                    case BIRCH_DOOR:
-                                    case DARK_OAK_DOOR:
-                                    case IRON_DOOR:
-                                    case JUNGLE_DOOR:
-                                    case OAK_DOOR:
-                                    case SPRUCE_DOOR:
+                                        stGrid[y][x] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
+                                    }
+                                    case ACACIA_DOOR, BAMBOO_DOOR, BIRCH_DOOR, CHERRY_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, MANGROVE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                                         BlockData dbd = material.createBlockData();
                                         Door door = (Door) dbd;
                                         // set facing / hinge
@@ -131,33 +122,16 @@ public class ConstructsConverter {
                                         String doorData = door.getAsString();
                                         bpGrid[y][x] = doorData;
                                         stGrid[y][x] = doorData;
-                                        break;
-                                    case ACACIA_SIGN:
-                                    case ACACIA_WALL_SIGN:
-                                    case AIR:
-                                    case BIRCH_SIGN:
-                                    case BIRCH_WALL_SIGN:
-                                    case DARK_OAK_SIGN:
-                                    case DARK_OAK_WALL_SIGN:
-                                    case JUNGLE_SIGN:
-                                    case JUNGLE_WALL_SIGN:
-                                    case OAK_SIGN:
-                                    case OAK_WALL_SIGN:
-                                    case REDSTONE_TORCH:
-                                    case REDSTONE_WALL_TORCH:
-                                    case SPRUCE_SIGN:
-                                    case SPRUCE_WALL_SIGN:
-                                    case TORCH:
-                                    case WALL_TORCH:
-                                        stGrid[y][x] = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
-                                        break;
-                                    default:
+                                    }
+                                    case ACACIA_SIGN, ACACIA_WALL_SIGN, AIR, BIRCH_SIGN, BIRCH_WALL_SIGN, DARK_OAK_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_SIGN, JUNGLE_WALL_SIGN, MANGROVE_SIGN, MANGROVE_WALL_SIGN, OAK_SIGN, OAK_WALL_SIGN, REDSTONE_TORCH, REDSTONE_WALL_TORCH, SPRUCE_SIGN, SPRUCE_WALL_SIGN, TORCH, WALL_TORCH ->
+                                            stGrid[y][x] = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
+                                    default -> {
                                         try {
-                                            stGrid[y][x] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material).createBlockData().getAsString();
+                                            stGrid[y][x] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
                                         } catch (NullPointerException ex) {
                                             plugin.debug(material.toString());
                                         }
-                                        break;
+                                    }
                                 }
                                 glGrid[y][x] = LegacyIdTable.LOOKUP.get(glIDX.get(x).getAsInt()).createBlockData().getAsString();
                             }

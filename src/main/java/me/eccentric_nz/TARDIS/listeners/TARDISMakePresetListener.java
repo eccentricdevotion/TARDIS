@@ -16,13 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Location;
@@ -36,6 +32,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
@@ -98,7 +100,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_stain_data.append(dataStr);
                                 sb_glass_data.append(dataStr);
                             } else {
-                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
                                 sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
                                 sb_glass_data.append(GLASS);
                             }
@@ -108,7 +110,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_stain_data.append(dataStr).append(",");
                                 sb_glass_data.append(dataStr).append(",");
                             } else {
-                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
                                 sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
                                 sb_glass_data.append(GLASS).append(",");
                             }

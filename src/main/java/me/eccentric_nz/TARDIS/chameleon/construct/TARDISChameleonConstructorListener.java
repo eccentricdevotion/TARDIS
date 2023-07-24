@@ -18,10 +18,6 @@ package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -29,6 +25,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonHelpGUI;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -53,6 +50,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -118,7 +120,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                                 case 0 ->
                                     // back
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset,tardis.getItemPreset());
+                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset, tardis.getItemPreset());
                                             ItemStack[] items = tci.getMenu();
                                             Inventory chaminv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                             chaminv.setContents(items);
@@ -203,11 +205,11 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                                                     directional.setFacing(BlockFace.WEST);
                                                     blue[first][second] = directional.getAsString();
                                                     glass[first][second] = TARDISConstants.GLASS.getAsString();
-                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(mat).createBlockData().getAsString();
+                                                    stain[first][second] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, mat).createBlockData().getAsString();
                                                 } else {
                                                     blue[first][second] = blockData.getAsString();
                                                     glass[first][second] = TARDISConstants.GLASS.getAsString();
-                                                    stain[first][second] = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(mat).createBlockData().getAsString();
+                                                    stain[first][second] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, mat).createBlockData().getAsString();
                                                 }
                                             } else {
                                                 blue[first][second] = air;

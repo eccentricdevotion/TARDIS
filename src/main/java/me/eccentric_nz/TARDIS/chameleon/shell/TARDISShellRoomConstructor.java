@@ -16,30 +16,31 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -113,7 +114,7 @@ public class TARDISShellRoomConstructor {
                             sb_stain_data.append(dataStr);
                             sb_glass_data.append(dataStr);
                         } else {
-                            Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                            Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
                             sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
                             sb_glass_data.append(GLASS);
                         }
@@ -123,7 +124,7 @@ public class TARDISShellRoomConstructor {
                             sb_stain_data.append(dataStr).append(",");
                             sb_glass_data.append(dataStr).append(",");
                         } else {
-                            Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                            Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
                             sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
                             sb_glass_data.append(GLASS).append(",");
                         }

@@ -16,13 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.hads;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -39,6 +36,11 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
@@ -158,7 +160,7 @@ class TARDISHostileDispersal {
                     if (!b.getType().isAir()) {
                         float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 + 0.5) + 1));
                         // get the appropriate carpet colour
-                        String stainedGlass = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType()).toString();
+                        String stainedGlass = TARDISStainedGlassLookup.stainedGlassFromMaterial(b.getWorld(), b.getType()).toString();
                         String colour = stainedGlass.replace("STAINED_GLASS", "CARPET");
                         Material carpet = Material.valueOf(colour);
                         if (yy == 1 && xx == 0 && zz == 0) {

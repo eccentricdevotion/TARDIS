@@ -16,14 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
@@ -48,10 +45,14 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
- * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
- * enabled it to dematerialise from normal space into the Time Vortex and
- * rematerialise back from it.
+ * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
+ * space into the Time Vortex and rematerialise back from it.
  *
  * @author eccentric_nz
  */
@@ -81,15 +82,14 @@ class TARDISMaterialisePreset implements Runnable {
     private BlockData slab_data;
 
     /**
-     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
-     * transparency of materialisation by building the Police Box first with
-     * GLASS, then STAINED_GLASS, then the normal preset wall block.
+     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the transparency of materialisation by
+     * building the Police Box first with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
      * @param plugin instance of the TARDIS plugin
-     * @param bd the Materialisation data
+     * @param bd     the Materialisation data
      * @param preset the preset to construct
-     * @param data the chameleon block data for the police box
-     * @param adapt the chameleon circuit adaption setting
+     * @param data   the chameleon block data for the police box
+     * @param adapt  the chameleon circuit adaption setting
      */
     TARDISMaterialisePreset(TARDIS plugin, BuildData bd, ChameleonPreset preset, BlockData data, Adaption adapt) {
         this.plugin = plugin;
@@ -181,7 +181,8 @@ class TARDISMaterialisePreset implements Runnable {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                    case WARP, RAPID, FASTER ->
+                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
                                     default -> "tardis_land";
                                 };
                             }
@@ -314,7 +315,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     }
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
                                 }
-                                case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
+                                case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CHERRY_DOOR, CHERRY_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, MANGROVE_DOOR, MANGROVE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
                                     boolean door = false;
                                     if (Tag.DOORS.isTagged(mat)) {
                                         Bisected bisected = (Bisected) colData[yy];
@@ -358,12 +359,12 @@ class TARDISMaterialisePreset implements Runnable {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                                     }
                                 }
-                                case ACACIA_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN -> {
+                                case ACACIA_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, MANGROVE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN -> {
                                     if (preset.equals(ChameleonPreset.APPERTURE)) {
                                         TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                     }
                                 }
-                                case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN -> {
+                                case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, CRIMSON_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, MANGROVE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN, WARPED_WALL_SIGN -> {
                                     // sign - if there is one
                                     if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                                         // add a sign
@@ -491,11 +492,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 }
                                 default -> { // everything else
                                     if (change) {
-//                                        if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
-//                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, mat, bd.getTardisID());
-//                                        } else {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-//                                        }
                                     }
                                 }
                             }
@@ -616,12 +613,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lamp);
                                 }
                             }
-                            case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors
-//                                if (preset.usesArmourStand()) { // normal presets don't use armour stands so never called here...
-//                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-//                                    // remember the door location
-//                                    saveDoorLocation(world, xx, y, yy, zz);
-//                                }
+                            case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CHERRY_DOOR, CHERRY_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, MANGROVE_DOOR, MANGROVE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> {
                                 // don't change the door
                             }
                             case LEVER -> {
@@ -643,7 +635,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                             }
                             case LIGHT_GRAY_STAINED_GLASS -> {
-                                Material chag = isAdaptiveFactory ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
+                                Material chag = isAdaptiveFactory ? TARDISStainedGlassLookup.stainedGlassFromMaterial(world, data.getMaterial()) : mat;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chag);
                             }
                             case WHITE_STAINED_GLASS -> {
@@ -655,7 +647,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chal);
                             }
                             case BLUE_STAINED_GLASS -> {
-                                Material chad = ((preset.equals(ChameleonPreset.ADAPTIVE) && adapt.equals(Adaption.BLOCK)) || preset.equals(ChameleonPreset.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
+                                Material chad = ((preset.equals(ChameleonPreset.ADAPTIVE) && adapt.equals(Adaption.BLOCK)) || preset.equals(ChameleonPreset.SUBMERGED)) ? TARDISStainedGlassLookup.stainedGlassFromMaterial(world, data.getMaterial()) : mat;
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
                             }
                             case SKELETON_SKULL -> {

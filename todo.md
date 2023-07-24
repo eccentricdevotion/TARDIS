@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `5.0.0-no-animated-textures`
+## Current version `5.0.0`
 
 1. ?
 
@@ -23,9 +23,6 @@
 
 ## Wiki Documentation
 
-* `/tadmin find` command
-* Pandorica preset
-* `/tprefs announce_repeaters [on|off]`
 * ?
 
 ## Resource Pack / Monsters

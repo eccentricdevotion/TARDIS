@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
-import java.util.*;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
+
+import java.util.*;
 
 /**
  * Keeps track of various building related lookups. these include: Room block
@@ -55,7 +55,6 @@ public class TARDISBuilderInstanceKeeper {
 
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
-    private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
     private HashMap<Material, String> seeds;
 
@@ -151,15 +150,6 @@ public class TARDISBuilderInstanceKeeper {
      */
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
         return roomBlockCounts;
-    }
-
-    /**
-     * Gets a lookup utility to convert blocks to their stained glass equivalent
-     *
-     * @return the TARDIS Stained Glass Lookup class
-     */
-    public TARDISStainedGlassLookup getStainedGlassLookup() {
-        return stainedGlassLookup;
     }
 
     /**
