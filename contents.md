@@ -29,7 +29,7 @@ To get started choose a page:
 
 [Advanced TARDIS Console](advanced-console.html) — Add more complexity to the game
 
-[Alternative controls](alt-controls.html) — Set destinations in style
+[TARDIS Keyboard](keyboard.html) — Set destinations by editing a sign
 
 [TARDIS malfunctions](malfunction.html) — When not everything goes to plan
 
@@ -99,11 +99,13 @@ To get started choose a page:
 
 [Player Preferences](player-preferences.html) — Commands to set TARDIS player preferences
 
-[Bind commands](bind-commands.html) — ‘Bind’ saves to buttons for easy access
+[Bind commands](bind-commands.html) — ‘Bind’ saves and other functions to buttons for easy access
 
-[Texture Pack commands](texture-commands.html) — Switch texture packs when entering and exiting the TARDIS
+[Texture Pack commands](texture-commands.html) — Switch texture packs when entering and exiting the TARDIS (not recommended)
 
-[Admin Commands](admin-commands.html) — Configure the TARDIS plugin settings
+[Config Commands](config-commands.html) — Configure the TARDIS plugin settings
+
+[Admin Commands](admin-commands.html) — Perform TARDIS administrative functions
 
 [Give Commands](give-commands.html) — Give TARDIS items and Artron Energy to players
 
@@ -111,8 +113,7 @@ To get started choose a page:
 
 [Schematic Commands](schematic-commands.html) — Make TARDIS schematics
 
-[Area Commands](area-commands.html) — Set up areas that players can travel to (such as recharge stations and parking
-lots)
+[Area Commands](area-commands.html) — Set up areas that players can travel to (such as recharge stations and parking lots)
 
 ## Admin stuff
 

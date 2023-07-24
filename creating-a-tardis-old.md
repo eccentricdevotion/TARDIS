@@ -3,7 +3,7 @@ layout: default
 title: Creating a TARDIS
 ---
 
-**@deprecated**
+**@Deprecated**
 
 ## TARDIS Seed Blocks - TARDIS v2.6.2 - v3.6.2
 
