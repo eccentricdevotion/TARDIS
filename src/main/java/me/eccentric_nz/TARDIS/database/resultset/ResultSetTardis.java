@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,9 +113,9 @@ public class ResultSetTardis {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    String uuid = rs.getString("uuid");
-                    if (rs.wasNull() || uuid.equals("")) {
-                        uuid = UUID.randomUUID().toString();
+                    String uid = rs.getString("uuid");
+                    if (rs.wasNull() || uid.equals("")) {
+                        uid = UUID.randomUUID().toString();
                     }
                     String companions = rs.getString("companions");
                     if (rs.wasNull()) {
@@ -133,12 +134,18 @@ public class ResultSetTardis {
                     ChameleonPreset demat;
                     String itemPreset = "";
                     String itemDemat = "";
+                    UUID uuid = UUID.fromString(uid);
                     try {
                         String p = rs.getString("chameleon_preset");
                         if (p.startsWith("ITEM:")) {
                             preset = ChameleonPreset.ITEM;
                             String[] split = p.split(":");
-                            itemPreset = (split.length > 1) ? split[1] : "Bad Wolf";
+                            if (split.length > 1) {
+                                itemPreset = split[1];
+                            } else {
+                                itemPreset = "Bad Wolf";
+                                TARDISStaticUtils.warnPreset(uuid);
+                            }
                         } else {
                             preset = ChameleonPreset.valueOf(p);
                         }
@@ -150,7 +157,12 @@ public class ResultSetTardis {
                         if (d.startsWith("ITEM:")) {
                             demat = ChameleonPreset.ITEM;
                             String[] split = d.split(":");
-                            itemPreset = (split.length > 1) ? split[1] : "Bad Wolf";
+                            if (split.length > 1) {
+                                itemPreset = split[1];
+                            } else {
+                                itemPreset = "Bad Wolf";
+                                TARDISStaticUtils.warnPreset(uuid);
+                            }
                         } else {
                             demat = ChameleonPreset.valueOf(d);
                         }
@@ -159,7 +171,7 @@ public class ResultSetTardis {
                     }
                     tardis = new Tardis(
                             rs.getInt("tardis_id"),
-                            UUID.fromString(uuid),
+                            uuid,
                             rs.getString("owner"),
                             rs.getString("last_known_name"),
                             rs.getString("chunk"),

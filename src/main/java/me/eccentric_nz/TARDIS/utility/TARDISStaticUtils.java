@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -36,6 +35,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
 
+import java.util.UUID;
+
 /**
  * @author eccentric_nz
  */
@@ -46,7 +47,7 @@ public class TARDISStaticUtils {
     /**
      * Get the direction a player is facing.
      *
-     * @param p the player
+     * @param p    the player
      * @param swap whether to swap the direction E &lt;-&gt; W, S &lt;-&gt; N
      * @return the direction the player is facing
      */
@@ -148,8 +149,7 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Gets the column to set the Police box sign in if CTM is on in the
-     * player's preferences.
+     * Gets the column to set the Police box sign in if CTM is on in the player's preferences.
      *
      * @param d the direction of the Police Box
      * @return the column
@@ -166,10 +166,10 @@ public class TARDISStaticUtils {
     /**
      * Sets the Chameleon Sign text or messages the player.
      *
-     * @param loc the location string retrieved from the database
+     * @param loc  the location string retrieved from the database
      * @param line the line number to set
      * @param text the text to write
-     * @param p the player to message (if the Chameleon control is not a sign)
+     * @param p    the player to message (if the Chameleon control is not a sign)
      */
     public static void setSign(String loc, int line, String text, Player p) {
         if (!loc.isEmpty()) {
@@ -318,4 +318,10 @@ public class TARDISStaticUtils {
         return false;
     }
 
+    public static void warnPreset(UUID uuid) {
+        Player player = TARDIS.plugin.getServer().getPlayer(uuid);
+        if (player != null) {
+            TARDIS.plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_BROKEN");
+        }
+    }
 }
