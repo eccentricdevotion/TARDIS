@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -30,6 +27,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -60,8 +61,8 @@ public class TARDISAbandoned {
         set.put("powered_on", 0);
         set.put("lastuse", Long.MAX_VALUE);
         if (preset == ChameleonPreset.ITEM) {
-            set.put("chameleon_preset", "ITEM:"+item);
-            set.put("chameleon_demat", "ITEM:"+item);
+            set.put("chameleon_preset", "ITEM:" + item);
+            set.put("chameleon_demat", "ITEM:" + item);
         } else {
             set.put("chameleon_preset", preset.toString());
             set.put("chameleon_demat", preset.toString());

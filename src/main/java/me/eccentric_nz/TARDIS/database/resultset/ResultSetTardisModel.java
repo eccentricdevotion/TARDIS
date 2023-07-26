@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -70,10 +71,12 @@ public class ResultSetTardisModel {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 if (rs.getString("chameleon_preset").startsWith("ITEM:")) {
-                    itemPreset = rs.getString("chameleon_preset").split(":")[1];
+                    String[] split = rs.getString("chameleon_preset").split(":");
+                    itemPreset = (split.length > 1) ? split[1]: "Bad Wolf";
                 }
                 if (rs.getString("chameleon_demat").startsWith("ITEM:")) {
-                    itemDemat = rs.getString("chameleon_demat").split(":")[1];
+                    String[] split = rs.getString("chameleon_demat").split(":");
+                    itemDemat = (split.length > 1) ? split[1]: "Bad Wolf";
                 }
                 return true;
             }

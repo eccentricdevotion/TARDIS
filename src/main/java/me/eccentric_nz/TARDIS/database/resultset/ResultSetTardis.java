@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -136,7 +137,8 @@ public class ResultSetTardis {
                         String p = rs.getString("chameleon_preset");
                         if (p.startsWith("ITEM:")) {
                             preset = ChameleonPreset.ITEM;
-                            itemPreset = p.split(":")[1];
+                            String[] split = p.split(":");
+                            itemPreset = (split.length > 1) ? split[1] : "Bad Wolf";
                         } else {
                             preset = ChameleonPreset.valueOf(p);
                         }
@@ -147,7 +149,8 @@ public class ResultSetTardis {
                         String d = rs.getString("chameleon_demat");
                         if (d.startsWith("ITEM:")) {
                             demat = ChameleonPreset.ITEM;
-                            itemPreset = d.split(":")[1];
+                            String[] split = d.split(":");
+                            itemPreset = (split.length > 1) ? split[1] : "Bad Wolf";
                         } else {
                             demat = ChameleonPreset.valueOf(d);
                         }
