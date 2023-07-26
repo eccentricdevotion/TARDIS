@@ -3,14 +3,15 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -94,7 +95,7 @@ public class VortexManipulatorConfig {
         if (i > 0) {
             try {
                 String handlesPath = plugin.getDataFolder() + File.separator + "vortex_manipulator.yml";
-                config.save(new File(handlesPath));
+                plugin.getVortexConfig().save(new File(handlesPath));
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.VORTEX_MANIPULATOR, "Added " + i + " new items to config");
             } catch (IOException io) {
                 plugin.debug("Could not save vortex_manipulator.yml, " + io.getMessage());
