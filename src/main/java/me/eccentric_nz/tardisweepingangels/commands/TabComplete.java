@@ -36,7 +36,8 @@ public class TabComplete  extends TARDISCompleter implements TabCompleter {
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> MONSTER_SUBS;
-    ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give");
+    ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay",
+            "remove", "set", "give", "teleport");
 
     public TabComplete(TARDIS plugin) {
         this.plugin = plugin;

@@ -1756,6 +1756,11 @@ commands:
       usage: /<command> give [player] [monser type]
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
+    teleport:
+      description: Add the player's current location to weeping angels' teleport locations. If [replace] is specified, this location will replace any existing saved locations. If [true|false] is specified, set the value of 'angels.teleport_to_locations'. 
+      usage: /<command> teleport [replace|true|false]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
   # shop
   tardisshop:
     aliases: [tshop]

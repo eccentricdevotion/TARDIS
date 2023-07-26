@@ -68,6 +68,9 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                 case "give" -> {
                     return new GiveCommand(plugin).give(sender, args);
                 }
+                case "teleport" -> {
+                    return new TeleportCommand(plugin).add(sender, args);
+                }
                 default -> {
                     // unknown command
                     plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID_CMD");

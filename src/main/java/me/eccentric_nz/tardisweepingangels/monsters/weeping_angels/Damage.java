@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.MonsterTargetListener;
 import org.bukkit.Chunk;
@@ -89,11 +90,15 @@ public class Damage implements Listener {
                 if (e.getPersistentDataContainer().has(TARDISWeepingAngels.ANGEL, PersistentDataType.INTEGER)) {
                     Entity t = event.getEntity();
                     Player p = (Player) t;
-                    Location l = getRandomLocation(t.getWorld());
+                    Location l = null;
+                    if (plugin.getMonstersConfig().getBoolean("angels.teleport_to_location")) {
+                        l = getSpecificLocation();
+                    } else {
+                        l = getRandomLocation(t.getWorld());
+                    }
                     if (l != null) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            p.teleport(l);
-                        }, 1L);
+                        final Location tpLoc = l;
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(tpLoc), 1L);
                     }
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 300, 5, true, false));
                     if (TARDISWeepingAngels.angelsCanSteal()) {
@@ -115,7 +120,20 @@ public class Damage implements Listener {
         int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
         int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
         int y = w.getHighestBlockYAt(x, z);
-        return new Location(w, x, y + 1, z);
+        return new Location(w, x, y + 1, z).add(0.5d, 0, 0.5d);
+    }
+
+    private Location getSpecificLocation() {
+        // get a random location from the lst
+        List<String> locations = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
+        String l = locations.get(TARDISConstants.RANDOM.nextInt(locations.size()));
+        String[] split = l.split(",");
+        World w = plugin.getServer().getWorld(split[0]);
+        // use the middle of the block
+        double x = TARDISNumberParsers.parseDouble(split[1]) + 0.5d;
+        double z = TARDISNumberParsers.parseDouble(split[3]) + 0.5d;
+        double y = TARDISNumberParsers.parseDouble(split[2]);
+        return new Location(w, x, y, z);
     }
 
     private void stealKey(Player p) {

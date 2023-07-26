@@ -6,6 +6,12 @@ spawn_rate:
 angels:
   worlds:
     world: 10
+  # whether to teleport to specific locations or random locations in specified worlds
+  teleport_to_location: false
+  # locations to teleport to if 'teleport_to_location' is true - use the format world,x,y,z defaults to world spawn
+  teleport_locations:
+    - world,0,64,0
+  # worlds to teleport to if 'teleport_to_location' is false
   teleport_worlds:
     - world
   freeze_time: 100

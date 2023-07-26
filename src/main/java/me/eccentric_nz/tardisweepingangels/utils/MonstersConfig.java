@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class MonstersConfig {
 
@@ -84,6 +86,7 @@ public class MonstersConfig {
         listOptions.put("zygons.drops", Arrays.asList("PAINTING", "SAND"));
         // boolean
         boolOptions.put("angels.angels_can_steal", true);
+        boolOptions.put("angels.teleport_to_location", false);
         boolOptions.put("angels.can_build", true);
         boolOptions.put("angels.spawn_from_chat.enabled", true);
         boolOptions.put("cybermen.can_upgrade", true);
@@ -135,10 +138,18 @@ public class MonstersConfig {
                 i++;
             }
         }
+        // set angels.teleport_locations to world spawn
+        if (!config.contains("angels.teleport_locations")) {
+            Location location = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+            String spawn = location.getWorld().getName()+","+location.getBlockX()+","+location.getBlockY()+","+location.getBlockZ();
+            List<String> list = Arrays.asList(spawn);
+            plugin.getMonstersConfig().set("angels.teleport_locations", list);
+            i++;
+        }
         if (i > 0) {
             try {
                 String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
-                config.save(new File(monstersPath));
+                plugin.getMonstersConfig().save(new File(monstersPath));
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.MONSTERS, "Added " + i + " new items to monsters.yml");
             } catch (IOException io) {
                 plugin.debug("Could not save monsters.yml, " + io.getMessage());
