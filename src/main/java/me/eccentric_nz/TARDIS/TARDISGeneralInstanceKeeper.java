@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
@@ -38,6 +32,13 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Keeps instances of various classes, maps and lists for easy access in other classes.
@@ -61,7 +62,15 @@ public class TARDISGeneralInstanceKeeper {
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final Set<Location> rechargers = new HashSet<>();
-    private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
+    private final List<Material> goodNether = new ArrayList<>() {
+        {
+            addAll(Tag.NETHER_CARVER_REPLACEABLES.getValues());
+            add(Material.GLOWSTONE);
+            add(Material.NETHER_BRICK);
+            add(Material.NETHER_BRICK_FENCE);
+            add(Material.NETHER_BRICK_STAIRS);
+        }
+    };
     private final Set<String> gravityDownList = new HashSet<>();
     private final List<String> roomArgs;
     private final Set<String> sonicLamps = new HashSet<>();

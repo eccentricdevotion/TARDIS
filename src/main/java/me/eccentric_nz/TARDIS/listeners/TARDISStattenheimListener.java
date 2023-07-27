@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -53,6 +49,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a
  * Stattenheim signal through the Vortex, which summons the operator's TARDIS
@@ -70,7 +71,7 @@ public class TARDISStattenheimListener implements Listener {
         this.plugin = plugin;
         // add useless blocks
         useless.add(Material.SNOW);
-        useless.add(Material.POWDER_SNOW);
+        useless.add(Material.MOSS_CARPET);
         useless.addAll(Tag.WOOL_CARPETS.getValues());
         useless.addAll(TARDISMaterials.plants);
         useless.addAll(Tag.SAPLINGS.getValues());

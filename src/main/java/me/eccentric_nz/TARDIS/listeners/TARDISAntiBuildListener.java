@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAntiBuild;
@@ -43,6 +41,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author eccentric_nz
  */
@@ -55,49 +56,57 @@ public class TARDISAntiBuildListener implements Listener {
 
     public TARDISAntiBuildListener(TARDIS plugin) {
         this.plugin = plugin;
-        no_place.add(Material.ACACIA_BOAT);
+        no_place.add(Material.ALLAY_SPAWN_EGG);
+        no_place.add(Material.AXOLOTL_SPAWN_EGG);
         no_place.add(Material.BAT_SPAWN_EGG);
-        no_place.add(Material.BIRCH_BOAT);
+        no_place.add(Material.BEE_SPAWN_EGG);
         no_place.add(Material.BLAZE_SPAWN_EGG);
         no_place.add(Material.BUCKET);
-        no_place.add(Material.CAVE_SPIDER_SPAWN_EGG);
+        no_place.add(Material.CAMEL_SPAWN_EGG);
         no_place.add(Material.CAT_SPAWN_EGG);
+        no_place.add(Material.CAVE_SPIDER_SPAWN_EGG);
         no_place.add(Material.CHEST_MINECART);
         no_place.add(Material.CHICKEN_SPAWN_EGG);
         no_place.add(Material.COD_SPAWN_EGG);
         no_place.add(Material.COW_SPAWN_EGG);
         no_place.add(Material.CREEPER_SPAWN_EGG);
-        no_place.add(Material.DARK_OAK_BOAT);
+        no_place.add(Material.DOLPHIN_SPAWN_EGG);
         no_place.add(Material.DONKEY_SPAWN_EGG);
         no_place.add(Material.DROWNED_SPAWN_EGG);
         no_place.add(Material.EGG);
         no_place.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
+        no_place.add(Material.ENDER_DRAGON_SPAWN_EGG);
         no_place.add(Material.ENDERMAN_SPAWN_EGG);
         no_place.add(Material.ENDERMITE_SPAWN_EGG);
         no_place.add(Material.EVOKER_SPAWN_EGG);
         no_place.add(Material.FLINT_AND_STEEL);
         no_place.add(Material.FOX_SPAWN_EGG);
+        no_place.add(Material.FROG_SPAWN_EGG);
         no_place.add(Material.FURNACE_MINECART);
         no_place.add(Material.GHAST_SPAWN_EGG);
+        no_place.add(Material.GLOW_SQUID_SPAWN_EGG);
+        no_place.add(Material.GOAT_SPAWN_EGG);
         no_place.add(Material.GUARDIAN_SPAWN_EGG);
+        no_place.add(Material.HOGLIN_SPAWN_EGG);
         no_place.add(Material.HOPPER_MINECART);
         no_place.add(Material.HORSE_SPAWN_EGG);
         no_place.add(Material.HUSK_SPAWN_EGG);
+        no_place.add(Material.IRON_GOLEM_SPAWN_EGG);
         no_place.add(Material.ITEM_FRAME);
-        no_place.add(Material.JUNGLE_BOAT);
         no_place.add(Material.LAVA_BUCKET);
         no_place.add(Material.LLAMA_SPAWN_EGG);
         no_place.add(Material.MAGMA_CUBE_SPAWN_EGG);
         no_place.add(Material.MINECART);
         no_place.add(Material.MOOSHROOM_SPAWN_EGG);
         no_place.add(Material.MULE_SPAWN_EGG);
-        no_place.add(Material.OAK_BOAT);
         no_place.add(Material.OCELOT_SPAWN_EGG);
         no_place.add(Material.PAINTING);
         no_place.add(Material.PANDA_SPAWN_EGG);
         no_place.add(Material.PARROT_SPAWN_EGG);
         no_place.add(Material.PHANTOM_SPAWN_EGG);
         no_place.add(Material.PIG_SPAWN_EGG);
+        no_place.add(Material.PIGLIN_BRUTE_SPAWN_EGG);
+        no_place.add(Material.PIGLIN_SPAWN_EGG);
         no_place.add(Material.PILLAGER_SPAWN_EGG);
         no_place.add(Material.POLAR_BEAR_SPAWN_EGG);
         no_place.add(Material.PUFFERFISH_SPAWN_EGG);
@@ -111,12 +120,14 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.SKELETON_HORSE_SPAWN_EGG);
         no_place.add(Material.SKELETON_SPAWN_EGG);
         no_place.add(Material.SLIME_SPAWN_EGG);
+        no_place.add(Material.SNIFFER_SPAWN_EGG);
+        no_place.add(Material.SNOW_GOLEM_SPAWN_EGG);
         no_place.add(Material.SPIDER_SPAWN_EGG);
-        no_place.add(Material.SPRUCE_BOAT);
         no_place.add(Material.SQUID_SPAWN_EGG);
         no_place.add(Material.STRAY_SPAWN_EGG);
+        no_place.add(Material.STRIDER_SPAWN_EGG);
+        no_place.add(Material.TADPOLE_SPAWN_EGG);
         no_place.add(Material.TNT_MINECART);
-        no_place.addAll(Tag.ITEMS_BOATS.getValues());
         no_place.add(Material.TRADER_LLAMA_SPAWN_EGG);
         no_place.add(Material.TROPICAL_FISH_SPAWN_EGG);
         no_place.add(Material.TURTLE_SPAWN_EGG);
@@ -124,18 +135,18 @@ public class TARDISAntiBuildListener implements Listener {
         no_place.add(Material.VILLAGER_SPAWN_EGG);
         no_place.add(Material.VINDICATOR_SPAWN_EGG);
         no_place.add(Material.WANDERING_TRADER_SPAWN_EGG);
+        no_place.add(Material.WARDEN_SPAWN_EGG);
         no_place.add(Material.WATER_BUCKET);
         no_place.add(Material.WITCH_SPAWN_EGG);
         no_place.add(Material.WITHER_SKELETON_SPAWN_EGG);
+        no_place.add(Material.WITHER_SPAWN_EGG);
         no_place.add(Material.WOLF_SPAWN_EGG);
-        no_place.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
-        no_place.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
-        no_place.add(Material.PIGLIN_SPAWN_EGG);
-        no_place.add(Material.HOGLIN_SPAWN_EGG);
         no_place.add(Material.ZOGLIN_SPAWN_EGG);
-        no_place.add(Material.STRIDER_SPAWN_EGG);
+        no_place.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
         no_place.add(Material.ZOMBIE_SPAWN_EGG);
         no_place.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
+        no_place.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
+        no_place.addAll(Tag.ITEMS_BOATS.getValues());
         allow_interact.add(Material.COMPARATOR);
         allow_interact.add(Material.LEVER);
         allow_interact.add(Material.REPEATER);
