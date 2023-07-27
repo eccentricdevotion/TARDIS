@@ -79,8 +79,15 @@ the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Reso
 
 ### Weeping Angels
 
-Weeping Angels only spawn at night in loaded chunks. They spawn with grey leather armour and a water lily helmet (their
-wings).
+Weeping Angels only spawn at night in loaded chunks. They may also spawn when metioned in chat (if configured) or by building them with blocks.
+
+To build an angel, place four cobblestone walls in a 'T' shape, then place a skeleton skull on the top. If the builder has the permission `tardisweepingangels.build.angel` an angel will spawn.
+
+```
+ S
+CCC
+ C
+```
 
 Weeping Angels can only be killed with the configured weapon - by default a DIAMOND_PICKAXE - hitting them with anything
 else has no effect. When they die they drop a random (1-3) amount of STONE.
@@ -90,6 +97,17 @@ Better arm yourself or flee quickly though, as they'll be after you again in a s
 teleported away to a random location. If the TARDIS plugin is also installed, your TARDIS Key will be stolen.
 
 ![Weeping Angel](images/docs/weeping_angel.jpg)
+
+Random teleport locations can be specified by world, or you can set specific locations to teleport players to.
+
+* Random teleports are set in the `angels.teleport_worlds` section in _monsters.yml_.
+  Add all the worlds you want to allow teleports to. A random location will be generating from loaded chunks in a randomly selected world.
+* Specific teleport locations require `angels.teleport_to_location` to be set to `true`. You can then use the `/twa teleport [replace|true|false]` command.
+  * You can list multiple locations to teleport to in the `angels.teleport_locations` section in _monsters.yml_.
+  * By default one location exists - the spawn location of the server's main world.
+  * To add a location, stand in the place you want to add and use the `/twa teleport` command.
+  * To replace all previously stored locations, repeat the above step, but use the `/twa teleport replace` command.
+  * To toggle between random world and specific location teleporting use the command `/twa teleport [true|false]` - where `true` is for specific locations.
 
 ### Cybermen
 
@@ -271,6 +289,9 @@ spawn_rate:
 angels:
   worlds:
     world: 10
+  teleport_to_location: false
+  teleport_locations:
+    - world,0,64,0
   teleport_worlds:
     - world
   freeze_time: 100
@@ -291,6 +312,8 @@ cybermen:
     - REDSTONE
     - STONE_BUTTON
   can_upgrade: true
+  dalek_sec_chance: 5
+  davros_chance: 5
 daleks:
   worlds:
     world: 10
@@ -426,9 +449,61 @@ The `worlds` section allows you to list the worlds you want the monsters to spaw
 
 `angels_can_steal` sets whether the Angels can steal your TARDIS Key — requires the TARDIS plugin to be installed.
 
+`teleport_to_location` sets whether angles teleport players to random worlds or specific locations.
+
+`teleport_locations` a list of one or more specific teleport locations to use.
+
+`teleport_worlds` a list of one or more worlds to for random teleport locations.
+
+`spawn_from_chat` sets whether mentioning _weeping angels_ in chat has a chance to spwan an angel nearby.
+
+`can_build` sets whether angels can be built using a specific sequence of blocks (like a snow golem).
+
 #### Cybermen specific
 
 `can_upgrade` sets whether the Cybermen can upgrade players and villagers.
+
+`dalek_sec_chance` sets the chance that Dalek sec will spawn instead of a regular Dalek
+
+`davros_chance` sets the chance that Davros will spawn instead of a regular Dalek
+
+#### Headless Monk specific
+
+`projectile` sets the item used a the monks projectile
+
+`particles` sets whether monks have a flaming sword
+
+#### Judoon specific
+
+`guards` sets whether Judoon can serve as personal body guards
+
+`can_build` sets whether Judoon can be built using a specific sequence of blocks (like a snow golem).
+
+`ammunition` sets the default amount of ammunition Judoon can carry
+
+`damage` sets the amount of damage a Judoon projectile will cause when hitting entities
+
+#### K-9 specific
+
+`by_taming` sets the chance that K-9 will appear instead of a tamed wolf
+
+`can_build` sets whether K-9 can be built using a specific sequence of blocks (like a snow golem).
+
+#### Ood specific
+
+`spawn_from_villager` sets the chance that an Ood will spawn instead of a villager
+
+`spawn_from_cured` sets the chance that an Ood will spawn instead of a cured villager
+
+#### Sontaran specific
+
+`can_tame` sets whether sontarans can to tamed into Strax
+
+#### Toclafane specific
+
+`spawn_from_bee` sets the chance that Toclaface will spawn instead of a bee
+  
+`destroy_blocks` sets whether toclafane explosions will destroy blocks
 
 ### Video
 
