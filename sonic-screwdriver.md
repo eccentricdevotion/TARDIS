@@ -33,10 +33,11 @@ td{vertical-align:top;}
 | Redstone Activator Circuit  | `/tardisrecipe redstone-activator-circuit`  | `tardis.sonic.redstone`                            |
 | Emerald Environment Circuit | `/tardisrecipe emerald-environment-circuit` | `tardis.sonic.emerald`<br>`tardis.sonic.plant`     |
 | Diamond Disruptor Circuit   | `/tardisrecipe diamond-disruptor-circuit`   | `tardis.sonic.diamond`<br>`tardis.sonic.silktouch` |
-| Painter Circuit             | `/tardisrecipe painter-circuit`             | `tardis.sonic.paint`                               |
+| Painter Circuit             | `/tardisrecipe painter-circuit`             | `tardis.sonic.paint`<br>`tardis.sonic.paint_block`                           |
 | Ignite Circuit              | `/tardisrecipe ignite-circuit`              | `tardis.sonic.ignite`                              |
-| Pickup Arrows Circuit       | `/tardisrecipe pickup-arrow-circuit`        | `tardis.sonic.arrow`                               |
-| Knockback Circuit           | `/tardisrecipe knockback-circuit`           | `tardis.sonic.arrow`                               |
+| Pickup Arrows Circuit       | `/tardisrecipe pickup-arrows-circuit`       | `tardis.sonic.arrow`                               |
+| Knockback Circuit           | `/tardisrecipe knockback-circuit`           | `tardis.sonic.knockback`                           |
+| Brush Circuit               | `/tardisrecipe brush-circuit`               | `tardis.sonic.brush`                               |
 | Server Admin Circuit        | `/tardisrecipe server-admin-circuit`        | `tardis.sonic.admin`                               |
 
 To upgrade your Sonic Screwdriver, you combine it with a new circuit in a crafting table or smithing table (though
