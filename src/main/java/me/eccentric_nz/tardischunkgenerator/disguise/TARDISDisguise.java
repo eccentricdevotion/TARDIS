@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,6 +23,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ambient.Bat;
@@ -45,6 +43,10 @@ import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ThreadLocalRandom;
+
 ;
 
 public class TARDISDisguise {
@@ -57,7 +59,7 @@ public class TARDISDisguise {
         this.options = options;
     }
 
-    public static net.minecraft.world.entity.Entity createMobDisguise(TARDISDisguise disguise, World w) {
+    public static Entity createMobDisguise(TARDISDisguise disguise, World w) {
         String str;
         String packagePath = "net.minecraft.world.entity.";
         boolean hasEntityStr = true;
@@ -184,7 +186,7 @@ public class TARDISDisguise {
             Constructor constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
             net.minecraft.world.entity.EntityType type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
             net.minecraft.world.level.Level world = ((CraftWorld) w).getHandle();
-            net.minecraft.world.entity.Entity entity = (net.minecraft.world.entity.Entity) constructor.newInstance(type, world);
+            Entity entity = (Entity) constructor.newInstance(type, world);
             if (disguise.getOptions() != null) {
                 for (Object o : disguise.getOptions()) {
                     if (o instanceof org.bukkit.DyeColor) {
