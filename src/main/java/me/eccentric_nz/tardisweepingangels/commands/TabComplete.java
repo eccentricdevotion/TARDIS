@@ -17,9 +17,6 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -27,29 +24,29 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * TabCompleter
  */
-public class TabComplete  extends TARDISCompleter implements TabCompleter {
+public class TabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
+    private final ImmutableList<String> TP_SUBS = ImmutableList.of("replace", "true", "false");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> MONSTER_SUBS;
-    ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay",
-            "remove", "set", "give", "teleport");
+    ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give", "teleport");
 
     public TabComplete(TARDIS plugin) {
-        this.plugin = plugin;
         List<String> tmp = new ArrayList<>();
         for (Monster m : Monster.values()) {
             tmp.add(m.toString());
         }
         MONSTER_SUBS = ImmutableList.copyOf(tmp);
         List<String> worlds = new ArrayList<>();
-        this.plugin.getServer().getWorlds().forEach((w) -> {
-            worlds.add(w.getName());
-        });
+        plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
     }
 
@@ -62,6 +59,8 @@ public class TabComplete  extends TARDISCompleter implements TabCompleter {
             case 2 -> {
                 if (args[0].equals("give")) {
                     return null;
+                } else if (args[0].equals("teleport")) {
+                    return partial(args[1], TP_SUBS);
                 } else {
                     return partial(args[1], MONSTER_SUBS);
                 }
