@@ -16,15 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
 import net.md_5.bungee.api.ChatColor;
@@ -38,12 +33,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.*;
+
 /**
- * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
- * is stored in the Secondary Control Room. All TARDISes have one of these
- * devices, which can be used to remotely control a TARDIS by broadcasting
- * Stattenheim signals that travel along the time contours in the Space/Time
- * Vortex.
+ * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
+ * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
  */
@@ -58,7 +53,22 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("seed", "");
         recipeItems.put("tardis", "");
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
+            if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED) {
+                recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
+            }
+        }
+        // remove recipes form modules that are not enabled
+        if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
+            recipeItems.remove("vortex-manipulator");
+        }
+        if (!plugin.getConfig().getBoolean("modules.sonic_blaster")) {
+            recipeItems.remove("sonic-blaster");
+            recipeItems.remove("blaster-battery");
+            recipeItems.remove("landing-pad");
+        }
+        if (!plugin.getConfig().getBoolean("modules.weeping_angels")) {
+            recipeItems.remove("judoon-ammunition");
+            recipeItems.remove("k9");
         }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put("ANCIENT", Material.SCULK); // ancient
@@ -129,7 +139,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player.openInventory(categories);
                 return true;
             }
-            if (!recipeItems.containsKey(args[0].toLowerCase(Locale.ENGLISH))) {
+            String which = args[0].toLowerCase();
+            if (!recipeItems.containsKey(which)) {
                 if (args[0].equalsIgnoreCase("list_more")) {
                     new TARDISRecipeLister(plugin, sender).listMore();
                 } else {
@@ -149,9 +160,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 showTARDISRecipe(player, args[1].toUpperCase(Locale.ENGLISH));
                 return true;
             }
-            String which = args[0].toLowerCase();
             switch (which) {
-                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade" -> {
+                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade", "brush-upgrade", "judoon-ammunition" -> {
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
                 }

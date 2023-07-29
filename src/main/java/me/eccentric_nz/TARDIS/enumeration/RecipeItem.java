@@ -25,7 +25,6 @@ public enum RecipeItem {
     AUTHORISED_CONTROL_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BIO_SCANNER_CIRCUIT(10001969, RecipeCategory.SONIC_CIRCUITS),
     BLANK_STORAGE_DISK(10000001, RecipeCategory.STORAGE_DISKS),
-    BLASTER_BATTERY(10000002, RecipeCategory.MISC),
     BRUSH_CIRCUIT(10001987, RecipeCategory.SONIC_CIRCUITS),
     CUSTARD_CREAM(10000002, RecipeCategory.FOOD),
     DIAMOND_DISRUPTOR_CIRCUIT(10001971, RecipeCategory.SONIC_CIRCUITS),
@@ -95,7 +94,13 @@ public enum RecipeItem {
     RED_BOW_TIE(10000037, RecipeCategory.ACCESSORIES),
     BLACK_BOW_TIE(10000038),
     THREE_D_GLASSES(10000039, RecipeCategory.ACCESSORIES),
+    // module recipes
     VORTEX_MANIPULATOR(10000002, RecipeCategory.ACCESSORIES),
+    SONIC_BLASTER(10000002, RecipeCategory.ACCESSORIES),
+    BLASTER_BATTERY(10000002, RecipeCategory.MISC),
+    LANDING_PAD(10000001, RecipeCategory.ACCESSORIES),
+    JUDOON_AMMUNITION(13, RecipeCategory.MISC),
+    K9(1, RecipeCategory.MISC),
     // custom block recipes start here
     GROW(10001, RecipeCategory.CUSTOM_BLOCKS),
     BLUE_BOX(10001, RecipeCategory.CUSTOM_BLOCKS),
