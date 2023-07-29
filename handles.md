@@ -21,7 +21,7 @@ other players a Handles with the command `/tardisgive [player] handles 1`
 
 Handles can only be placed inside the TARDIS, and must be placed in an item frame.
 
-Outside the TARDIS you can only communicate with Handles if he is in your inventory, or you have a communicator (and
+<a id="communicator"></a>Outside the TARDIS you can only communicate with Handles if he is in your inventory, or you have a communicator (and
 Handles is placed in the TARDIS) — use the `/tardisrecipe communicator` to view the recipe, or give a communicator with
 the `/tardisgive [player] communicator 1` command.
 

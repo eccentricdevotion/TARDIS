@@ -40,10 +40,10 @@ Otherwise, mobs will look like vanilla mobs!
 - Daleks will spawn in the big main buildings. There is a 10% chance that a Dalek will spawn flying in the air, but this
   can be disabled in the config described below.
 - A random loot chest is located in the main Dalek building — wear plenty of armour if you want to raid these!
-- You can fill Acid Buckets and Rust Buckets by using an empty bucket on water and lava. Acid Buckets can be used to
+- <a id="buckets"></a>You can fill Acid Buckets and Rust Buckets by using an empty bucket on water and lava. Acid Buckets can be used to
   make Acid Batteries, which in turn can be used to make [Rift Manipulators](rift-manipulator.html). Rust Buckets are
   used in the crafting recipe for the [Rust Plague](http://tardis.wikia.com/wiki/Rust_plague) Sword - this deals more
-  damage to Daleks (Update the TARDIS-MCP resource pack to see the textures).
+  damage to Daleks (Use the TARDIS-Resource-Pack to see the textures).
 
 ## Planet Gallifrey
 

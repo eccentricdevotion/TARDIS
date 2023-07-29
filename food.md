@@ -16,9 +16,18 @@ colour. To see the recipe type:
 
     /tardisrecipe jelly-baby
 
-Each recipe gives 4 coloured jelly-babies, eating a jelly baby restores one hunger.
+Each recipe gives 4 coloured jelly babies, eating a jelly baby restores one hunger.
 
 ![jelly baby crafting](images/docs/jelly_baby.jpg)
+
+#### Paper bag
+
+You can store your jelly babies in a paper bag. 
+- SHIFT-click the bag in inventory to store up to 4 stacks of Jelly Babies in it
+- RIGHT-click the bag in inventory to get a random Jelly Baby out of the bag
+
+
+    /tardisrecipe paper-bag
 
 ### Fish fingers
 
@@ -52,8 +61,20 @@ recipe type:
 
 Each recipe gives 8 Jammy Dodgers, eating a Jammy Dodger restores 1 hunger.
 
-![custard crafting](images/docs/jammy_dodger.jpg)
+![jammy dodger crafting](images/docs/jammy_dodger.jpg)
+
+### Custard Creams
+
+// TODO
+
+    /tardisrecipe custard-cream
+
+#### Custard cream dispenser
+
+// TODO
+
+---
 
 All the food items, including all 16 jelly baby flavours.
 
-![custard crafting](images/docs/tardis_food.jpg)
+![all the food](images/docs/tardis_food.jpg)

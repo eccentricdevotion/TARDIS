@@ -8,7 +8,8 @@ Whovian accessories
 
 You can craft two Whovian accessories items in-game so that you can be cool like the Doctor.
 
-To see the custom accessory textures, you will need to use the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/).
+To see the custom accessory textures, you will need to use
+the [TARDIS-Resource-Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/).
 
 ### Bow ties
 
@@ -25,7 +26,7 @@ combine same coloured bow ties in an ANVIL to ‘repair’ them.
 
 ### 3-D glasses
 
-The Tenth Doctor used a pair of 3-D glasses when observing the effects the Void had on people and objects. you can do
+The Tenth Doctor used a pair of 3-D glasses when observing the effects the Void had on people and objects. You can do
 the same! To see the recipe type:
 
     /tardisrecipe 3-d-glasses

@@ -60,12 +60,16 @@ To change the look of your TARDIS Key, type:
 This requires the [TARDIS Resource Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) to see the
 different key textures. Use the command to open the TARDIS Key GUI.
 
+![TARDIS Key GUI](images/docs/key_prefs_menu.jpg)
+
 To change the look of your Sonic Screwdriver, type:
 
     /tardisprefs sonic
 
 This requires the [TARDIS Resource Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) to see the
 different sonic textures. Use the command to open the Sonic Screwdriver GUI.
+
+![Sonic Screwdriver GUI](images/docs/sonic_prefs_menu.jpg)
 
 To toggle the TARDIS sound effects on or off, type:
 
@@ -104,7 +108,8 @@ To toggle the Who quotes on or off, type:
 
     /tardisprefs quotes [on|off]
 
-To toggle announcing (i.e. showing a title in-game) of the TARDIS console travel repeater settings when you click them, type:
+To toggle announcing (i.e. showing a title in-game) of the TARDIS console travel repeater settings when you click them,
+type:
 
     /tprefs announce_repeaters [on|off]
 
