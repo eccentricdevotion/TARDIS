@@ -5,7 +5,7 @@ title: TARDIS Items
 
 # TARDIS Items
 
-<style>img{max-height:64px;}</style>
+<style>img{max-height:64px;}td:nth-child(2){text-align:center;}</style>
 
 | Item                                                             |                                                                                                                                                            | Description                                                                                                                                                                                                                                                                          | View recipe command            |
 |------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
@@ -26,10 +26,10 @@ title: TARDIS Items
 | [Remote Key](remote-key.html)                                    | ![Remote key](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/item/key/remote.png?raw=true)                   | Lock and unlock the TARDIS remotely.                                                                                                                                                                                                                                                 | `/trecipe remote-key`          |
 | [Rift Manipulator](rift-manipulator.html)                        | ![Rift Manipulator](images/docs/rift_manipulator.png)                                                                                                      | Set up personal TARDIS rechargers.                                                                                                                                                                                                                                                   | `/trecipe rift-manipulator`    |
 | [Rust Bucket](planets.html#buckets)                              | ![Rust Bucket](images/docs/rust_bucket.png)                                                                                                                | An ingredient in the Rust Plague Sword                                                                                                                                                                                                                                               | Not craftable                  |
-| [Rust Plague Sword](planets.html#buckets)                        |                                                                                                                                                            | Deals more damage to Daleks.                                                                                                                                                                                                                                                         | `/trecipe rust-plague-sword`   |
+| [Rust Plague Sword](planets.html#buckets)                        | ![Rust Plague Sword](images/docs/rust_plague_sword.png)                                                                                                    | Deals more damage to Daleks.                                                                                                                                                                                                                                                         | `/trecipe rust-plague-sword`   |
 | [Schematic Wand](schematics.html)                                | ![Schematic Wand](images/docs/schematic-wand.png)                                                                                                          | Select the corners of TARDIS schematic areas.                                                                                                                                                                                                                                        | `/trecipe schematic-wand`      |
 | [Paper Bag](food.html#paper-bag)                                 | ![Paper Bag](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/item/food/paper_bag.png?raw=true)                | Store your Jelly Babies.                                                                                                                                                                                                                                                             | `/trecipe schematic-wand`      |
-| [Custard Cream Dispenser](food.html#custard-cream)               | ![Custard Cream Dispenser](images/docs/dispenser.png)                                                                                                      | Get your custard cream fix more easily from the TARDIS console.                                                                                                                                                                                                                      | `/trecipe schematic-wand`      |
+| [Custard Cream Dispenser](food.html#custard-cream)               | ![Custard Cream Dispenser](images/docs/custard_cream_dispenser.png)                                                                                        | Get your custard cream fix more easily from the TARDIS console.                                                                                                                                                                                                                      | `/trecipe schematic-wand`      |
 | <a id="stattenheim-remote"></a>Stattenheim Remote                | ![Stattenheim Remote](images/docs/stattenheim-remote.png)                                                                                                  | Used to call the TARDIS to the block that you use the remote on.                                                                                                                                                                                                                     | `/trecipe stattenheim-remote`  |
 | [TARDIS Communicator](handles.html#communicator)                 | ![](images/docs/communicator.png)                                                                                                                          | Communicate with Handles from outside of the TARDIS.                                                                                                                                                                                                                                 | `/trecipe coomunicator`        |
 | <a id="locator"></a>TARDIS Locator                               | ![TARDIS Locator](images/docs/locator.png)                                                                                                                 | Find the TARDIS by following a compass. This item replaces the `/tardis find` command when the plugin `difficulty` is set to hard.                                                                                                                                                   | `/trecipe locator`             |
@@ -38,37 +38,57 @@ title: TARDIS Items
 
 ## Food
 
-| Item          |                                                 | Description                                                | Recipe command          |
-|---------------|-------------------------------------------------|------------------------------------------------------------|-------------------------|
-| Jelly Babies  | ![Jelly Baby](images/docs/jelly_baby.png)       | The fourth Doctor’s favourite.                             | `/trecipe jelly-baby`   |
-| Jammy Dodger  | ![Jammy Dodger](images/docs/jammy_dodger.png)   | A self-destruct button or just jummy?                      | `/trecipe jammy-dodger` |
-| Custard       | ![Custard](images/docs/bowl_of_custard.png)     | One half of the eleventh Doctor’s regeneration food.       | `/trecipe custard`      |
-| Fish Finger   | ![Fish Finger](images/docs/fish_finger.png)     | The other half of the eleventh Doctor’s regeneration food. | `/trecipe fish-finger`  |
-| Custard Cream | ![Custard Cream](images/docs/custard_cream.png) |                                                            | `/trecipe jelly-baby`   |
+| Item          |                                                 | Description                                                | Recipe command           |
+|---------------|-------------------------------------------------|------------------------------------------------------------|--------------------------|
+| Jelly Babies  | ![Jelly Baby](images/docs/jelly_baby.png)       | The fourth Doctor’s favourite.                             | `/trecipe jelly-baby`    |
+| Jammy Dodger  | ![Jammy Dodger](images/docs/jammy_dodger.png)   | A self-destruct button or just jummy?                      | `/trecipe jammy-dodger`  |
+| Custard       | ![Custard](images/docs/bowl_of_custard.png)     | One half of the eleventh Doctor’s regeneration food.       | `/trecipe custard`       |
+| Fish Finger   | ![Fish Finger](images/docs/fish_finger.png)     | The other half of the eleventh Doctor’s regeneration food. | `/trecipe fish-finger`   |
+| Custard Cream | ![Custard Cream](images/docs/custard_cream.png) | Eat one of the Thirteenth Doctor’s favourtites.            | `/trecipe custard-cream` |
 
 ## Disks
 
-| Item |   | Description | Recipe command |
-|------|---|-------------|----------------|
-|      |   |             | `/trecipe `    |
+| Item      |                                            | Description                                                                                                | Recipe command                     |
+|-----------|--------------------------------------------|------------------------------------------------------------------------------------------------------------|------------------------------------|
+| area      | ![ Disk](images/docs/area_disk.png)        | Area Storage Disk - automatically assigned whn server areas are made.                                      | Uncraftable                        |
+| biome     | ![ Disk](images/docs/biome_disk.png)       | Biome Storage Disk - for storing biomes to travel to.                                                      | `/trecipe biome-storage-disk`      |
+| blank     | ![ Disk](images/docs/blank_disk.png)       | Blank Storage Disk - the base disk, needed to craft all the others.                                        | `/trecipe blank-storage-disk`      |
+| blueprint | ![ Disk](images/docs/blueprint_disk_2.png) | Blueprint Disk - given by server admins, or bought from the TARDIS Shop, they to grant plugin permissions. | Uncraftable                        |
+| control   | ![ Disk](images/docs/control_disk.png)     | Authorised Control Disk - allow companions to travel to preset destinations in your TARDIS.                | `/trecipe authorised-control-disk` |
+| handles   | ![ Disk](images/docs/handles_disk.png)     | Handles Program Disk - generated from the Handles Program GUI.                                             | Uncraftable                        |
+| player    | ![ Disk](images/docs/player_disk.png)      | Player Storage Disk - for storing players to travel to.                                                    | `/trecipe player-storage-disk`     |
+| preset    | ![ Disk](images/docs/preset_disk.png)      | Preset Storage Disk - for setting the Chameleon preset when travelling.                                    | `/trecipe preset-storage-disk`     |
+| save      | ![ Disk](images/docs/save_disk.png)        | Save Storage Disk - for storing saved locations to travel to.                                              | `/trecipe save-storage-disk`       |
 
 ## [Time rotors](time-rotor.html)
 
-| Item         |   | Description | Recipe command                 |
-|--------------|---|-------------|--------------------------------|
-| early        |   |             | `/trecipe time-rotor-early`    |
-| tenth        |   |             | `/trecipe time-rotor-tenth`    |
-| eleventh     |   |             | `/trecipe time-rotor-eleventh` |
-| twelfth      |   |             | `/trecipe time-rotor-twelfth`  |
-| delta        |   |             | `/trecipe time-rotor-delta`    |
-| engine       |   |             | `/trecipe time-engine`         |
-| engine rotor |   |             | `/trecipe time-rotor-engine`   |
-| hospital     |   |             | `/trecipe time-rotor-hospital` |
+| Item         |                                               | Description                           | Recipe command                 |
+|--------------|-----------------------------------------------|---------------------------------------|--------------------------------|
+| early        | ![Early](images/docs/early_0.png)             | Old Who style time rotor              | `/trecipe time-rotor-early`    |
+| tenth        | ![Tennant](images/docs/tennant_0.png)         | Ninth and Tenth Doctors’ time rotor   | `/trecipe time-rotor-tenth`    |
+| eleventh     | ![Eleventh](images/docs/eleventh_0.png)       | Eleventh Doctor’s time rotor          | `/trecipe time-rotor-eleventh` |
+| twelfth      | ![Twelfth](images/docs/twelfth_0.png)         | Twelfth Doctor’s time rotor           | `/trecipe time-rotor-twelfth`  |
+| delta        | ![Delta](images/docs/delta_0.png)             | Nether Delta console time rotor       | `/trecipe time-rotor-delta`    |
+| engine       | ![Engine](images/docs/engine_0.png)           | Mechanical console time engine        | `/trecipe time-engine`         |
+| engine rotor | ![Engine Rotor](images/docs/engine_rotor.png) | Mechanical conole time rotor          | `/trecipe time-rotor-engine`   |
+| hospital     | ![Hospital](images/docs/hospital_0.png)       | St John’s hospital console time rotor | `/trecipe time-rotor-hospital` |
 
 ## Custom blocks
 
-| Block |   | Description | Recipe command |
-|-------|---|-------------|----------------|
-|       |   |             | `/trecipe `    |
+| Block            |                                                                                                                                                          | Description                           | Recipe command            |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|---------------------------|
+| grow             | ![Grow](images/docs/grow.png)                                                                                                                            | TARDIS seed block animated processor. | `/trecipe grow`           |
+| siege            | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/siege.png?raw=true)                        |                                       | `/trecipe siege-cube`     |
+| the moment       | ![The Moment](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/the_moment/the_moment_0.png?raw=true)   |                                       | `/trecipe the-moment`     |
+| hexagon          | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/tardis/hexagon.png?raw=true)               |                                       | `/trecipe hexagon`        |
+| roundel          | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/tardis/roundel.png?raw=true)               |                                       | `/trecipe roundel`        |
+| offset roundel   | ![Offset roundel](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/tardis/roundel_offset.png?raw=true) |                                       | `/trecipe roundel_offset` |
+| cog              | ![Cog](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/tardis/cog.png?raw=true)                       |                                       | `/trecipe hexagon`        |
+| blue box         | ![Blue Box](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/tardis/blue_box.png?raw=true)             |                                       | `/trecipe hexagon`        |
+| classic light    | ![Classic](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/lights/classic_on.png?raw=true)            |                                       | `/trecipe hexagon`        |
+| tenth light      | ![Tenth](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/lights/tenth_on.png?raw=true)                |                                       | `/trecipe hexagon`        |
+| eleventh light   | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/lights/eleventh_on.png?raw=true)           |                                       | `/trecipe hexagon`        |
+| twelfth light    | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/lights/twelfth_on.png?raw=true)            |                                       | `/trecipe hexagon`        |
+| thirteenth light | ![Hexagon](https://github.com/eccentricdevotion/TARDIS-Resource-Pack/blob/master/assets/tardis/textures/block/lights/thirteenth_on.png?raw=true)         |                                       | `/trecipe hexagon`        |
 
 
