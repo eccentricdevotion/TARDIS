@@ -11,6 +11,11 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
+        <!--vault & griefprevention-->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
         <repository>
             <id>spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
@@ -68,8 +73,16 @@
             <url>https://repo.citizensnpcs.co/</url>
         </repository>
         <repository>
-            <id>vault</id>
-            <url>https://jitpack.io</url>
+            <id>towny</id>
+            <url>https://repo.glaremasters.me/repository/towny/</url>
+        </repository>
+        <repository>
+            <id>red-protect</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+        <id>factions</id>
+        <url>https://repo.dustplanet.de/artifactory/ext-release-local/</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -151,7 +164,7 @@
             <plugin>
                 <groupId>net.md-5</groupId>
                 <artifactId>specialsource-maven-plugin</artifactId>
-                <version>1.2.4</version>
+                <version>1.2.5</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -218,7 +231,7 @@
                             <shadedPattern>me.eccentric_nz.paperlib</shadedPattern>
                         </relocation>
                     </relocations>
-                </configuration>                
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -335,22 +348,23 @@
             <version>2.0.30-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.palmergames.bukkit</groupId>
-            <artifactId>Towny</artifactId>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>towny</artifactId>
             <version>0.99.5.0</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Towny.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.wimbli.WorldBorder</groupId>
+            <groupId>com.github.Brettflan</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>2.1.0</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/WorldBorder.jar</systemPath>
+            <version>44f388f3ba</version>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
@@ -380,19 +394,21 @@
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
-            <artifactId>factions</artifactId>
-            <version>1.6.9.5</version>
+            <artifactId>Factions</artifactId>
+            <version>1.6.9.5-U0.6.8</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Factions.jar</systemPath>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>me.ryanhamshire</groupId>
+            <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.18.1</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
+            <version>16.18.2-beta1</version>
         </dependency>
         <dependency>
             <groupId>nl.rutgerkok</groupId>
@@ -474,12 +490,19 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect</artifactId>
+            <groupId>io.github.fabiozumbi12.RedProtect</groupId>
+            <artifactId>RedProtect-Core</artifactId>
             <version>8.1.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/RedProtect.jar</systemPath>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>        </dependency>
+        <dependency>
+            <groupId>io.github.fabiozumbi12.RedProtect</groupId>
+            <artifactId>RedProtect-Spigot</artifactId>
+            <version>8.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.coreprotect</groupId>
@@ -523,6 +546,12 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.geysermc.floodgate</groupId>
@@ -546,7 +575,7 @@
             <groupId>org.swinglabs</groupId>
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
-            <scope>provided</scope>        
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
