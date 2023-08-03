@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -31,10 +29,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -44,9 +39,9 @@ import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.transmat.TARDISTransmatInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -57,6 +52,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -81,9 +80,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             if (slot >= 0 && slot < 54) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
+                    UUID uuid = player.getUniqueId();
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
+                    wheres.put("uuid", uuid.toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
@@ -205,7 +205,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                         close(player, false);
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
-                                        plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
+                                        plugin.getTrackerKeeper().getZeroRoomOccupants().add(uuid);
                                         HashMap<String, Object> wherez = new HashMap<>();
                                         wherez.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
@@ -213,8 +213,24 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
                                     }
                                 }
-                                case 9 -> {
+                                case 9, 18 -> {
                                     // saves
+                                    // 9 = saves for the TARDIS the player is in
+                                    // 18 = saves for the player's TARDIS (if they're not in their own)
+                                    // so, determine player's TARDIS id vs occupied TARDIS id
+                                    int whichId = tardis.getTardis_id();
+                                    if (slot == 18) {
+                                        ResultSetTardisID tstid = new ResultSetTardisID(plugin);
+                                        if (tstid.fromUUID(uuid.toString())) {
+                                            int pid = tstid.getTardis_id();
+                                            if (whichId != pid) {
+                                                whichId = pid;
+                                                plugin.getTrackerKeeper().getSavesIds().put(uuid, pid);
+                                            }
+                                        }
+                                    } else {
+                                        plugin.getTrackerKeeper().getSavesIds().remove(uuid);
+                                    }
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                                         return;
@@ -223,9 +239,9 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
                                         return;
                                     }
-                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), player);
-                                    ItemStack[] saves = tssi.getTerminal();
-                                    Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+                                    TARDISSavesPlanetInventory tssi = new TARDISSavesPlanetInventory(plugin, whichId);
+                                    ItemStack[] saves = tssi.getPlanets();
+                                    Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                                     saved.setContents(saves);
                                     player.openInventory(saved);
                                 }
@@ -258,21 +274,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                 case 17 -> {
                                     //player prefs
                                     Inventory ppm = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Player Prefs Menu");
-                                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
+                                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, uuid).getMenu());
                                     player.openInventory(ppm);
-                                }
-                                case 18 -> {
-                                    // fast return
-                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                                        return;
-                                    }
-                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
-                                        return;
-                                    }
-                                    close(player, false);
-                                    new TARDISFastReturnButton(plugin, player, id, level).clickButton();
                                 }
                                 case 20 -> {
                                     // power up/down
@@ -312,22 +315,19 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                     player.openInventory(companions);
                                 }
                                 case 27 -> {
-                                    // areas
+                                    // fast return
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasMemory()) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
                                         return;
                                     }
-                                    TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
-                                    ItemStack[] areas = tai.getTerminal();
-                                    Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
-                                    areainv.setContents(areas);
-                                    player.openInventory(areainv);
+                                    close(player, false);
+                                    new TARDISFastReturnButton(plugin, player, id, level).clickButton();
                                 }
-                                case 29 -> {
+                                 case 29 -> {
                                     // light switch
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
@@ -357,23 +357,20 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                     player.openInventory(smat);
                                 }
                                 case 36 -> {
-                                    // destination terminal
+                                    // areas
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                                         return;
                                     }
-                                    if (level < plugin.getArtronConfig().getInt("travel")) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
+                                    if (tcc != null && !tcc.hasMemory()) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
-                                        return;
-                                    }
-                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-                                    Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
-                                    aec.setContents(items);
-                                    player.openInventory(aec);
+                                    TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
+                                    ItemStack[] areas = tai.getTerminal();
+                                    Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
+                                    areainv.setContents(areas);
+                                    player.openInventory(areainv);
                                 }
                                 case 38 -> {
                                     // toggle wool
@@ -411,25 +408,23 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                     d.setItemMeta(im);
                                 }
                                 case 45 -> {
-                                    // space time throttle
-                                    // update the lore
-                                    ItemStack spt = view.getItem(45);
-                                    ItemMeta im = spt.getItemMeta();
-                                    String currentThrottle = im.getLore().get(0);
-                                    int delay = SpaceTimeThrottle.valueOf(currentThrottle).getDelay() - 1;
-                                    if (delay < 1) {
-                                        delay = 4;
+                                    // destination terminal
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
+                                        return;
                                     }
-                                    String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-                                    im.setLore(Collections.singletonList(throttle));
-                                    spt.setItemMeta(im);
-                                    // update player prefs
-                                    HashMap<String, Object> wherer = new HashMap<>();
-                                    wherer.put("uuid", player.getUniqueId().toString());
-                                    HashMap<String, Object> setr = new HashMap<>();
-                                    setr.put("throttle", delay);
-                                    plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "THROTTLE", throttle);
+                                    if (level < plugin.getArtronConfig().getInt("travel")) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
+                                    Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+                                    aec.setContents(items);
+                                    player.openInventory(aec);
                                 }
                                 case 47 -> {
                                     // tardis map
@@ -452,6 +447,27 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                                     Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
                                     tmpl.setContents(clocks);
                                     player.openInventory(tmpl);
+                                }
+                                case 51 -> {
+                                    // space-time throttle
+                                    // update the lore
+                                    ItemStack spt = view.getItem(51);
+                                    ItemMeta im = spt.getItemMeta();
+                                    String currentThrottle = im.getLore().get(0);
+                                    int delay = SpaceTimeThrottle.valueOf(currentThrottle).getDelay() - 1;
+                                    if (delay < 1) {
+                                        delay = 4;
+                                    }
+                                    String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
+                                    im.setLore(Collections.singletonList(throttle));
+                                    spt.setItemMeta(im);
+                                    // update player prefs
+                                    HashMap<String, Object> wherer = new HashMap<>();
+                                    wherer.put("uuid", uuid.toString());
+                                    HashMap<String, Object> setr = new HashMap<>();
+                                    setr.put("throttle", delay);
+                                    plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "THROTTLE", throttle);
                                 }
                                 case 53 ->
                                     // close

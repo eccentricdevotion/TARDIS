@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.gson.JsonObject;
-import java.util.*;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -41,6 +40,8 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+
+import java.util.*;
 
 /**
  * A central repository used to store various data values required to track what
@@ -78,6 +79,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> count = new HashMap<>();
     private final HashMap<UUID, Integer> ejecting = new HashMap<>();
     private final HashMap<UUID, Integer> junkPlayers = new HashMap<>();
+    private final HashMap<UUID, Integer> savesIds = new HashMap<>();
     private final HashMap<UUID, Integer> secondaryRemovers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
@@ -426,6 +428,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, Integer> getJunkPlayers() {
         return junkPlayers;
+    }
+
+    /**
+     * Tracks players wanting to access their own saves from another player's TARDIS
+     *
+     * @return a Map of player UUIDs and their TARDIS id
+     */
+    public HashMap<UUID, Integer> getSavesIds() {
+        return savesIds;
     }
 
     /**

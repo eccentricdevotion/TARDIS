@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
@@ -27,9 +24,9 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,6 +38,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A trip stitch circuit-breaker was a circuit that if was enabled in the psycho-kinetic threshold manipulator of the
@@ -101,8 +102,8 @@ public class TARDISConsoleSwitchListener implements Listener {
                                             stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
                                         } // Memory circuit (saves/areas)
                                         case 10001975, 20001975 -> {
-                                            new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS saves");
-                                            stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), p).getTerminal();
+                                            new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                                            stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardis_id()).getPlanets();
                                         } // Input circuit (terminal)
                                         case 10001976, 20001976 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");

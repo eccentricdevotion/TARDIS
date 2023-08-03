@@ -76,6 +76,8 @@ import me.eccentric_nz.TARDIS.sonic.*;
 import me.eccentric_nz.TARDIS.transmat.TARDISTransmatGUIListener;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesListener;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetListener;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlockListener;
@@ -231,7 +233,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISRemoteKeyListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRoomSeeder(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISSaveSignListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSavesListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSavesPlanetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSchematicListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSeedBlockListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("siege.enabled")) {

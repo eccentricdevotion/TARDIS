@@ -55,7 +55,7 @@ public class TARDISStringUtils {
         if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
             return s.toUpperCase();
         }
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase().replace("tardis", "TARDIS");
     }
 
     public static String titleCase(String s) {

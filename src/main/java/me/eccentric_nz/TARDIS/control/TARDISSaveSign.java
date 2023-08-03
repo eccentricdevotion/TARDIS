@@ -16,20 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
 
 class TARDISSaveSign {
 
@@ -75,16 +76,16 @@ class TARDISSaveSign {
                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.SAVE));
                 }
             } else {
-                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
-                ItemStack[] items = sst.getTerminal();
-                Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+                TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id);
+                ItemStack[] items = sst.getPlanets();
+                Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                 inv.setContents(items);
                 player.openInventory(inv);
             }
         } else {
-            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
-            ItemStack[] items = sst.getTerminal();
-            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+            TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id);
+            ItemStack[] items = sst.getPlanets();
+            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
             inv.setContents(items);
             player.openInventory(inv);
         }

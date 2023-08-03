@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.io.IOException;
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -63,6 +61,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * The various systems of the console room are fairly well-understood. According
@@ -407,7 +408,7 @@ public class TARDISControlListener implements Listener {
                                         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
                                             TARDISFloodgate.sendControlForm(playerUUID);
                                         } else {
-                                            ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
+                                            ItemStack[] controls = new TARDISControlInventory(plugin, id).getControls();
                                             Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
                                             cgui.setContents(controls);
                                             player.openInventory(cgui);

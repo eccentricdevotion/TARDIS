@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,6 +31,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -103,9 +105,9 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
                     if (rs.resultSet()) {
-                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id(), player);
-                        ItemStack[] items = sst.getTerminal();
-                        Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+                        TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id());
+                        ItemStack[] items = sst.getPlanets();
+                        Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                         saveinv.setContents(items);
                         player.openInventory(saveinv);
                     }

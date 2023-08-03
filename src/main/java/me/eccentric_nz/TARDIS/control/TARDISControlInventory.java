@@ -16,11 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIControlCentre;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -32,18 +30,22 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author eccentric_nz
  */
 public class TARDISControlInventory {
 
     private final TARDIS plugin;
-    private final UUID uuid;
+    private final int id;
     private final ItemStack[] controls;
 
-    TARDISControlInventory(TARDIS plugin, UUID uuid) {
+    TARDISControlInventory(TARDIS plugin, int id) {
         this.plugin = plugin;
-        this.uuid = uuid;
+        this.id = id;
         controls = getItemStack();
     }
 
@@ -56,7 +58,7 @@ public class TARDISControlInventory {
 
         // get tardis options
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
+        where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         String lights_onoff = "";
         String siege_onoff = "";
@@ -98,9 +100,17 @@ public class TARDISControlInventory {
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta locs = save.getItemMeta();
         locs.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
+        locs.setLore(List.of(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName()));
         locs.setCustomModelData(GUIControlCentre.BUTTON_SAVES.getCustomModelData());
         save.setItemMeta(locs);
-        // back
+        // Own saves if in another player's TARDIS
+        ItemStack own = new ItemStack(Material.BOWL, 1);
+        ItemMeta saves = own.getItemMeta();
+        saves.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
+        saves.setLore(List.of(GUISaves.LOAD_MY_SAVES.getName()));
+        saves.setCustomModelData(GUIControlCentre.BUTTON_SAVES.getCustomModelData());
+        own.setItemMeta(saves);
+                // back
         ItemStack fast = new ItemStack(Material.BOWL, 1);
         ItemMeta ret = fast.getItemMeta();
         ret.setDisplayName(plugin.getLanguage().getString("BUTTON_BACK"));
@@ -283,10 +293,10 @@ public class TARDISControlInventory {
         return new ItemStack[]{
             ran, null, ars, null, cham, null, art, null, zero,
             save, null, upg, null, siege, null, scan, null, player,
-            fast, null, pow, null, hide, null, info, null, companion,
-            area, null, lig, null, reb, null, tran, null, null,
-            ter, null, tog, null, dir, null, null, null, null,
-            thro, null, map, null, temp, null, null, null, close
+            own, null, pow, null, hide, null, info, null, companion,
+            fast, null, lig, null, reb, null, tran, null, null,
+            area, null, tog, null, dir, null, null, null, null,
+            ter, null, map, null, temp, null, thro, null, close
         };
     }
 
