@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicPreferences;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -54,7 +55,7 @@ public class TARDISSonicMenuInventory {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(sonic.getChatColor() + "Sonic Screwdriver");
+                im.setDisplayName("Sonic Screwdriver");
                 im.setLore(Collections.singletonList(sonic.getName()));
                 im.setCustomModelData(sonic.getCustomModelData());
                 is.setItemMeta(im);
