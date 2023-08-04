@@ -2,7 +2,8 @@
 
 ## Current version `5.0.0`
 
-1. ?
+1. Add custom item model for Rust Plague Sword
+2. ?
 
 ## Next version `5.1.0`
 
@@ -35,6 +36,7 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
+2. Rust Plague Sword
 
 ## Minecraft Bedrock Edition?
 

@@ -17,14 +17,16 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardisrecipe command
@@ -42,7 +44,9 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
         ROOT_SUBS.add("seed");
         ROOT_SUBS.add("tardis");
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            ROOT_SUBS.add(recipeItem.toTabCompletionString());
+            if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED) {
+                ROOT_SUBS.add(recipeItem.toTabCompletionString());
+            }
         }
     }
 
