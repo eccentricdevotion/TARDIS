@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -32,6 +31,8 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
  * @author eccentric_nz
  */
@@ -41,6 +42,12 @@ public class TARDISTakeoff {
 
     public TARDISTakeoff(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public static void toggleBeacon(String str) {
+        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+        Block b = bl.getBlock();
+        b.setBlockData(TARDISConstants.GLASS);
     }
 
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, SpaceTimeThrottle spaceTimeThrottle) {
@@ -133,11 +140,5 @@ public class TARDISTakeoff {
                 new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
             }
         }
-    }
-
-    public static void toggleBeacon(String str) {
-        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
-        Block b = bl.getBlock();
-        b.setBlockData(TARDISConstants.GLASS);
     }
 }

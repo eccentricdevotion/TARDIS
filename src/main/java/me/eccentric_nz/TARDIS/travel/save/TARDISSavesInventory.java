@@ -71,7 +71,7 @@ public class TARDISSavesInventory {
             int count = 0;
             // cycle through saves
             for (Destination map : data) {
-                if (map.getType()==0) {
+                if (map.getType() == 0) {
                     count++;
                     if (count > 45) {
                         break;
@@ -103,11 +103,11 @@ public class TARDISSavesInventory {
                         List<String> lore = new ArrayList<>();
                         String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.getWorld()) : TARDISAliasResolver.getWorldAlias(map.getWorld());
                         lore.add(world);
-                        lore.add(""+map.getX());
-                        lore.add(""+map.getY());
-                        lore.add(""+map.getZ());
+                        lore.add("" + map.getX());
+                        lore.add("" + map.getY());
+                        lore.add("" + map.getZ());
                         lore.add(map.getDirection());
-                        lore.add(""+map.isSubmarine());
+                        lore.add("" + map.isSubmarine());
                         if (!map.getPreset().isEmpty()) {
                             lore.add(map.getPreset());
                         }
@@ -118,7 +118,7 @@ public class TARDISSavesInventory {
                     }
                 }
             }
-            for (int s = 1; s < 45; s++) {
+            for (int s = 0; s < 45; s++) {
                 stack[s] = dests.getOrDefault(s, null);
             }
         }

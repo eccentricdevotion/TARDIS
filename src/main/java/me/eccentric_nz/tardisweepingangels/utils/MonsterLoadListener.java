@@ -76,7 +76,6 @@ public class MonsterLoadListener implements Listener {
             }
             Location location = entity.getLocation();
             entity.remove();
-            TARDIS.plugin.debug("Re-spawning a " + monster);
             LivingEntity a = new MonsterSpawner().create(location, monster);
             new Equipper(monster, a, false).setHelmetAndInvisibilty();
             switch (monster) {

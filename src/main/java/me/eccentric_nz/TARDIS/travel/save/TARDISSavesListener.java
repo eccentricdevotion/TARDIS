@@ -83,21 +83,23 @@ public class TARDISSavesListener extends TARDISMenuListener {
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
             boolean allow = false;
-            int id = -1;
+            int occupiedTardisId = -1;
+            int playerTardisId = -1;
             if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid)) {
                 allow = true;
-                id = plugin.getTrackerKeeper().getJunkPlayers().get(uuid);
+                occupiedTardisId = plugin.getTrackerKeeper().getJunkPlayers().get(uuid);
+                playerTardisId = occupiedTardisId;
             } else if (plugin.getTrackerKeeper().getSavesIds().containsKey(uuid)) {
                 // player wants own saves
-                id = plugin.getTrackerKeeper().getSavesIds().get(uuid);
-            } else {
-                HashMap<String, Object> wheres = new HashMap<>();
-                wheres.put("uuid", uuid.toString());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                if (rst.resultSet()) {
-                    allow = true;
-                    id = rst.getTardis_id();
-                }
+                playerTardisId = plugin.getTrackerKeeper().getSavesIds().get(uuid);
+                allow = true;
+            }
+            HashMap<String, Object> wheres = new HashMap<>();
+            wheres.put("uuid", uuid.toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+            if (rst.resultSet()) {
+                occupiedTardisId = rst.getTardis_id();
+                allow = true;
             }
             if (!allow) {
                 event.setCancelled(true);
@@ -119,7 +121,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 ItemMeta cim = cursor.getItemMeta();
                                 String save = cim.getDisplayName();
                                 HashMap<String, Object> where = new HashMap<>();
-                                where.put("tardis_id", id);
+                                where.put("tardis_id", occupiedTardisId);
                                 where.put("dest_name", save);
                                 plugin.getQueryFactory().doDelete("destinations", where);
                                 player.setItemOnCursor(null);
@@ -133,7 +135,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
                         HashMap<String, Object> where = new HashMap<>();
-                        where.put("tardis_id", id);
+                        where.put("tardis_id", occupiedTardisId);
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
                         Location current = null;
                         if (rsc.resultSet()) {
@@ -143,13 +145,13 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
+                            if (lore.get(0).startsWith("TARDIS_")) {
+                                close(player);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
+                                return;
+                            }
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
-                                if (lore.get(0).startsWith("TARDIS_")) {
-                                    close(player);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
-                                    return;
-                                }
                                 // check the player is allowed!
                                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                                     close(player);
@@ -157,7 +159,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 }
                                 // get tardis artron level
                                 ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-                                if (!rs.fromID(id)) {
+                                if (!rs.fromID(occupiedTardisId)) {
                                     close(player);
                                     return;
                                 }
@@ -184,7 +186,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     }
                                     String invisibility = tac.getArea().getInvisibility();
                                     HashMap<String, Object> wheret = new HashMap<>();
-                                    wheret.put("tardis_id", id);
+                                    wheret.put("tardis_id", occupiedTardisId);
                                     ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
                                     if (resultSetTardis.resultSet()) {
                                         if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
@@ -195,7 +197,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                             // force preset
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
                                             HashMap<String, Object> wherei = new HashMap<>();
-                                            wherei.put("tardis_id", id);
+                                            wherei.put("tardis_id", occupiedTardisId);
                                             HashMap<String, Object> seti = new HashMap<>();
                                             seti.put("chameleon_preset", invisibility);
                                             // set chameleon adaption to OFF
@@ -204,7 +206,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         }
                                     }
                                 }
-                                if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("world", lore.get(0));
                                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
@@ -227,20 +229,20 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         // set chameleon adaption to OFF
                                         sett.put("adapti_on", 0);
                                         HashMap<String, Object> wheret = new HashMap<>();
-                                        wheret.put("tardis_id", id);
+                                        wheret.put("tardis_id", occupiedTardisId);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
-                                    wheret.put("tardis_id", id);
+                                    wheret.put("tardis_id", occupiedTardisId);
                                     plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
                                     TravelType travelType = (is.getItemMeta().getDisplayName().equals("Home")) ? TravelType.HOME : TravelType.SAVE;
-                                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
-                                    plugin.getTrackerKeeper().getRescue().remove(id);
+                                    plugin.getTrackerKeeper().getHasDestination().put(occupiedTardisId, new TravelCostAndType(travel, travelType));
+                                    plugin.getTrackerKeeper().getRescue().remove(occupiedTardisId);
                                     close(player);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        new TARDISLand(plugin, id, player).exitVortex();
-                                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId));
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
+                                        new TARDISLand(plugin, occupiedTardisId, player).exitVortex();
+                                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, occupiedTardisId));
                                     }
                                 } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
                                     lore.add(ChatColor.GOLD + "Current location");
@@ -256,7 +258,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                     if (slot == 45) {
                         // check it is this player's TARDIS
                         HashMap<String, Object> wherez = new HashMap<>();
-                        wherez.put("tardis_id", id);
+                        wherez.put("tardis_id", occupiedTardisId);
                         wherez.put("uuid", uuid.toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                         if (rs.resultSet()) {
@@ -267,7 +269,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         }
                     }
                     if (slot == 53) {
-                        int finalId = id;
+                        int finalId = playerTardisId != -1 ? playerTardisId : occupiedTardisId;
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                             TARDISSavesPlanetInventory tspi = new TARDISSavesPlanetInventory(plugin, finalId);
