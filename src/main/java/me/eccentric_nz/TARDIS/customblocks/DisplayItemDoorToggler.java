@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -29,6 +27,9 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  *
@@ -78,7 +79,7 @@ public class DisplayItemDoorToggler {
                     if (!rsd.isLocked()) {
                         // toggle the door
                         if (rs.getTardis().getPreset().usesArmourStand()) {
-                            new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
+                            new TARDISCustomModelDataChanger(plugin, block, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
                         }
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
                         boolean minecart = false;

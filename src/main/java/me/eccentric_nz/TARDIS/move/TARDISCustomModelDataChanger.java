@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -31,18 +30,23 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class TARDISCustomModelDataChanger {
 
     private final TARDIS plugin;
     private final Block block;
     private final Player player;
     private final int id;
+    private final ChameleonPreset preset;
 
-    public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
+    public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id, ChameleonPreset preset) {
         this.plugin = plugin;
         this.block = block;
         this.player = player;
         this.id = id;
+        this.preset = preset;
     }
 
     /**
@@ -84,7 +88,9 @@ public class TARDISCustomModelDataChanger {
                             new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
                             newData = 1001;
                         }
-                        playDoorSound(open, block.getLocation());
+                        if (preset != ChameleonPreset.PANDORICA) {
+                            playDoorSound(open, block.getLocation());
+                        }
                         im.setCustomModelData(newData);
                         is.setItemMeta(im);
                         ee.setHelmet(is, true);

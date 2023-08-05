@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
@@ -52,6 +49,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * During TARDIS operation, a distinctive grinding and whirring sound is usually
@@ -251,7 +252,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 }
                                                 // toggle the door
                                                 if (isPoliceBox) {
-                                                    new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
+                                                    new TARDISCustomModelDataChanger(plugin, block, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
                                                     // should toggle inner door too!
                                                 }
                                                 if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {

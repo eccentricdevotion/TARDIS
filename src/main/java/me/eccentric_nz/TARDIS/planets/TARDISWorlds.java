@@ -79,7 +79,7 @@ public class TARDISWorlds {
                     try {
                         Difficulty difficulty = Difficulty.valueOf(d.toUpperCase());
                         w.setDifficulty(difficulty);
-                    } catch (IllegalArgumentException ex) {
+                    } catch (IllegalArgumentException ignored) {
                     }
                 }
             }
