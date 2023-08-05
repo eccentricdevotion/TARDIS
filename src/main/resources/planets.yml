@@ -18,6 +18,7 @@ planets:
     keep_spawn_in_memory: false
     allow_portals: false
     alias: TimeVortex
+    icon: CRYING_OBSIDIAN
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -34,6 +35,7 @@ planets:
     keep_spawn_in_memory: false
     allow_portals: false
     alias: ZeroRoom
+    icon: PINK_WOOL
   skaro:
     enabled: false
     resource_pack: default
@@ -56,6 +58,7 @@ planets:
       doPatrolSpawning: false
     allow_portals: false
     alias: Skaro
+    icon: FIRE_CORAL_BLOCK
   siluria:
     enabled: false
     resource_pack: default
@@ -71,6 +74,7 @@ planets:
       doPatrolSpawning: false
     allow_portals: false
     alias: Siluria
+    icon: BAMBOO_MOSAIC
   gallifrey:
     enabled: false
     resource_pack: default
@@ -86,3 +90,4 @@ planets:
       doPatrolSpawning: false
     allow_portals: false
     alias: Gallifrey
+    icon: RED_SAND

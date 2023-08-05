@@ -129,6 +129,13 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets." + w + ".difficulty", d);
             }
         }
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.icon")) {
+            Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
+            // get/set icon material
+            for (String w : worlds) {
+                planets_config.set("planets." + w + ".icon", getIcon(w, planets_config.getString("planets." + w + ".environment")));
+            }
+        }
         if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle")) {
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
             planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
@@ -271,5 +278,24 @@ public class TARDISPlanetsUpdater {
         } catch (IOException e) {
             return "EASY"; // minecraft / spigot default
         }
+    }
+
+    private String getIcon(String world, String env) {
+        String icon;
+        switch (world) {
+            case "TARDIS_TimeVortex" -> icon = "CRYING_OBSIDIAN";
+            case "TARDIS_Zero_Room" -> icon = "PINK_WOOL";
+            case "skaro" -> icon = "FIRE_CORAL_BLOCK";
+            case "siluria" -> icon = "BAMBOO_MOSAIC";
+            case "gallifrey" -> icon = "RED_SAND";
+            default -> {
+                switch (env) {
+                    case "NETHER" -> icon = "NETHERRACK";
+                    case "THE_END" -> icon = "END_STONE";
+                    default -> icon = "STONE";
+                }
+            }
+        }
+        return icon;
     }
 }

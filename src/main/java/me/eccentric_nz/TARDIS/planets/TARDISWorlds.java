@@ -104,6 +104,14 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.getDifficulty().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".keep_spawn_in_memory", false);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".alias", worldName);
+                String icon;
+                switch (data.getEnvironment()) {
+                    case NETHER -> icon = "NETHERRACK";
+                    case THE_END -> icon = "END_STONE";
+                    default -> icon = "STONE";
+                }
+                plugin.getPlanetsConfig().set("planets." + worldName + ".icon", icon);
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
             }
         });

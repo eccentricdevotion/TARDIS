@@ -170,7 +170,8 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();
-                    String world = im.getDisplayName();
+                    String alias = im.getDisplayName();
+                    String world = TARDISAliasResolver.getWorldNameFromAlias(alias);
                     TARDISSavesInventory sst = new TARDISSavesInventory(plugin, id, world);
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                     ItemStack[] items = sst.getSaves();

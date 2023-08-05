@@ -2,15 +2,15 @@
 
 ## Current version `5.0.0`
 
-1. Add custom item model for Rust Plague Sword
-2. ?
+1. ?
 
 ## Next version `5.1.0`
 
 1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-2. Animated models for player disguises
-3. Sonic Blaster
+2. [#731](https://github.com/eccentricdevotion/TARDIS/issues/731) External scanner/camera
+3. Animated models for player disguises
+4. Sonic Blaster
 
 ## Future versions
 

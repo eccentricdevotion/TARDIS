@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Planet;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Material;
 import org.bukkit.World;
 
@@ -77,20 +78,22 @@ public class ResultSetPlanets {
                     String planet = rs.getString("world");
                     World world = plugin.getServer().getWorld(planet);
                     if (world != null) {
+                        String alias = TARDISAliasResolver.getWorldAlias(world);
                         Material material;
-                        switch (world.getEnvironment()) {
-                            case NETHER -> material = Material.NETHERRACK;
-                            case THE_END -> material = Material.END_STONE;
-                            default -> material = Material.STONE;
+                        try {
+                            String m = plugin.getPlanetsConfig().getString("planets." + planet + ".icon");
+                            material = (m != null) ? Material.valueOf(m) : getIcon(world.getEnvironment());
+                        } catch (IllegalArgumentException e) {
+                            material = getIcon(world.getEnvironment());
                         }
-                        data.add(new Planet(planet, material));
+                        data.add(new Planet(alias, material));
                     }
                 }
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for destinations table when getting dimensions! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -101,7 +104,7 @@ public class ResultSetPlanets {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing destinations table when getting dimensions! " + e.getMessage());
             }
         }
         return true;
@@ -110,5 +113,13 @@ public class ResultSetPlanets {
     public List<Planet> getData() {
         Collections.sort(data);
         return data;
+    }
+
+    private Material getIcon(World.Environment environment) {
+        return switch (environment) {
+            case NETHER -> Material.NETHERRACK;
+            case THE_END -> Material.END_STONE;
+            default -> Material.STONE;
+        };
     }
 }
