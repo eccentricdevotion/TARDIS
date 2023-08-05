@@ -390,6 +390,7 @@ DEST_SLOT: "The specified save slot is already occupied, please move the save '%
 DIFF_HARD_FIND: "You need to craft a TARDIS Locator! Type %s to see how to make it."
 DIFF_HARD_REMOTE: "You need to craft a Stattenheim Remote Control! Type %s to see how to make it."
 DIFF_SAVED: "Difficulty preference saved."
+DIMENSION_ICON: "The dimension's icon was changed to %s"
 DIRECTION_CHANGED: "Direction changed."
 DIRECTION_CURRENT: "Current TARDIS direction is %s"
 DIRECTION_NEED: "You need to specify the compass direction!"

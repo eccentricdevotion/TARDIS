@@ -16,15 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
 
 class TARDISSaveIconCommand {
 
@@ -40,20 +45,6 @@ class TARDISSaveIconCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
-            }
-            int id = rs.getTardis_id();
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", args[1]);
-            whered.put("tardis_id", id);
-            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-            if (!rsd.resultSet()) {
-                plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return false;
-            }
             Material material;
             try {
                 material = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
@@ -61,14 +52,45 @@ class TARDISSaveIconCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
                 return false;
             }
-            int destID = rsd.getDest_id();
-            HashMap<String, Object> did = new HashMap<>();
-            did.put("dest_id", destID);
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("icon", material.toString());
-            plugin.getQueryFactory().doUpdate("destinations", set, did);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_ICON", material.toString());
-            return true;
+            String m = material.toString();
+            if (args[0].equalsIgnoreCase("dimensionicon")) {
+                World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
+                if (world == null) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
+                    return false;
+                }
+                plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
+                try {
+                    plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
+                } catch (IOException ex) {
+                    plugin.debug("Could not save planets.yml, " + ex.getMessage());
+                }
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIMENSION_ICON", m);
+                return true;
+            } else {
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+                    return false;
+                }
+                int id = rs.getTardis_id();
+                HashMap<String, Object> whered = new HashMap<>();
+                whered.put("dest_name", args[1]);
+                whered.put("tardis_id", id);
+                ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+                if (!rsd.resultSet()) {
+                    plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
+                    return false;
+                }
+                int destID = rsd.getDest_id();
+                HashMap<String, Object> did = new HashMap<>();
+                did.put("dest_id", destID);
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("icon", m);
+                plugin.getQueryFactory().doUpdate("destinations", set, did);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_ICON", m);
+                return true;
+            }
         }
         return true;
     }

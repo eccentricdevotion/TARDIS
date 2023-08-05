@@ -17,19 +17,22 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * TabCompleter for /tardis command
@@ -55,6 +58,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> RECHARGER_SUBS;
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
+    private final List<String> DIM_SUBS = new ArrayList<>();
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -73,6 +77,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         }
         SEC_SUBS.add("remove");
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
+        for (World w : plugin.getServer().getWorlds()) {
+            DIM_SUBS.add(TARDISAliasResolver.getWorldAlias(w));
+        }
     }
 
     @Override
@@ -126,6 +133,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "update" -> {
                     return partial(lastArg, UPD_SUBS);
                 }
+                case "dimensionicon" -> {
+                    return partial(lastArg, DIM_SUBS);
+                }
                 default -> {
                 }
             }
@@ -143,7 +153,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             if (args[0].equals("update")) {
                 return partial(lastArg, EXTRA_SUBS);
             }
-            if (args[0].equals("saveicon")) {
+            if (args[0].equals("saveicon") || args[0].equals("dimensionicon")) {
                 return partial(lastArg, MAT_SUBS);
             }
         } else if (args.length == 4) {
