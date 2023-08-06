@@ -35,7 +35,9 @@ public enum GUIKeyPreferences {
     FILTER(11, 12, Material.GOLD_NUGGET, "Tenth Doctor, Martha Jones & Jack Harkness"),
     BRASS_STRING(12, 14, Material.GOLD_NUGGET, "Susan Foreman"),
     BROMLEY_GOLD(13, 16, Material.GOLD_NUGGET, "eccentric_nz"),
+    DISPLAY_NAME_COLOUR(-1, 19, Material.WHITE_WOOL, "Click to select"),
     INSTRUCTIONS(1, 22, Material.BOOK, "Put your TARDIS Key~in the bottom left most slot~and then click on the~key of your choice."),
+    NAME(1, 23, Material.BOOK, "If you want to have~a coloured display name~click the wool block~to choose a colour."),
     CLOSE(1, 26, Material.BOWL, "");
 
     private final int customModelData;

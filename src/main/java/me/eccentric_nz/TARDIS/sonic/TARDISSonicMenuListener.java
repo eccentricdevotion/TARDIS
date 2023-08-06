@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,21 +55,54 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 switch (slot) {
                     case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
                         event.setCancelled(true);
-                        // set display name of sonic in slot 18
+                        // set custom model data of sonic in slot 18
                         ItemStack sonic = view.getItem(18);
                         if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
                             return;
                         }
-                        // get Display name of selected sonic
                         ItemStack choice = view.getItem(slot);
                         ItemMeta choice_im = choice.getItemMeta();
-                        String choice_name = choice_im.getDisplayName();
                         ItemMeta sonic_im = sonic.getItemMeta();
-                        sonic_im.setDisplayName(choice_name);
                         sonic_im.setCustomModelData(choice_im.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
                     }
-                    case 18 -> { }
+                    case 18 -> {
+                        // get item on cursor
+                        ItemStack cursor = event.getCursor();
+                        if (cursor == null || !cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
+                            return;
+                        }
+                        ItemMeta meta = cursor.getItemMeta();
+                        if (!meta.hasDisplayName()) {
+                            return;
+                        }
+                        // set wool colour from display name of placed sonic
+                        ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
+                        Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
+                        ItemStack choice = view.getItem(19);
+                        choice.setType(material);
+                    }
+                    case 19 -> {
+                        event.setCancelled(true);
+                        // set display name colour of sonic in slot 18
+                        ItemStack sonic = view.getItem(18);
+                        if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
+                            return;
+                        }
+                        // get current colour of wool
+                        ItemStack choice = view.getItem(19);
+                        Material wool = getNextWool(choice.getType());
+                        // set wool colour to next in line
+                        choice.setType(wool);
+                        ChatColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
+                        ItemMeta sonic_im = sonic.getItemMeta();
+                        if (display != ChatColor.WHITE) {
+                            sonic_im.setDisplayName(display + "Sonic Screwdriver");
+                        } else {
+                            sonic_im.setDisplayName("Sonic Screwdriver");
+                        }
+                        sonic.setItemMeta(sonic_im);
+                    }
                     case 26 -> {
                         // close
                         event.setCancelled(true);
@@ -82,6 +117,11 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 }
             }
         }
+    }
+
+    private Material getNextWool(Material current) {
+        Material index = TARDISKeyMenuListener.COLOUR_LOOKUP.higherKey(current);
+        return (index != null) ? index : Material.WHITE_WOOL;
     }
 
     @EventHandler(ignoreCancelled = true)

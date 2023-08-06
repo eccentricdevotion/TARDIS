@@ -62,6 +62,13 @@ public class TARDISSonicMenuInventory {
                 stack[sonic.getSlot()] = is;
             }
         }
+        // coloured wool
+        ItemStack wool = new ItemStack(Material.WHITE_WOOL);
+        ItemMeta wool_im = wool.getItemMeta();
+        wool_im.setDisplayName("Display name colour");
+        wool_im.setLore(List.of("Click to select"));
+        wool.setItemMeta(wool_im);
+        stack[19] = wool;
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
@@ -71,6 +78,15 @@ public class TARDISSonicMenuInventory {
         info_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
         info.setItemMeta(info_im);
         stack[22] = info;
+        // info 2
+        ItemStack name = new ItemStack(Material.BOOK, 1);
+        ItemMeta name_im = name.getItemMeta();
+        name_im.setDisplayName("Name");
+        List<String> display = Arrays.asList("If you want to have", "a coloured display name", "click the wool block", "to choose a colour.");
+        name_im.setLore(display);
+        name_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
+        name.setItemMeta(name_im);
+        stack[23] = name;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

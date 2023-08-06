@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Arrays;
-import java.util.Collections;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -48,7 +49,7 @@ class TARDISKeyMenuInventory {
         for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
             ItemStack is = new ItemStack(key.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
+            if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS || key == GUIKeyPreferences.NAME || key == GUIKeyPreferences.DISPLAY_NAME_COLOUR) {
                 im.setDisplayName(key.getName());
             } else {
                 im.setDisplayName("TARDIS Key");
@@ -58,10 +59,12 @@ class TARDISKeyMenuInventory {
                     String[] split = key.getLore().split("~");
                     im.setLore(Arrays.asList(split));
                 } else {
-                    im.setLore(Collections.singletonList(key.getLore()));
+                    im.setLore(List.of(key.getLore()));
                 }
             }
-            im.setCustomModelData(key.getCustomModelData());
+            if (key.getCustomModelData() != -1) {
+                im.setCustomModelData(key.getCustomModelData());
+            }
             is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;
         }

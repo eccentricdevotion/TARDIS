@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -323,5 +324,25 @@ public class TARDISStaticUtils {
         if (player != null) {
             TARDIS.plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_BROKEN");
         }
+    }
+
+    /**
+     * Gets the chat colour from a display name. Used by Key and Sonic preference GUIs.
+     * @param input the display name of the item
+     * @return a ChatColor
+     */
+    public static ChatColor getColor(String input) {
+        char COLOR_CHAR = '\u00A7';
+        int length = input.length();
+        // Search backwards from the end as it is faster
+        for (int index = length - 1; index > -1; index--) {
+            char section = input.charAt(index);
+            if (section == COLOR_CHAR && index < length - 1) {
+                // check normal color
+                char c = input.charAt(index + 1);
+                return ChatColor.getByChar(c);
+            }
+        }
+        return ChatColor.WHITE;
     }
 }
