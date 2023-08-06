@@ -91,9 +91,9 @@ public class Equipper {
         }
         // make the entity invisible
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
+            PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
             le.addPotionEffect(invisibility);
-            PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, true, false);
+            PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
             le.addPotionEffect(resistance);
         });
         if (!disguise) {

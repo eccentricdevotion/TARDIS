@@ -111,7 +111,6 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 }
                                 case MONITOR -> {
                                     ItemStack map = frame.getItem();
-                                    plugin.debug("map type = " + map.getType());
                                     // does it have a TARDIS Monitor map?
                                     if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasCustomModelData()) {
 
