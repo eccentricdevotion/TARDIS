@@ -23,10 +23,9 @@ public class TARDISDismountListener implements Listener {
     public void onDismount(EntityDismountEvent event) {
         EntityType riding = event.getEntity().getType();
         EntityType ridden = event.getDismounted().getType();
-        if (ridden == EntityType.SKELETON && riding == EntityType.GUARDIAN) {
+        if (plugin.getConfig().getBoolean("modules.weeping_angels") && ridden == EntityType.SKELETON && riding == EntityType.GUARDIAN) {
             if (event.getEntity().getPersistentDataContainer().has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                 event.setCancelled(true);
-                plugin.debug("prevented silent guardian dismount at " + event.getDismounted().getLocation());
             }
         }
         if (!(event.getDismounted() instanceof ArmorStand)) {
