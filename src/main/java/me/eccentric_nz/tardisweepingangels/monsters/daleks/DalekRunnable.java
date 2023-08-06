@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -92,7 +93,7 @@ public class DalekRunnable implements Runnable {
                 EntityType dalek;
                 Monster monster;
                 int chance = TARDISConstants.RANDOM.nextInt(100);
-                boolean sec = chance < plugin.getMonstersConfig().getInt("daleks.daleck_sec_chance");
+                boolean sec = chance < plugin.getMonstersConfig().getInt("daleks.dalek_sec_chance");
                 boolean dav = chance > (100 - plugin.getMonstersConfig().getInt("daleks.davros_chance"));
                 if (sec) {
                     dalek = EntityType.ZOMBIFIED_PIGLIN;
@@ -104,7 +105,7 @@ public class DalekRunnable implements Runnable {
                     dalek = EntityType.SKELETON;
                     monster = Monster.DALEK;
                 }
-                LivingEntity e = (LivingEntity) world.spawnEntity(l, dalek);
+                LivingEntity e = (sec) ? new MonsterSpawner().create(l, monster) : (LivingEntity) world.spawnEntity(l, dalek);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (sec) {
                         new Equipper(monster, e, false).setHelmetAndInvisibilty();

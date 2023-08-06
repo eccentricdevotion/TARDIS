@@ -104,7 +104,7 @@ public enum Monster {
 
     public boolean isCustom() {
         switch (this) {
-            case DAVROS, OOD, K9, JUDOON, DALEK, TOCLAFANE -> {
+            case DALEK, DAVROS, JUDOON, K9, OOD, TOCLAFANE -> {
                 return false;
             }
             default -> {
