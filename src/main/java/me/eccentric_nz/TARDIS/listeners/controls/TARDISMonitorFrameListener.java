@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
@@ -61,6 +62,11 @@ public class TARDISMonitorFrameListener implements Listener {
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
                 if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.camera")) {
+                    // not while travelling
+                    if (isTravelling(rs.getTardis_id())) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAMERA_NO_TRAVEL");
+                        return;
+                    }
                     // get the preset - only custom model presets
                     ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
                     if (rsp.fromID(rs.getTardis_id()) && rsp.getPreset().usesArmourStand()) {
@@ -106,5 +112,9 @@ public class TARDISMonitorFrameListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isTravelling(int id) {
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
     }
 }
