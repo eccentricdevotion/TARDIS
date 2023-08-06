@@ -32,3 +32,13 @@ The monitor requires two item frames to be placed adjacent to each other.
 
 ![TARDIS Monitor](images/docs/tardis_monitor.jpg)
 
+## TARDIS external camera
+
+If players have the permission `tardis.camera`, they can right-click the monitor frame while sneaking to view the actual exterior.
+
+This feature is only available when the TARDIS exterior is using an armour stand custom model Chameleon preset.
+
+Press the _Shift_ key to dismount and return to the TARDIS interior.
+
+![TARDIS external camera](images/docs/camera.gif)
+

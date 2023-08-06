@@ -123,7 +123,7 @@ Right-click the arrow, then step towards to pick it up.
 
 ### Knockback
 
-The Knockback upgraded Sonic allows you repel monsters when right-clicking them.
+The Knockback upgraded Sonic allows you to repel monsters when right-clicking them.
 
 ### Brush
 
@@ -152,9 +152,11 @@ To change the screwdriver texture:
 - Open the Sonic Prefs menu using the command `/tardisprefs sonic`
 - In the GUI, place your sonic in the lower left slot and then select the
   screwdriver of your choice
-- Remove the screwdriver and close the GUI
+- To change the colour of the sonic’s display name, click the wool block to choose a colour
+- Remove your screwdriver and close the GUI
 
 ![Sonic Prefs Menu](images/docs/sonic_prefs_menu.jpg)
 
+## Default screwdriver
 Server admins can set the default screwdriver type —
 `/tardisconfig default_sonic [type]` — use tab completion to see a list of types.

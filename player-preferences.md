@@ -60,6 +60,13 @@ To change the look of your TARDIS Key, type:
 This requires the [TARDIS Resource Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) to see the
 different key textures. Use the command to open the TARDIS Key GUI.
 
+To change the TARDIS key texture:
+
+- Place your key in the lower left slot and then select the
+  key of your choice
+- To change the colour of the key’s display name, click the wool block to choose a colour
+- Remove your key and close the GUI
+
 ![TARDIS Key GUI](images/docs/key_prefs_menu.jpg)
 
 To change the look of your Sonic Screwdriver, type:
@@ -68,6 +75,13 @@ To change the look of your Sonic Screwdriver, type:
 
 This requires the [TARDIS Resource Pack](http://tardisjenkins.duckdns.org:8080/job/TARDIS-Resource-Pack/) to see the
 different sonic textures. Use the command to open the Sonic Screwdriver GUI.
+
+To change the screwdriver texture:
+
+- Place your sonic in the lower left slot and then select the
+  screwdriver of your choice
+- To change the colour of the sonic’s display name, click the wool block to choose a colour
+- Remove your screwdriver and close the GUI
 
 ![Sonic Screwdriver GUI](images/docs/sonic_prefs_menu.jpg)
 
@@ -168,7 +182,7 @@ The server admin may have restricted the blocks that can be used as a lamp.
 
 ### `/tardisprefs build`
 
-You can toggle the whether companions can build inside your TARDIS with this command, type:
+You can toggle whether companions can build inside your TARDIS with this command, type:
 
     /tardis build [on|off]
 
@@ -179,7 +193,7 @@ materialisation with this command, type:
 
     /tardisprefs minecart [on|off]
 
-### `@Deprecated<br>/tardisprefs wool_lights`
+### `@Deprecated`<br>`/tardisprefs wool_lights`
 
 You can choose whether to use black wool or sponge (re-textured with the TARDIS Resource Pack to look like Redstone Lamp
 Off blocks) for the off state of the TARDIS lights with this command, type:
@@ -187,7 +201,7 @@ Off blocks) for the off state of the TARDIS lights with this command, type:
     @Deprecated
     /tardisprefs wool_lights [on|off]
 
-### `@Deprecated<br>/tardisprefs ctm`
+### `@Deprecated`<br>`/tardisprefs ctm`
 
 You can choose whether your Police Box preset uses the Connected Textures Mod to change the block to the left of the
 door to a quartz pillar that is retextured to the Police Box sign (players without the mod installed will see a plain
@@ -222,7 +236,7 @@ To toggle automatically powering up the TARDIS when entering (if it is powered d
 
     /tardisprefs auto_powerup [on|off]
 
-### `@Deprecated<br>/tardisprefs lanterns`
+### `@Deprecated`<br>`/tardisprefs lanterns`
 
 Set whether your TARDIS console uses lanterns or redstone lamps with this command, type:
 
