@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -11,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -25,7 +26,7 @@ public class TARDISCamera {
 
     public void viewExterior(Player player, int id, boolean pandorica) {
         Location playerLocation = player.getLocation();
-        TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, player.getGameMode(), id, playerLocation.getChunk().isForceLoaded()));
+        TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
         playerLocation.getChunk().setForceLoaded(true);
         // get the TARDIS's current location
         HashMap<String, Object> where = new HashMap<>();
@@ -50,7 +51,7 @@ public class TARDISCamera {
                     is.setItemMeta(im);
                     ee.setHelmet(is);
                     // hide player from themselves
-                    player.setGameMode(GameMode.SPECTATOR);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
                     stand.addPassenger(player);
                 }, 2L);
             }
@@ -73,8 +74,11 @@ public class TARDISCamera {
             while (!interior.getChunk().isLoaded()) {
                 interior.getChunk().load();
             }
-            player.setGameMode(data.getGameMode());
             player.teleport(interior);
+            // remove invisibility
+            if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+                player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            }
             // add player to travellers
             HashMap<String, Object> sett = new HashMap<>();
             sett.put("tardis_id", data.getId());

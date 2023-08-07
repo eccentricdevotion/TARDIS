@@ -3,9 +3,8 @@
 ## Current version `5.0.0`
 
 1. Persist/deal with camera users over logouts/restarts
-2. Change camera viewers to invisible rather than spectating as TWA monsters become visible...
-3. Change flying police box model sizes so that they are slightly bigger
-2. ?
+2. Check `tardis.prefs.*`, `tardis.preset.*` and other `*` permission nodes are up to date with new additions
+3. ?
 
 ## Next version `5.1.0`
 
