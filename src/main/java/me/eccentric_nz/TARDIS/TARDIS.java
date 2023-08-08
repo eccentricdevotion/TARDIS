@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
+import me.eccentric_nz.TARDIS.camera.CameraPersister;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.*;
@@ -39,6 +40,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
+import me.eccentric_nz.TARDIS.flight.FlightPersister;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
@@ -253,6 +255,8 @@ public class TARDIS extends JavaPlugin {
                 new TARDISHadsPersister(this).save();
             }
             new TARDISVortexPersister(this).save();
+            new FlightPersister(this).save();
+            new CameraPersister(this).save();
             if (getConfig().getInt("allow.force_field") > 0) {
                 new TARDISForceFieldPersister(this).save();
             }
@@ -525,6 +529,8 @@ public class TARDIS extends JavaPlugin {
                 blockLogger.enableLogger();
             }
             new TARDISVortexPersister(this).load();
+            new FlightPersister(this).load();
+            new CameraPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();
             new TARDISSeedBlockPersister(this).load();
             setDates();

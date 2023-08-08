@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -30,10 +30,9 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
-public class FlightPersister {
+public class CameraPersister {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -43,23 +42,28 @@ public class FlightPersister {
     private ResultSet rs = null;
     private int count = 0;
 
-    public FlightPersister(TARDIS plugin) {
+    public CameraPersister(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     public void save() {
         try {
-            // save flying TARDISes
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location) VALUES (?, ?, ?)");
-            for (Map.Entry<UUID, FlightReturnData> map : plugin.getTrackerKeeper().getFlyingReturnLocation().entrySet()) {
+            // save players who have logged out while using the external camera / or were junk TARDIS travellers
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "camera (uuid, location) VALUES (?, ?)");
+            for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getJunkRelog().entrySet()) {
                 ps.setString(1, map.getKey().toString());
-                ps.setInt(2, map.getValue().getId());
-                ps.setString(3, map.getValue().getLocation().toString());
+                ps.setString(2, map.getValue().toString());
+                count += ps.executeUpdate();
+            }
+            for (Map.Entry<UUID, CameraLocation> map : TARDISCameraTracker.SPECTATING.entrySet()) {
+                plugin.debug("spectator " + (count + 1));
+                ps.setString(1, map.getKey().toString());
+                ps.setString(2, map.getValue().getLocation().toString());
                 count += ps.executeUpdate();
             }
             if (count > 0) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " flying TARDISes.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " camera/junk players.");
             }
         } catch (SQLException ex) {
             plugin.debug("Insert error for flight table: " + ex.getMessage());
@@ -72,30 +76,29 @@ public class FlightPersister {
                     rs.close();
                 }
             } catch (SQLException ex) {
-                plugin.debug("Error closing flight statement: " + ex.getMessage());
+                plugin.debug("Error closing camera statement: " + ex.getMessage());
             }
         }
     }
 
     public void load() {
         try {
-            // load flying TARDISes
-            ps = connection.prepareStatement("SELECT * FROM " + prefix + "flight");
+            // load camera/junk players
+            ps = connection.prepareStatement("SELECT * FROM " + prefix + "camera");
             rs = ps.executeQuery();
             while (rs.next()) {
                 UUID uuid = UUID.fromString(rs.getString("uuid"));
-                int id = rs.getInt("tardis_id");
                 Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1));
+                plugin.getTrackerKeeper().getJunkRelog().put(uuid, location);
                 count++;
             }
             if (count > 0) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " flying TARDISes.");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " camera/junk players.");
             }
-            ps = connection.prepareStatement("DELETE FROM " + prefix + "flight");
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "camera");
             ps.executeUpdate();
         } catch (SQLException ex) {
-            plugin.debug("ResultSet error for flight table: " + ex.getMessage());
+            plugin.debug("ResultSet error for camera table: " + ex.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -105,7 +108,7 @@ public class FlightPersister {
                     rs.close();
                 }
             } catch (SQLException ex) {
-                plugin.debug("Error closing flight statement or resultset: " + ex.getMessage());
+                plugin.debug("Error closing camera statement or resultset: " + ex.getMessage());
             }
         }
     }

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -53,6 +54,12 @@ public class TARDISQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
+        // remove camera viewers
+        if (TARDISCameraTracker.SPECTATING.containsKey(uuid)) {
+            // set their location back to the TARDIS interior
+            plugin.getTrackerKeeper().getJunkRelog().put(uuid, TARDISCameraTracker.SPECTATING.get(uuid).getLocation());
+            TARDISCameraTracker.SPECTATING.remove(uuid);
+        }
         // remove if Junk TARDIS traveller
         if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
             // check if they are in the vortex

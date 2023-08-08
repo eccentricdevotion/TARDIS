@@ -34,7 +34,7 @@ public class TARDISDismountListener implements Listener {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        if (TARDISCameraTracker.SPECTATING.containsKey(player.getUniqueId())) {
+        if (TARDISCameraTracker.SPECTATING.containsKey(player.getUniqueId()) || plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
             // get armour stand
             for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 1, 2, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                 if (e instanceof ArmorStand stand) {

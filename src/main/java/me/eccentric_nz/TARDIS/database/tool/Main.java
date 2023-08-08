@@ -174,6 +174,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("bp_id"), rs.getString("uuid"), rs.getString("permission")) + end;
                                         bw.write(str);
                                     }
+                                    case camera -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("c_id"), rs.getString("uuid"), rs.getString("location")) + end;
+                                        bw.write(str);
+                                    }
                                     case chameleon -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintData"), rs.getString("stainData"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
                                         bw.write(str);

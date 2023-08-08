@@ -29,6 +29,7 @@ public enum Table {
     bind,
     blocks,
     blueprint,
+    camera,
     chameleon,
     colour,
     chunks,

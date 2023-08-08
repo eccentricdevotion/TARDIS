@@ -94,6 +94,10 @@ public class TARDISSQLiteDatabase {
             String queryBlueprint = "CREATE TABLE IF NOT EXISTS " + prefix + "blueprint (bp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', permission TEXT DEFAULT '')";
             statement.executeUpdate(queryBlueprint);
 
+            // Table structure for table 'camera/junk relog'
+            String queryCamera = "CREATE TABLE IF NOT EXISTS " + prefix + "camera (c_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '')";
+            statement.executeUpdate(queryCamera);
+
             // Table structure for table 'chameleon'
             String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintData TEXT, stainData TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '')";
             statement.executeUpdate(queryChameleon);

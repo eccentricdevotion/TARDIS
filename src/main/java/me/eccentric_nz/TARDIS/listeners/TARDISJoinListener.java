@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -34,6 +36,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
@@ -124,6 +127,7 @@ public class TARDISJoinListener implements Listener {
                     }
                 }
             }
+            // TODO not sure we should be doing this anymore...
             if (plugin.getConfig().getBoolean("creation.keep_night")) {
                 player.setPlayerTime(18000, false);
             }
@@ -191,7 +195,31 @@ public class TARDISJoinListener implements Listener {
         }
         // teleport players that rejoined after logging out while in Junk TARDIS
         if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(plugin.getTrackerKeeper().getJunkRelog().get(player.getUniqueId())), 2L);
+            Location location = plugin.getTrackerKeeper().getJunkRelog().remove(player.getUniqueId());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                player.teleport(location);
+                // remove invisibility
+                if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+                    player.removePotionEffect(PotionEffectType.INVISIBILITY);
+                }
+                // occupy tardis
+                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+                // if TIPS determine tardis_id from player location
+                if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
+                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    if (!rsid.fromTIPSSlot(slot)) {
+                        return;
+                    }
+                } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
+                    return;
+                }
+                int id = rsid.getTardis_id();
+                HashMap<String, Object> wherei = new HashMap<>();
+                wherei.put("tardis_id", id);
+                wherei.put("uuid", player.getUniqueId().toString());
+                plugin.getQueryFactory().doInsert("travellers", wherei);
+                TARDISCameraTracker.SPECTATING.remove(player.getUniqueId());
+            }, 2L);
         }
         // notify updates
         if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {
