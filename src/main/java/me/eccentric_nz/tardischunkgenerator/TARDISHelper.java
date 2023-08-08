@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -60,17 +55,34 @@ import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
 public class TARDISHelper {
 
-    private final TARDIS plugin;
     public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
     public static boolean colourSkies;
+    private final TARDIS plugin;
 
     public TARDISHelper(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public void enable() {
+        // should we filter the log?
+        if (plugin.getConfig().getBoolean("debug")) {
+            // yes we should!
+            String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
+            filterLog(basePath + "filtered.log");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Starting filtered logging for TARDIS plugins...");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Log file located at 'plugins/TARDIS/filtered.log'");
+        }
         // load custom biomes if they are enabled
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
@@ -84,14 +96,6 @@ public class TARDISHelper {
             aPlanetIsEnabled = true;
         }
         colourSkies = (aPlanetIsEnabled && plugin.getPlanetsConfig().getBoolean("colour_skies"));
-        // should we filter the log?
-        if (plugin.getConfig().getBoolean("debug")) {
-            // yes we should!
-            String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
-            filterLog(basePath + "filtered.log");
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Starting filtered logging for TARDIS plugins...");
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Log file located at 'plugins/TARDIS/filtered.log'");
-        }
         // register disguise listener
         plugin.getServer().getPluginManager().registerEvents(new TARDISDisguiseListener(plugin), plugin);
     }
