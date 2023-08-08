@@ -8,9 +8,8 @@
 
 1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-2. [#731](https://github.com/eccentricdevotion/TARDIS/issues/731) External scanner/camera
-3. Animated models for player disguises
-4. Sonic Blaster
+2. Animated models for player disguises
+3. Sonic Blaster
 
 ## Future versions
 
