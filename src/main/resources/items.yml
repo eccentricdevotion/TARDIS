@@ -175,6 +175,7 @@ blueprint_console_eleventh: 33.00
 blueprint_console_ender: 33.00
 blueprint_console_factory: 33.00
 blueprint_console_fugitive: 33.00
+blueprint_console_hospital: 33.00
 blueprint_console_legacy_bigger: 33.00
 blueprint_console_legacy_deluxe: 33.00
 blueprint_console_legacy_eleventh: 33.00
@@ -285,6 +286,9 @@ blueprint_preset_police_box_pink: 33.00
 blueprint_preset_police_box_purple: 33.00
 blueprint_preset_police_box_red: 33.00
 blueprint_preset_police_box_tennant: 33.00
+blueprint_preset_coloured: 33.00
+blueprint_preset_bad_wolf: 33.00
+blueprint_preset_type_40: 33.00
 blueprint_preset_police_box_white: 33.00
 blueprint_preset_police_box_yellow: 33.00
 blueprint_preset_portal: 33.00

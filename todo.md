@@ -3,8 +3,7 @@
 ## Current version `5.0.0`
 
 1. Persist/deal with camera users over logouts/restarts
-2. Check `tardis.prefs.*`, `tardis.preset.*` and other `*` permission nodes are up to date with new additions
-3. ?
+2. ?
 
 ## Next version `5.1.0`
 

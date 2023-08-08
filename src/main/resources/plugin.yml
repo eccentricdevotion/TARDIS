@@ -64,10 +64,12 @@ permissions:
       tardis.preset.andesite: true
       tardis.preset.angel: true
       tardis.preset.apperture: true
+      tardis.preset.bad_wolf: true
       tardis.preset.cake: true
       tardis.preset.candy: true
       tardis.preset.chalice: true
       tardis.preset.chorus: true
+      tardis.preset.coloured: true
       tardis.preset.creepy: true
       tardis.preset.desert: true
       tardis.preset.diorite: true
@@ -91,6 +93,23 @@ permissions:
       tardis.preset.party: true
       tardis.preset.peanut: true
       tardis.preset.pine: true
+      tardis.preset.police_box_black: true
+      tardis.preset.police_box_blue: true
+      tardis.preset.police_box_brown: true
+      tardis.preset.police_box_cyan: true
+      tardis.preset.police_box_gray: true
+      tardis.preset.police_box_green: true
+      tardis.preset.police_box_light_blue: true
+      tardis.preset.police_box_light_gray: true
+      tardis.preset.police_box_lime: true
+      tardis.preset.police_box_magenta: true
+      tardis.preset.police_box_orange: true
+      tardis.preset.police_box_pink: true
+      tardis.preset.police_box_purple: true
+      tardis.preset.police_box_red: true
+      tardis.preset.police_box_tennant: true
+      tardis.preset.police_box_white: true
+      tardis.preset.police_box_yellow: true
       tardis.preset.portal: true
       tardis.preset.prismarine: true
       tardis.preset.punked: true
@@ -104,28 +123,12 @@ permissions:
       tardis.preset.toilet: true
       tardis.preset.topsyturvey: true
       tardis.preset.torch: true
+      tardis.preset.type_40: true
       tardis.preset.village: true
+      tardis.preset.weeping_angel: true
       tardis.preset.well: true
       tardis.preset.windmill: true
       tardis.preset.yellow: true
-      tardis.preset.police_box_blue: true
-      tardis.preset.police_box_white: true
-      tardis.preset.police_box_orange: true
-      tardis.preset.police_box_magenta: true
-      tardis.preset.police_box_light_blue: true
-      tardis.preset.police_box_yellow: true
-      tardis.preset.police_box_lime: true
-      tardis.preset.police_box_pink: true
-      tardis.preset.police_box_gray: true
-      tardis.preset.police_box_light_gray: true
-      tardis.preset.police_box_cyan: true
-      tardis.preset.police_box_purple: true
-      tardis.preset.police_box_brown: true
-      tardis.preset.police_box_green: true
-      tardis.preset.police_box_red: true
-      tardis.preset.police_box_black: true
-      tardis.preset.police_box_tennant: true
-      tardis.preset.weeping_angel: true
     default: op
   tardis.fly:
     description: Allow players to fly their TARDIS exterior.
@@ -193,6 +196,7 @@ permissions:
   tardis.prefs.*:
     description: Allow players to use /tardisprefs commands.
     children:
+      tardis.prefs.annouce_repeaters: true
       tardis.prefs.auto: true
       tardis.prefs.auto_powerup: true
       tardis.prefs.auto_rescue: true
@@ -228,9 +232,9 @@ permissions:
       tardis.prefs.sonic: true
       tardis.prefs.submarine: true
       tardis.prefs.telepathy: true
+      tardis.prefs.translate: true
       tardis.prefs.travelbar: true
       tardis.prefs.wall: true
-      tardis.prefs.wool_lights: true
   tardis.list:
     description: Allow players to list saved time travel destinations.
     default: op
@@ -425,6 +429,7 @@ permissions:
       tardis.room.kitchen: true
       tardis.room.lazarus: true
       tardis.room.library: true
+      tardis.room.mangrove: true
       tardis.room.maze: true
       tardis.room.mushroom: true
       tardis.room.nether: true

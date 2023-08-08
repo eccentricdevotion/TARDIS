@@ -440,7 +440,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>5.0.0-SNAPSHOT</version>
+            <version>5.1.0</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
