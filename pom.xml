@@ -520,7 +520,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>21.3</version>
+            <version>22.0</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
