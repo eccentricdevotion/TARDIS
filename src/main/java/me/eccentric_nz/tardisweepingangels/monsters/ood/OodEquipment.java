@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
@@ -30,6 +29,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
+
+import java.util.UUID;
 
 public class OodEquipment {
 
@@ -52,8 +53,11 @@ public class OodEquipment {
                 uuid = TARDISWeepingAngels.UNCLAIMED;
             }
             ArmorStand armorStand = (ArmorStand) entity;
-            armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, 0);
-            armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+//            armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, 0);
+//            armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+//                        Skeleton armorStand = (Skeleton) entity;
+            entity.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, 0);
+            entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
             ItemStack arm = new ItemStack(Material.ROTTEN_FLESH);
             ItemMeta armMeta = arm.getItemMeta();
             armMeta.setDisplayName("Ood Arm");
@@ -77,6 +81,7 @@ public class OodEquipment {
             p.getInventory().setHelmet(head);
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             p.addPotionEffect(potionEffect);
+            // track player for animating
         }
     }
 }

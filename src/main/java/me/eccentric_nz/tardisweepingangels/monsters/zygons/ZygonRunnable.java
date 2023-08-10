@@ -89,7 +89,7 @@ public class ZygonRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity zygon = new MonsterSpawner().create(l, Monster.ZYGON);
+                LivingEntity zygon = new MonsterSpawner().create(l, Monster.ZYGON, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.ZYGON, zygon, false, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(zygon, EntityType.ZOMBIE, Monster.ZYGON, l));

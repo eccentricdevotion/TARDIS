@@ -94,7 +94,7 @@ public class WeepingAngelsRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
+                LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));

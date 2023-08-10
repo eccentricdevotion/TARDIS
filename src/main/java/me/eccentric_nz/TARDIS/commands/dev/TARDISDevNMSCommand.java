@@ -26,7 +26,7 @@ public class TARDISDevNMSCommand {
             try {
                 Monster monster = Monster.valueOf(args[1].toUpperCase());
                 Location location = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation();
-                LivingEntity le = new MonsterSpawner().create(location, monster);
+                LivingEntity le = new MonsterSpawner().create(location, monster, player.getUniqueId());
                 new Equipper(monster, le, false, monster == Monster.SILURIAN, monster == Monster.SEA_DEVIL).setHelmetAndInvisibilty();
                 if (monster == Monster.SILENT) {
                     SilentEquipment.setGuardian(le);
@@ -40,7 +40,7 @@ public class TARDISDevNMSCommand {
                 if (monster == Monster.ICE_WARRIOR) {
                     IceWarriorEquipment.setAnger(le);
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
         return true;

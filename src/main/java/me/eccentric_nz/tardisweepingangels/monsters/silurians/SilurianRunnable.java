@@ -88,7 +88,7 @@ public class SilurianRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(cave)) {
                     continue;
                 }
-                LivingEntity silurian = new MonsterSpawner().create(cave, Monster.SILURIAN);
+                LivingEntity silurian = new MonsterSpawner().create(cave, Monster.SILURIAN, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SILURIAN, silurian, false, true).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silurian, EntityType.SKELETON, Monster.SILURIAN, cave));

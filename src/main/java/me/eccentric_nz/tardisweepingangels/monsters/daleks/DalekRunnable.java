@@ -105,7 +105,7 @@ public class DalekRunnable implements Runnable {
                     dalek = EntityType.SKELETON;
                     monster = Monster.DALEK;
                 }
-                LivingEntity e = (sec) ? new MonsterSpawner().create(l, monster) : (LivingEntity) world.spawnEntity(l, dalek);
+                LivingEntity e = (sec) ? new MonsterSpawner().create(l, monster, null) : (LivingEntity) world.spawnEntity(l, dalek);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (sec) {
                         new Equipper(monster, e, false).setHelmetAndInvisibilty();

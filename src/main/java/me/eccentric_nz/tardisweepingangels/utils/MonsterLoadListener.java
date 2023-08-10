@@ -76,7 +76,7 @@ public class MonsterLoadListener implements Listener {
             }
             Location location = entity.getLocation();
             entity.remove();
-            LivingEntity a = new MonsterSpawner().create(location, monster);
+            LivingEntity a = new MonsterSpawner().create(location, monster, null);
             new Equipper(monster, a, false).setHelmetAndInvisibilty();
             switch (monster) {
                 case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);

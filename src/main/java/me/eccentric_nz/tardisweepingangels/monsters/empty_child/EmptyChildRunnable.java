@@ -90,7 +90,7 @@ public class EmptyChildRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD);
+                LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibilty();
                     EmptyChildEquipment.setSpeed(child);

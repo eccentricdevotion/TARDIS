@@ -81,8 +81,7 @@ public class Butler implements Listener {
                             // switch the armour to a butler uniform
                             Location l = zombie.getLocation();
                             zombie.remove();
-                            PigZombie strax = (PigZombie) new MonsterSpawner().create(l, Monster.STRAX);
-//                            PigZombie strax = (PigZombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIFIED_PIGLIN);
+                            PigZombie strax = (PigZombie) new MonsterSpawner().create(l, Monster.STRAX, null);
                             strax.setAngry(false);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 new Equipper(Monster.STRAX, strax, false, false).setHelmetAndInvisibilty();

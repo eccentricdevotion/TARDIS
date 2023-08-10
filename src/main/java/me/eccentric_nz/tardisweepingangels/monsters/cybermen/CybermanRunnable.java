@@ -89,7 +89,7 @@ public class CybermanRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity cyberman = new MonsterSpawner().create(l, Monster.CYBERMAN);
+                LivingEntity cyberman = new MonsterSpawner().create(l, Monster.CYBERMAN, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.CYBERMAN, cyberman, false, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(cyberman, EntityType.ZOMBIE, Monster.CYBERMAN, l));

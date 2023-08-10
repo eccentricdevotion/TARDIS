@@ -78,7 +78,7 @@ public class SpawnCommand {
             eyeLocation.add(0.5, 1.0, 0.5);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
             World world = eyeLocation.getWorld();
-            LivingEntity a = new MonsterSpawner().create(eyeLocation, monster);
+            LivingEntity a = new MonsterSpawner().create(eyeLocation, monster, player.getUniqueId());
             a.setNoDamageTicks(75);
             switch (monster) {
                 case DALEK -> {

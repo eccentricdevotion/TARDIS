@@ -32,11 +32,10 @@ import org.bukkit.Bukkit;
  */
 public class TWAPiglinBrute extends PiglinBrute {
 
+    private final int[] frames = new int[]{0, 1, 0, 2};
     private boolean isAnimating = false;
     private int task = -1;
     private int i = 0;
-    private int[] frames = new int[]{0, 1, 0, 2};
-    private long delay = 3;
 
     public TWAPiglinBrute(EntityType<? extends PiglinBrute> type, Level level) {
         super(type, level);
@@ -59,7 +58,7 @@ public class TWAPiglinBrute extends PiglinBrute {
                     if (i == frames.length) {
                         i = 0;
                     }
-                }, 1L, delay);
+                }, 1L, 3L);
                 isAnimating = true;
             }
         }

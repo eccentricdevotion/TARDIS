@@ -23,7 +23,6 @@
 
 ## Wiki Documentation
 
-* Authorised Control Disks
 * ?
 
 ## Resource Pack / Monsters
