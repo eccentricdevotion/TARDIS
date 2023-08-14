@@ -18,13 +18,17 @@ public class TimeRotorAnimation implements Runnable {
     @Override
     public void run() {
         ItemStack is = frame.getItem();
-        ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1021 + frames[i]);
-        is.setItemMeta(im);
-        frame.setItem(is, false);
-        i++;
-        if (i == frames.length) {
-            i = 0;
+        if (!is.getType().isAir()) {
+            ItemMeta im = is.getItemMeta();
+            if (im != null) {
+                im.setCustomModelData(1021 + frames[i]);
+                is.setItemMeta(im);
+                frame.setItem(is, false);
+                i++;
+                if (i == frames.length) {
+                    i = 0;
+                }
+            }
         }
     }
 }
