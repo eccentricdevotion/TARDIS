@@ -277,13 +277,17 @@ public class TARDISSQLiteDatabase {
             String queryMessages = "CREATE TABLE IF NOT EXISTS " + prefix + "messages (message_id INTEGER PRIMARY KEY NOT NULL, uuid_to TEXT DEFAULT '', uuid_from TEXT DEFAULT '', message TEXT DEFAULT '', date INTEGER DEFAULT (strftime('%s', 'now')), read INTEGER DEFAULT 0)";
             statement.executeUpdate(queryMessages);
 
-            //  Table structure for table 'beacons'
+            // Table structure for table 'beacons'
             String queryBeacons = "CREATE TABLE IF NOT EXISTS " + prefix + "beacons (beacon_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', location TEXT DEFAULT '', block_data TEXT DEFAULT '')";
             statement.executeUpdate(queryBeacons);
 
-            //  Table structure for table 'manipulator'
+            // Table structure for table 'manipulator'
             String queryManipulator = "CREATE TABLE IF NOT EXISTS " + prefix + "manipulator (uuid TEXT PRIMARY KEY NOT NULL, tachyon_level INTEGER DEFAULT 0)";
             statement.executeUpdate(queryManipulator);
+
+            // Table structure for table 'followers' (ood/judoon/k9)
+            String queryOod = "CREATE TABLE IF NOT EXISTS " + prefix + "followers (uuid TEXT PRIMARY KEY NOT NULL, owner TEXT, redeye INTEGER DEFAULT 0, colour TEXT DEFAULT '', ammo INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryOod);
 
             // delete old submerged, gravity and levers tables
             String dropSubmerged = "DROP TABLE IF EXISTS submerged";

@@ -87,7 +87,7 @@ public class MireRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity mire = new MonsterSpawner().create(l, Monster.MIRE, null);
+            LivingEntity mire = new MonsterSpawner().create(l, Monster.MIRE);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.MIRE, mire, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(mire, EntityType.SKELETON, Monster.MIRE, l));

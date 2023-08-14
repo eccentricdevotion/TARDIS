@@ -76,7 +76,7 @@ public class AngelBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation();
-                    LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL, null);
+                    LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibilty();
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));

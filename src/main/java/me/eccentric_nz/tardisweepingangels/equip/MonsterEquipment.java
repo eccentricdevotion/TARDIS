@@ -146,6 +146,9 @@ public class MonsterEquipment {
             if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                 return Monster.MIRE;
             }
+            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                return Monster.OOD;
+            }
             if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                 return Monster.SILENT;
             }

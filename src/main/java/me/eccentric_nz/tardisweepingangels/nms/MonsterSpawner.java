@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class MonsterSpawner {
 
-    public LivingEntity create(Location location, Monster monster, UUID uuid) {
+    public LivingEntity create(Location location, Monster monster) {
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
         net.minecraft.world.entity.monster.Monster entity;
         switch(monster.getEntityType()) {
@@ -20,11 +20,18 @@ public class MonsterSpawner {
             case ZOMBIFIED_PIGLIN -> entity = new TWAZombifiedPiglin(EntityType.ZOMBIFIED_PIGLIN, world);
             case DROWNED -> entity = new TWADrowned(EntityType.DROWNED, world);
             case PIGLIN_BRUTE -> entity = new TWAPiglinBrute(EntityType.PIGLIN_BRUTE, world);
-            case ARMOR_STAND -> entity = new TWAFollower(EntityType.SKELETON, world, uuid);
             default -> entity = new TWASkeleton(EntityType.SKELETON, world);
         }
         entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return (LivingEntity) entity.getBukkitEntity();
+    }
+
+    public TWAFollower createFollower(Location location, Monster monster, UUID uuid) {
+        ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
+        TWAFollower entity = new TWAOod(EntityType.SKELETON, world, uuid);
+        entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
+        world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return entity;
     }
 }

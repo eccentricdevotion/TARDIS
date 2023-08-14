@@ -89,7 +89,7 @@ public class SlitheenRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity slitheen = new MonsterSpawner().create(l, Monster.SLITHEEN, null);
+                LivingEntity slitheen = new MonsterSpawner().create(l, Monster.SLITHEEN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SLITHEEN, slitheen, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(slitheen, EntityType.ZOMBIE, Monster.SLITHEEN, l));

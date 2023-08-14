@@ -89,7 +89,7 @@ public class HeadlessMonkRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK, null);
+                LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.HEADLESS_MONK, monk, false, false).setHelmetAndInvisibilty();
                     HeadlessMonkEquipment.setTasks(monk);

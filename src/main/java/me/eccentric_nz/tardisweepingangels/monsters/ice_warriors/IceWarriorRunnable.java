@@ -107,7 +107,7 @@ public class IceWarriorRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity warrior = new MonsterSpawner().create(l, Monster.ICE_WARRIOR, null);
+                LivingEntity warrior = new MonsterSpawner().create(l, Monster.ICE_WARRIOR);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.ICE_WARRIOR, warrior, false, false).setHelmetAndInvisibilty();
                     IceWarriorEquipment.setAnger(warrior);

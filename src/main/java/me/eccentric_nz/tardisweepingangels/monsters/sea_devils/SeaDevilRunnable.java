@@ -87,7 +87,7 @@ public class SeaDevilRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity devil = new MonsterSpawner().create(l, Monster.SEA_DEVIL, null);
+            LivingEntity devil = new MonsterSpawner().create(l, Monster.SEA_DEVIL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.SEA_DEVIL, devil, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(devil, EntityType.DROWNED, Monster.SEA_DEVIL, l));

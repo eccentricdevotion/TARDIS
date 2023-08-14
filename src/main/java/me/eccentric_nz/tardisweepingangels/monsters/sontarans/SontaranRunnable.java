@@ -94,7 +94,7 @@ public class SontaranRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity sontaran = new MonsterSpawner().create(l, Monster.SONTARAN, null);
+                LivingEntity sontaran = new MonsterSpawner().create(l, Monster.SONTARAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SONTARAN, sontaran, false, false).setHelmetAndInvisibilty();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(sontaran, EntityType.ZOMBIE, Monster.SONTARAN, l));

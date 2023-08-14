@@ -56,6 +56,7 @@ public class MonsterLoadListener implements Listener {
                         || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWASkeleton
                         || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombie
                         || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombifiedPiglin
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAOod
                 ) {
                     return;
                 }
@@ -76,7 +77,13 @@ public class MonsterLoadListener implements Listener {
             }
             Location location = entity.getLocation();
             entity.remove();
-            LivingEntity a = new MonsterSpawner().create(location, monster, null);
+            LivingEntity a;
+            if (monster == Monster.OOD) {
+                TWAOod ood = (TWAOod) entity;
+                a = (LivingEntity) new MonsterSpawner().createFollower(location, monster, null).getBukkitEntity();
+            } else {
+                a = new MonsterSpawner().create(location, monster);
+            }
             new Equipper(monster, a, false).setHelmetAndInvisibilty();
             switch (monster) {
                 case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);

@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,12 +13,13 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.EnumSet;
 
 public class FollowPathFinder extends Goal {
 
-//    public static final int TELEPORT_WHEN_DISTANCE_IS = 12;
+    //    public static final int TELEPORT_WHEN_DISTANCE_IS = 12;
 //    private static final int MIN_HORIZONTAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 2;
 //    private static final int MAX_HORIZONTAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 3;
 //    private static final int MAX_VERTICAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 1;
@@ -65,10 +67,6 @@ public class FollowPathFinder extends Goal {
         return !this.navigation.isDone() && (!unableToMove() && ((this.follower.distanceToSqr(this.owner) > (this.stopDistance * this.stopDistance))));
     }
 
-    private boolean unableToMove() {
-        return !(!this.follower.isPassenger() && !this.follower.isLeashed());
-    }
-
     public void start() {
         this.timeToRecalcPath = 0;
         this.oldWaterCost = this.follower.getPathfindingMalus(BlockPathTypes.WATER);
@@ -91,6 +89,15 @@ public class FollowPathFinder extends Goal {
                 this.navigation.moveTo(this.owner, this.speedModifier);
             }
         }
+    }
+
+    private boolean unableToMove() {
+        // check if entity has follower PDC entry
+        boolean stay = false;
+        if (this.follower.getBukkitEntity().getPersistentDataContainer().has(TARDISWeepingAngels.FOLLOW, PersistentDataType.BOOLEAN)) {
+            stay = !this.follower.getBukkitEntity().getPersistentDataContainer().getOrDefault(TARDISWeepingAngels.FOLLOW, PersistentDataType.BOOLEAN, true);
+        }
+        return (this.follower.isPassenger() || this.follower.isLeashed() || stay);
     }
 
     private void teleportToOwner() {

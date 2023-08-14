@@ -98,7 +98,7 @@ public class RacnossRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity racnoss = new MonsterSpawner().create(l, Monster.RACNOSS, null);
+            LivingEntity racnoss = new MonsterSpawner().create(l, Monster.RACNOSS);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new Equipper(Monster.RACNOSS, racnoss, false, false).setHelmetAndInvisibilty();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(racnoss, EntityType.PIGLIN_BRUTE, Monster.RACNOSS, l));

@@ -89,7 +89,7 @@ public class SilentRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity silent = new MonsterSpawner().create(l, Monster.SILENT, null);
+                LivingEntity silent = new MonsterSpawner().create(l, Monster.SILENT);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.SILENT, silent, false, false).setHelmetAndInvisibilty();
                     SilentEquipment.setGuardian(silent);

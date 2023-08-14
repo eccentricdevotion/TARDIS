@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class K9Follow {
 
@@ -34,7 +35,7 @@ public class K9Follow {
         if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
             UUID uuid = player.getUniqueId();
             UUID k9Id = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-            if (k9Id.equals(uuid)) {
+            if (uuid.equals(k9Id)) {
                 double speed = (args.length == 2) ? Math.min(Double.parseDouble(args[1]) / 100.0d, 0.5d) : 0.15d;
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new K9WalkRunnable(stand, speed, player), 2L, 2L);
                 TARDISWeepingAngels.getFollowTasks().put(uuid, taskId);

@@ -92,6 +92,7 @@ public class TARDISWeepingAngels {
     public static NamespacedKey HEADLESS_TASK;
     public static NamespacedKey OOD;
     public static NamespacedKey OWNER_UUID;
+    public static NamespacedKey FOLLOW;
     public static NamespacedKey RACNOSS;
     public static NamespacedKey SILENT;
     public static NamespacedKey SILURIAN;
@@ -264,6 +265,7 @@ public class TARDISWeepingAngels {
         OOD = new NamespacedKey(plugin, "ood");
         PDC_KEYS.put(Monster.OOD, OOD);
         OWNER_UUID = new NamespacedKey(plugin, "owner_uuid");
+        FOLLOW = new NamespacedKey(plugin, "follow");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
         PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
         SILENT = new NamespacedKey(plugin, "silent");
