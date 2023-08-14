@@ -289,10 +289,14 @@ public class TARDISPlanetsUpdater {
             case "siluria" -> icon = "BAMBOO_MOSAIC";
             case "gallifrey" -> icon = "RED_SAND";
             default -> {
-                switch (env) {
-                    case "NETHER" -> icon = "NETHERRACK";
-                    case "THE_END" -> icon = "END_STONE";
-                    default -> icon = "STONE";
+                if (env != null) {
+                    switch (env) {
+                        case "NETHER" -> icon = "NETHERRACK";
+                        case "THE_END" -> icon = "END_STONE";
+                        default -> icon = "STONE";
+                    }
+                } else {
+                    icon = "DIRT";
                 }
             }
         }
