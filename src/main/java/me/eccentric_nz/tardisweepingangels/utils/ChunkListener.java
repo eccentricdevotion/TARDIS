@@ -22,7 +22,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
-import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -33,10 +32,6 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class ChunkListener implements Listener {
 
@@ -119,21 +114,6 @@ public class ChunkListener implements Listener {
                     int f = pdc.get(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER);
                     if (f != -1) {
                         plugin.getServer().getScheduler().cancelTask(f);
-                    }
-                }
-                if (pdc.has(TARDISWeepingAngels.OWNER_UUID)) {
-                    try {
-                        // TODO save entity in followers table
-                        HashMap<String, Object> set = new HashMap<>();
-                        set.put("uuid", monk.getUniqueId().toString());
-                        UUID owner = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                        set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED);
-                        String species;
-                        if (monk.getClass().getDeclaredMethod("getHandle").invoke(monk) instanceof TWAOod) {
-                            species = "OOD";
-                        }
-                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
-
                     }
                 }
             }

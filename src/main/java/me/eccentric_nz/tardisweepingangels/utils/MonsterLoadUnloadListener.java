@@ -37,23 +37,25 @@ import org.bukkit.entity.PigZombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-public class MonsterLoadListener implements Listener {
+public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
     private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
 
-    public MonsterLoadListener(TARDIS plugin) {
+    public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -93,7 +95,7 @@ public class MonsterLoadListener implements Listener {
                 if (a == null || entity.getType() == EntityType.ARMOR_STAND) {
                     UUID uuid = TARDISWeepingAngels.UNCLAIMED;
                     PersistentDataContainer pdc = entity.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.OWNER_UUID)) {
+                    if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                     }
                     a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster, false, false, OodColour.BLACK, 0));
@@ -114,6 +116,10 @@ public class MonsterLoadListener implements Listener {
                         TWAK9 k9 = (TWAK9) a;
                         k9.setFollowing(follower.isFollowing());
                     }
+                    // remove database entry
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("uuid", follower.getUuid().toString());
+                    plugin.getQueryFactory().doDelete("followers", where);
                 }
             } else {
                 a = new MonsterSpawner().create(location, monster);
@@ -142,6 +148,45 @@ public class MonsterLoadListener implements Listener {
                 }
                 default -> {
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onUnload(EntitiesUnloadEvent event) {
+        for (Entity e : event.getEntities()) {
+            if (e.getType() != EntityType.HUSK) {
+                return;
+            }
+            PersistentDataContainer pdc = e.getPersistentDataContainer();
+            if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                // save entity in followers table
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("uuid", e.getUniqueId().toString());
+                UUID owner = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED);
+                String species = "";
+                int following = ((TWAFollower) e).isFollowing() ? 1 : 0;
+                String colour = "BLACK";
+                int option = 0;
+                int ammo = 0;
+                if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                    species = "OOD";
+                    colour = ((TWAOod) e).getColour().toString();
+                }
+                if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                    species = "JUDOON";
+                    ammo = ((TWAJudoon) e).getAmmo();
+                }
+                if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                    species = "K9";
+                }
+                set.put("species", species);
+                set.put("following", following);
+                set.put("option", option);
+                set.put("colour", colour);
+                set.put("ammo", ammo);
+                plugin.getQueryFactory().doInsert("followers", set);
             }
         }
     }

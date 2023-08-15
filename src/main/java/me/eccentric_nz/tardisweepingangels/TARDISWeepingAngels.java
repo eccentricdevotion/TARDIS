@@ -164,7 +164,7 @@ public class TARDISWeepingAngels {
         if (plugin.getMonstersConfig().getBoolean("k9.can_build")) {
             plugin.getPM().registerEvents(new K9Builder(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new MonsterLoadListener(plugin), plugin);
+        plugin.getPM().registerEvents(new MonsterLoadUnloadListener(plugin), plugin);
         plugin.getPM().registerEvents(new DalekGlideListener(), plugin);
         plugin.getPM().registerEvents(new Damage(plugin), plugin);
         plugin.getPM().registerEvents(new VashtaNeradaListener(plugin), plugin);
