@@ -146,9 +146,6 @@ public class MonsterEquipment {
             if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                 return Monster.MIRE;
             }
-            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
-                return Monster.OOD;
-            }
             if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                 return Monster.SILENT;
             }
@@ -159,7 +156,7 @@ public class MonsterEquipment {
                 return Monster.WEEPING_ANGEL;
             }
         }
-        if (entity instanceof ArmorStand stand) {
+        if (entity instanceof Husk || entity instanceof ArmorStand) {
             if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
                 return Monster.OOD;
             }

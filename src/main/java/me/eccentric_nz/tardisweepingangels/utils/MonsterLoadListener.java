@@ -17,12 +17,15 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Follower;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetFollowers;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
+import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.*;
 import org.bukkit.Bukkit;
@@ -34,33 +37,34 @@ import org.bukkit.entity.PigZombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
 public class MonsterLoadListener implements Listener {
 
-    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIFIED_PIGLIN);
+    private final TARDIS plugin;
+    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
+
+    public MonsterLoadListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onMonsterLoad(EntitiesLoadEvent event) {
         for (Entity e : event.getEntities()) {
             try {
-                if (e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWADrowned
-                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAPiglinBrute
-                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWASkeleton
-                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombie
-                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombifiedPiglin
-                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAOod
-                ) {
+                if (e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWADrowned || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAPiglinBrute || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWASkeleton || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombie || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombifiedPiglin || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAFollower) {
                     return;
                 }
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignore) {
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
             }
             resetMonster(e);
         }
@@ -72,15 +76,45 @@ public class MonsterLoadListener implements Listener {
         }
         Monster monster = MonsterEquipment.getMonsterType(entity);
         if (monster != null) {
-            if (!monster.isCustom()) {
+            if (!monster.isAnimated()) {
                 return;
             }
             Location location = entity.getLocation();
             entity.remove();
-            LivingEntity a;
-            if (monster == Monster.OOD) {
-                TWAOod ood = (TWAOod) entity;
-                a = (LivingEntity) new MonsterSpawner().createFollower(location, monster, null).getBukkitEntity();
+            LivingEntity a = null;
+            if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
+                // retrieve entity from followers table and get attributes
+                Follower follower = null;
+                ResultSetFollowers rsf = new ResultSetFollowers(plugin, entity.getUniqueId().toString());
+                if (rsf.resultSet()) {
+                    follower = rsf.getEntity();
+                    a = (LivingEntity) new MonsterSpawner().createFollower(location, follower).getBukkitEntity();
+                }
+                if (a == null || entity.getType() == EntityType.ARMOR_STAND) {
+                    UUID uuid = TARDISWeepingAngels.UNCLAIMED;
+                    PersistentDataContainer pdc = entity.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.OWNER_UUID)) {
+                        uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                    }
+                    a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster, false, false, OodColour.BLACK, 0));
+                }
+                if (follower != null) {
+                    if (monster == Monster.OOD) {
+                        TWAOod ood = (TWAOod) a;
+                        ood.setColour(follower.getColour());
+                        ood.setRedeye(follower.hasOption());
+                        ood.setFollowing(follower.isFollowing());
+                    } else if (monster == Monster.JUDOON) {
+                        TWAJudoon judoon = (TWAJudoon) a;
+                        judoon.setAmmo(follower.getAmmo());
+                        judoon.setGuard(follower.hasOption());
+                        judoon.setFollowing(follower.isFollowing());
+                    }
+                    if (monster == Monster.K9) {
+                        TWAK9 k9 = (TWAK9) a;
+                        k9.setFollowing(follower.isFollowing());
+                    }
+                }
             } else {
                 a = new MonsterSpawner().create(location, monster);
             }

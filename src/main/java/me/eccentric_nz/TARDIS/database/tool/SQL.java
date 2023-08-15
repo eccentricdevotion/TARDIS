@@ -138,7 +138,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %ssaves (save_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', save_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float DEFAULT '0', y float DEFAULT '0', z float DEFAULT '0', yaw float DEFAULT '0', pitch float DEFAULT '0', PRIMARY KEY (save_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sfollowers (uuid varchar(48) NOT NULL, owner varchar(48) NOT NULL, redeye int(1) DEFAULT '0', colour varchar(5) DEFAULT '', ammo int(3) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %sfollowers (uuid varchar(48) NOT NULL, owner varchar(48), species  varchar(8) DEFAULT '', following int(1) DEFAULT '0', option int(1) DEFAULT '0', colour varchar(5) DEFAULT '', ammo int(3) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
     public static final List<String> VALUES = Arrays.asList(
 
@@ -252,7 +252,9 @@ public class SQL {
 
             "(%s, '%s', '%s', '%s', '%s', %s)",
 
-            "(%s, '%s', '%s', '%s', %s, %s, %s, %s, %s)"
+            "(%s, '%s', '%s', '%s', %s, %s, %s, %s, %s)",
+
+            "('%s', '%s', '%s', %s, %s, '%s', %s)"
     );
     static final List<String> INSERTS = Arrays.asList(
 
@@ -366,7 +368,9 @@ public class SQL {
 
             "INSERT INTO `%smessages` (`message_id`, `uuid_to`, `uuid_from`, `message`, `date`, `read`) VALUES ",
 
-            "INSERT INTO `%ssaves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES "
+            "INSERT INTO `%ssaves` (`save_id`, `uuid`, `save_name`, `world`, `x`, `y`, `z`, `yaw`, `pitch`) VALUES ",
+
+            "INSERT INTO  `%sfollwers` (`uuid`, `owner`, `species`, `following`, `option`, `colour`, `ammo`) VALUES "
 
     );
     static final String COMMENT = "--";

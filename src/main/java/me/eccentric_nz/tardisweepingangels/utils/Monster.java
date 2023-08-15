@@ -102,10 +102,9 @@ public enum Monster {
         return headModelData;
     }
 
-    public boolean isCustom() {
+    public boolean isAnimated() {
         switch (this) {
-//            case DALEK, DAVROS, JUDOON, K9, OOD, TOCLAFANE -> {
-            case DALEK, DAVROS, JUDOON, K9, TOCLAFANE -> {
+            case DALEK, DAVROS, TOCLAFANE -> {
                 return false;
             }
             default -> {

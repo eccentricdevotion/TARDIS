@@ -6,10 +6,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
@@ -30,8 +28,8 @@ public class TWAOod extends TWAFollower {
     private boolean redeye;
     private OodColour colour;
 
-    public TWAOod(EntityType<? extends Skeleton> type, Level world, UUID owner) {
-        super(type, world, owner);
+    public TWAOod(Level world, UUID owner) {
+        super(world, owner);
         this.uuid = owner;
         this.redeye = false;
         this.colour = OodColour.BLACK;

@@ -286,7 +286,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryManipulator);
 
             // Table structure for table 'followers' (ood/judoon/k9)
-            String queryOod = "CREATE TABLE IF NOT EXISTS " + prefix + "followers (uuid TEXT PRIMARY KEY NOT NULL, owner TEXT, redeye INTEGER DEFAULT 0, colour TEXT DEFAULT '', ammo INTEGER DEFAULT 0)";
+            String queryOod = "CREATE TABLE IF NOT EXISTS " + prefix + "followers (uuid TEXT PRIMARY KEY NOT NULL, owner TEXT, species TEXT DEFAULT '', following INTEGER DEFAULT 0, option INTEGER DEFAULT 0, colour TEXT DEFAULT '', ammo INTEGER DEFAULT 0)";
             statement.executeUpdate(queryOod);
 
             // delete old submerged, gravity and levers tables

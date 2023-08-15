@@ -5,15 +5,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.monster.Husk;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
@@ -23,28 +16,21 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class TWAFollower extends Husk implements OwnableEntity {
+public class TWAJudoon extends TWAFollower {
 
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAJudoon.class, EntityDataSerializers.OPTIONAL_UUID);
     private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
     private UUID uuid;
     private boolean isAnimating = false;
-    private boolean following = false;
     private int task = -1;
     private int i = 0;
+    private int ammo;
+    private boolean guard;
 
-    public TWAFollower(Level world, UUID owner) {
-        super(EntityType.HUSK, world);
+    public TWAJudoon(Level world, UUID owner) {
+        super(world, owner);
         this.uuid = owner;
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(6, new FollowPathFinder(this, 1.0D, 10.0F, 2.0F, false));
-        this.goalSelector.addGoal(8, new RandomPathGoal(this, 1.0D));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        this.guard = false;
     }
 
     @Override
@@ -92,11 +78,19 @@ public class TWAFollower extends Husk implements OwnableEntity {
         return (player != null) ? ((CraftPlayer) player).getHandle() : null;
     }
 
-    public boolean isFollowing() {
-        return following;
+    public int getAmmo() {
+        return ammo;
     }
 
-    public void setFollowing(boolean following) {
-        this.following = following;
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
+    public boolean isGuard() {
+        return guard;
+    }
+
+    public void setGuard(boolean guard) {
+        this.guard = guard;
     }
 }
