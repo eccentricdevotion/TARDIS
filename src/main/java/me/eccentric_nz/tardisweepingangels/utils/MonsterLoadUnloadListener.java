@@ -82,6 +82,7 @@ public class MonsterLoadUnloadListener implements Listener {
                 return;
             }
             Location location = entity.getLocation();
+            // TODO
             entity.remove();
             LivingEntity a = null;
             if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {

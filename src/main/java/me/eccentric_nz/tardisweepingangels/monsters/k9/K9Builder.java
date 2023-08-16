@@ -75,6 +75,7 @@ public class K9Builder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = below.getLocation().add(0.5d, 0, 0.5d);
+                    // TODO
                     Entity e = l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         K9Equipment.set(player, e, false);

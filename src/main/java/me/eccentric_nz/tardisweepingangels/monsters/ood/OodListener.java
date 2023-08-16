@@ -54,24 +54,6 @@ public class OodListener implements Listener {
                     if (husk instanceof TWAOod ood) {
                         ood.setRedeye(!ood.isRedeye());
                     }
-//                    EntityEquipment ee = husk.getEquipment();
-//                    if (ee != null) {
-//                        ItemStack head = ee.getHelmet();
-//                        ItemMeta im = head.getItemMeta();
-//                        int rage = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER);
-//                        int cmd = im.getCustomModelData();
-//                        if (rage == 1) {
-//                            cmd -= 100;
-//                            rage = 0;
-//                        } else {
-//                            cmd += 100;
-//                            rage = 1;
-//                        }
-//                        im.setCustomModelData(cmd);
-//                        head.setItemMeta(im);
-//                        ee.setHelmet(head);
-//                        husk.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, rage);
-//                    }
                 } else if (oodId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Ood
                     husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());

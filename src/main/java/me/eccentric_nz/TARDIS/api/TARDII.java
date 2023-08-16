@@ -906,22 +906,19 @@ public class TARDII implements TardisAPI {
         new Equipper(Monster.SLITHEEN, le, disguise, true).setHelmetAndInvisibilty();
     }
 
+    // TODO
     @Override
     public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise) {
         JudoonEquipment.set(player, armorStand, disguise);
     }
 
-    @Override
-    public void setJudoonEquipment(Player player, Entity armorStand, int ammunition) {
-        setJudoonEquipment(player, armorStand, false);
-        armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, ammunition);
-    }
-
+    // TODO
     @Override
     public void setK9Equipment(Player player, Entity armorStand, boolean disguise) {
         K9Equipment.set(player, armorStand, disguise);
     }
 
+    // TODO
     @Override
     public void setOodEquipment(Player player, Entity entity, boolean disguise) {
         OodEquipment.set(entity, disguise);
@@ -991,6 +988,14 @@ public class TARDII implements TardisAPI {
         return (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels") && PaperLib.isPaper()) ? new FollowerChecker(entity, uuid) : null;
     }
 
+    // TODO
+    @Override
+    public void setJudoonEquipment(Player player, Entity armorStand, int ammunition) {
+        setJudoonEquipment(player, armorStand, false);
+        armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, ammunition);
+    }
+
+    // TODO
     @Override
     public void setFollowing(ArmorStand stand, Player player) {
         int taskId = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new JudoonWalkRunnable(stand, 0.15d, player), 2L, 2L);

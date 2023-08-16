@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -36,6 +35,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class K9Listener implements Listener {
 
@@ -78,7 +79,8 @@ public class K9Listener implements Listener {
             if (ent.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 UUID uuid = player.getUniqueId();
                 UUID k9Id = ent.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                if (k9Id.equals(uuid)) {
+                // TODO
+                if (uuid.equals(k9Id)) {
                     player.playSound(ent.getLocation(), "k9", 1.0f, 1.0f);
                     if (TARDISWeepingAngels.getFollowTasks().containsKey(uuid)) {
                         // stay

@@ -74,6 +74,7 @@ public class JudoonBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation().add(0.5d, 0, 0.5d);
+                    // TODO
                     Entity e = l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         JudoonEquipment.set(event.getPlayer(), e, false);

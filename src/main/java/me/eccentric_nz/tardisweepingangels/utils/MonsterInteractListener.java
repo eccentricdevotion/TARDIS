@@ -142,11 +142,11 @@ public class MonsterInteractListener implements Listener {
             // get current follower status
             TWAFollower follower = (TWAFollower) husk;
             if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, (Husk) husk, "Ood", !follower.isFollowing());
+                Follow.toggle(plugin, player, husk, "Ood", !follower.isFollowing());
             } else if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, (Husk) husk, "Judoon", !follower.isFollowing());
+                Follow.toggle(plugin, player, husk, "Judoon", !follower.isFollowing());
             } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, (Husk) husk, "K9", !follower.isFollowing());
+                Follow.toggle(plugin, player, husk, "K9", !follower.isFollowing());
             }
         }
     }

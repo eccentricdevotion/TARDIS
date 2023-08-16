@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
@@ -56,7 +57,7 @@ public class JudoonListener implements Listener {
                 }
                 UUID judoonId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (player.getUniqueId().equals(judoonId)) {
-                    int ammo = husk.getPersistentDataContainer().get(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER);
+                    int ammo = husk.getPersistentDataContainer().getOrDefault(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, 0);
                     if (Tag.SHULKER_BOXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
                         // top up ammo
                         ItemStack box = player.getInventory().getItemInMainHand();
@@ -85,37 +86,28 @@ public class JudoonListener implements Listener {
                             }
                         }
                     } else {
-                        // TODO toggle guard mode
-                        // TODO add projectile firing to TWAJudoon - borrow target/bow code from Skeleton?
+                        // toggle guard mode
                         // TODO need models for firing gun while walking - alter TWAJudoon `aiStep()`
-                        ItemStack arm = husk.getEquipment().getItemInMainHand();
-                        ItemMeta im = arm.getItemMeta();
-                        int cmd = im.getCustomModelData();
-                        if (cmd == 4 && ammo > 0) {
+                        TWAJudoon judoon = (TWAJudoon) husk;
+                        String message = "";
+                        if (!judoon.isGuard()) {
                             if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {
-                                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ACTION");
-                                // add to repeating task
-                                TARDISWeepingAngels.getGuards().add(husk.getUniqueId());
-                                TARDISWeepingAngels.getPlayersWithGuards().add(player.getUniqueId());
+                                // point weapon
+                                judoon.setGuard(true);
+                                message = "WA_ACTION";
+                                husk.setCustomName("Ammunition: " + ammo);
+                                husk.setCustomNameVisible(true);
                             } else {
                                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_GUARD");
+                                return;
                             }
-                            // point weapon
-                            cmd = 9;
-                            husk.setCustomName("Ammunition: " + ammo);
-                            husk.setCustomNameVisible(true);
                         } else {
                             // stand easy
-                            cmd = 4;
+                            judoon.setGuard(false);
+                            message = "WA_EASE";
                             husk.setCustomNameVisible(false);
-                            plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_EASE");
-                            // end guarding task
-                            TARDISWeepingAngels.getGuards().remove(husk.getUniqueId());
-                            TARDISWeepingAngels.getPlayersWithGuards().remove(player.getUniqueId());
                         }
-                        im.setCustomModelData(cmd);
-                        arm.setItemMeta(im);
-                        husk.getEquipment().setItemInMainHand(arm);
+                        plugin.getMessenger().send(player, TardisModule.MONSTERS, message);
                     }
                 } else if (judoonId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Judoon
