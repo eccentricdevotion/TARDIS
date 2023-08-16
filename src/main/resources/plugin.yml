@@ -1746,7 +1746,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     follow:
       description: Make an Ood, Judoon or K9 follow you.
-      usage: /<command> follow <speed from 1-50>
+      usage: /<command> follow
       permission: tardisweepingangels.follow
       permission-message: You don't have the permission <permission> to use this command
     stay:

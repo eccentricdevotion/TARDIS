@@ -17,11 +17,6 @@
 package me.eccentric_nz.TARDIS.api;
 
 import io.papermc.lib.PaperLib;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -73,6 +68,12 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -922,8 +923,8 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public void setOodEquipment(Player player, Entity armorStand, boolean disguise) {
-        OodEquipment.set(player, armorStand, disguise);
+    public void setOodEquipment(Player player, Entity entity, boolean disguise) {
+        OodEquipment.set(entity, disguise);
     }
 
     @Override

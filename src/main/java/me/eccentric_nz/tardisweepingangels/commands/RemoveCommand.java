@@ -16,16 +16,19 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import me.eccentric_nz.tardisweepingangels.utils.ArmourStandFinder;
+import me.eccentric_nz.tardisweepingangels.utils.FollowerFinder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class RemoveCommand {
 
@@ -38,28 +41,31 @@ public class RemoveCommand {
     public boolean remove(CommandSender sender) {
         if (sender instanceof Player player) {
             UUID uuid = player.getUniqueId();
-            if (TARDISWeepingAngels.getFollowTasks().containsKey(uuid)) {
-                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_STAY");
+            // monster equipped armour stands
+            ArmorStand stand = (ArmorStand) FollowerFinder.getEntity(player, EntityType.ARMOR_STAND);
+            if (stand != null && stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+                stand.remove();
                 return true;
             }
-            ArmorStand stand = ArmourStandFinder.getStand(player);
-            if (stand == null || (!stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && !stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER))) {
+            // monster followers - Ood, Judoon, K9
+            Husk husk = (Husk) FollowerFinder.getEntity(player, EntityType.HUSK);
+            if (husk == null || !husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ENTITY");
                 return true;
             } else {
-                if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.judoon")) {
+                if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.judoon")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "Judoon");
                     return true;
-                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.k9")) {
+                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.k9")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "K9");
                     return true;
-                } else if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.ood")) {
+                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.ood")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "Ood");
                     return true;
                 }
-                UUID storedUuid = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                if ((storedUuid != null && storedUuid.equals(uuid)) || stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
-                    stand.remove();
+                UUID storedUuid = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                if (storedUuid != null && storedUuid.equals(uuid)) {
+                    husk.remove();
                 } else {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_OWNER");
                 }

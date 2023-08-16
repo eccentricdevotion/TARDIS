@@ -59,7 +59,6 @@ public class TARDISDevNMSCommand {
                         }
                     }
                     new Equipper(monster, (LivingEntity) species.getBukkitEntity(), false, false, false).setHelmetAndInvisibilty();
-
                 } else {
                     LivingEntity le = new MonsterSpawner().create(location, monster);
                     new Equipper(monster, le, false, monster == Monster.SILURIAN, monster == Monster.SEA_DEVIL).setHelmetAndInvisibilty();
@@ -76,7 +75,6 @@ public class TARDISDevNMSCommand {
                         IceWarriorEquipment.setAnger(le);
                     }
                 }
-
             } catch (IllegalArgumentException ignored) {
             }
         }

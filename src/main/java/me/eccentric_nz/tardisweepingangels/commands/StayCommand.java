@@ -16,12 +16,19 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
+import me.eccentric_nz.tardisweepingangels.utils.Follow;
+import me.eccentric_nz.tardisweepingangels.utils.FollowerFinder;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public class StayCommand {
 
@@ -33,12 +40,26 @@ public class StayCommand {
 
     public boolean stay(CommandSender sender) {
         if (sender instanceof Player player) {
-            UUID uuid = player.getUniqueId();
-            if (TARDISWeepingAngels.getFollowTasks().containsKey(uuid)) {
-                plugin.getServer().getScheduler().cancelTask(TARDISWeepingAngels.getFollowTasks().get(uuid));
-                TARDISWeepingAngels.getFollowTasks().remove(uuid);
-            } else {
+            // get the entity the player is looking at
+            Entity husk = FollowerFinder.getEntity(player, EntityType.HUSK);
+            if (husk == null) {
+                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_LOOKING");
+                return true;
+            }
+            // check if monster is already following
+            TWAFollower follower = (TWAFollower) husk;
+            if (!follower.isFollowing()) {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_FOLLOWING");
+                return true;
+            }
+            // set following status
+            PersistentDataContainer pdc = husk.getPersistentDataContainer();
+            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "Ood", false);
+            } else if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "Judoon", false);
+            } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "K9", false);
             }
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");

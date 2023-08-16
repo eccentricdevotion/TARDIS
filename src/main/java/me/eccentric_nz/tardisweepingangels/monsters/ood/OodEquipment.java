@@ -18,30 +18,33 @@ package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
-import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class OodEquipment {
 
-    public static void set(Player player, Entity entity, boolean disguise) {
+    public static void set(Entity entity, boolean disguise) {
+        TWAOod ood = (TWAOod) entity;
+        ood.setRedeye(TARDISConstants.RANDOM.nextBoolean());
+        int chance = TARDISConstants.RANDOM.nextInt(100);
         int colour = 0;
-        int r = TARDISConstants.RANDOM.nextInt(100);
-        if (r > 70) {
-            colour = (r > 85) ? 20 : 10;
+        if (chance < 33) {
+            ood.setColour(OodColour.BLUE);
+            colour = 10;
         }
-        ItemStack head = new ItemStack(Material.ROTTEN_FLESH);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.setDisplayName("Ood Head");
-        headMeta.setCustomModelData((disguise) ? 29 : 2 + colour);
-        head.setItemMeta(headMeta);
-        if (!disguise) {
-            new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
-        } else {
+        if (chance > 66) {
+            ood.setColour(OodColour.BROWN);
+            colour = 20;
+        }
+        if (disguise) {
+            ItemStack head = new ItemStack(Material.ROTTEN_FLESH);
+            ItemMeta headMeta = head.getItemMeta();
+            headMeta.setDisplayName("Ood Head");
+            headMeta.setCustomModelData((disguise) ? 29 : 2 + colour);
+            head.setItemMeta(headMeta);
             new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
         }
     }

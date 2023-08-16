@@ -16,21 +16,20 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import org.bukkit.entity.ArmorStand;
+import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class OodListener implements Listener {
 
@@ -42,36 +41,40 @@ public class OodListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageOod(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof ArmorStand stand && event.getDamager() instanceof Player player) {
-            if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+        if (event.getEntity() instanceof Husk husk && event.getDamager() instanceof Player player) {
+            if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(true);
-                player.playSound(stand.getLocation(), "ood", 1.0f, 1.0f);
+                player.playSound(husk.getLocation(), "ood", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.ood")) {
                     return;
                 }
-                UUID oodId = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                UUID oodId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (oodId.equals(player.getUniqueId())) {
-                    EntityEquipment ee = stand.getEquipment();
-                    if (ee != null) {
-                        ItemStack head = ee.getHelmet();
-                        ItemMeta im = head.getItemMeta();
-                        int rage = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER);
-                        int cmd = im.getCustomModelData();
-                        if (rage == 1) {
-                            cmd -= 100;
-                            rage = 0;
-                        } else {
-                            cmd += 100;
-                            rage = 1;
-                        }
-                        im.setCustomModelData(cmd);
-                        head.setItemMeta(im);
-                        ee.setHelmet(head);
-                        stand.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, rage);
+                    // set redeye
+                    if (husk instanceof TWAOod ood) {
+                        ood.setRedeye(!ood.isRedeye());
                     }
+//                    EntityEquipment ee = husk.getEquipment();
+//                    if (ee != null) {
+//                        ItemStack head = ee.getHelmet();
+//                        ItemMeta im = head.getItemMeta();
+//                        int rage = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER);
+//                        int cmd = im.getCustomModelData();
+//                        if (rage == 1) {
+//                            cmd -= 100;
+//                            rage = 0;
+//                        } else {
+//                            cmd += 100;
+//                            rage = 1;
+//                        }
+//                        im.setCustomModelData(cmd);
+//                        head.setItemMeta(im);
+//                        ee.setHelmet(head);
+//                        husk.getPersistentDataContainer().set(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER, rage);
+//                    }
                 } else if (oodId.equals(TARDISWeepingAngels.UNCLAIMED)) {
                     // claim the Ood
-                    stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
+                    husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
                 }
             }

@@ -51,7 +51,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianSpawnerListener;
 import me.eccentric_nz.tardisweepingangels.monsters.slitheen.SlitheenRunnable;
-import me.eccentric_nz.tardisweepingangels.monsters.sontarans.Butler;
 import me.eccentric_nz.tardisweepingangels.monsters.sontarans.SontaranRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.BeeSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneListener;
@@ -173,7 +172,7 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new PlayerUndisguise(), plugin);
         plugin.getPM().registerEvents(new Sounds(plugin), plugin);
         plugin.getPM().registerEvents(new GasMask(plugin), plugin);
-        plugin.getPM().registerEvents(new Butler(plugin), plugin);
+        plugin.getPM().registerEvents(new MonsterInteractListener(plugin), plugin);
         plugin.getPM().registerEvents(new HeadlessTarget(plugin), plugin);
         plugin.getPM().registerEvents(new HeadlessProjectileListener(), plugin);
         plugin.getPM().registerEvents(new K9Listener(plugin), plugin);

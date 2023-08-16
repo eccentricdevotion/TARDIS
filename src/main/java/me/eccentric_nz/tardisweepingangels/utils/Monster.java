@@ -112,4 +112,15 @@ public enum Monster {
             }
         }
     }
+
+    public boolean isFollower() {
+        switch (this) {
+            case K9, JUDOON, OOD -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
 }

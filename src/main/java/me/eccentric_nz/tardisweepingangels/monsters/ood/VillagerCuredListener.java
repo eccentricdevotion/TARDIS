@@ -46,8 +46,9 @@ public class VillagerCuredListener implements Listener {
             return;
         }
         if (TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("ood.spawn_from_cured")) {
+            // TODO
             Entity ood = world.spawnEntity(entity.getLocation(), EntityType.ARMOR_STAND);
-            OodEquipment.set(null, ood, false);
+            OodEquipment.set(ood, false);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(ood, EntityType.ARMOR_STAND, Monster.OOD, entity.getLocation()));
         }
     }

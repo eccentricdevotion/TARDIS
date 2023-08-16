@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.sontarans;
+package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -22,7 +22,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -34,6 +34,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
 
@@ -42,29 +43,39 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The seemingly male Sontarans could be genespliced to produce milk. Strax was
+ * The seemingly male Sontarans could be gene spliced to produce milk. Strax was
  * very proud that he could produce "magnificent quantities" of lactic fluid and
  * offered to nurse Melody Pond.
  *
  * @author eccentric_nz
  */
-public class Butler implements Listener {
+public class MonsterInteractListener implements Listener {
 
     private final List<UUID> milkers = new ArrayList<>();
     private final TARDIS plugin;
 
-    public Butler(TARDIS plugin) {
+    public MonsterInteractListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onSontaranInteract(PlayerInteractEntityEvent event) {
+    public void onMonsterInteract(PlayerInteractEntityEvent event) {
         Entity ent = event.getRightClicked();
+        if (!(ent instanceof org.bukkit.entity.Monster monster)) {
+            return;
+        }
+        EntityEquipment ee = monster.getEquipment();
+        ItemStack h = ee.getHelmet();
+        if (!h.hasItemMeta()) {
+            return;
+        }
+        ItemMeta im = h.getItemMeta();
+        if (!im.hasDisplayName()) {
+            return;
+        }
         if (ent instanceof Zombie zombie) {
-            EntityEquipment ee = zombie.getEquipment();
-            if (ee.getHelmet().getType().equals(Material.POTATO)) {
-                ItemStack h = ee.getHelmet();
-                if (h.hasItemMeta() && h.getItemMeta().hasDisplayName() && h.getItemMeta().getDisplayName().startsWith("Sontaran")) {
+            if (h.getType().equals(Material.POTATO)) {
+                if (im.getDisplayName().startsWith("Sontaran")) {
                     Player p = event.getPlayer();
                     ItemStack is = p.getInventory().getItemInMainHand();
                     if (is.getType().equals(Material.POTION)) {
@@ -96,8 +107,7 @@ public class Butler implements Listener {
                 }
             }
             if (ee.getHelmet().getType().equals(Material.BAKED_POTATO)) {
-                ItemStack h = ee.getHelmet();
-                if (h.hasItemMeta() && h.getItemMeta().hasDisplayName() && h.getItemMeta().getDisplayName().startsWith("Strax")) {
+                if (im.getDisplayName().startsWith("Strax")) {
                     Player p = event.getPlayer();
                     UUID uuid = p.getUniqueId();
                     ItemStack is = p.getInventory().getItemInMainHand();
@@ -120,6 +130,23 @@ public class Butler implements Listener {
                         p.playSound(zombie.getLocation(), "strax", 1.0f, 1.0f);
                     }
                 }
+            }
+        }
+        if (ent instanceof Husk husk) {
+            // toggle following status
+            PersistentDataContainer pdc = husk.getPersistentDataContainer();
+            if (!pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                return;
+            }
+            Player player = event.getPlayer();
+            // get current follower status
+            TWAFollower follower = (TWAFollower) husk;
+            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "Ood", !follower.isFollowing());
+            } else if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "Judoon", !follower.isFollowing());
+            } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                Follow.toggle(plugin, player, (Husk) husk, "K9", !follower.isFollowing());
             }
         }
     }

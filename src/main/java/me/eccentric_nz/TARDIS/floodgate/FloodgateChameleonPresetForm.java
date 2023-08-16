@@ -1,8 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
@@ -18,6 +15,10 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class FloodgateChameleonPresetForm {
 
@@ -41,12 +42,6 @@ public class FloodgateChameleonPresetForm {
                 builder.button(preset.toString(), FormImage.Type.PATH, path);
             }
         }
-        // TODO TARDIS-Bedrock-Resource-Pack.mcpack for ItemFrame police boxes and sounds
-//        for (PRESET preset : PRESET.values()) {
-//            if (preset.usesItemFrame()) {
-//                builder.button(preset.toString(), FormImage.Type.PATH, String.format("textures/%s.png", FloodgateTextures.lookup.get(preset.getGuiDisplay().toString())));
-//            }
-//        }
         builder.validResultHandler(response -> handleResponse(response));
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
