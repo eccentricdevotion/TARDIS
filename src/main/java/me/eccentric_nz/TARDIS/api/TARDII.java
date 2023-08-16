@@ -472,7 +472,7 @@ public class TARDII implements TardisAPI {
                 lore = new ArrayList<>();
             }
             String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-            String what = item.equals("key") ? "key" : "disk";
+            String what = item.equals("TARDIS Key") ? "key" : "disk";
             lore.add(format + "This " + what + " belongs to");
             lore.add(format + player.getName());
             im.setLore(lore);
@@ -921,7 +921,7 @@ public class TARDII implements TardisAPI {
     // TODO
     @Override
     public void setOodEquipment(Player player, Entity entity, boolean disguise) {
-        OodEquipment.set(entity, disguise);
+        OodEquipment.set(player, entity, disguise);
     }
 
     @Override
