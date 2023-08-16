@@ -150,7 +150,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 default -> 0; // 1, 4 TARDIS inside door, secondary inside door
                             };
                             if (action == Action.LEFT_CLICK_BLOCK) {
-                                if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+                                if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
                                     return;
                                 }
                                 // must be the owner

@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -42,8 +43,8 @@ class TARDISRepairCommand {
             return true;
         }
         // Look up this player's UUID
-        OfflinePlayer op = TARDISStaticUtils.getOfflinePlayer(args[1]);
-        if (op == null) {
+        OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
+        if (op.getName() == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }

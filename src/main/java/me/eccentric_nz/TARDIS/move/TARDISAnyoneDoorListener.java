@@ -155,7 +155,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 }
                                 // must use key to lock / unlock door
                                 if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
-                                    if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+                                    if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
                                         return;
                                     }
                                     int locked = (rsd.isLocked()) ? 0 : 1;

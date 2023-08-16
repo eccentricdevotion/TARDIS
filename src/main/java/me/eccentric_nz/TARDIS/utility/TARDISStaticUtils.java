@@ -21,7 +21,6 @@ import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
@@ -34,7 +33,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.EulerAngle;
 
 import java.util.UUID;
 
@@ -80,7 +78,7 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Get a human readable time from server ticks.
+     * Get a human-readable time from server ticks.
      *
      * @param t the time in ticks
      * @return a string representation of the time
@@ -142,26 +140,9 @@ public class TARDISStaticUtils {
         ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(door);
         if (display != null) {
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-            if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
-                return true;
-            }
+            return tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN;
         }
         return false;
-    }
-
-    /**
-     * Gets the column to set the Police box sign in if CTM is on in the player's preferences.
-     *
-     * @param d the direction of the Police Box
-     * @return the column
-     */
-    public static int getCol(COMPASS d) {
-        return switch (d) {
-            case NORTH -> 6;
-            case WEST -> 4;
-            case SOUTH -> 2;
-            default -> 0;
-        };
     }
 
     /**
@@ -193,26 +174,6 @@ public class TARDISStaticUtils {
         }
     }
 
-    /**
-     * Gets the Chameleon Sign preset text.
-     *
-     * @param loc the location string retrieved from the database
-     * @return the last line of the sign
-     */
-    public static String getLastLine(String loc) {
-        // get sign block so we can read it
-        String str = "";
-        Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
-        if (l != null) {
-            Block cc = l.getBlock();
-            if (Tag.SIGNS.isTagged(cc.getType())) {
-                Sign sign = (Sign) cc.getState();
-                str = sign.getSide(Side.FRONT).getLine(3);
-            }
-        }
-        return str;
-    }
-
     public static boolean isInfested(Material material) {
         return switch (material) {
             case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS -> true;
@@ -235,8 +196,8 @@ public class TARDISStaticUtils {
         }
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
-            return (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            return (offlinePlayer.getName() != null) ? offlinePlayer.getName() : "Unknown";
         } else {
             return player.getName();
         }
@@ -258,16 +219,6 @@ public class TARDISStaticUtils {
         return ZERO_UUID;
     }
 
-    public static EulerAngle angleToEulerAngle(int degrees) {
-        return angleToEulerAngle(((double) degrees) / 360 * Math.PI);
-    }
-
-    private static EulerAngle angleToEulerAngle(double radians) {
-        double x = Math.cos(radians);
-        double z = Math.sin(radians);
-        return new EulerAngle(x, 0, z);
-    }
-
     public static boolean isMusicDisk(ItemStack is) {
         return switch (is.getType()) {
             case MUSIC_DISC_BLOCKS, MUSIC_DISC_CAT, MUSIC_DISC_CHIRP, MUSIC_DISC_MALL, MUSIC_DISC_WAIT -> true;
@@ -276,38 +227,10 @@ public class TARDISStaticUtils {
     }
 
     /**
-     * Gets an offline player
-     *
-     * @param name the player's name to lookup
-     */
-    public static OfflinePlayer getOfflinePlayer(String name) {
-        for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (name.equals(player.getName())) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Gets an offline player
-     *
-     * @param uuid the player's UUID to lookup
-     */
-    public static OfflinePlayer getOfflinePlayer(UUID uuid) {
-        for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            if (uuid.equals(player.getUniqueId())) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Checks whether an ItemStack is a sonic screwdriver
      *
      * @param is the ItemStack to check
-     * @return
+     * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isSonic(ItemStack is) {
         if (is != null && is.hasItemMeta()) {
