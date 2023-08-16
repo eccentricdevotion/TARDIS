@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
@@ -43,9 +42,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 /**
  * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
- * joke, the TARDIS roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
+ * joke, the TARDIS roof light flashed and an alarm chirp sound was heard, similar to that used on vehicles on Earth.
  *
  * @author eccentric_nz
  */
@@ -71,10 +72,10 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is == null || !is.getType().equals(rkey)) {
+        if (!is.getType().equals(rkey)) {
             return;
         }
-        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
             String uuid = player.getUniqueId().toString();
             // has TARDIS?
             HashMap<String, Object> where = new HashMap<>();

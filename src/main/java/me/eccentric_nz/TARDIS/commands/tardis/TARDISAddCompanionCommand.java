@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -96,8 +96,8 @@ class TARDISAddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    companion = TARDISStaticUtils.getOfflinePlayer(args[1]);
-                    if (companion != null) {
+                    companion = Bukkit.getOfflinePlayer(args[1]);
+                    if (companion.getName() != null) {
                         UUID oluuid = companion.getUniqueId();
                         tid.put("tardis_id", id);
                         if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {

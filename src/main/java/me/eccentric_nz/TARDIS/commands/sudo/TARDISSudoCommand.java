@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
@@ -37,11 +36,13 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -75,8 +76,8 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                     return true;
                 }
                 // must be a player name
-                OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[0]);
-                if (offlinePlayer == null) {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+                if (offlinePlayer.getName() == null) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                     return true;
                 }

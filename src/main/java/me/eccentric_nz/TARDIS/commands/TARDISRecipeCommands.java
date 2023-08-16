@@ -197,7 +197,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                     glowstoneCount++;
                 }
-                if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
+                if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     im.setDisplayName("TARDIS Key");
                     im.setCustomModelData(1);
                 }

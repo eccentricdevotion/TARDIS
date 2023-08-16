@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -43,8 +44,8 @@ class TARDISPurgeCommand {
         if (args[1].toLowerCase(Locale.ENGLISH).equals("junk")) {
             uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
         } else {
-            OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
-            if (offlinePlayer != null) {
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+            if (offlinePlayer.getName() != null) {
                 uuid = offlinePlayer.getUniqueId();
             }
         }

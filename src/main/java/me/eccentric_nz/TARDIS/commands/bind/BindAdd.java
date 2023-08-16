@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.bind;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -26,10 +24,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 class BindAdd {
 
@@ -68,8 +69,8 @@ class BindAdd {
                 // get player online or offline
                 Player p = plugin.getServer().getPlayer(which);
                 if (p == null) {
-                    OfflinePlayer offp = TARDISStaticUtils.getOfflinePlayer(which);
-                    if (offp == null) {
+                    OfflinePlayer offp = Bukkit.getOfflinePlayer(which);
+                    if (offp.getName() == null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }

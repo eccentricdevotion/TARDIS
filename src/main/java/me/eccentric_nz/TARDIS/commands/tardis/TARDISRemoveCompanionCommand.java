@@ -16,19 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -75,8 +76,8 @@ class TARDISRemoveCompanionCommand {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
-                    OfflinePlayer offlinePlayer = TARDISStaticUtils.getOfflinePlayer(args[1]);
-                    if (offlinePlayer != null) {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                    if (offlinePlayer.getName() != null) {
                         UUID oluuid = offlinePlayer.getUniqueId();
                         String[] split = comps.split(":");
                         StringBuilder sb = new StringBuilder();
@@ -89,7 +90,7 @@ class TARDISRemoveCompanionCommand {
                                 }
                             }
                             // remove trailing colon
-                            if (sb.length() > 0) {
+                            if (!sb.isEmpty()) {
                                 newList = sb.substring(0, sb.length() - 1);
                             }
                         }
