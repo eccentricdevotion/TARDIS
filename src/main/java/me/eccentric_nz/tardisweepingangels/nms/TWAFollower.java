@@ -25,17 +25,18 @@ import java.util.UUID;
 
 public class TWAFollower extends Husk implements OwnableEntity {
 
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
-    private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
-    private UUID uuid;
-    private boolean isAnimating = false;
-    private boolean following = false;
-    private int task = -1;
-    private int i = 0;
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
+    protected UUID uuid;
+    protected boolean isAnimating = false;
+    protected boolean following = false;
+    protected int task = -1;
+    protected int i = 0;
 
     public TWAFollower(Level world, UUID owner) {
         super(EntityType.HUSK, world);
         this.uuid = owner;
+        setOwnerUUID(this.uuid);
     }
 
     @Override
@@ -79,7 +80,7 @@ public class TWAFollower extends Husk implements OwnableEntity {
 
     public void setOwnerUUID(@Nullable UUID uuid) {
         this.uuid = uuid;
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
+        this.entityData.set(DATA_OWNER_UUID_ID, Optional.ofNullable(uuid));
     }
 
     @Nullable

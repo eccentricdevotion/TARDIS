@@ -3,34 +3,20 @@ package me.eccentric_nz.tardisweepingangels.nms;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class TWAOod extends TWAFollower {
 
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAOod.class, EntityDataSerializers.OPTIONAL_UUID);
-    private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
-    private UUID uuid;
-    private boolean isAnimating = false;
-    private int task = -1;
-    private int i = 0;
     private boolean redeye;
     private OodColour colour;
 
     public TWAOod(Level world, UUID owner) {
         super(world, owner);
-        this.uuid = owner;
         this.redeye = false;
         this.colour = OodColour.BLACK;
     }
@@ -65,27 +51,6 @@ public class TWAOod extends TWAFollower {
             }
         }
         super.aiStep();
-    }
-
-    @Nullable
-    @Override
-    public UUID getOwnerUUID() {
-        return uuid;
-    }
-
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.uuid = uuid;
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
-    }
-
-    @Nullable
-    @Override
-    public LivingEntity getOwner() {
-        if (uuid == null) {
-            return null;
-        }
-        org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
-        return (player != null) ? ((CraftPlayer) player).getHandle() : null;
     }
 
     public boolean isRedeye() {
