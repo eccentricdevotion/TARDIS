@@ -35,8 +35,8 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessTarge
 import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonAmmoRecipe;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonBuilder;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonGuardRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonListener;
+import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
@@ -62,10 +62,7 @@ import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISWeepingAngels {
 
@@ -202,28 +199,36 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CleanGuardians(plugin), 100L, 6000L);
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CybermanRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new DalekRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new EmptyChildRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HathRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessMonkRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new IceWarriorRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new MireRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new RacnossRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SeaDevilRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SilentRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SilurianRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SlitheenRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SontaranRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ToclafaneRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new WeepingAngelsRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ZygonRunnable(plugin), delay, delay);
+        List<Runnable> spawners = Arrays.asList(
+                new CybermanRunnable(plugin),
+                new DalekRunnable(plugin),
+                new EmptyChildRunnable(plugin),
+                new HathRunnable(plugin),
+                new HeadlessMonkRunnable(plugin),
+                new IceWarriorRunnable(plugin),
+                new JudoonRunnable(plugin),
+                new MireRunnable(plugin),
+                new RacnossRunnable(plugin),
+                new SeaDevilRunnable(plugin),
+                new SilentRunnable(plugin),
+                new SilurianRunnable(plugin),
+                new SlitheenRunnable(plugin),
+                new SontaranRunnable(plugin),
+                new ToclafaneRunnable(plugin),
+                new WeepingAngelsRunnable(plugin),
+                new ZygonRunnable(plugin)
+        );
+        long d = 0;
+        for (Runnable r : spawners) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, r, delay + d, delay);
+            d += 6;
+        }
         steal = (plugin.getMonstersConfig().getBoolean("angels.angels_can_steal"));
         if (plugin.getMonstersConfig().getBoolean("judoon.guards")) {
             // add recipe
             new JudoonAmmoRecipe(plugin).addRecipe();
-            // start guarding task
-            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new JudoonGuardRunnable(plugin), 20L, 20L);
+//            // start guarding task
+//            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new JudoonGuardRunnable(plugin), 20L, 20L);
         }
         new K9Recipe(plugin).addRecipe();
         // process worlds
