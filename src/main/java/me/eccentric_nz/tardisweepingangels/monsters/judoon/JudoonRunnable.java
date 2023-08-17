@@ -18,8 +18,10 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -27,13 +29,14 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Husk;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class JudoonRunnable implements Runnable {
 
@@ -51,8 +54,8 @@ public class JudoonRunnable implements Runnable {
             if (plugin.getMonstersConfig().getInt("judoon.worlds." + name) > 0) {
                 // get the current judoons
                 int galactic = 0;
-                Collection<ArmorStand> police = w.getEntitiesByClass(ArmorStand.class);
-                for (ArmorStand s : police) {
+                Collection<Husk> police = w.getEntitiesByClass(Husk.class);
+                for (Husk s : police) {
                     PersistentDataContainer pdc = s.getPersistentDataContainer();
                     if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
                         galactic++;
@@ -83,11 +86,10 @@ public class JudoonRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                // TODO
-                Entity e = world.spawnEntity(l, EntityType.ARMOR_STAND);
+                Entity e = (Entity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.JUDOON));
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     JudoonEquipment.set(null, e, false);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ARMOR_STAND, Monster.JUDOON, l));
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));
                 }, 2L);
             }
         }

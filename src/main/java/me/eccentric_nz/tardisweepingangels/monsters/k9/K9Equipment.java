@@ -32,7 +32,7 @@ public class K9Equipment {
         ItemStack head = new ItemStack(Material.BONE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("K9 Head");
-        headMeta.setCustomModelData(1);
+        headMeta.setCustomModelData(disguise ? 1 : 405);
         head.setItemMeta(headMeta);
         if (entity instanceof Skeleton k9) {
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.K9, head);

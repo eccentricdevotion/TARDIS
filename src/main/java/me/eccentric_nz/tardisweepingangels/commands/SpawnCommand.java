@@ -29,7 +29,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlame
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
-import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
@@ -83,7 +82,7 @@ public class SpawnCommand {
             World world = eyeLocation.getWorld();
             LivingEntity a;
             if (monster.isFollower()) {
-                a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster, false, false, OodColour.BLACK, 0));
+                a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster));
             } else {
                 a = new MonsterSpawner().create(eyeLocation, monster);
             }
@@ -122,10 +121,7 @@ public class SpawnCommand {
                 case JUDOON -> JudoonEquipment.set(null, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
                 case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
-                case OOD -> {
-                    new Equipper(monster, a, false).setHelmetAndInvisibilty();
-                    OodEquipment.set(a, false);
-                }
+                case OOD -> OodEquipment.set(player, a, false, true);
                 case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
                 case SILENT -> {
                     new Equipper(monster, a, false, false).setHelmetAndInvisibilty();

@@ -87,7 +87,7 @@ public class JudoonListener implements Listener {
                         }
                     } else {
                         // toggle guard mode
-                        // TODO need models for firing gun while walking - alter TWAJudoon `aiStep()`
+                        // TODO need models for firing gun while walking
                         TWAJudoon judoon = (TWAJudoon) husk;
                         String message = "";
                         if (!judoon.isGuard()) {

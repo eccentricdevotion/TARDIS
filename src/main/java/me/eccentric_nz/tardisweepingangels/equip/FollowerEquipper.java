@@ -5,8 +5,8 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -24,11 +24,11 @@ public class FollowerEquipper {
         } else {
             uuid = TARDISWeepingAngels.UNCLAIMED;
         }
-        Skeleton skeleton = (Skeleton) entity;
+        Husk husk = (Husk) entity;
         // set TWA data
-        skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, 0);
-        skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
-        EntityEquipment ee = skeleton.getEquipment();
+        husk.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, 0);
+        husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+        EntityEquipment ee = husk.getEquipment();
         // set the helmet to the static monster model
         ee.setHelmet(head);
         // make sure the monster doesn't spawn with any armour
@@ -38,19 +38,19 @@ public class FollowerEquipper {
         // make the entity invisible
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
-            skeleton.addPotionEffect(invisibility);
+            husk.addPotionEffect(invisibility);
             PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
-            skeleton.addPotionEffect(resistance);
+            husk.addPotionEffect(resistance);
         });
         // make silent
-        skeleton.setSilent(true);
-        skeleton.setCollidable(true);
+        husk.setSilent(true);
+        husk.setCollidable(true);
         // don't drop items when killed
         ee.setItemInMainHandDropChance(0);
         ee.setItemInOffHandDropChance(0);
         ee.setHelmetDropChance(0);
         // don't pickup items
-        skeleton.setCanPickupItems(false);
+        husk.setCanPickupItems(false);
         // make silent
     }
 }

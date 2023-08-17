@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -47,17 +46,16 @@ import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonWalkRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -921,7 +919,7 @@ public class TARDII implements TardisAPI {
     // TODO
     @Override
     public void setOodEquipment(Player player, Entity entity, boolean disguise) {
-        OodEquipment.set(player, entity, disguise);
+        OodEquipment.set(player, entity, disguise, false);
     }
 
     @Override
@@ -985,7 +983,12 @@ public class TARDII implements TardisAPI {
 
     @Override
     public FollowerChecker isClaimedMonster(Entity entity, UUID uuid) {
-        return (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels") && PaperLib.isPaper()) ? new FollowerChecker(entity, uuid) : null;
+        if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
+            FollowerChecker fc = new FollowerChecker();
+            fc.checkEntity(entity, uuid);
+            return fc;
+        }
+        return null;
     }
 
     // TODO
@@ -997,9 +1000,8 @@ public class TARDII implements TardisAPI {
 
     // TODO
     @Override
-    public void setFollowing(ArmorStand stand, Player player) {
-        int taskId = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new JudoonWalkRunnable(stand, 0.15d, player), 2L, 2L);
-        TARDISWeepingAngels.getFollowTasks().put(player.getUniqueId(), taskId);
+    public void setFollowing(Entity husk, Player player) {
+        ((TWAFollower) husk).setFollowing(true);
     }
 
     @Override

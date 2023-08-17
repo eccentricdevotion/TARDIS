@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Bukkit;
@@ -24,10 +23,13 @@ import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class JudoonGuardRunnable implements Runnable {
 
     private final TARDIS plugin;
 
+    // TODO - delete
     public JudoonGuardRunnable(TARDIS plugin) {
         this.plugin = plugin;
     }

@@ -25,15 +25,14 @@ import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
+import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
+import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
+import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.EntitiesLoadEvent;
@@ -82,9 +81,9 @@ public class MonsterLoadUnloadListener implements Listener {
                 return;
             }
             Location location = entity.getLocation();
-            // TODO
             entity.remove();
             LivingEntity a = null;
+            Player player = null;
             if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
                 // retrieve entity from followers table and get attributes
                 Follower follower = null;
@@ -99,7 +98,7 @@ public class MonsterLoadUnloadListener implements Listener {
                     if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                     }
-                    a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster, false, false, OodColour.BLACK, 0));
+                    a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster));
                 }
                 if (follower != null) {
                     if (monster == Monster.OOD) {
@@ -117,6 +116,9 @@ public class MonsterLoadUnloadListener implements Listener {
                         TWAK9 k9 = (TWAK9) a;
                         k9.setFollowing(follower.isFollowing());
                     }
+                    TWAFollower twaf = (TWAFollower) a;
+                    twaf.setOwnerUUID(follower.getOwner());
+                    player = plugin.getServer().getPlayer(follower.getOwner());
                     // remove database entry
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", follower.getUuid().toString());
@@ -125,29 +127,39 @@ public class MonsterLoadUnloadListener implements Listener {
             } else {
                 a = new MonsterSpawner().create(location, monster);
             }
-            new Equipper(monster, a, false).setHelmetAndInvisibilty();
-            switch (monster) {
-                case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);
-                case HEADLESS_MONK -> {
-                    HeadlessMonkEquipment.setTasks(a);
-                    // start flame runnable
-                    int flameID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new HeadlessFlameRunnable(a), 1, 20);
-                    a.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+            // set ood / judoon / k9 equipment
+            if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
+                switch (monster) {
+                    case K9 -> K9Equipment.set(player, a, false);
+                    case JUDOON -> JudoonEquipment.set(player, a, false);
+                    default -> OodEquipment.set(player, a, false, false);
                 }
-                case ICE_WARRIOR -> {
-                    PigZombie pigman = (PigZombie) a;
-                    pigman.setAngry(true);
-                    pigman.setAnger(Integer.MAX_VALUE);
-                }
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
-                case SILENT -> SilentEquipment.setGuardian(a);
-                case STRAX -> {
-                    PigZombie strax = (PigZombie) a;
-                    strax.setAngry(false);
-                    a.setCustomName("Strax");
-                }
-                default -> {
+            } else {
+                // set monster equipment
+                new Equipper(monster, a, false).setHelmetAndInvisibilty();
+                switch (monster) {
+                    case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);
+                    case HEADLESS_MONK -> {
+                        HeadlessMonkEquipment.setTasks(a);
+                        // start flame runnable
+                        int flameID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new HeadlessFlameRunnable(a), 1, 20);
+                        a.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+                    }
+                    case ICE_WARRIOR -> {
+                        PigZombie pigman = (PigZombie) a;
+                        pigman.setAngry(true);
+                        pigman.setAnger(Integer.MAX_VALUE);
+                    }
+                    case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
+                    case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
+                    case SILENT -> SilentEquipment.setGuardian(a);
+                    case STRAX -> {
+                        PigZombie strax = (PigZombie) a;
+                        strax.setAngry(false);
+                        a.setCustomName("Strax");
+                    }
+                    default -> {
+                    }
                 }
             }
         }
@@ -165,7 +177,7 @@ public class MonsterLoadUnloadListener implements Listener {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", e.getUniqueId().toString());
                 UUID owner = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED);
+                set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED.toString());
                 String species = "";
                 int following = ((TWAFollower) e).isFollowing() ? 1 : 0;
                 String colour = "BLACK";

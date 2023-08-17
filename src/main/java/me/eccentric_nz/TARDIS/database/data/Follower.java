@@ -25,6 +25,16 @@ public class Follower {
         this.ammo = ammo;
     }
 
+    public Follower(UUID uuid, UUID owner, Monster species) {
+        this.uuid = uuid;
+        this.owner = owner;
+        this.species = species;
+        this.following = false;
+        this.option = false;
+        this.colour = OodColour.BLACK;
+        this.ammo = 0;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

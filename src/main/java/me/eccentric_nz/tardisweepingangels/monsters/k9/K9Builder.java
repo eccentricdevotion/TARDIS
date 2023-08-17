@@ -18,8 +18,10 @@ package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +33,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+
+import java.util.UUID;
 
 public class K9Builder implements Listener {
 
@@ -75,11 +79,10 @@ public class K9Builder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = below.getLocation().add(0.5d, 0, 0.5d);
-                    // TODO
-                    Entity e = l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
+                    Entity e = (Entity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         K9Equipment.set(player, e, false);
-                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ARMOR_STAND, Monster.K9, l));
+                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.K9, l));
                     }, 2L);
                 }, 20L);
             }

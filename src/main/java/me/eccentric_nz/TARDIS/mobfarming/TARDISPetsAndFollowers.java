@@ -16,14 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import me.eccentric_nz.TARDIS.database.data.Follower;
+
 import java.util.List;
 
 public class TARDISPetsAndFollowers {
 
     private final List<TARDISPet> pets;
-    private final List<TARDISFollower> followers;
+    private final List<Follower> followers;
 
-    TARDISPetsAndFollowers(List<TARDISPet> pets, List<TARDISFollower> followers) {
+    TARDISPetsAndFollowers(List<TARDISPet> pets, List<Follower> followers) {
         this.pets = pets;
         this.followers = followers;
     }
@@ -32,7 +34,7 @@ public class TARDISPetsAndFollowers {
         return pets;
     }
 
-    public List<TARDISFollower> getFollowers() {
+    public List<Follower> getFollowers() {
         return followers;
     }
 }

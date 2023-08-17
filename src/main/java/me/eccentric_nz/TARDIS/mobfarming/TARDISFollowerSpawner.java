@@ -16,19 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
+import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
+import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISFollowerSpawner {
 
@@ -38,9 +43,8 @@ public class TARDISFollowerSpawner {
         this.plugin = plugin;
     }
 
-    public void spawn(List<TARDISFollower> followers, Location location, Player player, COMPASS direction, boolean enter) {
+    public void spawn(List<Follower> followers, Location location, Player player, COMPASS direction, boolean enter) {
         Location pl = location.clone();
-        World w = location.getWorld();
         // will need to adjust this depending on direction Police Box is facing
         if (enter) {
             pl.setZ(location.getZ() + 1);
@@ -52,31 +56,30 @@ public class TARDISFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        for (TARDISFollower follower : followers) {
+        for (Follower follower : followers) {
             plugin.setTardisSpawn(true);
-            ArmorStand stand = (ArmorStand) w.spawnEntity(pl, EntityType.ARMOR_STAND);
-            if (follower.getMonster().equals(Monster.JUDOON)) {
-                plugin.getTardisAPI().setJudoonEquipment(player, stand, follower.getPersist());
-            } else if (follower.getMonster().equals(Monster.K9)) {
-                plugin.getTardisAPI().setK9Equipment(player, stand, false);
-            } else if (follower.getMonster().equals(Monster.OOD)) {
-                plugin.getTardisAPI().setOodEquipment(player, stand, false);
+            // get data from follower
+            Entity husk = (Entity) new MonsterSpawner().createFollower(pl, new Follower(follower.getUuid(), follower.getOwner(), follower.getSpecies(), true, follower.hasOption(), follower.getColour(), follower.getAmmo()));
+            if (follower.getSpecies().equals(Monster.JUDOON)) {
+                JudoonEquipment.set(player, husk, false);
+            } else if (follower.getSpecies().equals(Monster.K9)) {
+                K9Equipment.set(player, husk, false);
+            } else if (follower.getSpecies().equals(Monster.OOD)) {
+                OodEquipment.set(player, husk, false, false);
             }
-            if (follower.isFollowing()) {
-                plugin.getTardisAPI().setFollowing(stand, player);
-            }
+            ((TWAFollower) husk).setFollowing(true);
         }
         followers.clear();
     }
 
     public void spawnDivisionOod(Location location) {
         plugin.setTardisSpawn(true);
-        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location.clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
-        plugin.getTardisAPI().setOodEquipment(null, stand, false);
+        Entity husk = (Entity) new MonsterSpawner().createFollower(location.clone().add(0.5d, 0, 0.5d), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD));
+        plugin.getTardisAPI().setOodEquipment(null, husk, false);
     }
 
     public void removeDivisionOod(Location location) {
-        for (Entity a : location.getWorld().getNearbyEntities(location, 32, 8, 32, (e) -> e.getType() == EntityType.ARMOR_STAND)) {
+        for (Entity a : location.getWorld().getNearbyEntities(location, 32, 8, 32, (e) -> e.getType() == EntityType.ARMOR_STAND || e.getType() == EntityType.HUSK)) {
             if (a.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && a.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
                 UUID fetched = a.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (fetched.equals(TARDISWeepingAngels.UNCLAIMED)) {
