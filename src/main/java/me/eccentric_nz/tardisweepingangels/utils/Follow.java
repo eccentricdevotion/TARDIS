@@ -21,14 +21,15 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import org.bukkit.entity.Husk;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
 public class Follow {
 
-    public static void toggle(TARDIS plugin, Player player, Husk husk, String which, boolean follow) {
+    public static void toggle(TARDIS plugin, Player player, Entity husk, String which, boolean follow) {
         if (!TARDISPermission.hasPermission(player, "tardisweepingangels.follow." + which.toLowerCase())) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_PERM_FOLLOW", which);
             return;
@@ -37,7 +38,8 @@ public class Follow {
             UUID uuid = player.getUniqueId();
             UUID huskId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
             if (uuid.equals(huskId)) {
-                ((TWAFollower) husk).setFollowing(follow);
+                TWAFollower follower = (TWAFollower) ((CraftEntity) husk).getHandle();
+                follower.setFollowing(follow);
             } else {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", which);
             }

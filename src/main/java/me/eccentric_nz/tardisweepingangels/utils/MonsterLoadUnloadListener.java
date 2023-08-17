@@ -32,11 +32,12 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
-import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -98,25 +99,25 @@ public class MonsterLoadUnloadListener implements Listener {
                     if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                     }
-                    a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster));
+                    a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster)).getBukkitEntity();
                 }
                 if (follower != null) {
                     if (monster == Monster.OOD) {
-                        TWAOod ood = (TWAOod) a;
+                        TWAOod ood = (TWAOod) ((CraftEntity) a).getHandle();
                         ood.setColour(follower.getColour());
                         ood.setRedeye(follower.hasOption());
                         ood.setFollowing(follower.isFollowing());
                     } else if (monster == Monster.JUDOON) {
-                        TWAJudoon judoon = (TWAJudoon) a;
+                        TWAJudoon judoon = (TWAJudoon) ((CraftEntity) a).getHandle();
                         judoon.setAmmo(follower.getAmmo());
                         judoon.setGuard(follower.hasOption());
                         judoon.setFollowing(follower.isFollowing());
                     }
                     if (monster == Monster.K9) {
-                        TWAK9 k9 = (TWAK9) a;
+                        TWAK9 k9 = (TWAK9) ((CraftEntity) a).getHandle();
                         k9.setFollowing(follower.isFollowing());
                     }
-                    TWAFollower twaf = (TWAFollower) a;
+                    TWAFollower twaf = (TWAFollower) ((CraftEntity) a).getHandle();
                     twaf.setOwnerUUID(follower.getOwner());
                     player = plugin.getServer().getPlayer(follower.getOwner());
                     // remove database entry
@@ -166,30 +167,31 @@ public class MonsterLoadUnloadListener implements Listener {
     }
 
     @EventHandler
-    public void onUnload(EntitiesUnloadEvent event) {
-        for (Entity e : event.getEntities()) {
+    public void onUnload(ChunkUnloadEvent event) {
+        for (Entity e : event.getChunk().getEntities()) {
             if (e.getType() != EntityType.HUSK) {
                 return;
             }
             PersistentDataContainer pdc = e.getPersistentDataContainer();
             if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                TWAFollower follower = (TWAFollower) ((CraftEntity) e).getHandle();
                 // save entity in followers table
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", e.getUniqueId().toString());
                 UUID owner = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED.toString());
                 String species = "";
-                int following = ((TWAFollower) e).isFollowing() ? 1 : 0;
+                int following = follower.isFollowing() ? 1 : 0;
                 String colour = "BLACK";
                 int option = 0;
                 int ammo = 0;
                 if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
                     species = "OOD";
-                    colour = ((TWAOod) e).getColour().toString();
+                    colour = ((TWAOod) follower).getColour().toString();
                 }
                 if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
                     species = "JUDOON";
-                    ammo = ((TWAJudoon) e).getAmmo();
+                    ammo = ((TWAJudoon) follower).getAmmo();
                 }
                 if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
                     species = "K9";

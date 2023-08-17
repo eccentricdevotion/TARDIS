@@ -25,8 +25,10 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -43,9 +45,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The seemingly male Sontarans could be gene spliced to produce milk. Strax was
- * very proud that he could produce "magnificent quantities" of lactic fluid and
- * offered to nurse Melody Pond.
+ * The seemingly male Sontarans could be gene spliced to produce milk. Strax was very proud that he could produce
+ * "magnificent quantities" of lactic fluid and offered to nurse Melody Pond.
  *
  * @author eccentric_nz
  */
@@ -58,10 +59,10 @@ public class MonsterInteractListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onMonsterInteract(PlayerInteractEntityEvent event) {
-        Entity ent = event.getRightClicked();
-        if (!(ent instanceof org.bukkit.entity.Monster monster)) {
+        Entity entity = event.getRightClicked();
+        if (!(entity instanceof org.bukkit.entity.Monster monster)) {
             return;
         }
         EntityEquipment ee = monster.getEquipment();
@@ -73,7 +74,7 @@ public class MonsterInteractListener implements Listener {
         if (!im.hasDisplayName()) {
             return;
         }
-        if (ent instanceof Zombie zombie) {
+        if (entity instanceof Zombie zombie) {
             if (h.getType().equals(Material.POTATO)) {
                 if (im.getDisplayName().startsWith("Sontaran")) {
                     Player p = event.getPlayer();
@@ -132,21 +133,23 @@ public class MonsterInteractListener implements Listener {
                 }
             }
         }
-        if (ent instanceof Husk husk) {
+        if (((CraftEntity) entity).getHandle() instanceof TWAFollower follower) {
+            if (event.getHand() != EquipmentSlot.HAND) {
+                return;
+            }
             // toggle following status
-            PersistentDataContainer pdc = husk.getPersistentDataContainer();
+            PersistentDataContainer pdc = entity.getPersistentDataContainer();
             if (!pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 return;
             }
             Player player = event.getPlayer();
             // get current follower status
-            TWAFollower follower = (TWAFollower) husk;
             if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, husk, "Ood", !follower.isFollowing());
+                Follow.toggle(plugin, player, entity, "Ood", !follower.isFollowing());
             } else if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, husk, "Judoon", !follower.isFollowing());
+                Follow.toggle(plugin, player, entity, "Judoon", !follower.isFollowing());
             } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
-                Follow.toggle(plugin, player, husk, "K9", !follower.isFollowing());
+                Follow.toggle(plugin, player, entity, "K9", !follower.isFollowing());
             }
         }
     }

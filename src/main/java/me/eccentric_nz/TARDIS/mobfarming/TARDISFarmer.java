@@ -83,7 +83,6 @@ public class TARDISFarmer {
         World w = l.getWorld();
         Entity egg = w.spawnEntity(l, EntityType.EGG);
         List<Entity> mobs = egg.getNearbyEntities(3.75D, 3.75D, 3.75D);
-
         List<TARDISPet> pets = new ArrayList<>();
         List<Follower> followers = new ArrayList<>();
         if (!mobs.isEmpty()) {

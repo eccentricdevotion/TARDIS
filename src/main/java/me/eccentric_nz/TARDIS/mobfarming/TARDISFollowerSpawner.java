@@ -56,18 +56,19 @@ public class TARDISFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        for (Follower follower : followers) {
+        for (Follower f : followers) {
             plugin.setTardisSpawn(true);
             // get data from follower
-            Entity husk = (Entity) new MonsterSpawner().createFollower(pl, new Follower(follower.getUuid(), follower.getOwner(), follower.getSpecies(), true, follower.hasOption(), follower.getColour(), follower.getAmmo()));
-            if (follower.getSpecies().equals(Monster.JUDOON)) {
+            TWAFollower follower = new MonsterSpawner().createFollower(pl, new Follower(f.getUuid(), f.getOwner(), f.getSpecies(), true, f.hasOption(), f.getColour(), f.getAmmo()));
+            Entity husk = follower.getBukkitEntity();
+            if (f.getSpecies().equals(Monster.JUDOON)) {
                 JudoonEquipment.set(player, husk, false);
-            } else if (follower.getSpecies().equals(Monster.K9)) {
+            } else if (f.getSpecies().equals(Monster.K9)) {
                 K9Equipment.set(player, husk, false);
-            } else if (follower.getSpecies().equals(Monster.OOD)) {
+            } else if (f.getSpecies().equals(Monster.OOD)) {
                 OodEquipment.set(player, husk, false, false);
             }
-            ((TWAFollower) husk).setFollowing(true);
+            follower.setFollowing(true);
         }
         followers.clear();
     }

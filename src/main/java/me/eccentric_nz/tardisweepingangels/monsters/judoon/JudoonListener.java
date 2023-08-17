@@ -24,6 +24,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,7 +89,7 @@ public class JudoonListener implements Listener {
                     } else {
                         // toggle guard mode
                         // TODO need models for firing gun while walking
-                        TWAJudoon judoon = (TWAJudoon) husk;
+                        TWAJudoon judoon = (TWAJudoon) ((CraftEntity) husk).getHandle();
                         String message = "";
                         if (!judoon.isGuard()) {
                             if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {

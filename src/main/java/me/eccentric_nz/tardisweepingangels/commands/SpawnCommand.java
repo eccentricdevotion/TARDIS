@@ -36,7 +36,6 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
@@ -79,10 +78,9 @@ public class SpawnCommand {
             Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
             eyeLocation.add(0.5, 1.0, 0.5);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
-            World world = eyeLocation.getWorld();
             LivingEntity a;
             if (monster.isFollower()) {
-                a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster));
+                a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster)).getBukkitEntity();
             } else {
                 a = new MonsterSpawner().create(eyeLocation, monster);
             }

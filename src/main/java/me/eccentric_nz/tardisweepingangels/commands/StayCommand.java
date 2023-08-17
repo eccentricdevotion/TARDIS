@@ -23,6 +23,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.Follow;
 import me.eccentric_nz.tardisweepingangels.utils.FollowerFinder;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
@@ -47,7 +48,7 @@ public class StayCommand {
                 return true;
             }
             // check if monster is already following
-            TWAFollower follower = (TWAFollower) husk;
+            TWAFollower follower = (TWAFollower) ((CraftEntity) husk).getHandle();
             if (!follower.isFollowing()) {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_FOLLOWING");
                 return true;

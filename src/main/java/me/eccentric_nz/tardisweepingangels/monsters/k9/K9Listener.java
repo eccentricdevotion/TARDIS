@@ -27,6 +27,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -78,14 +79,14 @@ public class K9Listener implements Listener {
         if (!TARDISPermission.hasPermission(player, "tardisweepingangels.k9")) {
             return;
         }
-        Entity ent = event.getRightClicked();
-        if (ent.getType().equals(EntityType.HUSK) && ent.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
-            if (ent.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+        Entity k9 = event.getRightClicked();
+        if (k9.getType().equals(EntityType.HUSK) && k9.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+            if (k9.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 UUID uuid = player.getUniqueId();
-                UUID k9Id = ent.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                UUID k9Id = k9.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (uuid.equals(k9Id)) {
-                    player.playSound(ent.getLocation(), "k9", 1.0f, 1.0f);
-                    TWAFollower follower = (TWAFollower) ent;
+                    player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
+                    TWAFollower follower = (TWAFollower) ((CraftEntity) k9).getHandle();
                     // toggle following
                     follower.setFollowing(!follower.isFollowing());
                 } else {

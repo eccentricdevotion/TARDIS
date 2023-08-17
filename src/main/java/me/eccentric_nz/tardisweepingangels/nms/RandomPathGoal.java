@@ -1,11 +1,9 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
 
@@ -19,10 +17,10 @@ public class RandomPathGoal extends RandomStrollGoal {
 
     @Nullable
     protected Vec3 getPosition() {
-        // check if entity has follower PDC entry
+        // check if entity is following
         boolean stay = false;
-        if (this.mob.getBukkitEntity().getPersistentDataContainer().has(TARDISWeepingAngels.FOLLOW)) {
-            stay = !this.mob.getBukkitEntity().getPersistentDataContainer().getOrDefault(TARDISWeepingAngels.FOLLOW, PersistentDataType.BOOLEAN, true);
+        if (this.mob instanceof TWAFollower follower) {
+            stay = !follower.isFollowing();
         }
         if (stay) {
             return this.mob.position();

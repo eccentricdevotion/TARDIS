@@ -1,12 +1,9 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -14,7 +11,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
@@ -49,33 +45,15 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     @Override
-    public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD)) {
-            ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
-            CompoundTag nbt = is.getTag();
-            if (!isPathFinding()) {
-                Bukkit.getScheduler().cancelTask(task);
-                nbt.putInt("CustomModelData", 405);
-                isAnimating = false;
-            } else if (!isAnimating) {
-                // play move animation
-                task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    nbt.putInt("CustomModelData", 400 + frames[i]);
-                    i++;
-                    if (i == frames.length) {
-                        i = 0;
-                    }
-                }, 1L, 3L);
-                isAnimating = true;
-            }
-        }
-        super.aiStep();
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_OWNER_UUID_ID, Optional.empty());
     }
 
     @Nullable
     @Override
     public UUID getOwnerUUID() {
-        return uuid;
+        return (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {

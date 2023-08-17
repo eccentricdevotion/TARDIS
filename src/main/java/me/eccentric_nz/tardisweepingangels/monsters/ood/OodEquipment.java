@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,13 +32,13 @@ public class OodEquipment {
 
     public static void set(Player player, Entity entity, boolean disguise, boolean random) {
         if (random) {
-            TWAOod ood = (TWAOod) entity;
+            TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
             ood.setRedeye(TARDISConstants.RANDOM.nextBoolean());
             int chance = TARDISConstants.RANDOM.nextInt(100);
-            if (chance < 33) {
+            if (chance < 15) {
                 ood.setColour(OodColour.BLUE);
             }
-            if (chance > 66) {
+            if (chance > 85) {
                 ood.setColour(OodColour.BROWN);
             }
         }
@@ -51,10 +52,10 @@ public class OodEquipment {
         } else {
             int chance = TARDISConstants.RANDOM.nextInt(100);
             int colour = 29;
-            if (chance < 33) {
+            if (chance < 15) {
                 colour += 10;
             }
-            if (chance > 66) {
+            if (chance > 85) {
                 colour += 20;
             }
             headMeta.setCustomModelData(colour);

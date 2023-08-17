@@ -17,10 +17,6 @@ import java.util.EnumSet;
 
 public class FollowPathFinder extends Goal {
 
-    //    public static final int TELEPORT_WHEN_DISTANCE_IS = 12;
-//    private static final int MIN_HORIZONTAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 2;
-//    private static final int MAX_HORIZONTAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 3;
-//    private static final int MAX_VERTICAL_DISTANCE_FROM_PLAYER_WHEN_TELEPORTING = 1;
     private final TWAFollower follower;
     private final LevelReader level;
     private final double speedModifier;
