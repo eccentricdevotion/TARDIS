@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
@@ -44,6 +41,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -79,6 +80,9 @@ public class TARDISSeedBlockListener implements Listener {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                 block.setBlockData(TARDISConstants.BARRIER);
                 TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(is.getType(), which);
+                if (tdi == null) {
+                    tdi = TARDISDisplayItem.CUSTOM;
+                }
                 TARDISDisplayItemUtils.setSeed(tdi, block, im);
             }
             List<String> lore = im.getLore();
