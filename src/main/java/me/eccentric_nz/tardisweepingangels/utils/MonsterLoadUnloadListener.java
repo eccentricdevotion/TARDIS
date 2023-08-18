@@ -176,32 +176,7 @@ public class MonsterLoadUnloadListener implements Listener {
             if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 TWAFollower follower = (TWAFollower) ((CraftEntity) e).getHandle();
                 // save entity in followers table
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("uuid", e.getUniqueId().toString());
-                UUID owner = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                set.put("owner", (owner != null) ? owner.toString() : TARDISWeepingAngels.UNCLAIMED.toString());
-                String species = "";
-                int following = follower.isFollowing() ? 1 : 0;
-                String colour = "BLACK";
-                int option = 0;
-                int ammo = 0;
-                if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
-                    species = "OOD";
-                    colour = ((TWAOod) follower).getColour().toString();
-                }
-                if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
-                    species = "JUDOON";
-                    ammo = ((TWAJudoon) follower).getAmmo();
-                }
-                if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
-                    species = "K9";
-                }
-                set.put("species", species);
-                set.put("following", following);
-                set.put("option", option);
-                set.put("colour", colour);
-                set.put("ammo", ammo);
-                plugin.getQueryFactory().doInsert("followers", set);
+                new FollowerPersister(plugin).save(follower);
             }
         }
     }

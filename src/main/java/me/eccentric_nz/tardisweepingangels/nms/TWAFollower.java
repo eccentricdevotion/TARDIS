@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -49,6 +50,26 @@ public class TWAFollower extends Husk implements OwnableEntity {
         super.defineSynchedData();
         this.entityData.define(DATA_OWNER_UUID_ID, Optional.empty());
     }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+        super.addAdditionalSaveData(nbttagcompound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
+        super.readAdditionalSaveData(nbttagcompound);
+    }
+
+//    @Override
+//    public CompoundTag saveWithoutId(CompoundTag nbttagcompound) {
+//        return super.saveWithoutId(nbttagcompound);
+//    }
+//
+//    @Override
+//    public void load(CompoundTag nbttagcompound) {
+//        super.load(nbttagcompound);
+//    }
 
     @Nullable
     @Override
