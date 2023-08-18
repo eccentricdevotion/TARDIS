@@ -402,7 +402,7 @@
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.18.2-beta1</version>
+            <version>16.18.1</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>

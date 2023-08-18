@@ -38,6 +38,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -162,6 +163,21 @@ public class MonsterLoadUnloadListener implements Listener {
                     default -> {
                     }
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityUnload(EntitiesUnloadEvent event) {
+        for (Entity e : event.getEntities()) {
+            if (e.getType() != EntityType.HUSK) {
+                return;
+            }
+            PersistentDataContainer pdc = e.getPersistentDataContainer();
+            if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                TWAFollower follower = (TWAFollower) ((CraftEntity) e).getHandle();
+                // save entity in followers table
+                new FollowerPersister(plugin).save(follower);
             }
         }
     }

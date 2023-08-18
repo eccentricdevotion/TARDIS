@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.ByteBuffer;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,22 +55,20 @@ public class TWAFollower extends Husk implements OwnableEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
+        nbttagcompound.putByteArray("TWAOwner", uuidToByteArray(this.uuid));
+        nbttagcompound.putBoolean("TWAFollowing", this.following);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag nbttagcompound) {
         super.readAdditionalSaveData(nbttagcompound);
+        if (nbttagcompound.contains("TWAOwner")) {
+            setOwnerUUID(byteArrayToUUID(nbttagcompound.getByteArray("TWAOwner")));
+        }
+        if (nbttagcompound.contains("TWAFollowing")) {
+            this.following = nbttagcompound.getBoolean("TWAFollowing");
+        }
     }
-
-//    @Override
-//    public CompoundTag saveWithoutId(CompoundTag nbttagcompound) {
-//        return super.saveWithoutId(nbttagcompound);
-//    }
-//
-//    @Override
-//    public void load(CompoundTag nbttagcompound) {
-//        super.load(nbttagcompound);
-//    }
 
     @Nullable
     @Override
@@ -90,6 +89,20 @@ public class TWAFollower extends Husk implements OwnableEntity {
         }
         org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
         return (player != null) ? ((CraftPlayer) player).getHandle() : null;
+    }
+
+    protected byte[] uuidToByteArray(UUID uuid) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+        bb.putLong(uuid.getMostSignificantBits());
+        bb.putLong(uuid.getLeastSignificantBits());
+        return bb.array();
+    }
+
+    protected static UUID byteArrayToUUID(byte[] bytes) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        long high = byteBuffer.getLong();
+        long low = byteBuffer.getLong();
+        return new UUID(high, low);
     }
 
     public boolean isFollowing() {

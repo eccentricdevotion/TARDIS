@@ -32,6 +32,24 @@ public class TWAJudoon extends TWAFollower implements RangedAttackMob {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+        super.addAdditionalSaveData(nbttagcompound);
+        nbttagcompound.putBoolean("TWAOption", this.guard);
+        nbttagcompound.putInt("TWAAmmo", this.ammo);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
+        super.readAdditionalSaveData(nbttagcompound);
+        if (nbttagcompound.contains("TWAOption")) {
+            this.guard = nbttagcompound.getBoolean("TWAOption");
+        }
+        if (nbttagcompound.contains("TWAAmmo")) {
+            this.ammo = nbttagcompound.getInt("TWAAmmo");
+        }
+    }
+
+    @Override
     public void aiStep() {
         if (hasItemInSlot(EquipmentSlot.HEAD)) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
