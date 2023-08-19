@@ -50,7 +50,7 @@ public class JudoonListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageJudoon(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Husk husk && event.getDamager() instanceof Player player) {
-            if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+            if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(true);
                 player.playSound(husk.getLocation(), "judoon", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.judoon")) {

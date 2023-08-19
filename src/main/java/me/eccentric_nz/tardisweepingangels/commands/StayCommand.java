@@ -55,11 +55,11 @@ public class StayCommand {
             }
             // set following status
             PersistentDataContainer pdc = husk.getPersistentDataContainer();
-            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+            if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 Follow.toggle(plugin, player, (Husk) husk, "Ood", false);
-            } else if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+            } else if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 Follow.toggle(plugin, player, (Husk) husk, "Judoon", false);
-            } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+            } else if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 Follow.toggle(plugin, player, (Husk) husk, "K9", false);
             }
         } else {

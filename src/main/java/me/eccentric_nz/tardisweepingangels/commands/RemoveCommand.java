@@ -53,13 +53,13 @@ public class RemoveCommand {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ENTITY");
                 return true;
             } else {
-                if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.judoon")) {
+                if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.judoon")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "Judoon");
                     return true;
-                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.k9")) {
+                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.k9")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "K9");
                     return true;
-                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.ood")) {
+                } else if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID) && !TARDISPermission.hasPermission(player, "tardisweepingangels.remove.ood")) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NO_PERM", "Ood");
                     return true;
                 }

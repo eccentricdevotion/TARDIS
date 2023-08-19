@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
@@ -36,6 +37,7 @@ public class MonsterSpawner {
         }
         entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        new FollowerPersister(TARDIS.plugin).save(follower, entity.getUUID());
         return entity;
     }
 }

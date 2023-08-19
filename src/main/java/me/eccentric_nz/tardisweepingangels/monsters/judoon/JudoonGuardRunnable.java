@@ -44,7 +44,7 @@ public class JudoonGuardRunnable implements Runnable {
                         if (e instanceof Monster) {
                             Damageable damageable = (Damageable) e;
                             double health = damageable.getHealth();
-                            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                                 int ammo = entity.getPersistentDataContainer().get(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER);
                                 if (ammo > 0 && health > 0) {
                                     damageable.damage(plugin.getMonstersConfig().getDouble("judoon.damage"), entity);

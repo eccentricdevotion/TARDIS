@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -27,6 +26,8 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class KillCommand {
 
@@ -130,15 +131,15 @@ public class KillCommand {
             case OOD, JUDOON, K9, TOCLAFANE -> {
                 Collection<ArmorStand> ood = w.getEntitiesByClass(ArmorStand.class);
                 for (ArmorStand o : ood) {
-                    if (o.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                    if (o.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         what = "Ood";
                         o.remove();
                         count++;
-                    } else if (o.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                    } else if (o.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         what = "Judoon";
                         o.remove();
                         count++;
-                    } else if (o.getPersistentDataContainer().has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                    } else if (o.getPersistentDataContainer().has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         what = "K9s";
                         o.remove();
                         count++;

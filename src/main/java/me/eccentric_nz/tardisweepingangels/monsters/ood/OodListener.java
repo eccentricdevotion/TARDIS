@@ -29,7 +29,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
@@ -45,7 +44,7 @@ public class OodListener implements Listener {
     public void onDamageOod(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         if (((CraftEntity) entity).getHandle() instanceof TWAOod ood && event.getDamager() instanceof Player player) {
-            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER) && entity.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID) && entity.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(player.getInventory().getItemInMainHand().getType() != Material.STONE_SWORD);
                 player.playSound(entity.getLocation(), "ood", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.ood")) {
@@ -55,10 +54,16 @@ public class OodListener implements Listener {
                 if (player.getUniqueId().equals(oodId)) {
                     // set redeye
                     ood.setRedeye(!ood.isRedeye());
+                    ood.getOwnerUUID();
                 } else if (TARDISWeepingAngels.UNCLAIMED.equals(oodId)) {
                     // claim the Ood
-                    entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
+                    UUID pid = player.getUniqueId();
+                    entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
+                    ood.setOwnerUUID(pid);
+                    ood.getOwnerUUID();
+                } else {
+                    ood.getOwnerUUID();
                 }
             }
         }

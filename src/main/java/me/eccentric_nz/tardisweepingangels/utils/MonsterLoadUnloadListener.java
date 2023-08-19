@@ -36,7 +36,6 @@ import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -54,7 +53,7 @@ import java.util.UUID;
 public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
+    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
 
     public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -83,20 +82,22 @@ public class MonsterLoadUnloadListener implements Listener {
                 return;
             }
             Location location = entity.getLocation();
-            entity.remove();
+            PersistentDataContainer pdc = entity.getPersistentDataContainer();
             LivingEntity a = null;
             Player player = null;
-            if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
+            if (monster.isFollower()) {
                 // retrieve entity from followers table and get attributes
                 Follower follower = null;
-                ResultSetFollowers rsf = new ResultSetFollowers(plugin, entity.getUniqueId().toString());
-                if (rsf.resultSet()) {
-                    follower = rsf.getEntity();
-                    a = (LivingEntity) new MonsterSpawner().createFollower(location, follower).getBukkitEntity();
+                UUID eid = pdc.get(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID);
+                if (eid != null) {
+                    ResultSetFollowers rsf = new ResultSetFollowers(plugin, eid.toString());
+                    if (rsf.resultSet()) {
+                        follower = rsf.getEntity();
+                        a = (LivingEntity) new MonsterSpawner().createFollower(location, follower).getBukkitEntity();
+                    }
                 }
                 if (a == null || entity.getType() == EntityType.ARMOR_STAND) {
                     UUID uuid = TARDISWeepingAngels.UNCLAIMED;
-                    PersistentDataContainer pdc = entity.getPersistentDataContainer();
                     if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                     }
@@ -113,8 +114,7 @@ public class MonsterLoadUnloadListener implements Listener {
                         judoon.setAmmo(follower.getAmmo());
                         judoon.setGuard(follower.hasOption());
                         judoon.setFollowing(follower.isFollowing());
-                    }
-                    if (monster == Monster.K9) {
+                    } else if (monster == Monster.K9) {
                         TWAK9 k9 = (TWAK9) ((CraftEntity) a).getHandle();
                         k9.setFollowing(follower.isFollowing());
                     }
@@ -129,6 +129,7 @@ public class MonsterLoadUnloadListener implements Listener {
             } else {
                 a = new MonsterSpawner().create(location, monster);
             }
+            entity.remove();
             // set ood / judoon / k9 equipment
             if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
                 switch (monster) {
@@ -170,21 +171,6 @@ public class MonsterLoadUnloadListener implements Listener {
     @EventHandler
     public void onEntityUnload(EntitiesUnloadEvent event) {
         for (Entity e : event.getEntities()) {
-            if (e.getType() != EntityType.HUSK) {
-                return;
-            }
-            PersistentDataContainer pdc = e.getPersistentDataContainer();
-            if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                TWAFollower follower = (TWAFollower) ((CraftEntity) e).getHandle();
-                // save entity in followers table
-                new FollowerPersister(plugin).save(follower);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onUnload(ChunkUnloadEvent event) {
-        for (Entity e : event.getChunk().getEntities()) {
             if (e.getType() != EntityType.HUSK) {
                 return;
             }

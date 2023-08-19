@@ -26,7 +26,6 @@ import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
@@ -49,14 +48,14 @@ public class FollowerChecker {
                 OodColour colour = OodColour.BLACK;
                 int ammo = 0;
                 if (playerUUID.equals(uuid)) {
-                    if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                    if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         monster = Monster.JUDOON;
                         TWAJudoon judoon = (TWAJudoon) ((CraftEntity) entity).getHandle();
                         option = judoon.isGuard();
                         ammo = judoon.getAmmo();
-                    } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+                    } else if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         monster = Monster.K9;
-                    } else if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                    } else if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
                         option = ood.isRedeye();
                         colour = ood.getColour();

@@ -2,14 +2,14 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class FollowerPersister {
 
@@ -18,7 +18,6 @@ public class FollowerPersister {
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
-    private int count = 0;
 
     public FollowerPersister(TARDIS plugin) {
         this.plugin = plugin;
@@ -28,39 +27,63 @@ public class FollowerPersister {
     public void save(TWAFollower follower) {
         try {
             PersistentDataContainer pdc = follower.getBukkitEntity().getPersistentDataContainer();
+            String uuid = follower.getUUID().toString();
+            String owner = follower.getOwnerUUID() != null ? follower.getOwnerUUID().toString() : TARDISWeepingAngels.UNCLAIMED.toString();
             String species = "";
             int following = follower.isFollowing() ? 1 : 0;
             String colour = "BLACK";
             int option = 0;
             int ammo = 0;
-            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+            if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 species = "OOD";
-                TWAOod ood = ((TWAOod) follower);
+                TWAOod ood = (TWAOod) follower;
                 colour = ood.getColour().toString();
                 option = ood.isRedeye() ? 1 : 0;
             }
-            if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+            if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 species = "JUDOON";
-                TWAJudoon judoon = ((TWAJudoon) follower);
+                TWAJudoon judoon = (TWAJudoon) follower;
                 ammo = judoon.getAmmo();
                 option = judoon.isGuard() ? 1 : 0;
             }
-            if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
+            if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 species = "K9";
             }
-            // save players who have logged out while using the external camera / or were junk TARDIS travellers
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1, follower.getUUID().toString());
-            ps.setString(2, follower.getOwnerUUID() != null ? follower.getOwnerUUID().toString() : TARDISWeepingAngels.UNCLAIMED.toString());
+            // save custom follower
+            ps = connection.prepareStatement("REPLACE INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, uuid);
+            ps.setString(2, owner);
             ps.setString(3, species);
             ps.setInt(4, following);
             ps.setInt(5, option);
             ps.setString(6, colour);
             ps.setInt(7, ammo);
-            count += ps.executeUpdate();
-            if (count > 0) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " camera/junk players.");
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            plugin.debug("Insert error for follower persistence: " + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException ex) {
+                plugin.debug("Error closing follower persistence statement: " + ex.getMessage());
             }
+        }
+    }
+
+    public void save(Follower follower, UUID uuid) {
+        try {
+            // save custom follower
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, uuid.toString());
+            ps.setString(2, follower.getOwner().toString());
+            ps.setString(3, follower.getSpecies().toString());
+            ps.setInt(4, follower.isFollowing()? 1: 0);
+            ps.setInt(5, follower.hasOption()? 1: 0);
+            ps.setString(6, follower.getColour().toString());
+            ps.setInt(7, follower.getAmmo());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             plugin.debug("Insert error for follower persistence: " + ex.getMessage());
         } finally {

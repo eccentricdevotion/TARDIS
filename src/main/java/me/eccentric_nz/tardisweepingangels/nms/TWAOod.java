@@ -22,24 +22,6 @@ public class TWAOod extends TWAFollower {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putBoolean("TWAOption", this.redeye);
-        nbttagcompound.putString("TWAColour", this.colour.toString());
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.readAdditionalSaveData(nbttagcompound);
-        if (nbttagcompound.contains("TWAOption")) {
-            this.redeye = nbttagcompound.getBoolean("TWAOption");
-        }
-        if (nbttagcompound.contains("TWAColour")) {
-            this.colour = OodColour.valueOf(nbttagcompound.getString("TWAColour"));
-        }
-    }
-
-    @Override
     public void aiStep() {
         if (hasItemInSlot(EquipmentSlot.HEAD)) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);

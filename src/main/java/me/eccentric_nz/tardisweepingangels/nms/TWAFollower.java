@@ -1,6 +1,5 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -17,7 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.ByteBuffer;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,28 +50,34 @@ public class TWAFollower extends Husk implements OwnableEntity {
         this.entityData.define(DATA_OWNER_UUID_ID, Optional.empty());
     }
 
-    @Override
-    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putByteArray("TWAOwner", uuidToByteArray(this.uuid));
-        nbttagcompound.putBoolean("TWAFollowing", this.following);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.readAdditionalSaveData(nbttagcompound);
-        if (nbttagcompound.contains("TWAOwner")) {
-            setOwnerUUID(byteArrayToUUID(nbttagcompound.getByteArray("TWAOwner")));
-        }
-        if (nbttagcompound.contains("TWAFollowing")) {
-            this.following = nbttagcompound.getBoolean("TWAFollowing");
-        }
-    }
+//    @Override
+//    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+//        super.addAdditionalSaveData(nbttagcompound);
+//        nbttagcompound.putByteArray("TWAOwner", uuidToByteArray(this.uuid));
+//        nbttagcompound.putBoolean("TWAFollowing", this.following);
+//    }
+//
+//    @Override
+//    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
+//        super.readAdditionalSaveData(nbttagcompound);
+//        if (nbttagcompound.contains("TWAOwner")) {
+//            setOwnerUUID(byteArrayToUUID(nbttagcompound.getByteArray("TWAOwner")));
+//        }
+//        if (nbttagcompound.contains("TWAFollowing")) {
+//            this.following = nbttagcompound.getBoolean("TWAFollowing");
+//        }
+//    }
+//
+//    @Override
+//    public CompoundTag saveWithoutId(CompoundTag nbttagcompound) {
+//        return super.saveWithoutId(nbttagcompound);
+//    }
 
     @Nullable
     @Override
     public UUID getOwnerUUID() {
-        return (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
+        UUID id = (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
+        return id;
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {
@@ -91,19 +95,19 @@ public class TWAFollower extends Husk implements OwnableEntity {
         return (player != null) ? ((CraftPlayer) player).getHandle() : null;
     }
 
-    protected byte[] uuidToByteArray(UUID uuid) {
-        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
-        bb.putLong(uuid.getMostSignificantBits());
-        bb.putLong(uuid.getLeastSignificantBits());
-        return bb.array();
-    }
-
-    protected static UUID byteArrayToUUID(byte[] bytes) {
-        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        long high = byteBuffer.getLong();
-        long low = byteBuffer.getLong();
-        return new UUID(high, low);
-    }
+//    protected byte[] uuidToByteArray(UUID uuid) {
+//        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+//        bb.putLong(uuid.getMostSignificantBits());
+//        bb.putLong(uuid.getLeastSignificantBits());
+//        return bb.array();
+//    }
+//
+//    protected UUID byteArrayToUUID(byte[] bytes) {
+//        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+//        long high = byteBuffer.getLong();
+//        long low = byteBuffer.getLong();
+//        return new UUID(high, low);
+//    }
 
     public boolean isFollowing() {
         return following;

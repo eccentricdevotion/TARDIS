@@ -9,7 +9,6 @@ import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -26,7 +25,7 @@ public class FollowerEquipper {
         }
         Husk husk = (Husk) entity;
         // set TWA data
-        husk.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, 0);
+        husk.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID, entity.getUniqueId());
         husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
         EntityEquipment ee = husk.getEquipment();
         // set the helmet to the static monster model

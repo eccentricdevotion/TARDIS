@@ -33,7 +33,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -57,7 +56,7 @@ public class JudoonRunnable implements Runnable {
                 Collection<Husk> police = w.getEntitiesByClass(Husk.class);
                 for (Husk s : police) {
                     PersistentDataContainer pdc = s.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                    if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         galactic++;
                     }
                 }
