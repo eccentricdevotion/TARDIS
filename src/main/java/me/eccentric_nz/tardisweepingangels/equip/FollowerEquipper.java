@@ -44,6 +44,8 @@ public class FollowerEquipper {
         // make silent
         husk.setSilent(true);
         husk.setCollidable(true);
+        // don't remove when far away
+        husk.setRemoveWhenFarAway(false);
         // don't drop items when killed
         ee.setItemInMainHandDropChance(0);
         ee.setItemInOffHandDropChance(0);
