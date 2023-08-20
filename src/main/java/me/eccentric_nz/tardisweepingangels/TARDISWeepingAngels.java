@@ -33,10 +33,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkR
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessProjectileListener;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessTarget;
 import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorRunnable;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonAmmoRecipe;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonBuilder;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonListener;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.judoon.*;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
@@ -227,8 +224,8 @@ public class TARDISWeepingAngels {
         if (plugin.getMonstersConfig().getBoolean("judoon.guards")) {
             // add recipe
             new JudoonAmmoRecipe(plugin).addRecipe();
-//            // start guarding task
-//            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new JudoonGuardRunnable(plugin), 20L, 20L);
+            // start guarding task
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new JudoonGuardRunnable(plugin), 20L, 20L);
         }
         new K9Recipe(plugin).addRecipe();
         // process worlds
