@@ -120,10 +120,11 @@ public class MonsterLoadUnloadListener implements Listener {
                     }
                     TWAFollower twaf = (TWAFollower) ((CraftEntity) a).getHandle();
                     twaf.setOwnerUUID(follower.getOwner());
+                    a.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getOwner());
                     player = plugin.getServer().getPlayer(follower.getOwner());
                     // remove database entry
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", follower.getUuid().toString());
+                    where.put("uuid", eid.toString());
                     plugin.getQueryFactory().doDelete("followers", where);
                 }
             } else {

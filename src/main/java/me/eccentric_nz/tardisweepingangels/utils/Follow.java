@@ -40,6 +40,7 @@ public class Follow {
             if (uuid.equals(huskId)) {
                 TWAFollower follower = (TWAFollower) ((CraftEntity) husk).getHandle();
                 follower.setFollowing(follow);
+                plugin.getMessenger().send(player, TardisModule.MONSTERS, (follow) ? "WA_FOLLOWING_START" : "WA_FOLLOWING_END", which);
             } else {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", which);
             }

@@ -21,8 +21,8 @@ import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -34,7 +34,7 @@ public class K9Equipment {
         headMeta.setDisplayName("K9 Head");
         headMeta.setCustomModelData(disguise ? 1 : 405);
         head.setItemMeta(headMeta);
-        if (entity instanceof Skeleton k9) {
+        if (entity instanceof Husk) {
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.K9, head);
         } else if (disguise) {
             new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);

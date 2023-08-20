@@ -60,7 +60,7 @@ public class FollowerPersister {
             ps.setInt(7, ammo);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            plugin.debug("Insert error for follower persistence: " + ex.getMessage());
+            plugin.debug("Upsert error for follower persistence: " + ex.getMessage());
         } finally {
             try {
                 if (ps != null) {
