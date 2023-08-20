@@ -40,7 +40,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
@@ -64,7 +63,7 @@ public class K9Listener implements Listener {
                 if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getName())) {
                     return;
                 }
-                Entity k9 = (Entity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9));
+                Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
                 K9Equipment.set(player, k9, false);
                 ent.remove();
                 player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
@@ -118,7 +117,7 @@ public class K9Listener implements Listener {
                         player.getInventory().setItemInMainHand(is);
                     }
                     // spawn a K9 instead
-                    Entity k9 = (Entity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9));
+                    Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
                     K9Equipment.set(player, k9, false);
                     player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(k9, EntityType.ARMOR_STAND, Monster.K9, location));

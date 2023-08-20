@@ -78,7 +78,7 @@ public class JudoonBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation().add(0.5d, 0, 0.5d);
-                    Entity e = (Entity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), event.getPlayer().getUniqueId(), Monster.JUDOON));
+                    Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), event.getPlayer().getUniqueId(), Monster.JUDOON)).getBukkitEntity();
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         JudoonEquipment.set(event.getPlayer(), e, false);
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));

@@ -74,7 +74,7 @@ public class TARDISFollowerSpawner {
 
     public void spawnDivisionOod(Location location) {
         plugin.setTardisSpawn(true);
-        Entity husk = (Entity) new MonsterSpawner().createFollower(location.clone().add(0.5d, 0, 0.5d), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD));
+        Entity husk = new MonsterSpawner().createFollower(location.clone().add(0.5d, 0, 0.5d), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD)).getBukkitEntity();
         plugin.getTardisAPI().setOodEquipment(null, husk, false);
     }
 

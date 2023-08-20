@@ -79,7 +79,7 @@ public class K9Builder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = below.getLocation().add(0.5d, 0, 0.5d);
-                    Entity e = (Entity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9));
+                    Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         K9Equipment.set(player, e, false);
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.K9, l));

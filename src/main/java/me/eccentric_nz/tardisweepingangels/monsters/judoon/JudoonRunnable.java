@@ -85,7 +85,7 @@ public class JudoonRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                Entity e = (Entity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.JUDOON));
+                Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.JUDOON)).getBukkitEntity();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     JudoonEquipment.set(null, e, false);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));
