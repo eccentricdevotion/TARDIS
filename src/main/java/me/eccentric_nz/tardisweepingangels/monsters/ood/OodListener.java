@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -45,7 +44,7 @@ public class OodListener implements Listener {
         Entity entity = event.getEntity();
         if (((CraftEntity) entity).getHandle() instanceof TWAOod ood && event.getDamager() instanceof Player player) {
             if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID) && entity.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                event.setCancelled(player.getInventory().getItemInMainHand().getType() != Material.STONE_SWORD);
+                event.setCancelled(true);
                 player.playSound(entity.getLocation(), "ood", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.ood")) {
                     return;

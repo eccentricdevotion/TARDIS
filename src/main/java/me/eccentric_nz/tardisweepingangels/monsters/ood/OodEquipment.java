@@ -22,15 +22,15 @@ import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class OodEquipment {
 
-    public static void set(Player player, Entity entity, boolean disguise, boolean random) {
+    public static void set(OfflinePlayer player, Entity entity, boolean disguise, boolean random) {
         if (random) {
             TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
             ood.setRedeye(TARDISConstants.RANDOM.nextBoolean());

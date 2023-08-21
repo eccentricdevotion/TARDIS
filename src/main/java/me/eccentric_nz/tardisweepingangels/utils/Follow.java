@@ -43,7 +43,7 @@ public class Follow {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, (follow) ? "WA_FOLLOWING_START" : "WA_FOLLOWING_END", which);
             } else {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_YOURS", which);
-            }
+           }
         } else {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_BROKEN", which);
         }

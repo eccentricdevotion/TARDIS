@@ -26,12 +26,12 @@ public class TWAJudoon extends TWAFollower {
             CompoundTag nbt = is.getTag();
             if (!isPathFinding()) {
                 Bukkit.getScheduler().cancelTask(task);
-                nbt.putInt("CustomModelData", 405);
+                nbt.putInt("CustomModelData", 405 + (this.guard ? 6 : 0));
                 isAnimating = false;
             } else if (!isAnimating) {
                 // play move animation
                 task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    nbt.putInt("CustomModelData", 400 + frames[i] + ((this.guard) ? 6 : 0));
+                    nbt.putInt("CustomModelData", 400 + frames[i] + (this.guard ? 6 : 0));
                     i++;
                     if (i == frames.length) {
                         i = 0;

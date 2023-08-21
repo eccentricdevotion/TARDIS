@@ -4,9 +4,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Husk;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class FollowerEquipper {
 
-    public void setHelmetAndInvisibilty(Player player, Entity entity, Monster monster, ItemStack head) {
+    public void setHelmetAndInvisibilty(OfflinePlayer player, Entity entity, Monster monster, ItemStack head) {
         UUID uuid;
         if (player != null) {
             uuid = player.getUniqueId();

@@ -88,7 +88,6 @@ public class JudoonListener implements Listener {
                         }
                     } else {
                         // toggle guard mode
-                        // TODO need models for firing gun while walking
                         String message = "";
                         if (!judoon.isGuard()) {
                             if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {

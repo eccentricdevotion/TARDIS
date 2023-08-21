@@ -81,8 +81,8 @@ public class TARDISFollowerSpawner {
     public void removeDivisionOod(Location location) {
         for (Entity a : location.getWorld().getNearbyEntities(location, 32, 8, 32, (e) -> e.getType() == EntityType.ARMOR_STAND || e.getType() == EntityType.HUSK)) {
             if (a.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && a.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                UUID fetched = a.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-                if (fetched.equals(TARDISWeepingAngels.UNCLAIMED)) {
+                UUID uuid = a.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                if (TARDISWeepingAngels.UNCLAIMED.equals(uuid)) {
                     a.remove();
                 }
             }

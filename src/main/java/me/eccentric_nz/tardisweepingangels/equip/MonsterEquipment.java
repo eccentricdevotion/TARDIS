@@ -24,27 +24,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class MonsterEquipment {
 
-    public static boolean isAnimatedMonster(Entity entity) {
-        PersistentDataContainer pdc = entity.getPersistentDataContainer();
-        return pdc.has(TARDISWeepingAngels.ANGEL, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.DALEK_SEC, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.HATH, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.RACNOSS, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.WARRIOR, PersistentDataType.INTEGER)
-                || pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER);
-    }
-
     public static boolean isMonster(Entity entity) {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         if (entity instanceof Drowned) {

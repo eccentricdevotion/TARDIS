@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
@@ -40,30 +41,30 @@ public class JudoonGuardRunnable implements Runnable {
         if (!TARDISWeepingAngels.getGuards().isEmpty()) {
             for (UUID uuid : TARDISWeepingAngels.getGuards()) {
                 Entity entity = Bukkit.getEntity(uuid);
-                if (entity != null) {
-                    for (Entity e : entity.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
-                        if (e instanceof Monster) {
-                            Damageable damageable = (Damageable) e;
-                            double health = damageable.getHealth();
-                            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                                TWAJudoon judoon = (TWAJudoon) ((CraftEntity) entity).getHandle();
-                                int ammo = judoon.getAmmo();
-                                if (ammo > 0 && health > 0) {
-                                    damageable.damage(plugin.getMonstersConfig().getDouble("judoon.damage"), entity);
-                                    entity.getWorld().playSound(entity.getLocation(), "judoon_fire", 1.0f, 1.0f);
-                                    Snowball snowball = ((LivingEntity) entity).launchProjectile(Snowball.class);
-                                    Vector direction = damageable.getLocation().toVector().subtract(entity.getLocation().toVector());
-                                    direction.normalize();
-                                    Vector bulletVelocity = direction.multiply(3.0d);
-                                    snowball.setVelocity(bulletVelocity);
-                                    ammo -= 1;
-                                    if (ammo >= 0) {
-                                        entity.setCustomName("Ammunition: " + ammo);
-                                        entity.setCustomNameVisible(true);
-                                        judoon.setAmmo(ammo);
-                                    }
-                                }
-                            }
+                if (entity == null || !entity.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                    return;
+                }
+                for (Entity e : entity.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
+                    if (!(e instanceof Monster) || ((CraftEntity) e).getHandle() instanceof TWAFollower) {
+                        return;
+                    }
+                    Damageable damageable = (Damageable) e;
+                    double health = damageable.getHealth();
+                    TWAJudoon judoon = (TWAJudoon) ((CraftEntity) entity).getHandle();
+                    int ammo = judoon.getAmmo();
+                    if (ammo > 0 && health > 0) {
+                        damageable.damage(plugin.getMonstersConfig().getDouble("judoon.damage"), entity);
+                        entity.getWorld().playSound(entity.getLocation(), "judoon_fire", 1.0f, 1.0f);
+                        Snowball snowball = ((LivingEntity) entity).launchProjectile(Snowball.class);
+                        Vector direction = damageable.getLocation().toVector().subtract(entity.getLocation().toVector());
+                        direction.normalize();
+                        Vector bulletVelocity = direction.multiply(3.0d);
+                        snowball.setVelocity(bulletVelocity);
+                        ammo -= 1;
+                        if (ammo >= 0) {
+                            entity.setCustomName("Ammunition: " + ammo);
+                            entity.setCustomNameVisible(true);
+                            judoon.setAmmo(ammo);
                         }
                     }
                 }
