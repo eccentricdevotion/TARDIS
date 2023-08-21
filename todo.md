@@ -28,13 +28,13 @@
 ## Resource Pack / Monsters
 
 1. New mobs and sounds for Resource pack
-   * Whispermen
-   * Clockwork Droid
-   * Endermites -> Cybermats
-   * Iron Golem -> Gunslinger
-   * Slimes -> Adipose
-   * Husk -> Sycorax
-   * Stray -> Scarecrows
+    * Whispermen
+    * Clockwork Droid
+    * Endermites -> Cybermats
+    * Iron Golem -> Gunslinger
+    * Slimes -> Adipose
+    * Husk -> Sycorax
+    * Stray -> Scarecrows
 2. Rust Plague Sword
 
 ## Minecraft Bedrock Edition?

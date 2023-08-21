@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +31,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -68,29 +70,13 @@ public class TARDISDiskCraftListener implements Listener {
                             ItemMeta im = is.getItemMeta();
                             if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
                                 List<String> lore = im.getLore();
-                                int ladder = inv.first(Material.LADDER);
                                 if (lore.get(0).equals("Blank")) {
                                     List<String> disk_lore = new ArrayList<>();
                                     // biome disk
-                                    if (items.size() > 1 && ladder > 0) {
-                                        // mega biome
-                                        items.remove(inv.getItem(ladder));
-                                        String lookup = items.get(0).getType() + "_B";
-                                        try {
-                                            String biome = BiomeLookup.valueOf(lookup).getUpper();
-                                            disk_lore.add(biome);
-                                        } catch (IllegalArgumentException e) {
-                                            plugin.debug("Could not get biome from craft item! " + e);
-                                        }
-                                    } else {
-                                        // regular biome
-                                        String lookup = items.get(0).getType() + "_B";
-                                        try {
-                                            String biome = BiomeLookup.valueOf(lookup).getRegular();
-                                            disk_lore.add(biome);
-                                        } catch (IllegalArgumentException e) {
-                                            plugin.debug("Could not get biome from craft item! " + e);
-                                        }
+                                    Material lookup = items.get(0).getType();
+                                    Biome biome = BiomeLookup.MATERIALS.get(lookup);
+                                    if (biome != null) {
+                                        disk_lore.add(biome.toString());
                                     }
                                     if (!disk_lore.isEmpty()) {
                                         disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
@@ -101,23 +87,6 @@ public class TARDISDiskCraftListener implements Listener {
                                         disk.setItemMeta(dim);
                                         inv.setItem(0, disk);
                                         player.updateInventory();
-                                    }
-                                } else if (BiomeLookup.BY_REG.containsKey(lore.get(0)) && ladder > 0) {
-                                    // upgrade to mega biome
-                                    List<String> disk_lore = new ArrayList<>();
-                                    try {
-                                        String biome = BiomeLookup.getBiome(lore.get(0)).getUpper();
-                                        disk_lore.add(biome);
-                                        disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
-                                        ItemMeta dim = disk.getItemMeta();
-                                        dim.setDisplayName("Biome Storage Disk");
-                                        dim.setLore(disk_lore);
-                                        dim.setCustomModelData(10000001);
-                                        disk.setItemMeta(dim);
-                                        inv.setItem(0, disk);
-                                        player.updateInventory();
-                                    } catch (IllegalArgumentException e) {
-                                        plugin.debug("Could not get biome from craft item! " + e);
                                     }
                                 } else {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
