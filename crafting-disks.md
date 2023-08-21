@@ -19,33 +19,62 @@ Check the recipes using the `/tardisrecipe [biome-storage-disk|preset-storage-di
 
 ## Biome Storage Disks
 
-There are two levels of Biome Storage Disk — regular biomes and ‘higher’ biomes, for example: a regular biome would be
-DESERT, and a ‘higher’ biome would be DESERT\_HILLS. ‘higher’ biomes are crafted the same way as for regular biomes, but
-with the addition to the recipe of a LADDER.
+To craft the disk for a specific biome, combine a Blank Biome Storage Disk with the appropriate item.
+Currently the Biome Storage Disks you can craft are shown in the table below (Cave, End and Nether biomes
+are not currently supported).
 
-To craft the disk combine a Blank Biome Storage Disk with the correct item. Currently the only Biome Storage Disks you
-can craft are shown in the table below:
-
-| Craft Item   | Regular Biome    | ‘Higher‘ biome (Item + LADDER) |
-|--------------|------------------|--------------------------------|
-| Cactus       | DESERT           | DESERT\_HILLS                  |
-| Dirt         | EXTREME\_HILLS   | EXTREME\_HILLS\_PLUS           |
-| Podzol       | MEGA\_TAIGA      | MEGA\_TAIGA\_HILLS             |
-| Red Sand     | MESA             | MESA\_PLATEAU                  |
-| Acacia Log   | SAVANNA          | SAVANNA\_PLATEAU               |
-| Dark Oak Log | ROOFED\_FOREST   | ROOFED\_FOREST\_MOUNTAINS      |
-| Oak Log      | FOREST           | FOREST\_HILLS                  |
-| Spruce Log   | TAIGA            | TAIGA\_HILLS                   |
-| Birch Log    | BIRCH\_FOREST    | BIRCH\_FOREST\_HILLS           |
-| Jungle Log   | JUNGLE           | JUNGLE\_HILLS                  |
-| Sand         | BEACH            | COLD\_BEACH                    |
-| Snow Block   | COLD\_TAIGA      | COLD\_TAIGA\_HILLS             |
-| Water Bucket | OCEAN            | DEEP\_OCEAN                    |
-| Red Tulip    | FLOWER\_FOREST   | FLOWER\_FOREST                 |
-| Sunflower    | PLAINS           | SUNFLOWER\_PLAINS              |
-| Ice          | ICE\_PLAINS      | ICE\_PLAINS\_SPIKES            |
-| Mycel        | MUSHROOM\_ISLAND | MUSHROOM\_SHORE                |
-| Water Lily   | SWAMPLAND        | SWAMPLAND\_MOUNTAINS           |
+| Craft Item              | Biome                    |
+|-------------------------|--------------------------|
+| Acacia Leaves           | Windswept Savanna        |
+| Acacia Log              | Savanna                  |
+| Bamboo Block            | Bamboo Jungle            |
+| Birch Log               | Birch Forest             |
+| Blue Concrete           | River                    |
+| Blue Ice                | Frozen River             |
+| Cactus                  | Desert                   |
+| Cherry Log              | Cherry Grove             |
+| Coarse Dirt             | Wooded Badlands          |
+| Cobblestone             | Stony Shore              |
+| Dark Oak Log            | Dark Forest              |
+| Dead Brain Coral Block  | Deep Cold Ocean          |
+| Dead Bubble Coral Block | Deep Frozen Ocean        |
+| Dead Fire Coral Block   | Deep Lukewarm Ocean      |
+| Dead Horn Coral Block   | Deep Ocean               |
+| Dirt                    | Windswept Hills          |
+| Grass                   | Plains                   |
+| Gravel                  | Windswept Gravelly Hills |
+| Gray Glazed Terracotta  | Jagged Peaks             |
+| Ice                     | Frozen Ocean             |
+| Jungle Log              | Jungle                   |
+| Kelp                    | Lukewarm Ocean           |
+| Lily Pad                | Swamp                    |
+| Mangrove Log            | Mangrove Swamp           |
+| Mycelium                | Mushroom Fields          |
+| Oak Log                 | Forest                   |
+| Oak Sapling             | Windswept Forest         |
+| Orange Terracotta       | Eroded Badlands          |
+| Oxeye Daisy             | Snowy Beach              |
+| Packed Ice              | Ice Spikes               |
+| Poppy                   | Meadow                   |
+| Salmon                  | Cold Ocean               |
+| Sand                    | Beach                    |
+| Seagrass                | Ocean                    |
+| Sea Pickle              | Warm Ocean               |
+| Snowball                | Snowy Slopes             |
+| Snow Block              | Snowy Taiga              |
+| Spruce Leaves           | Old Growth Pine Taiga    |
+| Spruce Log              | Taiga                    |
+| Spruce Sapling          | Grove                    |
+| Stone                   | Stony Peaks              |
+| Stripped Acacia Log     | Savanna Plateau          |
+| Stripped Bamboo Block   | Sparse Jungle            |
+| Stripped Birch Log      | Old Growth Birch Forest  |
+| Stripped Spruce Log     | Old Growth Spruce Taiga  |
+| Sunflower               | Sunflower Plains         |
+| Terracotta              | Badlands                 |
+| White Glazed Terracotta | Frozen Peaks             |
+| White Terracotta        | Snowy Plains             |
+| White Tulip             | Flower Forest            |
 
 ## Preset Storage Disks
 
