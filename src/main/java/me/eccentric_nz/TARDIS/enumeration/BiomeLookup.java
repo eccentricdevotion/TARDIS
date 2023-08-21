@@ -16,59 +16,87 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import com.google.common.collect.Maps;
+import org.bukkit.Material;
+import org.bukkit.block.Biome;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author eccentric_nz
  */
-public enum BiomeLookup {
+public class BiomeLookup {
 
-    CACTUS_B("DESERT", "DESERT_HILLS"),
-    DIRT_B("MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS"),
-    PODZOL_B("GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS"),
-    RED_SAND_B("BADLANDS", "BADLANDS_PLATEAU"),
-    ACACIA_LOG_B("SAVANNA", "SHATTERED_SAVANNA"),
-    DARK_OAK_LOG_B("DARK_FOREST", "DARK_FOREST_HILLS"),
-    OAK_LOG_B("FOREST", "WOODED_HILLS"),
-    SPRUCE_LOG_B("TAIGA", "TAIGA_HILLS"),
-    BIRCH_LOG_B("BIRCH_FOREST", "BIRCH_FOREST_HILLS"),
-    JUNGLE_LOG_B("JUNGLE", "JUNGLE_HILLS"),
-    SAND_B("BEACH", "SNOWY_BEACH"),
-    SNOW_BLOCK_B("SNOWY_TAIGA", "SNOWY_TAIGA_HILLS"),
-    WATER_BUCKET_B("OCEAN", "DEEP_OCEAN"),
-    RED_TULIP_B("FLOWER_FOREST", "TALL_BIRCH_HILLS"),
-    SUNFLOWER_B("PLAINS", "SUNFLOWER_PLAINS"),
-    ICE_B("SNOWY_TUNDRA", "ICE_SPIKES"),
-    MYCELIUM_B("MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE"),
-    LILY_PAD_B("SWAMP", "SWAMP_HILLS"),
-    BAMBOO_B("BAMBOO_JUNGLE", "BAMBOO_JUNGLE_HILLS");
-
-    public final static Map<String, BiomeLookup> BY_REG = Maps.newHashMap();
+    public static final Map<Material, Biome> MATERIALS = new HashMap<>();
 
     static {
-        for (BiomeLookup bm : values()) {
-            BY_REG.put(bm.getRegular(), bm);
-        }
-    }
-
-    final String regular;
-    final String upper;
-
-    BiomeLookup(String regular, String upper) {
-        this.regular = regular;
-        this.upper = upper;
-    }
-
-    public static BiomeLookup getBiome(String data) {
-        return BY_REG.get(data);
-    }
-
-    public String getRegular() {
-        return regular;
-    }
-
-    public String getUpper() {
-        return upper;
+        MATERIALS.put(Material.ACACIA_LEAVES, Biome.WINDSWEPT_SAVANNA);
+        MATERIALS.put(Material.ACACIA_LOG, Biome.SAVANNA);
+        MATERIALS.put(Material.BAMBOO_BLOCK, Biome.BAMBOO_JUNGLE);
+        MATERIALS.put(Material.BIRCH_LOG, Biome.BIRCH_FOREST);
+        MATERIALS.put(Material.BLUE_CONCRETE, Biome.RIVER);
+        MATERIALS.put(Material.BLUE_ICE, Biome.FROZEN_RIVER);
+        MATERIALS.put(Material.CACTUS, Biome.DESERT);
+        MATERIALS.put(Material.CHERRY_LOG, Biome.CHERRY_GROVE);
+        MATERIALS.put(Material.COARSE_DIRT, Biome.WOODED_BADLANDS);
+        MATERIALS.put(Material.COBBLESTONE, Biome.STONY_SHORE);
+        MATERIALS.put(Material.DARK_OAK_LOG, Biome.DARK_FOREST);
+        MATERIALS.put(Material.DEAD_BRAIN_CORAL_BLOCK, Biome.DEEP_COLD_OCEAN);
+        MATERIALS.put(Material.DEAD_BUBBLE_CORAL_BLOCK, Biome.DEEP_FROZEN_OCEAN);
+        MATERIALS.put(Material.DEAD_FIRE_CORAL_BLOCK, Biome.DEEP_LUKEWARM_OCEAN);
+        MATERIALS.put(Material.DEAD_HORN_CORAL_BLOCK, Biome.DEEP_OCEAN);
+        MATERIALS.put(Material.DIRT, Biome.WINDSWEPT_HILLS);
+        MATERIALS.put(Material.GRASS, Biome.PLAINS);
+        MATERIALS.put(Material.GRAVEL, Biome.WINDSWEPT_GRAVELLY_HILLS);
+        MATERIALS.put(Material.GRAY_GLAZED_TERRACOTTA, Biome.JAGGED_PEAKS);
+        MATERIALS.put(Material.ICE, Biome.FROZEN_OCEAN);
+        MATERIALS.put(Material.JUNGLE_LOG, Biome.JUNGLE);
+        MATERIALS.put(Material.KELP, Biome.LUKEWARM_OCEAN);
+        MATERIALS.put(Material.LILY_PAD, Biome.SWAMP);
+        MATERIALS.put(Material.MANGROVE_LOG, Biome.MANGROVE_SWAMP);
+        MATERIALS.put(Material.MYCELIUM, Biome.MUSHROOM_FIELDS);
+        MATERIALS.put(Material.OAK_LOG, Biome.FOREST);
+        MATERIALS.put(Material.OAK_SAPLING, Biome.WINDSWEPT_FOREST);
+        MATERIALS.put(Material.ORANGE_TERRACOTTA, Biome.ERODED_BADLANDS);
+        MATERIALS.put(Material.OXEYE_DAISY, Biome.SNOWY_BEACH);
+        MATERIALS.put(Material.PACKED_ICE, Biome.ICE_SPIKES);
+        MATERIALS.put(Material.POPPY, Biome.MEADOW);
+        MATERIALS.put(Material.SALMON, Biome.COLD_OCEAN);
+        MATERIALS.put(Material.SAND, Biome.BEACH);
+        MATERIALS.put(Material.SEAGRASS, Biome.OCEAN);
+        MATERIALS.put(Material.SEA_PICKLE, Biome.WARM_OCEAN);
+        MATERIALS.put(Material.SNOWBALL, Biome.SNOWY_SLOPES);
+        MATERIALS.put(Material.SNOW_BLOCK, Biome.SNOWY_TAIGA);
+        MATERIALS.put(Material.SPRUCE_LEAVES, Biome.OLD_GROWTH_PINE_TAIGA);
+        MATERIALS.put(Material.SPRUCE_LOG, Biome.TAIGA);
+        MATERIALS.put(Material.SPRUCE_SAPLING, Biome.GROVE);
+        MATERIALS.put(Material.STONE, Biome.STONY_PEAKS);
+        MATERIALS.put(Material.STRIPPED_ACACIA_LOG, Biome.SAVANNA_PLATEAU);
+        MATERIALS.put(Material.STRIPPED_BAMBOO_BLOCK, Biome.SPARSE_JUNGLE);
+        MATERIALS.put(Material.STRIPPED_BIRCH_LOG, Biome.OLD_GROWTH_BIRCH_FOREST);
+        MATERIALS.put(Material.STRIPPED_SPRUCE_LOG, Biome.OLD_GROWTH_SPRUCE_TAIGA);
+        MATERIALS.put(Material.SUNFLOWER, Biome.SUNFLOWER_PLAINS);
+        MATERIALS.put(Material.TERRACOTTA, Biome.BADLANDS);
+        MATERIALS.put(Material.WHITE_GLAZED_TERRACOTTA, Biome.FROZEN_PEAKS);
+        MATERIALS.put(Material.WHITE_TERRACOTTA, Biome.SNOWY_PLAINS);
+        MATERIALS.put(Material.WHITE_TULIP, Biome.FLOWER_FOREST);
+        // CAVES
+//        MATERIALS.put(Material.DRIPSTONE_BLOCK, Biome.DRIPSTONE_CAVES);
+//        MATERIALS.put(Material.MOSS_BLOCK, Biome.LUSH_CAVES);
+//        MATERIALS.put(Material.SCULK, Biome.DEEP_DARK);
+        // NETHER
+//        MATERIALS.put(Material.BASALT, Biome.BASALT_DELTAS);
+//        MATERIALS.put(Material.CRIMSON_HYPHAE, Biome.CRIMSON_FOREST);
+//        MATERIALS.put(Material.NETHERRACK, Biome.NETHER_WASTES);
+//        MATERIALS.put(Material.SOUL_SAND, Biome.SOUL_SAND_VALLEY);
+//        MATERIALS.put(Material.WARPED_HYPHAE, Biome.WARPED_FOREST);
+        // THE_END
+//        MATERIALS.put(Material.CHORUS_FLOWER, Biome.END_HIGHLANDS);
+//        MATERIALS.put(Material.CHORUS_FRUIT, Biome.END_BARRENS);
+//        MATERIALS.put(Material.END_STONE, Biome.THE_END);
+//        MATERIALS.put(Material.END_STONE_BRICKS, Biome.END_MIDLANDS);
+//        MATERIALS.put(Material.YELLOW_GLAZED_TERRACOTTA, Biome.SMALL_END_ISLANDS);
+        // VOID
+//        MATERIALS.put(Material.TERRACOTTA, Biome.THE_VOID);
     }
 }
