@@ -330,15 +330,6 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks TARDIS keyboard signs so they can be processed for travel commands
-     *
-     * @return a Map of locations and signs
-     */
-    public HashMap<String, Sign> getSign() {
-        return sign;
-    }
-
-    /**
      * Trackers players using the <code>/tardisbind remove</code> command
      *
      * @return a Map of player UUIDs and the command to unbind

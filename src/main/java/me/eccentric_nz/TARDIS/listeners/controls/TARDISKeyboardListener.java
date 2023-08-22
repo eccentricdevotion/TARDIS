@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -25,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -37,13 +34,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
- * Now, if the trachoid crystal contrafibulations are in synchronic resonance
- * with the referential difference index, then this should take us right to the
- * heart of the trouble. And they don't make sentences like that anymore.
+ * Now, if the trachoid crystal contrafibulations are in synchronic resonance with the referential difference index,
+ * then this should take us right to the heart of the trouble. And they don't make sentences like that anymore.
  *
  * @author eccentric_nz
  */
@@ -55,149 +52,139 @@ public class TARDISKeyboardListener implements Listener {
         this.plugin = plugin;
     }
 
-    public static boolean isKeyboardEditor(ItemStack is) {
-        if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
-        }
-        return false;
-    }
-
     @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Block b = event.getClickedBlock();
-        if (b != null && Tag.SIGNS.isTagged(b.getType())) {
-            Player player = event.getPlayer();
-            Sign sign = (Sign) b.getState();
-            if (sign.getSide(Side.FRONT).getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
-                plugin.getMessenger().sendSign(player);
-                return;
-            }
-            String loc = event.getClickedBlock().getLocation().toString();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("type", 7);
-            where.put("location", loc);
-            ResultSetControls rs = new ResultSetControls(plugin, where, false);
-            if (rs.resultSet()) {
-                TARDISCircuitChecker tcc = null;
-                if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                    tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
-                    tcc.getCircuits();
-                }
-                if (tcc != null && !tcc.hasInput()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
-                    return;
-                }
-                plugin.getTrackerKeeper().getSign().put(loc, sign);
-                player.openSign(sign);
-            }
+        if (b == null || !Tag.SIGNS.isTagged(b.getType())) {
+            return;
+        }
+        Player player = event.getPlayer();
+        Sign sign = (Sign) b.getState();
+        if (sign.getSide(Side.FRONT).getLine(0).equalsIgnoreCase("[TARDIS Wiki]")) {
+            plugin.getMessenger().sendSign(player);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
-        if (!plugin.getTrackerKeeper().getSign().containsKey(loc)) {
+        // is it a keyboard sign?
+        HashMap<String, Object> wherel = new HashMap<>();
+        wherel.put("type", 7);
+        wherel.put("location", loc);
+        ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+        if (!rsc.resultSet()) {
             return;
         }
         Player p = event.getPlayer();
-        plugin.getTrackerKeeper().getSign().remove(loc);
+        TARDISCircuitChecker tcc = null;
+        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, false)) {
+            tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
+            tcc.getCircuits();
+        }
+        if (tcc != null && !tcc.hasInput()) {
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "INPUT_MISSING");
+            return;
+        }
         // process the lines...
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-        if (rs.resultSet()) {
-            // wiki?
-            if (event.getLine(0).equalsIgnoreCase("wiki")) {
-                plugin.getMessenger().sendSign(p);
-                return;
-            }
-            int id = rs.getTardis_id();
-            // player?
-            if (plugin.getServer().getPlayer(event.getLine(0)) != null) {
-                // set location player
-                p.performCommand("tardistravel " + event.getLine(0));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel " + event.getLine(0));
-                return;
-            }
-            // location?
-            if (TARDISAliasResolver.getWorldFromAlias(event.getLine(0)) != null) {
-                // set location to coords
-                String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
-                p.performCommand("tardistravel " + command);
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel " + command);
-                return;
-            }
-            // home?
-            if (event.getLine(0).equalsIgnoreCase("home")) {
-                // check not already at home location
-                HashMap<String, Object> whereh = new HashMap<>();
-                whereh.put("tardis_id", id);
-                ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
-                if (rsh.resultSet()) {
-                    HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                    if (rsc.resultSet()) {
-                        if (currentIsNotHome(rsh, rsc)) {
-                            p.performCommand("tardistravel home");
-                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel home");
-                        } else {
-                            plugin.getMessenger().send(p, TardisModule.TARDIS, "HOME_ALREADY");
-                        }
+        if (!rs.resultSet()) {
+            return;
+        }
+        String firstLine = event.getLine(0);
+        if (firstLine == null) {
+            return;
+        }
+        // wiki?
+        if (firstLine.equalsIgnoreCase("wiki")) {
+            plugin.getMessenger().sendSign(p);
+            return;
+        }
+        int id = rs.getTardis_id();
+        // player?
+        if (plugin.getServer().getPlayer(firstLine) != null) {
+            // set location player
+            p.performCommand("tardistravel " + firstLine);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel " + firstLine);
+            return;
+        }
+        // location?
+        if (TARDISAliasResolver.getWorldFromAlias(firstLine) != null) {
+            // set location to coords
+            String command = firstLine + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
+            p.performCommand("tardistravel " + command);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel " + command);
+            return;
+        }
+        // home?
+        if (firstLine.equalsIgnoreCase("home")) {
+            // check not already at home location
+            HashMap<String, Object> whereh = new HashMap<>();
+            whereh.put("tardis_id", id);
+            ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
+            if (rsh.resultSet()) {
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("tardis_id", id);
+                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                if (rscl.resultSet()) {
+                    if (currentIsNotHome(rsh, rscl)) {
+                        p.performCommand("tardistravel home");
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel home");
                     } else {
-                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "HOME_ALREADY");
                     }
                 } else {
-                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HOME_NOT_FOUND");
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 }
+            } else {
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "HOME_NOT_FOUND");
+            }
+            return;
+        }
+        if (firstLine.equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
+            p.performCommand("tardistravel cave");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel cave");
+            return;
+        }
+        if (firstLine.equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
+            p.performCommand("tardistravel village");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel village");
+            return;
+        }
+        // biome ?
+        try {
+            String upper = firstLine.toUpperCase(Locale.ENGLISH);
+            Biome.valueOf(upper);
+            if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
+                p.performCommand("tardistravel biome " + upper);
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel biome " + upper);
                 return;
             }
-            if (event.getLine(0).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
-                p.performCommand("tardistravel cave");
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel cave");
-                return;
-            }
-            if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
-                p.performCommand("tardistravel village");
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel village");
-                return;
-            }
-            // biome ?
-            try {
-                String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
-                Biome.valueOf(upper);
-                if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
-                    p.performCommand("tardistravel biome " + upper);
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel biome " + upper);
-                    return;
-                }
-            } catch (IllegalArgumentException iae) {
-                plugin.debug(plugin.getLanguage().getString("BIOME_NOT_VALID"));
-            }
-            // dest?
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", event.getLine(0));
-            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-            if (rsd.resultSet()) {
-                p.performCommand("tardistravel dest " + event.getLine(0));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
-                return;
-            }
-            // area?
-            HashMap<String, Object> wherea = new HashMap<>();
-            wherea.put("area_name", event.getLine(0));
-            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
-            if (rsa.resultSet()) {
-                p.performCommand("tardistravel area " + event.getLine(0));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
-                return;
-            }
-        } else {
-            plugin.debug("Player is not in a TARDIS!");
+        } catch (IllegalArgumentException iae) {
+            plugin.debug(plugin.getLanguage().getString("BIOME_NOT_VALID"));
+        }
+        // dest?
+        HashMap<String, Object> whered = new HashMap<>();
+        whered.put("dest_name", firstLine);
+        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+        if (rsd.resultSet()) {
+            p.performCommand("tardistravel dest " + firstLine);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel dest " + firstLine);
+            return;
+        }
+        // area?
+        HashMap<String, Object> wherea = new HashMap<>();
+        wherea.put("area_name", firstLine);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+        if (rsa.resultSet()) {
+            p.performCommand("tardistravel area " + firstLine);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel area " + firstLine);
+            return;
         }
         plugin.getMessenger().send(p, TardisModule.TARDIS, "KEYBOARD_ERROR");
     }

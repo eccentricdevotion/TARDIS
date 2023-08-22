@@ -37,7 +37,6 @@ import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
-import me.eccentric_nz.TARDIS.listeners.controls.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
@@ -105,7 +104,7 @@ public class TARDISControlListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onControlInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
-        if ((event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) && action != Action.PHYSICAL) {
+        if ((event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) && action != Action.PHYSICAL) {
             return;
         }
         Player player = event.getPlayer();

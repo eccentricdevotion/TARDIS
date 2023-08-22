@@ -50,14 +50,14 @@ public class OodEquipment {
             head.setItemMeta(headMeta);
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
         } else {
-            int chance = TARDISConstants.RANDOM.nextInt(100);
+//            int chance = TARDISConstants.RANDOM.nextInt(100);
             int colour = 29;
-            if (chance < 15) {
-                colour += 10;
-            }
-            if (chance > 85) {
-                colour += 20;
-            }
+//            if (chance < 15) {
+//                colour += 10;
+//            }
+//            if (chance > 85) {
+//                colour += 20;
+//            }
             headMeta.setCustomModelData(colour);
             head.setItemMeta(headMeta);
             new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
