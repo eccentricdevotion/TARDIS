@@ -34,11 +34,10 @@ import org.bukkit.Bukkit;
  */
 public class TWASkeleton extends Skeleton {
 
+    private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
     private boolean isAnimating = false;
     private int task = -1;
     private int i = 0;
-    private int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
-    private long delay = 3;
     private boolean beaming = false;
 
     public TWASkeleton(EntityType<? extends Skeleton> type, Level level) {
@@ -51,7 +50,7 @@ public class TWASkeleton extends Skeleton {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             CompoundTag nbt = is.getTag();
             Entity passenger = getFirstPassenger();
-            if (passenger != null && passenger instanceof Guardian guardian) {
+            if (passenger instanceof Guardian guardian) {
                 beaming = guardian.hasActiveAttackTarget();
             }
             if (!isPathFinding() || beaming) {
@@ -67,7 +66,7 @@ public class TWASkeleton extends Skeleton {
                     if (i == frames.length) {
                         i = 0;
                     }
-                }, 1L, delay);
+                }, 1L, 3L);
                 isAnimating = true;
             }
         }

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -31,13 +28,16 @@ import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -784,10 +784,10 @@ public interface TardisAPI {
     /**
      * Start a following task for a claimed monster
      *
-     * @param stand the armour stand that will follow the player
+     * @param husk the entity that will follow the player
      * @param player the player that owns this Judoon / Ood / K9
      */
-    public void setFollowing(ArmorStand stand, Player player);
+    public void setFollowing(Entity husk, Player player);
 
     /**
      * Get a TARDISWeepingAngels monster head

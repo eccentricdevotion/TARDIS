@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -31,6 +30,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.UUID;
 
 public class DisguiseCommand {
 
@@ -54,7 +55,7 @@ public class DisguiseCommand {
             return true;
         }
         Player player = null;
-       if (sender instanceof ConsoleCommandSender) {
+        if (sender instanceof ConsoleCommandSender) {
             // check argument length
             if (args.length < 4) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
@@ -66,7 +67,7 @@ public class DisguiseCommand {
         if (sender instanceof Player) {
             player = (Player) sender;
         }
-         if (player == null) {
+        if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
             return true;
         }
@@ -76,7 +77,7 @@ public class DisguiseCommand {
         }
         PlayerInventory inv = player.getInventory();
         if (args[2].equalsIgnoreCase("on") && (inv.getBoots() != null || inv.getChestplate() != null || inv.getHelmet() != null || inv.getLeggings() != null)) {
-            plugin.getMessenger().send(player,TardisModule.MONSTERS, "WA_ARMOUR");
+            plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ARMOUR");
             return true;
         }
         if (args[2].equalsIgnoreCase("on")) {
@@ -84,9 +85,9 @@ public class DisguiseCommand {
                 case DALEK -> DalekEquipment.set(player, true);
                 case JUDOON -> JudoonEquipment.set(null, player, true);
                 case K9 -> K9Equipment.set(null, player, true);
-                case OOD -> OodEquipment.set(null, player, true);
+                case OOD -> OodEquipment.set(null, player, true, false);
                 case TOCLAFANE -> ToclafaneEquipment.set(player, true);
-                // CYBERMAN, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, SEA_DEVIL, SILENT,
+                // CYBERMAN, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, RACNOSS, SEA_DEVIL, SILENT,
                 // SILURIAN, SLITHEEN, SONTARAN, STRAX, MIRE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON
                 default -> new Equipper(monster, player, true, false).setHelmetAndInvisibilty();
             }

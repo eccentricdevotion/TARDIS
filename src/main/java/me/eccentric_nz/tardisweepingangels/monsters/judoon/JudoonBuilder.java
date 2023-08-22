@@ -18,8 +18,10 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +32,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+
+import java.util.UUID;
 
 public class JudoonBuilder implements Listener {
 
@@ -74,10 +78,10 @@ public class JudoonBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation().add(0.5d, 0, 0.5d);
-                    Entity e = l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
+                    Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), event.getPlayer().getUniqueId(), Monster.JUDOON)).getBukkitEntity();
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         JudoonEquipment.set(event.getPlayer(), e, false);
-                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ARMOR_STAND, Monster.JUDOON, l));
+                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));
                     }, 2L);
                 }, 20L);
             }

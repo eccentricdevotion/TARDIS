@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -35,7 +36,6 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
@@ -45,6 +45,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class SpawnCommand {
 
@@ -77,8 +78,12 @@ public class SpawnCommand {
             Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
             eyeLocation.add(0.5, 1.0, 0.5);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
-            World world = eyeLocation.getWorld();
-            LivingEntity a = new MonsterSpawner().create(eyeLocation, monster);
+            LivingEntity a;
+            if (monster.isFollower()) {
+                a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster)).getBukkitEntity();
+            } else {
+                a = new MonsterSpawner().create(eyeLocation, monster);
+            }
             a.setNoDamageTicks(75);
             switch (monster) {
                 case DALEK -> {
@@ -114,7 +119,7 @@ public class SpawnCommand {
                 case JUDOON -> JudoonEquipment.set(null, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
                 case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
-                case OOD -> OodEquipment.set(null, a, false);
+                case OOD -> OodEquipment.set(player, a, false, true);
                 case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
                 case SILENT -> {
                     new Equipper(monster, a, false, false).setHelmetAndInvisibilty();

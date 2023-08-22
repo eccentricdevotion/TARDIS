@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import io.papermc.lib.PaperLib;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -44,7 +38,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.WeightedChoice;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
@@ -52,17 +45,18 @@ import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonWalkRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
+import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -73,6 +67,12 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -471,7 +471,7 @@ public class TARDII implements TardisAPI {
                 lore = new ArrayList<>();
             }
             String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-            String what = item.equals("key") ? "key" : "disk";
+            String what = item.equals("TARDIS Key") ? "key" : "disk";
             lore.add(format + "This " + what + " belongs to");
             lore.add(format + player.getName());
             im.setLore(lore);
@@ -905,25 +905,22 @@ public class TARDII implements TardisAPI {
         new Equipper(Monster.SLITHEEN, le, disguise, true).setHelmetAndInvisibilty();
     }
 
+    // TODO
     @Override
     public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise) {
         JudoonEquipment.set(player, armorStand, disguise);
     }
 
-    @Override
-    public void setJudoonEquipment(Player player, Entity armorStand, int ammunition) {
-        setJudoonEquipment(player, armorStand, false);
-        armorStand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, ammunition);
-    }
-
+    // TODO
     @Override
     public void setK9Equipment(Player player, Entity armorStand, boolean disguise) {
         K9Equipment.set(player, armorStand, disguise);
     }
 
+    // TODO
     @Override
-    public void setOodEquipment(Player player, Entity armorStand, boolean disguise) {
-        OodEquipment.set(player, armorStand, disguise);
+    public void setOodEquipment(Player player, Entity entity, boolean disguise) {
+        OodEquipment.set(player, entity, disguise, false);
     }
 
     @Override
@@ -987,13 +984,25 @@ public class TARDII implements TardisAPI {
 
     @Override
     public FollowerChecker isClaimedMonster(Entity entity, UUID uuid) {
-        return (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels") && PaperLib.isPaper()) ? new FollowerChecker(entity, uuid) : null;
+        if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
+            FollowerChecker fc = new FollowerChecker();
+            fc.checkEntity(entity, uuid);
+            return fc;
+        }
+        return null;
     }
 
+    // TODO
     @Override
-    public void setFollowing(ArmorStand stand, Player player) {
-        int taskId = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new JudoonWalkRunnable(stand, 0.15d, player), 2L, 2L);
-        TARDISWeepingAngels.getFollowTasks().put(player.getUniqueId(), taskId);
+    public void setJudoonEquipment(Player player, Entity husk, int ammunition) {
+        setJudoonEquipment(player, husk, false);
+        ((TWAJudoon) ((CraftEntity) husk).getHandle()).setAmmo(ammunition);
+    }
+
+    // TODO
+    @Override
+    public void setFollowing(Entity husk, Player player) {
+        ((TWAFollower) husk).setFollowing(true);
     }
 
     @Override

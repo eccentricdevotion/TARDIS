@@ -16,62 +16,62 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import java.util.UUID;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
+import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
+import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class FollowerChecker {
 
-    private Monster monster;
-    private int persist = -1;
-    private boolean following = false;
+    private Follower follower;
+    private boolean valid = false;
 
-    public FollowerChecker(Entity entity, UUID playerUUID) {
-        checkEntity(entity, playerUUID);
-    }
-
-    void checkEntity(Entity entity, UUID playerUUID) {
-        if (!entity.getType().equals(EntityType.ARMOR_STAND)) {
-            monster = Monster.WEEPING_ANGEL;
+    public void checkEntity(Entity entity, UUID playerUUID) {
+        if (!entity.getType().equals(EntityType.HUSK)) {
             return;
         }
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
             UUID uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-            if (playerUUID.equals(uuid)) {
-                if (TARDISWeepingAngels.getFollowTasks().containsKey(playerUUID)) {
-                    following = true;
-                    // remove following task
-                    TARDISWeepingAngels.getFollowTasks().remove(playerUUID);
-                }
-                if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
-                    monster = Monster.JUDOON;
-                    persist = pdc.get(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER);
-                    return;
-                } else if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
-                    monster = Monster.K9;
-                    return;
-                } else if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
-                    monster = Monster.OOD;
-                    return;
+            TWAFollower twaf = (TWAFollower) ((CraftEntity) entity).getHandle();
+            if (twaf.isFollowing()) {
+                Monster monster = Monster.OOD;
+                boolean option = false;
+                OodColour colour = OodColour.BLACK;
+                int ammo = 0;
+                if (playerUUID.equals(uuid)) {
+                    if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                        monster = Monster.JUDOON;
+                        TWAJudoon judoon = (TWAJudoon) ((CraftEntity) entity).getHandle();
+                        option = judoon.isGuard();
+                        ammo = judoon.getAmmo();
+                    } else if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                        monster = Monster.K9;
+                    } else if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                        TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
+                        option = ood.isRedeye();
+                        colour = ood.getColour();
+                    }
+                    follower = new Follower(entity.getUniqueId(), uuid, monster, twaf.isFollowing(), option, colour, ammo);
+                    valid = true;
                 }
             }
         }
-        monster = Monster.WEEPING_ANGEL;
     }
 
-    public Monster getMonster() {
-        return monster;
+    public boolean isValid() {
+        return valid;
     }
 
-    public int getPersist() {
-        return persist;
-    }
-
-    public boolean isFollowing() {
-        return following;
+    public Follower getFollower() {
+        return follower;
     }
 }

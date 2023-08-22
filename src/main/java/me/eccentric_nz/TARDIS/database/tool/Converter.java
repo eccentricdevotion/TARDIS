@@ -43,7 +43,6 @@ public class Converter implements Runnable {
      * @param plugin an instance of the TARDIS JavaPlugin class
      * @param sender the player using the /tadmin convert_database command
      * @throws SQLException if their is an SQL error
-     *
      */
     public Converter(TARDIS plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
@@ -322,6 +321,10 @@ public class Converter implements Runnable {
                                     }
                                     case saves -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("save_id"), rs.getString("uuid"), rs.getString("save_name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch")) + end;
+                                        sb.append(str);
+                                    }
+                                    case followers -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("owner"), rs.getString("species"), rs.getInt("following"), rs.getInt("option"), rs.getString("colour"), rs.getInt("ammo")) + end;
                                         sb.append(str);
                                     }
                                     default -> {

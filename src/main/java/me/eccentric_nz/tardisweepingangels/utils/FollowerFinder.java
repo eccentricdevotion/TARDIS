@@ -18,16 +18,15 @@ package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.Blink;
 import org.bukkit.Location;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class ArmourStandFinder {
+public class FollowerFinder {
 
-    public static ArmorStand getStand(Player player) {
-        ArmorStand stand = null;
-        // get the armour stand player is looking at
+    public static Entity getEntity(Player player, EntityType type) {
+        Entity entity = null;
+        // get the entity the player is looking at
         Location observerPos = player.getEyeLocation();
         Vector3D observerDir = new Vector3D(observerPos.getDirection());
         Vector3D observerStart = new Vector3D(observerPos);
@@ -38,9 +37,9 @@ public class ArmourStandFinder {
             Vector3D targetPos = new Vector3D(target.getLocation());
             Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
             Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-            if (target.getType().equals(EntityType.ARMOR_STAND) && Blink.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (stand == null || stand.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                    return (ArmorStand) target;
+            if (target.getType().equals(type) && Blink.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                if (entity == null || entity.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                    return target;
                 }
             }
         }

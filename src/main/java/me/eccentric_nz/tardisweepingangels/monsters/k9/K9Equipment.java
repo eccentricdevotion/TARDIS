@@ -16,48 +16,28 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import java.util.UUID;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
+import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.entity.Husk;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class K9Equipment {
 
-    public static void set(Player player, Entity entity, boolean disguise) {
+    public static void set(OfflinePlayer player, Entity entity, boolean disguise) {
         ItemStack head = new ItemStack(Material.BONE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("K9 Head");
-        headMeta.setCustomModelData(1);
+        headMeta.setCustomModelData(disguise ? 1 : 405);
         head.setItemMeta(headMeta);
-        if (entity instanceof ArmorStand stand) {
-            UUID uuid;
-            if (player != null) {
-                uuid = player.getUniqueId();
-            } else {
-                uuid = TARDISWeepingAngels.UNCLAIMED;
-            }
-            stand.getPersistentDataContainer().set(TARDISWeepingAngels.K9, PersistentDataType.INTEGER, 0);
-            stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
-            EntityEquipment ee = stand.getEquipment();
-            ee.setHelmet(head);
-            ee.setItemInMainHand(null);
-            ee.setItemInOffHand(null);
-            stand.setVisible(false);
-            stand.setSilent(true);
-            stand.setCollidable(true);
+        if (entity instanceof Husk) {
+            new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.K9, head);
         } else if (disguise) {
-            Player p = (Player) entity;
-            p.getInventory().setHelmet(head);
-            PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
-            p.addPotionEffect(potionEffect);
+            new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
         }
     }
 }

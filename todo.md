@@ -1,10 +1,10 @@
 # TODO
 
-## Current version `5.0.0`
+## Current version `5.1.0`
 
 1. ?
 
-## Next version `5.1.0`
+## Next version `5.2.0`
 
 1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
@@ -23,7 +23,6 @@
 
 ## Wiki Documentation
 
-* Authorised Control Disks
 * ?
 
 ## Resource Pack / Monsters
@@ -36,7 +35,6 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-2. Rust Plague Sword
 
 ## Minecraft Bedrock Edition?
 

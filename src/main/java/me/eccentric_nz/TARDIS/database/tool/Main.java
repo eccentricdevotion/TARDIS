@@ -360,6 +360,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("save_id"), rs.getString("uuid"), rs.getString("save_name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch")) + end;
                                         bw.write(str);
                                     }
+                                    case followers -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("owner"), rs.getString("species"), rs.getInt("following"), rs.getInt("option"), rs.getString("colour"), rs.getInt("ammo")) + end;
+                                        bw.write(str);
+                                    }
                                     default -> {
                                     }
                                 }

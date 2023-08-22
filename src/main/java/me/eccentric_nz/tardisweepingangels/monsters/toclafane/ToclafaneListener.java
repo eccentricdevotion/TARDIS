@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,6 +37,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToclafaneListener implements Listener {
 
@@ -136,7 +139,7 @@ public class ToclafaneListener implements Listener {
     }
 
     @EventHandler
-    public void onBeeTargetEvent(EntityTargetEvent event) {
+    public void onBeeAndGolemTargetEvent(EntityTargetEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof Bee bee) {
             if (bee.getTarget() instanceof Player || bee.getAnger() >= 0) {
@@ -146,6 +149,15 @@ public class ToclafaneListener implements Listener {
                         bee.setHasStung(false);
                     }
                 }
+            }
+        }
+        // stop iron golems attacking followers
+        if (entity instanceof IronGolem golem) {
+            if (!(golem.getTarget() instanceof Husk husk)) {
+                return;
+            }
+            if (((CraftEntity)husk).getHandle() instanceof TWAFollower) {
+                event.setCancelled(true);
             }
         }
     }

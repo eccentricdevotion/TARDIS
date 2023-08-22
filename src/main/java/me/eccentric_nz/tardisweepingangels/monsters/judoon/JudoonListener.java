@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +35,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class JudoonListener implements Listener {
 
@@ -46,16 +48,17 @@ public class JudoonListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageJudoon(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof ArmorStand stand && event.getDamager() instanceof Player player) {
-            if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && stand.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+        if (event.getEntity() instanceof Husk husk && event.getDamager() instanceof Player player) {
+            if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && husk.getPersistentDataContainer().has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(true);
-                player.playSound(stand.getLocation(), "judoon", 1.0f, 1.0f);
+                player.playSound(husk.getLocation(), "judoon", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.judoon")) {
                     return;
                 }
-                UUID judoonId = stand.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                UUID judoonId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 if (player.getUniqueId().equals(judoonId)) {
-                    int ammo = stand.getPersistentDataContainer().get(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER);
+                    TWAJudoon judoon = (TWAJudoon) ((CraftEntity) husk).getHandle();
+                    int ammo = judoon.getAmmo();
                     if (Tag.SHULKER_BOXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
                         // top up ammo
                         ItemStack box = player.getInventory().getItemInMainHand();
@@ -78,44 +81,42 @@ public class JudoonListener implements Listener {
                                 shulkerBox.update();
                                 bsm.setBlockState(shulkerBox);
                                 box.setItemMeta(bsm);
-                                stand.getPersistentDataContainer().set(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER, (ammo + remove));
-                                stand.setCustomName("Ammunition: " + (ammo + remove));
+                                judoon.setAmmo(ammo + remove);
+                                husk.setCustomName("Ammunition: " + (ammo + remove));
                                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_RELOADED", remove);
                             }
                         }
                     } else {
-                        ItemStack arm = stand.getEquipment().getItemInMainHand();
-                        ItemMeta im = arm.getItemMeta();
-                        int cmd = im.getCustomModelData();
-                        if (cmd == 4 && ammo > 0) {
+                        // toggle guard mode
+                        String message = "";
+                        if (!judoon.isGuard()) {
                             if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {
-                                plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ACTION");
+                                // point weapon
+                                judoon.setGuard(true);
+                                message = "WA_ACTION";
+                                husk.setCustomName("Ammunition: " + ammo);
+                                husk.setCustomNameVisible(true);
                                 // add to repeating task
-                                TARDISWeepingAngels.getGuards().add(stand.getUniqueId());
+                                TARDISWeepingAngels.getGuards().add(judoon.getUUID());
                                 TARDISWeepingAngels.getPlayersWithGuards().add(player.getUniqueId());
                             } else {
                                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_GUARD");
+                                return;
                             }
-                            // point weapon
-                            cmd = 9;
-                            stand.setCustomName("Ammunition: " + ammo);
-                            stand.setCustomNameVisible(true);
                         } else {
                             // stand easy
-                            cmd = 4;
-                            stand.setCustomNameVisible(false);
-                            plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_EASE");
+                            judoon.setGuard(false);
+                            message = "WA_EASE";
+                            husk.setCustomNameVisible(false);
                             // end guarding task
-                            TARDISWeepingAngels.getGuards().remove(stand.getUniqueId());
+                            TARDISWeepingAngels.getGuards().remove(judoon.getUUID());
                             TARDISWeepingAngels.getPlayersWithGuards().remove(player.getUniqueId());
                         }
-                        im.setCustomModelData(cmd);
-                        arm.setItemMeta(im);
-                        stand.getEquipment().setItemInMainHand(arm);
+                        plugin.getMessenger().send(player, TardisModule.MONSTERS, message);
                     }
-                } else if (judoonId.equals(TARDISWeepingAngels.UNCLAIMED)) {
+                } else if (TARDISWeepingAngels.UNCLAIMED.equals(judoonId)) {
                     // claim the Judoon
-                    stand.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
+                    husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Judoon");
                 }
             }

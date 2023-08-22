@@ -220,7 +220,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
             return true;
         }
-        if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
+        if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
             result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
         } else if (custom.contains(item)) {
             result = new TARDISDisplayBlockCommand(plugin).getStack(item);

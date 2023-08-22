@@ -57,7 +57,7 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                     return new AdminCommand(plugin).set(sender, args);
                 }
                 case "follow" -> {
-                    return new FollowCommand(plugin).follow(sender, args);
+                    return new FollowCommand(plugin).follow(sender);
                 }
                 case "stay" -> {
                     return new StayCommand(plugin).stay(sender);
@@ -76,9 +76,6 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                     plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID_CMD");
                     return true;
                 }
-
-
-
             }
         }
         return true;

@@ -83,6 +83,7 @@ import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.FollowerSaver;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
@@ -261,6 +262,9 @@ public class TARDIS extends JavaPlugin {
                 new TARDISForceFieldPersister(this).save();
             }
             new TARDISSeedBlockPersister(this).save();
+            if (getConfig().getBoolean("modules.weeping_angels")) {
+                new FollowerSaver(this).persist();
+            }
             updateTagStats();
             debug("Updated Tag stats");
             getServer().getScheduler().cancelTasks(this);

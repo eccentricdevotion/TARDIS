@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.data.Farm;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -39,6 +39,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold has an identifying number.
@@ -80,9 +83,8 @@ public class TARDISFarmer {
         World w = l.getWorld();
         Entity egg = w.spawnEntity(l, EntityType.EGG);
         List<Entity> mobs = egg.getNearbyEntities(3.75D, 3.75D, 3.75D);
-
         List<TARDISPet> pets = new ArrayList<>();
-        List<TARDISFollower> followers = new ArrayList<>();
+        List<Follower> followers = new ArrayList<>();
         if (!mobs.isEmpty()) {
             List<TARDISAxolotl> axolotls = new ArrayList<>();
             List<TARDISHorse> horses = new ArrayList<>();
@@ -126,11 +128,12 @@ public class TARDISFarmer {
                 // collate the mobs
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
-                        case ARMOR_STAND -> {
+                        case HUSK -> {
                             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                                TARDISFollower follower = new TARDISFollower(entity, p.getUniqueId());
-                                if (follower.isValid()) {
-                                    followers.add(follower);
+                                FollowerChecker fc = new FollowerChecker();
+                                fc.checkEntity(entity, p.getUniqueId());
+                                if (fc.isValid()) {
+                                    followers.add(fc.getFollower());
                                     entity.remove();
                                 }
                             }
@@ -1046,7 +1049,7 @@ public class TARDISFarmer {
 
     public TARDISPetsAndFollowers exitPets(Player player) {
         List<TARDISPet> pets = new ArrayList<>();
-        List<TARDISFollower> followers = new ArrayList<>();
+        List<Follower> followers = new ArrayList<>();
         List<Entity> mobs = player.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity entity : mobs) {
             if (entity.getType().equals(EntityType.CAT) || entity.getType().equals(EntityType.WOLF) || entity.getType().equals(EntityType.PARROT)) {
@@ -1096,10 +1099,11 @@ public class TARDISFarmer {
                     pets.add(pet);
                     entity.remove();
                 }
-            } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                TARDISFollower follower = new TARDISFollower(entity, player.getUniqueId());
-                if (follower.isValid()) {
-                    followers.add(follower);
+            } else if (entity.getType().equals(EntityType.HUSK) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                FollowerChecker fc = new FollowerChecker();
+                fc.checkEntity(entity, player.getUniqueId());
+                if (fc.isValid()) {
+                    followers.add(fc.getFollower());
                     entity.remove();
                 }
             }

@@ -75,5 +75,7 @@ public enum Table {
     beacons,
     manipulator,
     messages,
-    saves
+    saves,
+    // weeping angels
+    followers
 }

@@ -33,10 +33,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkR
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessProjectileListener;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessTarget;
 import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorRunnable;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonAmmoRecipe;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonBuilder;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonGuardRunnable;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonListener;
+import me.eccentric_nz.tardisweepingangels.monsters.judoon.*;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
@@ -51,7 +48,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianSpawnerListener;
 import me.eccentric_nz.tardisweepingangels.monsters.slitheen.SlitheenRunnable;
-import me.eccentric_nz.tardisweepingangels.monsters.sontarans.Butler;
 import me.eccentric_nz.tardisweepingangels.monsters.sontarans.SontaranRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.BeeSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneListener;
@@ -63,10 +59,7 @@ import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISWeepingAngels {
 
@@ -92,6 +85,7 @@ public class TARDISWeepingAngels {
     public static NamespacedKey HEADLESS_TASK;
     public static NamespacedKey OOD;
     public static NamespacedKey OWNER_UUID;
+    public static NamespacedKey FOLLOW;
     public static NamespacedKey RACNOSS;
     public static NamespacedKey SILENT;
     public static NamespacedKey SILURIAN;
@@ -163,7 +157,7 @@ public class TARDISWeepingAngels {
         if (plugin.getMonstersConfig().getBoolean("k9.can_build")) {
             plugin.getPM().registerEvents(new K9Builder(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new MonsterLoadListener(), plugin);
+        plugin.getPM().registerEvents(new MonsterLoadUnloadListener(plugin), plugin);
         plugin.getPM().registerEvents(new DalekGlideListener(), plugin);
         plugin.getPM().registerEvents(new Damage(plugin), plugin);
         plugin.getPM().registerEvents(new VashtaNeradaListener(plugin), plugin);
@@ -172,7 +166,7 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new PlayerUndisguise(), plugin);
         plugin.getPM().registerEvents(new Sounds(plugin), plugin);
         plugin.getPM().registerEvents(new GasMask(plugin), plugin);
-        plugin.getPM().registerEvents(new Butler(plugin), plugin);
+        plugin.getPM().registerEvents(new MonsterInteractListener(plugin), plugin);
         plugin.getPM().registerEvents(new HeadlessTarget(plugin), plugin);
         plugin.getPM().registerEvents(new HeadlessProjectileListener(), plugin);
         plugin.getPM().registerEvents(new K9Listener(plugin), plugin);
@@ -202,22 +196,30 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CleanGuardians(plugin), 100L, 6000L);
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CybermanRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new DalekRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new EmptyChildRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HathRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessMonkRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new IceWarriorRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new MireRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new RacnossRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SeaDevilRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SilentRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SilurianRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SlitheenRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SontaranRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ToclafaneRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new WeepingAngelsRunnable(plugin), delay, delay);
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ZygonRunnable(plugin), delay, delay);
+        List<Runnable> spawners = Arrays.asList(
+                new CybermanRunnable(plugin),
+                new DalekRunnable(plugin),
+                new EmptyChildRunnable(plugin),
+                new HathRunnable(plugin),
+                new HeadlessMonkRunnable(plugin),
+                new IceWarriorRunnable(plugin),
+                new JudoonRunnable(plugin),
+                new MireRunnable(plugin),
+                new RacnossRunnable(plugin),
+                new SeaDevilRunnable(plugin),
+                new SilentRunnable(plugin),
+                new SilurianRunnable(plugin),
+                new SlitheenRunnable(plugin),
+                new SontaranRunnable(plugin),
+                new ToclafaneRunnable(plugin),
+                new WeepingAngelsRunnable(plugin),
+                new ZygonRunnable(plugin)
+        );
+        long d = 0;
+        for (Runnable r : spawners) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, r, delay + d, delay);
+            d += 6;
+        }
         steal = (plugin.getMonstersConfig().getBoolean("angels.angels_can_steal"));
         if (plugin.getMonstersConfig().getBoolean("judoon.guards")) {
             // add recipe
@@ -264,6 +266,7 @@ public class TARDISWeepingAngels {
         OOD = new NamespacedKey(plugin, "ood");
         PDC_KEYS.put(Monster.OOD, OOD);
         OWNER_UUID = new NamespacedKey(plugin, "owner_uuid");
+        FOLLOW = new NamespacedKey(plugin, "follow");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
         PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
         SILENT = new NamespacedKey(plugin, "silent");
