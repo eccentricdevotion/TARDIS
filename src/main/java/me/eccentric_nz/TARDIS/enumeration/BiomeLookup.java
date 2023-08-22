@@ -97,6 +97,6 @@ public class BiomeLookup {
 //        MATERIALS.put(Material.END_STONE_BRICKS, Biome.END_MIDLANDS);
 //        MATERIALS.put(Material.YELLOW_GLAZED_TERRACOTTA, Biome.SMALL_END_ISLANDS);
         // VOID
-//        MATERIALS.put(Material.TERRACOTTA, Biome.THE_VOID);
+//        MATERIALS.put(Material.PHANTOM_MEMBRANE, Biome.THE_VOID);
     }
 }
