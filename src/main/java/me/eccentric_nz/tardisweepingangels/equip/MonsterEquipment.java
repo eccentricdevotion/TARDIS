@@ -73,7 +73,7 @@ public class MonsterEquipment {
 
     public static Monster getMonsterType(Entity entity) {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
-        if (entity instanceof Husk || entity instanceof ArmorStand) {
+        if (entity instanceof Husk) {
             if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 return Monster.OOD;
             }
@@ -81,6 +81,17 @@ public class MonsterEquipment {
                 return Monster.JUDOON;
             }
             if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                return Monster.K9;
+            }
+        }
+        if (entity instanceof ArmorStand) {
+            if (pdc.has(TARDISWeepingAngels.OOD, PersistentDataType.INTEGER)) {
+                return Monster.OOD;
+            }
+            if (pdc.has(TARDISWeepingAngels.JUDOON, PersistentDataType.INTEGER)) {
+                return Monster.JUDOON;
+            }
+            if (pdc.has(TARDISWeepingAngels.K9, PersistentDataType.INTEGER)) {
                 return Monster.K9;
             }
         }

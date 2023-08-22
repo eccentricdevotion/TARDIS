@@ -57,7 +57,15 @@ import java.util.UUID;
 public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
+    private final List<EntityType> justThese = Arrays.asList(
+            EntityType.DROWNED,
+            EntityType.PIGLIN_BRUTE,
+            EntityType.SKELETON,
+            EntityType.ZOMBIE,
+            EntityType.HUSK,
+            EntityType.ZOMBIFIED_PIGLIN,
+            EntityType.ARMOR_STAND
+    );
 
     public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,7 +75,12 @@ public class MonsterLoadUnloadListener implements Listener {
     public void onMonsterLoad(EntitiesLoadEvent event) {
         for (Entity e : event.getEntities()) {
             try {
-                if (e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWADrowned || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAPiglinBrute || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWASkeleton || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombie || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombifiedPiglin || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAFollower) {
+                if (e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWADrowned
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAPiglinBrute
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWASkeleton
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombie
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAZombifiedPiglin
+                        || e.getClass().getDeclaredMethod("getHandle").invoke(e) instanceof TWAFollower) {
                     return;
                 }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
@@ -91,7 +104,10 @@ public class MonsterLoadUnloadListener implements Listener {
         if (monster.isFollower()) {
             // retrieve entity from followers table and get attributes
             Follower follower = null;
-            UUID eid = pdc.get(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID);
+            UUID eid = null;
+            if (pdc.has(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                eid = pdc.get(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID);
+            }
             if (eid != null) {
                 ResultSetFollowers rsf = new ResultSetFollowers(plugin, eid.toString());
                 if (rsf.resultSet()) {
