@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
@@ -31,6 +29,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+import java.util.UUID;
+
 /**
  * The TARDIS information system is a searchable database which was discovered
  * by the Fifth Doctor's companions Nyssa and Tegan from a readout in the
@@ -41,6 +42,8 @@ import org.jetbrains.annotations.NotNull;
 public class TARDISInformationSystemListener implements Listener, CommandExecutor {
 
     private final TARDIS plugin;
+    private final String[] find = new String[]{"TARDIS_", "_RECIPE", "_"};
+    private final String[] repl = new String[]{"", "", "-"};
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -1399,7 +1402,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
      * Displays the next menu level based on the parent menu item that was
      * selected. Automatically pulls the key code and highlights it.
      *
-     * @param p the player to show the menu to
+     * @param p    the player to show the menu to
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
@@ -1423,7 +1426,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
      * TARDISDescription enum. Other values are pulled directly from the
      * rooms.yml configuration file.
      *
-     * @param p the player to show the room information to
+     * @param p    the player to show the room information to
      * @param item the room to display
      */
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
@@ -1442,7 +1445,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
      * Displays information about an item or TARDIS type. Descriptions are
      * stored in the TARDISDescription enum.
      *
-     * @param p the player to show the information to
+     * @param p    the player to show the information to
      * @param item the item or TARDIS type to display
      */
     private void showInfo(Player p, TARDISInfoMenu item) {
@@ -1452,13 +1455,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         exit(p);
     }
 
-    private final String[] find = new String[]{"TARDIS_", "_RECIPE", "_"};
-    private final String[] repl = new String[]{"", "", "-"};
-
     /**
      * Displays the workbench recipe for an item or component.
      *
-     * @param p the player to show the recipe to
+     * @param p    the player to show the recipe to
      * @param item the recipe to display
      */
     private void showRecipe(Player p, TARDISInfoMenu item) {
@@ -1477,7 +1477,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
      * Displays the description and usage of a command. Values are pulled
      * directly from the plugin.yml configuration file.
      *
-     * @param p the player to show the command information to
+     * @param p    the player to show the command information to
      * @param item the command to display
      */
     private void showCommand(Player p, TARDISInfoMenu item) {

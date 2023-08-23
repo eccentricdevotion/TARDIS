@@ -67,7 +67,8 @@ public class TARDISDevCommand implements CommandExecutor {
             "brushable",
             "box",
             "nms",
-            "circuit"
+            "circuit",
+            "tis"
     );
     private final TARDIS plugin;
 
@@ -114,6 +115,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("circuit")) {
                     return new TARDISDevCircuitCommand(plugin).give(sender);
+                }
+                if (first.equals("tis")) {
+                    return new TARDISDevInfoCommand(plugin).test(sender);
                 }
                 if (first.equals("list")) {
                     return new TARDISDevListCommand(plugin).listStuff(sender, args);
