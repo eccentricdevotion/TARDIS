@@ -102,9 +102,10 @@ class TARDISLazarusInventory {
         for (Material m : disguises) {
             ItemStack egg = new ItemStack(m, 1);
             ItemMeta me = egg.getItemMeta();
-            switch (m) {
-                case MOOSHROOM_SPAWN_EGG -> me.setDisplayName("MUSHROOM_COW");
-                default -> me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
+            if (m == Material.MOOSHROOM_SPAWN_EGG) {
+                me.setDisplayName("MUSHROOM_COW");
+            } else {
+                me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
             }
             egg.setItemMeta(me);
             stacks[i] = egg;

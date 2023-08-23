@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.placeholders;
 
-import java.util.HashMap;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -24,6 +23,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 
@@ -95,16 +96,14 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                      */
                     String[] split = identifier.split("_");
                     switch (split[1]) {
-                        case "any":
-                            result = "true";
-                            break;
-                        case "own":
+                        case "any" -> result = "true";
+                        case "own" -> {
                             rsti = new ResultSetTardisID(plugin);
                             if (rsti.fromUUID(uuid) && rsti.getTardis_id() == rsv.getTardis_id()) {
                                 result = "true";
                             }
-                            break;
-                        case "whose":
+                        }
+                        case "whose" -> {
                             where.put("tardis_id", rsv.getTardis_id());
                             rst = new ResultSetTardis(plugin, where, "", false, 2);
                             if (rst.resultSet()) {
@@ -114,8 +113,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                                     result = rst.getTardis().getOwner() + "'s";
                                 }
                             }
-                            break;
-                        default:
+                        }
+                        default -> {
                             // user
                             if (split.length > 2) {
                                 OfflinePlayer offlinePlayer = plugin.getServer().getPlayer(split[2]);
@@ -126,7 +125,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                                     }
                                 }
                             }
-                            break;
+                        }
                     }
                 } else {
                     result = "Not in any TARDIS";

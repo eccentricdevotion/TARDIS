@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -25,6 +24,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -56,11 +57,10 @@ class TARDISJunkFind {
                     world = plugin.getMVHelper().getAlias(rsc.getWorld());
                 }
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-                return true;
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NOT_FOUND");
-                return true;
             }
+            return true;
         }
         return true;
     }

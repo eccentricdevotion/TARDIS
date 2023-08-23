@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
@@ -37,6 +35,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Destroy the TARDIS Police Box.
@@ -139,7 +140,7 @@ public class TARDISPresetDestroyerFactory {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
-            case JUNK_MODE:
+            case JUNK_MODE -> {
                 switch (d) {
                     case EAST -> {
                         signx = 0;
@@ -154,12 +155,12 @@ public class TARDISPresetDestroyerFactory {
                         signz = 0;
                     }
                 }
-                break;
-            case GRAVESTONE:
+            }
+            case GRAVESTONE -> {
                 signx = 0;
                 signz = 0;
-                break;
-            case TORCH:
+            }
+            case TORCH -> {
                 switch (d) {
                     case EAST -> {
                         signx = -1;
@@ -178,8 +179,8 @@ public class TARDISPresetDestroyerFactory {
                         signz = 1;
                     }
                 }
-                break;
-            case TOILET:
+            }
+            case TOILET -> {
                 switch (d) {
                     case EAST -> {
                         signx = 1;
@@ -198,8 +199,8 @@ public class TARDISPresetDestroyerFactory {
                         signz = -1;
                     }
                 }
-                break;
-            case APPERTURE:
+            }
+            case APPERTURE -> {
                 switch (d) {
                     case EAST -> {
                         signx = 1;
@@ -218,8 +219,8 @@ public class TARDISPresetDestroyerFactory {
                         signz = -1;
                     }
                 }
-                break;
-            default:
+            }
+            default -> {
                 switch (d) {
                     case EAST -> {
                         signx = -2;
@@ -238,7 +239,7 @@ public class TARDISPresetDestroyerFactory {
                         signz = 2;
                     }
                 }
-                break;
+            }
         }
         signy = switch (p) {
             case GAZEBO, JAIL, SHROOM, SWAMP -> 3;

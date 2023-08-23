@@ -67,7 +67,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
                     }
                 }
                 // remove trailing colon
-                if (buf.length() > 0) {
+                if (!buf.isEmpty()) {
                     newList = buf.substring(0, buf.length() - 1);
                 }
                 set.put("companions", newList);
@@ -89,59 +89,57 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Companions")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            UUID uuid = player.getUniqueId();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    switch (slot) {
-                        case 45: // info
-                            break;
-                        case 48: // add
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
-                                Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
-                                presetinv.setContents(items);
-                                player.openInventory(presetinv);
-                            }, 2L);
-                            break;
-                        case 51: // delete
-                            if (selected_head.containsKey(uuid)) {
-                                HashMap<String, Object> where = new HashMap<>();
-                                where.put("uuid", uuid.toString());
-                                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                                if (rs.resultSet()) {
-                                    Tardis tardis = rs.getTardis();
-                                    int id = tardis.getTardis_id();
-                                    String comps = tardis.getCompanions();
-                                    ItemStack h = view.getItem(selected_head.get(uuid));
-                                    ItemMeta m = h.getItemMeta();
-                                    List<String> l = m.getLore();
-                                    String u = l.get(0);
-                                    removeCompanion(id, comps, u, player);
-                                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                        if (!comps.equalsIgnoreCase("everyone")) {
-                                            String[] data = tardis.getChunk().split(":");
-                                            removeFromRegion(data[0], tardis.getOwner(), UUID.fromString(u));
-                                        }
-                                    }
-                                    close(player);
-                                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Companions")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        switch (slot) {
+            case 45 -> { // info
+            }
+            case 48 -> // add
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
+                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+                        presetinv.setContents(items);
+                        player.openInventory(presetinv);
+                    }, 2L);
+            case 51 -> {
+                // delete
+                if (selected_head.containsKey(uuid)) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("uuid", uuid.toString());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
+                        int id = tardis.getTardis_id();
+                        String comps = tardis.getCompanions();
+                        ItemStack h = view.getItem(selected_head.get(uuid));
+                        ItemMeta m = h.getItemMeta();
+                        List<String> l = m.getLore();
+                        String u = l.get(0);
+                        removeCompanion(id, comps, u, player);
+                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            if (!comps.equalsIgnoreCase("everyone")) {
+                                String[] data = tardis.getChunk().split(":");
+                                removeFromRegion(data[0], tardis.getOwner(), UUID.fromString(u));
                             }
-                            break;
-                        case 53: // close
-                            close(player);
-                            break;
-                        default:
-                            selected_head.put(uuid, slot);
-                            break;
+                        }
+                        close(player);
                     }
                 }
             }
+            case 53 -> close(player); // close
+            default -> selected_head.put(uuid, slot);
         }
     }
 }

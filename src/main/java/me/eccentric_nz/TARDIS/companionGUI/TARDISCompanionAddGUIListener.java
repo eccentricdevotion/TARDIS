@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -34,6 +32,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -76,65 +77,64 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionAddGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Add Companion")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    switch (slot) {
-                        case 45: // info
-                            break;
-                        case 47: // list
-                            list(player);
-                            break;
-                        case 49: // add everyone
-                            HashMap<String, Object> wherea = new HashMap<>();
-                            wherea.put("uuid", player.getUniqueId().toString());
-                            ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
-                            if (rsa.resultSet()) {
-                                Tardis tardis = rsa.getTardis();
-                                int id = tardis.getTardis_id();
-                                String comps = tardis.getCompanions();
-                                addCompanion(id, comps, "everyone");
-                                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                    // remove all members
-                                    String[] data = tardis.getChunk().split(":");
-                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
-                                    // set entry and exit flags to allow
-                                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
-                                }
-                                list(player);
-                            }
-                            break;
-                        case 53: // close
-                            close(player);
-                            break;
-                        default:
-                            HashMap<String, Object> where = new HashMap<>();
-                            where.put("uuid", player.getUniqueId().toString());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                            if (rs.resultSet()) {
-                                Tardis tardis = rs.getTardis();
-                                int id = tardis.getTardis_id();
-                                String comps = tardis.getCompanions();
-                                ItemStack h = view.getItem(slot);
-                                ItemMeta m = h.getItemMeta();
-                                List<String> l = m.getLore();
-                                String u = l.get(0);
-                                addCompanion(id, comps, u);
-                                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                    String[] data = tardis.getChunk().split(":");
-                                    addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
-                                    // set entry and exit flags to deny
-                                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
-                                }
-                                list(player);
-                            }
-                            break;
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Add Companion")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        switch (slot) {
+            case 45 -> { // info
+            }
+            case 47 -> list(player); // list
+            case 49 -> {
+                // add everyone
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
+                if (rsa.resultSet()) {
+                    Tardis tardis = rsa.getTardis();
+                    int id = tardis.getTardis_id();
+                    String comps = tardis.getCompanions();
+                    addCompanion(id, comps, "everyone");
+                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                        // remove all members
+                        String[] data = tardis.getChunk().split(":");
+                        plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
+                        // set entry and exit flags to allow
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                     }
+                    list(player);
+                }
+            }
+            case 53 -> close(player); // close
+            default -> {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+                if (rs.resultSet()) {
+                    Tardis tardis = rs.getTardis();
+                    int id = tardis.getTardis_id();
+                    String comps = tardis.getCompanions();
+//                    ItemStack h = view.getItem(slot);
+                    ItemMeta m = is.getItemMeta();
+                    List<String> l = m.getLore();
+                    String u = l.get(0);
+                    addCompanion(id, comps, u);
+                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                        String[] data = tardis.getChunk().split(":");
+                        addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
+                        // set entry and exit flags to deny
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
+                    }
+                    list(player);
                 }
             }
         }

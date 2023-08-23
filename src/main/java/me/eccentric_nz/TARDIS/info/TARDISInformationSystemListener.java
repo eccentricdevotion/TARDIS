@@ -378,9 +378,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
             }
             case TIME_TRAVEL -> {
             }
-            case DOOR -> {
-                showInfo(p, TARDISInfoMenu.DOOR);
-            }
+            case DOOR -> showInfo(p, TARDISInfoMenu.DOOR);
             case COMMANDS -> {
                 if (chat.equalsIgnoreCase("T")) {
                     processKey(p, TARDISInfoMenu.TARDIS);
@@ -1451,7 +1449,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
     private void showInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        plugin.getMessenger().messageWithColour(p, "" + TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
+        plugin.getMessenger().messageWithColour(p, TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
         exit(p);
     }
 
@@ -1486,10 +1484,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         String usage;
         if (c.length > 1) {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".description");
-            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
+            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage", "/" + c[0] + " " + c[1]).replace("<command>", c[0]);
         } else {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
-            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage").replace("<command>", c[0]);
+            usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage", "/" + c[0]).replace("<command>", c[0]);
         }
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");

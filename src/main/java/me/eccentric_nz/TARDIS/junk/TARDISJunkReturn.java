@@ -57,10 +57,9 @@ class TARDISJunkReturn {
             plugin.getGeneralKeeper().setJunkTravelling(true);
             plugin.getGeneralKeeper().setJunkDestination(home);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_RETURN");
-            return true;
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_AT_HOME");
-            return true;
         }
+        return true;
     }
 }

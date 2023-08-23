@@ -292,7 +292,7 @@ public class TARDISConfiguration {
             plugin.getConfig().set("creation.use_block_stack", null);
         }
         // add comments
-        if (config.getComments("storage").size() == 0) {
+        if (config.getComments("storage").isEmpty()) {
             for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
                 plugin.getConfig().setComments(entry.getKey(), entry.getValue());
             }
