@@ -39,6 +39,7 @@ public class CreativeGUIListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCreativeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
+        String name = view.getTitle();
         if (view.getTitle().equals(ChatColor.DARK_RED + "Molecular compounds") || name.equals(ChatColor.DARK_RED + "Products")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();

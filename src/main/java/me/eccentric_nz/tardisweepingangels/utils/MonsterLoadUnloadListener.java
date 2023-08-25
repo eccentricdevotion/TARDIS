@@ -159,9 +159,7 @@ public class MonsterLoadUnloadListener implements Listener {
         if (monster.isFollower()) {
             switch (monster) {
                 case K9 -> K9Equipment.set(player, a, false);
-                case JUDOON -> {
-                    JudoonEquipment.set(player, a, false);
-                }
+                case JUDOON ->  JudoonEquipment.set(player, a, false);
                 default -> OodEquipment.set(player, a, false, false);
             }
         } else {
