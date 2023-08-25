@@ -61,8 +61,7 @@ public class TARDISHandlesProgramListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Handles Program")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             if (!scroll_list.containsKey(uuid)) {

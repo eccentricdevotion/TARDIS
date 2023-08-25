@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.universaltranslator.Language;
@@ -26,6 +23,10 @@ import me.eccentric_nz.TARDIS.universaltranslator.TranslateData;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -75,7 +76,7 @@ class TARDISSetLanguageCommand {
                     return false;
                 }
                 OfflinePlayer sender = plugin.getServer().getOfflinePlayer(args[3]);
-                if (sender == null) {
+                if (sender.getPlayer() == null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
                     return true;
                 }

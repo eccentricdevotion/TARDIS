@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -25,6 +24,8 @@ import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -47,7 +48,7 @@ public class TARDISAbandonLister {
             }
             int i = 1;
             for (Tardis t : rst.getData()) {
-                String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
+                String owner = (t.getOwner().isEmpty()) ? "TARDIS Admin" : t.getOwner();
                 // get current location
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", t.getTardis_id());

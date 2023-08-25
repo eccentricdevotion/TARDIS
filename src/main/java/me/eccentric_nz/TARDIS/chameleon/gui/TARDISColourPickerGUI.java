@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
 import org.bukkit.Color;
@@ -8,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import java.util.Arrays;
 
 public class TARDISColourPickerGUI {
 
@@ -87,7 +88,7 @@ public class TARDISColourPickerGUI {
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         win.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(win);
-        ItemStack[] is = {
+        return new ItemStack[]{
                 null, null, null, null, dis, null, null, null, null,
                 null, null, null, null, null, null, null, null, null,
                 red, null, less, null, redtint, null, more, null, null,
@@ -95,7 +96,6 @@ public class TARDISColourPickerGUI {
                 blue, null, less, null, bluetint, null, more, null, null,
                 null, null, null, null, null, null, null, null, close
         };
-        return is;
     }
 
     public ItemStack[] getGUI() {

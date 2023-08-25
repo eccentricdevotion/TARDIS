@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -41,6 +36,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Banshee Circuits were components of TARDISes, emergency defence mechanisms
@@ -207,14 +208,16 @@ public class TARDISStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
         ItemStack stack = event.getItemDrop().getItemStack();
-        if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
-            ItemMeta ims = stack.getItemMeta();
-            if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
-                event.setCancelled(true);
-                Player p = event.getPlayer();
-                plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_DROP");
-            }
+        if (stack == null || !stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
+            return;
         }
+        ItemMeta ims = stack.getItemMeta();
+        if (!ims.hasDisplayName() || !ims.getDisplayName().equals("Area Storage Disk")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player p = event.getPlayer();
+        plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_DROP");
     }
 
     private void saveCurrentStorage(Inventory inv, String column, Player p) {

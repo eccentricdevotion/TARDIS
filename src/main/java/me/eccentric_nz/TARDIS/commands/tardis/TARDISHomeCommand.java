@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -25,15 +23,14 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -56,7 +53,7 @@ class TARDISHomeCommand {
             int id = rs.getTardis_id();
             if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
                 // set the PRESET for the home location
-                String which = "";
+                String which;
                 if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
                     which = args[2];
                 } else {

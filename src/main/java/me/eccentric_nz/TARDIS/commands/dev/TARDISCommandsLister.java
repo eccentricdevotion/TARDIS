@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import org.bukkit.command.CommandSender;
+
+import java.util.Set;
 
 /**
  *
@@ -90,21 +91,13 @@ public class TARDISCommandsLister {
                 sender.sendMessage("<tr" + lighter + "><td rowspan=\"" + size + "\" id=\"" + c + "\"><strong>" + c + "</strong></td>");
                 for (String k : keys) {
                     switch (k) {
-                        case "aliases" -> {
-                            sender.sendMessage("<td><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".aliases") + "</code></td>");
-                        }
-                        case "description" -> {
-                            sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".description") + "</td>");
-                        }
-                        case "permission" -> {
-                            sender.sendMessage("<td>" + (perm == null ? "none" : perm) + "</td></tr>");
-                        }
+                        case "aliases" -> sender.sendMessage("<td><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".aliases") + "</code></td>");
+                        case "description" -> sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".description") + "</td>");
+                        case "permission" -> sender.sendMessage("<td>" + (perm == null ? "none" : perm) + "</td></tr>");
                         case "permission-message" -> {
                             // do nothing
                         }
-                        case "usage" -> {
-                            sender.sendMessage("<tr" + lighter + "><td colspan=\"3\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
-                        }
+                        case "usage" -> sender.sendMessage("<tr" + lighter + "><td colspan=\"3\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
                         default -> {
                             String subperm = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".permission");
                             // get sub commands

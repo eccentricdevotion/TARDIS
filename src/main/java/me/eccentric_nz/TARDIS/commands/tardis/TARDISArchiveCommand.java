@@ -231,17 +231,15 @@ class TARDISArchiveCommand {
                             set.put("y", sy);
                             plugin.getQueryFactory().doInsert("archive", set);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_ADD", name);
-                            return true;
-                        }
-                        if (sub.equals("update")) {
+                        }else  {
                             // update json in database
                             HashMap<String, Object> whereu = new HashMap<>();
                             whereu.put("uuid", uuid);
                             whereu.put("name", name);
                             plugin.getQueryFactory().doUpdate("archive", set, whereu);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_UPDATE", name);
-                            return true;
                         }
+                        return true;
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_NO_JSON");
                         return true;

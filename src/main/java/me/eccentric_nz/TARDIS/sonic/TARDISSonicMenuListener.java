@@ -47,8 +47,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

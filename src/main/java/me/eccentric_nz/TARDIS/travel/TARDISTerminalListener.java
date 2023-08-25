@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -49,6 +48,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
  * A control sphere is a device created by the Great Intelligence to control its Robot Yetis. It is a glass sphere that
  * is fitted into the chest of a Yeti and serves as the brain. It emits a beeping noise.
@@ -78,8 +79,7 @@ public class TARDISTerminalListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onDestTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Destination Terminal")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {

@@ -16,18 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 /**
  * Command /tardistravel [arguments].
@@ -144,7 +146,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return new TARDISTravelPlayer(plugin).action(player, args[1], id);
                 }
                 if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
-                    return new TARDISTravelAsk(plugin).action(player, args, id);
+                    return new TARDISTravelAsk(plugin).action(player, args);
                 }
                 if (args[0].equalsIgnoreCase("biome")) {
                     // we're thinking this is a biome search

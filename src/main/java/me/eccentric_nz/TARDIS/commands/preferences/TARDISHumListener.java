@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -31,6 +27,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -61,8 +62,7 @@ public class TARDISHumListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 18) {

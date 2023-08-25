@@ -42,7 +42,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public interface TardisAPI {
+interface TardisAPI {
 
     /**
      * Fetches a map of TARDIS owners and ids.
@@ -555,7 +555,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setAngelEquipment(LivingEntity le, boolean disguise);
+    void setAngelEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as an Ice Warrior.
@@ -563,7 +563,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setWarriorEquipment(LivingEntity le, boolean disguise);
+    void setWarriorEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Cyberman.
@@ -571,7 +571,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setCyberEquipment(LivingEntity le, boolean disguise);
+    void setCyberEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Dalek.
@@ -579,7 +579,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setDalekEquipment(LivingEntity le, boolean disguise);
+    void setDalekEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as Dalek Sec.
@@ -587,7 +587,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setDalekSecEquipment(LivingEntity le, boolean disguise);
+    void setDalekSecEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as Davros.
@@ -595,7 +595,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setDavrosEquipment(LivingEntity le, boolean disguise);
+    void setDavrosEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Empty Child.
@@ -603,7 +603,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setEmptyChildEquipment(LivingEntity le, boolean disguise);
+    void setEmptyChildEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Hath.
@@ -611,7 +611,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setHathEquipment(LivingEntity le, boolean disguise);
+    void setHathEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Headless Monk.
@@ -619,7 +619,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setHeadlessMonkEquipment(LivingEntity le, boolean disguise);
+    void setHeadlessMonkEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Mire.
@@ -627,7 +627,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setMireEquipment(LivingEntity le, boolean disguise);
+    void setMireEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Sea Devil.
@@ -635,7 +635,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setSeaDevilEquipment(LivingEntity le, boolean disguise);
+    void setSeaDevilEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Slitheen.
@@ -643,7 +643,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setSlitheenEquipment(LivingEntity le, boolean disguise);
+    void setSlitheenEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as a Judoon.
@@ -652,7 +652,7 @@ public interface TardisAPI {
      * @param armorStand The armour stand or player to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise);
+    void setJudoonEquipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as K9.
@@ -661,7 +661,7 @@ public interface TardisAPI {
      * @param armorStand The armour stand or player to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setK9Equipment(Player player, Entity armorStand, boolean disguise);
+    void setK9Equipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as an Ood.
@@ -670,7 +670,7 @@ public interface TardisAPI {
      * @param armorStand The armour stand or player to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setOodEquipment(Player player, Entity armorStand, boolean disguise);
+    void setOodEquipment(Player player, Entity armorStand, boolean disguise);
 
     /**
      * Sets an entity as a Racnoss.
@@ -678,7 +678,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setRacnossEquipment(LivingEntity le, boolean disguise);
+    void setRacnossEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Silent.
@@ -686,7 +686,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setSilentEquipment(LivingEntity le, boolean disguise);
+    void setSilentEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Silurian.
@@ -694,7 +694,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setSilurianEquipment(LivingEntity le, boolean disguise);
+    void setSilurianEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Sontaran.
@@ -702,7 +702,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setSontaranEquipment(LivingEntity le, boolean disguise);
+    void setSontaranEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as Strax (a Sontaran butler).
@@ -710,7 +710,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setStraxEquipment(LivingEntity le, boolean disguise);
+    void setStraxEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as a Toclafane.
@@ -718,7 +718,7 @@ public interface TardisAPI {
      * @param armorStand The armour stand to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setToclafaneEquipment(Entity armorStand, boolean disguise);
+    void setToclafaneEquipment(Entity armorStand, boolean disguise);
 
     /**
      * Sets an entity as a Vashta Nerada.
@@ -726,7 +726,7 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setVashtaNeradaEquipment(LivingEntity le, boolean disguise);
+    void setVashtaNeradaEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Sets an entity as a Zygon.
@@ -734,14 +734,14 @@ public interface TardisAPI {
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    public void setZygonEquipment(LivingEntity le, boolean disguise);
+    void setZygonEquipment(LivingEntity le, boolean disguise);
 
     /**
      * Removes a disguise from a Player.
      *
      * @param p The Player to un-disguise
      */
-    public void removeEquipment(Player p);
+    void removeEquipment(Player p);
 
     /**
      * Returns whether an entity is a TARDISWeepingAngels entity.
@@ -749,7 +749,7 @@ public interface TardisAPI {
      * @param entity the entity to check
      * @return true if the entity is a TARDISWeepingAngels entity
      */
-    public boolean isWeepingAngelMonster(Entity entity);
+    boolean isWeepingAngelMonster(Entity entity);
 
     /**
      * Returns the Monster type for a TARDISWeepingAngels entity.
@@ -757,7 +757,7 @@ public interface TardisAPI {
      * @param entity the entity to get the Monster type for
      * @return the Monster type
      */
-    public Monster getWeepingAngelMonsterType(Entity entity);
+    Monster getWeepingAngelMonsterType(Entity entity);
 
     /**
      * Returns whether the specified entity is a claimed TARDISWeepingAngels
@@ -769,7 +769,7 @@ public interface TardisAPI {
      * monster (JUDOON, K9, OOD) - if the monster is not claimable it will
      * return WEEPING_ANGEL - and an integer from its persistent data container
      */
-    public FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
+    FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
 
     /**
      * Set the entity entity equipment and ammunition count for a claimed Judoon
@@ -779,7 +779,7 @@ public interface TardisAPI {
      * @param ammunition the persistent data container value with the amount of
      * ammunition
      */
-    public void setJudoonEquipment(Player player, Entity armorStand, int ammunition);
+    void setJudoonEquipment(Player player, Entity armorStand, int ammunition);
 
     /**
      * Start a following task for a claimed monster
@@ -787,7 +787,7 @@ public interface TardisAPI {
      * @param husk the entity that will follow the player
      * @param player the player that owns this Judoon / Ood / K9
      */
-    public void setFollowing(Entity husk, Player player);
+    void setFollowing(Entity husk, Player player);
 
     /**
      * Get a TARDISWeepingAngels monster head
@@ -795,12 +795,12 @@ public interface TardisAPI {
      * @param monster the type of monster head to get
      * @return a monster head itemstack
      */
-    public ItemStack getHead(Monster monster);
+    ItemStack getHead(Monster monster);
 
     /**
      * Get a K9 item
      *
      * @return a K9 itemstack
      */
-    public ItemStack getK9();
+    ItemStack getK9();
 }

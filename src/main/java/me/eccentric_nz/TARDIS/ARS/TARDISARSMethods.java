@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -38,6 +37,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
@@ -153,9 +154,8 @@ public class TARDISARSMethods {
      * @param material   the item (material) type to set the item stack to
      * @param room       the room type associated with the block type
      * @param playerUUID the player using the GUI
-     * @param update     whether to update the grid display
      */
-    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean update, boolean showPerms) {
+    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean showPerms) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
@@ -177,9 +177,6 @@ public class TARDISARSMethods {
         im.setCustomModelData(1);
         is.setItemMeta(im);
         view.setItem(slot, is);
-        if (update) {
-            updateGrid(playerUUID, slot, material.toString());
-        }
     }
 
     /**
@@ -428,7 +425,7 @@ public class TARDISARSMethods {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
                 String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
-                setSlot(view, slot, material, name, playerUUID, false, false);
+                setSlot(view, slot, material, name, playerUUID, false);
                 indexz++;
             }
             indexz = 0;

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
@@ -33,6 +32,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 /**
  * A control room's look could be changed over time. The process by which an
@@ -53,8 +54,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {

@@ -66,7 +66,6 @@ class TARDISSaveIconCommand {
                     plugin.debug("Could not save planets.yml, " + ex.getMessage());
                 }
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIMENSION_ICON", m);
-                return true;
             } else {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
@@ -89,8 +88,8 @@ class TARDISSaveIconCommand {
                 set.put("icon", m);
                 plugin.getQueryFactory().doUpdate("destinations", set, did);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_ICON", m);
-                return true;
             }
+            return true;
         }
         return true;
     }

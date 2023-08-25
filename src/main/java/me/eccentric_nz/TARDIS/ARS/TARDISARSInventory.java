@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIArs;
@@ -27,6 +24,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural
@@ -39,11 +40,6 @@ public class TARDISARSInventory {
 
     private final ItemStack[] ars;
     private final TARDIS plugin;
-
-    public TARDISARSInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        ars = getItemStack(null);
-    }
 
     public TARDISARSInventory(TARDIS plugin, Player p) {
         this.plugin = plugin;

@@ -78,8 +78,7 @@ public class TVMGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();

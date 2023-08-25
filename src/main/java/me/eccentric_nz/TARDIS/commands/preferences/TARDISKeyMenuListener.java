@@ -41,8 +41,8 @@ import java.util.*;
  */
 public class TARDISKeyMenuListener extends TARDISMenuListener {
 
-    public static TreeMap<Material, ChatColor> COLOUR_LOOKUP = new TreeMap<>();
-    public static HashMap<ChatColor, Material> REVERSE_LOOKUP = new HashMap<>();
+    public static final TreeMap<Material, ChatColor> COLOUR_LOOKUP = new TreeMap<>();
+    public static final HashMap<ChatColor, Material> REVERSE_LOOKUP = new HashMap<>();
 
     public TARDISKeyMenuListener(TARDIS plugin) {
         super(plugin);
@@ -70,8 +70,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

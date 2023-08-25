@@ -64,8 +64,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSavesPlanetClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.startsWith(ChatColor.DARK_RED + "TARDIS Dimension Map")) {
+        if (view.getTitle().startsWith(ChatColor.DARK_RED + "TARDIS Dimension Map")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in

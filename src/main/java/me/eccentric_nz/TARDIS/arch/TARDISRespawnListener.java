@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
@@ -25,6 +23,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -46,7 +47,6 @@ public class TARDISRespawnListener implements Listener {
         if (!plugin.getUtils().inTARDISWorld(event.getRespawnLocation())) {
             // reset player time
             player.resetPlayerTime();
-
             // remove the player from the travellers table if they respawned in a non-TARDIS world
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());

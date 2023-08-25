@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -26,6 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -55,11 +56,10 @@ class TARDISFindCommand {
                         world = plugin.getMVHelper().getAlias(rsc.getWorld());
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-                    return true;
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                    return true;
                 }
+                return true;
             } else {
                 plugin.getMessenger().sendColouredCommand(player, "DIFF_HARD_FIND", "/tardisrecipe locator", plugin);
                 return true;

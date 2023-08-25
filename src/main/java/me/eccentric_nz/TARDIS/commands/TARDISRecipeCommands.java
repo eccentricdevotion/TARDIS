@@ -180,7 +180,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.discoverRecipe(recipe.getKey());
         player.closeInventory();
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
         int glowstoneCount = 0;
@@ -245,7 +245,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + str + " recipe");
         int glowstoneCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
             ItemMeta im = ingredients.get(i).getItemMeta();

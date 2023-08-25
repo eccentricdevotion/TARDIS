@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -32,6 +30,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -85,11 +86,10 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                 }
                 world.setTime(ticks);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getName());
-                return true;
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-                return true;
             }
+            return true;
         }
         return false;
     }

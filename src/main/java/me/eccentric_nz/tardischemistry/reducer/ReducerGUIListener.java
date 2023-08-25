@@ -45,8 +45,7 @@ public class ReducerGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCompoundMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Material reducer")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Material reducer")) {
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

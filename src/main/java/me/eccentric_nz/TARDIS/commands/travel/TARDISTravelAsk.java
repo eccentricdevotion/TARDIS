@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  *
@@ -36,7 +37,7 @@ public class TARDISTravelAsk {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id) {
+    public boolean action(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
             return true;

@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -41,7 +42,7 @@ class TARDISEPSMessageCommand {
         String message;
         int count = args.length;
         ItemStack bq = player.getInventory().getItemInMainHand();
-        if (bq != null && (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK))) {
+        if (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK)) {
             BookMeta bm = (BookMeta) bq.getItemMeta();
             List<String> pages = bm.getPages();
             StringBuilder sb = new StringBuilder();

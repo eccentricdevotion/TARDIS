@@ -3,8 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -20,6 +18,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -37,8 +38,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onMessageGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "VM Messages")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "VM Messages")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();

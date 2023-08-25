@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -35,6 +32,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * Command /tardisadmin [arguments].
@@ -145,7 +146,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISFindHiddenCommand().search(plugin, sender, args);
                 }
                 if (first.equals("remove_protection")) {
-                    return new TARDISRemoveProtectionCommand(plugin).remove(sender, args);
+                    return new TARDISRemoveProtectionCommand(plugin).remove(args);
                 }
                 if (first.equals("list")) {
                     return new TARDISListCommand(plugin).listStuff(sender, args);

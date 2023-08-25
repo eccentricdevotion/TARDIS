@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
@@ -40,6 +39,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.util.Collections;
+
 public class TARDISMaterialisePoliceBox implements Runnable {
 
     private final TARDIS plugin;
@@ -51,7 +52,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private ItemFrame frame;
     private ArmorStand stand;
     private ItemStack is;
-    private Material dye;
     private Color colour = null;
     private String pb;
 
@@ -65,148 +65,147 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 
     @Override
     public void run() {
-        if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
-            World world = bd.getLocation().getWorld();
-            Block block = bd.getLocation().getBlock();
-            Block light = block.getRelative(BlockFace.UP, 2);
-            if (i < loops) {
-                i++;
-                int cmd;
-                switch (i % 3) {
-                    case 2 -> { // stained
-                        cmd = 1003;
-                        light.setBlockData(TARDISConstants.AIR);
+        if (plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
+            return;
+        }
+        World world = bd.getLocation().getWorld();
+        Block block = bd.getLocation().getBlock();
+        Block light = block.getRelative(BlockFace.UP, 2);
+        if (i < loops) {
+            i++;
+            int cmd;
+            switch (i % 3) {
+                case 2 -> { // stained
+                    cmd = 1003;
+                    light.setBlockData(TARDISConstants.AIR);
+                }
+                case 1 -> { // glass
+                    cmd = 1004;
+                    light.setBlockData(TARDISConstants.AIR);
+                }
+                default -> { // preset
+                    cmd = 1001;
+                    // set a light block
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    levelled.setLevel(7);
+                    light.setBlockData(levelled);
+                }
+            }
+            // first run
+            if (i == 1) {
+                TARDISBuilderUtility.saveDoorLocation(bd);
+                plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
+                boolean found = false;
+                for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
+                    if (e instanceof ArmorStand a) {
+                        stand = a;
+                        found = true;
+                        break;
                     }
-                    case 1 -> { // glass
-                        cmd = 1004;
-                        light.setBlockData(TARDISConstants.AIR);
-                    }
-                    default -> { // preset
-                        cmd = 1001;
-                        // set a light block
-                        Levelled levelled = TARDISConstants.LIGHT;
-                        levelled.setLevel(7);
-                        light.setBlockData(levelled);
+                    if (e instanceof ItemFrame f) {
+                        frame = f;
+                        found = true;
+                        break;
                     }
                 }
-                // first run
-                if (i == 1) {
-                    TARDISBuilderUtility.saveDoorLocation(bd);
-                    plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
-                    boolean found = false;
-                    for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-                        if (e instanceof ArmorStand a) {
-                            stand = a;
-                            found = true;
-                            break;
-                        }
-                        if (e instanceof ItemFrame f) {
-                            frame = f;
-                            found = true;
-                            break;
-                        }
+                if (!found || (stand == null && frame != null)) {
+                    if (frame != null) {
+                        frame.remove();
                     }
-                    if (!found || (stand == null && frame != null)) {
-                        if (frame != null) {
-                            frame.remove();
-                        }
-                        Block under = block.getRelative(BlockFace.DOWN);
-                        block.setBlockData(TARDISConstants.AIR);
-                        TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
-                        // spawn armour stand
-                        stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
-                    }
-                    stand.setRotation(bd.getDirection().getYaw(), 0.0f);
-                    dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
-                    is = new ItemStack(dye, 1);
-                    if (bd.isOutside()) {
-                        if (!bd.useMinecartSounds()) {
-                            String sound;
-                            if (preset.equals(ChameleonPreset.JUNK_MODE)) {
-                                sound = "junk_land";
-                            } else {
-                                sound = switch (bd.getThrottle()) {
-                                    case WARP, RAPID, FASTER ->
-                                        "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-                                    default ->
-                                        "tardis_land"; // NORMAL
-                                };
-                            }
-                            TARDISSounds.playTARDISSound(bd.getLocation(), sound);
+                    Block under = block.getRelative(BlockFace.DOWN);
+                    block.setBlockData(TARDISConstants.AIR);
+                    TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+                    // spawn armour stand
+                    stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
+                }
+                stand.setRotation(bd.getDirection().getYaw(), 0.0f);
+                Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
+                is = new ItemStack(dye, 1);
+                if (bd.isOutside()) {
+                    if (!bd.useMinecartSounds()) {
+                        String sound;
+                        if (preset.equals(ChameleonPreset.JUNK_MODE)) {
+                            sound = "junk_land";
                         } else {
-                            world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                            sound = switch (bd.getThrottle()) {
+                                case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                default -> "tardis_land"; // NORMAL
+                            };
                         }
+                        TARDISSounds.playTARDISSound(bd.getLocation(), sound);
+                    } else {
+                        world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
-                    switch (preset) {
-                        case WEEPING_ANGEL -> pb = "Weeping Angel";
-                        case PANDORICA -> pb = "Pandorica";
-                        case ITEM -> {
-                            for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-                                if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
-                                    pb = k;
-                                    break;
-                                }
+                }
+                switch (preset) {
+                    case WEEPING_ANGEL -> pb = "Weeping Angel";
+                    case PANDORICA -> pb = "Pandorica";
+                    case ITEM -> {
+                        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                            if (dye.toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {
+                                pb = k;
+                                break;
                             }
                         }
-                        default -> pb = "Police Box";
                     }
-                    if (preset == ChameleonPreset.COLOURED) {
-                        // get the colour
-                        ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
-                        if (rsc.resultSet()) {
-                            colour = Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue());
-                        }
+                    default -> pb = "Police Box";
+                }
+                if (preset == ChameleonPreset.COLOURED) {
+                    // get the colour
+                    ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+                    if (rsc.resultSet()) {
+                        colour = Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue());
                     }
                 }
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(cmd);
-                if (bd.shouldAddSign()) {
-                    String name = bd.getPlayer().getName() + "'s " + pb;
-                    im.setDisplayName(name);
-                    stand.setCustomName(name);
-                    stand.setCustomNameVisible(true);
-                }
-                if (cmd == 1001 && preset == ChameleonPreset.COLOURED && colour != null) {
-                    // set the colour
-                    LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
-                    leatherArmorMeta.setColor(colour);
-                    is.setItemMeta(leatherArmorMeta);
-                } else {
-                    is.setItemMeta(im);
-                }
-                EntityEquipment ee = stand.getEquipment();
-                ee.setHelmet(is, true);
-                stand.setInvulnerable(true);
-                stand.setInvisible(true);
-                stand.setGravity(false);
+            }
+            ItemMeta im = is.getItemMeta();
+            im.setCustomModelData(cmd);
+            if (bd.shouldAddSign()) {
+                String name = bd.getPlayer().getName() + "'s " + pb;
+                im.setDisplayName(name);
+                stand.setCustomName(name);
+                stand.setCustomNameVisible(true);
+            }
+            if (cmd == 1001 && preset == ChameleonPreset.COLOURED && colour != null) {
+                // set the colour
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                leatherArmorMeta.setColor(colour);
+                is.setItemMeta(leatherArmorMeta);
             } else {
-                // remove trackers
-                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
-                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
-                plugin.getServer().getScheduler().cancelTask(task);
-                task = 0;
-                plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
-                if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
-                    plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+                is.setItemMeta(im);
+            }
+            EntityEquipment ee = stand.getEquipment();
+            ee.setHelmet(is, true);
+            stand.setInvulnerable(true);
+            stand.setInvisible(true);
+            stand.setGravity(false);
+        } else {
+            // remove trackers
+            plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
+            plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = 0;
+            plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
+            if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
+                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+            }
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
+                int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
+                plugin.getServer().getScheduler().cancelTask(taskID);
+                plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
+            }
+            if (!bd.isRebuild()) {
+                plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
+            }
+            // message travellers in tardis
+            if (loops > 3) {
+                new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());
+                // update demat field in database
+                String update = preset.toString();
+                if (preset == ChameleonPreset.ITEM) {
+                    update = "ITEM:" + pb;
                 }
-                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
-                    int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
-                    plugin.getServer().getScheduler().cancelTask(taskID);
-                    plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
-                }
-                if (!bd.isRebuild()) {
-                    plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
-                }
-                // message travellers in tardis
-                if (loops > 3) {
-                    new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());
-                    // update demat field in database
-                    String update = preset.toString();
-                    if (preset == ChameleonPreset.ITEM) {
-                        update = "ITEM:" + pb;
-                    }
-                    TARDISBuilderUtility.updateChameleonDemat(update, bd.getTardisID());
-                }
+                TARDISBuilderUtility.updateChameleonDemat(update, bd.getTardisID());
             }
         }
     }

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -27,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -34,6 +33,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -157,7 +159,7 @@ public class TARDISInteriorPostioning {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             // get the exit location
-            TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+            TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
             Location exitLocation = dl.getL();
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);

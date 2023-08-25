@@ -5,5 +5,5 @@ import java.util.UUID;
 
 public class TARDISCameraTracker {
 
-    public static HashMap<UUID, CameraLocation> SPECTATING = new HashMap<>();
+    public static final HashMap<UUID, CameraLocation> SPECTATING = new HashMap<>();
 }

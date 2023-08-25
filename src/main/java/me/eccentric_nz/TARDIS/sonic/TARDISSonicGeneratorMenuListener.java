@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
@@ -37,6 +34,10 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -91,8 +92,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGeneratorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Sonic Generator")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Generator")) {
             Player p = (Player) event.getWhoClicked();
             location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
             int slot = event.getRawSlot();

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
@@ -28,6 +27,8 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -48,7 +49,7 @@ public class TARDISRemoteBackCommand {
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (!rsb.resultSet()) {
             if (sender instanceof Player) {
-                plugin.getMessenger().send((Player) sender, TardisModule.TARDIS, "PREV_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREV_NOT_FOUND");
             }
             return true;
         }
@@ -65,7 +66,7 @@ public class TARDISRemoteBackCommand {
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             if (sender instanceof Player) {
-                plugin.getMessenger().send((Player) sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
             return true;
         }

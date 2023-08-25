@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -39,6 +36,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's
@@ -67,8 +68,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onARSMapClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Map")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Map")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();

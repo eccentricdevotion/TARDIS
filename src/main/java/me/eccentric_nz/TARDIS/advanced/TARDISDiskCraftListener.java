@@ -57,78 +57,87 @@ public class TARDISDiskCraftListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
-        if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10 && actions.contains(event.getAction())) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if (checkSlots(inv)) {
-                    // get the other ingredients
-                    List<ItemStack> items = getOtherItems(inv);
-                    ItemStack disk;
-                    if (inv.contains(Material.MUSIC_DISC_CAT)) {
-                        // check it is a Biome Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
-                        if (is != null && is.hasItemMeta()) {
-                            ItemMeta im = is.getItemMeta();
-                            if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
-                                List<String> lore = im.getLore();
-                                if (lore.get(0).equals("Blank")) {
-                                    List<String> disk_lore = new ArrayList<>();
-                                    // biome disk
-                                    Material lookup = items.get(0).getType();
-                                    Biome biome = BiomeLookup.MATERIALS.get(lookup);
-                                    if (biome != null) {
-                                        disk_lore.add(biome.toString());
-                                    }
-                                    if (!disk_lore.isEmpty()) {
-                                        disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
-                                        ItemMeta dim = disk.getItemMeta();
-                                        dim.setDisplayName("Biome Storage Disk");
-                                        dim.setLore(disk_lore);
-                                        dim.setCustomModelData(10000001);
-                                        disk.setItemMeta(dim);
-                                        inv.setItem(0, disk);
-                                        player.updateInventory();
-                                    }
-                                } else {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
-                                }
-                            }
-                        }
-                    } else {
-                        // check it is a Preset Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
-                        if (is != null && is.hasItemMeta()) {
-                            ItemMeta im = is.getItemMeta();
-                            if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") && im.hasLore()) {
-                                List<String> lore = im.getLore();
-                                if (lore.get(0).equals("Blank")) {
-                                    // preset disk
-                                    if (!items.isEmpty()) {
-                                        Material m = items.get(0).getType();
-                                        String preset = "";
-                                        if (ChameleonPreset.getPreset(m) != null) {
-                                            preset = ChameleonPreset.getPreset(m).toString();
-                                        }
-                                        if (!preset.isEmpty()) {
-                                            List<String> disk_lore = Collections.singletonList(preset);
-                                            disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
-                                            ItemMeta dim = disk.getItemMeta();
-                                            dim.setDisplayName("Preset Storage Disk");
-                                            dim.setLore(disk_lore);
-                                            dim.setCustomModelData(10000001);
-                                            disk.setItemMeta(dim);
-                                            inv.setItem(0, disk);
-                                            player.updateInventory();
-                                        }
-                                    }
-                                } else {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_PRESET");
-                                }
-                            }
-                        }
-                    }
-                }
-            }, 3L);
+        if (!inv.getType().equals(InventoryType.WORKBENCH) || slot > 9 || !actions.contains(event.getAction())) {
+            return;
         }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (!checkSlots(inv)) {
+                return;
+            }
+            // get the other ingredients
+            List<ItemStack> items = getOtherItems(inv);
+            ItemStack disk;
+            if (inv.contains(Material.MUSIC_DISC_CAT)) {
+                // check it is a Biome Storage Disk
+                ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
+                if (is == null || !is.hasItemMeta()) {
+                    return;
+                }
+                ItemMeta im = is.getItemMeta();
+                if (!im.hasDisplayName() || !im.getDisplayName().equals("Biome Storage Disk") || !im.hasLore()) {
+                    return;
+                }
+                List<String> lore = im.getLore();
+                if (!lore.get(0).equals("Blank")) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
+                    return;
+                }
+                List<String> disk_lore = new ArrayList<>();
+                // biome disk
+                Material lookup = items.get(0).getType();
+                Biome biome = BiomeLookup.MATERIALS.get(lookup);
+                if (biome != null) {
+                    disk_lore.add(biome.toString());
+                }
+                if (disk_lore.isEmpty()) {
+                    return;
+                }
+                disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
+                ItemMeta dim = disk.getItemMeta();
+                dim.setDisplayName("Biome Storage Disk");
+                dim.setLore(disk_lore);
+                dim.setCustomModelData(10000001);
+                disk.setItemMeta(dim);
+                inv.setItem(0, disk);
+                player.updateInventory();
+            } else {
+                // check if it is a Preset Storage Disk
+                ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
+                if (is == null || !is.hasItemMeta()) {
+                    return;
+                }
+                ItemMeta im = is.getItemMeta();
+                if (!im.hasDisplayName() || !im.getDisplayName().equals("Preset Storage Disk") || !im.hasLore()) {
+                    return;
+                }
+                List<String> lore = im.getLore();
+                if (!lore.get(0).equals("Blank")) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_PRESET");
+                    return;
+                }
+                // preset disk
+                if (items.isEmpty()) {
+                    return;
+                }
+                Material m = items.get(0).getType();
+                String preset = "";
+                if (ChameleonPreset.getPreset(m) != null) {
+                    preset = ChameleonPreset.getPreset(m).toString();
+                }
+                if (preset.isEmpty()) {
+                    return;
+                }
+                List<String> disk_lore = Collections.singletonList(preset);
+                disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
+                ItemMeta dim = disk.getItemMeta();
+                dim.setDisplayName("Preset Storage Disk");
+                dim.setLore(disk_lore);
+                dim.setCustomModelData(10000001);
+                disk.setItemMeta(dim);
+                inv.setItem(0, disk);
+                player.updateInventory();
+            }
+        }, 3L);
     }
 
     private boolean checkSlots(Inventory inv) {

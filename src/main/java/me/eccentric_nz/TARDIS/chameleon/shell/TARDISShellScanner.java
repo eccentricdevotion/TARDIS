@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -27,6 +26,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+
+import java.util.HashMap;
 
 public class TARDISShellScanner {
 
@@ -40,63 +41,60 @@ public class TARDISShellScanner {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
-        if (rsc.resultSet()) {
-            World w = rsc.getWorld();
-            int fx = rsc.getX();
-            int fy = rsc.getY();
-            int fz = rsc.getZ();
-            BlockData[][] shell = new BlockData[10][4];
-            for (int c = 0; c < 10; c++) {
-                for (int y = 0; y < 4; y++) {
-                    Block block;
+        if (!rsc.resultSet()) {
+            return plugin.getPresets().getColumn(preset, COMPASS.EAST);
+        }
+        World w = rsc.getWorld();
+        int fx = rsc.getX();
+        int fy = rsc.getY();
+        int fz = rsc.getZ();
+        BlockData[][] shell = new BlockData[10][4];
+        for (int c = 0; c < 10; c++) {
+            for (int y = 0; y < 4; y++) {
+                Block block;
+                switch (rsc.getDirection()) {
+                    case WEST -> block = w.getBlockAt(fx + westXnorthZ[c], fy + y, fz + southXwestZ[c]);
+                    case NORTH -> block = w.getBlockAt(fx + northXeastZ[c], fy + y, fz + westXnorthZ[c]);
+                    case SOUTH -> block = w.getBlockAt(fx + southXwestZ[c], fy + y, fz + eastXsouthZ[c]);
+                    // EAST
+                    default -> block = w.getBlockAt(fx + eastXsouthZ[c], fy + y, fz + northXeastZ[c]);
+                }
+                BlockData data = block.getBlockData();
+                if (data instanceof Directional directional) {
                     switch (rsc.getDirection()) {
-                        case WEST -> block = w.getBlockAt(fx + westXnorthZ[c], fy + y, fz + southXwestZ[c]);
-                        case NORTH -> block = w.getBlockAt(fx + northXeastZ[c], fy + y, fz + westXnorthZ[c]);
-                        case SOUTH -> block = w.getBlockAt(fx + southXwestZ[c], fy + y, fz + eastXsouthZ[c]);
-                        // EAST
-                        default -> block = w.getBlockAt(fx + eastXsouthZ[c], fy + y, fz + northXeastZ[c]);
-                    }
-                    BlockData data = block.getBlockData();
-                    if (data instanceof Directional directional) {
-                        switch (rsc.getDirection()) {
-                            case WEST -> {
-                                // rotate 180
-                                directional.setFacing(directional.getFacing().getOppositeFace());
+                        case WEST -> directional.setFacing(directional.getFacing().getOppositeFace()); // rotate 180
+                        case NORTH -> {
+                            // clockwise
+                            BlockFace face;
+                            switch (directional.getFacing()) {
+                                case EAST -> face = BlockFace.NORTH;
+                                case SOUTH -> face = BlockFace.EAST;
+                                case WEST -> face = BlockFace.SOUTH;
+                                // north
+                                default -> face = BlockFace.WEST;
                             }
-                            case NORTH -> {
-                                // clockwise
-                                BlockFace face;
-                                switch (directional.getFacing()) {
-                                    case EAST -> face = BlockFace.NORTH;
-                                    case SOUTH -> face = BlockFace.EAST;
-                                    case WEST -> face = BlockFace.SOUTH;
-                                    // north
-                                    default -> face = BlockFace.WEST;
-                                }
-                                directional.setFacing(face);
+                            directional.setFacing(face);
+                        }
+                        case SOUTH -> {
+                            // anti-clockwise
+                            BlockFace face;
+                            switch (directional.getFacing()) {
+                                case EAST -> face = BlockFace.SOUTH;
+                                case SOUTH -> face = BlockFace.WEST;
+                                case WEST -> face = BlockFace.NORTH;
+                                // north
+                                default -> face = BlockFace.EAST;
                             }
-                            case SOUTH -> {
-                                // anti-clockwise
-                                BlockFace face;
-                                switch (directional.getFacing()) {
-                                    case EAST -> face = BlockFace.SOUTH;
-                                    case SOUTH -> face = BlockFace.WEST;
-                                    case WEST -> face = BlockFace.NORTH;
-                                    // north
-                                    default -> face = BlockFace.EAST;
-                                }
-                                directional.setFacing(face);
-                            }
-                            default -> {
-                                // do nothing
-                            }
+                            directional.setFacing(face);
+                        }
+                        default -> {
+                            // do nothing
                         }
                     }
-                    shell[c][y] = data;
                 }
+                shell[c][y] = data;
             }
-            return new TARDISChameleonColumn(shell);
         }
-        return plugin.getPresets().getColumn(preset, COMPASS.EAST);
+        return new TARDISChameleonColumn(shell);
     }
 }

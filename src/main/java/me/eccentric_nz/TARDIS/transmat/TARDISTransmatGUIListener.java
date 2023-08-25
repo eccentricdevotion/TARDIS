@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.transmat;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -32,6 +30,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISTransmatGUIListener extends TARDISMenuListener {
 
@@ -52,8 +53,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onTransmatMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS transmats")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS transmats")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

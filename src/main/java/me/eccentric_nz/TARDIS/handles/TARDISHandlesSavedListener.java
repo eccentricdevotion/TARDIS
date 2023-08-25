@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -32,6 +29,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -55,8 +56,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Saved Programs")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Saved Programs")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             int slot = event.getRawSlot();

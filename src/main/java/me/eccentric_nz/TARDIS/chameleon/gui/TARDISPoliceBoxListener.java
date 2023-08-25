@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -35,6 +33,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -57,104 +58,109 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonPoliceBoxClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Chameleon Police Boxes")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                        if (rs.resultSet()) {
-                            Tardis tardis = rs.getTardis();
-                            HashMap<String, Object> wherec = new HashMap<>();
-                            wherec.put("tardis_id", id);
-                            wherec.put("type", Control.CHAMELEON.getId());
-                            ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
-                            boolean hasSign = rsc.resultSet();
-                            HashMap<String, Object> wheref = new HashMap<>();
-                            wheref.put("tardis_id", id);
-                            wheref.put("type", Control.FRAME.getId());
-                            ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
-                            boolean hasFrame = rsf.resultSet();
-                            // set the Chameleon Circuit sign(s)
-                            HashMap<String, Object> set = new HashMap<>();
-                            switch (slot) {
-                                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 -> {
-                                    // item frame preset
-                                    ChameleonPreset selected = ChameleonPreset.getItemFramePresetBySlot(slot);
-                                    set.put("chameleon_preset", selected.toString());
-                                    if (hasSign) {
-                                        updateChameleonSign(rsc.getData(), selected.toString(), player);
-                                    }
-                                    if (hasFrame) {
-                                        new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
-                                    }
-                                    plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
-                                    if (slot == 19) {
-                                        // any colour - open the colour picker
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISColourPickerGUI picker = new TARDISColourPickerGUI(plugin);
-                                            ItemStack[] items = picker.getGUI();
-                                            Inventory pickerinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Colour Picker");
-                                            pickerinv.setContents(items);
-                                            player.openInventory(pickerinv);
-                                        }, 2L);
-                                    }
-                                }
-                                case 51 ->
-                                    // go to page one (regular presets)
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
-                                            ItemStack[] items = tpi.getPresets();
-                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
-                                            presetinv.setContents(items);
-                                            player.openInventory(presetinv);
-                                        }, 2L);
-                                case 52 ->
-                                    // return to Chameleon Circuit GUI
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
-                                            Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                            gui.setContents(stacks);
-                                            player.openInventory(gui);
-                                        }, 2L);
-                                case 53 -> close(player);
-                                default -> {
-                                    // custom model exterior
-                                    String custom = is.getItemMeta().getDisplayName();
-                                    set.put("chameleon_preset", "ITEM:" + custom);
-                                    if (hasSign) {
-                                        updateChameleonSign(rsc.getData(), custom, player);
-                                    }
-                                    if (hasFrame) {
-                                        new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.ITEM, rsf.getLocation());
-                                    }
-                                    plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", custom, plugin);
-                                }
-
-                            }
-                            if (!set.isEmpty()) {
-                                set.put("adapti_on", 0);
-                                HashMap<String, Object> wheret = new HashMap<>();
-                                wheret.put("tardis_id", id);
-                                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                            }
-                        }
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Police Boxes")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        // get the TARDIS the player is in
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+        if (!rst.resultSet()) {
+            return;
+        }
+        int id = rst.getTardis_id();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (!rs.resultSet()) {
+            return;
+        }
+        Tardis tardis = rs.getTardis();
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", id);
+        wherec.put("type", Control.CHAMELEON.getId());
+        ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
+        boolean hasSign = rsc.resultSet();
+        HashMap<String, Object> wheref = new HashMap<>();
+        wheref.put("tardis_id", id);
+        wheref.put("type", Control.FRAME.getId());
+        ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
+        boolean hasFrame = rsf.resultSet();
+        // set the Chameleon Circuit sign(s)
+        HashMap<String, Object> set = new HashMap<>();
+        switch (slot) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 -> {
+                // item frame preset
+                ChameleonPreset selected = ChameleonPreset.getItemFramePresetBySlot(slot);
+                set.put("chameleon_preset", selected.toString());
+                if (hasSign) {
+                    updateChameleonSign(rsc.getData(), selected.toString(), player);
+                }
+                if (hasFrame) {
+                    new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
+                }
+                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
+                if (slot == 19) {
+                    // any colour - open the colour picker
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISColourPickerGUI picker = new TARDISColourPickerGUI(plugin);
+                        ItemStack[] items = picker.getGUI();
+                        Inventory pickerinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Colour Picker");
+                        pickerinv.setContents(items);
+                        player.openInventory(pickerinv);
+                    }, 2L);
                 }
             }
+            case 51 ->
+                // go to page one (regular presets)
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
+                        ItemStack[] items = tpi.getPresets();
+                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+                        presetinv.setContents(items);
+                        player.openInventory(presetinv);
+                    }, 2L);
+            case 52 ->
+                // return to Chameleon Circuit GUI
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
+                        Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                        gui.setContents(stacks);
+                        player.openInventory(gui);
+                    }, 2L);
+            case 53 -> close(player);
+            default -> {
+                // custom model exterior
+                String custom = is.getItemMeta().getDisplayName();
+                set.put("chameleon_preset", "ITEM:" + custom);
+                if (hasSign) {
+                    updateChameleonSign(rsc.getData(), custom, player);
+                }
+                if (hasFrame) {
+                    new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.ITEM, rsf.getLocation());
+                }
+                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", custom, plugin);
+            }
+
+        }
+        if (!set.isEmpty()) {
+            set.put("adapti_on", 0);
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("tardis_id", id);
+            plugin.getQueryFactory().doUpdate("tardis", set, wheret);
         }
     }
+
 
     private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
         for (HashMap<String, String> entry : map) {

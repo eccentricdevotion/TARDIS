@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -29,6 +28,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -51,8 +52,7 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Chameleon Template")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Template")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

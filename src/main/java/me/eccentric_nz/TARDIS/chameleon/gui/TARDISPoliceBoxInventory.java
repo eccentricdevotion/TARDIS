@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
@@ -25,6 +23,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of
@@ -138,7 +139,6 @@ public class TARDISPoliceBoxInventory {
         can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
         close.setItemMeta(can);
         boxes[53] = close;
-
         return boxes;
     }
 

@@ -94,8 +94,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
 
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Construction")) {
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && (slot < 18 || slot == 26 || slot == 43 || slot == 52)) {

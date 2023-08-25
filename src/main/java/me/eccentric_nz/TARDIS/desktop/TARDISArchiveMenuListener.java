@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -37,6 +36,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 /**
  * A control room's look could be changed over time. The process by which an operator could transform a control room was
  * fairly simple, once compared by the Fifth Doctor to changing a "desktop theme".
@@ -55,8 +56,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Archive")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Archive")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

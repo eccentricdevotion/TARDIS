@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.areas;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -31,6 +28,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -65,8 +66,7 @@ public class TARDISEditAreasGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Area Locations")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Area Locations")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

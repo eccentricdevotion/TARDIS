@@ -45,8 +45,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSeedMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {

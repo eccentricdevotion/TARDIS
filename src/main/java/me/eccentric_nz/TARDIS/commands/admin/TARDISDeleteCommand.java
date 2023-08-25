@@ -16,26 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.io.File;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.*;
+
+import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 
 /**
  * @author eccentric_nz
@@ -70,14 +69,15 @@ public class TARDISDeleteCommand {
             // do nothing
         }
         HashMap<String, Object> where = new HashMap<>();
-        Player player = null;
+        OfflinePlayer player = null;
         if (tmp == -1) {
             // Look up this player's UUID
             UUID uuid;
             if (junk) {
                 uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
             } else {
-                uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+                player = plugin.getServer().getOfflinePlayer(args[1]);
+                uuid = player.getUniqueId();
             }
             where.put("uuid", uuid.toString());
         } else {
@@ -117,7 +117,7 @@ public class TARDISDeleteCommand {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
+            plugin.getPM().callEvent(new TARDISDestructionEvent(player.getPlayer(), bb_loc, tardis.getOwner()));
             // destroy outer TARDIS
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();

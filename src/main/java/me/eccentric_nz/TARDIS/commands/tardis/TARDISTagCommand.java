@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author eccentric_nz
@@ -39,7 +40,7 @@ class TARDISTagCommand {
     boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
         plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
-        String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
+        String who = (!plugin.getTagConfig().getString("it").isEmpty()) ? plugin.getTagConfig().getString("it") : "No one";
         plugin.getMessenger().sendWithColours(player, who + " is currently the ", "#FFFFFF", "'OOD'", "#FF0000");
         player.sendMessage("-----------");
         plugin.getMessenger().messageWithColour(player, "Top 5 OODs", "#FFAA00");

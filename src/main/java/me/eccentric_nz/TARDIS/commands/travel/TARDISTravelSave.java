@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -34,6 +33,8 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -144,10 +145,9 @@ public class TARDISTravelSave {
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_WORLD");
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_SAVE");
-            return true;
         }
+        return true;
     }
 }

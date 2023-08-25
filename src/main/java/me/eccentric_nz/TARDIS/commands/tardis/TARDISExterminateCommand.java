@@ -42,9 +42,7 @@ class TARDISExterminateCommand {
                 plugin.getMessenger().sendExterminate(player, plugin);
                 // open floodgate gui
                 if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        new FloodgateExterminateForm(plugin, player.getUniqueId()).send();
-                    }, 2L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FloodgateExterminateForm(plugin, player.getUniqueId()).send(), 2L);
                 }
                 return true;
             } else {

@@ -84,7 +84,6 @@ public class TARDISPresetInventory {
         can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(can);
         stacks[53] = close;
-
         return stacks;
     }
 

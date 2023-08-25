@@ -72,8 +72,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onControlMenuInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

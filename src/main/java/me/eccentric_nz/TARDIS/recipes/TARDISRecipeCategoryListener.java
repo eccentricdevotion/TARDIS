@@ -41,8 +41,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onRecipeCategoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Recipe Categories")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Recipe Categories")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

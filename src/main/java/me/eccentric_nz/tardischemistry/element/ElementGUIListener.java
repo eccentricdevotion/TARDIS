@@ -61,8 +61,7 @@ public class ElementGUIListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Atomic elements")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Atomic elements")) {
             Player p = (Player) event.getWhoClicked();
             UUID uuid = p.getUniqueId();
             int slot = event.getRawSlot();

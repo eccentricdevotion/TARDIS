@@ -562,6 +562,22 @@ public class TARDII implements TardisAPI {
                     BlueprintTravel travel = BlueprintTravel.valueOf(upper);
                     perm = travel.getPermission();
                 }
+                case SHOP -> {
+                    BlueprintShop shop = BlueprintShop.valueOf(upper);
+                    perm = shop.getPermission();
+                }
+                case VORTEX_MANIPULATOR -> {
+                    BlueprintVortexManipulator manipulator = BlueprintVortexManipulator.valueOf(upper);
+                    perm = manipulator.getPermission();
+                }
+                case WEEPING_ANGELS -> {
+                    BlueprintWeepingAngels angel = BlueprintWeepingAngels.valueOf(upper);
+                    perm = angel.getPermission();
+                }
+                case BLASTER -> {
+                    BlueprintBlaster blaster = BlueprintBlaster.valueOf(upper);
+                    perm = blaster.getPermission();
+                }
                 default -> { // BASE
                     BlueprintBase base = BlueprintBase.valueOf(upper);
                     perm = base.getPermission();

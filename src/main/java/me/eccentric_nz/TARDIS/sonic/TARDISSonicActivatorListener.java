@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -35,6 +31,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -64,8 +65,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onActivatorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Sonic Activator")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Activator")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 9) {

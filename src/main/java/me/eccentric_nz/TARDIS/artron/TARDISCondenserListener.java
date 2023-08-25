@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
@@ -44,6 +41,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -312,7 +313,7 @@ public class TARDISCondenserListener implements Listener {
         // check inv size
         int inv_size = (is.length > 27) ? 54 : 27;
         holder.getInventory().clear();
-        Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + "" + title);
+        Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + title);
         // set the contents to what was in the chest
         aec.setContents(is);
         p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 0.5f, 1);

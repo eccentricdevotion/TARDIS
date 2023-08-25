@@ -55,8 +55,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onAreaTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS areas")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS areas")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

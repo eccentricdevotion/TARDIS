@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
@@ -41,6 +40,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -98,8 +99,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onLazarusClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -29,6 +28,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 public class TARDISAutonomousGUIListener extends TARDISMenuListener {
 
@@ -58,8 +59,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Autonomous Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Autonomous Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();

@@ -90,8 +90,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Player Prefs Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 36) {

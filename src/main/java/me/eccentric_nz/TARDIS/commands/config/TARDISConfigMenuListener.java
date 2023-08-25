@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import net.md_5.bungee.api.ChatColor;
@@ -29,6 +27,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
@@ -49,53 +50,54 @@ public class TARDISConfigMenuListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAdminMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Admin Config Menu")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            if (slot < 54) {
-                String option = getDisplay(view, slot);
-                if (slot == 52) {
-                    Player p = (Player) event.getWhoClicked();
-                    // close this gui and load the previous / next page
-                    if (option.equals("Previous page")) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
-                            ppm.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
-                            p.openInventory(ppm);
-                        }, 1L);
-                    } else {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
-                            ppm.setContents(new TARDISConfigPageTwoInventory(plugin).getMenu());
-                            p.openInventory(ppm);
-                        }, 1L);
-                    }
-                    return;
-                }
-                if (slot == 53 && option.equals("Player Preferences")) {
-                    Player p = (Player) event.getWhoClicked();
-                    // close this gui and load the Player Prefs Menu
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
-                        ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
-                        p.openInventory(ppm);
-                    }, 1L);
-                    return;
-                }
-                if (!option.isEmpty()) {
-                    boolean bool = plugin.getConfig().getBoolean(option);
-                    if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-                        Player p = (Player) event.getWhoClicked();
-                        plugin.getMessenger().messageWithColour(p, "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
-                        return;
-                    }
-                    plugin.getConfig().set(option, !bool);
-                    String lore = (bool) ? "false" : "true";
-                    setLore(view, slot, lore);
-                    plugin.saveConfig();
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Admin Config Menu")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        String option = getDisplay(view, slot);
+        if (slot == 52) {
+            Player p = (Player) event.getWhoClicked();
+            // close this gui and load the previous / next page
+            if (option.equals("Previous page")) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                    ppm.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
+                    p.openInventory(ppm);
+                }, 1L);
+            } else {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                    ppm.setContents(new TARDISConfigPageTwoInventory(plugin).getMenu());
+                    p.openInventory(ppm);
+                }, 1L);
             }
+            return;
+        }
+        if (slot == 53 && option.equals("Player Preferences")) {
+            Player p = (Player) event.getWhoClicked();
+            // close this gui and load the Player Prefs Menu
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+                ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
+                p.openInventory(ppm);
+            }, 1L);
+            return;
+        }
+        if (!option.isEmpty()) {
+            boolean bool = plugin.getConfig().getBoolean(option);
+            if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+                Player p = (Player) event.getWhoClicked();
+                plugin.getMessenger().messageWithColour(p, "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
+                return;
+            }
+            plugin.getConfig().set(option, !bool);
+            String lore = (bool) ? "false" : "true";
+            setLore(view, slot, lore);
+            plugin.saveConfig();
         }
     }
 

@@ -35,7 +35,7 @@ import java.util.UUID;
  */
 public class TARDISTimeRotor {
 
-    public static HashMap<UUID, Integer> ANIMATED_ROTORS = new HashMap<>();
+    public static final HashMap<UUID, Integer> ANIMATED_ROTORS = new HashMap<>();
 
     public static void updateRotorRecord(int id, String uuid) {
         HashMap<String, Object> where = new HashMap<>();

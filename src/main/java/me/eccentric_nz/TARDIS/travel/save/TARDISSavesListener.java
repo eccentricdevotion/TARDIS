@@ -77,8 +77,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
             return;
         }
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+        if (view.getTitle().startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in

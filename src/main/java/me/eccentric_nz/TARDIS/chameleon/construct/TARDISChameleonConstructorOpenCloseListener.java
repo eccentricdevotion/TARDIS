@@ -41,31 +41,33 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorOpen(InventoryOpenEvent event) {
         InventoryView view = event.getView();
-        String inv_name = view.getTitle();
-        if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
-            Player player = ((Player) event.getPlayer());
-            plugin.getTrackerKeeper().getConstructors().add(player.getUniqueId());
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Construction")) {
+            return;
         }
+        Player player = ((Player) event.getPlayer());
+        plugin.getTrackerKeeper().getConstructors().add(player.getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        String inv_name = view.getTitle();
-        if (inv_name.equals(ChatColor.DARK_RED + "Chameleon Construction")) {
-            Player player = ((Player) event.getPlayer());
-            if (plugin.getTrackerKeeper().getConstructors().contains(player.getUniqueId())) {
-                // abort
-                // drop any user placed items in the inventory
-                for (int s = 18; s < 54; s++) {
-                    if (s != 26 && s != 43 && s != 52) {
-                        ItemStack userStack = view.getItem(s);
-                        if (userStack != null) {
-                            player.getWorld().dropItemNaturally(player.getLocation(), userStack);
-                        }
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Construction")) {
+            return;
+        }
+        Player player = ((Player) event.getPlayer());
+        if (!plugin.getTrackerKeeper().getConstructors().contains(player.getUniqueId())) {
+            return;
+        }
+        // abort
+        // drop any user placed items in the inventory
+        for (int s = 18; s < 54; s++) {
+            if (s != 26 && s != 43 && s != 52) {
+                ItemStack userStack = view.getItem(s);
+                if (userStack != null) {
+                    player.getWorld().dropItemNaturally(player.getLocation(), userStack);
                 }
             }
         }
     }
 }
+

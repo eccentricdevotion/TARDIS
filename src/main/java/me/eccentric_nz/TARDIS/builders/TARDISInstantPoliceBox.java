@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Color;
@@ -31,15 +30,14 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISInstantPoliceBox {
 
@@ -63,7 +61,7 @@ public class TARDISInstantPoliceBox {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
             Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
+                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, bd.getTardisID());
                 Location l = idl.getL();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds(), false);
                 // put player into travellers table

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -43,6 +42,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 
+import java.util.HashMap;
+
 /**
  *
  * @author eccentric_nz
@@ -68,7 +69,7 @@ public class TARDISDisplayItemCommand {
                 ItemDisplay.ItemDisplayTransform transform = ItemDisplay.ItemDisplayTransform.GROUND;
                 try {
                     material = Material.valueOf(args[2]);
-                    if (args.length > 2) {
+                    if (args.length > 3) {
                         transform = ItemDisplay.ItemDisplayTransform.valueOf(args[3]);
                     }
                 } catch (IllegalArgumentException e) {

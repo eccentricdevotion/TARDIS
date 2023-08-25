@@ -39,8 +39,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "VM Saves")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "VM Saves")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();

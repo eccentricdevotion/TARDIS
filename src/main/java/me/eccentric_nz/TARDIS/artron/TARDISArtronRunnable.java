@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Location;
+
+import java.util.HashMap;
 
 /**
  * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
@@ -54,7 +55,7 @@ class TARDISArtronRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-        } else if (near) {
+        } else {
             // calculate percentage
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -29,6 +28,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -54,28 +55,27 @@ class TARDISARSRemoveCommand {
         wheres.put("tardis_id", id);
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
-        if (rsc.resultSet()) {
-            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-            if (l != null) {
-                Block b = l.getBlock();
-                if (Tag.SIGNS.isTagged(b.getType())) {
-                    Sign sign = (Sign) b.getState();
-                    SignSide front = sign.getSide(Side.FRONT);
-                    for (int i = 0; i < 4; i++) {
-                        front.setLine(i, "");
-                    }
-                    sign.update();
-                }
-                HashMap<String, Object> del = new HashMap<>();
-                del.put("tardis_id", id);
-                del.put("type", 10);
-                plugin.getQueryFactory().doDelete("controls", del);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_REMOVED");
-            }
-            return true;
-        } else {
+        if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ARS");
             return true;
         }
+        Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+        if (l != null) {
+            Block b = l.getBlock();
+            if (Tag.SIGNS.isTagged(b.getType())) {
+                Sign sign = (Sign) b.getState();
+                SignSide front = sign.getSide(Side.FRONT);
+                for (int i = 0; i < 4; i++) {
+                    front.setLine(i, "");
+                }
+                sign.update();
+            }
+            HashMap<String, Object> del = new HashMap<>();
+            del.put("tardis_id", id);
+            del.put("type", 10);
+            plugin.getQueryFactory().doDelete("controls", del);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_REMOVED");
+        }
+        return true;
     }
 }

@@ -23,5 +23,5 @@ import org.bukkit.entity.Player;
  */
 public interface TARDISUpdateChatGUI {
 
-    public boolean showInterface(Player player, String[] args);
+    boolean showInterface(Player player, String[] args);
 }

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
@@ -33,6 +32,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 public class TARDISWeatherListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
@@ -45,8 +46,7 @@ public class TARDISWeatherListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onWeatherMenuInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Weather Menu")) {
+        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Weather Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             Player player = (Player) event.getWhoClicked();
