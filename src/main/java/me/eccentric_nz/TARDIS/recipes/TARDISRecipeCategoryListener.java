@@ -41,24 +41,26 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onRecipeCategoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Recipe Categories")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 8 && slot < 27) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    ItemMeta im = is.getItemMeta();
-                    String cat = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
-                    RecipeCategory category = RecipeCategory.valueOf(cat);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        ItemStack[] items = new TARDISRecipeInventory(plugin, category).getMenu();
-                        Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
-                        recipes.setContents(items);
-                        player.openInventory(recipes);
-                    }, 2L);
-                }
-            }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Recipe Categories")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 8 || slot > 26) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is != null) {
+            ItemMeta im = is.getItemMeta();
+            String cat = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
+            RecipeCategory category = RecipeCategory.valueOf(cat);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                ItemStack[] items = new TARDISRecipeInventory(plugin, category).getMenu();
+                Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
+                recipes.setContents(items);
+                player.openInventory(recipes);
+            }, 2L);
         }
     }
 }

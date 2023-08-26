@@ -35,53 +35,38 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ReducerGUIListener extends TARDISMenuListener {
 
-//    private final TARDIS plugin;
-
     public ReducerGUIListener(TARDIS plugin) {
         super(plugin);
-//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onCompoundMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Material reducer")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 0:
-                    case 9:
-                    case 18:
-                    case 19:
-                    case 20:
-                    case 21:
-                    case 22:
-                    case 23:
-                    case 24:
-                    case 25:
-                        // do nothing
-                        break;
-                    case 17:
-                        // reduce
-                        event.setCancelled(true);
-                        reduce(event.getClickedInventory(), player);
-                        break;
-                    case 26:
-                        // close
-                        event.setCancelled(true);
-                        close(player);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Material reducer")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
+            return;
+        }
+        switch (slot) {
+            case 0, 9, 18, 19, 20, 21, 22, 23, 24, 25 -> {
+                // do nothing
+            }
+            case 17 -> { // reduce
+                event.setCancelled(true);
+                reduce(event.getClickedInventory(), player);
+            }
+            case 26 -> { // close
+                event.setCancelled(true);
+                close(player);
+            }
+            default -> event.setCancelled(true);
         }
     }
 

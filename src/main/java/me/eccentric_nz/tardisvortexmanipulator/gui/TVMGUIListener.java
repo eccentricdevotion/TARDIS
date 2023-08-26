@@ -78,213 +78,196 @@ public class TVMGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                switch (slot) {
-                    case 6 -> {
-                        // predictive world
-                        usePredictive(view);
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        switch (slot) {
+            case 6 -> usePredictive(view); // predictive world
+            case 11 -> {
+                // world
+                which = 0;
+                resetTrackers();
+            }
+            case 12 -> updateDisplay(view, '1'); // one
+            case 13 -> {
+                // two
+                if (letters.contains(which)) {
+                    updateDisplay(view, two[t2]);
+                    t2++;
+                    if (t2 == two.length) {
+                        t2 = 0;
                     }
-                    case 11 -> {
-                        // world
-                        which = 0;
-                        resetTrackers();
-                    }
-                    case 12 -> {
-                        // one
-                        updateDisplay(view, '1');
-                    }
-                    case 13 -> {
-                        // two
-                        if (letters.contains(which)) {
-                            updateDisplay(view, two[t2]);
-                            t2++;
-                            if (t2 == two.length) {
-                                t2 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '2');
-                        }
-                    }
-                    case 14 -> {
-                        // three
-                        if (letters.contains(which)) {
-                            updateDisplay(view, three[t3]);
-                            t3++;
-                            if (t3 == three.length) {
-                                t3 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '3');
-                        }
-                    }
-                    case 16 -> {
-                        // save
-                        which = 4;
-                        resetTrackers();
-                    }
-                    case 18 -> {
-                        // lifesigns
-                        which = 5;
-                        resetTrackers();
-                    }
-                    case 20 -> {
-                        // x
-                        which = 1;
-                        resetTrackers();
-                    }
-                    case 21 -> {
-                        // four
-                        if (letters.contains(which)) {
-                            updateDisplay(view, four[t4]);
-                            t4++;
-                            if (t4 == four.length) {
-                                t4 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '4');
-                        }
-                    }
-                    case 22 -> {
-                        // five
-                        if (letters.contains(which)) {
-                            updateDisplay(view, five[t5]);
-                            t5++;
-                            if (t5 == five.length) {
-                                t5 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '5');
-                        }
-                    }
-                    case 23 -> {
-                        // six
-                        if (letters.contains(which)) {
-                            updateDisplay(view, six[t6]);
-                            t6++;
-                            if (t6 == six.length) {
-                                t6 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '6');
-                        }
-                    }
-                    case 25 -> {
-                        // load
-                        // open saves GUI
-                        loadSaves(player);
-                    }
-                    case 29 -> {
-                        // y
-                        which = 2;
-                        resetTrackers();
-                    }
-                    case 30 -> {
-                        // seven
-                        if (letters.contains(which)) {
-                            updateDisplay(view, seven[t7]);
-                            t7++;
-                            if (t7 == seven.length) {
-                                t7 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '7');
-                        }
-                    }
-                    case 31 -> {
-                        // eight
-                        if (letters.contains(which)) {
-                            updateDisplay(view, eight[t8]);
-                            t8++;
-                            if (t8 == eight.length) {
-                                t8 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '8');
-                        }
-                    }
-                    case 32 -> {
-                        // nine
-                        if (letters.contains(which)) {
-                            updateDisplay(view, nine[t9]);
-                            t9++;
-                            if (t9 == nine.length) {
-                                t9 = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '9');
-                        }
-                    }
-                    case 34 -> {
-                        // message
-                        message(player);
-                    }
-                    case 38 -> {
-                        // z
-                        which = 3;
-                        resetTrackers();
-                    }
-                    case 39 -> {
-                        // star
-                        updateDisplay(view, star[ts]);
-                        ts++;
-                        if (ts == star.length) {
-                            ts = 0;
-                        }
-                    }
-                    case 40 -> {
-                        //zero
-                        updateDisplay(view, '0');
-                    }
-                    case 41 -> {
-                        // hash
-                        if (letters.contains(which) || components.get(0).startsWith("~")) {
-                            updateDisplay(view, hash[th]);
-                            th++;
-                            if (th == hash.length) {
-                                th = 0;
-                            }
-                        } else {
-                            updateDisplay(view, '-');
-                        }
-                    }
-                    case 43 -> {
-                        // beacon
-                        setBeacon(player);
-                    }
-                    case 45 -> {
-                        // close
-                        close(player);
-                        components = Arrays.asList("", "", "", "", "", "");
-                    }
-                    case 48 -> {
-                        // previous cursor
-                        if (pos[which] > 0) {
-                            pos[which]--;
-                        }
-                        resetTrackers();
-                    }
-                    case 50 -> {
-                        // next cursor
-                        int next = components.get(which).length() + 1;
-                        if (pos[which] < next) {
-                            pos[which]++;
-                        }
-                        resetTrackers();
-                    }
-                    case 53 -> {
-                        switch (which) {
-                            case 4 -> saveCurrentLocation(player, view); // save
-                            case 5 -> scanLifesigns(player, view); // scan
-                            default -> doWarp(player, view); // warp
-                        }
-                    }
-                    default -> {
-                    }
+                } else {
+                    updateDisplay(view, '2');
                 }
+            }
+            case 14 -> {
+                // three
+                if (letters.contains(which)) {
+                    updateDisplay(view, three[t3]);
+                    t3++;
+                    if (t3 == three.length) {
+                        t3 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '3');
+                }
+            }
+            case 16 -> {
+                // save
+                which = 4;
+                resetTrackers();
+            }
+            case 18 -> {
+                // lifesigns
+                which = 5;
+                resetTrackers();
+            }
+            case 20 -> {
+                // x
+                which = 1;
+                resetTrackers();
+            }
+            case 21 -> {
+                // four
+                if (letters.contains(which)) {
+                    updateDisplay(view, four[t4]);
+                    t4++;
+                    if (t4 == four.length) {
+                        t4 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '4');
+                }
+            }
+            case 22 -> {
+                // five
+                if (letters.contains(which)) {
+                    updateDisplay(view, five[t5]);
+                    t5++;
+                    if (t5 == five.length) {
+                        t5 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '5');
+                }
+            }
+            case 23 -> {
+                // six
+                if (letters.contains(which)) {
+                    updateDisplay(view, six[t6]);
+                    t6++;
+                    if (t6 == six.length) {
+                        t6 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '6');
+                }
+            }
+            case 25 -> loadSaves(player); // open saves GUI
+            case 29 -> {
+                // y
+                which = 2;
+                resetTrackers();
+            }
+            case 30 -> {
+                // seven
+                if (letters.contains(which)) {
+                    updateDisplay(view, seven[t7]);
+                    t7++;
+                    if (t7 == seven.length) {
+                        t7 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '7');
+                }
+            }
+            case 31 -> {
+                // eight
+                if (letters.contains(which)) {
+                    updateDisplay(view, eight[t8]);
+                    t8++;
+                    if (t8 == eight.length) {
+                        t8 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '8');
+                }
+            }
+            case 32 -> {
+                // nine
+                if (letters.contains(which)) {
+                    updateDisplay(view, nine[t9]);
+                    t9++;
+                    if (t9 == nine.length) {
+                        t9 = 0;
+                    }
+                } else {
+                    updateDisplay(view, '9');
+                }
+            }
+            case 34 -> message(player); // message
+            case 38 -> {
+                // z
+                which = 3;
+                resetTrackers();
+            }
+            case 39 -> {
+                // star
+                updateDisplay(view, star[ts]);
+                ts++;
+                if (ts == star.length) {
+                    ts = 0;
+                }
+            }
+            case 40 -> updateDisplay(view, '0'); //zero
+            case 41 -> {
+                // hash
+                if (letters.contains(which) || components.get(0).startsWith("~")) {
+                    updateDisplay(view, hash[th]);
+                    th++;
+                    if (th == hash.length) {
+                        th = 0;
+                    }
+                } else {
+                    updateDisplay(view, '-');
+                }
+            }
+            case 43 -> setBeacon(player); // beacon
+            case 45 -> {
+                // close
+                close(player);
+                components = Arrays.asList("", "", "", "", "", "");
+            }
+            case 48 -> {
+                // previous cursor
+                if (pos[which] > 0) {
+                    pos[which]--;
+                }
+                resetTrackers();
+            }
+            case 50 -> {
+                // next cursor
+                int next = components.get(which).length() + 1;
+                if (pos[which] < next) {
+                    pos[which]++;
+                }
+                resetTrackers();
+            }
+            case 53 -> {
+                switch (which) {
+                    case 4 -> saveCurrentLocation(player, view); // save
+                    case 5 -> scanLifesigns(player, view); // scan
+                    default -> doWarp(player, view); // warp
+                }
+            }
+            default -> {
             }
         }
     }
@@ -296,7 +279,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         components.set(0, world);
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
-        List<String> lore = Arrays.asList(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3));
+        List<String> lore = List.of(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3));
         dim.setLore(lore);
         display.setItemMeta(dim);
         // move the cursor to the end of the string
@@ -309,7 +292,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         for (World w : plugin.getServer().getWorlds()) {
             String world = w.getName();
             if (w.getName().toLowerCase().startsWith(stub)) {
-                List<String> lore = Arrays.asList(world);
+                List<String> lore = List.of(world);
                 im.setLore(lore);
                 is.setItemMeta(im);
                 break;
@@ -344,7 +327,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        List<String> dlore = Arrays.asList(combined);
+        List<String> dlore = List.of(combined);
         dim.setLore(dlore);
         display.setItemMeta(dim);
     }
@@ -435,10 +418,8 @@ public class TVMGUIListener extends TARDISMenuListener {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
                     if (key.equals(EntityType.PLAYER) && !playernames.isEmpty()) {
-                        playernames.forEach((pn) -> {
-                            buf.append(", ").append(pn);
-                        });
-                        message = " (" + buf.toString().substring(2) + ")";
+                        playernames.forEach((pn) -> buf.append(", ").append(pn));
+                        message = " (" + buf.substring(2) + ")";
                     }
                     player.sendMessage("    " + key + ": " + value + message);
                 });
@@ -653,7 +634,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                 // check block has space for player
                 if (!l.getBlock().getType().equals(Material.AIR)) {
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_ADJUST");
-                    // get highest block at these coords
+                    // get the highest block at these coords
                     int highest = l.getWorld().getHighestBlockYAt(l);
                     l.setY(highest);
                 }

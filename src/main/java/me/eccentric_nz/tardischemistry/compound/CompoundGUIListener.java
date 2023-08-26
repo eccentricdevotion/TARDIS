@@ -33,51 +33,37 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundGUIListener extends TARDISMenuListener {
 
-//    private final TARDIS plugin;
-
     public CompoundGUIListener(TARDIS plugin) {
         super(plugin);
-//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onCompoundMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Chemical compounds")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 0:
-                    case 18:
-                    case 19:
-                    case 20:
-                    case 21:
-                    case 22:
-                    case 23:
-                    case 24:
-                    case 25:
-                        // do nothing
-                        break;
-                    case 17:
-                        // check formula
-                        event.setCancelled(true);
-                        checkFormula(event.getClickedInventory(), player);
-                        break;
-                    case 26:
-                        // close
-                        event.setCancelled(true);
-                        close(player);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chemical compounds")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot >= 0 && slot < 27) {
+            switch (slot) {
+                case 0, 18, 19, 20, 21, 22, 23, 24, 25 -> {
+                    // do nothing
                 }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                case 17 -> { // check formula
                     event.setCancelled(true);
+                    checkFormula(event.getClickedInventory(), player);
                 }
+                case 26 -> { // close
+                    event.setCancelled(true);
+                    close(player);
+                }
+                default -> event.setCancelled(true);
+            }
+        } else {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
         }
     }

@@ -61,70 +61,71 @@ public class ElementGUIListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Atomic elements")) {
-            Player p = (Player) event.getWhoClicked();
-            UUID uuid = p.getUniqueId();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                switch (slot) {
-                    case 8 -> {
-                        // scroll up
-                        event.setCancelled(true);
-                        if (!scrolling.contains(uuid)) {
-                            scrolling.add(uuid);
-                            scroll(view, scroll.get(uuid) + 1, true, uuid);
-                        }
-                    }
-                    case 17 -> {
-                        // scroll down
-                        event.setCancelled(true);
-                        if (!scrolling.contains(uuid)) {
-                            scrolling.add(uuid);
-                            scroll(view, scroll.get(uuid) - 1, false, uuid);
-                        }
-                    }
-                    case 26 -> event.setCancelled(true);
-                    case 35 -> {
-                        event.setCancelled(true);
-                        // switch to compounds
-                        close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
-                            Inventory compounds = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Molecular compounds");
-                            compounds.setContents(cmenu);
-                            p.openInventory(compounds);
-                        }, 2L);
-                    }
-                    case 44 -> {
-                        event.setCancelled(true);
-                        // switch to products
-                        close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
-                            Inventory lab = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Products");
-                            lab.setContents(lmenu);
-                            p.openInventory(lab);
-                        }, 2L);
-                    }
-                    case 53 -> {
-                        // close
-                        event.setCancelled(true);
-                        close(p);
-                    }
-                    default -> {
-                        event.setCancelled(true);
-                        // get clicked ItemStack
-                        ItemStack choice = view.getItem(slot).clone();
-                        choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
-                        // add ItemStack to inventory if there is room
-                        p.getInventory().addItem(choice);
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Atomic elements")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        UUID uuid = p.getUniqueId();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
+            }
+            return;
+        }
+        switch (slot) {
+            case 8 -> {
+                // scroll up
+                event.setCancelled(true);
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) + 1, true, uuid);
                 }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
+            }
+            case 17 -> {
+                // scroll down
+                event.setCancelled(true);
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) - 1, false, uuid);
                 }
+            }
+            case 26 -> event.setCancelled(true);
+            case 35 -> {
+                event.setCancelled(true);
+                // switch to compounds
+                close(p);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
+                    Inventory compounds = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Molecular compounds");
+                    compounds.setContents(cmenu);
+                    p.openInventory(compounds);
+                }, 2L);
+            }
+            case 44 -> {
+                event.setCancelled(true);
+                // switch to products
+                close(p);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
+                    Inventory lab = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Products");
+                    lab.setContents(lmenu);
+                    p.openInventory(lab);
+                }, 2L);
+            }
+            case 53 -> {
+                // close
+                event.setCancelled(true);
+                close(p);
+            }
+            default -> {
+                event.setCancelled(true);
+                // get clicked ItemStack
+                ItemStack choice = view.getItem(slot).clone();
+                choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
+                // add ItemStack to inventory if there is room
+                p.getInventory().addItem(choice);
             }
         }
     }

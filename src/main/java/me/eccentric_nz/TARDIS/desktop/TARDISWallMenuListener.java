@@ -77,50 +77,49 @@ public class TARDISWallMenuListener extends TARDISMenuListener {
         Player p = (Player) event.getWhoClicked();
         UUID uuid = p.getUniqueId();
         int slot = event.getRawSlot();
-        if (slot >= 0 && slot < 54) {
-            event.setCancelled(true);
-            switch (slot) {
-                case 8 -> {
-                    // scroll up
-                    if (!scrolling.contains(uuid)) {
-                        scrolling.add(uuid);
-                        scroll(view, scroll.get(uuid) + 1, true, uuid);
-                    }
-                }
-                case 17 -> {
-                    // scroll down
-                    if (!scrolling.contains(uuid)) {
-                        scrolling.add(uuid);
-                        scroll(view, scroll.get(uuid) - 1, false, uuid);
-                    }
-                }
-                case 26 -> {
-                    // default wall
-                    String wall = getWallFloor(uuid, true);
-                    setWallFloorBlock(p, uuid, wall, isWall);
-                }
-                case 35 -> {
-                    // default floor
-                    String floor = getWallFloor(uuid, false);
-                    setWallFloorBlock(p, uuid, floor, isWall);
-                }
-                case 53 ->
-                    // close
-                        close(p, true);
-                default -> {
-                    // get block type and data
-                    ItemStack choice = view.getItem(slot);
-                    // set the tardis wall/floor block
-                    setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
-                }
-            }
-        } else {
+        if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
             }
+            return;
         }
-
+        event.setCancelled(true);
+        switch (slot) {
+            case 8 -> {
+                // scroll up
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) + 1, true, uuid);
+                }
+            }
+            case 17 -> {
+                // scroll down
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) - 1, false, uuid);
+                }
+            }
+            case 26 -> {
+                // default wall
+                String wall = getWallFloor(uuid, true);
+                setWallFloorBlock(p, uuid, wall, isWall);
+            }
+            case 35 -> {
+                // default floor
+                String floor = getWallFloor(uuid, false);
+                setWallFloorBlock(p, uuid, floor, isWall);
+            }
+            case 53 ->
+                // close
+                    close(p, true);
+            default -> {
+                // get block type and data
+                ItemStack choice = view.getItem(slot);
+                // set the tardis wall/floor block
+                setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
+            }
+        }
     }
 
     private void setWallFloorBlock(Player p, UUID uuid, String str, boolean isWall) {

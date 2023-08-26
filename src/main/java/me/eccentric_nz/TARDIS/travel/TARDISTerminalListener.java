@@ -79,99 +79,102 @@ public class TARDISTerminalListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onDestTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                Player player = (Player) event.getWhoClicked();
-                UUID uuid = player.getUniqueId();
-                // get the TARDIS the player is in
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-                if (rst.resultSet()) {
-                    switch (slot) {
-                        case 1 -> terminalStep.put(uuid, 10);
-                        case 3 -> terminalStep.put(uuid, 25);
-                        case 5 -> terminalStep.put(uuid, 50);
-                        case 7 -> terminalStep.put(uuid, 100);
-                        case 9 -> setSlots(view, 10, 16, false, "X", true, uuid);
-                        case 17 -> setSlots(view, 10, 16, true, "X", true, uuid);
-                        case 18 -> setSlots(view, 19, 25, false, "Z", true, uuid);
-                        case 26 -> setSlots(view, 19, 25, true, "Z", true, uuid);
-                        case 27 -> setSlots(view, 28, 34, false, "Multiplier", false, uuid);
-                        case 35 -> setSlots(view, 28, 34, true, "Multiplier", false, uuid);
-                        case 36 -> {
-                            // current world
-                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
-                            setCurrent(view, player, 36);
-                        }
-                        case 38 -> {
-                            // normal
-                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
-                            setCurrent(view, player, 38);
-                        }
-                        case 40 -> {
-                            // nether
-                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
-                            setCurrent(view, player, 40);
-                        }
-                        case 42 -> {
-                            // the end
-                            terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
-                            setCurrent(view, player, 42);
-                        }
-                        case 44 ->
-                            // submarine
-                                toggleSubmarine(view, player);
-                        case 46 ->
-                            // check destination
-                                checkSettings(view, player);
-                        case 49 -> {
-                            // set destination
-                            if (terminalDestination.containsKey(uuid)) {
-                                HashMap<String, Object> set = new HashMap<>();
-                                String[] data = terminalDestination.get(uuid).split(":");
-                                String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
-                                set.put("world", ww);
-                                set.put("x", data[1]);
-                                set.put("y", data[2]);
-                                set.put("z", data[3]);
-                                set.put("direction", terminalUsers.get(uuid).getDirection().toString());
-                                set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
-                                HashMap<String, Object> wheret = new HashMap<>();
-                                wheret.put("tardis_id", terminalIDs.get(uuid));
-                                plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
-                                plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
-                                close(player);
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
-                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
-                                    new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
-                                    plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));
-                                }
-                                // damage the circuit if configured
-                                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
-                                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
-                                    tcc.getCircuits();
-                                    // decrement uses
-                                    int uses_left = tcc.getInputUses();
-                                    new TARDISCircuitDamager(plugin, DiskCircuit.INPUT, uses_left, terminalIDs.get(uuid), player).damage();
-                                }
-                            } else {
-                                // set lore
-                                ItemStack is = view.getItem(49);
-                                ItemMeta im = is.getItemMeta();
-                                List<String> lore = Collections.singletonList("No valid destination has been set!");
-                                im.setLore(lore);
-                                is.setItemMeta(im);
-                            }
-                        }
-                        case 52 -> close(player);
-                        default -> {
-                        }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+        // get the TARDIS the player is in
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (!rst.resultSet()) {
+            return;
+        }
+        switch (slot) {
+            case 1 -> terminalStep.put(uuid, 10);
+            case 3 -> terminalStep.put(uuid, 25);
+            case 5 -> terminalStep.put(uuid, 50);
+            case 7 -> terminalStep.put(uuid, 100);
+            case 9 -> setSlots(view, 10, 16, false, "X", true, uuid);
+            case 17 -> setSlots(view, 10, 16, true, "X", true, uuid);
+            case 18 -> setSlots(view, 19, 25, false, "Z", true, uuid);
+            case 26 -> setSlots(view, 19, 25, true, "Z", true, uuid);
+            case 27 -> setSlots(view, 28, 34, false, "Multiplier", false, uuid);
+            case 35 -> setSlots(view, 28, 34, true, "Multiplier", false, uuid);
+            case 36 -> {
+                // current world
+                terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+                setCurrent(view, player, 36);
+            }
+            case 38 -> {
+                // normal
+                terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+                setCurrent(view, player, 38);
+            }
+            case 40 -> {
+                // nether
+                terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+                setCurrent(view, player, 40);
+            }
+            case 42 -> {
+                // the end
+                terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+                setCurrent(view, player, 42);
+            }
+            case 44 ->
+                // submarine
+                    toggleSubmarine(view, player);
+            case 46 ->
+                // check destination
+                    checkSettings(view, player);
+            case 49 -> {
+                // set destination
+                if (terminalDestination.containsKey(uuid)) {
+                    HashMap<String, Object> set = new HashMap<>();
+                    String[] data = terminalDestination.get(uuid).split(":");
+                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                    set.put("world", ww);
+                    set.put("x", data[1]);
+                    set.put("y", data[2]);
+                    set.put("z", data[3]);
+                    set.put("direction", terminalUsers.get(uuid).getDirection().toString());
+                    set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("tardis_id", terminalIDs.get(uuid));
+                    plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
+                    plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
+                    plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
+                    close(player);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
+                        new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
+                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));
                     }
+                    // damage the circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
+                        tcc.getCircuits();
+                        // decrement uses
+                        int uses_left = tcc.getInputUses();
+                        new TARDISCircuitDamager(plugin, DiskCircuit.INPUT, uses_left, terminalIDs.get(uuid), player).damage();
+                    }
+                } else {
+                    // set lore
+                    ItemStack is = view.getItem(49);
+                    ItemMeta im = is.getItemMeta();
+                    List<String> lore = Collections.singletonList("No valid destination has been set!");
+                    im.setLore(lore);
+                    is.setItemMeta(im);
                 }
+            }
+            case 52 -> close(player);
+            default -> {
             }
         }
     }

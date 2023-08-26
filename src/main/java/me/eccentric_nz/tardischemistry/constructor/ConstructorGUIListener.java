@@ -39,75 +39,76 @@ public class ConstructorGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Element constructor")) {
-            Player p = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 5 -> {
-                        event.setCancelled(true);
-                        int pminus = getCount(view, 0);
-                        if (pminus > 0) {
-                            setCount(view, pminus - 1, 0);
-                            setElement(view);
-                        }
-                    }
-                    case 6 -> {
-                        event.setCancelled(true);
-                        int pplus = getCount(view, 0);
-                        if (pplus < 118) {
-                            setCount(view, pplus + 1, 0);
-                            setElement(view);
-                        }
-                    }
-                    case 14 -> {
-                        event.setCancelled(true);
-                        int nminus = getCount(view, 9);
-                        if (nminus > 0) {
-                            setCount(view, nminus - 1, 9);
-                            setElement(view);
-                        }
-                    }
-                    case 15 -> {
-                        event.setCancelled(true);
-                        int nplus = getCount(view, 9);
-                        if (nplus < 176) {
-                            setCount(view, nplus + 1, 9);
-                            setElement(view);
-                        }
-                    }
-                    case 23 -> {
-                        event.setCancelled(true);
-                        int eminus = getCount(view, 18);
-                        if (eminus > 0) {
-                            setCount(view, eminus - 1, 18);
-                            setElement(view);
-                        }
-                    }
-                    case 24 -> {
-                        event.setCancelled(true);
-                        int eplus = getCount(view, 18);
-                        if (eplus < 118) {
-                            setCount(view, eplus + 1, 18);
-                            setElement(view);
-                        }
-                    }
-                    case 17 -> {
-                        event.setCancelled(true);
-                        // get clicked ItemStack
-                        ItemStack choice = view.getItem(17).clone();
-                        choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
-                        // add ItemStack to inventory if there is room
-                        p.getInventory().addItem(choice);
-                    }
-                    default -> event.setCancelled(true);
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Element constructor")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
+            }
+            return;
+        }
+        switch (slot) {
+            case 5 -> {
+                event.setCancelled(true);
+                int pminus = getCount(view, 0);
+                if (pminus > 0) {
+                    setCount(view, pminus - 1, 0);
+                    setElement(view);
                 }
             }
+            case 6 -> {
+                event.setCancelled(true);
+                int pplus = getCount(view, 0);
+                if (pplus < 118) {
+                    setCount(view, pplus + 1, 0);
+                    setElement(view);
+                }
+            }
+            case 14 -> {
+                event.setCancelled(true);
+                int nminus = getCount(view, 9);
+                if (nminus > 0) {
+                    setCount(view, nminus - 1, 9);
+                    setElement(view);
+                }
+            }
+            case 15 -> {
+                event.setCancelled(true);
+                int nplus = getCount(view, 9);
+                if (nplus < 176) {
+                    setCount(view, nplus + 1, 9);
+                    setElement(view);
+                }
+            }
+            case 23 -> {
+                event.setCancelled(true);
+                int eminus = getCount(view, 18);
+                if (eminus > 0) {
+                    setCount(view, eminus - 1, 18);
+                    setElement(view);
+                }
+            }
+            case 24 -> {
+                event.setCancelled(true);
+                int eplus = getCount(view, 18);
+                if (eplus < 118) {
+                    setCount(view, eplus + 1, 18);
+                    setElement(view);
+                }
+            }
+            case 17 -> {
+                event.setCancelled(true);
+                // get clicked ItemStack
+                ItemStack choice = view.getItem(17).clone();
+                choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
+                // add ItemStack to inventory if there is room
+                p.getInventory().addItem(choice);
+            }
+            default -> event.setCancelled(true);
         }
     }
 

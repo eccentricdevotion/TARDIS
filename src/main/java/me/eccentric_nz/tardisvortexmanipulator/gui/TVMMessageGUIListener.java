@@ -38,21 +38,23 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onMessageGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "VM Messages")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                switch (slot) {
-                    case 45 -> {}
-                    case 46 -> close(player); // close
-                    case 48 -> doPrev(view, player); // previous page
-                    case 49 -> doNext(view, player); // next page
-                    case 51 -> doRead(view, player); // read
-                    case 53 -> doDelete(view, player); // delete
-                    default -> selectedSlot = slot; // select a message
-                }
-            }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "VM Messages")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        switch (slot) {
+            case 45 -> {}
+            case 46 -> close(player); // close
+            case 48 -> doPrev(view, player); // previous page
+            case 49 -> doNext(view, player); // next page
+            case 51 -> doRead(view, player); // read
+            case 53 -> doDelete(view, player); // delete
+            default -> selectedSlot = slot; // select a message
         }
     }
 

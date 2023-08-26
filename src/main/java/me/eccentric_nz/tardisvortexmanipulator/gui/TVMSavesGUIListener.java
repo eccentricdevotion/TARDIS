@@ -39,23 +39,27 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "VM Saves")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                if (view.getItem(slot) != null) {
-                    switch (slot) {
-                        case 45 -> {} // page number
-                        case 46 -> close(player); // close
-                        case 48 -> doPrev(view, player); // previous page
-                        case 49 -> doNext(view, player); // next page
-                        case 51 -> delete(view, player); // delete save
-                        case 53 -> doWarp(view, player); // warp
-                        default -> selectedSlot = slot;
-                    }
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "VM Saves")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        if (view.getItem(slot) == null) {
+            return;
+        }
+        switch (slot) {
+            case 45 -> { // page number
             }
+            case 46 -> close(player); // close
+            case 48 -> doPrev(view, player); // previous page
+            case 49 -> doNext(view, player); // next page
+            case 51 -> delete(view, player); // delete save
+            case 53 -> doWarp(view, player); // warp
+            default -> selectedSlot = slot;
         }
     }
 

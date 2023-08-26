@@ -92,111 +92,112 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGeneratorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Generator")) {
-            Player p = (Player) event.getWhoClicked();
-            location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
-            int slot = event.getRawSlot();
-            ItemStack sonic;
-            ItemMeta sonic_im;
-            boolean slotWasNull = false;
-            if (slot >= 0 && slot < 54) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Generator")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
+        int slot = event.getRawSlot();
+        ItemStack sonic;
+        ItemMeta sonic_im;
+        boolean slotWasNull = false;
+        if (slot < 0 || slot > 53) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
-                switch (slot) {
-                    case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
-                        // set display name of sonic in slot 49
-                        sonic = view.getItem(49);
-                        if (sonic == null) {
-                            sonic = new ItemStack(Material.BLAZE_ROD, 1);
-                            slotWasNull = true;
-                        }
-                        // get Display name of selected sonic
-                        ItemStack choice = view.getItem(slot);
-                        ItemMeta choice_im = choice.getItemMeta();
-                        String choice_name = choice_im.getDisplayName();
-                        sonic_im = sonic.getItemMeta();
-                        sonic_im.setDisplayName(choice_name);
-                        sonic_im.setCustomModelData(choice_im.getCustomModelData());
-                        sonic.setItemMeta(sonic_im);
-                        if (slotWasNull) {
-                            view.setItem(49, sonic);
-                            setCost(view, costs.get("Standard Sonic"));
-                        }
-                    }
-                    case 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
-                        ItemStack upgrade = view.getItem(slot);
-                        ItemMeta upgrade_im = upgrade.getItemMeta();
-                        String upgrade_name = upgrade_im.getDisplayName();
-                        sonic = view.getItem(49);
-                        if (sonic == null) {
-                            sonic = new ItemStack(Material.BLAZE_ROD, 1);
-                            slotWasNull = true;
-                        }
-                        sonic_im = sonic.getItemMeta();
-                        List<String> lore;
-                        if (sonic_im.hasLore()) {
-                            // get the current sonic's upgrades
-                            lore = sonic_im.getLore();
-                        } else {
-                            // otherwise this is the first upgrade
-                            lore = new ArrayList<>();
-                            lore.add("Upgrades:");
-                        }
-                        // if they don't already have the upgrade
-                        if (!lore.contains(upgrade_name)) {
-                            lore.add(upgrade_name);
-                            sonic_im.setLore(lore);
-                            setCost(view, getCost(view) + costs.get(upgrade_name));
-                        }
-                        sonic.setItemMeta(sonic_im);
-                        if (slotWasNull) {
-                            view.setItem(49, sonic);
-                        }
-                    }
-                    case 36 -> {
-                        // reset to standard
-                        sonic = view.getItem(49);
-                        if (sonic == null) {
-                            sonic = new ItemStack(Material.BLAZE_ROD, 1);
-                            slotWasNull = true;
-                        }
-                        sonic_im = sonic.getItemMeta();
-                        if (slotWasNull) {
-                            sonic_im.setDisplayName("Sonic Screwdriver");
-                            view.setItem(49, sonic);
-                        } else {
-                            // remove lore
-                            sonic_im.setLore(null);
-                        }
-                        sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
-                        sonic.setItemMeta(sonic_im);
-                        setCost(view, costs.get("Standard Sonic"));
-                    }
-                    case 43 -> {
-                        // save
-                        sonic = view.getItem(49);
-                        if (sonic != null) {
-                            save(p, sonic, true);
-                        }
-                    }
-                    case 44 -> {
-                        // save & generate
-                        sonic = view.getItem(49);
-                        if (sonic != null) {
-                            save(p, sonic, false);
-                            generate(p, sonic, getCost(view));
-                        }
-                    }
-                    case 53 ->
-                        // close
-                            close(p);
-                    default -> {
-                    }
+            }
+            return;
+        }
+        event.setCancelled(true);
+        switch (slot) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
+                // set display name of sonic in slot 49
+                sonic = view.getItem(49);
+                if (sonic == null) {
+                    sonic = new ItemStack(Material.BLAZE_ROD, 1);
+                    slotWasNull = true;
                 }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
+                // get Display name of selected sonic
+                ItemStack choice = view.getItem(slot);
+                ItemMeta choice_im = choice.getItemMeta();
+                String choice_name = choice_im.getDisplayName();
+                sonic_im = sonic.getItemMeta();
+                sonic_im.setDisplayName(choice_name);
+                sonic_im.setCustomModelData(choice_im.getCustomModelData());
+                sonic.setItemMeta(sonic_im);
+                if (slotWasNull) {
+                    view.setItem(49, sonic);
+                    setCost(view, costs.get("Standard Sonic"));
                 }
+            }
+            case 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
+                ItemStack upgrade = view.getItem(slot);
+                ItemMeta upgrade_im = upgrade.getItemMeta();
+                String upgrade_name = upgrade_im.getDisplayName();
+                sonic = view.getItem(49);
+                if (sonic == null) {
+                    sonic = new ItemStack(Material.BLAZE_ROD, 1);
+                    slotWasNull = true;
+                }
+                sonic_im = sonic.getItemMeta();
+                List<String> lore;
+                if (sonic_im.hasLore()) {
+                    // get the current sonic's upgrades
+                    lore = sonic_im.getLore();
+                } else {
+                    // otherwise this is the first upgrade
+                    lore = new ArrayList<>();
+                    lore.add("Upgrades:");
+                }
+                // if they don't already have the upgrade
+                if (!lore.contains(upgrade_name)) {
+                    lore.add(upgrade_name);
+                    sonic_im.setLore(lore);
+                    setCost(view, getCost(view) + costs.get(upgrade_name));
+                }
+                sonic.setItemMeta(sonic_im);
+                if (slotWasNull) {
+                    view.setItem(49, sonic);
+                }
+            }
+            case 36 -> {
+                // reset to standard
+                sonic = view.getItem(49);
+                if (sonic == null) {
+                    sonic = new ItemStack(Material.BLAZE_ROD, 1);
+                    slotWasNull = true;
+                }
+                sonic_im = sonic.getItemMeta();
+                if (slotWasNull) {
+                    sonic_im.setDisplayName("Sonic Screwdriver");
+                    view.setItem(49, sonic);
+                } else {
+                    // remove lore
+                    sonic_im.setLore(null);
+                }
+                sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
+                sonic.setItemMeta(sonic_im);
+                setCost(view, costs.get("Standard Sonic"));
+            }
+            case 43 -> {
+                // save
+                sonic = view.getItem(49);
+                if (sonic != null) {
+                    save(p, sonic, true);
+                }
+            }
+            case 44 -> {
+                // save & generate
+                sonic = view.getItem(49);
+                if (sonic != null) {
+                    save(p, sonic, false);
+                    generate(p, sonic, getCost(view));
+                }
+            }
+            case 53 ->
+                // close
+                    close(p);
+            default -> {
             }
         }
     }

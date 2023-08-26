@@ -42,12 +42,10 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's
- * TARDIS in the shape of a tree that, according to the Eleventh Doctor,
- * "reconstructs the particles according to your needs." It is basically "a
- * machine that makes machines," perhaps somewhat like a 3D printer. It is,
- * according to Gregor Van Baalen's scanner, "more valuable than the total sum
- * of any currency.
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
+ * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
+ * the total sum of any currency.
  *
  * @author eccentric_nz
  */
@@ -60,87 +58,81 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a
-     * TARDIS GUI, then the click is processed accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
      *
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
     public void onARSMapClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Map")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            UUID playerUUID = player.getUniqueId();
-            UUID uuid;
-            uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
-            ids.put(playerUUID, getTardisId(uuid.toString()));
-            int slot = event.getRawSlot();
-            if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
-                return;
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Map")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        UUID playerUUID = player.getUniqueId();
+        UUID uuid;
+        uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
+        ids.put(playerUUID, getTardisId(uuid.toString()));
+        int slot = event.getRawSlot();
+        if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
+            return;
+        }
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        switch (slot) {
+            case 1, 9, 11, 19 -> moveMap(playerUUID, view, slot); // up
+            case 10 -> loadMap(view, playerUUID); // load map
+            case 45 -> close(player); // close
+            case 47 -> findPlayer(player, view); // where am I?
+            case 27, 28, 29 -> {
+                // change levels
+                if (map_data.containsKey(playerUUID)) {
+                    switchLevel(view, slot, playerUUID);
+                    TARDISARSMapData md = map_data.get(playerUUID);
+                    setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
+                    setLore(view, slot, null);
+                } else {
+                    setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                }
             }
-            if (slot >= 0 && slot < 54) {
-                switch (slot) {
-                    case 1, 9, 11, 19 ->
-                        // up
-                        moveMap(playerUUID, view, slot);
-                    case 10 ->
-                        // load map
-                        loadMap(view, playerUUID);
-                    case 45 ->
-                        // close
-                        close(player);
-                    case 47 ->
-                        // where am I?
-                        findPlayer(player, view);
-                    case 27, 28, 29 -> {
-                        // change levels
-                        if (map_data.containsKey(playerUUID)) {
-                            switchLevel(view, slot, playerUUID);
-                            TARDISARSMapData md = map_data.get(playerUUID);
-                            setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
-                            setLore(view, slot, null);
-                        } else {
-                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+            case 46 -> {
+                if (map_data.containsKey(playerUUID)) {
+                    // transmat
+                    if (!selectedLocation.containsKey(playerUUID)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
+                    } else if (selectedLocation.get(playerUUID).equals("TERRACOTTA")) {
+                        setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
+                    } else {
+                        Location tp_loc = getRoomLocation(player);
+                        if (tp_loc != null) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                                player.teleport(tp_loc);
+                            }, 10L);
+                            close(player);
                         }
                     }
-                    case 46 -> {
-                        if (map_data.containsKey(playerUUID)) {
-                            // transmat
-                            if (!selectedLocation.containsKey(playerUUID)) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
-                            } else if (selectedLocation.get(playerUUID).equals("TERRACOTTA")) {
-                                setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
-                            } else {
-                                Location tp_loc = getRoomLocation(player);
-                                if (tp_loc != null) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                                        player.teleport(tp_loc);
-                                    }, 10L);
-                                    close(player);
-                                }
-                            }
-                        } else {
-                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                } else {
+                    setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
+                }
+            }
+            default -> {
+                if (map_data.containsKey(playerUUID)) {
+                    ItemStack is = view.getItem(slot);
+                    if (is != null) {
+                        ItemMeta im = is.getItemMeta();
+                        String dn = im.getDisplayName();
+                        if (!dn.equals("Empty slot")) {
+                            selectedLocation.put(playerUUID, is.getType().toString());
                         }
                     }
-                    default -> {
-                        if (map_data.containsKey(playerUUID)) {
-                            ItemStack is = view.getItem(slot);
-                            if (is != null) {
-                                ItemMeta im = is.getItemMeta();
-                                String dn = im.getDisplayName();
-                                if (!dn.equals("Empty slot")) {
-                                    selectedLocation.put(playerUUID, is.getType().toString());
-                                }
-                            }
-                        } else {
-                            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
-                        }
-                    }
+                } else {
+                    setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
                 }
             }
         }

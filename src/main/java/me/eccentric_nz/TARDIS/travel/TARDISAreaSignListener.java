@@ -55,63 +55,66 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onAreaTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS areas")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 45) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS areas")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot >= 0 && slot < 45) {
+            // get the TARDIS the player is in
+            HashMap<String, Object> wheres = new HashMap<>();
+            wheres.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+            if (!rst.resultSet()) {
+                return;
+            }
+            ItemStack is = view.getItem(slot);
+            if (is == null) {
+                return;
+            }
+            ItemMeta im = is.getItemMeta();
+            String area = im.getDisplayName();
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("area_name", area);
+            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
+            rsa.resultSet();
+            Location l;
+            if (rsa.getArea().isGrid()) {
+                l = plugin.getTardisArea().getNextSpot(area);
+            } else {
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            }
+            if (l == null) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
+                close(player);
+                return;
+            }
+            // check the player is not already in the area!
+            if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().getAreaId())) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
+                close(player);
+                return;
+            }
+            player.performCommand("tardistravel area " + area);
+            close(player);
+            return;
+        }
+        if (slot == 49) {
+            // load TARDIS saves
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("uuid", player.getUniqueId().toString());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                if (rst.resultSet()) {
-                    ItemStack is = view.getItem(slot);
-                    if (is != null) {
-                        ItemMeta im = is.getItemMeta();
-                        String area = im.getDisplayName();
-                        HashMap<String, Object> wherea = new HashMap<>();
-                        wherea.put("area_name", area);
-                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
-                        rsa.resultSet();
-                        Location l;
-                        if (rsa.getArea().isGrid()) {
-                            l = plugin.getTardisArea().getNextSpot(area);
-                        } else {
-                            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
-                        }
-                        if (l == null) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
-                            close(player);
-                            return;
-                        }
-                        // check the player is not already in the area!
-                        if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().getAreaId())) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
-                            close(player);
-                            return;
-                        }
-                        player.performCommand("tardistravel area " + area);
-                        close(player);
-                        return;
-                    }
+                ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
+                if (rs.resultSet()) {
+                    TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id());
+                    ItemStack[] items = sst.getPlanets();
+                    Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                    saveinv.setContents(items);
+                    player.openInventory(saveinv);
                 }
-            }
-            if (slot == 49) {
-                // load TARDIS saves
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
-                    if (rs.resultSet()) {
-                        TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id());
-                        ItemStack[] items = sst.getPlanets();
-                        Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
-                        saveinv.setContents(items);
-                        player.openInventory(saveinv);
-                    }
-                }, 2L);
-            }
+            }, 2L);
         }
     }
 }

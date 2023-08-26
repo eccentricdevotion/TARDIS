@@ -53,68 +53,72 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onTransmatMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS transmats")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis_id();
-                        switch (slot) {
-                            case 17:
-                                if (!selectedLocation.containsKey(player.getUniqueId())) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
-                                } else {
-                                    // transmat to selected location
-                                    ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
-                                    if (rsm.resultSet()) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
-                                        Location tp_loc = rsm.getLocation();
-                                        tp_loc.setYaw(rsm.getYaw());
-                                        tp_loc.setPitch(player.getLocation().getPitch());
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                                            player.teleport(tp_loc);
-                                        }, 10L);
-                                        close(player);
-                                    }
-                                }
-                                break;
-                            case 35:
-                                if (!selectedLocation.containsKey(player.getUniqueId())) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
-                                } else {
-                                    // delete
-                                    ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
-                                    if (rsm.resultSet()) {
-                                        HashMap<String, Object> wherer = new HashMap<>();
-                                        wherer.put("transmat_id", rsm.getTransmat_id());
-                                        plugin.getQueryFactory().doDelete("transmats", wherer);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_REMOVED");
-                                        close(player);
-                                    }
-                                }
-                                break;
-                            case 53:
-                                selectedLocation.remove(player.getUniqueId());
-                                //close
-                                close(player);
-                                break;
-                            default:
-                                // select
-                                ItemMeta im = is.getItemMeta();
-                                selectedLocation.put(player.getUniqueId(), im.getDisplayName());
-                                break;
-                        }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS transmats")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        // get the TARDIS the player is in
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+        if (!rst.resultSet()) {
+            return;
+        }
+        int id = rst.getTardis_id();
+        switch (slot) {
+            case 17:
+                if (!selectedLocation.containsKey(player.getUniqueId())) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
+                } else {
+                    // transmat to selected location
+                    ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
+                    if (rsm.resultSet()) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
+                        Location tp_loc = rsm.getLocation();
+                        tp_loc.setYaw(rsm.getYaw());
+                        tp_loc.setPitch(player.getLocation().getPitch());
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                            player.teleport(tp_loc);
+                        }, 10L);
+                        close(player);
                     }
                 }
-            }
+                break;
+            case 35:
+                if (!selectedLocation.containsKey(player.getUniqueId())) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
+                } else {
+                    // delete
+                    ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
+                    if (rsm.resultSet()) {
+                        HashMap<String, Object> wherer = new HashMap<>();
+                        wherer.put("transmat_id", rsm.getTransmat_id());
+                        plugin.getQueryFactory().doDelete("transmats", wherer);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_REMOVED");
+                        close(player);
+                    }
+                }
+                break;
+            case 53:
+                selectedLocation.remove(player.getUniqueId());
+                //close
+                close(player);
+                break;
+            default:
+                // select
+                ItemMeta im = is.getItemMeta();
+                selectedLocation.put(player.getUniqueId(), im.getDisplayName());
+                break;
         }
     }
 }

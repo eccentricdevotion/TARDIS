@@ -46,99 +46,104 @@ public class TARDISWeatherListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onWeatherMenuInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Weather Menu")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (!plugin.getConfig().getBoolean("allow.weather_set")) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
-                return;
-            }
-            if (slot >= 0 && slot < 9) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                        if (rs.resultSet()) {
-                            Tardis tardis = rs.getTardis();
-                            // check they initialised
-                            if (!tardis.isTardis_init()) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
-                                return;
-                            }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                                return;
-                            }
-                            if (!tardis.isHandbrake_on()) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
-                                return;
-                            }
-                            // get current location
-                            HashMap<String, Object> wherec = new HashMap<>();
-                            wherec.put("tardis_id", tardis.getTardis_id());
-                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                            if (!rsc.resultSet()) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                                close(player);
-                            }
-                            switch (slot) {
-                                case 0 -> {
-                                    // clear / sun
-                                    if (TARDISPermission.hasPermission(player, "tardis.weather.clear")) {
-                                        TARDISWeather.setClear(rsc.getWorld());
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "clear");
-                                    } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                    }
-                                    close(player);
-                                }
-                                case 1 -> {
-                                    // rain
-                                    if (TARDISPermission.hasPermission(player, "tardis.weather.rain")) {
-                                        TARDISWeather.setRain(rsc.getWorld());
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "rain");
-                                    } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                    }
-                                    close(player);
-                                }
-                                case 2 -> {
-                                    // thunderstorm
-                                    if (TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
-                                        TARDISWeather.setThunder(rsc.getWorld());
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "thunder");
-                                    } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                    }
-                                    close(player);
-                                }
-                                case 5 -> {
-                                    // atmospheric excitation
-                                    if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
-                                        return;
-                                    }
-                                    new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
-                                    plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
-                                    close(player);
-                                }
-                                case 8 ->
-                                    // close
-                                        close(player);
-                                default -> {
-                                }
-                            }
-                        }
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Weather Menu")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (!plugin.getConfig().getBoolean("allow.weather_set")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
+            return;
+        }
+        if (slot < 0 || slot > 8) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        // get the TARDIS the player is in
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+        if (!rst.resultSet()) {
+            return;
+        }
+        int id = rst.getTardis_id();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (!rs.resultSet()) {
+            return;
+        }
+        Tardis tardis = rs.getTardis();
+        // check they initialised
+        if (!tardis.isTardis_init()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
+            return;
+        }
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
+            return;
+        }
+        if (!tardis.isHandbrake_on()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
+            return;
+        }
+        // get current location
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", tardis.getTardis_id());
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+        if (!rsc.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+            close(player);
+        }
+        switch (slot) {
+            case 0 -> {
+                // clear / sun
+                if (TARDISPermission.hasPermission(player, "tardis.weather.clear")) {
+                    TARDISWeather.setClear(rsc.getWorld());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "clear");
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                 }
+                close(player);
+            }
+            case 1 -> {
+                // rain
+                if (TARDISPermission.hasPermission(player, "tardis.weather.rain")) {
+                    TARDISWeather.setRain(rsc.getWorld());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "rain");
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
+                }
+                close(player);
+            }
+            case 2 -> {
+                // thunderstorm
+                if (TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
+                    TARDISWeather.setThunder(rsc.getWorld());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "thunder");
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
+                }
+                close(player);
+            }
+            case 5 -> {
+                // atmospheric excitation
+                if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
+                    return;
+                }
+                new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
+                plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
+                close(player);
+            }
+            case 8 ->
+                // close
+                    close(player);
+            default -> {
             }
         }
     }

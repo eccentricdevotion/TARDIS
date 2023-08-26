@@ -54,31 +54,33 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onTemporalTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Temporal Locator")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                ItemStack is = view.getItem(slot);
-                if (is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
-                    long time = getTime(lore);
-                    plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", time));
-                    // damage the circuit if configured
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
-                        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
-                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                        tcc.getCircuits();
-                        // decrement uses
-                        int uses_left = tcc.getTemporalUses();
-                        new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
-                    }
-                }
-                close(player);
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Temporal Locator")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            List<String> lore = im.getLore();
+            long time = getTime(lore);
+            plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", time));
+            // damage the circuit if configured
+            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+                int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+                // decrement uses
+                int uses_left = tcc.getTemporalUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
             }
         }
+        close(player);
     }
 
     /**

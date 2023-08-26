@@ -35,55 +35,41 @@ import java.util.List;
 
 public class ProductGUIListener extends TARDISMenuListener {
 
-    //    private final TARDIS plugin;
     private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);
     private final List<Integer> pipe = Arrays.asList(2, 11, 20);
 
     public ProductGUIListener(TARDIS plugin) {
         super(plugin);
-//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onProductMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Product crafting")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 18:
-                    case 19:
-                    case 20:
-                    case 14:
-                        // do nothing
-                        break;
-                    case 17:
-                        // craft
-                        event.setCancelled(true);
-                        craft(event.getClickedInventory(), player);
-                        break;
-                    case 26:
-                        // close
-                        event.setCancelled(true);
-                        close(player);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Product crafting")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
+            return;
+        }
+        switch (slot) {
+            case 0, 1, 2, 9, 10, 11, 18, 19, 20, 14 -> {
+                // do nothing
+            }
+            case 17 -> { // craft
+                event.setCancelled(true);
+                craft(event.getClickedInventory(), player);
+            }
+            case 26 -> { // close
+                event.setCancelled(true);
+                close(player);
+            }
+            default -> event.setCancelled(true);
         }
     }
 
