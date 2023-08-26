@@ -58,7 +58,7 @@ public class TARDISPresetListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonPresetClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Presets")) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Presets")) {
             return;
         }
         event.setCancelled(true);
