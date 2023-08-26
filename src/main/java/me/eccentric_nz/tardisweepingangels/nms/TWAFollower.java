@@ -53,8 +53,7 @@ public class TWAFollower extends Husk implements OwnableEntity {
     @Nullable
     @Override
     public UUID getOwnerUUID() {
-        UUID id = (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
-        return id;
+        return (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {

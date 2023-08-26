@@ -24,11 +24,6 @@ import org.bukkit.util.Vector;
 
 public class Vector3D {
 
-    /**
-     * Represents the null (0, 0, 0) origin.
-     */
-    public static final Vector3D ORIGIN = new Vector3D(0, 0, 0);
-
     // Use protected members, like Bukkit
     public final double x;
     public final double y;
@@ -37,9 +32,9 @@ public class Vector3D {
     /**
      * Construct an immutable 3D vector.
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x the x component
+     * @param y the y component
+     * @param z the z component
      */
     public Vector3D(double x, double y, double z) {
         this.x = x;
@@ -86,9 +81,9 @@ public class Vector3D {
     /**
      * Adds the current vector and a given vector together, producing a result vector.
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x the x component
+     * @param y the y component
+     * @param z the z component
      * @return The new result vector.
      */
     public Vector3D add(double x, double y, double z) {

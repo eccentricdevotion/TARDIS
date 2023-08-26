@@ -121,9 +121,7 @@ public class MonsterInteractListener implements Listener {
                             m.setDisplayName("Sontaran Lactic Fluid");
                             milk.setItemMeta(m);
                             p.getEquipment().setItemInMainHand(milk);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                milkers.remove(uuid);
-                            }, 3000L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> milkers.remove(uuid), 3000L);
                         } else {
                             plugin.getMessenger().send(p, TardisModule.MONSTERS, "WA_STRAX");
                         }

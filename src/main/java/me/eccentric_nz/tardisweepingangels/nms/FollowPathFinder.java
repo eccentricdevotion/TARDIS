@@ -1,7 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -109,7 +108,7 @@ public class FollowPathFinder extends Goal {
         if (!canTeleportTo(new BlockPos(x, y, z))) {
             return false;
         }
-        EntityTeleportEvent event = CraftEventFactory.callEntityTeleportEvent((Entity) this.follower, x + 0.5D, y, z + 0.5D);
+        EntityTeleportEvent event = CraftEventFactory.callEntityTeleportEvent(this.follower, x + 0.5D, y, z + 0.5D);
         if (event.isCancelled()) {
             return false;
         }
