@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.portal;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
@@ -28,6 +25,10 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class Cast {
 
@@ -129,6 +130,9 @@ public class Cast {
                     int xx = startX + x;
                     int yy = startY + y;
                     int zz = startZ + z;
+                    if (rotated[y][x][z] == null) {
+                        continue;
+                    }
                     player.sendBlockChange(new Location(world, xx, yy, zz), rotated[y][x][z]);
                 }
             }

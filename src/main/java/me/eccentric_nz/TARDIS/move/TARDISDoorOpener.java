@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -40,6 +36,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -210,11 +211,11 @@ public class TARDISDoorOpener {
                     // get distance from door
                     Player player = plugin.getServer().getPlayer(uuid);
                     Location location = player.getLocation();
-                    int distance = (location.getWorld() == exportal.getWorld()) ? (int) location.distanceSquared(exportal) : 1; // or exdoor?
+                    double distance = (location.getWorld() == exportal.getWorld()) ? location.distanceSquared(exportal) : 1; // or exdoor?
                     if (distance <= 9) {
                         // start casting
                         Capture capture = new Capture();
-                        BlockData[][][] data = capture.captureInterior(inportal, distance, tardis.getRotor(), consoleSize);
+                        BlockData[][][] data = capture.captureInterior(inportal, (int) distance, tardis.getRotor(), consoleSize);
                         Cast cast = new Cast(plugin, exportal);
                         cast.castInterior(uuid, data);
                         if (capture.getRotorData().getFrame() != null) {
