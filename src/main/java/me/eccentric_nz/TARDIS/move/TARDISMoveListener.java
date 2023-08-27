@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -45,6 +42,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Listen for a player moving, if they move over a TARDIS portal, teleport them to the TARDIS interior or exterior.
@@ -88,7 +89,7 @@ public class TARDISMoveListener implements Listener {
                 Location interior = data.getInterior();
                 // get distance from exterior
                 // only in the direction of the door!
-                int distance = (int) l.distanceSquared(exterior);
+                double distance = l.distanceSquared(exterior);
                 double vx, vz;
                 switch (data.getDirection()) {
                     case EAST -> {
@@ -115,7 +116,7 @@ public class TARDISMoveListener implements Listener {
                 Cast cast = new Cast(plugin, exterior);
                 if (distance <= 9 && angle < 26 && angle > -26) {
                     Capture capture = new Capture();
-                    BlockData[][][] dataArr = capture.captureInterior(interior, distance, data.getRotor(), data.getConsoleSize());
+                    BlockData[][][] dataArr = capture.captureInterior(interior, (int) distance, data.getRotor(), data.getConsoleSize());
                     cast.castInterior(uuid, dataArr);
                     if (capture.getRotorData().getFrame() != null) {
                         // get vector of rotor

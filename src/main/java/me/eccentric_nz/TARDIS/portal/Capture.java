@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.portal;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import org.bukkit.Location;
@@ -25,6 +24,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 public class Capture {
 
@@ -44,13 +45,14 @@ public class Capture {
         // get depth of the console from ConsoleSize
         int iy, ix, iz = (TARDIS.plugin.getConfig().getBoolean("policebox.view_interior_uses_console_size")) ? consoleSize.getCastDistance() : 16;
         // determine height and width from distance from door
-        if (distance > 6) {
+        // 1, 4 ,9
+        if (distance == 9) {
             iy = 5;
             ix = 5;
-        } else if (distance > 1) {
+        } else if (distance == 4) {
             iy = 6;
-            ix = 9;
-        } else {
+            ix = 7;
+        } else { // 1
             iy = 7;
             ix = 9;
         }
@@ -71,6 +73,10 @@ public class Capture {
                     int xx = startX + x;
                     int yy = startY + y;
                     int zz = startZ + z;
+                    if (((z == 0 || z == 1) && (x == 0 || x == ix - 1)) ||
+                            (z == 0 && (x == 1 || x == ix - 2))) {
+                        continue;
+                    }
                     // get the blockdata
                     capture[y][x][z] = world.getBlockAt(xx, yy, zz).getBlockData();
                 }
