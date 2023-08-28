@@ -316,7 +316,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     }
                                     x = TARDISNumberParsers.parseInt(args[args.length - 3]);
                                     y = TARDISNumberParsers.parseInt(args[args.length - 2]);
-                                    if (y == 0) {
+                                    if (y < -64 || ((w.getEnvironment().equals(World.Environment.NORMAL) && y > 310) || (!w.getEnvironment().equals(World.Environment.NORMAL) && y > 240))) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "Y_NOT_VALID");
                                         return true;
                                     }

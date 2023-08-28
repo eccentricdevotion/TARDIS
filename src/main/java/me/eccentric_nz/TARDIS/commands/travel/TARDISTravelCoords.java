@@ -134,7 +134,8 @@ public class TARDISTravelCoords {
                     int x = rsc.getX() + rx;
                     int y = rsc.getY() + ry;
                     int z = rsc.getZ() + rz;
-                    if (y < 0 || y > 256) {
+                    World.Environment environment = player.getWorld().getEnvironment();
+                    if (y < -64 || ((environment.equals(World.Environment.NORMAL) && y > 310) || (!environment.equals(World.Environment.NORMAL) && y > 240))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "Y_NOT_VALID");
                         return true;
                     }
