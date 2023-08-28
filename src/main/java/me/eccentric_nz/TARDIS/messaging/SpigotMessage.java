@@ -302,6 +302,16 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendStatus(Player player, String key, Object... subs) {
+        String local = String.format(TARDIS.plugin.getLanguage().getString(key), subs);
+        TextComponent actionBar = SpigotComponents.getModule(TardisModule.TARDIS);
+        TextComponent m = new TextComponent(local);
+        m.setColor(ChatColor.WHITE);
+        actionBar.addExtra(m);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
+    }
+
+    @Override
     public void sendArtron(Player player, int id, int used) {
         ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
         TextComponent actionBar = SpigotComponents.getArtronIndicator(data);

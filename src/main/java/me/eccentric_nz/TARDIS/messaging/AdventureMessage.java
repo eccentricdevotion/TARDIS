@@ -296,6 +296,14 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendStatus(Player player, String key, Object... subs) {
+        String local = String.format(TARDIS.plugin.getLanguage().getString(key), subs);
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS)
+                .append(Component.text(local, NamedTextColor.WHITE));
+        player.sendActionBar(actionBar);
+    }
+
+    @Override
     public void sendArtron(Player player, int id, int used) {
         ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
         TextComponent actionBar = AdventureComponents.getArtronIndicator(data);

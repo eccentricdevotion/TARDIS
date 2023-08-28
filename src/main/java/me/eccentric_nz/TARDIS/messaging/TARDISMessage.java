@@ -122,5 +122,7 @@ public interface TARDISMessage {
 
     void sendStatus(Player player, String key);
 
+    void sendStatus(Player player, String key, Object... subs);
+
     void sendArtron(Player player, int id, int used);
 }
