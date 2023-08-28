@@ -207,7 +207,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         }
                         if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                                plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
                             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -285,7 +285,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 return;
                             }
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                                plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
                             HashMap<String, Object> tid = new HashMap<>();
@@ -542,7 +542,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             return;
                                         }
                                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                                            plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                             return;
                                         }
                                         // always exit to outer back door

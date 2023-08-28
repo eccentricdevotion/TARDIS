@@ -66,7 +66,7 @@ public class DisplayItemDoorMover {
                 return;
             }
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                 return;
             }
             HashMap<String, Object> tid = new HashMap<>();

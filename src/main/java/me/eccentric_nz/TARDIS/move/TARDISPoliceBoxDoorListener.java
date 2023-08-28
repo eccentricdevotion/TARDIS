@@ -87,7 +87,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                             int id = rsd.getTardis_id();
                             boolean closed = cmd < 1002;
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                                plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
                             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
