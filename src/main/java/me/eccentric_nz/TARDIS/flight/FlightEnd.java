@@ -51,7 +51,7 @@ public class FlightEnd {
                 if (p != null) {
                     String message = malfunction ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                     plugin.getMessenger().sendStatus(p, message);
-                    // TARDIS has travelled so add players to list so they can receive Artron on exit
+                    // TARDIS has travelled so add players to list, so they can receive Artron on exit
                     plugin.getTrackerKeeper().getHasTravelled().add(s);
                 }
             });
