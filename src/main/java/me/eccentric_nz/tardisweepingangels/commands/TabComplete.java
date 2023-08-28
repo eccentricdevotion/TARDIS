@@ -42,7 +42,9 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
     public TabComplete(TARDIS plugin) {
         List<String> tmp = new ArrayList<>();
         for (Monster m : Monster.values()) {
-            tmp.add(m.toString());
+            if (m != Monster.FLYER) {
+                tmp.add(m.toString());
+            }
         }
         MONSTER_SUBS = ImmutableList.copyOf(tmp);
         List<String> worlds = new ArrayList<>();

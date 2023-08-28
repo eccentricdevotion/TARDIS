@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Follower;
+import me.eccentric_nz.TARDIS.flight.TARDISChicken;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -14,12 +15,13 @@ public class MonsterSpawner {
 
     public LivingEntity create(Location location, Monster monster) {
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        net.minecraft.world.entity.monster.Monster entity;
+        net.minecraft.world.entity.Entity entity;
         switch(monster.getEntityType()) {
             case ZOMBIE -> entity = new TWAZombie(EntityType.ZOMBIE, world);
             case ZOMBIFIED_PIGLIN -> entity = new TWAZombifiedPiglin(EntityType.ZOMBIFIED_PIGLIN, world);
             case DROWNED -> entity = new TWADrowned(EntityType.DROWNED, world);
             case PIGLIN_BRUTE -> entity = new TWAPiglinBrute(EntityType.PIGLIN_BRUTE, world);
+            case CHICKEN -> entity = new TARDISChicken(EntityType.CHICKEN, world);
             default -> entity = new TWASkeleton(EntityType.SKELETON, world);
         }
         entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());

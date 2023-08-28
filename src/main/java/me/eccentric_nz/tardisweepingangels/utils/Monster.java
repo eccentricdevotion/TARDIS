@@ -44,7 +44,8 @@ public enum Monster {
     TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, 2, Material.GUNPOWDER),
     VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, 5, Material.BOOK, 4),
     WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, 5, Material.BRICK),
-    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, 4, Material.PAINTING);
+    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, 4, Material.PAINTING),
+    FLYER("Flyer", EntityType.CHICKEN, "flyer", 99, 99, Material.CHICKEN_SPAWN_EGG);
 
     private final String name;
     private final EntityType entityType;
@@ -104,7 +105,7 @@ public enum Monster {
 
     public boolean isAnimated() {
         switch (this) {
-            case DALEK, DAVROS, TOCLAFANE -> {
+            case DALEK, DAVROS, TOCLAFANE, FLYER -> {
                 return false;
             }
             default -> {
