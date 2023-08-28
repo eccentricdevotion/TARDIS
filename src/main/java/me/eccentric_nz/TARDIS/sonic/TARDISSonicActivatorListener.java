@@ -65,25 +65,26 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onActivatorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Activator")) {
-            Player p = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 9) {
-                switch (slot) {
-                    case 7 -> event.setCancelled(true);
-                    case 8 -> {
-                        event.setCancelled(true);
-                        // close
-                        save(p, view);
-                    }
-                    default -> {
-                    }
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Activator")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot >= 0 && slot < 9) {
+            switch (slot) {
+                case 7 -> event.setCancelled(true);
+                case 8 -> {
                     event.setCancelled(true);
+                    // close
+                    save(p, view);
                 }
+                default -> {
+                }
+            }
+        } else {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
         }
     }

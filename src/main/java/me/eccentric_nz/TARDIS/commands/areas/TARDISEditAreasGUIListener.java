@@ -66,47 +66,50 @@ public class TARDISEditAreasGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Area Locations")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            UUID uuid = player.getUniqueId();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    switch (slot) {
-                        case 45 -> { // info
-                        }
-                        case 48 -> {
-                            // add
-                            ItemMeta meta = is.getItemMeta();
-                            Object area_id = getValueFromLore(meta.getLore().get(0));
-                            // get player's location
-                            Location location = player.getLocation();
-                            HashMap<String, Object> add = new HashMap<>();
-                            add.put("area_id", area_id);
-                            add.put("world", location.getWorld().getName());
-                            add.put("x", location.getBlockX());
-                            add.put("y", location.getBlockY());
-                            add.put("z", location.getBlockZ());
-                            plugin.getQueryFactory().doInsert("area_locations", add);
-                            close(player);
-                        }
-                        case 50 -> {
-                            // delete
-                            if (selected.containsKey(uuid)) {
-                                ItemStack map = view.getItem(selected.get(uuid));
-                                ItemMeta meta = map.getItemMeta();
-                                List<String> lore = meta.getLore();
-                                removeLocation(lore);
-                                close(player);
-                            }
-                        }
-                        case 53 -> close(player);
-                        default -> selected.put(uuid, slot);
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Area Locations")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        switch (slot) {
+            case 45 -> { // info
+            }
+            case 48 -> {
+                // add
+                ItemMeta meta = is.getItemMeta();
+                Object area_id = getValueFromLore(meta.getLore().get(0));
+                // get player's location
+                Location location = player.getLocation();
+                HashMap<String, Object> add = new HashMap<>();
+                add.put("area_id", area_id);
+                add.put("world", location.getWorld().getName());
+                add.put("x", location.getBlockX());
+                add.put("y", location.getBlockY());
+                add.put("z", location.getBlockZ());
+                plugin.getQueryFactory().doInsert("area_locations", add);
+                close(player);
+            }
+            case 50 -> {
+                // delete
+                if (selected.containsKey(uuid)) {
+                    ItemStack map = view.getItem(selected.get(uuid));
+                    ItemMeta meta = map.getItemMeta();
+                    List<String> lore = meta.getLore();
+                    removeLocation(lore);
+                    close(player);
                 }
             }
+            case 53 -> close(player);
+            default -> selected.put(uuid, slot);
         }
     }
 

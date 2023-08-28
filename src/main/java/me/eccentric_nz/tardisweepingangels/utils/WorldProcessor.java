@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import java.io.File;
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.util.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 public class WorldProcessor implements Runnable {
 
@@ -88,7 +89,7 @@ public class WorldProcessor implements Runnable {
                 plugin.getMonstersConfig().set("ice_warriors.worlds." + n, m);
                 i++;
             }
-            if (!config.contains("judoon.worlds." + n, true) || (config.contains("judoon.worlds." + n, true) && config.getString("judoon.worlds." + n).equals("true"))) {
+            if (!config.contains("judoon.worlds." + n, true) || (config.contains("judoon.worlds." + n, true) && "true".equals(config.getString("judoon.worlds." + n)))) {
                 plugin.getMonstersConfig().set("judoon.worlds." + n, m);
                 i++;
             }

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.artron.ArtronIndicatorData;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -442,5 +443,32 @@ public class SpigotComponents {
         banner.add(line4);
         banner.add(base);
         return banner;
+    }
+
+    public static TextComponent getArtronIndicator(ArtronIndicatorData data) {
+        TextComponent indicator = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_DISPLAY", "Artron Energy") + " ");
+        TextComponent remaining = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_REMAINING") + ": " + data.getRemaining() + " ");
+        remaining.setColor(ChatColor.GREEN);
+        indicator.addExtra(remaining);
+        if (data.getUsed() == 0) {
+            TextComponent percent = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_PERCENT") + ": " + data.getPercent() + "% ");
+            percent.setColor(ChatColor.LIGHT_PURPLE);
+            TextComponent max = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_MAX") + ": " + data.getMax() + " ");
+            max.setColor(ChatColor.AQUA);
+            TextComponent timelord = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_TL") + ": " + data.getTimelord() + " ");
+            timelord.setColor(ChatColor.YELLOW);
+            indicator.addExtra(percent);
+            indicator.addExtra(timelord);
+        }
+        if (data.getUsed() > 0) {
+            TextComponent used = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_USED") + ": " + data.getUsed() + " ");
+            used.setColor(ChatColor.RED);
+            indicator.addExtra(used);
+        } else if (data.getCost() > 0) {
+            TextComponent cost = new TextComponent(TARDIS.plugin.getLanguage().getString("ARTRON_COST") + ": " + data.getCost());
+            cost.setColor(ChatColor.RED);
+            indicator.addExtra(cost);
+        }
+        return indicator;
     }
 }

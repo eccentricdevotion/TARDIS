@@ -16,13 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -32,7 +29,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
@@ -43,6 +39,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -122,12 +121,12 @@ class TARDISHandlesLandCommand {
                                 TARDISHandbrakeListener.toggleBeacon(beacon, false);
                             }
                             // Remove energy from TARDIS and sets database
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON");
+                            plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
-                            new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
+                            plugin.getMessenger().sendArtron(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                 plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));

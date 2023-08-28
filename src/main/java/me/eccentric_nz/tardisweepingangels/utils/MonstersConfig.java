@@ -31,7 +31,6 @@ import java.util.Map;
 
 public class MonstersConfig {
 
-    private final double min_version = 2.0d;
     private final TARDIS plugin;
     private final HashMap<String, List<String>> listOptions = new HashMap<>();
     private final HashMap<String, String> strOptions = new HashMap<>();
@@ -39,11 +38,10 @@ public class MonstersConfig {
     private final HashMap<String, Double> doubleOptions = new HashMap<>();
     private final HashMap<String, Boolean> boolOptions = new HashMap<>();
     private final FileConfiguration config;
-    private final File monstersFile;
 
     public MonstersConfig(TARDIS plugin) {
         this.plugin = plugin;
-        monstersFile = new File(plugin.getDataFolder(), "monsters.yml");
+        File monstersFile = new File(plugin.getDataFolder(), "monsters.yml");
         config = YamlConfiguration.loadConfiguration(monstersFile);
         // integer
         intOptions.put("angels.freeze_time", 100);
@@ -64,7 +62,7 @@ public class MonstersConfig {
         strOptions.put("headless_monks.projectile", "SMALL_FIREBALL");
         // list
         listOptions.put("angels.drops", Arrays.asList("STONE", "COBBLESTONE"));
-        listOptions.put("angels.teleport_worlds", Arrays.asList("world"));
+        listOptions.put("angels.teleport_worlds", List.of("world"));
         listOptions.put("cybermen.drops", Arrays.asList("REDSTONE", "STONE_BUTTON"));
         listOptions.put("daleks.drops", Arrays.asList("SLIME_BALL", "ROTTEN_FLESH"));
         listOptions.put("daleks.dalek_sec_drops", Arrays.asList("VERDANT_FROGLIGHT", "LEATHER_CHESTPLATE"));
@@ -74,7 +72,7 @@ public class MonstersConfig {
         listOptions.put("headless_monks.drops", Arrays.asList("BOOK", "RED_CANDLE"));
         listOptions.put("ice_warriors.drops", Arrays.asList("ICE", "PACKED_ICE", "SNOW_BLOCK"));
         listOptions.put("silent.drops", Arrays.asList("INK_SAC", "FLOWER_POT"));
-        listOptions.put("ood.drops", Arrays.asList("NAME_TAG"));
+        listOptions.put("ood.drops", List.of("NAME_TAG"));
         listOptions.put("racnoss.drops", Arrays.asList("NETHERITE_INGOT", "ECHO_SHARD"));
         listOptions.put("sea_devils.drops", Arrays.asList("COD", "KELP"));
         listOptions.put("silurians.drops", Arrays.asList("GOLD_NUGGET", "FEATHER"));
@@ -98,6 +96,7 @@ public class MonstersConfig {
         boolOptions.put("k9.by_taming", true);
         boolOptions.put("toclafane.destroy_blocks", true);
         // float
+        double min_version = 2.0d;
         doubleOptions.put("config_version", min_version);
     }
 
@@ -142,7 +141,7 @@ public class MonstersConfig {
         if (!config.contains("angels.teleport_locations")) {
             Location location = plugin.getServer().getWorlds().get(0).getSpawnLocation();
             String spawn = location.getWorld().getName()+","+location.getBlockX()+","+location.getBlockY()+","+location.getBlockZ();
-            List<String> list = Arrays.asList(spawn);
+            List<String> list = List.of(spawn);
             plugin.getMonstersConfig().set("angels.teleport_locations", list);
             i++;
         }

@@ -56,7 +56,7 @@ public class DisplayItemDoorToggler {
         if (rsd.resultSet()) {
             int id = rsd.getTardis_id();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_EXIT");
+                plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                 return;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -69,7 +69,7 @@ public class DisplayItemDoorToggler {
             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
             if (rs.resultSet()) {
                 if (!rs.getTardis().isHandbrake_on()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;
                 }
                 UUID playerUUID = player.getUniqueId();
@@ -88,7 +88,7 @@ public class DisplayItemDoorToggler {
                         }
                         new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoors();
                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
+                        plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
                     }

@@ -45,29 +45,31 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSeedMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
-            Player p = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    // close
-                    event.setCancelled(true);
-                    if (slot != 26) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
-                            Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
-                            gui.setContents(recipe);
-                            p.openInventory(gui);
-                        }, 2L);
-                    }
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is != null) {
+            // close
+            event.setCancelled(true);
+            if (slot == 26) {
+                return;
+            }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
+                Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
+                gui.setContents(recipe);
+                p.openInventory(gui);
+            }, 2L);
         }
     }
 

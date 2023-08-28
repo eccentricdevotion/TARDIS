@@ -67,41 +67,36 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onWallFloorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
-            Player p = (Player) event.getWhoClicked();
-            UUID uuid = p.getUniqueId();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        UUID uuid = p.getUniqueId();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 53) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
-                switch (slot) {
-                    case 8 -> {
-                        // scroll up
-                        if (!scrolling.contains(uuid)) {
-                            scrolling.add(uuid);
-                            scroll(view, scroll.get(uuid) + 1, true, uuid);
-                        }
-                    }
-                    case 26 -> {
-                        // scroll down
-                        if (!scrolling.contains(uuid)) {
-                            scrolling.add(uuid);
-                            scroll(view, scroll.get(uuid) - 1, false, uuid);
-                        }
-                    }
-                    case 44 ->
-                        // back to seeds
-                            back(p);
-                    case 53 ->
-                        // close
-                            close(p);
-                    default -> {
-                    }
+            }
+            return;
+        }
+        event.setCancelled(true);
+        switch (slot) {
+            case 8 -> { // scroll up
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) + 1, true, uuid);
                 }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
+            }
+            case 26 -> { // scroll down
+                if (!scrolling.contains(uuid)) {
+                    scrolling.add(uuid);
+                    scroll(view, scroll.get(uuid) - 1, false, uuid);
                 }
+            }
+            case 44 -> back(p); // back to seeds
+            case 53 -> close(p); // close
+            default -> {
             }
         }
     }

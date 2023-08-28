@@ -142,7 +142,7 @@ public class TARDISSiegeMode {
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }
-            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_OFF");
+            plugin.getMessenger().sendStatus(p, "SIEGE_OFF");
         } else {
             // make sure TARDIS is not dispersed
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
@@ -164,7 +164,7 @@ public class TARDISSiegeMode {
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
-            plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_ON");
+            plugin.getMessenger().sendStatus(p, "SIEGE_ON");
             plugin.getPM().callEvent(new TARDISSiegeEvent(p, tardis));
             // butcher hostile mobs?
             if (plugin.getConfig().getBoolean("siege.butcher")) {

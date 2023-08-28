@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -36,6 +35,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and
@@ -71,7 +72,7 @@ public class TARDISBlockBreakListener implements Listener {
             where.put("police_box", 1);
             ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
             if (rsb.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_BREAK");
+                plugin.getMessenger().sendStatus(player, "TARDIS_BREAK");
                 event.setCancelled(true);
                 return;
             }

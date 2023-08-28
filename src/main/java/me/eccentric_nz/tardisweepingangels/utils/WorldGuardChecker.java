@@ -40,10 +40,7 @@ public class WorldGuardChecker {
             RegionManager rm = wg.getRegionContainer().get(BukkitAdapter.adapt(l.getWorld()));
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
             if (rs.testState(null, Flags.MOB_SPAWNING)) {
-                if (rs.queryValue(null, Flags.DENY_SPAWN) != null) {
-                    return false;
-                }
-                return true;
+                return rs.queryValue(null, Flags.DENY_SPAWN) == null;
             } else {
                 return false;
             }

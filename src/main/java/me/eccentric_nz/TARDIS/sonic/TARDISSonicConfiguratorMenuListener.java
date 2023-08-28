@@ -52,28 +52,30 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicConfiguratorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                event.setCancelled(slot != 18);
-                switch (slot) {
-                    // load configured sonic
-                    case 18 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                loadSonic(view.getItem(18), player, view);
-                                setOptions(player, view);
-                            }, 1L);
-                    case 9, 10, 11, 12, 13, 14, 15, 16, 17 -> toggleOption(view.getItem(slot)); // toggle option enabled / disabled
-                    case 25 -> saveConfiguredSonic(player, view); // save selected options
-                    case 26 -> close(player);
-                    default -> event.setCancelled(true);
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
+            return;
+        }
+        event.setCancelled(slot != 18);
+        switch (slot) {
+            // load configured sonic
+            case 18 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                loadSonic(view.getItem(18), player, view);
+                setOptions(player, view);
+            }, 1L);
+            case 9, 10, 11, 12, 13, 14, 15, 16, 17 ->
+                    toggleOption(view.getItem(slot)); // toggle option enabled / disabled
+            case 25 -> saveConfiguredSonic(player, view); // save selected options
+            case 26 -> close(player);
+            default -> event.setCancelled(true);
         }
     }
 
@@ -95,62 +97,63 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
 
     private void setOptions(Player player, InventoryView view) {
         ConfiguredSonic configuredSonic = sonics.get(player.getUniqueId());
-        if (configuredSonic != null) {
-            ItemStack bio = view.getItem(9);
-            bio.setType(configuredSonic.getBio().getMaterial());
-            ItemMeta bim = bio.getItemMeta();
-            bim.setDisplayName(configuredSonic.getBio().getName());
-            bim.setCustomModelData(configuredSonic.getBio().getCustomModelData());
-            bio.setItemMeta(bim);
-            ItemStack dia = view.getItem(10);
-            dia.setType(configuredSonic.getDiamond().getMaterial());
-            ItemMeta dim = dia.getItemMeta();
-            dim.setDisplayName(configuredSonic.getDiamond().getName());
-            dim.setCustomModelData(configuredSonic.getDiamond().getCustomModelData());
-            dia.setItemMeta(dim);
-            ItemStack eme = view.getItem(11);
-            eme.setType(configuredSonic.getEmerald().getMaterial());
-            ItemMeta eim = eme.getItemMeta();
-            eim.setDisplayName(configuredSonic.getEmerald().getName());
-            eim.setCustomModelData(configuredSonic.getEmerald().getCustomModelData());
-            eme.setItemMeta(eim);
-            ItemStack red = view.getItem(12);
-            red.setType(configuredSonic.getRedstone().getMaterial());
-            ItemMeta rim = red.getItemMeta();
-            rim.setDisplayName(configuredSonic.getRedstone().getName());
-            rim.setCustomModelData(configuredSonic.getRedstone().getCustomModelData());
-            red.setItemMeta(rim);
-            ItemStack pai = view.getItem(13);
-            pai.setType(configuredSonic.getPainter().getMaterial());
-            ItemMeta pim = pai.getItemMeta();
-            pim.setDisplayName(configuredSonic.getPainter().getName());
-            pim.setCustomModelData(configuredSonic.getPainter().getCustomModelData());
-            pai.setItemMeta(pim);
-            ItemStack ign = view.getItem(14);
-            ign.setType(configuredSonic.getIgnite().getMaterial());
-            ItemMeta iim = ign.getItemMeta();
-            iim.setDisplayName(configuredSonic.getIgnite().getName());
-            iim.setCustomModelData(configuredSonic.getIgnite().getCustomModelData());
-            ign.setItemMeta(iim);
-            ItemStack arr = view.getItem(15);
-            arr.setType(configuredSonic.getArrow().getMaterial());
-            ItemMeta aim = arr.getItemMeta();
-            aim.setDisplayName(configuredSonic.getArrow().getName());
-            aim.setCustomModelData(configuredSonic.getArrow().getCustomModelData());
-            arr.setItemMeta(aim);
-            ItemStack kno = view.getItem(16);
-            kno.setType(configuredSonic.getKnockback().getMaterial());
-            ItemMeta kim = kno.getItemMeta();
-            kim.setDisplayName(configuredSonic.getKnockback().getName());
-            kim.setCustomModelData(configuredSonic.getKnockback().getCustomModelData());
-            kno.setItemMeta(kim);
-            ItemStack bru = view.getItem(17);
-            bru.setType(configuredSonic.getBrush().getMaterial());
-            ItemMeta sh = bru.getItemMeta();
-            sh.setDisplayName(configuredSonic.getBrush().getName());
-            sh.setCustomModelData(configuredSonic.getBrush().getCustomModelData());
-            bru.setItemMeta(sh);
+        if (configuredSonic == null) {
+            return;
         }
+        ItemStack bio = view.getItem(9);
+        bio.setType(configuredSonic.getBio().getMaterial());
+        ItemMeta bim = bio.getItemMeta();
+        bim.setDisplayName(configuredSonic.getBio().getName());
+        bim.setCustomModelData(configuredSonic.getBio().getCustomModelData());
+        bio.setItemMeta(bim);
+        ItemStack dia = view.getItem(10);
+        dia.setType(configuredSonic.getDiamond().getMaterial());
+        ItemMeta dim = dia.getItemMeta();
+        dim.setDisplayName(configuredSonic.getDiamond().getName());
+        dim.setCustomModelData(configuredSonic.getDiamond().getCustomModelData());
+        dia.setItemMeta(dim);
+        ItemStack eme = view.getItem(11);
+        eme.setType(configuredSonic.getEmerald().getMaterial());
+        ItemMeta eim = eme.getItemMeta();
+        eim.setDisplayName(configuredSonic.getEmerald().getName());
+        eim.setCustomModelData(configuredSonic.getEmerald().getCustomModelData());
+        eme.setItemMeta(eim);
+        ItemStack red = view.getItem(12);
+        red.setType(configuredSonic.getRedstone().getMaterial());
+        ItemMeta rim = red.getItemMeta();
+        rim.setDisplayName(configuredSonic.getRedstone().getName());
+        rim.setCustomModelData(configuredSonic.getRedstone().getCustomModelData());
+        red.setItemMeta(rim);
+        ItemStack pai = view.getItem(13);
+        pai.setType(configuredSonic.getPainter().getMaterial());
+        ItemMeta pim = pai.getItemMeta();
+        pim.setDisplayName(configuredSonic.getPainter().getName());
+        pim.setCustomModelData(configuredSonic.getPainter().getCustomModelData());
+        pai.setItemMeta(pim);
+        ItemStack ign = view.getItem(14);
+        ign.setType(configuredSonic.getIgnite().getMaterial());
+        ItemMeta iim = ign.getItemMeta();
+        iim.setDisplayName(configuredSonic.getIgnite().getName());
+        iim.setCustomModelData(configuredSonic.getIgnite().getCustomModelData());
+        ign.setItemMeta(iim);
+        ItemStack arr = view.getItem(15);
+        arr.setType(configuredSonic.getArrow().getMaterial());
+        ItemMeta aim = arr.getItemMeta();
+        aim.setDisplayName(configuredSonic.getArrow().getName());
+        aim.setCustomModelData(configuredSonic.getArrow().getCustomModelData());
+        arr.setItemMeta(aim);
+        ItemStack kno = view.getItem(16);
+        kno.setType(configuredSonic.getKnockback().getMaterial());
+        ItemMeta kim = kno.getItemMeta();
+        kim.setDisplayName(configuredSonic.getKnockback().getName());
+        kim.setCustomModelData(configuredSonic.getKnockback().getCustomModelData());
+        kno.setItemMeta(kim);
+        ItemStack bru = view.getItem(17);
+        bru.setType(configuredSonic.getBrush().getMaterial());
+        ItemMeta sh = bru.getItemMeta();
+        sh.setDisplayName(configuredSonic.getBrush().getName());
+        sh.setCustomModelData(configuredSonic.getBrush().getCustomModelData());
+        bru.setItemMeta(sh);
     }
 
     private void toggleOption(ItemStack option) {
@@ -208,78 +211,79 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         upgrades.add("Upgrades:");
         //update configured sonic
         ConfiguredSonic configuredSonic = sonics.get(player.getUniqueId());
-        if (configuredSonic != null) {
-            int bio = getSonicConfig(9, view);
-            if (bio == 1) {
-                upgrades.add("Bio-scanner Upgrade");
+        if (configuredSonic == null) {
+            return;
+        }
+        int bio = getSonicConfig(9, view);
+        if (bio == 1) {
+            upgrades.add("Bio-scanner Upgrade");
+        }
+        configuredSonic.setBio(SonicConfig.values()[bio]);
+        int dia = getSonicConfig(10, view);
+        if (dia == 1) {
+            upgrades.add("Diamond Upgrade");
+        }
+        configuredSonic.setDiamond(SonicConfig.values()[dia]);
+        int eme = getSonicConfig(11, view);
+        if (eme == 1) {
+            upgrades.add("Emerald Upgrade");
+        }
+        configuredSonic.setEmerald(SonicConfig.values()[eme]);
+        int red = getSonicConfig(12, view);
+        if (red == 1) {
+            upgrades.add("Redstone Upgrade");
+        }
+        configuredSonic.setRedstone(SonicConfig.values()[red]);
+        int pai = getSonicConfig(13, view);
+        if (pai == 1) {
+            upgrades.add("Painter Upgrade");
+        }
+        configuredSonic.setPainter(SonicConfig.values()[pai]);
+        int ign = getSonicConfig(14, view);
+        if (ign == 1) {
+            upgrades.add("Ignite Upgrade");
+        }
+        configuredSonic.setIgnite(SonicConfig.values()[ign]);
+        int arr = getSonicConfig(15, view);
+        if (arr == 1) {
+            upgrades.add("Pickup Arrows Upgrade");
+        }
+        configuredSonic.setArrow(SonicConfig.values()[arr]);
+        int kno = getSonicConfig(16, view);
+        if (kno == 1) {
+            upgrades.add("Knockback Upgrade");
+        }
+        configuredSonic.setKnockback(SonicConfig.values()[kno]);
+        int bru = getSonicConfig(17, view);
+        if (bru == 1) {
+            upgrades.add("Brush Upgrade");
+        }
+        configuredSonic.setBrush(SonicConfig.values()[bru]);
+        sonics.put(player.getUniqueId(), configuredSonic);
+        // prepare data for database insertion
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("bio", bio);
+        set.put("diamond", dia);
+        set.put("emerald", eme);
+        set.put("redstone", red);
+        set.put("painter", pai);
+        set.put("ignite", ign);
+        set.put("arrow", arr);
+        set.put("knockback", kno);
+        set.put("brush", bru);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("sonic_id", configuredSonic.getSonic_id());
+        plugin.getQueryFactory().doUpdate("sonic", set, where);
+        // set sonic lore
+        ItemStack sonic = view.getItem(18);
+        if (TARDISStaticUtils.isSonic(sonic)) {
+            ItemMeta im = sonic.getItemMeta();
+            if (upgrades.size() > 1) {
+                im.setLore(upgrades);
+            } else {
+                im.setLore(null);
             }
-            configuredSonic.setBio(SonicConfig.values()[bio]);
-            int dia = getSonicConfig(10, view);
-            if (dia == 1) {
-                upgrades.add("Diamond Upgrade");
-            }
-            configuredSonic.setDiamond(SonicConfig.values()[dia]);
-            int eme = getSonicConfig(11, view);
-            if (eme == 1) {
-                upgrades.add("Emerald Upgrade");
-            }
-            configuredSonic.setEmerald(SonicConfig.values()[eme]);
-            int red = getSonicConfig(12, view);
-            if (red == 1) {
-                upgrades.add("Redstone Upgrade");
-            }
-            configuredSonic.setRedstone(SonicConfig.values()[red]);
-            int pai = getSonicConfig(13, view);
-            if (pai == 1) {
-                upgrades.add("Painter Upgrade");
-            }
-            configuredSonic.setPainter(SonicConfig.values()[pai]);
-            int ign = getSonicConfig(14, view);
-            if (ign == 1) {
-                upgrades.add("Ignite Upgrade");
-            }
-            configuredSonic.setIgnite(SonicConfig.values()[ign]);
-            int arr = getSonicConfig(15, view);
-            if (arr == 1) {
-                upgrades.add("Pickup Arrows Upgrade");
-            }
-            configuredSonic.setArrow(SonicConfig.values()[arr]);
-            int kno = getSonicConfig(16, view);
-            if (kno == 1) {
-                upgrades.add("Knockback Upgrade");
-            }
-            configuredSonic.setKnockback(SonicConfig.values()[kno]);
-            int bru = getSonicConfig(17, view);
-            if (bru == 1) {
-                upgrades.add("Brush Upgrade");
-            }
-            configuredSonic.setBrush(SonicConfig.values()[bru]);
-            sonics.put(player.getUniqueId(), configuredSonic);
-            // prepare data for database insertion
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("bio", bio);
-            set.put("diamond", dia);
-            set.put("emerald", eme);
-            set.put("redstone", red);
-            set.put("painter", pai);
-            set.put("ignite", ign);
-            set.put("arrow", arr);
-            set.put("knockback", kno);
-            set.put("brush", bru);
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("sonic_id", configuredSonic.getSonic_id());
-            plugin.getQueryFactory().doUpdate("sonic", set, where);
-            // set sonic lore
-            ItemStack sonic = view.getItem(18);
-            if (TARDISStaticUtils.isSonic(sonic)) {
-                ItemMeta im = sonic.getItemMeta();
-                if (upgrades.size() > 1) {
-                    im.setLore(upgrades);
-                } else {
-                    im.setLore(null);
-                }
-                sonic.setItemMeta(im);
-            }
+            sonic.setItemMeta(im);
         }
     }
 
@@ -338,8 +342,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onKeyMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!title.equals(ChatColor.DARK_RED + "Sonic Configurator")) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
             return;
         }
         ItemStack sonic = view.getItem(18);

@@ -68,7 +68,6 @@ public class TARDISWeepingAngels {
     private static final List<UUID> timesUp = new ArrayList<>();
     private static final List<UUID> guards = new ArrayList<>();
     private static final List<UUID> playersWithGuards = new ArrayList<>();
-    private static final HashMap<UUID, Integer> followTasks = new HashMap<>();
     public static NamespacedKey ANGEL;
     public static NamespacedKey CYBERMAN;
     public static NamespacedKey DALEK;
@@ -134,12 +133,9 @@ public class TARDISWeepingAngels {
         return playersWithGuards;
     }
 
-    public static HashMap<UUID, Integer> getFollowTasks() {
-        return followTasks;
-    }
-
     public void enable() {
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
+        // TODO add TWA apin to TARDIS API
         api = new MonsterEquipment();
         // update the config
         new MonstersConfig(plugin).updateConfig();
@@ -232,6 +228,7 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new WorldProcessor(plugin), 200L);
     }
 
+    // TODO
     public MonsterEquipment getWeepingAngelsAPI() {
         return api;
     }

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -33,6 +31,9 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -185,7 +186,7 @@ public class TARDISRandomButton {
                                 wherec.put("uuid", c);
                                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
                                 if (rsv.resultSet() && !plugin.getConfig().getBoolean("preferences.no_coords")) {
-                                    plugin.getMessenger().send(plugin.getServer().getPlayer(cuuid), TardisModule.TARDIS, "DEST", dchat);
+                                    plugin.getMessenger().sendStatus(plugin.getServer().getPlayer(cuuid), "DEST", dchat);
                                 }
                             }
                             if (c.equalsIgnoreCase(player.getName())) {
@@ -195,9 +196,9 @@ public class TARDISRandomButton {
                     }
                     if (!plugin.getConfig().getBoolean("preferences.no_coords")) {
                         if (isTL) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST", dchat);
+                            plugin.getMessenger().sendStatus(player, "DEST", dchat);
                         } else if (plugin.getServer().getPlayer(ownerUUID) != null) {
-                            plugin.getMessenger().send(plugin.getServer().getPlayer(ownerUUID), TardisModule.TARDIS, "DEST", dchat);
+                            plugin.getMessenger().sendStatus(plugin.getServer().getPlayer(ownerUUID),"DEST", dchat);
                         }
                     }
                     HashMap<String, Object> wherel = new HashMap<>();

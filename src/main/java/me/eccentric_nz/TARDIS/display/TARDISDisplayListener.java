@@ -33,11 +33,13 @@ public class TARDISDisplayListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId())) {
-            if (event.getFrom().getWorld().getName().contains("TARDIS")) {
-                return;
-            }
-            plugin.getMessenger().sendHeadsUpDisplay(player, plugin);
+        if (!plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId())) {
+            return;
         }
+        if (event.getFrom().getWorld().getName().contains("TARDIS")) {
+            return;
+        }
+        plugin.getMessenger().sendHeadsUpDisplay(player, plugin);
     }
 }
+

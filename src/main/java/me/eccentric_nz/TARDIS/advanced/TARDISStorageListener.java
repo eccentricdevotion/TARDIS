@@ -44,10 +44,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Banshee Circuits were components of TARDISes, emergency defence mechanisms
- * used as a last resort when all other systems had failed. They allowed a
- * TARDIS to use whatever resources were available to ensure the survival of the
- * ship and its crew.
+ * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
+ * systems had failed. They allowed a TARDIS to use whatever resources were available to ensure the survival of the ship
+ * and its crew.
  *
  * @author eccentric_nz
  */
@@ -87,16 +86,18 @@ public class TARDISStorageListener extends TARDISMenuListener {
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < event.getInventory().getSize(); i++) {
                 ItemStack stack = view.getItem(i);
-                if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
-                    ItemMeta ims = stack.getItemMeta();
-                    if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
-                        Player p = (Player) event.getPlayer();
-                        Location loc = p.getLocation();
-                        loc.getWorld().dropItemNaturally(loc, stack);
-                        view.setItem(i, new ItemStack(Material.AIR));
-                        plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_STORE");
-                    }
+                if (stack == null || !stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
+                    return;
                 }
+                ItemMeta ims = stack.getItemMeta();
+                if (!ims.hasDisplayName() || !ims.getDisplayName().equals("Area Storage Disk")) {
+                    return;
+                }
+                Player p = (Player) event.getPlayer();
+                Location loc = p.getLocation();
+                loc.getWorld().dropItemNaturally(loc, stack);
+                view.setItem(i, new ItemStack(Material.AIR));
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_STORE");
             }
         }
     }
@@ -117,90 +118,91 @@ public class TARDISStorageListener extends TARDISMenuListener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            // which inventory screen is it?
-            String[] split = title.split(" ");
-            String tmp = split[0].toUpperCase(Locale.ENGLISH);
-            if (split.length > 2) {
-                tmp = tmp + "_" + split[2];
-            }
-            Storage store = Storage.valueOf(tmp);
-            if (slot < 6 || slot == 18 || slot == 26) {
-                saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
-            }
-            switch (slot) {
-                case 0 -> {
-                    if (!store.equals(Storage.SAVE_1)) {
-                        // switch to saves
-                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
-                    }
-                }
-                case 1 -> {
-                    if (!store.equals(Storage.AREA)) {
-                        // switch to areas
-                        loadInventory(rs.getAreas(), player, Storage.AREA);
-                    }
-                }
-                case 2 -> {
-                    if (!store.equals(Storage.PLAYER)) {
-                        // switch to players
-                        loadInventory(rs.getPlayers(), player, Storage.PLAYER);
-                    }
-                }
-                case 3 -> {
-                    if (!store.equals(Storage.BIOME_1)) {
-                        // switch to biomes
-                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
-                    }
-                }
-                case 4 -> {
-                    if (!store.equals(Storage.PRESET_1)) {
-                        // switch to presets
-                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
-                    }
-                }
-                case 5 -> {
-                    if (!store.equals(Storage.CIRCUIT)) {
-                        // switch to circuits
-                        loadInventory(rs.getCircuits(), player, Storage.CIRCUIT);
-                    }
-                }
-                default -> {
+        if (!rs.resultSet()) {
+            return;
+        }
+        // which inventory screen is it?
+        String[] split = title.split(" ");
+        String tmp = split[0].toUpperCase(Locale.ENGLISH);
+        if (split.length > 2) {
+            tmp = tmp + "_" + split[2];
+        }
+        Storage store = Storage.valueOf(tmp);
+        if (slot < 6 || slot == 18 || slot == 26) {
+            saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
+        }
+        switch (slot) {
+            case 0 -> {
+                if (!store.equals(Storage.SAVE_1)) {
+                    // switch to saves
+                    loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                 }
             }
-            switch (store) {
-                case BIOME_1 -> {
-                    if (slot == 26) {// switch to biome 2
-                        loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
-                    }
+            case 1 -> {
+                if (!store.equals(Storage.AREA)) {
+                    // switch to areas
+                    loadInventory(rs.getAreas(), player, Storage.AREA);
                 }
-                case BIOME_2 -> {
-                    if (slot == 18) {// switch to biome 1
-                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
-                    }
+            }
+            case 2 -> {
+                if (!store.equals(Storage.PLAYER)) {
+                    // switch to players
+                    loadInventory(rs.getPlayers(), player, Storage.PLAYER);
                 }
-                case PRESET_1 -> {
-                    if (slot == 26) {// switch to preset 2
-                        loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
-                    }
+            }
+            case 3 -> {
+                if (!store.equals(Storage.BIOME_1)) {
+                    // switch to biomes
+                    loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                 }
-                case PRESET_2 -> {
-                    if (slot == 18) {// switch to preset 1
-                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
-                    }
+            }
+            case 4 -> {
+                if (!store.equals(Storage.PRESET_1)) {
+                    // switch to presets
+                    loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                 }
-                case SAVE_1 -> {
-                    if (slot == 26) {// switch to save 2
-                        loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
-                    }
+            }
+            case 5 -> {
+                if (!store.equals(Storage.CIRCUIT)) {
+                    // switch to circuits
+                    loadInventory(rs.getCircuits(), player, Storage.CIRCUIT);
                 }
-                case SAVE_2 -> {
-                    if (slot == 18) {// switch to save 1
-                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
-                    }
+            }
+            default -> {
+            }
+        }
+        switch (store) {
+            case BIOME_1 -> {
+                if (slot == 26) {// switch to biome 2
+                    loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
                 }
-                default -> { // no extra pages
+            }
+            case BIOME_2 -> {
+                if (slot == 18) {// switch to biome 1
+                    loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                 }
+            }
+            case PRESET_1 -> {
+                if (slot == 26) {// switch to preset 2
+                    loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
+                }
+            }
+            case PRESET_2 -> {
+                if (slot == 18) {// switch to preset 1
+                    loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
+                }
+            }
+            case SAVE_1 -> {
+                if (slot == 26) {// switch to save 2
+                    loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
+                }
+            }
+            case SAVE_2 -> {
+                if (slot == 18) {// switch to save 1
+                    loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
+                }
+            }
+            default -> { // no extra pages
             }
         }
     }
@@ -208,7 +210,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
         ItemStack stack = event.getItemDrop().getItemStack();
-        if (stack == null || !stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
+        if (!stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
             return;
         }
         ItemMeta ims = stack.getItemMeta();

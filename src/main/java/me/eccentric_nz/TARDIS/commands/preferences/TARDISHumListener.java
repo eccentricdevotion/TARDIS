@@ -62,58 +62,61 @@ public class TARDISHumListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 18) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    Player p = (Player) event.getWhoClicked();
-                    UUID uuid = p.getUniqueId();
-                    ItemMeta im = is.getItemMeta();
-                    switch (slot) {
-                        case 11 -> {
-                            HashMap<String, Object> setr = new HashMap<>();
-                            HashMap<String, Object> wherer = new HashMap<>();
-                            wherer.put("uuid", uuid.toString());
-                            setr.put("hum", "");
-                            plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
-                            close(p);
-                            plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
-                        }
-                        case 15 -> {
-                            // toggle play save
-                            if (isPlay(view)) {
-                                setPlay(view, "SAVE");
-                            } else {
-                                setPlay(view, "PLAY");
-                            }
-                        }
-                        case 17 ->
-                            // close
-                                close(p);
-                        default -> {
-                            if (isPlay(view)) {
-                                long now = System.currentTimeMillis();
-                                if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
-                                    close(p);
-                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_WAIT");
-                                } else {
-                                    TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
-                                    last.put(uuid, slot);
-                                    cooldown.put(uuid, System.currentTimeMillis());
-                                }
-                            } else {
-                                HashMap<String, Object> set = new HashMap<>();
-                                HashMap<String, Object> where = new HashMap<>();
-                                where.put("uuid", uuid.toString());
-                                set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
-                                plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-                                close(p);
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
-                            }
-                        }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 17) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        Player p = (Player) event.getWhoClicked();
+        UUID uuid = p.getUniqueId();
+        ItemMeta im = is.getItemMeta();
+        switch (slot) {
+            case 11 -> {
+                HashMap<String, Object> setr = new HashMap<>();
+                HashMap<String, Object> wherer = new HashMap<>();
+                wherer.put("uuid", uuid.toString());
+                setr.put("hum", "");
+                plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
+                close(p);
+                plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
+            }
+            case 15 -> {
+                // toggle play save
+                if (isPlay(view)) {
+                    setPlay(view, "SAVE");
+                } else {
+                    setPlay(view, "PLAY");
+                }
+            }
+            case 17 ->
+                // close
+                    close(p);
+            default -> {
+                if (isPlay(view)) {
+                    long now = System.currentTimeMillis();
+                    if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
+                        close(p);
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_WAIT");
+                    } else {
+                        TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
+                        last.put(uuid, slot);
+                        cooldown.put(uuid, System.currentTimeMillis());
                     }
+                } else {
+                    HashMap<String, Object> set = new HashMap<>();
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("uuid", uuid.toString());
+                    set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
+                    plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+                    close(p);
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
                 }
             }
         }

@@ -52,48 +52,53 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Template")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    // get the TARDIS the player is in
-                    HashMap<String, Object> wheres = new HashMap<>();
-                    wheres.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                    if (rst.resultSet()) {
-                        int id = rst.getTardis_id();
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                        if (rs.resultSet()) {
-                            switch (slot) {
-                                case 0 ->
-                                    // back
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
-                                            ItemStack[] items = tci.getHelp();
-                                            Inventory chamhelp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
-                                            chamhelp.setContents(items);
-                                            player.openInventory(chamhelp);
-                                        }, 2L);
-                                case 8 ->
-                                    // construct
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
-                                            ItemStack[] items = tci.getConstruct();
-                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
-                                            chamcon.setContents(items);
-                                            player.openInventory(chamcon);
-                                        }, 2L);
-                                default -> {
-                                }
-                            }
-                        }
-                    }
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Template")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 0 || slot > 53) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        // get the TARDIS the player is in
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+        if (!rst.resultSet()) {
+            return;
+        }
+        int id = rst.getTardis_id();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (!rs.resultSet()) {
+            return;
+        }
+        switch (slot) {
+            case 0 ->
+                // back
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
+                        ItemStack[] items = tci.getHelp();
+                        Inventory chamhelp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
+                        chamhelp.setContents(items);
+                        player.openInventory(chamhelp);
+                    }, 2L);
+            case 8 ->
+                // construct
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                        ItemStack[] items = tci.getConstruct();
+                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+                        chamcon.setContents(items);
+                        player.openInventory(chamcon);
+                    }, 2L);
+            default -> {
             }
         }
     }

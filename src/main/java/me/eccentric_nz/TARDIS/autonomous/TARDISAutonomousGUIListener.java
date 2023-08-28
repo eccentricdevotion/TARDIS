@@ -59,66 +59,69 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Autonomous Menu")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 36) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    HashMap<String, Object> set = new HashMap<>();
-                    switch (slot) {
-                        case 3 -> {
-                            // home
-                            set.put("auto_type", "HOME");
-                            setTypeSlots(view, 12);
-                        }
-                        case 4 -> {
-                            // areas
-                            if (hasAreas()) {
-                                set.put("auto_type", "AREAS");
-                                setTypeSlots(view, 13);
-                            } else {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
-                            }
-                        }
-                        case 5 -> {
-                            // configured areas
-                            if (!plugin.getConfig().getStringList("autonomous_areas").isEmpty()) {
-                                set.put("auto_type", "CONFIGURED_AREAS");
-                                setTypeSlots(view, 14);
-                            } else {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
-                            }
-                        }
-                        case 6 -> {
-                            // closest
-                            set.put("auto_type", "CLOSEST");
-                            setTypeSlots(view, 15);
-                        }
-                        case 21 -> {
-                            // go home
-                            set.put("auto_default", "HOME");
-                            setDefaultSlots(view, 30);
-                        }
-                        case 22 -> {
-                            // stay
-                            set.put("auto_default", "STAY");
-                            setDefaultSlots(view, 31);
-                        }
-                        case 35 -> close(player);
-                        default -> {
-                            //ignore
-                        }
-                    }
-                    if (!set.isEmpty()) {
-                        // update player prefs
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("uuid", player.getUniqueId().toString());
-                        plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-                    }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Autonomous Menu")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        if (slot < 0 || slot > 35) {
+            return;
+        }
+        ItemStack is = view.getItem(slot);
+        if (is == null) {
+            return;
+        }
+        HashMap<String, Object> set = new HashMap<>();
+        switch (slot) {
+            case 3 -> {
+                // home
+                set.put("auto_type", "HOME");
+                setTypeSlots(view, 12);
+            }
+            case 4 -> {
+                // areas
+                if (hasAreas()) {
+                    set.put("auto_type", "AREAS");
+                    setTypeSlots(view, 13);
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
                 }
             }
+            case 5 -> {
+                // configured areas
+                if (!plugin.getConfig().getStringList("autonomous_areas").isEmpty()) {
+                    set.put("auto_type", "CONFIGURED_AREAS");
+                    setTypeSlots(view, 14);
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONFIGURED_AREAS");
+                }
+            }
+            case 6 -> {
+                // closest
+                set.put("auto_type", "CLOSEST");
+                setTypeSlots(view, 15);
+            }
+            case 21 -> {
+                // go home
+                set.put("auto_default", "HOME");
+                setDefaultSlots(view, 30);
+            }
+            case 22 -> {
+                // stay
+                set.put("auto_default", "STAY");
+                setDefaultSlots(view, 31);
+            }
+            case 35 -> close(player);
+            default -> {
+                //ignore
+            }
+        }
+        if (!set.isEmpty()) {
+            // update player prefs
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         }
     }
 

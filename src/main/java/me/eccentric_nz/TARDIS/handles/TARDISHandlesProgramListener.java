@@ -61,152 +61,153 @@ public class TARDISHandlesProgramListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
-            Player player = (Player) event.getWhoClicked();
-            UUID uuid = player.getUniqueId();
-            if (!scroll_list.containsKey(uuid)) {
-                scroll_list.put(uuid, TARDISHandlesBlock.getControls());
-                scroll_category.put(uuid, TARDISHandlesCategory.CONTROL);
-            }
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 36) {
-                // only allow Storage Disks
-                ItemStack item = player.getItemOnCursor();
-                if (item != null && !allowed.contains(item.getType())) {
-                    event.setCancelled(true);
-                }
-            }
-            if (slot < 0 || (slot > 35 && slot < 54)) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+        if (!scroll_list.containsKey(uuid)) {
+            scroll_list.put(uuid, TARDISHandlesBlock.getControls());
+            scroll_category.put(uuid, TARDISHandlesCategory.CONTROL);
+        }
+        int slot = event.getRawSlot();
+        if (slot >= 0 && slot < 36) {
+            // only allow Storage Disks
+            ItemStack item = player.getItemOnCursor();
+            if (item != null && !allowed.contains(item.getType())) {
                 event.setCancelled(true);
             }
-            switch (slot) {
-                case 36 -> {
-                    // set control blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getControls());
-                    setList(uuid, TARDISHandlesCategory.CONTROL, view);
-                    scroll_start.put(uuid, 0);
+        }
+        if (slot < 0 || (slot > 35 && slot < 54)) {
+            event.setCancelled(true);
+        }
+        switch (slot) {
+            case 36 -> {
+                // set control blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getControls());
+                setList(uuid, TARDISHandlesCategory.CONTROL, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 37 -> {
+                // set operator blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getOperators());
+                setList(uuid, TARDISHandlesCategory.OPERATOR, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 38 -> {
+                // set variable blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getVariables());
+                setList(uuid, TARDISHandlesCategory.VARIABLE, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 39 -> {
+                // set number blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getNumbers());
+                setList(uuid, TARDISHandlesCategory.NUMBER, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 40 -> {
+                // set event blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getEvents());
+                setList(uuid, TARDISHandlesCategory.EVENT, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 41 -> {
+                // set command blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getCommands());
+                setList(uuid, TARDISHandlesCategory.COMMAND, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 42 -> {
+                // set selector blocks
+                scroll_list.put(uuid, TARDISHandlesBlock.getSelectors());
+                setList(uuid, TARDISHandlesCategory.SELECTOR, view);
+                scroll_start.put(uuid, 0);
+            }
+            case 43 ->
+                // go to saved disks
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
+                        ItemStack[] items = thsi.getPrograms();
+                        Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
+                        programsinv.setContents(items);
+                        player.openInventory(programsinv);
+                    }, 2L);
+            case 44 -> {
+                // save program
+                int pid = saveDisk(view, uuid.toString(), player);
+                if (pid != -1) {
+                    close(player);
+                    ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName("Handles Program Disk");
+                    im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
+                    im.addItemFlags(ItemFlag.values());
+                    im.setCustomModelData(10000001);
+                    is.setItemMeta(im);
+                    player.getWorld().dropItemNaturally(player.getLocation(), is);
+                    plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_NOTHING");
                 }
-                case 37 -> {
-                    // set operator blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getOperators());
-                    setList(uuid, TARDISHandlesCategory.OPERATOR, view);
-                    scroll_start.put(uuid, 0);
+            }
+            case 45, 46, 47, 48, 49, 50, 51 -> {
+                // duplicate Item stack on cursor
+                ItemStack is = view.getItem(slot);
+                ItemStack cursor = player.getItemOnCursor();
+                if (cursor != null && (is == null || cursor.isSimilar(is))) {
+                    player.setItemOnCursor(null);
+                } else {
+                    player.setItemOnCursor(is.clone());
                 }
-                case 38 -> {
-                    // set variable blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getVariables());
-                    setList(uuid, TARDISHandlesCategory.VARIABLE, view);
-                    scroll_start.put(uuid, 0);
+                if (is != null) {
+                    is.setAmount(1);
                 }
-                case 39 -> {
-                    // set number blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getNumbers());
-                    setList(uuid, TARDISHandlesCategory.NUMBER, view);
-                    scroll_start.put(uuid, 0);
-                }
-                case 40 -> {
-                    // set event blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getEvents());
-                    setList(uuid, TARDISHandlesCategory.EVENT, view);
-                    scroll_start.put(uuid, 0);
-                }
-                case 41 -> {
-                    // set command blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getCommands());
-                    setList(uuid, TARDISHandlesCategory.COMMAND, view);
-                    scroll_start.put(uuid, 0);
-                }
-                case 42 -> {
-                    // set selector blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getSelectors());
-                    setList(uuid, TARDISHandlesCategory.SELECTOR, view);
-                    scroll_start.put(uuid, 0);
-                }
-                case 43 ->
-                    // go to saved disks
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
-                            ItemStack[] items = thsi.getPrograms();
-                            Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
-                            programsinv.setContents(items);
-                            player.openInventory(programsinv);
-                        }, 2L);
-                case 44 -> {
-                    // save program
-                    int pid = saveDisk(view, uuid.toString(), player);
-                    if (pid != -1) {
-                        close(player);
-                        ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
-                        ItemMeta im = is.getItemMeta();
-                        im.setDisplayName("Handles Program Disk");
-                        im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
-                        im.addItemFlags(ItemFlag.values());
-                        im.setCustomModelData(10000001);
-                        is.setItemMeta(im);
-                        player.getWorld().dropItemNaturally(player.getLocation(), is);
-                        plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
-                    } else {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_NOTHING");
-                    }
-                }
-                case 45, 46, 47, 48, 49, 50, 51 -> {
-                    // duplicate Item stack on cursor
-                    ItemStack is = view.getItem(slot);
-                    ItemStack cursor = player.getItemOnCursor();
-                    if (cursor != null && (is == null || cursor.isSimilar(is))) {
-                        player.setItemOnCursor(null);
-                    } else {
-                        player.setItemOnCursor(is.clone());
-                    }
-                    if (is != null) {
-                        is.setAmount(1);
-                    }
-                }
-                case 52 -> {
-                    // scroll left
-                    if (scroll_category.get(uuid).getSize() > 7) {
-                        int startl;
-                        int max = scroll_list.get(uuid).size() - 7;
-                        if (scroll_start.containsKey(uuid)) {
-                            startl = scroll_start.get(uuid) + 1;
-                            if (startl >= max) {
-                                startl = max;
-                            }
-                        } else {
-                            startl = 1;
+            }
+            case 52 -> {
+                // scroll left
+                if (scroll_category.get(uuid).getSize() > 7) {
+                    int startl;
+                    int max = scroll_list.get(uuid).size() - 7;
+                    if (scroll_start.containsKey(uuid)) {
+                        startl = scroll_start.get(uuid) + 1;
+                        if (startl >= max) {
+                            startl = max;
                         }
-                        scroll_start.put(uuid, startl);
-                        for (int i = 0; i < 7; i++) {
-                            // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
-                            setSlot(view, (45 + i), scroll_list.get(uuid).get(startl + i));
-                        }
+                    } else {
+                        startl = 1;
+                    }
+                    scroll_start.put(uuid, startl);
+                    for (int i = 0; i < 7; i++) {
+                        // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
+                        setSlot(view, (45 + i), scroll_list.get(uuid).get(startl + i));
                     }
                 }
-                case 53 -> {
-                    // scroll right
-                    if (scroll_category.get(uuid).getSize() > 7) {
-                        int startr;
-                        if (scroll_start.containsKey(uuid)) {
-                            startr = scroll_start.get(uuid) - 1;
-                            if (startr <= 0) {
-                                startr = 0;
-                            }
-                        } else {
+            }
+            case 53 -> {
+                // scroll right
+                if (scroll_category.get(uuid).getSize() > 7) {
+                    int startr;
+                    if (scroll_start.containsKey(uuid)) {
+                        startr = scroll_start.get(uuid) - 1;
+                        if (startr <= 0) {
                             startr = 0;
                         }
-                        scroll_start.put(uuid, startr);
-                        for (int i = 0; i < 7; i++) {
-                            // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
-                            setSlot(view, (45 + i), scroll_list.get(uuid).get(startr + i));
-                        }
+                    } else {
+                        startr = 0;
+                    }
+                    scroll_start.put(uuid, startr);
+                    for (int i = 0; i < 7; i++) {
+                        // setSlot(Inventory inv, int slot, TARDISHandlesBlock block)
+                        setSlot(view, (45 + i), scroll_list.get(uuid).get(startr + i));
                     }
                 }
-                default -> {
-                    ItemStack item = player.getItemOnCursor();
-                    if (slot > 53 && item != null && item.getType().equals(Material.PAPER)) {
-                        event.setCancelled(true);
-                        player.setItemOnCursor(null);
-                    }
+            }
+            default -> {
+                ItemStack item = player.getItemOnCursor();
+                if (slot > 53 && item != null && item.getType().equals(Material.PAPER)) {
+                    event.setCancelled(true);
+                    player.setItemOnCursor(null);
                 }
             }
         }
@@ -215,13 +216,12 @@ public class TARDISHandlesProgramListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesProgramClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!title.equals(ChatColor.DARK_RED + "Handles Program")) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
             return;
         }
         Player p = (Player) event.getPlayer();
         ItemStack item = p.getItemOnCursor();
-        if (item != null && item.getType().equals(Material.PAPER)) {
+        if (item.getType().equals(Material.PAPER)) {
             p.setItemOnCursor(null);
         }
     }

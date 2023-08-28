@@ -63,9 +63,9 @@ public class TARDISCondenserListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS condenser chest. When the chest is closed, any
-     * condensable items {@see TARDISCondensables} are converted to Artron Energy at a ratio of 2:1
-     * e.g. 2 COBBLESTONE gives 1 Artron energy.
+     * Listens for player interaction with the TARDIS condenser chest. When the chest is closed, any condensable items
+     * {@see TARDISCondensables} are converted to Artron Energy at a ratio of 2:1 e.g. 2 COBBLESTONE gives 1 Artron
+     * energy.
      *
      * @param event a chest closing
      */
@@ -75,205 +75,205 @@ public class TARDISCondenserListener implements Listener {
         InventoryHolder holder = event.getInventory().getHolder();
         String title = view.getTitle();
         if (holder instanceof Chest chest) {
-            if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
-                Player player = (Player) event.getPlayer();
-                Location loc = chest.getLocation();
-                String chest_loc = loc.toString();
-                ResultSetTardis rs;
-                boolean isCondenser;
-                HashMap<String, Object> where = new HashMap<>();
-                if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
-                    if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
-                        switch (plugin.getWorldManager()) {
-                            case MULTIVERSE -> {
-                                if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
-                                    return;
-                                }
+            if (!title.equals(ChatColor.DARK_RED + "Artron Condenser") && !title.equals(ChatColor.DARK_RED + "Server Condenser")) {
+                return;
+            }
+            Player player = (Player) event.getPlayer();
+            Location loc = chest.getLocation();
+            String chest_loc = loc.toString();
+            ResultSetTardis rs;
+            boolean isCondenser;
+            HashMap<String, Object> where = new HashMap<>();
+            if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
+                if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
+                    switch (plugin.getWorldManager()) {
+                        case MULTIVERSE -> {
+                            if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
+                                return;
                             }
-                            case NONE -> {
-                                if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
-                                    return;
-                                }
+                        }
+                        case NONE -> {
+                            if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
+                                return;
                             }
                         }
                     }
-                    where.put("type", 34);
-                    where.put("location", chest_loc);
-                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                    if (rsc.resultSet()) {
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", rsc.getTardis_id());
-                        rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-                        isCondenser = rs.resultSet();
-                    } else {
-                        return;
-                    }
+                }
+                where.put("type", 34);
+                where.put("location", chest_loc);
+                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                if (rsc.resultSet()) {
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("tardis_id", rsc.getTardis_id());
+                    rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+                    isCondenser = rs.resultSet();
                 } else {
-                    where.put("uuid", player.getUniqueId().toString());
-                    rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+                    return;
                 }
-
-                if (isCondenser) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
-                    int amount = 0;
-                    // non-condensable items we need to return to the player
-                    ArrayList<ItemStack> returnedItems = new ArrayList<>();
-                    // how many items we neglected to condense due to them being enchanted
-                    int savedEnchantedItems = 0;
-                    // get the stacks in the inventory
-                    HashMap<String, Integer> item_counts = new HashMap<>();
-                    Inventory inv = event.getInventory();
-                    for (ItemStack is : inv.getContents()) {
-                        // skip empty slots
-                        if (is == null) {
-                            continue;
+            } else {
+                where.put("uuid", player.getUniqueId().toString());
+                rs = new ResultSetTardis(plugin, where, "", false, 0);
+                isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+            }
+            if (!isCondenser) {
+                return;
+            }
+            player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
+            int amount = 0;
+            // non-condensable items we need to return to the player
+            ArrayList<ItemStack> returnedItems = new ArrayList<>();
+            // how many items we neglected to condense due to them being enchanted
+            int savedEnchantedItems = 0;
+            // get the stacks in the inventory
+            HashMap<String, Integer> item_counts = new HashMap<>();
+            Inventory inv = event.getInventory();
+            for (ItemStack is : inv.getContents()) {
+                // skip empty slots
+                if (is == null) {
+                    continue;
+                }
+                String item = is.getType().toString();
+                // condense sonic screwdriver
+                if (item.equals("BLAZE_ROD") && TARDISStaticUtils.isSonic(is)) {
+                    // add artron for base screwdriver
+                    double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
+                    amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
+                    // add extra artron for any sonic upgrades
+                    if (is.getItemMeta().hasLore()) {
+                        List<String> lore = is.getItemMeta().getLore();
+                        if (lore.contains("Bio-scanner Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                         }
-                        String item = is.getType().toString();
-                        // condense sonic screwdriver
-                        if (item.equals("BLAZE_ROD") && TARDISStaticUtils.isSonic(is)) {
-                            // add artron for base screwdriver
-                            double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
-                            amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
-                            // add extra artron for any sonic upgrades
-                            if (is.getItemMeta().hasLore()) {
-                                List<String> lore = is.getItemMeta().getLore();
-                                if (lore.contains("Bio-scanner Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
-                                }
-                                if (lore.contains("Diamond Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
-                                }
-                                if (lore.contains("Emerald Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
-                                }
-                                if (lore.contains("Redstone Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
-                                }
-                                if (lore.contains("Painter Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
-                                }
-                                if (lore.contains("Ignite Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
-                                }
-                                if (lore.contains("Pickup Arrows Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
-                                }
-                                if (lore.contains("Knockback Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
-                                }
-                                if (lore.contains("Brush Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
-                                }
-                            }
-                            inv.remove(is);
-                            continue;
+                        if (lore.contains("Diamond Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
                         }
-                        // condense blueprint disk
-                        if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
-                            BlueprintProcessor.addPermission(plugin, is, player);
-                            amount += plugin.getCondensables().get(item);
-                            inv.remove(is);
-                            continue;
+                        if (lore.contains("Emerald Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
                         }
-                        // don't condense enchanted items so players don't accidentally condense their
-                        // gear ignores curse enchantments
-                        // note: i would really love to use Enchantment#isCursed() here for forwards
-                        // compatibility but it's deprecated with no good alternative
-                        if (plugin.getConfig().getBoolean("preferences.no_enchanted_condense")) {
-                            if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
-                                savedEnchantedItems++;
-                                returnedItems.add(is);
-                                inv.remove(is);
-                                continue;
-                            }
+                        if (lore.contains("Redstone Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                         }
-                        // condense other blocks and items
-                        if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
-                            int stack_size = is.getAmount();
-                            // add item artron value
-                            amount += stack_size * plugin.getCondensables().get(item);
-                            // count blocks towards room growth and repair if enabled
-                            String block_data = is.getType().toString();
-                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")
-                                    || plugin.getConfig().getBoolean("allow.repair")) {
-                                if (item_counts.containsKey(block_data)) {
-                                    Integer add_this = (item_counts.get(block_data) + stack_size);
-                                    item_counts.put(block_data, add_this);
-                                } else {
-                                    item_counts.put(block_data, stack_size);
-                                }
-                            }
-                            inv.remove(is);
-                            continue;
+                        if (lore.contains("Painter Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
                         }
-                        // give the player the item back since it wasn't condensed
+                        if (lore.contains("Ignite Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+                        }
+                        if (lore.contains("Pickup Arrows Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
+                        }
+                        if (lore.contains("Knockback Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+                        }
+                        if (lore.contains("Brush Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
+                        }
+                    }
+                    inv.remove(is);
+                    continue;
+                }
+                // condense blueprint disk
+                if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
+                    BlueprintProcessor.addPermission(plugin, is, player);
+                    amount += plugin.getCondensables().get(item);
+                    inv.remove(is);
+                    continue;
+                }
+                // don't condense enchanted items so players don't accidentally condense their
+                // gear ignores curse enchantments
+                // note: i would really love to use Enchantment#isCursed() here for forwards
+                // compatibility but it's deprecated with no good alternative
+                if (plugin.getConfig().getBoolean("preferences.no_enchanted_condense")) {
+                    if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
+                        savedEnchantedItems++;
                         returnedItems.add(is);
-                        // remove the item from the condenser
                         inv.remove(is);
-                    }
-                    // return non-condensed items to the player
-                    HashMap<Integer, ItemStack> didntFit = player.getInventory().addItem(returnedItems.toArray(new ItemStack[0]));
-                    player.updateInventory();
-                    // drop items that didn't fit in the player's inventory on the ground
-                    for (ItemStack is : didntFit.values()) {
-                        player.getWorld().dropItem(player.getLocation(), is);
-                    }
-                    Tardis tardis = rs.getTardis();
-                    if (tardis != null) {
-                        // process item_counts
-                        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
-                            item_counts.forEach((key, value) -> {
-                                // check if the tardis has condensed this material before
-                                HashMap<String, Object> wherec = new HashMap<>();
-                                wherec.put("tardis_id", tardis.getTardis_id());
-                                wherec.put("block_data", key);
-                                ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
-                                HashMap<String, Object> setc = new HashMap<>();
-                                if (rsc.resultSet()) {
-                                    int new_stack_size = value + rsc.getBlock_count();
-                                    plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
-                                } else {
-                                    setc.put("tardis_id", tardis.getTardis_id());
-                                    setc.put("block_data", key);
-                                    setc.put("block_count", value);
-                                    plugin.getQueryFactory().doInsert("condenser", setc);
-                                }
-                            });
-                        }
-                        // warn players about not condensing enchanted items
-                        if (savedEnchantedItems > 0) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
-                        }
-                        // halve it cause 1:1 is too much...
-                        amount = Math.round(amount / 2.0F);
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", tardis.getTardis_id());
-                        plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
-                        if (amount > 0) {
-                            // are we doing an achievement?
-                            if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
-                                // determine the current percentage
-                                int current_level = tardis.getArtron_level() + amount;
-                                int fc = plugin.getArtronConfig().getInt("full_charge");
-                                int percent = Math.round((current_level * 100F) / fc);
-                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);
-                                if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
-                                    taf.doAchievement(percent);
-                                } else {
-                                    taf.doAchievement(Math.round((amount * 100F) / fc));
-                                }
-                            }
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_CONDENSED", String.format("%d", amount));
-                        } else {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_VALID");
-                        }
-                    } else {
-                        plugin.debug("TARDIS data was null!");
+                        continue;
                     }
                 }
+                // condense other blocks and items
+                if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
+                    int stack_size = is.getAmount();
+                    // add item artron value
+                    amount += stack_size * plugin.getCondensables().get(item);
+                    // count blocks towards room growth and repair if enabled
+                    String block_data = is.getType().toString();
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
+                        if (item_counts.containsKey(block_data)) {
+                            Integer add_this = (item_counts.get(block_data) + stack_size);
+                            item_counts.put(block_data, add_this);
+                        } else {
+                            item_counts.put(block_data, stack_size);
+                        }
+                    }
+                    inv.remove(is);
+                    continue;
+                }
+                // give the player the item back since it wasn't condensed
+                returnedItems.add(is);
+                // remove the item from the condenser
+                inv.remove(is);
+            }
+            // return non-condensed items to the player
+            HashMap<Integer, ItemStack> didntFit = player.getInventory().addItem(returnedItems.toArray(new ItemStack[0]));
+            player.updateInventory();
+            // drop items that didn't fit in the player's inventory on the ground
+            for (ItemStack is : didntFit.values()) {
+                player.getWorld().dropItem(player.getLocation(), is);
+            }
+            Tardis tardis = rs.getTardis();
+            if (tardis == null) {
+                plugin.debug("TARDIS data was null!");
+                return;
+            }
+            // process item_counts
+            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
+                item_counts.forEach((key, value) -> {
+                    // check if the tardis has condensed this material before
+                    HashMap<String, Object> wherec = new HashMap<>();
+                    wherec.put("tardis_id", tardis.getTardis_id());
+                    wherec.put("block_data", key);
+                    ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
+                    HashMap<String, Object> setc = new HashMap<>();
+                    if (rsc.resultSet()) {
+                        int new_stack_size = value + rsc.getBlock_count();
+                        plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
+                    } else {
+                        setc.put("tardis_id", tardis.getTardis_id());
+                        setc.put("block_data", key);
+                        setc.put("block_count", value);
+                        plugin.getQueryFactory().doInsert("condenser", setc);
+                    }
+                });
+            }
+            // warn players about not condensing enchanted items
+            if (savedEnchantedItems > 0) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_ENCHANTED", Integer.toString(savedEnchantedItems));
+            }
+            // halve it cause 1:1 is too much...
+            amount = Math.round(amount / 2.0F);
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("tardis_id", tardis.getTardis_id());
+            plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
+            if (amount > 0) {
+                // are we doing an achievement?
+                if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
+                    // determine the current percentage
+                    int current_level = tardis.getArtron_level() + amount;
+                    int fc = plugin.getArtronConfig().getInt("full_charge");
+                    int percent = Math.round((current_level * 100F) / fc);
+                    TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);
+                    if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
+                        taf.doAchievement(percent);
+                    } else {
+                        taf.doAchievement(Math.round((amount * 100F) / fc));
+                    }
+                }
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_CONDENSED", String.format("%d", amount));
+            } else {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_VALID");
             }
         }
     }

@@ -70,90 +70,91 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16 -> {
-                        event.setCancelled(true);
-                        // set display name of key in slot 18
-                        ItemStack key = view.getItem(18);
-                        if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
-                            return;
-                        }
-                        // get display name of selected key
-                        ItemStack choice = view.getItem(slot);
-                        ItemMeta choiceMeta = choice.getItemMeta();
-                        ItemMeta keyMeta = key.getItemMeta();
-                        keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
-                        // personalise
-                        keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                        // set lore
-                        List<String> lore;
-                        if (keyMeta.hasLore()) {
-                            lore = keyMeta.getLore();
-                        } else {
-                            lore = new ArrayList<>();
-                        }
-                        String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                        if (!lore.contains(format + "This key belongs to")) {
-                            lore.add(format + "This key belongs to");
-                            lore.add(format + player.getName());
-                            keyMeta.setLore(lore);
-                        }
-                        key.setItemMeta(keyMeta);
-                    }
-                    case 18 -> {
-                        // get item on cursor
-                        ItemStack cursor = event.getCursor();
-                        if (cursor == null || !cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
-                            return;
-                        }
-                        ItemMeta meta = cursor.getItemMeta();
-                        if (!meta.hasDisplayName()) {
-                            return;
-                        }
-                        // set wool colour from display name of placed key
-                        ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
-                        Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
-                        ItemStack choice = view.getItem(19);
-                        choice.setType(material);
-                    }
-                    case 19 -> {
-                        event.setCancelled(true);
-                        // set display name colour of key in slot 18
-                        ItemStack key = view.getItem(18);
-                        if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
-                            return;
-                        }
-                        // get current colour of wool
-                        ItemStack choice = view.getItem(19);
-                        Material wool = getNextWool(choice.getType());
-                        // set wool colour to next in line
-                        choice.setType(wool);
-                        ChatColor display = COLOUR_LOOKUP.get(wool);
-                        ItemMeta key_im = key.getItemMeta();
-                        if (display != ChatColor.WHITE) {
-                            key_im.setDisplayName(display + "TARDIS Key");
-                        } else {
-                            key_im.setDisplayName("TARDIS Key");
-                        }
-                        key.setItemMeta(key_im);
-                    }
-                    case 26 -> {
-                        // close
-                        event.setCancelled(true);
-                        close(player);
-                    }
-                    default -> event.setCancelled(true);
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 26) {
+            ClickType click = event.getClick();
+            if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
             }
+            return;
+        }
+        switch (slot) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16 -> {
+                event.setCancelled(true);
+                // set display name of key in slot 18
+                ItemStack key = view.getItem(18);
+                if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
+                    return;
+                }
+                // get display name of selected key
+                ItemStack choice = view.getItem(slot);
+                ItemMeta choiceMeta = choice.getItemMeta();
+                ItemMeta keyMeta = key.getItemMeta();
+                keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
+                // personalise
+                keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                // set lore
+                List<String> lore;
+                if (keyMeta.hasLore()) {
+                    lore = keyMeta.getLore();
+                } else {
+                    lore = new ArrayList<>();
+                }
+                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                if (!lore.contains(format + "This key belongs to")) {
+                    lore.add(format + "This key belongs to");
+                    lore.add(format + player.getName());
+                    keyMeta.setLore(lore);
+                }
+                key.setItemMeta(keyMeta);
+            }
+            case 18 -> {
+                // get item on cursor
+                ItemStack cursor = event.getCursor();
+                if (cursor == null || !cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
+                    return;
+                }
+                ItemMeta meta = cursor.getItemMeta();
+                if (!meta.hasDisplayName()) {
+                    return;
+                }
+                // set wool colour from display name of placed key
+                ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
+                Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
+                ItemStack choice = view.getItem(19);
+                choice.setType(material);
+            }
+            case 19 -> {
+                event.setCancelled(true);
+                // set display name colour of key in slot 18
+                ItemStack key = view.getItem(18);
+                if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
+                    return;
+                }
+                // get current colour of wool
+                ItemStack choice = view.getItem(19);
+                Material wool = getNextWool(choice.getType());
+                // set wool colour to next in line
+                choice.setType(wool);
+                ChatColor display = COLOUR_LOOKUP.get(wool);
+                ItemMeta key_im = key.getItemMeta();
+                if (display != ChatColor.WHITE) {
+                    key_im.setDisplayName(display + "TARDIS Key");
+                } else {
+                    key_im.setDisplayName("TARDIS Key");
+                }
+                key.setItemMeta(key_im);
+            }
+            case 26 -> {
+                // close
+                event.setCancelled(true);
+                close(player);
+            }
+            default -> event.setCancelled(true);
         }
     }
 
@@ -165,8 +166,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onKeyMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             return;
         }
         ItemStack key = view.getItem(18);

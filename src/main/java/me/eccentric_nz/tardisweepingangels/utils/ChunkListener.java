@@ -77,7 +77,7 @@ public class ChunkListener implements Listener {
                         if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SEA_DEVIL, drowned, false, false, true).setHelmetAndInvisibilty();
                         } else {
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> drowned.remove(), 2L);
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, drowned::remove, 2L);
                         }
                     }
                 }
@@ -111,7 +111,7 @@ public class ChunkListener implements Listener {
                 PersistentDataContainer pdc = monk.getPersistentDataContainer();
                 if (pdc.has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) {
                     // stop flame runnable?
-                    int f = pdc.get(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER);
+                    int f = pdc.getOrDefault(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, -1);
                     if (f != -1) {
                         plugin.getServer().getScheduler().cancelTask(f);
                     }

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.ArtronIndicatorData;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -32,7 +34,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class SpigotMessage implements TARDISMessage {
@@ -103,12 +104,12 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
-    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
+    public void send(Player player, String key, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
         } else {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
         }
     }
 
@@ -288,5 +289,32 @@ public class SpigotMessage implements TARDISMessage {
     @Override
     public void announceRepeater(Player player, String value) {
         player.sendTitle("", value, 5, 20, 5);
+    }
+
+    @Override
+    public void sendStatus(Player player, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        TextComponent actionBar = SpigotComponents.getModule(TardisModule.TARDIS);
+        TextComponent m = new TextComponent(local);
+        m.setColor(ChatColor.WHITE);
+        actionBar.addExtra(m);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
+    }
+
+    @Override
+    public void sendStatus(Player player, String key, Object... subs) {
+        String local = String.format(TARDIS.plugin.getLanguage().getString(key), subs);
+        TextComponent actionBar = SpigotComponents.getModule(TardisModule.TARDIS);
+        TextComponent m = new TextComponent(local);
+        m.setColor(ChatColor.WHITE);
+        actionBar.addExtra(m);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
+    }
+
+    @Override
+    public void sendArtron(Player player, int id, int used) {
+        ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
+        TextComponent actionBar = SpigotComponents.getArtronIndicator(data);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
     }
 }

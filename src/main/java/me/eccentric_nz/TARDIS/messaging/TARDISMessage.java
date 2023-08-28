@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -26,6 +25,8 @@ import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
  * Send messages.
  *
@@ -33,89 +34,95 @@ import org.bukkit.entity.Player;
  */
 public interface TARDISMessage {
 
-    public void sendJenkinsUpdateReady(CommandSender cs, int current, int latest);
+    void sendJenkinsUpdateReady(CommandSender cs, int current, int latest);
 
-    public void sendUpdateCommand(CommandSender cs);
+    void sendUpdateCommand(CommandSender cs);
 
-    public void sendBuildsBehind(CommandSender cs, int behind);
+    void sendBuildsBehind(CommandSender cs, int behind);
 
-    public void message(CommandSender cs, TardisModule module, String message);
+    void message(CommandSender cs, TardisModule module, String message);
 
-    public void message(CommandSender cs, String message);
+    void message(CommandSender cs, String message);
 
-    public void handlesMessage(Player p, String message);
+    void handlesMessage(Player p, String message);
 
-    public void handlesSend(Player p, String key);
+    void handlesSend(Player p, String key);
 
-    public void handlesSend(Player p, String key, Object... subs);
+    void handlesSend(Player p, String key, Object... subs);
 
-    public void send(CommandSender cs, TardisModule module, String key);
+    void send(CommandSender cs, TardisModule module, String key);
 
-    public void send(CommandSender cs, TardisModule module, String key, Object... subs);
+    void send(CommandSender cs, TardisModule module, String key, Object... subs);
 
-    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake);
+    void send(Player player, String key, boolean handbrake);
 
-    public void broadcast(TardisModule module, String message);
+    void broadcast(TardisModule module, String message);
 
-    public void sendWithColour(CommandSender cs, TardisModule module, String message, String hex);
+    void sendWithColour(CommandSender cs, TardisModule module, String message, String hex);
 
-    public void messageWithColour(CommandSender cs, String message, String hex);
+    void messageWithColour(CommandSender cs, String message, String hex);
 
-    public void sendRequestComehereAccept(CommandSender cs, String key, String command);
+    void sendRequestComehereAccept(CommandSender cs, String key, String command);
 
-    public void sendAbandoned(CommandSender cs, int i, String owner, String location, int id);
+    void sendAbandoned(CommandSender cs, int i, String owner, String location, int id);
 
-    public void sendTransmat(CommandSender cs, Transmat t);
+    void sendTransmat(CommandSender cs, Transmat t);
 
-    public void sendTARDISForList(CommandSender cs, Tardis t, String world, int x, int y, int z);
+    void sendTARDISForList(CommandSender cs, Tardis t, String world, int x, int y, int z);
 
-    public void sendExterminate(CommandSender cs, TARDIS plugin);
+    void sendExterminate(CommandSender cs, TARDIS plugin);
 
-    public void sendRescue(CommandSender cs, TARDIS plugin);
+    void sendRescue(CommandSender cs, TARDIS plugin);
 
-    public void sendSuggestCommand(CommandSender cs, String item, String hover, String colour);
+    void sendSuggestCommand(CommandSender cs, String item, String hover, String colour);
 
-    public void sendRunCommand(CommandSender cs, String item, String hover, String colour);
+    void sendRunCommand(CommandSender cs, String item, String hover, String colour);
 
-    public void sendShowMore(CommandSender cs, String command);
+    void sendShowMore(CommandSender cs, String command);
 
-    public void sendRecharger(CommandSender cs, String recharger, String world, String x, String y, String z, boolean hasPerm);
+    void sendRecharger(CommandSender cs, String recharger, String world, String x, String y, String z, boolean hasPerm);
 
-    public void sendHome(CommandSender cs, TARDIS plugin, String world, int x, int y, int z);
+    void sendHome(CommandSender cs, TARDIS plugin, String world, int x, int y, int z);
 
-    public void sendSave(CommandSender cs, HashMap<String, String> map, String world);
+    void sendSave(CommandSender cs, HashMap<String, String> map, String world);
 
-    public void sendArea(CommandSender cs, Area a, int n, boolean hasPerm);
+    void sendArea(CommandSender cs, Area a, int n, boolean hasPerm);
 
-    public void sendRoom(CommandSender cs, String room, boolean hasPerm);
+    void sendRoom(CommandSender cs, String room, boolean hasPerm);
 
-    public void sendRoomGallery(CommandSender cs);
+    void sendRoomGallery(CommandSender cs);
 
-    public void sendEyebrows(CommandSender cs);
+    void sendEyebrows(CommandSender cs);
 
-    public void sendSign(CommandSender cs);
+    void sendSign(CommandSender cs);
 
-    public void sendInfo(CommandSender cs, String first, String value, String split);
+    void sendInfo(CommandSender cs, String first, String value, String split);
 
-    public void sendHADS(CommandSender cs, TARDIS plugin);
+    void sendHADS(CommandSender cs, TARDIS plugin);
 
-    public void sendColouredCommand(CommandSender cs, String which, String command, TARDIS plugin);
+    void sendColouredCommand(CommandSender cs, String which, String command, TARDIS plugin);
 
-    public void sendInsertedColour(CommandSender cs, String local, String which, TARDIS plugin);
+    void sendInsertedColour(CommandSender cs, String local, String which, TARDIS plugin);
 
-    public void sendWithColours(CommandSender cs, String first, String colour, String last, String hue);
+    void sendWithColours(CommandSender cs, String first, String colour, String last, String hue);
 
-    public void sendWithColours(CommandSender cs, TardisModule module, String first, String colour, String last, String hue);
+    void sendWithColours(CommandSender cs, TardisModule module, String first, String colour, String last, String hue);
 
-    public void sendCommand(CommandSender cs, String root, String command);
+    void sendCommand(CommandSender cs, String root, String command);
 
-    public void sendHeadsUpDisplay(Player player, TARDIS plugin);
+    void sendHeadsUpDisplay(Player player, TARDIS plugin);
 
-    public void sendWikiLink(Player player, WikiLink wikiLink);
+    void sendWikiLink(Player player, WikiLink wikiLink);
 
-    public void sendStartBanner(CommandSender cs);
+    void sendStartBanner(CommandSender cs);
 
-    public void sendProtected(CommandSender cs, String xyz, String location, int id);
+    void sendProtected(CommandSender cs, String xyz, String location, int id);
 
-    public void announceRepeater(Player player, String value);
+    void announceRepeater(Player player, String value);
+
+    void sendStatus(Player player, String key);
+
+    void sendStatus(Player player, String key, Object... subs);
+
+    void sendArtron(Player player, int id, int used);
 }

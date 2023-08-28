@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
@@ -36,6 +32,11 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  *
@@ -103,7 +104,7 @@ public class TARDISTravelBiome {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
                     return true;
                 }
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_SEARCH");
+                plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
                 World w;
                 HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", id);

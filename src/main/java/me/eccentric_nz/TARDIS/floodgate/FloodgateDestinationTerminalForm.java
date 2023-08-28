@@ -1,8 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -12,11 +9,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -29,6 +22,10 @@ import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.response.CustomFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class FloodgateDestinationTerminalForm {
 
@@ -106,7 +103,7 @@ public class FloodgateDestinationTerminalForm {
                                     loc.setY(endy);
                                     if (plugin.getPluginRespect().getRespect(loc, new Parameters(player, Flag.getNoMessageFlags()))) {
                                         location = loc;
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET");
+                                        plugin.getMessenger().sendStatus(player, "LOC_SET");
                                     } else {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "PROTECTED");
                                     }
@@ -120,7 +117,7 @@ public class FloodgateDestinationTerminalForm {
                         case NETHER -> {
                             if (tt.safeNether(w, x, z, rsc.getDirection(), player)) {
                                 location = new Location(w, x, plugin.getUtils().getHighestNetherBlock(w, x, z), z);
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET");
+                                plugin.getMessenger().sendStatus(player, "LOC_SET");
                             } else {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_SAFE");
                             }
@@ -151,7 +148,7 @@ public class FloodgateDestinationTerminalForm {
                                 Location over = new Location(w, x, starty, z);
                                 if (plugin.getPluginRespect().getRespect(over, new Parameters(player, Flag.getNoMessageFlags()))) {
                                     location = over;
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET");
+                                    plugin.getMessenger().sendStatus(player, "LOC_SET");
                                 } else {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PROTECTED");
                                 }
@@ -175,7 +172,7 @@ public class FloodgateDestinationTerminalForm {
                         plugin.getQueryFactory().doSyncUpdate("next", set, wheretid);
                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
                         plugin.getTrackerKeeper().getRescue().remove(id);
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                        plugin.getMessenger().send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                             new TARDISLand(plugin, id, player).exitVortex();
                             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, id));

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.ArtronIndicatorData;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -106,12 +108,12 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
-    public void send(CommandSender cs, TardisModule module, String key, boolean handbrake) {
+    public void send(Player player, String key, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
         } else {
-            message(cs, module, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
         }
     }
 
@@ -283,6 +285,29 @@ public class AdventureMessage implements TARDISMessage {
         Title.Times times = Title.Times.times(Duration.ofMillis(250), Duration.ofMillis(1000), Duration.ofMillis(250));
         Title title = Title.title(Component.empty(), Component.text(value), times);
         player.showTitle(title);
+    }
+
+    @Override
+    public void sendStatus(Player player, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS)
+                .append(Component.text(local, NamedTextColor.WHITE));
+        player.sendActionBar(actionBar);
+    }
+
+    @Override
+    public void sendStatus(Player player, String key, Object... subs) {
+        String local = String.format(TARDIS.plugin.getLanguage().getString(key), subs);
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS)
+                .append(Component.text(local, NamedTextColor.WHITE));
+        player.sendActionBar(actionBar);
+    }
+
+    @Override
+    public void sendArtron(Player player, int id, int used) {
+        ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
+        TextComponent actionBar = AdventureComponents.getArtronIndicator(data);
+        player.sendActionBar(actionBar);
     }
 
     public void message(Audience audience, TardisModule module, String message) {

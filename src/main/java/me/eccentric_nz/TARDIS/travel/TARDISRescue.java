@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -34,6 +32,9 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Rescue Operational Security Module G723 (ROSM) was an artificial intelligence built into a spacecraft working around
@@ -98,7 +99,7 @@ public class TARDISRescue {
         plugin.getQueryFactory().doSyncUpdate("next", set, where);
         TravelType travelType = (rescue) ? TravelType.RESCUE : TravelType.PLAYER;
         if (!rescue) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+            plugin.getMessenger().send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 new TARDISLand(plugin, id, player).exitVortex();
                 plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
