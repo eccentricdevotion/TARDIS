@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -28,11 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
@@ -43,6 +37,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -205,7 +202,7 @@ class TARDISComehereCommand {
                     plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_COMING");
+                plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 boolean hid = hidden;

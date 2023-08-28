@@ -16,14 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -52,6 +48,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Programming is a process used by Cybermen to control humans. To program a
@@ -167,7 +167,7 @@ public class TARDISHandlesProcessor {
                                             }
                                         }
                                     }
-                                    case SHOW -> new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                    case SHOW -> plugin.getMessenger().sendArtron(player, id, 0);
                                     case REDSTONE -> {
                                         // press the Handles button
                                         HashMap<String, Object> whereh = new HashMap<>();
@@ -586,10 +586,7 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> {
-                        // operator
-                        comparison = thb;
-                    }
+                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> comparison = thb; // operator
                     case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
                         // find all sequential number blocks
                         if (first) {

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -45,6 +44,8 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -229,7 +230,7 @@ public class TARDISAbandonCommand {
                         return true;
                     }
                     if (!rs.isHandbrake_on()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                        plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                         return true;
                     }
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

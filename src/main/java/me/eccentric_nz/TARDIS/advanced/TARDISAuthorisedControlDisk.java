@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -29,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
@@ -42,6 +37,11 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Security Protocol 712 is a security feature aboard the Doctor's TARDIS which
@@ -156,7 +156,7 @@ public class TARDISAuthorisedControlDisk {
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
+                plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 // show emergency program one
                 HashMap<String, Object> wherev = new HashMap<>();

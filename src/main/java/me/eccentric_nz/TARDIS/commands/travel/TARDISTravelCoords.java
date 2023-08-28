@@ -87,7 +87,7 @@ public class TARDISTravelCoords {
                             set.put("z", l.getBlockZ());
                             set.put("submarine", 0);
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SAVED", true);
+                            plugin.getMessenger().send(player, "LOC_SAVED", true);
                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.RANDOM));
                             plugin.getTrackerKeeper().getRescue().remove(id);
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -151,7 +151,7 @@ public class TARDISTravelCoords {
                         set.put("z", location.getBlockZ());
                         set.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SAVED", true);
+                        plugin.getMessenger().send(player, "LOC_SAVED", true);
                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.RELATIVE_COORDINATES));
                         plugin.getTrackerKeeper().getRescue().remove(id);
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -174,7 +174,7 @@ public class TARDISTravelCoords {
                             set.put("z", determiney.getBlockZ());
                             set.put("submarine", 0);
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SAVED", true);
+                            plugin.getMessenger().send(player, "LOC_SAVED", true);
                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.COORDINATES));
                             plugin.getTrackerKeeper().getRescue().remove(id);
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -201,7 +201,7 @@ public class TARDISTravelCoords {
                         set.put("z", giveny.getBlockZ());
                         set.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SAVED", true);
+                        plugin.getMessenger().send(player, "LOC_SAVED", true);
                         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.COORDINATES));
                         plugin.getTrackerKeeper().getRescue().remove(id);
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

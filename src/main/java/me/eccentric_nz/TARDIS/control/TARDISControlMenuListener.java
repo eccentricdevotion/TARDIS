@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
@@ -196,7 +195,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             case 6 -> {
                 // artron level
                 close(player, true);
-                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                plugin.getMessenger().sendArtron(player, id, 0);
             }
             case 8 -> {
                 // zero room

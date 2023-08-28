@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
@@ -26,6 +23,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -49,7 +50,7 @@ public class FlightEnd {
                 Player p = plugin.getServer().getPlayer(s);
                 if (p != null) {
                     String message = malfunction ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                    plugin.getMessenger().send(p, TardisModule.TARDIS, message);
+                    plugin.getMessenger().sendStatus(p, message);
                     // TARDIS has travelled so add players to list so they can receive Artron on exit
                     plugin.getTrackerKeeper().getHasTravelled().add(s);
                 }

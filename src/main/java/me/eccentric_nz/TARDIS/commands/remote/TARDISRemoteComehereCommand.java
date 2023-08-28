@@ -174,7 +174,7 @@ public class TARDISRemoteComehereCommand {
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_COMING");
+        plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);
         boolean hid = hidden;

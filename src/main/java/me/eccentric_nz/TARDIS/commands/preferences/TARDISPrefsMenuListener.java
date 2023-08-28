@@ -188,7 +188,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                         tal.recharge(id);
                         // Remove energy from TARDIS and sets database
-                        plugin.getMessenger().send(p, TardisModule.TARDIS, "HANDBRAKE_ON");
+                        plugin.getMessenger().sendStatus(p, "HANDBRAKE_ON");
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
                             HashMap<String, Object> wheref = new HashMap<>();
@@ -211,7 +211,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
                         }
                     } else {
-                        plugin.getMessenger().send(p, TardisModule.TARDIS, "HANDBRAKE_IN_VORTEX");
+                        plugin.getMessenger().sendStatus(p, "HANDBRAKE_IN_VORTEX");
                     }
                 } else {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_TARDIS");

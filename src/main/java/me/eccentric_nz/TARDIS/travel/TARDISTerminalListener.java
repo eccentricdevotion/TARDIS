@@ -151,7 +151,7 @@ public class TARDISTerminalListener implements Listener {
                     plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
                     plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                     close(player);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
+                    plugin.getMessenger().send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
                         new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));

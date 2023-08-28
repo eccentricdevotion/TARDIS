@@ -16,15 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
@@ -35,6 +32,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -130,7 +130,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 }
             }
             if (userQuotes) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_REMIND");
+                plugin.getMessenger().sendStatus(player, "DOOR_REMIND");
             }
             // if WorldGuard is on the server check for TARDIS region protection and remove player as member
             if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && isCompanion(uuid, id)) {

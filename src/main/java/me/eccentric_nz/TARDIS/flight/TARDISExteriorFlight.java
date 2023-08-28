@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -133,7 +132,7 @@ public class TARDISExteriorFlight {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
+        plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         Location playerLocation = player.getLocation();
         // teleport player to exterior

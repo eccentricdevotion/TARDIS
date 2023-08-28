@@ -62,7 +62,7 @@ public class DisplayItemDoorMover {
         if (rsd.resultSet()) {
             int id = rsd.getTardis_id();
             if (rsd.isLocked()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
+                plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                 return;
             }
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -75,7 +75,7 @@ public class DisplayItemDoorMover {
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
                 if (!tardis.isHandbrake_on()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;
                 }
                 ChameleonPreset preset = tardis.getPreset();

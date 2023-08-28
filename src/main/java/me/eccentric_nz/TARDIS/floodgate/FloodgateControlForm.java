@@ -1,11 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
@@ -22,8 +19,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Bukkit;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -33,6 +30,9 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class FloodgateControlForm {
 
@@ -253,9 +253,7 @@ public class FloodgateControlForm {
                         }
                         new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                     }
-                    case 10 -> { // map
-                        new FloodgateMapForm(plugin, uuid, id).send();
-                    }
+                    case 10 -> new FloodgateMapForm(plugin, uuid, id).send(); // map
                     case 11 -> { // chameleon circuit
                         if (tcc != null && !tcc.hasChameleon()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
@@ -323,18 +321,10 @@ public class FloodgateControlForm {
                         }
                         new FloodgateTemporalForm(plugin, uuid).send();
                     }
-                    case 17 -> { // artron level
-                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
-                    }
-                    case 18 -> { // scanner
-                        new TARDISScanner(plugin).scan(player, id, plugin.getServer().getScheduler());
-                    }
-                    case 19 -> { // TIS
-                        new TARDISInfoMenuButton(plugin, player).clickButton();
-                    }
-                    case 20 -> { // transmat
-                        new FloodgateTransmatForm(plugin, uuid, id).send();
-                    }
+                    case 17 -> plugin.getMessenger().sendArtron(player, id, 0); // artron level
+                    case 18 -> new TARDISScanner(plugin).scan(player, id, plugin.getServer().getScheduler()); // scanner
+                    case 19 -> new TARDISInfoMenuButton(plugin, player).clickButton(); // TIS
+                    case 20 -> new FloodgateTransmatForm(plugin, uuid, id).send(); // transmat
                     case 21 -> { // zero room
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
@@ -357,9 +347,7 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
                         }
                     }
-                    case 22 -> { // player prefs
-                        new FloodgatePlayerPrefsForm(plugin, uuid).send();
-                    }
+                    case 22 -> new FloodgatePlayerPrefsForm(plugin, uuid).send(); // player prefs
                     case 23 -> { // companions
                         String comps = tardis.getCompanions();
                         if (comps == null || comps.isEmpty()) {

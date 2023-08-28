@@ -139,7 +139,7 @@ class TARDISHomeCommand {
                 set.put("direction", player_d.toString());
                 set.put("submarine", isSub(eyeLocation) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("homes", set, tid);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_SET");
+                plugin.getMessenger().sendStatus(player, "HOME_SET");
             }
             return true;
         } else {

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.artron.ArtronIndicatorData;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -358,5 +359,15 @@ public class AdventureComponents {
                 .build()
         );
         return banner;
+    }
+
+    public static TextComponent getArtronIndicator(ArtronIndicatorData data) {
+        return Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_DISPLAY", "Artron Energy") + " ")
+                .append(Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_REMAINING") + ": " + data.getRemaining() + " ", NamedTextColor.GREEN))
+                .append(Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_PERCENT") + ": " + data.getPercent() + "% ", NamedTextColor.LIGHT_PURPLE))
+                .append(data.getUsed() == 0 ? Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_MAX") + ": " + data.getMax() + " ", NamedTextColor.AQUA) : Component.text())
+                .append(Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_TL") + ": " + data.getTimelord() + " ", NamedTextColor.YELLOW))
+                .append(data.getUsed() > 0 ? Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_USED") + ": " + data.getUsed() + " ", NamedTextColor.RED) : Component.text())
+                .append(data.getCost() > 0 ? Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_COST") + ": " + data.getCost(), NamedTextColor.RED) : Component.text());
     }
 }

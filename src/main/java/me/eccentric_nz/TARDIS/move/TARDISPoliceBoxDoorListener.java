@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -53,6 +50,10 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
 
@@ -100,7 +101,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrake_on()) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
                                 // must be Time Lord or companion
@@ -250,7 +251,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                             }
                                         }
                                     } else if (!tardis.getUuid().equals(playerUUID)) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
+                                        plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                     } else {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
                                     }

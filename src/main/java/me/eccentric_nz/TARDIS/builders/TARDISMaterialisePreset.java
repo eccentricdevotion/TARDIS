@@ -723,7 +723,7 @@ class TARDISMaterialisePreset implements Runnable {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, message);
+                                plugin.getMessenger().sendStatus(p, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }

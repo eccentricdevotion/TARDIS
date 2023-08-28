@@ -19,12 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.*;
 
 /**
  * @author eccentric_nz
@@ -32,69 +27,34 @@ import org.bukkit.scoreboard.*;
 public class TARDISArtronIndicator {
 
     private final TARDIS plugin;
-    private final ScoreboardManager manager;
     private final int fc;
-    private final Material filter;
 
     public TARDISArtronIndicator(TARDIS plugin) {
         this.plugin = plugin;
-        manager = plugin.getServer().getScoreboardManager();
         fc = plugin.getArtronConfig().getInt("full_charge");
-        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    public void showArtronLevel(Player p, int id, int used) {
-        // check if they have the perception filter on
-        boolean isFiltered = false;
-        ItemStack[] armour = p.getInventory().getArmorContents();
-        for (ItemStack is : armour) {
-            if (is != null && is.getType().equals(filter)) {
-                isFiltered = true;
-            }
-        }
-        Scoreboard currentScoreboard = p.getScoreboard();
+    public ArtronIndicatorData getLevels(Player p, int id, int used) {
+        ArtronIndicatorData data = new ArtronIndicatorData();
         // get Artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
         if (rs.fromID(id)) {
             int current_level = rs.getArtronLevel();
-            int percent = Math.round((current_level * 100F) / fc);
-            if (!isFiltered) {
-                Scoreboard board = manager.getNewScoreboard();
-                Objective objective = board.registerNewObjective("TARDIS", Criteria.create("Artron"), plugin.getLanguage().getString("ARTRON_DISPLAY"));
-                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-                if (used == 0) {
-                    Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
-                    max.setScore(fc);
-                    Score timelord = objective.getScore(ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-                    if (rsp.resultSet()) {
-                        timelord.setScore(rsp.getArtronLevel());
-                    }
+            data.setRemaining(current_level);
+            data.setPercent(Math.round((current_level * 100F) / fc));
+            if (used == 0) {
+                data.setMax(fc);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+                if (rsp.resultSet()) {
+                    data.setTimelord(rsp.getArtronLevel());
                 }
-                Score current = objective.getScore(ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
-                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
-                if (used > 0) {
-                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
-                    amount_used.setScore(used);
-                } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
-                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id).getCost());
-                }
-                current.setScore(current_level);
-                percentage.setScore(percent);
-                p.setScoreboard(board);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (p.isOnline() && p.isValid()) {
-                        if (manager != null) {
-                            p.setScoreboard(currentScoreboard);
-                        }
-                    }
-                }, 150L);
-            } else if (used > 0) {
-                plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_USED", String.format("%d", used));
-            } else {
-                plugin.getMessenger().send(p, TardisModule.TARDIS, "ENERGY_LEVEL", String.format("%d", percent));
+            }
+            if (used > 0) {
+                data.setUsed(used);
+            } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                data.setCost(plugin.getTrackerKeeper().getHasDestination().get(id).getCost());
             }
         }
+        return data;
     }
 }

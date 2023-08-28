@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -30,8 +29,9 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelCave {
@@ -50,7 +50,7 @@ public class TARDISTravelCave {
         // find a cave
         Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);
         if (cave == null) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "CAVE_NOT_FOUND");
+            plugin.getMessenger().sendStatus(player, "CAVE_NOT_FOUND");
             return true;
         }
         // check respect
@@ -79,5 +79,4 @@ public class TARDISTravelCave {
         }
         return true;
     }
-
 }

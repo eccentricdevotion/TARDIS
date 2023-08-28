@@ -254,7 +254,7 @@ public class TARDISStattenheimListener implements Listener {
                             tid.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                         }
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_COMING");
+                        plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                         long delay = 10L;
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         boolean hid = hidden;

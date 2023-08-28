@@ -50,6 +50,32 @@ public class TARDISCaveFinder {
         return y;
     }
 
+    public static boolean worldCheck(World w) {
+        if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
+            // caves not generated
+            return false;
+        }
+        Location spawn = w.getSpawnLocation();
+        int y = w.getHighestBlockYAt(spawn);
+        if (y < w.getMinHeight() + 15) {
+            // possibly a flat world
+            return false;
+        } else if (w.getBlockAt(spawn.getBlockX(), w.getMinHeight(), spawn.getBlockZ()).getType().isAir()) {
+            // possibly a void world
+            return false;
+        } else {
+            // move 20 blocks north
+            spawn.setZ(spawn.getBlockZ() - 100);
+            int ny = w.getHighestBlockYAt(spawn);
+            spawn.setX(spawn.getBlockX() + 100);
+            int ey = w.getHighestBlockYAt(spawn);
+            spawn.setZ(spawn.getBlockZ() + 100);
+            int sy = w.getHighestBlockYAt(spawn);
+            // possibly a flat world too
+            return (y != ny || y != ey || y != sy);
+        }
+    }
+
     public Location searchCave(Player p, int id) {
         // get the current TARDIS location
         HashMap<String, Object> where = new HashMap<>();
@@ -74,41 +100,41 @@ public class TARDISCaveFinder {
                     for (int i = 0; i < 4; i++) {
                         switch (directions.get(i)) {
                             case EAST -> {
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_E");
+                                plugin.getMessenger().sendStatus(p, "LOOK_E");
                                 for (int east = startx; east < plusx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
-                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_E");
+                                        plugin.getMessenger().sendStatus(p, "CAVE_E");
                                         return new Location(w, east, chk.getY(), startz);
                                     }
                                 }
                             }
                             case SOUTH -> {
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_S");
+                                plugin.getMessenger().sendStatus(p, "LOOK_S");
                                 for (int south = startz; south < plusz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
-                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_S");
+                                        plugin.getMessenger().sendStatus(p, "CAVE_S");
                                         return new Location(w, startx, chk.getY(), south);
                                     }
                                 }
                             }
                             case WEST -> {
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_W");
+                                plugin.getMessenger().sendStatus(p, "LOOK_W");
                                 for (int west = startx; west > minusx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
-                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_W");
+                                        plugin.getMessenger().sendStatus(p, "CAVE_W");
                                         return new Location(w, west, chk.getY(), startz);
                                     }
                                 }
                             }
                             default -> { // NORTH
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "LOOK_N");
+                                plugin.getMessenger().sendStatus(p, "LOOK_N");
                                 for (int north = startz; north > minusz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
-                                        plugin.getMessenger().send(p, TardisModule.TARDIS, "CAVE_N");
+                                        plugin.getMessenger().sendStatus(p, "CAVE_N");
                                         return new Location(w, startx, chk.getY(), north);
                                     }
                                 }
@@ -170,31 +196,5 @@ public class TARDISCaveFinder {
             }
         }
         return ret;
-    }
-
-    public static boolean worldCheck(World w) {
-        if (w.getGenerator() != null && !w.getGenerator().shouldGenerateCaves()) {
-            // caves not generated
-            return false;
-        }
-        Location spawn = w.getSpawnLocation();
-        int y = w.getHighestBlockYAt(spawn);
-        if (y < w.getMinHeight() + 15) {
-            // possibly a flat world
-            return false;
-        } else if (w.getBlockAt(spawn.getBlockX(), w.getMinHeight(), spawn.getBlockZ()).getType().isAir()) {
-            // possibly a void world
-            return false;
-        } else {
-            // move 20 blocks north
-            spawn.setZ(spawn.getBlockZ() - 100);
-            int ny = w.getHighestBlockYAt(spawn);
-            spawn.setX(spawn.getBlockX() + 100);
-            int ey = w.getHighestBlockYAt(spawn);
-            spawn.setZ(spawn.getBlockZ() + 100);
-            int sy = w.getHighestBlockYAt(spawn);
-            // possibly a flat world too
-            return (y != ny || y != ey || y != sy);
-        }
     }
 }

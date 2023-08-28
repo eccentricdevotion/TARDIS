@@ -448,7 +448,7 @@ public class TARDISInstantPreset {
                     Player trav = plugin.getServer().getPlayer(s);
                     if (trav != null) {
                         String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                        plugin.getMessenger().send(trav, TardisModule.TARDIS, message);
+                        plugin.getMessenger().sendStatus(trav, message);
                         // TARDIS has travelled so add players to list so they can receive Artron on exit
                         plugin.getTrackerKeeper().getHasTravelled().add(s);
                     }

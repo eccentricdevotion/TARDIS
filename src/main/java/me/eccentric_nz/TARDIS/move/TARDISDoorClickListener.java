@@ -157,7 +157,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                                 if (rs.fromUUID(playerUUID.toString())) {
                                     if (rs.getTardis_id() != id) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK_UNLOCK");
+                                        plugin.getMessenger().sendStatus(player, "DOOR_LOCK_UNLOCK");
                                         return;
                                     }
                                     int locked = (rsd.isLocked()) ? 0 : 1;
@@ -186,7 +186,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
                                     if (!rs.getTardis().isHandbrake_on()) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                                        plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                         return;
                                     }
                                     // must be Time Lord or companion
@@ -218,7 +218,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 door_data.setOpen(!door_data.isOpen());
                                             }
                                         } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
+                                            plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                         } else {
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
                                         }
@@ -228,7 +228,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                                 if (rsd.isLocked()) {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_DEADLOCKED");
+                                    plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                     return;
                                 }
                                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -241,7 +241,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 if (rs.resultSet()) {
                                     Tardis tardis = rs.getTardis();
                                     if (!tardis.isHandbrake_on()) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ENGAGE");
+                                        plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                         return;
                                     }
                                     int artron = tardis.getArtron_level();

@@ -135,7 +135,7 @@ public class TARDISTravelSave {
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", id);
                 plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                plugin.getMessenger().send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.SAVE));
                 plugin.getTrackerKeeper().getRescue().remove(id);
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

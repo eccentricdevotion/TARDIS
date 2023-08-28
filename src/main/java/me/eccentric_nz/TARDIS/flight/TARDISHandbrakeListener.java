@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
@@ -153,7 +152,7 @@ public class TARDISHandbrakeListener implements Listener {
                         }
                         String beacon = tardis.getBeacon();
                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_IN_VORTEX");
+                            plugin.getMessenger().sendStatus(player, "HANDBRAKE_IN_VORTEX");
                         } else {
                             Action action = event.getAction();
                             // should the beacon turn on
@@ -179,7 +178,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     // check if door is open
                                     if (isDoorOpen(id)) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_CLOSE");
+                                        plugin.getMessenger().sendStatus(player, "DOOR_CLOSE");
                                         // track handbrake clicked for takeoff when door closed
                                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                                         // give them 30 seconds to close the door
@@ -202,7 +201,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF_ERR");
+                                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF_ERR");
                                 }
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
@@ -234,7 +233,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         toggleBeacon(beacon, false);
                                     }
                                     // Remove energy from TARDIS and sets database
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON");
+                                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
                                         HashMap<String, Object> wheret = new HashMap<>();
@@ -243,7 +242,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         if (!uuid.equals(ownerUUID)) {
                                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
-                                                new TARDISArtronIndicator(plugin).showArtronLevel(ptl, id, Math.abs(amount));
+                                                plugin.getMessenger().sendArtron(ptl, id, Math.abs(amount));
                                             }
                                         }
                                     }
@@ -263,7 +262,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     whereh.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
                                 } else {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_ERR");
+                                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                                 }
                             }
                         }

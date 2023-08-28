@@ -202,7 +202,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                         continue;
                                     }
                                 }
-                                plugin.getMessenger().send(p, TardisModule.TARDIS, "BIOME_SEARCH");
+                                plugin.getMessenger().sendStatus(p, "BIOME_SEARCH");
                                 Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                 if (nsob == null) {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "BIOME_NOT_FOUND");
@@ -231,7 +231,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     set_next.put("z", nsob.getBlockZ());
                                     set_next.put("direction", rsc.getDirection().toString());
                                     set_next.put("submarine", 0);
-                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                    plugin.getMessenger().send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     travelType = TravelType.BIOME;
                                 }
                             }
@@ -305,7 +305,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             plugin.debug("Invalid PRESET value: " + lore.get(5));
                                         }
                                     }
-                                    plugin.getMessenger().send(p, TardisModule.TARDIS, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                    plugin.getMessenger().send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     travelType = TravelType.SAVE;
                                 } else {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_NO_PERM_SAVE");
