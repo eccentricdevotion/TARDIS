@@ -72,7 +72,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 plugin.debug("Sender was null!");
                 return true;
             }
-            if (!ROOT_SUBS.contains(args[0])) {
+            if (args.length < 1 || !ROOT_SUBS.contains(args[0])) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LOAD_UNLOAD");
                 return false;
             }
