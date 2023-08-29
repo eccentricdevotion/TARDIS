@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.utils.ArgumentParser;
+import me.eccentric_nz.TARDIS.commands.utils.Arguments;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
-
-import java.util.Arrays;
 
 /**
  * @author eccentric_nz
@@ -35,9 +35,16 @@ class TARDISSetWorldInclusionCommand {
     }
 
     boolean setWorldStatus(CommandSender sender, String[] args) {
-        String first = args[0];
+        ArgumentParser parser = new ArgumentParser();
+        String command = parser.join(args);
+        plugin.debug(command);
+        Arguments arguments = parser.parse(command);
+        for (String a : arguments.getArguments()) {
+            plugin.debug(a);
+        }
+        String first = arguments.getArguments().get(0);
         // get world name with no periods(.)
-        String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length)).replace(".", "_");
+        String name = arguments.getArguments().get(1).replace(".", "_");;
         // check the world actually exists!
         if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
             plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);

@@ -102,9 +102,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             ArgumentParser parser = new ArgumentParser();
             String command = parser.join(args);
             Arguments arguments = parser.parse(command);
-            for (String a : arguments.getArguments()) {
-                plugin.debug(a);
-            }
             if (args[0].equalsIgnoreCase("update")) {
                 String world = arguments.getArguments().get(1).toLowerCase(Locale.ROOT);
                 if (!PLANET_SUBS.contains(world)) {

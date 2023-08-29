@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.commands.utils.ArgumentParser;
+import me.eccentric_nz.TARDIS.commands.utils.Arguments;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -30,7 +32,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -56,11 +57,14 @@ public class TARDISTravelCoords {
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
-        switch (args.length) {
+        ArgumentParser parser = new ArgumentParser();
+        String command = parser.join(args);
+        Arguments arguments = parser.parse(command);
+        switch (arguments.getArguments().size()) {
             case 2 -> {
                 if (args[0].equalsIgnoreCase("random")) {
                     // check world is an actual world
-                    World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
+                    World world = TARDISAliasResolver.getWorldFromAlias(arguments.getArguments().get(1));
                     if (world == null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
                         return true;
@@ -259,27 +263,28 @@ public class TARDISTravelCoords {
 
     private Location getCoordinateLocation(String[] args, Player player, int id) {
         // coords
-        String w_str = args[0];
-        if (w_str.contains("'")) {
-            w_str = TARDISStringUtils.getQuotedString(args);
-        }
-        if (TARDISNumberParsers.isSimpleNumber(args[0])) {
+        ArgumentParser parser = new ArgumentParser();
+        String command = parser.join(args);
+        Arguments arguments = parser.parse(command);
+        String w_str = arguments.getArguments().get(0);
+        if (TARDISNumberParsers.isSimpleNumber(arguments.getArguments().get(0))) {
             plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             return null;
         }
         // must be at least a world name/~ and x, z
-        if (args.length < 3) {
+        int size = arguments.getArguments().size();
+        if (size < 3) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_COORDS");
             return null;
         }
-        if (args[1].startsWith("~")) {
+        if (arguments.getArguments().get(1).startsWith("~")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_RELATIVE");
             return null;
         }
         // must be a location then
         int x, y, z;
         World w;
-        if (args[0].equals("~")) {
+        if (arguments.getArguments().get(0).equals("~")) {
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -303,21 +308,21 @@ public class TARDISTravelCoords {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }
-        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[0].equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && arguments.getArguments().get(0).equals(plugin.getConfig().getString("creation.default_world_name"))) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }
-        z = TARDISNumberParsers.parseInt(args[args.length - 1]);
-        if (args.length > 3) {
-            x = TARDISNumberParsers.parseInt(args[args.length - 3]);
-            y = TARDISNumberParsers.parseInt(args[args.length - 2]);
+        z = TARDISNumberParsers.parseInt(arguments.getArguments().get(size - 1));
+        if (size > 3) {
+            x = TARDISNumberParsers.parseInt(arguments.getArguments().get(size - 3));
+            y = TARDISNumberParsers.parseInt(arguments.getArguments().get(size - 2));
             // y values are now lesser and greater in 1.18+, but normal worlds have higher altitude
             if (y < -64 || ((w.getEnvironment().equals(World.Environment.NORMAL) && y > 310) || (!w.getEnvironment().equals(World.Environment.NORMAL) && y > 240))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "Y_NOT_VALID");
                 return null;
             }
         } else {
-            x = TARDISNumberParsers.parseInt(args[args.length - 2]);
+            x = TARDISNumberParsers.parseInt(arguments.getArguments().get(size - 2));
             Chunk chunk = w.getChunkAt(x, z);
             while (!chunk.isLoaded()) {
                 chunk.load();

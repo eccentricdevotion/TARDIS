@@ -49,6 +49,10 @@ public class ArgumentParser {
             // if char is a quotation mark, then reverse booleans
             if (QUOTATION_MARKS.contains(c)) {
                 quote = !quote;
+                // also add if the quoted string is the last argument of the command
+                if (i == chars.length) {
+                    addAndClear(sb, arguments);
+                }
                 continue;
             }
             // append character
