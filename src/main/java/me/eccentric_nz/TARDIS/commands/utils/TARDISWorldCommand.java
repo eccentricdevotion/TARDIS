@@ -99,8 +99,14 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
+            ArgumentParser parser = new ArgumentParser();
+            String command = parser.join(args);
+            Arguments arguments = parser.parse(command);
+            for (String a : arguments.getArguments()) {
+                plugin.debug(a);
+            }
             if (args[0].equalsIgnoreCase("update")) {
-                String world = args[1].toLowerCase(Locale.ROOT);
+                String world = arguments.getArguments().get(1).toLowerCase(Locale.ROOT);
                 if (!PLANET_SUBS.contains(world)) {
                     plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                     return true;
@@ -108,18 +114,18 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 new TARDISWorldNameConverter(plugin, world).update();
                 return true;
             }
-            World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
+            World world = TARDISAliasResolver.getWorldFromAlias(arguments.getArguments().get(1));
             if (world != null) {
                 if (args[0].equalsIgnoreCase("disable")) {
                     // is the world in the config?
-                    if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
+                    if (!plugin.getPlanetsConfig().contains("planets." + arguments.getArguments().get(1))) {
                         plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
+                    plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1) + ".enabled", false);
                     plugin.savePlanetsConfig();
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DISABLED", args[1]);
-                    if (TARDISConstants.isTARDISPlanetExact(args[1])) {
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DISABLED", arguments.getArguments().get(1));
+                    if (TARDISConstants.isTARDISPlanetExact(arguments.getArguments().get(1))) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DISABLED_RESTART");
                     }
                     // remove players from world
@@ -146,61 +152,61 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     });
                     // unload world
                     plugin.getServer().unloadWorld(world, true);
-                    plugin.getTardisHelper().setLevelName(args[1], args[2]);
+                    plugin.getTardisHelper().setLevelName(arguments.getArguments().get(1), arguments.getArguments().get(2));
                     // rename the planet in planets.yml
-                    ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + args[1]);
+                    ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + arguments.getArguments().get(1));
                     if (section != null) {
                         Map<String, Object> map = section.getValues(true);
-                        plugin.getPlanetsConfig().set("planets." + args[2], map);
-                        plugin.getPlanetsConfig().set("planets." + args[1], null);
+                        plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(2), map);
+                        plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1), null);
                         plugin.savePlanetsConfig();
                     }
                     // load world
-                    TARDISWorlds.loadWorld(args[2]);
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_RENAME_SUCCESS", args[2]);
+                    TARDISWorlds.loadWorld(arguments.getArguments().get(2));
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_RENAME_SUCCESS", arguments.getArguments().get(2));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("gm")) {
                     if (args.length == 3) {
                         try {
-                            GameMode gm = GameMode.valueOf(args[2].toUpperCase());
-                            plugin.getTardisHelper().setWorldGameMode(args[1], gm);
-                            plugin.getPlanetsConfig().set("planets." + args[1] + ".gamemode", gm.toString());
+                            GameMode gm = GameMode.valueOf(arguments.getArguments().get(2).toUpperCase());
+                            plugin.getTardisHelper().setWorldGameMode(arguments.getArguments().get(1), gm);
+                            plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1) + ".gamemode", gm.toString());
                             plugin.savePlanetsConfig();
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GM_SET", args[1], args[2]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GM_SET", arguments.getArguments().get(1), arguments.getArguments().get(2));
                             return true;
                         } catch (IllegalArgumentException e) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GM", args[2]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GM", arguments.getArguments().get(2));
                             return true;
                         }
                     } else {
-                        TARDISPlanetData data = plugin.getTardisHelper().getLevelData(args[1]);
+                        TARDISPlanetData data = plugin.getTardisHelper().getLevelData(arguments.getArguments().get(1));
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GM", data.getGameMode().toString());
                         return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("load")) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_LOADED", args[1]);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_LOADED", arguments.getArguments().get(1));
                 } else {
                     // try to unload the world
                     plugin.getServer().unloadWorld(world, true);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".time_travel", false);
+                    plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1) + ".enabled", false);
+                    plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1) + ".time_travel", false);
                     plugin.savePlanetsConfig();
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_UNLOAD_SUCCESS", args[1]);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_UNLOAD_SUCCESS", arguments.getArguments().get(1));
                 }
             } else {
                 if (args[0].equalsIgnoreCase("enable")) {
                     // is the world in the config?
-                    if (!plugin.getPlanetsConfig().contains("planets." + args[1])) {
+                    if (!plugin.getPlanetsConfig().contains("planets." + arguments.getArguments().get(1))) {
                         plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", true);
+                    plugin.getPlanetsConfig().set("planets." + arguments.getArguments().get(1) + ".enabled", true);
                     plugin.savePlanetsConfig();
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENABLED", args[1]);
-                    if (TARDISConstants.isTARDISPlanetExact(args[1])) {
-                        switch (args[1]) {
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENABLED", arguments.getArguments().get(1));
+                    if (TARDISConstants.isTARDISPlanetExact(arguments.getArguments().get(1))) {
+                        switch (arguments.getArguments().get(1)) {
                             case "gallifrey" -> {
                                 plugin.debug("Gallifrey enabled, registering planet event listeners");
                                 plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
@@ -225,7 +231,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             }
                         }
                     }
-                    TARDISWorlds.loadWorld(args[1]);
+                    TARDISWorlds.loadWorld(arguments.getArguments().get(1));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("rename")) {
@@ -233,8 +239,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_WORLD_RENAME");
                         return true;
                     }
-                    plugin.getTardisHelper().setLevelName(args[1], args[2]);
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_RENAME_SUCCESS", args[2]);
+                    plugin.getTardisHelper().setLevelName(arguments.getArguments().get(1), arguments.getArguments().get(2));
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_RENAME_SUCCESS", arguments.getArguments().get(2));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("gm")) {
@@ -244,36 +250,36 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 if (args[0].equalsIgnoreCase("load")) {
                     WorldType worldType = WorldType.NORMAL;
                     World.Environment environment = World.Environment.NORMAL;
-                    String name = args[1].toLowerCase(Locale.ROOT);
+                    String name = arguments.getArguments().get(1).toLowerCase(Locale.ROOT);
                     // try to load the world
                     WorldCreator creator = new WorldCreator(name);
                     if (args.length > 2) {
                         try {
-                            worldType = WorldType.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                            worldType = WorldType.valueOf(arguments.getArguments().get(2).toUpperCase(Locale.ENGLISH));
                         } catch (IllegalArgumentException e) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_TYPE", args[2]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_TYPE", arguments.getArguments().get(2));
                             return true;
                         }
                     }
                     creator.type(worldType);
                     if (args.length > 3) {
                         try {
-                            environment = World.Environment.valueOf(args[3].toUpperCase(Locale.ENGLISH));
+                            environment = World.Environment.valueOf(arguments.getArguments().get(3).toUpperCase(Locale.ENGLISH));
                         } catch (IllegalArgumentException e) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENV", args[3]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENV", arguments.getArguments().get(3));
                             return true;
                         }
                     }
                     creator.environment(environment);
                     if (args.length > 4) {
                         // Check generator exists
-                        String[] split = args[4].split(":", 2);
+                        String[] split = arguments.getArguments().get(4).split(":", 2);
                         Plugin gen = plugin.getPM().getPlugin(split[0]);
                         if (gen == null) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GEN", args[4]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GEN", arguments.getArguments().get(4));
                             return true;
                         }
-                        creator.generator(args[4]);
+                        creator.generator(arguments.getArguments().get(4));
                     }
                     if (creator.createWorld() == null) {
                         plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
@@ -287,11 +293,11 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getPlanetsConfig().set("planets." + name + ".environment", environment.toString());
                     // don't set siluria/gallifrey/skaro generator
                     if (!TARDISConstants.isTARDISPlanetExact(name)) {
-                        plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
+                        plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? arguments.getArguments().get(4) : "DEFAULT");
                     }
                     plugin.savePlanetsConfig();
                 } else {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_UNLOADED", args[1]);
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_UNLOADED", arguments.getArguments().get(1));
                 }
             }
             return true;
