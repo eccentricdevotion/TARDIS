@@ -107,9 +107,9 @@ public class SpigotMessage implements TARDISMessage {
     public void send(Player player, String key, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            sendJoinedStatus(player, local ,"HANDBRAKE_RELEASE");
         } else {
-            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            sendJoinedStatus(player, local ,"LEAVING_VORTEX");
         }
     }
 
@@ -315,6 +315,16 @@ public class SpigotMessage implements TARDISMessage {
     public void sendArtron(Player player, int id, int used) {
         ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
         TextComponent actionBar = SpigotComponents.getArtronIndicator(data);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
+    }
+
+    public void sendJoinedStatus(Player player, String key, String otherKey) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        String other = TARDIS.plugin.getLanguage().getString(otherKey);
+        TextComponent actionBar = SpigotComponents.getModule(TardisModule.TARDIS);
+        TextComponent m = new TextComponent(local + " " + other);
+        m.setColor(ChatColor.WHITE);
+        actionBar.addExtra(m);
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
     }
 }

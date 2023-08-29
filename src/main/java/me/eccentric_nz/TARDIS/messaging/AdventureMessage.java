@@ -39,7 +39,6 @@ import java.time.Duration;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class AdventureMessage implements TARDISMessage {
@@ -62,8 +61,7 @@ public class AdventureMessage implements TARDISMessage {
     @Override
     public void message(CommandSender cs, TardisModule module, String message) {
         if (cs != null) {
-            TextComponent textComponent = AdventureComponents.getModule(module)
-                    .append(Component.text(message, NamedTextColor.WHITE));
+            TextComponent textComponent = AdventureComponents.getModule(module).append(Component.text(message, NamedTextColor.WHITE));
             cs.sendMessage(textComponent);
         }
     }
@@ -109,11 +107,10 @@ public class AdventureMessage implements TARDISMessage {
 
     @Override
     public void send(Player player, String key, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            sendJoinedStatus(player, key, "HANDBRAKE_RELEASE");
         } else {
-            sendStatus(player, local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            sendJoinedStatus(player, key, "LEAVING_VORTEX");
         }
     }
 
@@ -125,8 +122,7 @@ public class AdventureMessage implements TARDISMessage {
     @Override
     public void sendWithColour(CommandSender cs, TardisModule module, String message, String hex) {
         TextColor colour = TextColor.fromHexString(hex);
-        TextComponent textComponent = AdventureComponents.getModule(module)
-                .append(Component.text(message, colour));
+        TextComponent textComponent = AdventureComponents.getModule(module).append(Component.text(message, colour));
         cs.sendMessage(textComponent);
     }
 
@@ -290,16 +286,14 @@ public class AdventureMessage implements TARDISMessage {
     @Override
     public void sendStatus(Player player, String key) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS)
-                .append(Component.text(local, NamedTextColor.WHITE));
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS).append(Component.text(local, NamedTextColor.WHITE));
         player.sendActionBar(actionBar);
     }
 
     @Override
     public void sendStatus(Player player, String key, Object... subs) {
         String local = String.format(TARDIS.plugin.getLanguage().getString(key), subs);
-        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS)
-                .append(Component.text(local, NamedTextColor.WHITE));
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS).append(Component.text(local, NamedTextColor.WHITE));
         player.sendActionBar(actionBar);
     }
 
@@ -310,10 +304,16 @@ public class AdventureMessage implements TARDISMessage {
         player.sendActionBar(actionBar);
     }
 
+    public void sendJoinedStatus(Player player, String key, String otherKey) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        String other = TARDIS.plugin.getLanguage().getString(otherKey);
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS).append(Component.text(local + " " + other, NamedTextColor.WHITE));
+        player.sendActionBar(actionBar);
+    }
+
     public void message(Audience audience, TardisModule module, String message) {
         if (audience != null) {
-            TextComponent textComponent = AdventureComponents.getModule(module)
-                    .append(Component.text(message, NamedTextColor.WHITE));
+            TextComponent textComponent = AdventureComponents.getModule(module).append(Component.text(message, NamedTextColor.WHITE));
             audience.sendMessage(textComponent);
         }
     }
