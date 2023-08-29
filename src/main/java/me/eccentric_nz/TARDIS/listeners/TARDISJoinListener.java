@@ -24,18 +24,28 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
+import me.eccentric_nz.TARDIS.flight.FlyingAnimation;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -193,7 +203,46 @@ public class TARDISJoinListener implements Listener {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
         }
-        // teleport players that rejoined after logging out while in Junk TARDIS
+        // recreate custom flying chicken if player was flying the TARDIS exterior
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+            // get the chicken
+            Entity vehicle = player.getVehicle();
+            if (vehicle instanceof ArmorStand stand) {
+                Entity flyer = stand.getVehicle();
+                if (flyer != null) {
+                    FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+                    // get exterior preset
+                    boolean pandorica = false;
+                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                    if (rsp.fromID(data.getId())) {
+                        pandorica = (rsp.getPreset() == ChameleonPreset.PANDORICA);
+                    }
+                    // stop current flying tasks
+                    plugin.getServer().getScheduler().cancelTask(data.getAnimation());
+                    plugin.getServer().getScheduler().cancelTask(data.getSound());
+                    // restart animation and sound
+                    int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
+                    int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+                        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
+                    }, 5L, 280L);
+                    // re-save flight data
+                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation));
+                    // spawn a new TARDISChicken
+                    LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
+                    stand.removePassenger(player);
+                    flyer.removePassenger(stand);
+                    stand.addPassenger(player);
+                    stand.setGravity(false);
+                    chicken.addPassenger(stand);
+                    chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+                    chicken.setSilent(true);
+                    chicken.setInvulnerable(true);
+                    chicken.setNoDamageTicks(Integer.MAX_VALUE);
+                    chicken.setFireTicks(0);
+                }
+            }
+        }
+        // teleport players that rejoined after logging out while in Junk TARDIS or using external camera
         if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
             Location location = plugin.getTrackerKeeper().getJunkRelog().remove(player.getUniqueId());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

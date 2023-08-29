@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -149,7 +151,7 @@ public class TARDISExteriorFlight {
                     // save player's current location, so we can teleport them back to it when they finish flying
                     plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, sound, animation));
                     // spawn a chicken
-                    Chicken chicken = (Chicken) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.CHICKEN);
+                    LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
                     stand.addPassenger(player);
                     stand.setGravity(false);
                     chicken.addPassenger(stand);
