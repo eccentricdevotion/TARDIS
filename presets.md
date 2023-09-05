@@ -286,7 +286,7 @@ the TARDIS exterior see [Flying the TARDIS](flying.html).
 
 ![pandorica](images/presets/pandorica.jpg)
 
-![pandorica opens](images/presets/pandorica_open.gif)
+![pandorica opens](images/docs/pandorica_open.gif)
 
 ## Custom model presets
 
