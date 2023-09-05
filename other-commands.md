@@ -1078,7 +1078,6 @@ Use `/tardis? [command] [subcommand]` when necessary to view the command informa
     <tr class="lighter">
         <td colspan="3" class="usage"><code>/tardistime [day|morning|noon|night|midnight|?AM|?PM|ticks]</code></td>
     </tr>
-    <tr>
     <tr class="lighter">
         <td rowspan="2" id="tardisdisplay"><strong>tardisdisplay</strong></td>
         <td><code>tdisplay</code></td>
