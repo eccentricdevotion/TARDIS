@@ -57,7 +57,6 @@ public enum BlueprintFeature {
     TEXTURE("tardis.texture"),
     TRANSLATE("tardis.translate"),
     TRANSMAT("tardis.transmat"),
-    TWELFTH("tardis.twelfth"),
     UPDATE("tardis.update"),
     UPGRADE("tardis.upgrade"),
     VAULT("tardis.vault"),
