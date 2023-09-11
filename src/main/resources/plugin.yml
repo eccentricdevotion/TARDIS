@@ -53,6 +53,7 @@ permissions:
       tardis.gravity: true
       tardis.texture: true
       tardis.temporal: true
+      tardis.architectural: true
       tardis.advanced: true
       tardis.storage: true
       tardis.vault: true
