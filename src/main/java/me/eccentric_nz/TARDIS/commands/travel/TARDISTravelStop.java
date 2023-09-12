@@ -114,6 +114,12 @@ public class TARDISTravelStop {
                 }
             }
         }
+        // engage the handbrake!
+        HashMap<String, Object> seth = new HashMap<>();
+        seth.put("handbrake_on", 1);
+        HashMap<String, Object> whereh = new HashMap<>();
+        wherei.put("tardis_id", id);
+        plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         return true;
     }
